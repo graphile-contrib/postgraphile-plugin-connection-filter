@@ -1,0 +1,27 @@
+{
+  "name": "postgraphile-filter-plugins",
+  "version": "1.0.0-alpha.0",
+  "description": "Filter plugins for PostGraphile",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattbretl/postgraphile-filter-plugins.git"
+  },
+  "author": "Matt Bretl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattbretl/postgraphile-filter-plugins/issues"
+  },
+  "dependencies": {
+    "postgraphile": "^4.0.0-alpha2.20"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-plugin-prettier": "^2.2.0",
+    "prettier": "^1.6.1"
+  }
+}
