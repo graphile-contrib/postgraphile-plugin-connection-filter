@@ -1,4 +1,7 @@
-module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
+module.exports = function PgConnectionArgFilterOperatorsPlugin(
+  builder,
+  { connectionFilterUsesShortNames = false } = {}
+) {
   builder.hook(
     "init",
     (
@@ -10,8 +13,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
       }
     ) => {
-      const useShortNames = false;
-
       addFilterOperator(
         "null",
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
@@ -23,7 +24,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             : sql.query`IS NOT NULL`}`
       );
       addFilterOperator(
-        useShortNames ? "eq" : "equalTo",
+        connectionFilterUsesShortNames ? "eq" : "equalTo",
         "Checks for values equal to this value.",
         null,
         typeName => getTypeByName(typeName),
@@ -32,7 +33,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "ne" : "notEqualTo",
+        connectionFilterUsesShortNames ? "ne" : "notEqualTo",
         "Checks for values not equal to this value.",
         null,
         typeName => getTypeByName(typeName),
@@ -59,7 +60,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "lt" : "lessThan",
+        connectionFilterUsesShortNames ? "lt" : "lessThan",
         "Checks for values less than this value.",
         ["String", "Int", "Float", "Datetime", "Date", "Time"],
         typeName => getTypeByName(typeName),
@@ -68,7 +69,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "lte" : "lessThanOrEqualTo",
+        connectionFilterUsesShortNames ? "lte" : "lessThanOrEqualTo",
         "Checks for values less than or equal to this value.",
         ["String", "Int", "Float", "Datetime", "Date", "Time"],
         typeName => getTypeByName(typeName),
@@ -77,7 +78,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "gt" : "greaterThan",
+        connectionFilterUsesShortNames ? "gt" : "greaterThan",
         "Checks for values greater than this value.",
         ["String", "Int", "Float", "Datetime", "Date", "Time"],
         typeName => getTypeByName(typeName),
@@ -86,7 +87,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "gte" : "greaterThanOrEqualTo",
+        connectionFilterUsesShortNames ? "gte" : "greaterThanOrEqualTo",
         "Checks for values greater than or equal to this value.",
         ["String", "Int", "Float", "Datetime", "Date", "Time"],
         typeName => getTypeByName(typeName),
@@ -95,7 +96,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "in" : "in",
+        connectionFilterUsesShortNames ? "in" : "in",
         "Checks for values in this list.",
         ["String", "Int", "Float", "Datetime", "Date", "Time"],
         typeName =>
@@ -105,7 +106,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addFilterOperator(
-        useShortNames ? "nin" : "notIn",
+        connectionFilterUsesShortNames ? "nin" : "notIn",
         "Checks for values not in this list.",
         ["String", "Int", "Float", "Datetime", "Date", "Time"],
         typeName =>

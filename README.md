@@ -34,6 +34,9 @@ app.use(
       PgConnectionArgFilterPlugin,
       PgConnectionArgFilterOperatorsPlugin,
     ],
+    graphqlBuildOptions: {
+      connectionFilterUsesShortNames: false, // true: eq, ne, lt, lte, etc.
+    },
   })
 );
 
