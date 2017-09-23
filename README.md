@@ -7,12 +7,12 @@ This is an alpha-stage plugin for an alpha release of PostGraphile.  Bug reports
 
 ## Usage
 
-You'll need to load all three plugins (FilterTypesPlugin, PgConnectionArgFilterPlugin, and PgConnectionArgFilterOperatorsPlugin) for the filter argument to work.  The available operators can be customized by modifying PgConnectionArgFilterOperatorsPlugin.js.
+You'll need to load all three plugins (ConnectionArgFilterPlugin, PgConnectionArgFilterPlugin, and PgConnectionArgFilterOperatorsPlugin) for the filter argument to work.  The available operators can be customized by modifying PgConnectionArgFilterOperatorsPlugin.js.
 
 ### CLI
 
 ``` bash
-postgraphile --append-plugins `pwd`/src/FilterTypesPlugin.js,`pwd`/src/PgConnectionArgFilterPlugin.js,`pwd`/src/PgConnectionArgFilterOperatorsPlugin.js
+postgraphile --append-plugins `pwd`/src/ConnectionArgFilterPlugin.js,`pwd`/src/PgConnectionArgFilterPlugin.js,`pwd`/src/PgConnectionArgFilterOperatorsPlugin.js
 ```
 
 ### Library
@@ -20,7 +20,7 @@ postgraphile --append-plugins `pwd`/src/FilterTypesPlugin.js,`pwd`/src/PgConnect
 ``` js
 const express = require("express");
 const { postgraphql } = require("postgraphile");
-const FilterTypesPlugin = require("./src/FilterTypesPlugin.js");
+const ConnectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
 const PgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
 const PgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilterOperatorsPlugin.js");
 
@@ -30,7 +30,7 @@ app.use(
   postgraphql("postgres://localhost:5432/postgres", "public", {
     graphiql: true,
     appendPlugins: [
-      FilterTypesPlugin,
+      ConnectionArgFilterPlugin,
       PgConnectionArgFilterPlugin,
       PgConnectionArgFilterOperatorsPlugin,
     ],

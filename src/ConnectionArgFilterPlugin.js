@@ -1,4 +1,4 @@
-module.exports = function FilterTypesPlugin(
+module.exports = function ConnectionArgFilterPlugin(
   builder,
   {
     connectionFilterAllowedFieldTypes = [
