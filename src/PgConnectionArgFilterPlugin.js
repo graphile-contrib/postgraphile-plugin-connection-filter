@@ -13,7 +13,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgGqlInputTypeByTypeId: gqlTypeByTypeId,
         graphql: { GraphQLInputObjectType, GraphQLList, GraphQLNonNull },
         connectionFilterAllowedFieldTypes,
-        filterOperators,
+        connectionFilterOperators,
       }
     ) => {
       // Add *Filter type for each allowed field type
@@ -24,8 +24,10 @@ module.exports = function PgConnectionArgFilterPlugin(
             name: `${typeName}Filter`,
             description: `A filter to be used against ${typeName} fields. All fields are combined with a logical ‘and.’`,
             fields: ({ fieldWithHooks }) =>
-              Object.keys(filterOperators).reduce((memo, operatorName) => {
-                const operator = filterOperators[operatorName];
+              Object.keys(
+                connectionFilterOperators
+              ).reduce((memo, operatorName) => {
+                const operator = connectionFilterOperators[operatorName];
                 const allowedFieldTypes = operator.options
                   ? operator.options.allowedFieldTypes
                   : null;
@@ -42,8 +44,8 @@ module.exports = function PgConnectionArgFilterPlugin(
               }, {}),
           },
           {
-            isFilterType: true,
-            filterType: getTypeByName(typeName),
+            isConnectionFilterType: true,
+            connectionFilterType: getTypeByName(typeName),
           }
         );
       });
@@ -140,7 +142,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         extend,
         getTypeByName,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
-        filterOperators,
+        connectionFilterOperators,
       },
       {
         scope: { isPgConnectionField, pgIntrospection: table },
@@ -169,7 +171,7 @@ module.exports = function PgConnectionArgFilterPlugin(
 
             function resolveWhereComparison(fieldName, operatorName, input) {
               const attr = attrByFieldName[fieldName];
-              const operator = filterOperators[operatorName];
+              const operator = connectionFilterOperators[operatorName];
               const identifier = sql.query`${queryBuilder.getTableAlias()}.${sql.identifier(
                 attr.name
               )}`;

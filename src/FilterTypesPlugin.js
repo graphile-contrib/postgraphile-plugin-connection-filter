@@ -14,10 +14,10 @@ module.exports = function FilterTypesPlugin(
   } = {}
 ) {
   builder.hook("build", build => {
-    const filterOperators = {};
+    const connectionFilterOperators = {};
     return build.extend(build, {
-      filterOperators,
-      addFilterOperator(
+      connectionFilterOperators,
+      addConnectionFilterOperator(
         name,
         description,
         resolveType,
@@ -27,7 +27,7 @@ module.exports = function FilterTypesPlugin(
         if (!name) {
           throw new Error("No filter operator name specified");
         }
-        if (filterOperators[name]) {
+        if (connectionFilterOperators[name]) {
           throw new Error("There is already a filter operator with this name");
         }
         if (!resolveType) {
@@ -36,7 +36,7 @@ module.exports = function FilterTypesPlugin(
         if (!resolveWhereClause) {
           throw new Error("No filter operator where clause resolver specified");
         }
-        filterOperators[name] = {
+        connectionFilterOperators[name] = {
           name,
           description,
           resolveType,

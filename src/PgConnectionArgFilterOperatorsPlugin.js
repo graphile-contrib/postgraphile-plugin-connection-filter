@@ -8,12 +8,12 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       _,
       {
         getTypeByName,
-        addFilterOperator,
+        addConnectionFilterOperator,
         pgSql: sql,
         graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
       }
     ) => {
-      addFilterOperator(
+      addConnectionFilterOperator(
         "null",
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
         () => GraphQLBoolean,
@@ -22,7 +22,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
             ? sql.query`IS NULL`
             : sql.query`IS NOT NULL`}`
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "eq" : "equalTo",
         "Checks for values equal to this value.",
         typeName => getTypeByName(typeName),
@@ -30,7 +30,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} = ${val}`;
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "ne" : "notEqualTo",
         "Checks for values not equal to this value.",
         typeName => getTypeByName(typeName),
@@ -38,7 +38,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} <> ${val}`;
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         "distinctFrom",
         "Checks for values not equal to this value, treating null like an ordinary value.",
         typeName => getTypeByName(typeName),
@@ -46,7 +46,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} IS DISTINCT FROM ${val}`;
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         "notDistinctFrom",
         "Checks for values equal to this value, treating null like an ordinary value.",
         typeName => getTypeByName(typeName),
@@ -54,7 +54,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} IS NOT DISTINCT FROM ${val}`;
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "lt" : "lessThan",
         "Checks for values less than this value.",
         typeName => getTypeByName(typeName),
@@ -72,7 +72,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           ],
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "lte" : "lessThanOrEqualTo",
         "Checks for values less than or equal to this value.",
         typeName => getTypeByName(typeName),
@@ -90,7 +90,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           ],
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "gt" : "greaterThan",
         "Checks for values greater than this value.",
         typeName => getTypeByName(typeName),
@@ -108,7 +108,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           ],
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "gte" : "greaterThanOrEqualTo",
         "Checks for values greater than or equal to this value.",
         typeName => getTypeByName(typeName),
@@ -126,7 +126,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           ],
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "in" : "in",
         "Checks for values in this list.",
         typeName =>
@@ -145,7 +145,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           ],
         }
       );
-      addFilterOperator(
+      addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "nin" : "notIn",
         "Checks for values not in this list.",
         typeName =>
