@@ -26,9 +26,12 @@ module.exports = function PgConnectionArgFilterPlugin(
             fields: ({ fieldWithHooks }) =>
               Object.keys(filterOperators).reduce((memo, operatorName) => {
                 const operator = filterOperators[operatorName];
+                const allowedFieldTypes = operator.options
+                  ? operator.options.allowedFieldTypes
+                  : null;
                 if (
-                  operator.allowedFieldTypes === null ||
-                  operator.allowedFieldTypes.includes(typeName)
+                  !allowedFieldTypes ||
+                  allowedFieldTypes.includes(typeName)
                 ) {
                   memo[operatorName] = fieldWithHooks(operatorName, {
                     description: operator.description,

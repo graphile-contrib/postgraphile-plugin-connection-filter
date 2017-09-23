@@ -16,9 +16,9 @@ module.exports = function FilterTypesPlugin(builder) {
       addFilterOperator(
         name,
         description,
-        allowedFieldTypes,
         resolveType,
-        resolveWhereClause
+        resolveWhereClause,
+        options
       ) {
         if (!name) {
           throw new Error("No filter operator name specified");
@@ -35,9 +35,9 @@ module.exports = function FilterTypesPlugin(builder) {
         filterOperators[name] = {
           name,
           description,
-          allowedFieldTypes,
           resolveType,
           resolveWhereClause,
+          options,
         };
       },
       filterableTypeNames,
