@@ -12,12 +12,12 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgGqlInputTypeByTypeId: gqlTypeByTypeId,
         graphql: { GraphQLInputObjectType, GraphQLList, GraphQLNonNull },
-        filterableTypeNames,
+        connectionFilterAllowedFieldTypes,
         filterOperators,
       }
     ) => {
-      // Add *Filter type for each filterable type
-      filterableTypeNames.forEach(typeName => {
+      // Add *Filter type for each allowed field type
+      connectionFilterAllowedFieldTypes.forEach(typeName => {
         newWithHooks(
           GraphQLInputObjectType,
           {

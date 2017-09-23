@@ -1,7 +1,7 @@
-module.exports = function FilterTypesPlugin(builder) {
-  builder.hook("build", build => {
-    const filterOperators = {};
-    const filterableTypeNames = [
+module.exports = function FilterTypesPlugin(
+  builder,
+  {
+    connectionFilterAllowedFieldTypes = [
       "String",
       "Int",
       "Float",
@@ -10,7 +10,11 @@ module.exports = function FilterTypesPlugin(builder) {
       "Date",
       "Time",
       "JSON",
-    ];
+    ],
+  } = {}
+) {
+  builder.hook("build", build => {
+    const filterOperators = {};
     return build.extend(build, {
       filterOperators,
       addFilterOperator(
@@ -40,7 +44,7 @@ module.exports = function FilterTypesPlugin(builder) {
           options,
         };
       },
-      filterableTypeNames,
+      connectionFilterAllowedFieldTypes,
     });
   });
 };
