@@ -215,7 +215,9 @@ module.exports = function PgConnectionArgFilterPlugin(
               )})`;
             }
 
-            queryBuilder.where(resolveWhereLogic(filter));
+            if (filter != null) {
+              queryBuilder.where(resolveWhereLogic(filter));
+            }
           },
         };
       });
