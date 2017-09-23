@@ -27,19 +27,39 @@ const PgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilte
 const app = express();
 
 app.use(
-  postgraphql("postgres://localhost:5432/postgres", "public", {
+  postgraphql(pgConfig, schema, {
     graphiql: true,
     appendPlugins: [
       ConnectionArgFilterPlugin,
       PgConnectionArgFilterPlugin,
       PgConnectionArgFilterOperatorsPlugin,
     ],
-    graphqlBuildOptions: {
-      connectionFilterUsesShortNames: false, // true: eq, ne, lt, lte, etc.
-    },
   })
 );
 
 app.listen(3000);
 ```
 
+Plugin options can be passed via `graphqlBuildOptions`:
+
+#### connectionFilterUsesShortNames
+Use short names (e.g. eq, ne, lt, lte) for operators
+``` js
+postgraphql(pgConfig, schema, {
+  ...
+  graphqlBuildOptions: {
+    connectionFilterUsesShortNames: true,
+  },
+})
+```
+
+#### connectionFilterAllowedFieldTypes
+Restrict filters to specific field types
+``` js
+postgraphql(pgConfig, schema, {
+  ...
+  graphqlBuildOptions: {
+    connectionFilterAllowedFieldTypes: ["String", "Int"],
+  },
+})
+```
