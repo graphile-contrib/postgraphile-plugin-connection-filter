@@ -22,7 +22,7 @@ module.exports = function ConnectionArgFilterPlugin(
         description,
         resolveType,
         resolveWhereClause,
-        options
+        options = {}
       ) {
         if (!name) {
           throw new Error("No filter operator name specified");
