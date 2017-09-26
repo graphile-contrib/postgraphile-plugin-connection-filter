@@ -164,6 +164,32 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           ],
         }
       );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "cont" : "contains",
+        "Checks for values less than this value.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} like ${val}`;
+        },
+        {
+          allowedFieldTypes: [
+            "String",
+          ],
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "conti" : "containsInsensitive",
+        "Checks for values less than this value.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} ilike ${val}`;
+        },
+        {
+          allowedFieldTypes: [
+            "String",
+          ],
+        }
+      );
       return _;
     }
   );
