@@ -166,7 +166,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       );
       addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "cont" : "contains",
-        "Checks for values less than this value.",
+        "Checks for strings containing this string.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} like ${val}`;
@@ -179,7 +179,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       );
       addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "conti" : "containsInsensitive",
-        "Checks for values less than this value.",
+        "Checks for strings containing this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} ilike ${val}`;
