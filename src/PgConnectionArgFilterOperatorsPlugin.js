@@ -175,6 +175,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           allowedFieldTypes: [
             "String",
           ],
+          inputResolver: input => `%${input}%`,
         }
       );
       addConnectionFilterOperator(
@@ -188,6 +189,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           allowedFieldTypes: [
             "String",
           ],
+          inputResolver: input => `%${input}%`,
         }
       );
       return _;
