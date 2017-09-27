@@ -1,18 +1,16 @@
 # postgraphile-filter-plugins
-This set of plugins adds a new `filter:` argument to Connection types in PostGraphile v4.  No changes are made to the existing `condition:` argument.
+These plugins add a new `filter:` argument to Connection types in PostGraphile v4.  No changes are made to the existing `condition:` argument.
 
 ## Disclaimer
 
-This is an alpha-stage plugin for an alpha release of PostGraphile.  Bug reports and pull requests are very much welcome.
+These plugins target the alpha release of PostGraphile.  Bug reports and pull requests are very much welcome.
 
 ## Usage
-
-You'll need to load all three plugins (ConnectionArgFilterPlugin, PgConnectionArgFilterPlugin, and PgConnectionArgFilterOperatorsPlugin) for the filter argument to work.  The available operators can be customized by modifying PgConnectionArgFilterOperatorsPlugin.js.
 
 ### CLI
 
 ``` bash
-postgraphile --append-plugins `pwd`/src/ConnectionArgFilterPlugin.js,`pwd`/src/PgConnectionArgFilterPlugin.js,`pwd`/src/PgConnectionArgFilterOperatorsPlugin.js
+postgraphile --append-plugins `pwd`/path/to/this/plugin/index.js
 ```
 
 ### Library
@@ -20,27 +18,21 @@ postgraphile --append-plugins `pwd`/src/ConnectionArgFilterPlugin.js,`pwd`/src/P
 ``` js
 const express = require("express");
 const { postgraphql } = require("postgraphile");
-const ConnectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
-const PgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
-const PgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilterOperatorsPlugin.js");
+const GraphileBuildPgContribConnectionFilter = require("./path/to/this/plugin/index.js");
 
 const app = express();
 
 app.use(
   postgraphql(pgConfig, schema, {
     graphiql: true,
-    appendPlugins: [
-      ConnectionArgFilterPlugin,
-      PgConnectionArgFilterPlugin,
-      PgConnectionArgFilterOperatorsPlugin,
-    ],
+    appendPlugins: [GraphileBuildPgContribConnectionFilter],
   })
 );
 
 app.listen(3000);
 ```
 
-Plugin options can be passed via `graphqlBuildOptions`:
+The following options can be passed via `graphqlBuildOptions`:
 
 #### connectionFilterUsesShortNames
 Use short names (e.g. eq, ne, lt, lte) for operators
@@ -63,3 +55,7 @@ postgraphql(pgConfig, schema, {
   },
 })
 ```
+
+## Customization
+
+The operators exposed through GraphQL can be customized by modifying /src/PgConnectionArgFilterOperatorsPlugin.js.
