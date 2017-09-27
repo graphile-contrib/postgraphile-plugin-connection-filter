@@ -28,9 +28,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                 connectionFilterOperators
               ).reduce((memo, operatorName) => {
                 const operator = connectionFilterOperators[operatorName];
-                const allowedFieldTypes = operator.options
-                  ? operator.options.allowedFieldTypes
-                  : null;
+                const allowedFieldTypes = operator.options.allowedFieldTypes;
                 if (
                   !allowedFieldTypes ||
                   allowedFieldTypes.includes(typeName)
@@ -172,15 +170,25 @@ module.exports = function PgConnectionArgFilterPlugin(
             function resolveWhereComparison(fieldName, operatorName, input) {
               const attr = attrByFieldName[fieldName];
               const operator = connectionFilterOperators[operatorName];
+              const inputResolver = operator.options.inputResolver;
               const identifier = sql.query`${queryBuilder.getTableAlias()}.${sql.identifier(
                 attr.name
               )}`;
               const val = Array.isArray(input)
                 ? sql.query`(${sql.join(
-                    input.map(v => sql.query`${gql2pg(v, attr.type)}`),
+                    input.map(
+                      i =>
+                        sql.query`${gql2pg(
+                          (inputResolver && inputResolver(i)) || input,
+                          attr.type
+                        )}`
+                    ),
                     ","
                   )})`
-                : sql.query`${gql2pg(input, attr.type)}`;
+                : sql.query`${gql2pg(
+                    (inputResolver && inputResolver(input)) || input,
+                    attr.type
+                  )}`;
 
               return operator.resolveWhereClause(identifier, val);
             }
