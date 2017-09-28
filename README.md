@@ -56,6 +56,11 @@ postgraphql(pgConfig, schema, {
 })
 ```
 
-## Customization
+To add/remove/modify individual operators, you can edit src/PgConnectionArgFilterOperatorsPlugin.js.
 
-The operators exposed through GraphQL can be customized by modifying /src/PgConnectionArgFilterOperatorsPlugin.js.
+## Development
+
+To establish a test environment, create an empty Postgres database (e.g. `graphile-build-test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://@localhost:5432/graphile-build-test`).  To run tests:
+```
+npm test
+```
