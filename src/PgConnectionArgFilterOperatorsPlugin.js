@@ -249,7 +249,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "ilike" : "ilike",
+        connectionFilterUsesShortNames ? "ilike" : "likeInsensitive",
         "Raw SQL 'ilike', wildcards must be present and are not escaped",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
