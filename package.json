@@ -4,7 +4,7 @@
   "description": "Filter plugins for PostGraphile",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "scripts/test"
   },
   "repository": {
     "type": "git",
@@ -15,13 +15,17 @@
   "bugs": {
     "url": "https://github.com/mattbretl/postgraphile-filter-plugins/issues"
   },
-  "dependencies": {
-    "postgraphile": "^4.0.0-alpha2.20"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.6.1",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-prettier": "^2.2.0",
+    "jest": "^21.1.0",
+    "pg": ">=6 <7",
+    "postgraphile": "^4.0.0-alpha2.20",
     "prettier": "^1.6.1"
+  },
+  "jest": {
+    "testRegex": "__tests__/.*\\.test\\.js$"
   }
 }
