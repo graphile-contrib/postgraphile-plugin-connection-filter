@@ -9,6 +9,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       {
         getTypeByName,
         addConnectionFilterOperator,
+        escapeLikeWildcards,
         pgSql: sql,
         graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
       }
@@ -172,10 +173,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} like ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
-          inputResolver: input => `%${input}%`,
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}%`,
         }
       );
       addConnectionFilterOperator(
@@ -186,10 +185,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} ilike ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
-          inputResolver: input => `%${input}%`,
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}%`,
         }
       );
       addConnectionFilterOperator(
@@ -200,24 +197,20 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} like ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
-          inputResolver: input => `${input}%`,
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `${escapeLikeWildcards(input)}%`,
         }
       );
       addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "startsi" : "startsWithInsensitive",
-        "Checks for strings starting with this string.  Case sensitive.",
+        "Checks for strings starting with this string.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} ilike ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
-          inputResolver: input => `${input}%`,
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `${escapeLikeWildcards(input)}%`,
         }
       );
       addConnectionFilterOperator(
@@ -228,10 +221,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} like ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
-          inputResolver: input => `${input}%`,
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}`,
         }
       );
       addConnectionFilterOperator(
@@ -242,10 +233,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} ilike ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
-          inputResolver: input => `%${input}`,
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}`,
         }
       );
       addConnectionFilterOperator(
@@ -256,9 +245,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} like ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
+          allowedFieldTypes: ["String"],
         }
       );
       addConnectionFilterOperator(
@@ -269,9 +256,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return sql.query`${identifier} ilike ${val}`;
         },
         {
-          allowedFieldTypes: [
-            "String",
-          ],
+          allowedFieldTypes: ["String"],
         }
       );
       return _;
