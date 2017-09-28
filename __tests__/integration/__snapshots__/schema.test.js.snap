@@ -3315,14 +3315,20 @@ enum SimilarTable2SOrderBy {
 
 # A filter to be used against String fields. All fields are combined with a logical ‘and.’
 input StringFilter {
-  # Checks for values less than this value.
+  # Checks for strings containing this string.  Case sensitive.
   contains: String
 
-  # Checks for values less than this value.
+  # Checks for strings containing this value.  Case insensitive.
   containsInsensitive: String
 
   # Checks for values not equal to this value, treating null like an ordinary value.
   distinctFrom: String
+
+  # Checks for strings ending with this string.  Case sensitive.
+  endsWith: String
+
+  # Checks for strings ending with this string.  Case insensitive.
+  endsWithInsensitive: String
 
   # Checks for values equal to this value.
   equalTo: String
@@ -3342,6 +3348,12 @@ input StringFilter {
   # Checks for values less than or equal to this value.
   lessThanOrEqualTo: String
 
+  # Raw SQL 'like', wildcards must be present and are not escaped
+  like: String
+
+  # Raw SQL 'ilike', wildcards must be present and are not escaped
+  likeInsensitive: String
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: String
 
@@ -3353,6 +3365,12 @@ input StringFilter {
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
+
+  # Checks for strings starting with this string.  Case sensitive.
+  startsWith: String
+
+  # Checks for strings starting with this string.  Case insensitive.
+  startsWithInsensitive: String
 }
 
 type TablefuncCrosstab2 {

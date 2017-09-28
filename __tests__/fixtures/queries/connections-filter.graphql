@@ -11,6 +11,14 @@ query {
   j: allPeople(filter: { id: { greaterThanOrEqualTo: 3 } }) { ...personConnection }
   k: allPeople(filter: { id: { in: [3, 4] } }) { ...personConnection }
   l: allPeople(filter: { id: { notIn: [3, 4] } }) { ...personConnection }
+  m: allPeople(filter: { name: { contains: "Seven" } }) { ...personConnection }
+  n: allPeople(filter: { name: { containsInsensitive: "seven" } }) { ...personConnection }
+  o: allPeople(filter: { name: { startsWith: "Joe" } }) { ...personConnection }
+  p: allPeople(filter: { name: { startsWithInsensitive: "joe" } }) { ...personConnection }
+  q: allPeople(filter: { name: { endsWith: "Smith" } }) { ...personConnection }
+  r: allPeople(filter: { name: { endsWithInsensitive: "smith" } }) { ...personConnection }
+  s: allPeople(filter: { name: { like: "J%Smith" } }) { ...personConnection }
+  t: allPeople(filter: { name: { likeInsensitive: "j%smith" } }) { ...personConnection }
 }
 
 fragment personConnection on PeopleConnection {
