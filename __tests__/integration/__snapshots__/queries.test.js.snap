@@ -653,53 +653,21 @@ Object {
     "b": Object {
       "edges": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
+            "email": "budd.deey@email.com",
+            "id": 3,
+            "name": "Budd Deey",
           },
         },
       ],
       "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
       },
-      "totalCount": 5,
+      "totalCount": 1,
     },
     "c": Object {
       "edges": Array [
