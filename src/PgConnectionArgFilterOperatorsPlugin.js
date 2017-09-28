@@ -9,6 +9,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       {
         getTypeByName,
         addConnectionFilterOperator,
+        escapeLikeWildcards,
         pgSql: sql,
         graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
       }
@@ -162,6 +163,100 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
             "Date",
             "Time",
           ],
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "cont" : "contains",
+        "Checks for strings containing this string.  Case sensitive.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} like ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}%`,
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "conti" : "containsInsensitive",
+        "Checks for strings containing this value.  Case insensitive.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} ilike ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}%`,
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "starts" : "startsWith",
+        "Checks for strings starting with this string.  Case sensitive.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} like ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `${escapeLikeWildcards(input)}%`,
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "startsi" : "startsWithInsensitive",
+        "Checks for strings starting with this string.  Case insensitive.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} ilike ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `${escapeLikeWildcards(input)}%`,
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "ends" : "endsWith",
+        "Checks for strings ending with this string.  Case sensitive.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} like ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}`,
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "endsi" : "endsWithInsensitive",
+        "Checks for strings ending with this string.  Case insensitive.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} ilike ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+          inputResolver: input => `%${escapeLikeWildcards(input)}`,
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "like" : "like",
+        "Raw SQL 'like', wildcards must be present and are not escaped",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} like ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+        }
+      );
+      addConnectionFilterOperator(
+        connectionFilterUsesShortNames ? "ilike" : "ilike",
+        "Raw SQL 'ilike', wildcards must be present and are not escaped",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} ilike ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
         }
       );
       return _;
