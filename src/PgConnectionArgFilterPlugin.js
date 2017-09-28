@@ -179,7 +179,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     input.map(
                       i =>
                         sql.query`${gql2pg(
-                          (inputResolver && inputResolver(i)) || input,
+                          (inputResolver && inputResolver(i)) || i,
                           attr.type
                         )}`
                     ),
