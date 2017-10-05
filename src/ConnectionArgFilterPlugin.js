@@ -28,13 +28,13 @@ module.exports = function ConnectionArgFilterPlugin(
           throw new Error("No filter operator name specified");
         }
         if (connectionFilterOperators[name]) {
-          throw new Error("There is already a filter operator with this name");
+          throw new Error("There is already a filter operator with the name '" + name + "'");
         }
         if (!resolveType) {
-          throw new Error("No filter operator type specified");
+          throw new Error("No filter operator type specified for '" + name + "'");
         }
         if (!resolveWhereClause) {
-          throw new Error("No filter operator where clause resolver specified");
+          throw new Error("No filter operator where clause resolver specified for '" + name + "'");
         }
         connectionFilterOperators[name] = {
           name,
