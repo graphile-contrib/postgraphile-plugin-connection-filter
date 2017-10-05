@@ -3315,7 +3315,7 @@ enum SimilarTable2SOrderBy {
 
 # A filter to be used against String fields. All fields are combined with a logical ‘and.’
 input StringFilter {
-  # Checks for strings containing this string.  Case sensitive.
+  # Checks for strings containing this value.  Case sensitive.
   contains: String
 
   # Checks for strings containing this value.  Case insensitive.
@@ -3324,10 +3324,10 @@ input StringFilter {
   # Checks for values not equal to this value, treating null like an ordinary value.
   distinctFrom: String
 
-  # Checks for strings ending with this string.  Case sensitive.
+  # Checks for strings ending with this value.  Case sensitive.
   endsWith: String
 
-  # Checks for strings ending with this string.  Case insensitive.
+  # Checks for strings ending with this value.  Case insensitive.
   endsWithInsensitive: String
 
   # Checks for values equal to this value.
@@ -3354,8 +3354,20 @@ input StringFilter {
   # Raw SQL 'ilike', wildcards must be present and are not escaped
   likeInsensitive: String
 
+  # Checks for strings that do not contain this value.  Case sensitive.
+  notContains: String
+
+  # Checks for strings that do not not contain this value.  Case insensitive.
+  notContainsInsensitive: String
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: String
+
+  # Checks for strings that do not end with this value.  Case sensitive.
+  notEndsWith: String
+
+  # Checks for strings that do not end with this value.  Case insensitive.
+  notEndsWithInsensitive: String
 
   # Checks for values not equal to this value.
   notEqualTo: String
@@ -3363,13 +3375,25 @@ input StringFilter {
   # Checks for values not in this list.
   notIn: [String!]
 
+  # Raw SQL 'not like', wildcards must be present and are not escaped
+  notLike: String
+
+  # Raw SQL 'not ilike', wildcards must be present and are not escaped
+  notLikeInsensitive: String
+
+  # Checks for strings that do not start with this value.  Case sensitive.
+  notStartsWith: String
+
+  # Checks for strings that do not start with this value.  Case insensitive.
+  notStartsWithInsensitive: String
+
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
 
-  # Checks for strings starting with this string.  Case sensitive.
+  # Checks for strings starting with this value.  Case sensitive.
   startsWith: String
 
-  # Checks for strings starting with this string.  Case insensitive.
+  # Checks for strings starting with this value.  Case insensitive.
   startsWithInsensitive: String
 }
 
