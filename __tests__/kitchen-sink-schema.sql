@@ -236,3 +236,9 @@ CREATE TABLE a.default_value (
     id serial primary key,
     null_value text DEFAULT 'defaultValue!'
 );
+
+create table a.filterable (
+  id serial primary key,
+  "string" text,
+  "int" int
+);

@@ -1,27 +1,27 @@
 query {
-  a: allPeople(filter: { about: { null: true } }) { ...personConnection }
-  b: allPeople(filter: { about: { null: false } }) { ...personConnection }
-  c: allPeople(filter: { about: { equalTo: "Just a friendly human" } }) { ...personConnection }
-  d: allPeople(filter: { about: { notEqualTo: "Just a friendly human" } }) { ...personConnection }
-  e: allPeople(filter: { about: { distinctFrom: "Just a friendly human" } }) { ...personConnection }
-  f: allPeople(filter: { about: { notDistinctFrom: "Just a friendly human" } }) { ...personConnection }
-  g: allPeople(filter: { id: { lessThan: 3 } }) { ...personConnection }
-  h: allPeople(filter: { id: { lessThanOrEqualTo: 3 } }) { ...personConnection }
-  i: allPeople(filter: { id: { greaterThan: 3 } }) { ...personConnection }
-  j: allPeople(filter: { id: { greaterThanOrEqualTo: 3 } }) { ...personConnection }
-  k: allPeople(filter: { id: { in: [3, 4] } }) { ...personConnection }
-  l: allPeople(filter: { id: { notIn: [3, 4] } }) { ...personConnection }
-  m: allPeople(filter: { name: { contains: "Seven" } }) { ...personConnection }
-  n: allPeople(filter: { name: { containsInsensitive: "seven" } }) { ...personConnection }
-  o: allPeople(filter: { name: { startsWith: "Joe" } }) { ...personConnection }
-  p: allPeople(filter: { name: { startsWithInsensitive: "joe" } }) { ...personConnection }
-  q: allPeople(filter: { name: { endsWith: "Smith" } }) { ...personConnection }
-  r: allPeople(filter: { name: { endsWithInsensitive: "smith" } }) { ...personConnection }
-  s: allPeople(filter: { name: { like: "J%Smith" } }) { ...personConnection }
-  t: allPeople(filter: { name: { likeInsensitive: "j%smith" } }) { ...personConnection }
+  string_null_true: allFilterables(filter: { string: { null: true } }) { ...filterableConnection }
+  string_null_false: allFilterables(filter: { string: { null: false } }) { ...filterableConnection }
+  string_equalTo_test: allFilterables(filter: { string: { equalTo: "test" } }) { ...filterableConnection }
+  string_notEqualTo_test: allFilterables(filter: { string: { notEqualTo: "test" } }) { ...filterableConnection }
+  string_distinctFrom_test: allFilterables(filter: { string: { distinctFrom: "test" } }) { ...filterableConnection }
+  string_notDistinctFrom_test: allFilterables(filter: { string: { notDistinctFrom: "test" } }) { ...filterableConnection }
+  int_lessThan_2: allFilterables(filter: { int: { lessThan: 2 } }) { ...filterableConnection }
+  int_lessThanOrEqualTo_2: allFilterables(filter: { int: { lessThanOrEqualTo: 2 } }) { ...filterableConnection }
+  int_greaterThan_2: allFilterables(filter: { int: { greaterThan: 2 } }) { ...filterableConnection }
+  int_greaterThanOrEqualTo_2: allFilterables(filter: { int: { greaterThanOrEqualTo: 2 } }) { ...filterableConnection }
+  int_in_2_3: allFilterables(filter: { int: { in: [2, 3] } }) { ...filterableConnection }
+  int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...filterableConnection }
+  string_contains_t: allFilterables(filter: { string: { contains: "t" } }) { ...filterableConnection }
+  string_containsInsensitive_t: allFilterables(filter: { string: { containsInsensitive: "t" } }) { ...filterableConnection }
+  string_startsWith_t: allFilterables(filter: { string: { startsWith: "t" } }) { ...filterableConnection }
+  string_startsWithInsensitive_t: allFilterables(filter: { string: { startsWithInsensitive: "t" } }) { ...filterableConnection }
+  string_endsWith_t: allFilterables(filter: { string: { endsWith: "t" } }) { ...filterableConnection }
+  string_endsWithInsensitive_t: allFilterables(filter: { string: { endsWithInsensitive: "t" } }) { ...filterableConnection }
+  string_like_es: allFilterables(filter: { string: { like: "%es%" } }) { ...filterableConnection }
+  string_likeInsensitive_es: allFilterables(filter: { string: { likeInsensitive: "%es%" } }) { ...filterableConnection }
 }
 
-fragment personConnection on PeopleConnection {
+fragment filterableConnection on FilterablesConnection {
   pageInfo {
     startCursor
     endCursor
@@ -33,8 +33,8 @@ fragment personConnection on PeopleConnection {
     cursor
     node {
       id
-      name
-      email
+      string
+      int
     }
   }
 }

@@ -599,331 +599,57 @@ Object {
 exports[`connections-filter.graphql 1`] = `
 Object {
   "data": Object {
-    "a": Object {
+    "int_greaterThanOrEqualTo_2": Object {
       "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
-            "email": "sara.smith@email.com",
             "id": 2,
-            "name": "Sara Smith",
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
-            "email": "kathryn.ramirez@email.com",
             "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
+            "int": 4,
+            "string": "test",
           },
         },
       ],
       "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 5,
-    },
-    "b": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 1,
-    },
-    "c": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 1,
-    },
-    "d": Object {
-      "edges": Array [],
-      "pageInfo": Object {
-        "endCursor": null,
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": null,
-      },
-      "totalCount": 0,
-    },
-    "e": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 5,
-    },
-    "f": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 1,
-    },
-    "g": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
-    },
-    "h": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
       },
       "totalCount": 3,
     },
-    "i": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-      },
-      "totalCount": 3,
-    },
-    "j": Object {
+    "int_greaterThan_2": Object {
       "edges": Array [
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
-            "email": "budd.deey@email.com",
             "id": 3,
-            "name": "Budd Deey",
+            "int": 3,
+            "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
-            "email": "kathryn.ramirez@email.com",
             "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 4,
-    },
-    "k": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
+            "int": 4,
+            "string": "test",
           },
         },
       ],
@@ -935,95 +661,491 @@ Object {
       },
       "totalCount": 2,
     },
-    "l": Object {
+    "int_in_2_3": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+      },
+      "totalCount": 2,
+    },
+    "int_lessThanOrEqualTo_2": Object {
       "edges": Array [
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
-            "email": "john.smith@email.com",
             "id": 1,
-            "name": "John Smith",
+            "int": 1,
+            "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
-            "email": "sara.smith@email.com",
             "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
+            "int": 2,
+            "string": "Test",
           },
         },
       ],
       "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 2,
+    },
+    "int_lessThan_2": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 1,
+    },
+    "int_notIn_2_3": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 2,
+    },
+    "string_containsInsensitive_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
       },
       "totalCount": 4,
     },
-    "m": Object {
+    "string_contains_t": Object {
       "edges": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
           },
         },
       ],
       "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
       },
-      "totalCount": 1,
+      "totalCount": 3,
     },
-    "n": Object {
+    "string_distinctFrom_test": Object {
       "edges": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+          "node": Object {
+            "id": 5,
+            "int": null,
+            "string": null,
           },
         },
       ],
       "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "string_endsWithInsensitive_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "string_endsWith_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+      },
+      "totalCount": 2,
+    },
+    "string_equalTo_test": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
       },
       "totalCount": 1,
     },
-    "o": Object {
+    "string_likeInsensitive_es": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "string_like_es": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+      },
+      "totalCount": 2,
+    },
+    "string_notDistinctFrom_test": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+      },
+      "totalCount": 1,
+    },
+    "string_notEqualTo_test": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 3,
+    },
+    "string_null_false": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "id": 1,
+            "int": 1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "string_null_true": Object {
       "edges": Array [
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
           "node": Object {
-            "email": "joe.tucker@email.com",
             "id": 5,
-            "name": "Joe Tucker",
+            "int": null,
+            "string": null,
           },
         },
       ],
@@ -1035,116 +1157,75 @@ Object {
       },
       "totalCount": 1,
     },
-    "p": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 1,
-    },
-    "q": Object {
+    "string_startsWithInsensitive_t": Object {
       "edges": Array [
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
-            "email": "john.smith@email.com",
             "id": 1,
-            "name": "John Smith",
+            "int": 1,
+            "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
-            "email": "sara.smith@email.com",
             "id": 2,
-            "name": "Sara Smith",
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
           },
         },
       ],
       "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "string_startsWith_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "id": 3,
+            "int": 3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
       },
       "totalCount": 2,
-    },
-    "r": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
-    },
-    "s": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 1,
-    },
-    "t": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 1,
     },
   },
 }
