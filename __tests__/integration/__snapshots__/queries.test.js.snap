@@ -599,6 +599,52 @@ Object {
 exports[`connections-filter.graphql 1`] = `
 Object {
   "data": Object {
+    "int_equalTo_2_and_string_endsWith_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+      },
+      "totalCount": 1,
+    },
+    "int_equalTo_2_or_string_endsWith_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "id": 2,
+            "int": 2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "id": 4,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+      },
+      "totalCount": 2,
+    },
     "int_greaterThanOrEqualTo_2": Object {
       "edges": Array [
         Object {

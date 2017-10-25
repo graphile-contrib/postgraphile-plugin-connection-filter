@@ -19,6 +19,8 @@ query {
   string_endsWithInsensitive_t: allFilterables(filter: { string: { endsWithInsensitive: "t" } }) { ...filterableConnection }
   string_like_es: allFilterables(filter: { string: { like: "%es%" } }) { ...filterableConnection }
   string_likeInsensitive_es: allFilterables(filter: { string: { likeInsensitive: "%es%" } }) { ...filterableConnection }
+  int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
+  int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
