@@ -18,8 +18,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         "null",
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
         () => GraphQLBoolean,
-        (identifier, val) =>
-          sql.query`${identifier} ${val
+        (identifier, val, input) =>
+          sql.query`${identifier} ${input
             ? sql.query`IS NULL`
             : sql.query`IS NOT NULL`}`
       );

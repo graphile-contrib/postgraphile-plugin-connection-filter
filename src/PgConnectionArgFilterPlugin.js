@@ -174,9 +174,6 @@ module.exports = function PgConnectionArgFilterPlugin(
               const identifier = sql.query`${queryBuilder.getTableAlias()}.${sql.identifier(
                 attr.name
               )}`;
-              if (typeof input === "boolean") {
-                return operator.resolveWhereClause(identifier, input);
-              }
               const val = Array.isArray(input)
                 ? sql.query`(${sql.join(
                     input.map(
@@ -192,7 +189,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     (inputResolver && inputResolver(input)) || input,
                     attr.type
                   )}`;
-              return operator.resolveWhereClause(identifier, val);
+              return operator.resolveWhereClause(identifier, val, input);
             }
 
             function resolveWhereLogic(obj) {
