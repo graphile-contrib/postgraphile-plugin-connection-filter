@@ -240,5 +240,8 @@ CREATE TABLE a.default_value (
 create table a.filterable (
   id serial primary key,
   "string" text,
-  "int" int
+  "int" int,
+  "real" real,
+  "numeric" numeric,
+  "boolean" boolean
 );

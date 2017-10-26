@@ -604,8 +604,11 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
@@ -623,16 +626,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -650,24 +659,33 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -685,16 +703,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -712,16 +736,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
@@ -739,16 +769,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
@@ -766,8 +802,11 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
@@ -785,16 +824,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -812,32 +857,44 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -855,24 +912,33 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -890,32 +956,44 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
           "node": Object {
+            "boolean": null,
             "id": 5,
             "int": null,
+            "numeric": null,
+            "real": null,
             "string": null,
           },
         },
@@ -933,32 +1011,44 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -976,16 +1066,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1003,8 +1099,11 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1022,32 +1121,44 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1065,16 +1176,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1092,8 +1209,11 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1111,24 +1231,33 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
@@ -1146,32 +1275,44 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1189,8 +1330,11 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
           "node": Object {
+            "boolean": null,
             "id": 5,
             "int": null,
+            "numeric": null,
+            "real": null,
             "string": null,
           },
         },
@@ -1208,32 +1352,44 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
           "node": Object {
+            "boolean": true,
             "id": 1,
             "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
             "string": "TEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
+            "boolean": true,
             "id": 2,
             "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
             "string": "Test",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },
@@ -1251,16 +1407,22 @@ Object {
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
           "node": Object {
+            "boolean": false,
             "id": 3,
             "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
             "string": "tEST",
           },
         },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
+            "boolean": false,
             "id": 4,
             "int": 4,
+            "numeric": 0.4,
+            "real": 0.4,
             "string": "test",
           },
         },

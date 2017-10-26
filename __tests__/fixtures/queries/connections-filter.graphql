@@ -37,6 +37,9 @@ fragment filterableConnection on FilterablesConnection {
       id
       string
       int
+      real
+      numeric
+      boolean
     }
   }
 }

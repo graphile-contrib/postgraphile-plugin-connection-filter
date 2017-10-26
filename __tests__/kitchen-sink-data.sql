@@ -88,9 +88,9 @@ insert into a.similar_table_2 (id, col4, col5, col3) values
 insert into a.default_value (id, null_value) values
   (1, 'someValue!');
 
-insert into a.filterable (id, string, int) values
-  (1, 'TEST', 1),
-  (2, 'Test', 2),
-  (3, 'tEST', 3),
-  (4, 'test', 4),
-  (5, null, null);
+insert into a.filterable (id, string, int, real, numeric, boolean) values
+  (1, 'TEST', 1, 0.1, 0.1, true),
+  (2, 'Test', 2, 0.2, 0.2, true),
+  (3, 'tEST', 3, 0.3, 0.3, false),
+  (4, 'test', 4, 0.4, 0.4, false),
+  (5, null, null, null, null, null);
