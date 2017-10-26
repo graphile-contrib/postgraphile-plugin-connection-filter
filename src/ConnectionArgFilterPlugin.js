@@ -28,13 +28,21 @@ module.exports = function ConnectionArgFilterPlugin(
           throw new Error("No filter operator name specified");
         }
         if (connectionFilterOperators[name]) {
-          throw new Error("There is already a filter operator with the name '" + name + "'");
+          throw new Error(
+            "There is already a filter operator with the name '" + name + "'"
+          );
         }
         if (!resolveType) {
-          throw new Error("No filter operator type specified for '" + name + "'");
+          throw new Error(
+            "No filter operator type specified for '" + name + "'"
+          );
         }
         if (!resolveWhereClause) {
-          throw new Error("No filter operator where clause resolver specified for '" + name + "'");
+          throw new Error(
+            "No filter operator where clause resolver specified for '" +
+              name +
+              "'"
+          );
         }
         connectionFilterOperators[name] = {
           name,
@@ -54,7 +62,11 @@ module.exports = function ConnectionArgFilterPlugin(
         if ("string" !== typeof val) {
           throw new Error("escapeLikeWildcards called on non-string value");
         } else {
-          return val.split("%").join("\\%").split("_").join("\\_");
+          return val
+            .split("%")
+            .join("\\%")
+            .split("_")
+            .join("\\_");
         }
       },
     });
