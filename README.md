@@ -3,7 +3,15 @@ These plugins add a new `filter:` argument to Connection types in PostGraphile v
 
 ## Disclaimer
 
-These plugins target the alpha release of PostGraphile.  Bug reports and pull requests are very much welcome.
+These plugins target the alpha releases of PostGraphile v4.  Bug reports and pull requests are very much welcome.
+
+## Compatibility
+
+PostGraphile 4.0.0-alpha2.20 and earlier requires a 1.0.0-alpha.0 version of this plugin.
+
+PostGraphile 4.0.0-alpha2.21 and later requires a 1.0.0-alpha.1 version of this plugin.
+
+See package.json for the version number.
 
 ## Usage
 
@@ -17,13 +25,13 @@ postgraphile --append-plugins `pwd`/path/to/this/plugin/index.js
 
 ``` js
 const express = require("express");
-const { postgraphql } = require("postgraphile");
+const { postgraphile } = require("postgraphile");
 const GraphileBuildPgContribConnectionFilter = require("./path/to/this/plugin/index.js");
 
 const app = express();
 
 app.use(
-  postgraphql(pgConfig, schema, {
+  postgraphile(pgConfig, schema, {
     graphiql: true,
     appendPlugins: [GraphileBuildPgContribConnectionFilter],
   })
@@ -32,14 +40,14 @@ app.use(
 app.listen(3000);
 ```
 
-The following options can be passed via `graphqlBuildOptions`:
+The following options can be passed via `graphileBuildOptions` (called `graphqlBuildOptions` in PostGraphile 4.0.0-alpha2.20 and earlier):
 
 #### connectionFilterUsesShortNames
 Use short names (e.g. eq, ne, lt, lte) for operators
 ``` js
-postgraphql(pgConfig, schema, {
+postgraphile(pgConfig, schema, {
   ...
-  graphqlBuildOptions: {
+  graphileBuildOptions: {
     connectionFilterUsesShortNames: true,
   },
 })
@@ -48,9 +56,9 @@ postgraphql(pgConfig, schema, {
 #### connectionFilterAllowedFieldTypes
 Restrict filters to specific field types
 ``` js
-postgraphql(pgConfig, schema, {
+postgraphile(pgConfig, schema, {
   ...
-  graphqlBuildOptions: {
+  graphileBuildOptions: {
     connectionFilterAllowedFieldTypes: ["String", "Int"],
   },
 })
@@ -61,7 +69,7 @@ To add/remove/modify individual operators, you can edit src/PgConnectionArgFilte
 ## Development
 
 To establish a test environment, create an empty Postgres database (e.g. `graphile-build-test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile-build-test`).  Ensure that `psql` is installed locally and then run:
-```
+``` bash
 npm install
 npm test
 ```

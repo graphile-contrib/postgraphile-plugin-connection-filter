@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-filter-plugins",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Filter plugins for PostGraphile",
   "main": "index.js",
   "scripts": {
@@ -19,13 +19,16 @@
   "devDependencies": {
     "eslint": "^4.6.1",
     "eslint-config-prettier": "^2.3.0",
-    "eslint-plugin-prettier": "^2.2.0",
+    "eslint-plugin-prettier": "^2.3.1",
     "jest": "^21.1.0",
     "pg": ">=6 <7",
-    "postgraphile": "^4.0.0-alpha2.20",
+    "postgraphile": "^4.0.0-alpha2.21",
     "prettier": "^1.6.1"
   },
   "jest": {
     "testRegex": "__tests__/.*\\.test\\.js$"
-  }
+  },
+  "files": [
+    "src"
+  ]
 }
