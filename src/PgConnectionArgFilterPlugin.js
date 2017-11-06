@@ -122,6 +122,16 @@ module.exports = function PgConnectionArgFilterPlugin(
                         isPgConnectionFilterOperatorLogical: true,
                       }
                     ),
+                    not: fieldWithHooks(
+                      "not",
+                      {
+                        description: `Negates the expression.`,
+                        type: getTypeByName(`${tableTypeName}Filter`),
+                      },
+                      {
+                        isPgConnectionFilterOperatorLogical: true,
+                      }
+                    ),
                   }
                 );
             },
@@ -215,6 +225,8 @@ module.exports = function PgConnectionArgFilterPlugin(
                       }),
                       ") and ("
                     )})`;
+                  } else if (key === "not") {
+                    return sql.query`NOT (${resolveWhereLogic(obj[key])})`;
                   } else {
                     return sql.query`(${sql.join(
                       Object.keys(obj[key]).map(k => {

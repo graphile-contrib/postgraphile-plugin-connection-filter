@@ -301,6 +301,9 @@ input CompoundKeyFilter {
   # Filter by the object’s \`extra\` field.
   extra: BooleanFilter
 
+  # Negates the expression.
+  not: CompoundKeyFilter
+
   # Checks for any expressions in this list.
   or: [CompoundKeyFilter!]
 
@@ -906,6 +909,9 @@ input DefaultValueFilter {
   # Filter by the object’s \`id\` field.
   id: IntFilter
 
+  # Negates the expression.
+  not: DefaultValueFilter
+
   # Filter by the object’s \`nullValue\` field.
   nullValue: StringFilter
 
@@ -1307,6 +1313,9 @@ input EdgeCaseFilter {
   # Checks for all expressions in this list.
   and: [EdgeCaseFilter!]
 
+  # Negates the expression.
+  not: EdgeCaseFilter
+
   # Filter by the object’s \`notNullHasDefault\` field.
   notNullHasDefault: BooleanFilter
 
@@ -1424,6 +1433,9 @@ input FilterableFilter {
 
   # Filter by the object’s \`int\` field.
   int: IntFilter
+
+  # Negates the expression.
+  not: FilterableFilter
 
   # Filter by the object’s \`numeric\` field.
   numeric: FloatFilter
@@ -1608,6 +1620,9 @@ input ForeignKeyFilter {
 
   # Filter by the object’s \`compoundKey2\` field.
   compoundKey2: IntFilter
+
+  # Negates the expression.
+  not: ForeignKeyFilter
 
   # Checks for any expressions in this list.
   or: [ForeignKeyFilter!]
@@ -2369,6 +2384,9 @@ input NonUpdatableViewFilter {
   # Filter by the object’s \`column\` field.
   column: IntFilter
 
+  # Negates the expression.
+  not: NonUpdatableViewFilter
+
   # Checks for any expressions in this list.
   or: [NonUpdatableViewFilter!]
 }
@@ -2667,6 +2685,9 @@ input PersonFilter {
   # Filter by the object’s \`name\` field.
   name: StringFilter
 
+  # Negates the expression.
+  not: PersonFilter
+
   # Checks for any expressions in this list.
   or: [PersonFilter!]
 }
@@ -2740,6 +2761,9 @@ input PostFilter {
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
+
+  # Negates the expression.
+  not: PostFilter
 
   # Checks for any expressions in this list.
   or: [PostFilter!]
@@ -3408,6 +3432,9 @@ input SimilarTable1Filter {
   # Filter by the object’s \`id\` field.
   id: IntFilter
 
+  # Negates the expression.
+  not: SimilarTable1Filter
+
   # Checks for any expressions in this list.
   or: [SimilarTable1Filter!]
 }
@@ -3509,6 +3536,9 @@ input SimilarTable2Filter {
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
+
+  # Negates the expression.
+  not: SimilarTable2Filter
 
   # Checks for any expressions in this list.
   or: [SimilarTable2Filter!]
@@ -3956,6 +3986,9 @@ input TypeFilter {
   # Filter by the object’s \`money\` field.
   money: FloatFilter
 
+  # Negates the expression.
+  not: TypeFilter
+
   # Filter by the object’s \`numeric\` field.
   numeric: FloatFilter
 
@@ -4192,6 +4225,9 @@ input UpdatableViewFilter {
 
   # Filter by the object’s \`name\` field.
   name: StringFilter
+
+  # Negates the expression.
+  not: UpdatableViewFilter
 
   # Checks for any expressions in this list.
   or: [UpdatableViewFilter!]

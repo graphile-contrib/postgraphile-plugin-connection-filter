@@ -27,6 +27,8 @@ query {
   boolean_notEqualTo_true: allFilterables(filter: { boolean: { notEqualTo: true } }) { ...filterableConnection }
   boolean_distinctFrom_true: allFilterables(filter: { boolean: { distinctFrom: true } }) { ...filterableConnection }
   boolean_notDistinctFrom_true: allFilterables(filter: { boolean: { notDistinctFrom: true } }) { ...filterableConnection }
+  not_string_equalTo_test: allFilterables(filter: { not: { string: { equalTo: "test" } } }) { ...filterableConnection }
+  not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...filterableConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
