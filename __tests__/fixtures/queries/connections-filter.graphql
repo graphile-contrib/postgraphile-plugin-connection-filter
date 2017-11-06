@@ -1,32 +1,24 @@
 query {
-  aa: allPeople(filter: { about: { null: true } }) { ...personConnection }
-  ab: allPeople(filter: { about: { null: false } }) { ...personConnection }
-  ac: allPeople(filter: { about: { equalTo: "Just a friendly human" } }) { ...personConnection }
-  ad: allPeople(filter: { about: { notEqualTo: "Just a friendly human" } }) { ...personConnection }
-  ae: allPeople(filter: { about: { distinctFrom: "Just a friendly human" } }) { ...personConnection }
-  af: allPeople(filter: { about: { notDistinctFrom: "Just a friendly human" } }) { ...personConnection }
-  ag: allPeople(filter: { id: { lessThan: 3 } }) { ...personConnection }
-  ah: allPeople(filter: { id: { lessThanOrEqualTo: 3 } }) { ...personConnection }
-  ai: allPeople(filter: { id: { greaterThan: 3 } }) { ...personConnection }
-  aj: allPeople(filter: { id: { greaterThanOrEqualTo: 3 } }) { ...personConnection }
-  ak: allPeople(filter: { id: { in: [3, 4] } }) { ...personConnection }
-  al: allPeople(filter: { id: { notIn: [3, 4] } }) { ...personConnection }
-  am: allPeople(filter: { name: { contains: "Seven" } }) { ...personConnection }
-  an: allPeople(filter: { name: { containsInsensitive: "seven" } }) { ...personConnection }
-  ao: allPeople(filter: { name: { startsWith: "Joe" } }) { ...personConnection }
-  ap: allPeople(filter: { name: { startsWithInsensitive: "joe" } }) { ...personConnection }
-  aq: allPeople(filter: { name: { endsWith: "Smith" } }) { ...personConnection }
-  ar: allPeople(filter: { name: { endsWithInsensitive: "smith" } }) { ...personConnection }
-  as: allPeople(filter: { name: { like: "J%Smith" } }) { ...personConnection }
-  at: allPeople(filter: { name: { likeInsensitive: "j%smith" } }) { ...personConnection }
-  au: allPeople(filter: { name: { notContains: "Smit"} }) { ...personConnection }
-  av: allPeople(filter: { name: { notContainsInsensitive: "smit"} }) { ...personConnection }
-  aw: allPeople(filter: { name: { notStartsWith: "Joe" } }) { ...personConnection }
-  ax: allPeople(filter: { name: { notStartsWithInsensitive: "joe" } }) { ...personConnection }
-  ay: allPeople(filter: { name: { notEndsWith: "Smith" } }) { ...personConnection }
-  az: allPeople(filter: { name: { notEndsWithInsensitive: "smith" } }) { ...personConnection }
-  ba: allPeople(filter: { name: { notLike: "J%Smith" } }) { ...personConnection }
-  bb: allPeople(filter: { name: { notLikeInsensitive: "j%smith" } }) { ...personConnection }
+  a: allPeople(filter: { about: { null: true } }) { ...personConnection }
+  b: allPeople(filter: { about: { null: false } }) { ...personConnection }
+  c: allPeople(filter: { about: { equalTo: "Just a friendly human" } }) { ...personConnection }
+  d: allPeople(filter: { about: { notEqualTo: "Just a friendly human" } }) { ...personConnection }
+  e: allPeople(filter: { about: { distinctFrom: "Just a friendly human" } }) { ...personConnection }
+  f: allPeople(filter: { about: { notDistinctFrom: "Just a friendly human" } }) { ...personConnection }
+  g: allPeople(filter: { id: { lessThan: 3 } }) { ...personConnection }
+  h: allPeople(filter: { id: { lessThanOrEqualTo: 3 } }) { ...personConnection }
+  i: allPeople(filter: { id: { greaterThan: 3 } }) { ...personConnection }
+  j: allPeople(filter: { id: { greaterThanOrEqualTo: 3 } }) { ...personConnection }
+  k: allPeople(filter: { id: { in: [3, 4] } }) { ...personConnection }
+  l: allPeople(filter: { id: { notIn: [3, 4] } }) { ...personConnection }
+  m: allPeople(filter: { name: { contains: "Seven" } }) { ...personConnection }
+  n: allPeople(filter: { name: { containsInsensitive: "seven" } }) { ...personConnection }
+  o: allPeople(filter: { name: { startsWith: "Joe" } }) { ...personConnection }
+  p: allPeople(filter: { name: { startsWithInsensitive: "joe" } }) { ...personConnection }
+  q: allPeople(filter: { name: { endsWith: "Smith" } }) { ...personConnection }
+  r: allPeople(filter: { name: { endsWithInsensitive: "smith" } }) { ...personConnection }
+  s: allPeople(filter: { name: { like: "J%Smith" } }) { ...personConnection }
+  t: allPeople(filter: { name: { likeInsensitive: "j%smith" } }) { ...personConnection }
 }
 
 fragment personConnection on PeopleConnection {
