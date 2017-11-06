@@ -1552,6 +1552,38 @@ Object {
       },
       "totalCount": 2,
     },
+    "string_notContainsInsensitive_t": Object {
+      "edges": Array [],
+      "pageInfo": Object {
+        "endCursor": null,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": null,
+      },
+      "totalCount": 0,
+    },
+    "string_notContains_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 1,
+    },
     "string_notDistinctFrom_test": Object {
       "edges": Array [
         Object {
@@ -1573,6 +1605,49 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
       },
       "totalCount": 1,
+    },
+    "string_notEndsWithInsensitive_t": Object {
+      "edges": Array [],
+      "pageInfo": Object {
+        "endCursor": null,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": null,
+      },
+      "totalCount": 0,
+    },
+    "string_notEndsWith_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 3,
+            "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
+            "string": "tEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 2,
     },
     "string_notEqualTo_test": Object {
       "edges": Array [
@@ -1617,6 +1692,92 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
       },
       "totalCount": 3,
+    },
+    "string_notLikeInsensitive_es": Object {
+      "edges": Array [],
+      "pageInfo": Object {
+        "endCursor": null,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": null,
+      },
+      "totalCount": 0,
+    },
+    "string_notLike_es": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 3,
+            "int": 3,
+            "numeric": 0.3,
+            "real": 0.3,
+            "string": "tEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 2,
+    },
+    "string_notStartsWithInsensitive_t": Object {
+      "edges": Array [],
+      "pageInfo": Object {
+        "endCursor": null,
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": null,
+      },
+      "totalCount": 0,
+    },
+    "string_notStartsWith_t": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": 0.1,
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 2,
+            "int": 2,
+            "numeric": 0.2,
+            "real": 0.2,
+            "string": "Test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 2,
     },
     "string_null_false": Object {
       "edges": Array [

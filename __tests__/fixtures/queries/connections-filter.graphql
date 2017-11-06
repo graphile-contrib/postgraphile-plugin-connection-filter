@@ -13,12 +13,20 @@ query {
   int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...filterableConnection }
   string_contains_t: allFilterables(filter: { string: { contains: "t" } }) { ...filterableConnection }
   string_containsInsensitive_t: allFilterables(filter: { string: { containsInsensitive: "t" } }) { ...filterableConnection }
+  string_notContains_t: allFilterables(filter: { string: { notContains: "t" } }) { ...filterableConnection }
+  string_notContainsInsensitive_t: allFilterables(filter: { string: { notContainsInsensitive: "t" } }) { ...filterableConnection }
   string_startsWith_t: allFilterables(filter: { string: { startsWith: "t" } }) { ...filterableConnection }
   string_startsWithInsensitive_t: allFilterables(filter: { string: { startsWithInsensitive: "t" } }) { ...filterableConnection }
+  string_notStartsWith_t: allFilterables(filter: { string: { notStartsWith: "t" } }) { ...filterableConnection }
+  string_notStartsWithInsensitive_t: allFilterables(filter: { string: { notStartsWithInsensitive: "t" } }) { ...filterableConnection }
   string_endsWith_t: allFilterables(filter: { string: { endsWith: "t" } }) { ...filterableConnection }
   string_endsWithInsensitive_t: allFilterables(filter: { string: { endsWithInsensitive: "t" } }) { ...filterableConnection }
+  string_notEndsWith_t: allFilterables(filter: { string: { notEndsWith: "t" } }) { ...filterableConnection }
+  string_notEndsWithInsensitive_t: allFilterables(filter: { string: { notEndsWithInsensitive: "t" } }) { ...filterableConnection }
   string_like_es: allFilterables(filter: { string: { like: "%es%" } }) { ...filterableConnection }
   string_likeInsensitive_es: allFilterables(filter: { string: { likeInsensitive: "%es%" } }) { ...filterableConnection }
+  string_notLike_es: allFilterables(filter: { string: { notLike: "%es%" } }) { ...filterableConnection }
+  string_notLikeInsensitive_es: allFilterables(filter: { string: { notLikeInsensitive: "%es%" } }) { ...filterableConnection }
   int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
   int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
   boolean_null_true: allFilterables(filter: { boolean: { null: true } }) { ...filterableConnection }
