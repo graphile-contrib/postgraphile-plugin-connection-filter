@@ -106,6 +106,12 @@ type Add4MutationPayload {
   query: Query
 }
 
+enum AnEnum {
+  AWAITING
+  PUBLISHED
+  REJECTED
+}
+
 scalar AnInt
 
 # A range of \`AnInt\`.
@@ -431,6 +437,17 @@ type CompoundTypesEdge {
   node: CompoundType!
 }
 
+type Comptype {
+  isOptimised: Boolean
+  schedule: Datetime
+}
+
+# An input for mutations affecting \`Comptype\`
+input ComptypeInput {
+  isOptimised: Boolean
+  schedule: Datetime
+}
+
 # All input for the create \`CompoundKey\` mutation.
 input CreateCompoundKeyInput {
   # An arbitrary string value with no semantic meaning. Will be included in the
@@ -707,6 +724,35 @@ type CreateSimilarTable2Payload {
   ): SimilarTable2SEdge
 }
 
+# All input for the create \`Testview\` mutation.
+input CreateTestviewInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+
+  # The \`Testview\` to be created by this mutation.
+  testview: TestviewInput!
+}
+
+# The output of our create \`Testview\` mutation.
+type CreateTestviewPayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+
+  # The \`Testview\` that was created by this mutation.
+  testview: Testview
+
+  # An edge for the type. May be used by Relay 1.
+  testviewEdge(
+    # The method to use when ordering \`Testview\`.
+    orderBy: TestviewsOrderBy = NATURAL
+  ): TestviewsEdge
+}
+
 # All input for the create \`Type\` mutation.
 input CreateTypeInput {
   # An arbitrary string value with no semantic meaning. Will be included in the
@@ -763,6 +809,35 @@ type CreateUpdatableViewPayload {
     # The method to use when ordering \`UpdatableView\`.
     orderBy: UpdatableViewsOrderBy = NATURAL
   ): UpdatableViewsEdge
+}
+
+# All input for the create \`ViewTable\` mutation.
+input CreateViewTableInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+
+  # The \`ViewTable\` to be created by this mutation.
+  viewTable: ViewTableInput!
+}
+
+# The output of our create \`ViewTable\` mutation.
+type CreateViewTablePayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+
+  # The \`ViewTable\` that was created by this mutation.
+  viewTable: ViewTable
+
+  # An edge for the type. May be used by Relay 1.
+  viewTableEdge(
+    # The method to use when ordering \`ViewTable\`.
+    orderBy: ViewTablesOrderBy = PRIMARY_KEY_ASC
+  ): ViewTablesEdge
 }
 
 # A location in a connection that can be used for resuming pagination.
@@ -1288,6 +1363,44 @@ type DeleteTypePayload {
   ): TypesEdge
 }
 
+# All input for the \`deleteViewTableById\` mutation.
+input DeleteViewTableByIdInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  id: Int!
+}
+
+# All input for the \`deleteViewTable\` mutation.
+input DeleteViewTableInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+
+  # The globally unique \`ID\` which will identify a single \`ViewTable\` to be deleted.
+  nodeId: ID!
+}
+
+# The output of our delete \`ViewTable\` mutation.
+type DeleteViewTablePayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  deletedViewTableId: ID
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+
+  # The \`ViewTable\` that was deleted by this mutation.
+  viewTable: ViewTable
+
+  # An edge for the type. May be used by Relay 1.
+  viewTableEdge(
+    # The method to use when ordering \`ViewTable\`.
+    orderBy: ViewTablesOrderBy = PRIMARY_KEY_ASC
+  ): ViewTablesEdge
+}
+
 type EdgeCase {
   computed: String
   notNullHasDefault: Boolean!
@@ -1393,7 +1506,7 @@ type Filterable implements Node {
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
-  numeric: Float
+  numeric: String
   real: Float
   string: String
 }
@@ -1411,7 +1524,7 @@ input FilterableCondition {
   int: Int
 
   # Checks for equality with the object’s \`numeric\` field.
-  numeric: Float
+  numeric: String
 
   # Checks for equality with the object’s \`real\` field.
   real: Float
@@ -1438,7 +1551,7 @@ input FilterableFilter {
   not: FilterableFilter
 
   # Filter by the object’s \`numeric\` field.
-  numeric: FloatFilter
+  numeric: StringFilter
 
   # Checks for any expressions in this list.
   or: [FilterableFilter!]
@@ -1455,7 +1568,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
-  numeric: Float
+  numeric: String
   real: Float
   string: String
 }
@@ -1465,7 +1578,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
-  numeric: Float
+  numeric: String
   real: Float
   string: String
 }
@@ -1547,24 +1660,6 @@ input FloatFilter {
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
-}
-
-# A range of \`Float\`.
-type FloatRange {
-  # The ending bound of our range.
-  end: FloatRangeBound
-
-  # The starting bound of our range.
-  start: FloatRangeBound
-}
-
-# The value at one end of a range. A range can either include this value, or not.
-type FloatRangeBound {
-  # Whether or not the value of this bound is included in the range.
-  inclusive: Boolean!
-
-  # The value at one end of our range.
-  value: Float!
 }
 
 # The value at one end of a range. A range can either include this value, or not.
@@ -1818,6 +1913,65 @@ type IntSetQueryEdge {
 # A JavaScript object encoded in the JSON format as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 scalar JSON
 
+# All input for the \`jsonbIdentityMutation\` mutation.
+input JsonbIdentityMutationInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  json: JSON
+}
+
+# The output of our \`jsonbIdentityMutation\` mutation.
+type JsonbIdentityMutationPayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  json: JSON
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the \`jsonbIdentityMutationPlpgsql\` mutation.
+input JsonbIdentityMutationPlpgsqlInput {
+  _theJson: JSON!
+
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+}
+
+# The output of our \`jsonbIdentityMutationPlpgsql\` mutation.
+type JsonbIdentityMutationPlpgsqlPayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  json: JSON
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the \`jsonbIdentityMutationPlpgsqlWithDefault\` mutation.
+input JsonbIdentityMutationPlpgsqlWithDefaultInput {
+  _theJson: JSON
+
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+}
+
+# The output of our \`jsonbIdentityMutationPlpgsqlWithDefault\` mutation.
+type JsonbIdentityMutationPlpgsqlWithDefaultPayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  json: JSON
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
 # A filter to be used against JSON fields. All fields are combined with a logical ‘and.’
 input JSONFilter {
   # Checks for values not equal to this value, treating null like an ordinary value.
@@ -2055,6 +2209,12 @@ type Mutation {
     input: CreateSimilarTable2Input!
   ): CreateSimilarTable2Payload
 
+  # Creates a single \`Testview\`.
+  createTestview(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: CreateTestviewInput!
+  ): CreateTestviewPayload
+
   # Creates a single \`Type\`.
   createType(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
@@ -2066,6 +2226,12 @@ type Mutation {
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: CreateUpdatableViewInput!
   ): CreateUpdatableViewPayload
+
+  # Creates a single \`ViewTable\`.
+  createViewTable(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: CreateViewTableInput!
+  ): CreateViewTablePayload
 
   # Deletes a single \`CompoundKey\` using its globally unique id.
   deleteCompoundKey(
@@ -2168,6 +2334,18 @@ type Mutation {
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: DeleteTypeByIdInput!
   ): DeleteTypePayload
+
+  # Deletes a single \`ViewTable\` using its globally unique id.
+  deleteViewTable(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: DeleteViewTableInput!
+  ): DeleteViewTablePayload
+
+  # Deletes a single \`ViewTable\` using a unique key.
+  deleteViewTableById(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: DeleteViewTableByIdInput!
+  ): DeleteViewTablePayload
   guidFn(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: GuidFnInput!
@@ -2180,6 +2358,18 @@ type Mutation {
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: JsonIdentityMutationInput!
   ): JsonIdentityMutationPayload
+  jsonbIdentityMutation(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: JsonbIdentityMutationInput!
+  ): JsonbIdentityMutationPayload
+  jsonbIdentityMutationPlpgsql(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: JsonbIdentityMutationPlpgsqlInput!
+  ): JsonbIdentityMutationPlpgsqlPayload
+  jsonbIdentityMutationPlpgsqlWithDefault(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: JsonbIdentityMutationPlpgsqlWithDefaultInput!
+  ): JsonbIdentityMutationPlpgsqlWithDefaultPayload
   mult1(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: Mult1Input!
@@ -2204,6 +2394,12 @@ type Mutation {
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: NormalRandInput!
   ): NormalRandPayload
+
+  # Reads and enables pagination through a set of \`Post\`.
+  postMany(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: PostManyInput!
+  ): PostManyPayload
   returnVoidMutation(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: ReturnVoidMutationInput!
@@ -2326,6 +2522,18 @@ type Mutation {
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: UpdateTypeByIdInput!
   ): UpdateTypePayload
+
+  # Updates a single \`ViewTable\` using its globally unique id and a patch.
+  updateViewTable(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: UpdateViewTableInput!
+  ): UpdateViewTablePayload
+
+  # Updates a single \`ViewTable\` using a unique key and a patch.
+  updateViewTableById(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: UpdateViewTableByIdInput!
+  ): UpdateViewTablePayload
 }
 
 type NestedCompoundType {
@@ -2444,6 +2652,8 @@ type NormalRandPayload {
   query: Query
 }
 
+scalar NotNullUrl
+
 # Information about pagination in a connection.
 type PageInfo {
   # When paginating forwards, the cursor to continue.
@@ -2498,6 +2708,8 @@ enum PeopleOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+  SITE_ASC
+  SITE_DESC
 }
 
 # Person test comment
@@ -2648,6 +2860,7 @@ type Person implements Node {
     # The method to use when ordering \`Post\`.
     orderBy: PostsOrderBy = PRIMARY_KEY_ASC
   ): PostsConnection!
+  site: WrappedUrl
 }
 
 # A condition to be used against \`Person\` object types. All fields are tested for equality and combined with a logical ‘and.’
@@ -2666,6 +2879,9 @@ input PersonCondition {
 
   # Checks for equality with the object’s \`name\` field.
   name: String
+
+  # Checks for equality with the object’s \`site\` field.
+  site: WrappedUrlInput
 }
 
 # A filter to be used against \`Person\` object types. All fields are combined with a logical ‘and.’
@@ -2701,6 +2917,7 @@ input PersonInput {
 
   # The person’s name
   name: String!
+  site: WrappedUrlInput
 }
 
 # Represents an update to a \`Person\`. Fields that are set will be updated.
@@ -2712,11 +2929,14 @@ input PersonPatch {
 
   # The person’s name
   name: String
+  site: WrappedUrlInput
 }
 
 type Post implements Node {
   authorId: Int
   body: String
+  comptypes: [Comptype]
+  enums: [AnEnum]
   headline: String!
   headlineTrimmed(length: Int, omission: String): String
   headlineTrimmedNoDefaults(length: Int, omission: String): String
@@ -2737,6 +2957,12 @@ input PostCondition {
 
   # Checks for equality with the object’s \`body\` field.
   body: String
+
+  # Checks for equality with the object’s \`comptypes\` field.
+  comptypes: [ComptypeInput]
+
+  # Checks for equality with the object’s \`enums\` field.
+  enums: [AnEnum]
 
   # Checks for equality with the object’s \`headline\` field.
   headline: String
@@ -2773,14 +2999,46 @@ input PostFilter {
 input PostInput {
   authorId: Int
   body: String
+  comptypes: [ComptypeInput]
+  enums: [AnEnum]
   headline: String!
   id: Int
+}
+
+# All input for the \`postMany\` mutation.
+input PostManyInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  posts: [PostInput]
+}
+
+# The output of our \`postMany\` mutation.
+type PostManyPayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Reads a single \`Person\` that is related to this \`Post\`.
+  personByAuthorId: Person
+
+  # An edge for the type. May be used by Relay 1.
+  postEdge(
+    # The method to use when ordering \`Post\`.
+    orderBy: PostsOrderBy = PRIMARY_KEY_ASC
+  ): PostsEdge
+  posts: [Post]
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
 }
 
 # Represents an update to a \`Post\`. Fields that are set will be updated.
 input PostPatch {
   authorId: Int
   body: String
+  comptypes: [ComptypeInput]
+  enums: [AnEnum]
   headline: String
   id: Int
 }
@@ -2815,6 +3073,10 @@ enum PostsOrderBy {
   AUTHOR_ID_DESC
   BODY_ASC
   BODY_DESC
+  COMPTYPES_ASC
+  COMPTYPES_DESC
+  ENUMS_ASC
+  ENUMS_DESC
   HEADLINE_ASC
   HEADLINE_DESC
   ID_ASC
@@ -3118,6 +3380,34 @@ type Query implements Node {
     orderBy: SimilarTable2SOrderBy = PRIMARY_KEY_ASC
   ): SimilarTable2SConnection
 
+  # Reads and enables pagination through a set of \`Testview\`.
+  allTestviews(
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: TestviewCondition
+
+    # A filter to be used in determining which values should be returned by the collection.
+    filter: TestviewFilter
+
+    # Only read the first \`n\` values of the set.
+    first: Int
+
+    # Only read the last \`n\` values of the set.
+    last: Int
+
+    # Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    # based pagination. May not be used with \`last\`.
+    offset: Int
+
+    # The method to use when ordering \`Testview\`.
+    orderBy: TestviewsOrderBy = NATURAL
+  ): TestviewsConnection
+
   # Reads and enables pagination through a set of \`Type\`.
   allTypes(
     # Read all values in the set after (below) this cursor.
@@ -3173,6 +3463,34 @@ type Query implements Node {
     # The method to use when ordering \`UpdatableView\`.
     orderBy: UpdatableViewsOrderBy = NATURAL
   ): UpdatableViewsConnection
+
+  # Reads and enables pagination through a set of \`ViewTable\`.
+  allViewTables(
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ViewTableCondition
+
+    # A filter to be used in determining which values should be returned by the collection.
+    filter: ViewTableFilter
+
+    # Only read the first \`n\` values of the set.
+    first: Int
+
+    # Only read the last \`n\` values of the set.
+    last: Int
+
+    # Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    # based pagination. May not be used with \`last\`.
+    offset: Int
+
+    # The method to use when ordering \`ViewTable\`.
+    orderBy: ViewTablesOrderBy = PRIMARY_KEY_ASC
+  ): ViewTablesConnection
 
   # Reads a single \`CompoundKey\` using its globally unique \`ID\`.
   compoundKey(
@@ -3297,6 +3615,7 @@ type Query implements Node {
     z: Int
   ): IntSetQueryConnection!
   jsonIdentity(json: JSON): JSON
+  jsonbIdentity(json: JSON): JSON
   noArgsQuery: Int
 
   # Fetches an object given its globally unique \`ID\`.
@@ -3307,6 +3626,11 @@ type Query implements Node {
 
   # The root query type must be a \`Node\` to work well with Relay 1 mutations. This just resolves to \`query\`.
   nodeId: ID!
+  optionalMissingMiddle1(arg0: Int!, b: Int, c: Int): Int
+  optionalMissingMiddle2(a: Int!, b: Int, c: Int): Int
+  optionalMissingMiddle3(a: Int!, arg1: Int, c: Int): Int
+  optionalMissingMiddle4(arg0: Int!, arg2: Int, b: Int): Int
+  optionalMissingMiddle5(a: Int!, arg1: Int, arg2: Int): Int
 
   # Reads a single \`Person\` using its globally unique \`ID\`.
   person(
@@ -3370,6 +3694,13 @@ type Query implements Node {
   ): Type
   typeById(id: Int!): Type
   typesQuery(a: BigInt!, b: Boolean!, c: String!, d: [Int]!, e: JSON!, f: FloatRangeInput!): Boolean
+
+  # Reads a single \`ViewTable\` using its globally unique \`ID\`.
+  viewTable(
+    # The globally unique \`ID\` to be used in selecting a single \`ViewTable\`.
+    nodeId: ID!
+  ): ViewTable
+  viewTableById(id: Int!): ViewTable
 }
 
 # All input for the \`returnVoidMutation\` mutation.
@@ -3683,6 +4014,42 @@ input StringFilter {
   startsWithInsensitive: String
 }
 
+# A range of \`String\`.
+type StringRange {
+  # The ending bound of our range.
+  end: StringRangeBound
+
+  # The starting bound of our range.
+  start: StringRangeBound
+}
+
+# The value at one end of a range. A range can either include this value, or not.
+type StringRangeBound {
+  # Whether or not the value of this bound is included in the range.
+  inclusive: Boolean!
+
+  # The value at one end of our range.
+  value: String!
+}
+
+# The value at one end of a range. A range can either include this value, or not.
+input StringRangeBoundInput {
+  # Whether or not the value of this bound is included in the range.
+  inclusive: Boolean!
+
+  # The value at one end of our range.
+  value: String!
+}
+
+# A range of \`String\`.
+input StringRangeInput {
+  # The ending bound of our range.
+  end: StringRangeBoundInput
+
+  # The starting bound of our range.
+  start: StringRangeBoundInput
+}
+
 type TablefuncCrosstab2 {
   category1: String
   category2: String
@@ -3828,6 +4195,88 @@ type TableSetMutationPayload {
   query: Query
 }
 
+type Testview {
+  col1: Int
+  col2: Int
+  testviewid: Int
+}
+
+# A condition to be used against \`Testview\` object types. All fields are tested
+# for equality and combined with a logical ‘and.’
+input TestviewCondition {
+  # Checks for equality with the object’s \`col1\` field.
+  col1: Int
+
+  # Checks for equality with the object’s \`col2\` field.
+  col2: Int
+
+  # Checks for equality with the object’s \`testviewid\` field.
+  testviewid: Int
+}
+
+# A filter to be used against \`Testview\` object types. All fields are combined with a logical ‘and.’
+input TestviewFilter {
+  # Checks for all expressions in this list.
+  and: [TestviewFilter!]
+
+  # Filter by the object’s \`col1\` field.
+  col1: IntFilter
+
+  # Filter by the object’s \`col2\` field.
+  col2: IntFilter
+
+  # Negates the expression.
+  not: TestviewFilter
+
+  # Checks for any expressions in this list.
+  or: [TestviewFilter!]
+
+  # Filter by the object’s \`testviewid\` field.
+  testviewid: IntFilter
+}
+
+# An input for mutations affecting \`Testview\`
+input TestviewInput {
+  col1: Int
+  col2: Int
+  testviewid: Int
+}
+
+# A connection to a list of \`Testview\` values.
+type TestviewsConnection {
+  # A list of edges which contains the \`Testview\` and cursor to aid in pagination.
+  edges: [TestviewsEdge!]!
+
+  # A list of \`Testview\` objects.
+  nodes: [Testview]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* \`Testview\` you could get from the connection.
+  totalCount: Int
+}
+
+# A \`Testview\` edge in the connection.
+type TestviewsEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The \`Testview\` at the end of the edge.
+  node: Testview!
+}
+
+# Methods to use when ordering \`Testview\`.
+enum TestviewsOrderBy {
+  COL1_ASC
+  COL1_DESC
+  COL2_ASC
+  COL2_DESC
+  NATURAL
+  TESTVIEWID_ASC
+  TESTVIEWID_DESC
+}
+
 # The exact time of day, does not include the date. May or may not have a timezone offset.
 scalar Time
 
@@ -3874,7 +4323,7 @@ type Type implements Node {
   compoundType: CompoundType!
   date: Date!
   daterange: DateRange!
-  decimal: Float!
+  decimal: String!
   domain: AnInt!
   domain2: AnotherInt!
   enum: Color!
@@ -3888,9 +4337,9 @@ type Type implements Node {
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
-  nullableRange: FloatRange
-  numeric: Float!
-  numrange: FloatRange!
+  nullableRange: StringRange
+  numeric: String!
+  numrange: StringRange!
   smallint: Int!
   textArray: [String]!
   time: Time!
@@ -3921,7 +4370,7 @@ input TypeCondition {
   daterange: DateRangeInput
 
   # Checks for equality with the object’s \`decimal\` field.
-  decimal: Float
+  decimal: String
 
   # Checks for equality with the object’s \`domain\` field.
   domain: AnInt
@@ -3954,13 +4403,13 @@ input TypeCondition {
   nestedCompoundType: NestedCompoundTypeInput
 
   # Checks for equality with the object’s \`nullableRange\` field.
-  nullableRange: FloatRangeInput
+  nullableRange: StringRangeInput
 
   # Checks for equality with the object’s \`numeric\` field.
-  numeric: Float
+  numeric: String
 
   # Checks for equality with the object’s \`numrange\` field.
-  numrange: FloatRangeInput
+  numrange: StringRangeInput
 
   # Checks for equality with the object’s \`smallint\` field.
   smallint: Int
@@ -3996,7 +4445,7 @@ input TypeFilter {
   date: DateFilter
 
   # Filter by the object’s \`decimal\` field.
-  decimal: FloatFilter
+  decimal: StringFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
@@ -4014,7 +4463,7 @@ input TypeFilter {
   not: TypeFilter
 
   # Filter by the object’s \`numeric\` field.
-  numeric: FloatFilter
+  numeric: StringFilter
 
   # Checks for any expressions in this list.
   or: [TypeFilter!]
@@ -4046,7 +4495,7 @@ input TypeInput {
   compoundType: CompoundTypeInput!
   date: Date!
   daterange: DateRangeInput!
-  decimal: Float!
+  decimal: String!
   domain: AnInt!
   domain2: AnotherInt!
   enum: Color!
@@ -4057,9 +4506,9 @@ input TypeInput {
   jsonb: JSON!
   money: Float!
   nestedCompoundType: NestedCompoundTypeInput!
-  nullableRange: FloatRangeInput
-  numeric: Float!
-  numrange: FloatRangeInput!
+  nullableRange: StringRangeInput
+  numeric: String!
+  numrange: StringRangeInput!
   smallint: Int!
   textArray: [String]!
   time: Time!
@@ -4077,7 +4526,7 @@ input TypePatch {
   compoundType: CompoundTypeInput
   date: Date
   daterange: DateRangeInput
-  decimal: Float
+  decimal: String
   domain: AnInt
   domain2: AnotherInt
   enum: Color
@@ -4088,9 +4537,9 @@ input TypePatch {
   jsonb: JSON
   money: Float
   nestedCompoundType: NestedCompoundTypeInput
-  nullableRange: FloatRangeInput
-  numeric: Float
-  numrange: FloatRangeInput
+  nullableRange: StringRangeInput
+  numeric: String
+  numrange: StringRangeInput
   smallint: Int
   textArray: [String]
   time: Time
@@ -4671,7 +5120,153 @@ type UpdateTypePayload {
   ): TypesEdge
 }
 
+# All input for the \`updateViewTableById\` mutation.
+input UpdateViewTableByIdInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  id: Int!
+
+  # An object where the defined keys will be set on the \`ViewTable\` being updated.
+  viewTablePatch: ViewTablePatch!
+}
+
+# All input for the \`updateViewTable\` mutation.
+input UpdateViewTableInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+
+  # The globally unique \`ID\` which will identify a single \`ViewTable\` to be updated.
+  nodeId: ID!
+
+  # An object where the defined keys will be set on the \`ViewTable\` being updated.
+  viewTablePatch: ViewTablePatch!
+}
+
+# The output of our update \`ViewTable\` mutation.
+type UpdateViewTablePayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+
+  # The \`ViewTable\` that was updated by this mutation.
+  viewTable: ViewTable
+
+  # An edge for the type. May be used by Relay 1.
+  viewTableEdge(
+    # The method to use when ordering \`ViewTable\`.
+    orderBy: ViewTablesOrderBy = PRIMARY_KEY_ASC
+  ): ViewTablesEdge
+}
+
 # A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122).
 scalar UUID
+
+type ViewTable implements Node {
+  col1: Int
+  col2: Int
+  id: Int!
+
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+}
+
+# A condition to be used against \`ViewTable\` object types. All fields are tested
+# for equality and combined with a logical ‘and.’
+input ViewTableCondition {
+  # Checks for equality with the object’s \`col1\` field.
+  col1: Int
+
+  # Checks for equality with the object’s \`col2\` field.
+  col2: Int
+
+  # Checks for equality with the object’s \`id\` field.
+  id: Int
+}
+
+# A filter to be used against \`ViewTable\` object types. All fields are combined with a logical ‘and.’
+input ViewTableFilter {
+  # Checks for all expressions in this list.
+  and: [ViewTableFilter!]
+
+  # Filter by the object’s \`col1\` field.
+  col1: IntFilter
+
+  # Filter by the object’s \`col2\` field.
+  col2: IntFilter
+
+  # Filter by the object’s \`id\` field.
+  id: IntFilter
+
+  # Negates the expression.
+  not: ViewTableFilter
+
+  # Checks for any expressions in this list.
+  or: [ViewTableFilter!]
+}
+
+# An input for mutations affecting \`ViewTable\`
+input ViewTableInput {
+  col1: Int
+  col2: Int
+  id: Int
+}
+
+# Represents an update to a \`ViewTable\`. Fields that are set will be updated.
+input ViewTablePatch {
+  col1: Int
+  col2: Int
+  id: Int
+}
+
+# A connection to a list of \`ViewTable\` values.
+type ViewTablesConnection {
+  # A list of edges which contains the \`ViewTable\` and cursor to aid in pagination.
+  edges: [ViewTablesEdge!]!
+
+  # A list of \`ViewTable\` objects.
+  nodes: [ViewTable]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* \`ViewTable\` you could get from the connection.
+  totalCount: Int
+}
+
+# A \`ViewTable\` edge in the connection.
+type ViewTablesEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The \`ViewTable\` at the end of the edge.
+  node: ViewTable!
+}
+
+# Methods to use when ordering \`ViewTable\`.
+enum ViewTablesOrderBy {
+  COL1_ASC
+  COL1_DESC
+  COL2_ASC
+  COL2_DESC
+  ID_ASC
+  ID_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type WrappedUrl {
+  url: NotNullUrl!
+}
+
+# An input for mutations affecting \`WrappedUrl\`
+input WrappedUrlInput {
+  url: NotNullUrl!
+}
 "
 `;

@@ -88,6 +88,11 @@ insert into a.similar_table_2 (id, col4, col5, col3) values
 insert into a.default_value (id, null_value) values
   (1, 'someValue!');
 
+insert into a.view_table (id, col1, col2) values
+  (1, 11, 21),
+  (2, 12, 22),
+  (3, 13, 23);
+
 insert into a.filterable (id, string, int, real, numeric, boolean) values
   (1, 'TEST', 1, 0.1, 0.1, true),
   (2, 'Test', 2, 0.2, 0.2, true),

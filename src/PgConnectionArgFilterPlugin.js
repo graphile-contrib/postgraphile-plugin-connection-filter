@@ -159,11 +159,11 @@ module.exports = function PgConnectionArgFilterPlugin(
         connectionFilterOperators,
       },
       {
-        scope: { isPgConnectionField, pgIntrospection: table },
+        scope: { isPgFieldConnection, pgFieldIntrospection: table },
         addArgDataGenerator,
       }
     ) => {
-      if (!isPgConnectionField || !table || table.kind !== "class") {
+      if (!isPgFieldConnection || !table || table.kind !== "class") {
         return args;
       }
 

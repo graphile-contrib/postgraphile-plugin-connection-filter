@@ -1,7 +1,7 @@
 {
-  "name": "postgraphile-filter-plugins",
-  "version": "1.0.0-alpha.1",
-  "description": "Filter plugins for PostGraphile",
+  "name": "postgraphile-plugin-connection-filter",
+  "version": "1.0.0-alpha.2",
+  "description": "Advanced filtering of Connections in PostGraphile",
   "main": "index.js",
   "scripts": {
     "test": "scripts/test"
@@ -16,13 +16,16 @@
     "url": "https://github.com/mattbretl/postgraphile-filter-plugins/issues"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "postgraphile": "4.0.0-alpha2.26"
+  },
   "devDependencies": {
     "eslint": "^4.6.1",
     "eslint-config-prettier": "^2.3.0",
     "eslint-plugin-prettier": "^2.3.1",
     "jest": "^21.1.0",
     "pg": ">=6 <7",
-    "postgraphile": "^4.0.0-alpha2.21",
+    "postgraphile": "4.0.0-alpha2.26",
     "prettier": "^1.6.1"
   },
   "jest": {

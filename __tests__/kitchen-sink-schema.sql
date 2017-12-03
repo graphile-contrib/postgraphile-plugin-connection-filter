@@ -12,6 +12,10 @@ create extension tablefunc with schema a;
 comment on schema a is 'The a schema.';
 comment on schema b is 'qwerty';
 
+create domain b.not_null_url as character varying(2048) not null;
+create type b.wrapped_url as (
+  url b.not_null_url
+);
 create domain b.email as text
   check (value ~* '^.+@.+\..+$');
 
@@ -20,8 +24,12 @@ create table c.person (
   name varchar not null,
   about text,
   email b.email not null unique,
+  site b.wrapped_url default null,
   created_at timestamp default current_timestamp
 );
+
+-- This should not add a query to the schema
+create unique index uniq_person__email_id_3 on c.person (email) where (id = 3);
 
 comment on table c.person is 'Person test comment';
 comment on column c.person.name is 'The person’s name';
@@ -29,6 +37,13 @@ comment on column c.person.name is 'The person’s name';
 create function c.person_exists(person c.person, email b.email) returns boolean as $$
 select exists(select 1 from c.person where person.email = person_exists.email);
 $$ language sql stable;
+
+create type a.an_enum as enum('awaiting', 'rejected', 'published');
+
+create type a.comptype as (
+  schedule timestamptz,
+  is_optimised boolean
+);
 
 create domain b.guid
   as character varying(15)
@@ -43,8 +58,13 @@ create table a.post (
   id serial primary key,
   headline text not null,
   body text,
-  author_id int4 references c.person(id)
+  author_id int4 references c.person(id),
+  enums a.an_enum[],
+  comptypes a.comptype[]
 );
+
+-- This should not add a query to the schema
+create unique index uniq_post__headline_author_3 on a.post (headline) where (author_id = 3);
 
 create type a.letter as enum ('a', 'b', 'c', 'd');
 create type b.color as enum ('red', 'green', 'blue');
@@ -66,6 +86,8 @@ create type b.nested_compound_type as (
   b c.compound_type,
   baz_buz int
 );
+
+create type c.floatrange as range (subtype = float8, subtype_diff = float8mi);
 
 comment on type c.compound_type is 'Awesome feature!';
 
@@ -167,6 +189,12 @@ create function a.add_2_query(a int, b int default 2) returns int as $$ select $
 create function a.add_3_query(a int, int) returns int as $$ select $1 + $2 $$ language sql immutable;
 create function a.add_4_query(int, b int default 2) returns int as $$ select $1 + $2 $$ language sql stable;
 
+create function a.optional_missing_middle_1(int, b int default 2, c int default 3) returns int as $$ select $1 + $2 + $3 $$ language sql immutable strict;
+create function a.optional_missing_middle_2(a int, b int default 2, c int default 3) returns int as $$ select $1 + $2 + $3 $$ language sql immutable strict;
+create function a.optional_missing_middle_3(a int, int default 2, c int default 3) returns int as $$ select $1 + $2 + $3 $$ language sql immutable strict;
+create function a.optional_missing_middle_4(int, b int default 2, int default 3) returns int as $$ select $1 + $2 + $3 $$ language sql immutable strict;
+create function a.optional_missing_middle_5(a int, int default 2, int default 3) returns int as $$ select $1 + $2 + $3 $$ language sql immutable strict;
+
 comment on function a.add_1_mutation(int, int) is 'lol, add some stuff 1 mutation';
 comment on function a.add_2_mutation(int, int) is 'lol, add some stuff 2 mutation';
 comment on function a.add_3_mutation(int, int) is 'lol, add some stuff 3 mutation';
@@ -183,8 +211,12 @@ create function b.mult_4(int, int) returns int as $$ select $1 * $2 $$ language 
 
 create function c.json_identity(json json) returns json as $$ select json $$ language sql immutable;
 create function c.json_identity_mutation(json json) returns json as $$ select json $$ language sql;
-create function c.types_query(a bigint, b boolean, c varchar, d integer[], e json, f numrange) returns boolean as $$ select false $$ language sql stable strict;
-create function c.types_mutation(a bigint, b boolean, c varchar, d integer[], e json, f numrange) returns boolean as $$ select false $$ language sql strict;
+create function c.jsonb_identity(json jsonb) returns jsonb as $$ select json $$ language sql immutable;
+create function c.jsonb_identity_mutation(json jsonb) returns jsonb as $$ select json $$ language sql;
+create function c.jsonb_identity_mutation_plpgsql(_the_json jsonb) returns jsonb as $$ declare begin return _the_json; end; $$ language plpgsql strict security definer;
+create function c.jsonb_identity_mutation_plpgsql_with_default(_the_json jsonb default '[]') returns jsonb as $$ declare begin return _the_json; end; $$ language plpgsql strict security definer;
+create function c.types_query(a bigint, b boolean, c varchar, d integer[], e json, f c.floatrange) returns boolean as $$ select false $$ language sql stable strict;
+create function c.types_mutation(a bigint, b boolean, c varchar, d integer[], e json, f c.floatrange) returns boolean as $$ select false $$ language sql strict;
 create function b.compound_type_query(object c.compound_type) returns c.compound_type as $$ select (object.a + 1, object.b, object.c, object.d, object.e, object.f, object.foo_bar)::c.compound_type $$ language sql stable;
 create function c.compound_type_set_query() returns setof c.compound_type as $$ select (1, '2', 'blue', null, '0_BAR', '', 7)::c.compound_type $$ language sql stable;
 create function b.compound_type_mutation(object c.compound_type) returns c.compound_type as $$ select (object.a + 1, object.b, object.c, object.d, object.e, object.f, object.foo_bar)::c.compound_type $$ language sql;
@@ -205,6 +237,7 @@ create function c.compound_type_computed_field(compound_type c.compound_type) re
 create function a.post_headline_trimmed(post a.post, length int default 10, omission text default '…') returns text as $$ select substr(post.headline, 0, length) || omission $$ language sql stable;
 create function a.post_headline_trimmed_strict(post a.post, length int default 10, omission text default '…') returns text as $$ select substr(post.headline, 0, length) || omission $$ language sql stable strict;
 create function a.post_headline_trimmed_no_defaults(post a.post, length int, omission text) returns text as $$ select substr(post.headline, 0, length) || omission $$ language sql stable;
+create function a.post_many(posts a.post[]) returns setof a.post as $$ declare current_post a.post; begin foreach current_post in array posts loop return next current_post; end loop; end; $$ language plpgsql;
 
 create type b.jwt_token as (
   role text,
@@ -236,6 +269,16 @@ CREATE TABLE a.default_value (
     id serial primary key,
     null_value text DEFAULT 'defaultValue!'
 );
+
+create table a.view_table (
+  id serial primary key,
+  col1 int,
+  col2 int
+);
+
+create view a.testview as
+  select id as testviewid, col1, col2
+  from a.view_table;
 
 create table a.filterable (
   id serial primary key,

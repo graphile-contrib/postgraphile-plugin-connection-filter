@@ -1,5 +1,5 @@
-# postgraphile-filter-plugins
-These plugins add a new `filter:` argument to Connection types in PostGraphile v4.  No changes are made to the existing `condition:` argument.
+# postgraphile-plugin-connection-filter
+This plugin adds a `filter:` argument to Connection types in PostGraphile v4.
 
 ## Disclaimer
 
@@ -7,11 +7,11 @@ These plugins target the alpha releases of PostGraphile v4.  Bug reports and pul
 
 ## Compatibility
 
-PostGraphile 4.0.0-alpha2.20 and earlier requires a 1.0.0-alpha.0 version of this plugin.
+PostGraphile `4.0.0-alpha2.20` and earlier requires a `1.0.0-alpha.0` version of this plugin.
 
-PostGraphile 4.0.0-alpha2.21 and later requires a 1.0.0-alpha.1 version of this plugin.
+PostGraphile `4.0.0-alpha2.21` through 4.0.0-alpha2.25 requires a `1.0.0-alpha.1` version of this plugin.
 
-See package.json for the version number.
+PostGraphile `4.0.0-alpha2.26` and later requires a `1.0.0-alpha.2` version of this plugin.
 
 ## Usage
 
@@ -26,14 +26,14 @@ postgraphile --append-plugins `pwd`/path/to/this/plugin/index.js
 ``` js
 const express = require("express");
 const { postgraphile } = require("postgraphile");
-const GraphileBuildPgContribConnectionFilter = require("./path/to/this/plugin/index.js");
+const PostGraphileConnectionFilterPlugin = require("./path/to/this/plugin/index.js");
 
 const app = express();
 
 app.use(
   postgraphile(pgConfig, schema, {
     graphiql: true,
-    appendPlugins: [GraphileBuildPgContribConnectionFilter],
+    appendPlugins: [PostGraphileConnectionFilterPlugin],
   })
 );
 
@@ -68,7 +68,7 @@ To add/remove/modify individual operators, you can edit src/PgConnectionArgFilte
 
 ## Development
 
-To establish a test environment, create an empty Postgres database (e.g. `graphile-build-test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile-build-test`).  Ensure that `psql` is installed locally and then run:
+To establish a test environment, create an empty Postgres database (e.g. `graphile_build_test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile_build_test`).  Ensure that `psql` is installed locally and then run:
 ``` bash
 npm install
 npm test
