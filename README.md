@@ -9,7 +9,7 @@ These plugins target the alpha releases of PostGraphile v4.  Bug reports and pul
 
 PostGraphile `4.0.0-alpha2.20` and earlier requires a `1.0.0-alpha.0` version of this plugin.
 
-PostGraphile `4.0.0-alpha2.21` through 4.0.0-alpha2.25 requires a `1.0.0-alpha.1` version of this plugin.
+PostGraphile `4.0.0-alpha2.21` through `4.0.0-alpha2.25` requires a `1.0.0-alpha.1` version of this plugin.
 
 PostGraphile `4.0.0-alpha2.26` and later requires a `1.0.0-alpha.2` version of this plugin.
 
@@ -26,7 +26,7 @@ postgraphile --append-plugins `pwd`/path/to/this/plugin/index.js
 ``` js
 const express = require("express");
 const { postgraphile } = require("postgraphile");
-const PostGraphileConnectionFilterPlugin = require("./path/to/this/plugin/index.js");
+const PostGraphileConnectionFilterPlugin = require("postgraphile-plugin-connection-filter");
 
 const app = express();
 
