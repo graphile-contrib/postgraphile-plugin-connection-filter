@@ -114,6 +114,30 @@ enum AnEnum {
 
 scalar AnInt
 
+# A filter to be used against AnInt fields. All fields are combined with a logical ‘and.’
+input AnIntFilter {
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: AnInt
+
+  # Checks for values equal to this value.
+  equalTo: AnInt
+
+  # Checks for values in this list.
+  in: [AnInt!]
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: AnInt
+
+  # Checks for values not equal to this value.
+  notEqualTo: AnInt
+
+  # Checks for values not in this list.
+  notIn: [AnInt!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
+}
+
 # A range of \`AnInt\`.
 type AnIntRange {
   # The ending bound of our range.
@@ -151,6 +175,30 @@ input AnIntRangeInput {
 }
 
 scalar AnotherInt
+
+# A filter to be used against AnotherInt fields. All fields are combined with a logical ‘and.’
+input AnotherIntFilter {
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: AnotherInt
+
+  # Checks for values equal to this value.
+  equalTo: AnotherInt
+
+  # Checks for values in this list.
+  in: [AnotherInt!]
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: AnotherInt
+
+  # Checks for values not equal to this value.
+  notEqualTo: AnotherInt
+
+  # Checks for values not in this list.
+  notIn: [AnotherInt!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
+}
 
 # All input for the \`authenticateFail\` mutation.
 input AuthenticateFailInput {
@@ -219,6 +267,30 @@ type AuthenticatePayload {
 # strings and not numbers.
 scalar BigInt
 
+# A filter to be used against BigInt fields. All fields are combined with a logical ‘and.’
+input BigIntFilter {
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: BigInt
+
+  # Checks for values equal to this value.
+  equalTo: BigInt
+
+  # Checks for values in this list.
+  in: [BigInt!]
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: BigInt
+
+  # Checks for values not equal to this value.
+  notEqualTo: BigInt
+
+  # Checks for values not in this list.
+  notIn: [BigInt!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
+}
+
 # A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’
 input BooleanFilter {
   # Checks for values not equal to this value, treating null like an ordinary value.
@@ -227,11 +299,17 @@ input BooleanFilter {
   # Checks for values equal to this value.
   equalTo: Boolean
 
+  # Checks for values in this list.
+  in: [Boolean!]
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Boolean
 
   # Checks for values not equal to this value.
   notEqualTo: Boolean
+
+  # Checks for values not in this list.
+  notIn: [Boolean!]
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
@@ -241,6 +319,30 @@ enum Color {
   BLUE
   GREEN
   RED
+}
+
+# A filter to be used against Color fields. All fields are combined with a logical ‘and.’
+input ColorFilter {
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: Color
+
+  # Checks for values equal to this value.
+  equalTo: Color
+
+  # Checks for values in this list.
+  in: [Color!]
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: Color
+
+  # Checks for values not equal to this value.
+  notEqualTo: Color
+
+  # Checks for values not in this list.
+  notIn: [Color!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
 }
 
 type CompoundKey implements Node {
@@ -1486,6 +1588,30 @@ enum EdgeCasesOrderBy {
 
 scalar Email
 
+# A filter to be used against Email fields. All fields are combined with a logical ‘and.’
+input EmailFilter {
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: Email
+
+  # Checks for values equal to this value.
+  equalTo: Email
+
+  # Checks for values in this list.
+  in: [Email!]
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: Email
+
+  # Checks for values not equal to this value.
+  notEqualTo: Email
+
+  # Checks for values not in this list.
+  notIn: [Email!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
+}
+
 enum EnumCaps {
   _0_BAR
   BAR_FOO
@@ -1980,11 +2106,17 @@ input JSONFilter {
   # Checks for values equal to this value.
   equalTo: JSON
 
+  # Checks for values in this list.
+  in: [JSON!]
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: JSON
 
   # Checks for values not equal to this value.
   notEqualTo: JSON
+
+  # Checks for values not in this list.
+  notIn: [JSON!]
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
@@ -2894,6 +3026,9 @@ input PersonFilter {
 
   # Filter by the object’s \`createdAt\` field.
   createdAt: DatetimeFilter
+
+  # Filter by the object’s \`email\` field.
+  email: EmailFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
@@ -4438,6 +4573,9 @@ input TypeFilter {
   # Checks for all expressions in this list.
   and: [TypeFilter!]
 
+  # Filter by the object’s \`bigint\` field.
+  bigint: BigIntFilter
+
   # Filter by the object’s \`boolean\` field.
   boolean: BooleanFilter
 
@@ -4446,6 +4584,15 @@ input TypeFilter {
 
   # Filter by the object’s \`decimal\` field.
   decimal: StringFilter
+
+  # Filter by the object’s \`domain\` field.
+  domain: AnIntFilter
+
+  # Filter by the object’s \`domain2\` field.
+  domain2: AnotherIntFilter
+
+  # Filter by the object’s \`enum\` field.
+  enum: ColorFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter

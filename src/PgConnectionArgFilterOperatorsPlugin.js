@@ -134,16 +134,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           new GraphQLList(new GraphQLNonNull(getTypeByName(typeName))),
         (identifier, val) => {
           return sql.query`${identifier} IN ${val}`;
-        },
-        {
-          allowedFieldTypes: [
-            "String",
-            "Int",
-            "Float",
-            "Datetime",
-            "Date",
-            "Time",
-          ],
         }
       );
       addConnectionFilterOperator(
@@ -153,16 +143,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           new GraphQLList(new GraphQLNonNull(getTypeByName(typeName))),
         (identifier, val) => {
           return sql.query`${identifier} NOT IN ${val}`;
-        },
-        {
-          allowedFieldTypes: [
-            "String",
-            "Int",
-            "Float",
-            "Datetime",
-            "Date",
-            "Time",
-          ],
         }
       );
       addConnectionFilterOperator(
