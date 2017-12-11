@@ -1,17 +1,6 @@
 module.exports = function ConnectionArgFilterPlugin(
   builder,
-  {
-    connectionFilterAllowedFieldTypes = [
-      "String",
-      "Int",
-      "Float",
-      "Boolean",
-      "Datetime",
-      "Date",
-      "Time",
-      "JSON",
-    ],
-  } = {}
+  { connectionFilterAllowedFieldTypes } = {}
 ) {
   builder.hook("build", build => {
     const connectionFilterOperators = {};

@@ -15,38 +15,12 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLString,
         GraphQLList,
         GraphQLNonNull,
+        GraphQLScalarType,
+        GraphQLEnumType,
       },
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
     } = build;
-    // Add *Filter type for each allowed field type
-    connectionFilterAllowedFieldTypes.forEach(typeName => {
-      newWithHooks(
-        GraphQLInputObjectType,
-        {
-          name: `${typeName}Filter`,
-          description: `A filter to be used against ${typeName} fields. All fields are combined with a logical ‘and.’`,
-          fields: ({ fieldWithHooks }) =>
-            Object.keys(
-              connectionFilterOperators
-            ).reduce((memo, operatorName) => {
-              const operator = connectionFilterOperators[operatorName];
-              const allowedFieldTypes = operator.options.allowedFieldTypes;
-              if (!allowedFieldTypes || allowedFieldTypes.includes(typeName)) {
-                memo[operatorName] = fieldWithHooks(operatorName, {
-                  description: operator.description,
-                  type: operator.resolveType(typeName),
-                });
-              }
-              return memo;
-            }, {}),
-        },
-        {
-          isConnectionFilterType: true,
-          connectionFilterType: getTypeByName(typeName),
-        }
-      );
-    });
 
     // Add *Filter type for each Connection type
     introspectionResultsByKind.class
@@ -76,9 +50,59 @@ module.exports = function PgConnectionArgFilterPlugin(
                     );
                     const fieldType =
                       pgGetGqlInputTypeByTypeId(attr.typeId) || GraphQLString;
-                    const fieldFilterType = getTypeByName(
-                      `${fieldType.name}Filter`
-                    );
+                    if (
+                      !(
+                        fieldType instanceof GraphQLScalarType ||
+                        fieldType instanceof GraphQLEnumType
+                      ) ||
+                      !fieldType.name
+                    ) {
+                      return memo;
+                    }
+                    const fieldTypeName = fieldType.name;
+                    // Check whether this field type is filterable
+                    if (
+                      connectionFilterAllowedFieldTypes &&
+                      !connectionFilterAllowedFieldTypes.includes(fieldTypeName)
+                    ) {
+                      return memo;
+                    }
+                    const fieldFilterTypeName = `${fieldTypeName}Filter`;
+                    // If field filter type does not exist yet, create it
+                    if (!getTypeByName(fieldFilterTypeName)) {
+                      newWithHooks(
+                        GraphQLInputObjectType,
+                        {
+                          name: fieldFilterTypeName,
+                          description: `A filter to be used against ${fieldTypeName} fields. All fields are combined with a logical ‘and.’`,
+                          fields: ({ fieldWithHooks }) =>
+                            Object.keys(
+                              connectionFilterOperators
+                            ).reduce((memo, operatorName) => {
+                              const operator =
+                                connectionFilterOperators[operatorName];
+                              const allowedFieldTypes =
+                                operator.options.allowedFieldTypes;
+                              if (
+                                !allowedFieldTypes ||
+                                allowedFieldTypes.includes(fieldTypeName)
+                              ) {
+                                memo[
+                                  operatorName
+                                ] = fieldWithHooks(operatorName, {
+                                  description: operator.description,
+                                  type: operator.resolveType(fieldTypeName),
+                                });
+                              }
+                              return memo;
+                            }, {}),
+                        },
+                        {
+                          isPgConnectionFilterFilter: true,
+                        }
+                      );
+                    }
+                    const fieldFilterType = getTypeByName(fieldFilterTypeName);
                     if (fieldFilterType != null) {
                       memo[fieldName] = fieldWithHooks(
                         fieldName,
