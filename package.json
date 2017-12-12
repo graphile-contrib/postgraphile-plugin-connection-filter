@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mattbretl/postgraphile-filter-plugins.git"
+    "url": "git+https://github.com/mattbretl/postgraphile-plugin-connection-filter.git"
   },
   "author": "Matt Bretl",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mattbretl/postgraphile-filter-plugins/issues"
+    "url": "https://github.com/mattbretl/postgraphile-plugin-connection-filter/issues"
   },
   "dependencies": {},
   "peerDependencies": {
