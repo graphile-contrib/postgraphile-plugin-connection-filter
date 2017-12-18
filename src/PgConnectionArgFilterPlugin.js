@@ -76,26 +76,28 @@ module.exports = function PgConnectionArgFilterPlugin(
                           name: fieldFilterTypeName,
                           description: `A filter to be used against ${fieldTypeName} fields. All fields are combined with a logical ‘and.’`,
                           fields: ({ fieldWithHooks }) =>
-                            Object.keys(
-                              connectionFilterOperators
-                            ).reduce((memo, operatorName) => {
-                              const operator =
-                                connectionFilterOperators[operatorName];
-                              const allowedFieldTypes =
-                                operator.options.allowedFieldTypes;
-                              if (
-                                !allowedFieldTypes ||
-                                allowedFieldTypes.includes(fieldTypeName)
-                              ) {
-                                memo[
-                                  operatorName
-                                ] = fieldWithHooks(operatorName, {
-                                  description: operator.description,
-                                  type: operator.resolveType(fieldTypeName),
-                                });
-                              }
-                              return memo;
-                            }, {}),
+                            Object.keys(connectionFilterOperators).reduce(
+                              (memo, operatorName) => {
+                                const operator =
+                                  connectionFilterOperators[operatorName];
+                                const allowedFieldTypes =
+                                  operator.options.allowedFieldTypes;
+                                if (
+                                  !allowedFieldTypes ||
+                                  allowedFieldTypes.includes(fieldTypeName)
+                                ) {
+                                  memo[operatorName] = fieldWithHooks(
+                                    operatorName,
+                                    {
+                                      description: operator.description,
+                                      type: operator.resolveType(fieldTypeName),
+                                    }
+                                  );
+                                }
+                                return memo;
+                              },
+                              {}
+                            ),
                         },
                         {
                           isPgConnectionFilterFilter: true,

@@ -19,9 +19,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
         () => GraphQLBoolean,
         (identifier, val, input) =>
-          sql.query`${identifier} ${input
-            ? sql.query`IS NULL`
-            : sql.query`IS NOT NULL`}`
+          sql.query`${identifier} ${
+            input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`
       );
       addConnectionFilterOperator(
         connectionFilterUsesShortNames ? "eq" : "equalTo",
@@ -230,7 +230,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nstartsi" : "notStartsWithInsensitive",
+        connectionFilterUsesShortNames
+          ? "nstartsi"
+          : "notStartsWithInsensitive",
         "Checks for strings that do not start with this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
