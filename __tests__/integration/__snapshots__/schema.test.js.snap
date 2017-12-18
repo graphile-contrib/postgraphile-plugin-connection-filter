@@ -262,6 +262,69 @@ type AuthenticatePayload {
   query: Query
 }
 
+# A floating point number that requires more precision than IEEE 754 binary 64
+scalar BigFloat
+
+# A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’
+input BigFloatFilter {
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: BigFloat
+
+  # Checks for values equal to this value.
+  equalTo: BigFloat
+
+  # Checks for values in this list.
+  in: [BigFloat!]
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: BigFloat
+
+  # Checks for values not equal to this value.
+  notEqualTo: BigFloat
+
+  # Checks for values not in this list.
+  notIn: [BigFloat!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
+}
+
+# A range of \`BigFloat\`.
+type BigFloatRange {
+  # The ending bound of our range.
+  end: BigFloatRangeBound
+
+  # The starting bound of our range.
+  start: BigFloatRangeBound
+}
+
+# The value at one end of a range. A range can either include this value, or not.
+type BigFloatRangeBound {
+  # Whether or not the value of this bound is included in the range.
+  inclusive: Boolean!
+
+  # The value at one end of our range.
+  value: BigFloat!
+}
+
+# The value at one end of a range. A range can either include this value, or not.
+input BigFloatRangeBoundInput {
+  # Whether or not the value of this bound is included in the range.
+  inclusive: Boolean!
+
+  # The value at one end of our range.
+  value: BigFloat!
+}
+
+# A range of \`BigFloat\`.
+input BigFloatRangeInput {
+  # The ending bound of our range.
+  end: BigFloatRangeBoundInput
+
+  # The starting bound of our range.
+  start: BigFloatRangeBoundInput
+}
+
 # A signed eight-byte integer. The upper big integer values are greater then the
 # max value for a JavaScript number. Therefore all big integers will be output as
 # strings and not numbers.
@@ -373,7 +436,7 @@ type CompoundKey implements Node {
     offset: Int
 
     # The method to use when ordering \`ForeignKey\`.
-    orderBy: ForeignKeysOrderBy = NATURAL
+    orderBy: [ForeignKeysOrderBy!] = [NATURAL]
   ): ForeignKeysConnection!
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -1632,7 +1695,7 @@ type Filterable implements Node {
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
-  numeric: String
+  numeric: BigFloat
   real: Float
   string: String
 }
@@ -1650,7 +1713,7 @@ input FilterableCondition {
   int: Int
 
   # Checks for equality with the object’s \`numeric\` field.
-  numeric: String
+  numeric: BigFloat
 
   # Checks for equality with the object’s \`real\` field.
   real: Float
@@ -1677,7 +1740,7 @@ input FilterableFilter {
   not: FilterableFilter
 
   # Filter by the object’s \`numeric\` field.
-  numeric: StringFilter
+  numeric: BigFloatFilter
 
   # Checks for any expressions in this list.
   or: [FilterableFilter!]
@@ -1694,7 +1757,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
-  numeric: String
+  numeric: BigFloat
   real: Float
   string: String
 }
@@ -1704,7 +1767,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
-  numeric: String
+  numeric: BigFloat
   real: Float
   string: String
 }
@@ -2532,6 +2595,12 @@ type Mutation {
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: PostManyInput!
   ): PostManyPayload
+
+  # Reads and enables pagination through a set of \`Post\`.
+  postWithSuffix(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: PostWithSuffixInput!
+  ): PostWithSuffixPayload
   returnVoidMutation(
     # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     input: ReturnVoidMutationInput!
@@ -2829,6 +2898,8 @@ type PeopleEdge {
 enum PeopleOrderBy {
   ABOUT_ASC
   ABOUT_DESC
+  ALIASES_ASC
+  ALIASES_DESC
   CREATED_AT_ASC
   CREATED_AT_DESC
   EMAIL_ASC
@@ -2847,6 +2918,7 @@ enum PeopleOrderBy {
 # Person test comment
 type Person implements Node {
   about: String
+  aliases: [String]!
 
   # Reads and enables pagination through a set of \`CompoundKey\`.
   compoundKeysByPersonId1(
@@ -2873,7 +2945,7 @@ type Person implements Node {
     offset: Int
 
     # The method to use when ordering \`CompoundKey\`.
-    orderBy: CompoundKeysOrderBy = PRIMARY_KEY_ASC
+    orderBy: [CompoundKeysOrderBy!] = [PRIMARY_KEY_ASC]
   ): CompoundKeysConnection!
 
   # Reads and enables pagination through a set of \`CompoundKey\`.
@@ -2901,7 +2973,7 @@ type Person implements Node {
     offset: Int
 
     # The method to use when ordering \`CompoundKey\`.
-    orderBy: CompoundKeysOrderBy = PRIMARY_KEY_ASC
+    orderBy: [CompoundKeysOrderBy!] = [PRIMARY_KEY_ASC]
   ): CompoundKeysConnection!
   createdAt: Datetime
   email: Email!
@@ -2936,7 +3008,7 @@ type Person implements Node {
     offset: Int
 
     # The method to use when ordering \`ForeignKey\`.
-    orderBy: ForeignKeysOrderBy = NATURAL
+    orderBy: [ForeignKeysOrderBy!] = [NATURAL]
   ): ForeignKeysConnection!
 
   # Reads and enables pagination through a set of \`Person\`.
@@ -2990,15 +3062,18 @@ type Person implements Node {
     offset: Int
 
     # The method to use when ordering \`Post\`.
-    orderBy: PostsOrderBy = PRIMARY_KEY_ASC
+    orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
   ): PostsConnection!
-  site: WrappedUrl
+  site: WrappedUrl @deprecated(reason: \\"Don’t use me\\")
 }
 
 # A condition to be used against \`Person\` object types. All fields are tested for equality and combined with a logical ‘and.’
 input PersonCondition {
   # Checks for equality with the object’s \`about\` field.
   about: String
+
+  # Checks for equality with the object’s \`aliases\` field.
+  aliases: [String]
 
   # Checks for equality with the object’s \`createdAt\` field.
   createdAt: Datetime
@@ -3046,6 +3121,7 @@ input PersonFilter {
 # An input for mutations affecting \`Person\`
 input PersonInput {
   about: String
+  aliases: [String]
   createdAt: Datetime
   email: Email!
   id: Int
@@ -3058,6 +3134,7 @@ input PersonInput {
 # Represents an update to a \`Person\`. Fields that are set will be updated.
 input PersonPatch {
   about: String
+  aliases: [String]
   createdAt: Datetime
   email: Email
   id: Int
@@ -3065,6 +3142,16 @@ input PersonPatch {
   # The person’s name
   name: String
   site: WrappedUrlInput
+}
+
+type Point {
+  x: Float!
+  y: Float!
+}
+
+input PointInput {
+  x: Float!
+  y: Float!
 }
 
 type Post implements Node {
@@ -3221,6 +3308,35 @@ enum PostsOrderBy {
   PRIMARY_KEY_DESC
 }
 
+# All input for the \`postWithSuffix\` mutation.
+input PostWithSuffixInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  post: PostInput
+  suffix: String
+}
+
+# The output of our \`postWithSuffix\` mutation.
+type PostWithSuffixPayload {
+  # The exact same \`clientMutationId\` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Reads a single \`Person\` that is related to this \`Post\`.
+  personByAuthorId: Person
+  post: Post
+
+  # An edge for the type. May be used by Relay 1.
+  postEdge(
+    # The method to use when ordering \`Post\`.
+    orderBy: PostsOrderBy = PRIMARY_KEY_ASC
+  ): PostsEdge
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
 # The root query type which gives access points into the data universe.
 type Query implements Node {
   # lol, add some stuff 1 query
@@ -3260,7 +3376,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`CompoundKey\`.
-    orderBy: CompoundKeysOrderBy = PRIMARY_KEY_ASC
+    orderBy: [CompoundKeysOrderBy!] = [PRIMARY_KEY_ASC]
   ): CompoundKeysConnection
 
   # Reads and enables pagination through a set of \`DefaultValue\`.
@@ -3288,7 +3404,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`DefaultValue\`.
-    orderBy: DefaultValuesOrderBy = PRIMARY_KEY_ASC
+    orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
   ): DefaultValuesConnection
 
   # Reads and enables pagination through a set of \`EdgeCase\`.
@@ -3316,7 +3432,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`EdgeCase\`.
-    orderBy: EdgeCasesOrderBy = NATURAL
+    orderBy: [EdgeCasesOrderBy!] = [NATURAL]
   ): EdgeCasesConnection
 
   # Reads and enables pagination through a set of \`Filterable\`.
@@ -3344,7 +3460,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`Filterable\`.
-    orderBy: FilterablesOrderBy = PRIMARY_KEY_ASC
+    orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): FilterablesConnection
 
   # Reads and enables pagination through a set of \`ForeignKey\`.
@@ -3372,7 +3488,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`ForeignKey\`.
-    orderBy: ForeignKeysOrderBy = NATURAL
+    orderBy: [ForeignKeysOrderBy!] = [NATURAL]
   ): ForeignKeysConnection
 
   # Reads and enables pagination through a set of \`NonUpdatableView\`.
@@ -3400,7 +3516,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`NonUpdatableView\`.
-    orderBy: NonUpdatableViewsOrderBy = NATURAL
+    orderBy: [NonUpdatableViewsOrderBy!] = [NATURAL]
   ): NonUpdatableViewsConnection
 
   # Reads and enables pagination through a set of \`Person\`.
@@ -3428,7 +3544,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`Person\`.
-    orderBy: PeopleOrderBy = PRIMARY_KEY_ASC
+    orderBy: [PeopleOrderBy!] = [PRIMARY_KEY_ASC]
   ): PeopleConnection
 
   # Reads and enables pagination through a set of \`Post\`.
@@ -3456,7 +3572,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`Post\`.
-    orderBy: PostsOrderBy = PRIMARY_KEY_ASC
+    orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
   ): PostsConnection
 
   # Reads and enables pagination through a set of \`SimilarTable1\`.
@@ -3484,7 +3600,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`SimilarTable1\`.
-    orderBy: SimilarTable1SOrderBy = PRIMARY_KEY_ASC
+    orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
   ): SimilarTable1SConnection
 
   # Reads and enables pagination through a set of \`SimilarTable2\`.
@@ -3512,7 +3628,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`SimilarTable2\`.
-    orderBy: SimilarTable2SOrderBy = PRIMARY_KEY_ASC
+    orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
   ): SimilarTable2SConnection
 
   # Reads and enables pagination through a set of \`Testview\`.
@@ -3540,7 +3656,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`Testview\`.
-    orderBy: TestviewsOrderBy = NATURAL
+    orderBy: [TestviewsOrderBy!] = [NATURAL]
   ): TestviewsConnection
 
   # Reads and enables pagination through a set of \`Type\`.
@@ -3568,7 +3684,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`Type\`.
-    orderBy: TypesOrderBy = PRIMARY_KEY_ASC
+    orderBy: [TypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): TypesConnection
 
   # Reads and enables pagination through a set of \`UpdatableView\`.
@@ -3596,7 +3712,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`UpdatableView\`.
-    orderBy: UpdatableViewsOrderBy = NATURAL
+    orderBy: [UpdatableViewsOrderBy!] = [NATURAL]
   ): UpdatableViewsConnection
 
   # Reads and enables pagination through a set of \`ViewTable\`.
@@ -3624,7 +3740,7 @@ type Query implements Node {
     offset: Int
 
     # The method to use when ordering \`ViewTable\`.
-    orderBy: ViewTablesOrderBy = PRIMARY_KEY_ASC
+    orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): ViewTablesConnection
 
   # Reads a single \`CompoundKey\` using its globally unique \`ID\`.
@@ -4149,42 +4265,6 @@ input StringFilter {
   startsWithInsensitive: String
 }
 
-# A range of \`String\`.
-type StringRange {
-  # The ending bound of our range.
-  end: StringRangeBound
-
-  # The starting bound of our range.
-  start: StringRangeBound
-}
-
-# The value at one end of a range. A range can either include this value, or not.
-type StringRangeBound {
-  # Whether or not the value of this bound is included in the range.
-  inclusive: Boolean!
-
-  # The value at one end of our range.
-  value: String!
-}
-
-# The value at one end of a range. A range can either include this value, or not.
-input StringRangeBoundInput {
-  # Whether or not the value of this bound is included in the range.
-  inclusive: Boolean!
-
-  # The value at one end of our range.
-  value: String!
-}
-
-# A range of \`String\`.
-input StringRangeInput {
-  # The ending bound of our range.
-  end: StringRangeBoundInput
-
-  # The starting bound of our range.
-  start: StringRangeBoundInput
-}
-
 type TablefuncCrosstab2 {
   category1: String
   category2: String
@@ -4458,7 +4538,7 @@ type Type implements Node {
   compoundType: CompoundType!
   date: Date!
   daterange: DateRange!
-  decimal: String!
+  decimal: BigFloat!
   domain: AnInt!
   domain2: AnotherInt!
   enum: Color!
@@ -4472,9 +4552,13 @@ type Type implements Node {
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
-  nullableRange: StringRange
-  numeric: String!
-  numrange: StringRange!
+  nullableCompoundType: CompoundType
+  nullableNestedCompoundType: NestedCompoundType
+  nullablePoint: Point
+  nullableRange: BigFloatRange
+  numeric: BigFloat!
+  numrange: BigFloatRange!
+  point: Point!
   smallint: Int!
   textArray: [String]!
   time: Time!
@@ -4505,7 +4589,7 @@ input TypeCondition {
   daterange: DateRangeInput
 
   # Checks for equality with the object’s \`decimal\` field.
-  decimal: String
+  decimal: BigFloat
 
   # Checks for equality with the object’s \`domain\` field.
   domain: AnInt
@@ -4537,14 +4621,26 @@ input TypeCondition {
   # Checks for equality with the object’s \`nestedCompoundType\` field.
   nestedCompoundType: NestedCompoundTypeInput
 
+  # Checks for equality with the object’s \`nullableCompoundType\` field.
+  nullableCompoundType: CompoundTypeInput
+
+  # Checks for equality with the object’s \`nullableNestedCompoundType\` field.
+  nullableNestedCompoundType: NestedCompoundTypeInput
+
+  # Checks for equality with the object’s \`nullablePoint\` field.
+  nullablePoint: PointInput
+
   # Checks for equality with the object’s \`nullableRange\` field.
-  nullableRange: StringRangeInput
+  nullableRange: BigFloatRangeInput
 
   # Checks for equality with the object’s \`numeric\` field.
-  numeric: String
+  numeric: BigFloat
 
   # Checks for equality with the object’s \`numrange\` field.
-  numrange: StringRangeInput
+  numrange: BigFloatRangeInput
+
+  # Checks for equality with the object’s \`point\` field.
+  point: PointInput
 
   # Checks for equality with the object’s \`smallint\` field.
   smallint: Int
@@ -4583,7 +4679,7 @@ input TypeFilter {
   date: DateFilter
 
   # Filter by the object’s \`decimal\` field.
-  decimal: StringFilter
+  decimal: BigFloatFilter
 
   # Filter by the object’s \`domain\` field.
   domain: AnIntFilter
@@ -4610,7 +4706,7 @@ input TypeFilter {
   not: TypeFilter
 
   # Filter by the object’s \`numeric\` field.
-  numeric: StringFilter
+  numeric: BigFloatFilter
 
   # Checks for any expressions in this list.
   or: [TypeFilter!]
@@ -4642,7 +4738,7 @@ input TypeInput {
   compoundType: CompoundTypeInput!
   date: Date!
   daterange: DateRangeInput!
-  decimal: String!
+  decimal: BigFloat!
   domain: AnInt!
   domain2: AnotherInt!
   enum: Color!
@@ -4653,9 +4749,13 @@ input TypeInput {
   jsonb: JSON!
   money: Float!
   nestedCompoundType: NestedCompoundTypeInput!
-  nullableRange: StringRangeInput
-  numeric: String!
-  numrange: StringRangeInput!
+  nullableCompoundType: CompoundTypeInput
+  nullableNestedCompoundType: NestedCompoundTypeInput
+  nullablePoint: PointInput
+  nullableRange: BigFloatRangeInput
+  numeric: BigFloat!
+  numrange: BigFloatRangeInput!
+  point: PointInput!
   smallint: Int!
   textArray: [String]!
   time: Time!
@@ -4673,7 +4773,7 @@ input TypePatch {
   compoundType: CompoundTypeInput
   date: Date
   daterange: DateRangeInput
-  decimal: String
+  decimal: BigFloat
   domain: AnInt
   domain2: AnotherInt
   enum: Color
@@ -4684,9 +4784,13 @@ input TypePatch {
   jsonb: JSON
   money: Float
   nestedCompoundType: NestedCompoundTypeInput
-  nullableRange: StringRangeInput
-  numeric: String
-  numrange: StringRangeInput
+  nullableCompoundType: CompoundTypeInput
+  nullableNestedCompoundType: NestedCompoundTypeInput
+  nullablePoint: PointInput
+  nullableRange: BigFloatRangeInput
+  numeric: BigFloat
+  numrange: BigFloatRangeInput
+  point: PointInput
   smallint: Int
   textArray: [String]
   time: Time
@@ -4783,12 +4887,20 @@ enum TypesOrderBy {
   NATURAL
   NESTED_COMPOUND_TYPE_ASC
   NESTED_COMPOUND_TYPE_DESC
+  NULLABLE_COMPOUND_TYPE_ASC
+  NULLABLE_COMPOUND_TYPE_DESC
+  NULLABLE_NESTED_COMPOUND_TYPE_ASC
+  NULLABLE_NESTED_COMPOUND_TYPE_DESC
+  NULLABLE_POINT_ASC
+  NULLABLE_POINT_DESC
   NULLABLE_RANGE_ASC
   NULLABLE_RANGE_DESC
   NUMERIC_ASC
   NUMERIC_DESC
   NUMRANGE_ASC
   NUMRANGE_DESC
+  POINT_ASC
+  POINT_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
   SMALLINT_ASC

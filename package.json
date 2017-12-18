@@ -17,16 +17,17 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "postgraphile": "4.0.0-alpha2.26"
+    "postgraphile": "4.0.0-alpha2.27"
   },
   "devDependencies": {
     "eslint": "^4.0.0",
     "eslint-config-prettier": "2.3.0",
     "eslint-plugin-jest": "^20.0.3",
     "eslint-plugin-prettier": "^2.1.2",
+    "graphql": "^0.10.5",
     "jest": "^20.0.4",
     "pg": ">=6 <7",
-    "postgraphile": "4.0.0-alpha2.26",
+    "postgraphile": "4.0.0-alpha2.27",
     "prettier": "^1.4.4"
   },
   "jest": {

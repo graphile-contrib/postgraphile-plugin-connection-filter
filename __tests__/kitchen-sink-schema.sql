@@ -22,6 +22,7 @@ create domain b.email as text
 create table c.person (
   id serial primary key,
   name varchar not null,
+  aliases text[] not null default '{}',
   about text,
   email b.email not null unique,
   site b.wrapped_url default null,
@@ -33,6 +34,7 @@ create unique index uniq_person__email_id_3 on c.person (email) where (id = 3);
 
 comment on table c.person is 'Person test comment';
 comment on column c.person.name is 'The person’s name';
+comment on column c.person.site is '@deprecated Don’t use me';
 
 create function c.person_exists(person c.person, email b.email) returns boolean as $$
 select exists(select 1 from c.person where person.email = person_exists.email);
@@ -167,7 +169,11 @@ create table b.types (
   "interval" interval not null,
   "money" money not null,
   "compound_type" c.compound_type not null,
-  "nested_compound_type" b.nested_compound_type not null
+  "nested_compound_type" b.nested_compound_type not null,
+  "nullable_compound_type" c.compound_type,
+  "nullable_nested_compound_type" b.nested_compound_type,
+  "point" point not null,
+  "nullablePoint" point
 );
 
 create function b.throw_error() returns trigger as $$
@@ -279,6 +285,12 @@ create table a.view_table (
 create view a.testview as
   select id as testviewid, col1, col2
   from a.view_table;
+
+create function a.post_with_suffix(post a.post,suffix text) returns a.post as $$
+  insert into a.post(id,headline,body,author_id,enums,comptypes) values
+  (post.id,post.headline || suffix,post.body,post.author_id,post.enums,post.comptypes)
+  returning *; 
+$$ language sql volatile;
 
 create table a.filterable (
   id serial primary key,
