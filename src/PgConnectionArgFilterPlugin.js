@@ -1,8 +1,6 @@
-const defaultPgColumnFilter = (_attr, _build, _context) => true;
-
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
-  { pgInflection: inflection, pgColumnFilter = defaultPgColumnFilter }
+  { pgInflection: inflection }
 ) {
   builder.hook("init", (_, build) => {
     const {
@@ -18,6 +16,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLScalarType,
         GraphQLEnumType,
       },
+      pgColumnFilter,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
     } = build;
@@ -173,22 +172,21 @@ module.exports = function PgConnectionArgFilterPlugin(
 
   builder.hook(
     "GraphQLObjectType:fields:field:args",
-    (
-      args,
-      {
+    (args, build, context) => {
+      const {
         pgSql: sql,
         gql2pg,
         extend,
         getTypeByName,
-        pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgGetGqlTypeByTypeId,
+        pgIntrospectionResultsByKind: introspectionResultsByKind,
+        pgColumnFilter,
         connectionFilterOperators,
-      },
-      {
+      } = build;
+      const {
         scope: { isPgFieldConnection, pgFieldIntrospection: table },
         addArgDataGenerator,
-      }
-    ) => {
+      } = context;
       if (!isPgFieldConnection || !table || table.kind !== "class") {
         return args;
       }
@@ -199,6 +197,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           pgQuery: queryBuilder => {
             const attrByFieldName = introspectionResultsByKind.attribute
               .filter(attr => attr.classId === table.id)
+              .filter(attr => pgColumnFilter(attr, build, context))
               .reduce((memo, attr) => {
                 const fieldName = inflection.column(
                   attr.name,
