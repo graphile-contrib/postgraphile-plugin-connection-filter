@@ -273,8 +273,20 @@ input BigFloatFilter {
   # Checks for values equal to this value.
   equalTo: BigFloat
 
+  # Checks for values greater than this value.
+  greaterThan: BigFloat
+
+  # Checks for values greater than or equal to this value.
+  greaterThanOrEqualTo: BigFloat
+
   # Checks for values in this list.
   in: [BigFloat!]
+
+  # Checks for values less than this value.
+  lessThan: BigFloat
+
+  # Checks for values less than or equal to this value.
+  lessThanOrEqualTo: BigFloat
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: BigFloat
