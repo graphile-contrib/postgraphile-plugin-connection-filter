@@ -967,14 +967,14 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
-graphile-build-pg@^0.1.0-alpha.37:
-  version "0.1.0-alpha.37"
-  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-0.1.0-alpha.37.tgz#32de7ecfa695538125356eb9272761a29bbaba89"
+graphile-build-pg@^0.1.0-alpha.38:
+  version "0.1.0-alpha.38"
+  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-0.1.0-alpha.38.tgz#529b1c80b2d4d230b53dc463ca25d1d4f46148c7"
   dependencies:
     babel-runtime ">=6 <7"
     chalk "^2.1.0"
     debug ">=2 <3"
-    graphile-build "^0.1.0-alpha.37"
+    graphile-build "^0.1.0-alpha.38"
     graphql-iso-date "^3.2.0"
     graphql-type-json "^0.1.4"
     jsonwebtoken "^7.4.1"
@@ -985,9 +985,9 @@ graphile-build-pg@^0.1.0-alpha.37:
     pluralize "^5.0.0"
     postgres-interval "1.1.1"
 
-graphile-build@^0.1.0-alpha.37:
-  version "0.1.0-alpha.37"
-  resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-0.1.0-alpha.37.tgz#315320ba8c34a7ea8196de79090a8d707d25465f"
+graphile-build@^0.1.0-alpha.38:
+  version "0.1.0-alpha.38"
+  resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-0.1.0-alpha.38.tgz#f9fcb14a6c8e79d345d6a5f707aa90eca0ec5ae4"
   dependencies:
     babel-runtime ">=6 <7"
     debug ">=2 <3"
@@ -2092,13 +2092,13 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
-postgraphile-core@0.1.0-alpha.37:
-  version "0.1.0-alpha.37"
-  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-0.1.0-alpha.37.tgz#ec23619c5a95223e5d9785ddac2fdc1b9a50cca7"
+"postgraphile-core@0.1.0-alpha.37 || 0.1.0-alpha.38":
+  version "0.1.0-alpha.38"
+  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-0.1.0-alpha.38.tgz#c250ba4f1f41977e980e1558a8011b1af36004bd"
   dependencies:
     babel-runtime ">=6 <7"
-    graphile-build "^0.1.0-alpha.37"
-    graphile-build-pg "^0.1.0-alpha.37"
+    graphile-build "^0.1.0-alpha.38"
+    graphile-build-pg "^0.1.0-alpha.38"
 
 postgres-array@~1.0.0:
   version "1.0.2"
