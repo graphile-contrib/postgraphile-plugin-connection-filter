@@ -1,21 +1,22 @@
 module.exports = function ConnectionArgFilterPlugin(
   builder,
-  { connectionFilterAllowedFieldTypes } = {}
+  { connectionFilterAllowedFieldTypes, connectionFilterOperatorNames = {} } = {}
 ) {
   builder.hook("build", build => {
     const connectionFilterOperators = {};
     return build.extend(build, {
       connectionFilterOperators,
       addConnectionFilterOperator(
-        name,
+        defaultName,
         description,
         resolveType,
         resolveWhereClause,
         options = {}
       ) {
-        if (!name) {
-          throw new Error("No filter operator name specified");
+        if (!defaultName) {
+          throw new Error("No filter operator defaultName specified");
         }
+        const name = connectionFilterOperatorNames[defaultName] || defaultName;
         if (connectionFilterOperators[name]) {
           throw new Error(
             "There is already a filter operator with the name '" + name + "'"

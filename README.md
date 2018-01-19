@@ -12,7 +12,7 @@ This plugin targets the alpha release of PostGraphile v4.  Bug reports and pull 
 | 4.0.0-alpha2.20 | 1.0.0-alpha.0 |
 | 4.0.0-alpha2.21 - 4.0.0-alpha2.25 | 1.0.0-alpha.1 |
 | 4.0.0-alpha2.26 | 1.0.0-alpha.2 - 1.0.0-alpha.3 |
-| 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.5 |
+| 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.6 |
 
 ## Getting Started
 
@@ -174,18 +174,58 @@ For additional examples, see the [tests](https://github.com/mattbretl/postgraphi
 
 When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions` (called `graphqlBuildOptions` in PostGraphile 4.0.0-alpha2.20 and earlier):
 
-### connectionFilterUsesShortNames
-Use short names (e.g. eq, ne, lt, lte) for operators
+### connectionFilterOperatorNames
+
+Use alternative names (e.g. `eq`, `ne`) for operators
 ``` js
 postgraphile(pgConfig, schema, {
   ...
   graphileBuildOptions: {
-    connectionFilterUsesShortNames: true,
+    connectionFilterOperatorNames: {
+      equalTo: "eq",
+      notEqualTo: "ne",
+    },
+  },
+})
+``` 
+
+Note: The `connectionFilterUsesShortNames` option was removed in v1.0.0-alpha.6.  To restore the old functionality, you can use this:
+``` js
+postgraphile(pgConfig, schema, {
+  ...
+  graphileBuildOptions: {
+    connectionFilterOperatorNames: {
+      equalTo: "eq",
+      notEqualTo: "ne",
+      lessThan: "lt",
+      lessThanOrEqualTo: "lte",
+      greaterThan: "gt",
+      greaterThanOrEqualTo: "gte",
+      in: "in",
+      notIn: "nin",
+      contains: "cont",
+      notContains: "ncont",
+      containsInsensitive: "conti",
+      notContainsInsensitive: "nconti",
+      startsWith: "starts",
+      notStartsWith: "nstarts",
+      startsWithInsensitive: "startsi",
+      notStartsWithInsensitive: "nstartsi",
+      endsWith: "ends",
+      notEndsWith: "nends",
+      endsWithInsensitive: "endsi",
+      notEndsWithInsensitive: "nendsi",
+      like: "like",
+      notLike: "nlike",
+      likeInsensitive: "ilike",
+      notLikeInsensitive: "nilike"
+    },
   },
 })
 ```
 
 ### connectionFilterAllowedFieldTypes
+
 Restrict filters to specific field types
 ``` js
 postgraphile(pgConfig, schema, {

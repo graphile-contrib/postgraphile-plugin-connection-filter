@@ -2,6 +2,11 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder,
   { connectionFilterUsesShortNames = false } = {}
 ) {
+  if (connectionFilterUsesShortNames !== false) {
+    console.warn(
+      "The `connectionFilterUsesShortNames` option is obsolete; please use `connectionFilterOperatorNames` instead.  See README.md for details."
+    );
+  }
   builder.hook(
     "init",
     (
@@ -24,7 +29,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           }`
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "eq" : "equalTo",
+        "equalTo",
         "Checks for values equal to this value.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -32,7 +37,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "ne" : "notEqualTo",
+        "notEqualTo",
         "Checks for values not equal to this value.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -56,7 +61,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "lt" : "lessThan",
+        "lessThan",
         "Checks for values less than this value.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -75,7 +80,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "lte" : "lessThanOrEqualTo",
+        "lessThanOrEqualTo",
         "Checks for values less than or equal to this value.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -94,7 +99,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "gt" : "greaterThan",
+        "greaterThan",
         "Checks for values greater than this value.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -113,7 +118,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "gte" : "greaterThanOrEqualTo",
+        "greaterThanOrEqualTo",
         "Checks for values greater than or equal to this value.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -132,7 +137,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "in" : "in",
+        "in",
         "Checks for values in this list.",
         typeName =>
           new GraphQLList(new GraphQLNonNull(getTypeByName(typeName))),
@@ -141,7 +146,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nin" : "notIn",
+        "notIn",
         "Checks for values not in this list.",
         typeName =>
           new GraphQLList(new GraphQLNonNull(getTypeByName(typeName))),
@@ -150,7 +155,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "cont" : "contains",
+        "contains",
         "Checks for strings containing this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -162,7 +167,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "ncont" : "notContains",
+        "notContains",
         "Checks for strings that do not contain this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -174,7 +179,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "conti" : "containsInsensitive",
+        "containsInsensitive",
         "Checks for strings containing this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -186,7 +191,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nconti" : "notContainsInsensitive",
+        "notContainsInsensitive",
         "Checks for strings that do not not contain this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -198,7 +203,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "starts" : "startsWith",
+        "startsWith",
         "Checks for strings starting with this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -210,7 +215,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nstarts" : "notStartsWith",
+        "notStartsWith",
         "Checks for strings that do not start with this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -222,7 +227,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "startsi" : "startsWithInsensitive",
+        "startsWithInsensitive",
         "Checks for strings starting with this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -234,9 +239,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames
-          ? "nstartsi"
-          : "notStartsWithInsensitive",
+        "notStartsWithInsensitive",
         "Checks for strings that do not start with this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -248,7 +251,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "ends" : "endsWith",
+        "endsWith",
         "Checks for strings ending with this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -260,7 +263,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nends" : "notEndsWith",
+        "notEndsWith",
         "Checks for strings that do not end with this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -272,7 +275,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "endsi" : "endsWithInsensitive",
+        "endsWithInsensitive",
         "Checks for strings ending with this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -284,7 +287,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nendsi" : "notEndsWithInsensitive",
+        "notEndsWithInsensitive",
         "Checks for strings that do not end with this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -296,7 +299,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "like" : "like",
+        "like",
         "Raw SQL 'like', wildcards must be present and are not escaped",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -307,7 +310,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nlike" : "notLike",
+        "notLike",
         "Raw SQL 'not like', wildcards must be present and are not escaped",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -318,7 +321,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "ilike" : "likeInsensitive",
+        "likeInsensitive",
         "Raw SQL 'ilike', wildcards must be present and are not escaped",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
@@ -329,7 +332,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         }
       );
       addConnectionFilterOperator(
-        connectionFilterUsesShortNames ? "nilike" : "notLikeInsensitive",
+        "notLikeInsensitive",
         "Raw SQL 'not ilike', wildcards must be present and are not escaped",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
