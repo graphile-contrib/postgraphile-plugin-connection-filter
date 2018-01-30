@@ -27,6 +27,8 @@ query {
   string_likeInsensitive_es: allFilterables(filter: { string: { likeInsensitive: "%es%" } }) { ...filterableConnection }
   string_notLike_es: allFilterables(filter: { string: { notLike: "%es%" } }) { ...filterableConnection }
   string_notLikeInsensitive_es: allFilterables(filter: { string: { notLikeInsensitive: "%es%" } }) { ...filterableConnection }
+  string_similarTo_te_or_st: allFilterables(filter:{ string: { similarTo: "%(te|st)%" } }) { ...filterableConnection }
+  string_notSimilarTo_te_or_st: allFilterables(filter:{ string: { notSimilarTo: "%(te|st)%" } }) { ...filterableConnection }
   int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
   int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
   boolean_null_true: allFilterables(filter: { boolean: { null: true } }) { ...filterableConnection }

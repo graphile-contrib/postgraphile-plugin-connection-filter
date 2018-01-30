@@ -342,6 +342,28 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           allowedFieldTypes: ["String"],
         }
       );
+      addConnectionFilterOperator(
+        "similarTo",
+        "Raw SQL 'similar to', wildcards are not escaped",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} SIMILAR TO ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+        }
+      );
+      addConnectionFilterOperator(
+        "notSimilarTo",
+        "Raw SQL 'not similar to', wildcards are not escaped",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} NOT SIMILAR TO ${val}`;
+        },
+        {
+          allowedFieldTypes: ["String"],
+        }
+      );
       return _;
     }
   );

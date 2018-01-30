@@ -1768,6 +1768,39 @@ Object {
       },
       "totalCount": 2,
     },
+    "string_notSimilarTo_te_or_st": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": "0.1",
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 3,
+            "int": 3,
+            "numeric": "0.3",
+            "real": 0.3,
+            "string": "tEST",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 2,
+    },
     "string_notStartsWithInsensitive_t": Object {
       "edges": Array [],
       "pageInfo": Object {
@@ -1887,6 +1920,39 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
       },
       "totalCount": 1,
+    },
+    "string_similarTo_te_or_st": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 2,
+            "int": 2,
+            "numeric": "0.2",
+            "real": 0.2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 4,
+            "int": 4,
+            "numeric": "0.4",
+            "real": 0.4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+      },
+      "totalCount": 2,
     },
     "string_startsWithInsensitive_t": Object {
       "edges": Array [

@@ -83,6 +83,8 @@ The following filter operators are exposed by default:
 | NOT LIKE '...' | notLike | Scalar |
 | ILIKE '...' | likeInsensitive | Scalar |
 | NOT ILIKE '...' | notLikeInsensitive | Scalar |
+| SIMILAR TO '...' | similarTo | Scalar |
+| NOT SIMILAR TO '...' | notSimilarTo | Scalar |
 
 ## Examples
 

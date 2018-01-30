@@ -4261,6 +4261,9 @@ input StringFilter {
   # Raw SQL 'not ilike', wildcards must be present and are not escaped
   notLikeInsensitive: String
 
+  # Raw SQL 'not similar to', wildcards are not escaped
+  notSimilarTo: String
+
   # Checks for strings that do not start with this value.  Case sensitive.
   notStartsWith: String
 
@@ -4269,6 +4272,9 @@ input StringFilter {
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
+
+  # Raw SQL 'similar to', wildcards are not escaped
+  similarTo: String
 
   # Checks for strings starting with this value.  Case sensitive.
   startsWith: String
@@ -7758,6 +7764,9 @@ input StringFilter {
   # Raw SQL 'not ilike', wildcards must be present and are not escaped
   notLikeInsensitive: String
 
+  # Raw SQL 'not similar to', wildcards are not escaped
+  notSimilarTo: String
+
   # Checks for strings that do not start with this value.  Case sensitive.
   notStartsWith: String
 
@@ -7766,6 +7775,9 @@ input StringFilter {
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
+
+  # Raw SQL 'similar to', wildcards are not escaped
+  similarTo: String
 
   # Checks for strings starting with this value.  Case sensitive.
   startsWith: String
