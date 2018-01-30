@@ -13,6 +13,7 @@ This plugin targets the alpha release of PostGraphile v4.  Bug reports and pull 
 | 4.0.0-alpha2.21 - 4.0.0-alpha2.25 | 1.0.0-alpha.1 |
 | 4.0.0-alpha2.26 | 1.0.0-alpha.2 - 1.0.0-alpha.3 |
 | 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.6 |
+| 4.0.0-alpha2.30 | 1.0.0-alpha.7 |
 
 ## Getting Started
 
