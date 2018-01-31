@@ -1,9 +1,9 @@
 # postgraphile-plugin-connection-filter
 This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
-## Disclaimer
+> **Note:** This plugin targets the alpha release of PostGraphile v4.  Because of possible API changes, releases of this plugin are pinned to specific alpha versions of PostGraphile.  See the Compatibility table below for details.
 
-This plugin targets the alpha release of PostGraphile v4.  Bug reports and pull requests are very much welcome.
+> **Warning:** This plugin exposes a large number of operators (including some that can perform expensive pattern matching) by default.  Before enabling this plugin in production, you should consider the performance and security implications.  Use of the `connectionFilterAllowedOperators` option to limit the operators exposed through GraphQL is strongly encouraged.
 
 ## Compatibility
 
@@ -177,12 +177,49 @@ For additional examples, see the [tests](https://github.com/mattbretl/postgraphi
 
 When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions` (called `graphqlBuildOptions` in PostGraphile 4.0.0-alpha2.20 and earlier):
 
+### connectionFilterAllowedOperators
+
+Restrict filtering to specific operators
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterAllowedOperators: [
+      "null",
+      "equalTo",
+      "notEqualTo",
+      "distinctFrom",
+      "notDistinctFrom",
+      "lessThan",
+      "lessThanOrEqualTo",
+      "greaterThan",
+      "greaterThanOrEqualTo",
+      "in",
+      "notIn",
+    ],
+  },
+})
+```
+
+For a full list of the available operators, see the Comparison Operators table above.
+
+### connectionFilterAllowedFieldTypes
+
+Restrict filtering to specific field types
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterAllowedFieldTypes: ["String", "Int"],
+  },
+})
+```
+
+The available field types will depend on your database schema.
+
 ### connectionFilterOperatorNames
 
 Use alternative names (e.g. `eq`, `ne`) for operators
 ``` js
 postgraphile(pgConfig, schema, {
-  ...
   graphileBuildOptions: {
     connectionFilterOperatorNames: {
       equalTo: "eq",
@@ -195,7 +232,6 @@ postgraphile(pgConfig, schema, {
 Note: The `connectionFilterUsesShortNames` option was removed in v1.0.0-alpha.6.  To restore the old functionality, you can use this:
 ``` js
 postgraphile(pgConfig, schema, {
-  ...
   graphileBuildOptions: {
     connectionFilterOperatorNames: {
       equalTo: "eq",
@@ -221,25 +257,11 @@ postgraphile(pgConfig, schema, {
       like: "like",
       notLike: "nlike",
       likeInsensitive: "ilike",
-      notLikeInsensitive: "nilike"
+      notLikeInsensitive: "nilike",
     },
   },
 })
 ```
-
-### connectionFilterAllowedFieldTypes
-
-Restrict filters to specific field types
-``` js
-postgraphile(pgConfig, schema, {
-  ...
-  graphileBuildOptions: {
-    connectionFilterAllowedFieldTypes: ["String", "Int"],
-  },
-})
-```
-
-To add/remove/modify individual operators, you can edit src/PgConnectionArgFilterOperatorsPlugin.js.
 
 ## Development
 

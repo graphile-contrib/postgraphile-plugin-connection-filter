@@ -1,6 +1,10 @@
 module.exports = function ConnectionArgFilterPlugin(
   builder,
-  { connectionFilterAllowedFieldTypes, connectionFilterOperatorNames = {} } = {}
+  {
+    connectionFilterAllowedFieldTypes,
+    connectionFilterAllowedOperators,
+    connectionFilterOperatorNames = {},
+  } = {}
 ) {
   builder.hook("build", build => {
     const connectionFilterOperators = {};
@@ -34,13 +38,18 @@ module.exports = function ConnectionArgFilterPlugin(
               "'"
           );
         }
-        connectionFilterOperators[name] = {
-          name,
-          description,
-          resolveType,
-          resolveWhereClause,
-          options,
-        };
+        if (
+          !connectionFilterAllowedOperators ||
+          connectionFilterAllowedOperators.includes(defaultName)
+        ) {
+          connectionFilterOperators[name] = {
+            name,
+            description,
+            resolveType,
+            resolveWhereClause,
+            options,
+          };
+        }
       },
       connectionFilterAllowedFieldTypes,
     });

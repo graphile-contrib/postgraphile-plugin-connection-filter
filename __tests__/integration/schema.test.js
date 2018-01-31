@@ -19,7 +19,19 @@ const testFixtures = [
       })
   },
   {
-    name: "prints a schema with the filter plugin and the connectionFilterOperatorNames option",
+    name:
+      "prints a schema with the filter plugin and the connectionFilterAllowedOperators option",
+    createSchema: client =>
+      createPostGraphQLSchema(client, ["a"], {
+        appendPlugins: [require("../../index.js")],
+        graphileBuildOptions: {
+          connectionFilterAllowedOperators: ["equalTo", "notEqualTo"]
+        }
+      })
+  },
+  {
+    name:
+      "prints a schema with the filter plugin and the connectionFilterOperatorNames option",
     createSchema: client =>
       createPostGraphQLSchema(client, ["a"], {
         appendPlugins: [require("../../index.js")],
