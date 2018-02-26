@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-plugin-connection-filter",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description": "Advanced filtering of Connections in PostGraphile",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "postgraphile": "4.0.0-alpha2.30"
+    "postgraphile": "4.0.0-alpha2.33"
   },
   "devDependencies": {
     "eslint": "^4.0.0",
@@ -26,8 +26,8 @@
     "eslint-plugin-prettier": "^2.1.2",
     "graphql": "^0.10.5",
     "jest": "^20.0.4",
-    "pg": ">=6 <7",
-    "postgraphile-core": "0.1.0-alpha.37 || 0.1.0-alpha.38",
+    "pg": ">=6.1.0 <8",
+    "postgraphile-core": "4.0.0-alpha.1",
     "prettier": "^1.4.4"
   },
   "jest": {
