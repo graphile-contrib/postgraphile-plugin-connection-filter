@@ -902,6 +902,28 @@ Object {
       },
       "totalCount": 1,
     },
+    "computed_equalTo_test_computed": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 4,
+            "int": 4,
+            "numeric": "0.4",
+            "real": 0.4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+      },
+      "totalCount": 1,
+    },
     "int_equalTo_2_and_string_endsWith_t": Object {
       "edges": Array [
         Object {

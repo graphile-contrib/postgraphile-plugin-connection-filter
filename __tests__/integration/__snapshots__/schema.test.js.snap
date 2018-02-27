@@ -1603,6 +1603,9 @@ input EdgeCaseFilter {
   # Checks for all expressions in this list.
   and: [EdgeCaseFilter!]
 
+  # Filter by the object’s \`computed\` field.
+  computed: StringFilter
+
   # Negates the expression.
   not: EdgeCaseFilter
 
@@ -1702,6 +1705,7 @@ enum EnumWithEmptyString {
 
 type Filterable implements Node {
   boolean: Boolean
+  computed: String
   id: Int!
   int: Int
 
@@ -1741,6 +1745,9 @@ input FilterableFilter {
 
   # Filter by the object’s \`boolean\` field.
   boolean: BooleanFilter
+
+  # Filter by the object’s \`computed\` field.
+  computed: StringFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
@@ -3102,6 +3109,9 @@ input PersonFilter {
 
   # Filter by the object’s \`email\` field.
   email: EmailFilter
+
+  # Filter by the object’s \`firstName\` field.
+  firstName: StringFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
@@ -6226,6 +6236,7 @@ type DeleteViewTablePayload {
 
 type Filterable implements Node {
   boolean: Boolean
+  computed: String
   id: Int!
   int: Int
 
@@ -6265,6 +6276,9 @@ input FilterableFilter {
 
   # Filter by the object’s \`boolean\` field.
   boolean: BooleanFilter
+
+  # Filter by the object’s \`computed\` field.
+  computed: StringFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter
@@ -8856,6 +8870,7 @@ type DeleteViewTablePayload {
 
 type Filterable implements Node {
   boolean: Boolean
+  computed: String
   id: Int!
   int: Int
 
@@ -8895,6 +8910,9 @@ input FilterableFilter {
 
   # Filter by the object’s \`boolean\` field.
   boolean: BooleanFilter
+
+  # Filter by the object’s \`computed\` field.
+  computed: StringFilter
 
   # Filter by the object’s \`id\` field.
   id: IntFilter

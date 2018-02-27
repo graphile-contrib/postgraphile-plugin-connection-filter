@@ -129,6 +129,62 @@ module.exports = function PgConnectionArgFilterPlugin(
                   );
                 }, {});
 
+              // Proc fields
+              const tableType = introspectionResultsByKind.type.filter(
+                type =>
+                  type.type === "c" &&
+                  type.namespaceId === table.namespaceId &&
+                  type.classId === table.id
+              )[0];
+              if (!tableType) {
+                throw new Error("Could not determine the type for this table");
+              }
+              const procFields = introspectionResultsByKind.procedure
+                .filter(proc => proc.isStable)
+                .filter(proc => proc.namespaceId === table.namespaceId)
+                .filter(proc => proc.name.startsWith(`${table.name}_`))
+                .filter(proc => proc.argTypeIds.length > 0)
+                .filter(proc => proc.argTypeIds[0] === tableType.id)
+                .reduce((memo, proc) => {
+                  const argTypes = proc.argTypeIds.map(
+                    typeId => introspectionResultsByKind.typeById[typeId]
+                  );
+                  if (
+                    argTypes
+                      .slice(1)
+                      .some(
+                        type =>
+                          type.type === "c" &&
+                          type.class &&
+                          type.class.isSelectable
+                      )
+                  ) {
+                    // Accepts two input tables? Skip.
+                    return memo;
+                  }
+                  if (argTypes.length > 1) {
+                    // Accepts arguments? Skip.
+                    return memo;
+                  }
+                  const pseudoColumnName = proc.name.substr(
+                    table.name.length + 1
+                  );
+                  const fieldName = inflection.column(
+                    pseudoColumnName,
+                    table.name,
+                    table.namespace.name
+                  );
+                  const fieldType = pgGetGqlInputTypeByTypeId(
+                    proc.returnTypeId
+                  );
+                  return extendFilterFields(
+                    memo,
+                    fieldName,
+                    fieldType,
+                    fieldWithHooks
+                  );
+                }, {});
+
               // Logical operator fields
               const logicalOperatorFields = {
                 and: fieldWithHooks(
@@ -171,7 +227,12 @@ module.exports = function PgConnectionArgFilterPlugin(
                 ),
               };
 
-              return Object.assign({}, attrFields, logicalOperatorFields);
+              return Object.assign(
+                {},
+                attrFields,
+                procFields,
+                logicalOperatorFields
+              );
             },
           },
           {
@@ -221,6 +282,23 @@ module.exports = function PgConnectionArgFilterPlugin(
                 return memo;
               }, {});
 
+            const procByFieldName = introspectionResultsByKind.procedure
+              .filter(proc => proc.isStable)
+              .filter(proc => proc.namespaceId === table.namespaceId)
+              .filter(proc => proc.name.startsWith(`${table.name}_`))
+              .reduce((memo, proc) => {
+                const pseudoColumnName = proc.name.substr(
+                  table.name.length + 1
+                );
+                const fieldName = inflection.column(
+                  pseudoColumnName,
+                  table.name,
+                  table.namespace.name
+                );
+                memo[fieldName] = proc;
+                return memo;
+              }, {});
+
             function resolveWhereComparison(fieldName, operatorName, input) {
               const operator = connectionFilterOperators[operatorName];
               const inputResolver = operator.options.inputResolver;
@@ -245,6 +323,22 @@ module.exports = function PgConnectionArgFilterPlugin(
                       (inputResolver && inputResolver(input)) || input,
                       attr.type
                     )}`;
+                return operator.resolveWhereClause(identifier, val, input);
+              }
+
+              const proc = procByFieldName[fieldName];
+              if (proc != null) {
+                const procReturnType =
+                  introspectionResultsByKind.typeById[proc.returnTypeId];
+                const identifier = sql.query`${sql.identifier(
+                  proc.namespace.name
+                )}.${sql.identifier(
+                  proc.name
+                )}(${queryBuilder.getTableAlias()})`;
+                const val = sql.query`${gql2pg(
+                  (inputResolver && inputResolver(input)) || input,
+                  procReturnType
+                )}`;
                 return operator.resolveWhereClause(identifier, val, input);
               }
 

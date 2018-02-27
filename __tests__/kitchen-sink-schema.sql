@@ -300,3 +300,7 @@ create table a.filterable (
   "numeric" numeric,
   "boolean" boolean
 );
+
+create function a.filterable_computed(filterable a.filterable) returns text as $$
+  select filterable.string || ' computed'
+$$ language sql stable;
