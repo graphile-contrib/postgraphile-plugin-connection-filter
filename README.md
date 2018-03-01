@@ -24,7 +24,7 @@ By default, this plugin:
 
 To protect your server, you can:
 - Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` plugin options to limit the fields and operators exposed through GraphQL.
-- Use the `connectionFilterComputedColumns` option to disable the computed columns functionality unless strictly needed.
+- Use the `connectionFilterComputedColumns` option to disable the computed columns functionality.
 
 ## Getting Started
 
@@ -225,6 +225,17 @@ postgraphile(pgConfig, schema, {
 ```
 
 The available field types will depend on your database schema.
+
+### connectionFilterComputedColumns
+
+Enable/disable filtering by computed columns
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterComputedColumns: false, // default: true
+  },
+})
+```
 
 ### connectionFilterOperatorNames
 
