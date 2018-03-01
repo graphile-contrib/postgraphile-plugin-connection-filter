@@ -3,7 +3,7 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
 > **Note:** This plugin targets the alpha release of PostGraphile v4.  Because of possible API changes, releases of this plugin are pinned to specific alpha versions of PostGraphile.  See the Compatibility table below for details.
 
-> **Warning:** This plugin exposes a large number of operators (including some that can perform expensive pattern matching) by default.  Before enabling this plugin in production, you should consider the performance and security implications.  Use of the `connectionFilterAllowedOperators` option to limit the operators exposed through GraphQL is strongly encouraged.
+> **Warning:** Use of this plugin (particularly with the default options) may (and most likely will) make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
 
 ## Compatibility
 
@@ -15,6 +15,16 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 | 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.6 |
 | 4.0.0-alpha2.30 | 1.0.0-alpha.7 - 1.0.0-alpha.8 |
 | 4.0.0-alpha2.33 | 1.0.0-alpha.9 - 1.0.0-alpha.10 |
+
+## Performance and Security
+
+By default, this plugin:
+- Exposes a large number of filter operators, including some that can perform expensive pattern matching.
+- Exposes PostGraphile "computed columns" as filterable fields, which can result in expensive operations.
+
+To protect your server, you can:
+- Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` plugin options to limit the fields and operators exposed through GraphQL.
+- Use the `connectionFilterComputedColumns` option to disable the computed columns functionality unless strictly needed.
 
 ## Getting Started
 
