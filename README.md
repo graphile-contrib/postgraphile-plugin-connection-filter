@@ -14,7 +14,7 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 | 4.0.0-alpha2.26 | 1.0.0-alpha.2 - 1.0.0-alpha.3 |
 | 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.6 |
 | 4.0.0-alpha2.30 | 1.0.0-alpha.7 - 1.0.0-alpha.8 |
-| 4.0.0-alpha2.33 | 1.0.0-alpha.9 |
+| 4.0.0-alpha2.33 | 1.0.0-alpha.9 - 1.0.0-alpha.10 |
 
 ## Getting Started
 
