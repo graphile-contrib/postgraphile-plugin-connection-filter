@@ -532,7 +532,7 @@ type CompoundKeysEdge {
   cursor: Cursor
 
   # The \`CompoundKey\` at the end of the edge.
-  node: CompoundKey!
+  node: CompoundKey
 }
 
 # Methods to use when ordering \`CompoundKey\`.
@@ -611,7 +611,7 @@ type CompoundTypesEdge {
   cursor: Cursor
 
   # The \`CompoundType\` at the end of the edge.
-  node: CompoundType!
+  node: CompoundType
 }
 
 type Comptype {
@@ -644,7 +644,7 @@ type CreateCompoundKeyPayload {
   # The \`CompoundKey\` that was created by this mutation.
   compoundKey: CompoundKey
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`CompoundKey\`. May be used by Relay 1.
   compoundKeyEdge(
     # The method to use when ordering \`CompoundKey\`.
     orderBy: [CompoundKeysOrderBy!] = [PRIMARY_KEY_ASC]
@@ -679,7 +679,7 @@ type CreateDefaultValuePayload {
   # The \`DefaultValue\` that was created by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -708,7 +708,7 @@ type CreateEdgeCasePayload {
   # The \`EdgeCase\` that was created by this mutation.
   edgeCase: EdgeCase
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`EdgeCase\`. May be used by Relay 1.
   edgeCaseEdge(
     # The method to use when ordering \`EdgeCase\`.
     orderBy: [EdgeCasesOrderBy!] = [NATURAL]
@@ -737,7 +737,7 @@ type CreateFilterablePayload {
   # The \`Filterable\` that was created by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -769,7 +769,7 @@ type CreateForeignKeyPayload {
   # The \`ForeignKey\` that was created by this mutation.
   foreignKey: ForeignKey
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ForeignKey\`. May be used by Relay 1.
   foreignKeyEdge(
     # The method to use when ordering \`ForeignKey\`.
     orderBy: [ForeignKeysOrderBy!] = [NATURAL]
@@ -801,7 +801,7 @@ type CreatePersonPayload {
   # The \`Person\` that was created by this mutation.
   person: Person
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Person\`. May be used by Relay 1.
   personEdge(
     # The method to use when ordering \`Person\`.
     orderBy: [PeopleOrderBy!] = [PRIMARY_KEY_ASC]
@@ -833,7 +833,7 @@ type CreatePostPayload {
   # The \`Post\` that was created by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -865,7 +865,7 @@ type CreateSimilarTable1Payload {
   # The \`SimilarTable1\` that was created by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -894,7 +894,7 @@ type CreateSimilarTable2Payload {
   # The \`SimilarTable2\` that was created by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -923,7 +923,7 @@ type CreateTestviewPayload {
   # The \`Testview\` that was created by this mutation.
   testview: Testview
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Testview\`. May be used by Relay 1.
   testviewEdge(
     # The method to use when ordering \`Testview\`.
     orderBy: [TestviewsOrderBy!] = [NATURAL]
@@ -952,7 +952,7 @@ type CreateTypePayload {
   # The \`Type\` that was created by this mutation.
   type: Type
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Type\`. May be used by Relay 1.
   typeEdge(
     # The method to use when ordering \`Type\`.
     orderBy: [TypesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -981,7 +981,7 @@ type CreateUpdatableViewPayload {
   # The \`UpdatableView\` that was created by this mutation.
   updatableView: UpdatableView
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`UpdatableView\`. May be used by Relay 1.
   updatableViewEdge(
     # The method to use when ordering \`UpdatableView\`.
     orderBy: [UpdatableViewsOrderBy!] = [NATURAL]
@@ -1010,7 +1010,7 @@ type CreateViewTablePayload {
   # The \`ViewTable\` that was created by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1204,7 +1204,7 @@ type DefaultValuesEdge {
   cursor: Cursor
 
   # The \`DefaultValue\` at the end of the edge.
-  node: DefaultValue!
+  node: DefaultValue
 }
 
 # Methods to use when ordering \`DefaultValue\`.
@@ -1246,7 +1246,7 @@ type DeleteCompoundKeyPayload {
   # The \`CompoundKey\` that was deleted by this mutation.
   compoundKey: CompoundKey
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`CompoundKey\`. May be used by Relay 1.
   compoundKeyEdge(
     # The method to use when ordering \`CompoundKey\`.
     orderBy: [CompoundKeysOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1290,7 +1290,7 @@ type DeleteDefaultValuePayload {
   # The \`DefaultValue\` that was deleted by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1329,7 +1329,7 @@ type DeleteFilterablePayload {
   # The \`Filterable\` that was deleted by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1375,7 +1375,7 @@ type DeletePersonPayload {
   # The \`Person\` that was deleted by this mutation.
   person: Person
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Person\`. May be used by Relay 1.
   personEdge(
     # The method to use when ordering \`Person\`.
     orderBy: [PeopleOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1416,7 +1416,7 @@ type DeletePostPayload {
   # The \`Post\` that was deleted by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1457,7 +1457,7 @@ type DeleteSimilarTable1Payload {
   # The \`SimilarTable1\` that was deleted by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1495,7 +1495,7 @@ type DeleteSimilarTable2Payload {
   # The \`SimilarTable2\` that was deleted by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1533,7 +1533,7 @@ type DeleteTypePayload {
   # The \`Type\` that was deleted by this mutation.
   type: Type
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Type\`. May be used by Relay 1.
   typeEdge(
     # The method to use when ordering \`Type\`.
     orderBy: [TypesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1571,7 +1571,7 @@ type DeleteViewTablePayload {
   # The \`ViewTable\` that was deleted by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -1650,7 +1650,7 @@ type EdgeCasesEdge {
   cursor: Cursor
 
   # The \`EdgeCase\` at the end of the edge.
-  node: EdgeCase!
+  node: EdgeCase
 }
 
 # Methods to use when ordering \`EdgeCase\`.
@@ -1812,7 +1812,7 @@ type FilterablesEdge {
   cursor: Cursor
 
   # The \`Filterable\` at the end of the edge.
-  node: Filterable!
+  node: Filterable
 }
 
 # Methods to use when ordering \`Filterable\`.
@@ -1962,7 +1962,7 @@ type ForeignKeysEdge {
   cursor: Cursor
 
   # The \`ForeignKey\` at the end of the edge.
-  node: ForeignKey!
+  node: ForeignKey
 }
 
 # Methods to use when ordering \`ForeignKey\`.
@@ -2828,7 +2828,7 @@ type NonUpdatableViewsEdge {
   cursor: Cursor
 
   # The \`NonUpdatableView\` at the end of the edge.
-  node: NonUpdatableView!
+  node: NonUpdatableView
 }
 
 # Methods to use when ordering \`NonUpdatableView\`.
@@ -2898,7 +2898,7 @@ type PeopleEdge {
   cursor: Cursor
 
   # The \`Person\` at the end of the edge.
-  node: Person!
+  node: Person
 }
 
 # Methods to use when ordering \`Person\`.
@@ -3252,7 +3252,7 @@ type PostManyPayload {
   # Reads a single \`Person\` that is related to this \`Post\`.
   personByAuthorId: Person
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -3294,7 +3294,7 @@ type PostsEdge {
   cursor: Cursor
 
   # The \`Post\` at the end of the edge.
-  node: Post!
+  node: Post
 }
 
 # Methods to use when ordering \`Post\`.
@@ -3335,7 +3335,7 @@ type PostWithSuffixPayload {
   personByAuthorId: Person
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -4062,7 +4062,7 @@ type SimilarTable1SEdge {
   cursor: Cursor
 
   # The \`SimilarTable1\` at the end of the edge.
-  node: SimilarTable1!
+  node: SimilarTable1
 }
 
 # Methods to use when ordering \`SimilarTable1\`.
@@ -4167,7 +4167,7 @@ type SimilarTable2SEdge {
   cursor: Cursor
 
   # The \`SimilarTable2\` at the end of the edge.
-  node: SimilarTable2!
+  node: SimilarTable2
 }
 
 # Methods to use when ordering \`SimilarTable2\`.
@@ -4302,7 +4302,7 @@ type TablefuncCrosstab2SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab2\` at the end of the edge.
-  node: TablefuncCrosstab2!
+  node: TablefuncCrosstab2
 }
 
 type TablefuncCrosstab3 {
@@ -4333,7 +4333,7 @@ type TablefuncCrosstab3SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab3\` at the end of the edge.
-  node: TablefuncCrosstab3!
+  node: TablefuncCrosstab3
 }
 
 type TablefuncCrosstab4 {
@@ -4365,7 +4365,7 @@ type TablefuncCrosstab4SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab4\` at the end of the edge.
-  node: TablefuncCrosstab4!
+  node: TablefuncCrosstab4
 }
 
 # All input for the \`tableMutation\` mutation.
@@ -4386,7 +4386,7 @@ type TableMutationPayload {
   personByAuthorId: Person
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -4410,7 +4410,7 @@ type TableSetMutationPayload {
   clientMutationId: String
   people: [Person]
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Person\`. May be used by Relay 1.
   personEdge(
     # The method to use when ordering \`Person\`.
     orderBy: [PeopleOrderBy!] = [PRIMARY_KEY_ASC]
@@ -4488,7 +4488,7 @@ type TestviewsEdge {
   cursor: Cursor
 
   # The \`Testview\` at the end of the edge.
-  node: Testview!
+  node: Testview
 }
 
 # Methods to use when ordering \`Testview\`.
@@ -4831,7 +4831,7 @@ type TypesEdge {
   cursor: Cursor
 
   # The \`Type\` at the end of the edge.
-  node: Type!
+  node: Type
 }
 
 # All input for the \`typesMutation\` mutation.
@@ -5008,7 +5008,7 @@ type UpdatableViewsEdge {
   cursor: Cursor
 
   # The \`UpdatableView\` at the end of the edge.
-  node: UpdatableView!
+  node: UpdatableView
 }
 
 # Methods to use when ordering \`UpdatableView\`.
@@ -5058,7 +5058,7 @@ type UpdateCompoundKeyPayload {
   # The \`CompoundKey\` that was updated by this mutation.
   compoundKey: CompoundKey
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`CompoundKey\`. May be used by Relay 1.
   compoundKeyEdge(
     # The method to use when ordering \`CompoundKey\`.
     orderBy: [CompoundKeysOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5107,7 +5107,7 @@ type UpdateDefaultValuePayload {
   # The \`DefaultValue\` that was updated by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5150,7 +5150,7 @@ type UpdateFilterablePayload {
   # The \`Filterable\` that was updated by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5204,7 +5204,7 @@ type UpdatePersonPayload {
   # The \`Person\` that was updated by this mutation.
   person: Person
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Person\`. May be used by Relay 1.
   personEdge(
     # The method to use when ordering \`Person\`.
     orderBy: [PeopleOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5250,7 +5250,7 @@ type UpdatePostPayload {
   # The \`Post\` that was updated by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5296,7 +5296,7 @@ type UpdateSimilarTable1Payload {
   # The \`SimilarTable1\` that was updated by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5339,7 +5339,7 @@ type UpdateSimilarTable2Payload {
   # The \`SimilarTable2\` that was updated by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5382,7 +5382,7 @@ type UpdateTypePayload {
   # The \`Type\` that was updated by this mutation.
   type: Type
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Type\`. May be used by Relay 1.
   typeEdge(
     # The method to use when ordering \`Type\`.
     orderBy: [TypesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5425,7 +5425,7 @@ type UpdateViewTablePayload {
   # The \`ViewTable\` that was updated by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5513,7 +5513,7 @@ type ViewTablesEdge {
   cursor: Cursor
 
   # The \`ViewTable\` at the end of the edge.
-  node: ViewTable!
+  node: ViewTable
 }
 
 # Methods to use when ordering \`ViewTable\`.
@@ -5703,7 +5703,7 @@ type CreateDefaultValuePayload {
   # The \`DefaultValue\` that was created by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5732,7 +5732,7 @@ type CreateFilterablePayload {
   # The \`Filterable\` that was created by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5761,7 +5761,7 @@ type CreateForeignKeyPayload {
   # The \`ForeignKey\` that was created by this mutation.
   foreignKey: ForeignKey
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ForeignKey\`. May be used by Relay 1.
   foreignKeyEdge(
     # The method to use when ordering \`ForeignKey\`.
     orderBy: [ForeignKeysOrderBy!] = [NATURAL]
@@ -5790,7 +5790,7 @@ type CreatePostPayload {
   # The \`Post\` that was created by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5822,7 +5822,7 @@ type CreateSimilarTable1Payload {
   # The \`SimilarTable1\` that was created by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5851,7 +5851,7 @@ type CreateSimilarTable2Payload {
   # The \`SimilarTable2\` that was created by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5880,7 +5880,7 @@ type CreateTestviewPayload {
   # The \`Testview\` that was created by this mutation.
   testview: Testview
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Testview\`. May be used by Relay 1.
   testviewEdge(
     # The method to use when ordering \`Testview\`.
     orderBy: [TestviewsOrderBy!] = [NATURAL]
@@ -5909,7 +5909,7 @@ type CreateViewTablePayload {
   # The \`ViewTable\` that was created by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -5992,7 +5992,7 @@ type DefaultValuesEdge {
   cursor: Cursor
 
   # The \`DefaultValue\` at the end of the edge.
-  node: DefaultValue!
+  node: DefaultValue
 }
 
 # Methods to use when ordering \`DefaultValue\`.
@@ -6033,7 +6033,7 @@ type DeleteDefaultValuePayload {
   # The \`DefaultValue\` that was deleted by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6072,7 +6072,7 @@ type DeleteFilterablePayload {
   # The \`Filterable\` that was deleted by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6110,7 +6110,7 @@ type DeletePostPayload {
   # The \`Post\` that was deleted by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6151,7 +6151,7 @@ type DeleteSimilarTable1Payload {
   # The \`SimilarTable1\` that was deleted by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6189,7 +6189,7 @@ type DeleteSimilarTable2Payload {
   # The \`SimilarTable2\` that was deleted by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6227,7 +6227,7 @@ type DeleteViewTablePayload {
   # The \`ViewTable\` that was deleted by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6343,7 +6343,7 @@ type FilterablesEdge {
   cursor: Cursor
 
   # The \`Filterable\` at the end of the edge.
-  node: Filterable!
+  node: Filterable
 }
 
 # Methods to use when ordering \`Filterable\`.
@@ -6442,7 +6442,7 @@ type ForeignKeysEdge {
   cursor: Cursor
 
   # The \`ForeignKey\` at the end of the edge.
-  node: ForeignKey!
+  node: ForeignKey
 }
 
 # Methods to use when ordering \`ForeignKey\`.
@@ -6759,7 +6759,7 @@ type NonUpdatableViewsEdge {
   cursor: Cursor
 
   # The \`NonUpdatableView\` at the end of the edge.
-  node: NonUpdatableView!
+  node: NonUpdatableView
 }
 
 # Methods to use when ordering \`NonUpdatableView\`.
@@ -6890,7 +6890,7 @@ type PostManyPayload {
   # unchanged and unused. May be used by a client to track mutations.
   clientMutationId: String
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -6932,7 +6932,7 @@ type PostsEdge {
   cursor: Cursor
 
   # The \`Post\` at the end of the edge.
-  node: Post!
+  node: Post
 }
 
 # Methods to use when ordering \`Post\`.
@@ -6970,7 +6970,7 @@ type PostWithSuffixPayload {
   clientMutationId: String
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -7471,7 +7471,7 @@ type SimilarTable1SEdge {
   cursor: Cursor
 
   # The \`SimilarTable1\` at the end of the edge.
-  node: SimilarTable1!
+  node: SimilarTable1
 }
 
 # Methods to use when ordering \`SimilarTable1\`.
@@ -7576,7 +7576,7 @@ type SimilarTable2SEdge {
   cursor: Cursor
 
   # The \`SimilarTable2\` at the end of the edge.
-  node: SimilarTable2!
+  node: SimilarTable2
 }
 
 # Methods to use when ordering \`SimilarTable2\`.
@@ -7630,7 +7630,7 @@ type TablefuncCrosstab2SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab2\` at the end of the edge.
-  node: TablefuncCrosstab2!
+  node: TablefuncCrosstab2
 }
 
 type TablefuncCrosstab3 {
@@ -7661,7 +7661,7 @@ type TablefuncCrosstab3SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab3\` at the end of the edge.
-  node: TablefuncCrosstab3!
+  node: TablefuncCrosstab3
 }
 
 type TablefuncCrosstab4 {
@@ -7693,7 +7693,7 @@ type TablefuncCrosstab4SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab4\` at the end of the edge.
-  node: TablefuncCrosstab4!
+  node: TablefuncCrosstab4
 }
 
 type Testview {
@@ -7764,7 +7764,7 @@ type TestviewsEdge {
   cursor: Cursor
 
   # The \`Testview\` at the end of the edge.
-  node: Testview!
+  node: Testview
 }
 
 # Methods to use when ordering \`Testview\`.
@@ -7811,7 +7811,7 @@ type UpdateDefaultValuePayload {
   # The \`DefaultValue\` that was updated by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -7854,7 +7854,7 @@ type UpdateFilterablePayload {
   # The \`Filterable\` that was updated by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -7897,7 +7897,7 @@ type UpdatePostPayload {
   # The \`Post\` that was updated by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -7943,7 +7943,7 @@ type UpdateSimilarTable1Payload {
   # The \`SimilarTable1\` that was updated by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -7986,7 +7986,7 @@ type UpdateSimilarTable2Payload {
   # The \`SimilarTable2\` that was updated by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8029,7 +8029,7 @@ type UpdateViewTablePayload {
   # The \`ViewTable\` that was updated by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8114,7 +8114,7 @@ type ViewTablesEdge {
   cursor: Cursor
 
   # The \`ViewTable\` at the end of the edge.
-  node: ViewTable!
+  node: ViewTable
 }
 
 # Methods to use when ordering \`ViewTable\`.
@@ -8337,7 +8337,7 @@ type CreateDefaultValuePayload {
   # The \`DefaultValue\` that was created by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8366,7 +8366,7 @@ type CreateFilterablePayload {
   # The \`Filterable\` that was created by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8395,7 +8395,7 @@ type CreateForeignKeyPayload {
   # The \`ForeignKey\` that was created by this mutation.
   foreignKey: ForeignKey
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ForeignKey\`. May be used by Relay 1.
   foreignKeyEdge(
     # The method to use when ordering \`ForeignKey\`.
     orderBy: [ForeignKeysOrderBy!] = [NATURAL]
@@ -8424,7 +8424,7 @@ type CreatePostPayload {
   # The \`Post\` that was created by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8456,7 +8456,7 @@ type CreateSimilarTable1Payload {
   # The \`SimilarTable1\` that was created by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8485,7 +8485,7 @@ type CreateSimilarTable2Payload {
   # The \`SimilarTable2\` that was created by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8514,7 +8514,7 @@ type CreateTestviewPayload {
   # The \`Testview\` that was created by this mutation.
   testview: Testview
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Testview\`. May be used by Relay 1.
   testviewEdge(
     # The method to use when ordering \`Testview\`.
     orderBy: [TestviewsOrderBy!] = [NATURAL]
@@ -8543,7 +8543,7 @@ type CreateViewTablePayload {
   # The \`ViewTable\` that was created by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8626,7 +8626,7 @@ type DefaultValuesEdge {
   cursor: Cursor
 
   # The \`DefaultValue\` at the end of the edge.
-  node: DefaultValue!
+  node: DefaultValue
 }
 
 # Methods to use when ordering \`DefaultValue\`.
@@ -8667,7 +8667,7 @@ type DeleteDefaultValuePayload {
   # The \`DefaultValue\` that was deleted by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8706,7 +8706,7 @@ type DeleteFilterablePayload {
   # The \`Filterable\` that was deleted by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8744,7 +8744,7 @@ type DeletePostPayload {
   # The \`Post\` that was deleted by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8785,7 +8785,7 @@ type DeleteSimilarTable1Payload {
   # The \`SimilarTable1\` that was deleted by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8823,7 +8823,7 @@ type DeleteSimilarTable2Payload {
   # The \`SimilarTable2\` that was deleted by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8861,7 +8861,7 @@ type DeleteViewTablePayload {
   # The \`ViewTable\` that was deleted by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -8977,7 +8977,7 @@ type FilterablesEdge {
   cursor: Cursor
 
   # The \`Filterable\` at the end of the edge.
-  node: Filterable!
+  node: Filterable
 }
 
 # Methods to use when ordering \`Filterable\`.
@@ -9103,7 +9103,7 @@ type ForeignKeysEdge {
   cursor: Cursor
 
   # The \`ForeignKey\` at the end of the edge.
-  node: ForeignKey!
+  node: ForeignKey
 }
 
 # Methods to use when ordering \`ForeignKey\`.
@@ -9447,7 +9447,7 @@ type NonUpdatableViewsEdge {
   cursor: Cursor
 
   # The \`NonUpdatableView\` at the end of the edge.
-  node: NonUpdatableView!
+  node: NonUpdatableView
 }
 
 # Methods to use when ordering \`NonUpdatableView\`.
@@ -9578,7 +9578,7 @@ type PostManyPayload {
   # unchanged and unused. May be used by a client to track mutations.
   clientMutationId: String
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -9620,7 +9620,7 @@ type PostsEdge {
   cursor: Cursor
 
   # The \`Post\` at the end of the edge.
-  node: Post!
+  node: Post
 }
 
 # Methods to use when ordering \`Post\`.
@@ -9658,7 +9658,7 @@ type PostWithSuffixPayload {
   clientMutationId: String
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10159,7 +10159,7 @@ type SimilarTable1SEdge {
   cursor: Cursor
 
   # The \`SimilarTable1\` at the end of the edge.
-  node: SimilarTable1!
+  node: SimilarTable1
 }
 
 # Methods to use when ordering \`SimilarTable1\`.
@@ -10264,7 +10264,7 @@ type SimilarTable2SEdge {
   cursor: Cursor
 
   # The \`SimilarTable2\` at the end of the edge.
-  node: SimilarTable2!
+  node: SimilarTable2
 }
 
 # Methods to use when ordering \`SimilarTable2\`.
@@ -10399,7 +10399,7 @@ type TablefuncCrosstab2SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab2\` at the end of the edge.
-  node: TablefuncCrosstab2!
+  node: TablefuncCrosstab2
 }
 
 type TablefuncCrosstab3 {
@@ -10430,7 +10430,7 @@ type TablefuncCrosstab3SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab3\` at the end of the edge.
-  node: TablefuncCrosstab3!
+  node: TablefuncCrosstab3
 }
 
 type TablefuncCrosstab4 {
@@ -10462,7 +10462,7 @@ type TablefuncCrosstab4SEdge {
   cursor: Cursor
 
   # The \`TablefuncCrosstab4\` at the end of the edge.
-  node: TablefuncCrosstab4!
+  node: TablefuncCrosstab4
 }
 
 type Testview {
@@ -10533,7 +10533,7 @@ type TestviewsEdge {
   cursor: Cursor
 
   # The \`Testview\` at the end of the edge.
-  node: Testview!
+  node: Testview
 }
 
 # Methods to use when ordering \`Testview\`.
@@ -10580,7 +10580,7 @@ type UpdateDefaultValuePayload {
   # The \`DefaultValue\` that was updated by this mutation.
   defaultValue: DefaultValue
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`DefaultValue\`. May be used by Relay 1.
   defaultValueEdge(
     # The method to use when ordering \`DefaultValue\`.
     orderBy: [DefaultValuesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10623,7 +10623,7 @@ type UpdateFilterablePayload {
   # The \`Filterable\` that was updated by this mutation.
   filterable: Filterable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Filterable\`. May be used by Relay 1.
   filterableEdge(
     # The method to use when ordering \`Filterable\`.
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10666,7 +10666,7 @@ type UpdatePostPayload {
   # The \`Post\` that was updated by this mutation.
   post: Post
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`Post\`. May be used by Relay 1.
   postEdge(
     # The method to use when ordering \`Post\`.
     orderBy: [PostsOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10712,7 +10712,7 @@ type UpdateSimilarTable1Payload {
   # The \`SimilarTable1\` that was updated by this mutation.
   similarTable1: SimilarTable1
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable1\`. May be used by Relay 1.
   similarTable1Edge(
     # The method to use when ordering \`SimilarTable1\`.
     orderBy: [SimilarTable1SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10755,7 +10755,7 @@ type UpdateSimilarTable2Payload {
   # The \`SimilarTable2\` that was updated by this mutation.
   similarTable2: SimilarTable2
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`SimilarTable2\`. May be used by Relay 1.
   similarTable2Edge(
     # The method to use when ordering \`SimilarTable2\`.
     orderBy: [SimilarTable2SOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10798,7 +10798,7 @@ type UpdateViewTablePayload {
   # The \`ViewTable\` that was updated by this mutation.
   viewTable: ViewTable
 
-  # An edge for the type. May be used by Relay 1.
+  # An edge for our \`ViewTable\`. May be used by Relay 1.
   viewTableEdge(
     # The method to use when ordering \`ViewTable\`.
     orderBy: [ViewTablesOrderBy!] = [PRIMARY_KEY_ASC]
@@ -10883,7 +10883,7 @@ type ViewTablesEdge {
   cursor: Cursor
 
   # The \`ViewTable\` at the end of the edge.
-  node: ViewTable!
+  node: ViewTable
 }
 
 # Methods to use when ordering \`ViewTable\`.
