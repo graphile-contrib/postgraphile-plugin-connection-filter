@@ -4,6 +4,7 @@ module.exports = function ConnectionArgFilterPlugin(
     connectionFilterAllowedFieldTypes,
     connectionFilterAllowedOperators,
     connectionFilterOperatorNames = {},
+    connectionFilterComputedColumns = true,
   } = {}
 ) {
   builder.hook("build", build => {
@@ -52,6 +53,7 @@ module.exports = function ConnectionArgFilterPlugin(
         }
       },
       connectionFilterAllowedFieldTypes,
+      connectionFilterComputedColumns,
     });
   });
 
