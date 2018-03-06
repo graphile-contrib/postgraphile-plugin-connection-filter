@@ -1,3 +1,5 @@
+[![Package on npm](https://img.shields.io/npm/v/postgraphile-plugin-connection-filter.svg)](https://www.npmjs.com/package/postgraphile-plugin-connection-filter)
+
 # postgraphile-plugin-connection-filter
 This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
@@ -103,7 +105,9 @@ The following filter operators are exposed by default:
 
 ``` graphql
 query {
-  allPosts(filter: { body: { null: true } }) {
+  allPosts(filter: {
+    body: { null: true }
+  }) {
     ...
   }
 }
@@ -113,7 +117,9 @@ query {
 
 ``` graphql
 query {
-  allPosts(filter: { body: { null: false } }) {
+  allPosts(filter: {
+    body: { null: false }
+  }) {
     ...
   }
 }
@@ -122,7 +128,9 @@ query {
 ### Comparison operator with scalar input
 ``` graphql
 query {
-  allPosts(filter: { createdAt: { greaterThan: "2016-01-01" } }) {
+  allPosts(filter: {
+    createdAt: { greaterThan: "2016-01-01" }
+  }) {
     ...
   }
 }
@@ -131,7 +139,9 @@ query {
 ### Comparison operator with array input
 ``` graphql
 query {
-  allPosts(filter: { authorId: { in: [1, 2] } }) {
+  allPosts(filter: {
+    authorId: { in: [1, 2] }
+  }) {
     ...
   }
 }
@@ -178,6 +188,28 @@ query {
     }
   }) {
     ...
+  }
+}
+```
+
+### Related tables
+
+``` graphql
+query {
+  allPeople(filter: {
+    firstName: { startsWith:"John" }
+  }) {
+    nodes {
+      firstName
+      lastName
+      postsByAuthorId(filter: {
+        createdAt: { greaterThan: "2016-01-01" }
+      }) {
+        nodes {
+          ...
+        }
+      }
+    }
   }
 }
 ```
