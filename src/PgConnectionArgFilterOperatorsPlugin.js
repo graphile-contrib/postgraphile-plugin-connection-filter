@@ -1,12 +1,4 @@
-module.exports = function PgConnectionArgFilterOperatorsPlugin(
-  builder,
-  { connectionFilterUsesShortNames = false } = {}
-) {
-  if (connectionFilterUsesShortNames !== false) {
-    console.warn(
-      "The `connectionFilterUsesShortNames` option is obsolete; please use `connectionFilterOperatorNames` instead.  See README.md for details."
-    );
-  }
+module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
   builder.hook(
     "init",
     (
