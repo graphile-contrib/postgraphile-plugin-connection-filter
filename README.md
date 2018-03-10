@@ -103,7 +103,10 @@ The following filter operators are exposed by default:
 
 ## Examples
 
-### Null values
+<details>
+<summary>Null values</summary>
+<br>
+NOTE: The syntax for filtering null values will be standardized before the v1.0.0 release.  There are currently two options:
 
 ``` graphql
 query {
@@ -115,7 +118,21 @@ query {
 }
 ```
 
-### Non-null values
+``` graphql
+query {
+  allPosts(filter: {
+    body: { is: NULL }
+  }) {
+    ...
+  }
+}
+```
+</details>
+
+<details>
+<summary>Non-null values</summary>
+<br>
+NOTE: The syntax for filtering null values will standardized before the v1.0.0 release.  There are currently two options:
 
 ``` graphql
 query {
@@ -127,7 +144,20 @@ query {
 }
 ```
 
-### Comparison operator with scalar input
+``` graphql
+query {
+  allPosts(filter: {
+    body: { is: NOT_NULL }
+  }) {
+    ...
+  }
+}
+```
+</details>
+
+<details>
+<summary>Comparison operator with scalar input</summary>
+<br>
 ``` graphql
 query {
   allPosts(filter: {
@@ -137,8 +167,11 @@ query {
   }
 }
 ```
+</details>
 
-### Comparison operator with array input
+<details>
+<summary>Comparison operator with array input</summary>
+<br>
 ``` graphql
 query {
   allPosts(filter: {
@@ -148,8 +181,13 @@ query {
   }
 }
 ```
+</details>
 
-### Multiple comparison operators
+<details>
+<summary>Multiple comparison operators</summary>
+<br>
+Note: Objects with multiple keys are interpreted with an implicit `AND` between the conditions.
+
 ``` graphql
 query {
   allPosts(filter: {
@@ -160,10 +198,11 @@ query {
   }
 }
 ```
+</details>
 
-Note: Objects with multiple keys are interpreted with an implicit `AND` between the conditions.
-
-### Logical operator
+<details>
+<summary>Logical operator</summary>
+<br>
 ``` graphql
 query {
   allPosts(filter: {
@@ -176,9 +215,11 @@ query {
   }
 }
 ```
+</details>
 
-### Nested logic
-
+<details>
+<summary>Nested logic</summary>
+<br>
 ``` graphql
 query {
   allPosts(filter: {
@@ -193,9 +234,11 @@ query {
   }
 }
 ```
+</details>
 
-### Related tables
-
+<details>
+<summary>Related tables</summary>
+<br>
 ``` graphql
 query {
   allPeople(filter: {
@@ -215,6 +258,7 @@ query {
   }
 }
 ```
+</details>
 
 For additional examples, see the [tests](https://github.com/mattbretl/postgraphile-plugin-connection-filter/blob/master/__tests__/fixtures/queries/connections-filter.graphql).
 
@@ -222,9 +266,11 @@ For additional examples, see the [tests](https://github.com/mattbretl/postgraphi
 
 When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions`:
 
-### connectionFilterAllowedOperators
+<details>
+<summary>connectionFilterAllowedOperators</summary>
+<br>
+Restrict filtering to specific operators:
 
-Restrict filtering to specific operators
 ``` js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
@@ -246,10 +292,13 @@ postgraphile(pgConfig, schema, {
 ```
 
 For a full list of the available operators, see the Comparison Operators table above.
+</details>
 
-### connectionFilterAllowedFieldTypes
+<details>
+<summary>connectionFilterAllowedFieldTypes</summary>
+<br>
+Restrict filtering to specific field types:
 
-Restrict filtering to specific field types
 ``` js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
@@ -259,10 +308,13 @@ postgraphile(pgConfig, schema, {
 ```
 
 The available field types will depend on your database schema.
+</details>
 
-### connectionFilterComputedColumns
+<details>
+<summary>connectionFilterComputedColumns</summary>
+<br>
+Enable/disable filtering by computed columns:
 
-Enable/disable filtering by computed columns
 ``` js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
@@ -270,10 +322,13 @@ postgraphile(pgConfig, schema, {
   },
 })
 ```
+</details>
 
-### connectionFilterOperatorNames
+<details>
+<summary>connectionFilterOperatorNames</summary>
+<br>
+Use alternative names (e.g. `eq`, `ne`) for operators:
 
-Use alternative names (e.g. `eq`, `ne`) for operators
 ``` js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
@@ -284,6 +339,7 @@ postgraphile(pgConfig, schema, {
   },
 })
 ```
+</details>
 
 ## Development
 
