@@ -1,4 +1,6 @@
 query {
+  string_is_null: allFilterables(filter: { string: { is: NULL } }) { ...filterableConnection }
+  string_is_not_null: allFilterables(filter: { string: { is: NOT_NULL } }) { ...filterableConnection }
   string_null_true: allFilterables(filter: { string: { null: true } }) { ...filterableConnection }
   string_null_false: allFilterables(filter: { string: { null: false } }) { ...filterableConnection }
   string_equalTo_test: allFilterables(filter: { string: { equalTo: "test" } }) { ...filterableConnection }

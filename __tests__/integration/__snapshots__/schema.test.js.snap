@@ -125,6 +125,9 @@ input AnIntFilter {
   # Checks for values in this list.
   in: [AnInt!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: AnInt
 
@@ -186,6 +189,9 @@ input AnotherIntFilter {
 
   # Checks for values in this list.
   in: [AnotherInt!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: AnotherInt
@@ -282,6 +288,9 @@ input BigFloatFilter {
   # Checks for values in this list.
   in: [BigFloat!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values less than this value.
   lessThan: BigFloat
 
@@ -353,6 +362,9 @@ input BigIntFilter {
   # Checks for values in this list.
   in: [BigInt!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: BigInt
 
@@ -376,6 +388,9 @@ input BooleanFilter {
 
   # Checks for values in this list.
   in: [Boolean!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Boolean
@@ -406,6 +421,9 @@ input ColorFilter {
 
   # Checks for values in this list.
   in: [Color!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Color
@@ -1040,6 +1058,9 @@ input DateFilter {
   # Checks for values in this list.
   in: [Date!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values less than this value.
   lessThan: Date
 
@@ -1115,6 +1136,9 @@ input DatetimeFilter {
 
   # Checks for values in this list.
   in: [Datetime!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values less than this value.
   lessThan: Datetime
@@ -1677,6 +1701,9 @@ input EmailFilter {
   # Checks for values in this list.
   in: [Email!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Email
 
@@ -1850,6 +1877,9 @@ input FloatFilter {
 
   # Checks for values in this list.
   in: [Float!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values less than this value.
   lessThan: Float
@@ -2060,6 +2090,9 @@ input IntFilter {
   # Checks for values in this list.
   in: [Int!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values less than this value.
   lessThan: Int
 
@@ -2190,6 +2223,9 @@ input JSONFilter {
 
   # Checks for values in this list.
   in: [JSON!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: JSON
@@ -2861,6 +2897,11 @@ type NormalRandPayload {
 }
 
 scalar NotNullUrl
+
+enum NullOrNotNull {
+  NOT_NULL
+  NULL
+}
 
 # Information about pagination in a connection.
 type PageInfo {
@@ -4214,6 +4255,9 @@ input StringFilter {
   # Checks for values in this list.
   in: [String!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values less than this value.
   lessThan: String
 
@@ -4521,6 +4565,9 @@ input TimeFilter {
 
   # Checks for values in this list.
   in: [Time!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values less than this value.
   lessThan: Time
@@ -8264,6 +8311,9 @@ input BigFloatFilter {
   # Checks for values in this list.
   in: [BigFloat!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values less than this value.
   lessThan: BigFloat
 
@@ -8293,6 +8343,9 @@ input BooleanFilter {
 
   # Checks for values in this list.
   in: [Boolean!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values not equal to this value.
   ne: Boolean
@@ -9016,6 +9069,9 @@ input FloatFilter {
   # Checks for values in this list.
   in: [Float!]
 
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
   # Checks for values less than this value.
   lessThan: Float
 
@@ -9133,6 +9189,9 @@ input IntFilter {
 
   # Checks for values in this list.
   in: [Int!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values less than this value.
   lessThan: Int
@@ -9477,6 +9536,11 @@ type NormalRandPayload {
 
   # Our root query field type. Allows us to run any query from our mutation payload.
   query: Query
+}
+
+enum NullOrNotNull {
+  NOT_NULL
+  NULL
 }
 
 # Information about pagination in a connection.
@@ -10310,6 +10374,9 @@ input StringFilter {
 
   # Checks for values in this list.
   in: [String!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
 
   # Checks for values less than this value.
   lessThan: String

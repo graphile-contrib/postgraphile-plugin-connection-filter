@@ -4,13 +4,40 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     (
       _,
       {
+        newWithHooks,
         getTypeByName,
         addConnectionFilterOperator,
         escapeLikeWildcards,
         pgSql: sql,
-        graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
+        graphql: {
+          GraphQLBoolean,
+          GraphQLList,
+          GraphQLNonNull,
+          GraphQLEnumType,
+        },
       }
     ) => {
+      addConnectionFilterOperator(
+        "is",
+        "Checks for null or non-null values.",
+        () =>
+          getTypeByName("NullOrNotNull") ||
+          newWithHooks(
+            GraphQLEnumType,
+            {
+              name: "NullOrNotNull",
+              values: {
+                NULL: { value: "NULL" },
+                NOT_NULL: { value: "NOT NULL" },
+              },
+            },
+            {}
+          ),
+        (identifier, val, input) =>
+          sql.query`${identifier} ${
+            input === "NULL" ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`
+      );
       addConnectionFilterOperator(
         "null",
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
