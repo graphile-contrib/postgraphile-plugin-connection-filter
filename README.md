@@ -3,9 +3,9 @@
 # postgraphile-plugin-connection-filter
 This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
-> **Note:** This plugin targets the alpha release of PostGraphile v4.  Because of possible API changes, releases of this plugin are pinned to specific alpha versions of PostGraphile.  See the Compatibility table below for details.
+> **Note:** This plugin targets the beta release of PostGraphile v4. See the Compatibility table below for details.
 
-> **Warning:** Use of this plugin (particularly with the default options) may (and most likely will) make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
+> **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
 
 ## Compatibility
 
@@ -17,6 +17,7 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 | 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.6 |
 | 4.0.0-alpha2.30 | 1.0.0-alpha.7 - 1.0.0-alpha.8 |
 | 4.0.0-alpha2.33 | 1.0.0-alpha.9 - 1.0.0-alpha.10 |
+| 4.0.0-beta.0 or later | 1.0.0-beta.0 |
 
 ## Performance and Security
 
