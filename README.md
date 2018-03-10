@@ -283,8 +283,9 @@ For additional examples, see the [tests](https://github.com/mattbretl/postgraphi
 When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions`:
 
 <details>
+
 <summary>connectionFilterAllowedOperators</summary>
-<br>
+
 Restrict filtering to specific operators:
 
 ``` js
@@ -308,11 +309,13 @@ postgraphile(pgConfig, schema, {
 ```
 
 For a full list of the available operators, see the Comparison Operators table above.
+
 </details>
 
 <details>
+
 <summary>connectionFilterAllowedFieldTypes</summary>
-<br>
+
 Restrict filtering to specific field types:
 
 ``` js
@@ -324,11 +327,13 @@ postgraphile(pgConfig, schema, {
 ```
 
 The available field types will depend on your database schema.
+
 </details>
 
 <details>
+
 <summary>connectionFilterComputedColumns</summary>
-<br>
+
 Enable/disable filtering by computed columns:
 
 ``` js
@@ -338,11 +343,13 @@ postgraphile(pgConfig, schema, {
   },
 })
 ```
+
 </details>
 
 <details>
+
 <summary>connectionFilterOperatorNames</summary>
-<br>
+
 Use alternative names (e.g. `eq`, `ne`) for operators:
 
 ``` js
@@ -355,6 +362,7 @@ postgraphile(pgConfig, schema, {
   },
 })
 ```
+
 </details>
 
 ## Development
