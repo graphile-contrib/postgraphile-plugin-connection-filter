@@ -104,8 +104,9 @@ The following filter operators are exposed by default:
 ## Examples
 
 <details>
+
 <summary>Null values</summary>
-<br>
+
 NOTE: The syntax for filtering null values will be standardized before the v1.0.0 release.  There are currently two options:
 
 ``` graphql
@@ -127,11 +128,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Non-null values</summary>
-<br>
+
 NOTE: The syntax for filtering null values will standardized before the v1.0.0 release.  There are currently two options:
 
 ``` graphql
@@ -153,11 +156,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Comparison operator with scalar input</summary>
-<br>
+
 ``` graphql
 query {
   allPosts(filter: {
@@ -167,11 +172,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Comparison operator with array input</summary>
-<br>
+
 ``` graphql
 query {
   allPosts(filter: {
@@ -181,11 +188,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Multiple comparison operators</summary>
-<br>
+
 Note: Objects with multiple keys are interpreted with an implicit `AND` between the conditions.
 
 ``` graphql
@@ -198,11 +207,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Logical operator</summary>
-<br>
+
 ``` graphql
 query {
   allPosts(filter: {
@@ -215,11 +226,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Nested logic</summary>
-<br>
+
 ``` graphql
 query {
   allPosts(filter: {
@@ -234,11 +247,13 @@ query {
   }
 }
 ```
+
 </details>
 
 <details>
+
 <summary>Related tables</summary>
-<br>
+
 ``` graphql
 query {
   allPeople(filter: {
@@ -258,6 +273,7 @@ query {
   }
 }
 ```
+
 </details>
 
 For additional examples, see the [tests](https://github.com/mattbretl/postgraphile-plugin-connection-filter/blob/master/__tests__/fixtures/queries/connections-filter.graphql).
