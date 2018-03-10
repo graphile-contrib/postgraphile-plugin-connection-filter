@@ -70,6 +70,7 @@ The following filter operators are exposed by default:
 ### Comparison Operators
 | Postgres expression | GraphQL field | Type |
 | --- | --- | --- |
+| IS NULL | is | Enum (`NULL`, `NOT_NULL`) |
 | IS NULL | null | Boolean |
 | = | equalTo | Scalar |
 | <> | notEqualTo | Scalar |
@@ -219,7 +220,7 @@ For additional examples, see the [tests](https://github.com/mattbretl/postgraphi
 
 ## Plugin Options
 
-When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions` (called `graphqlBuildOptions` in PostGraphile 4.0.0-alpha2.20 and earlier):
+When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions`:
 
 ### connectionFilterAllowedOperators
 
@@ -279,40 +280,6 @@ postgraphile(pgConfig, schema, {
     connectionFilterOperatorNames: {
       equalTo: "eq",
       notEqualTo: "ne",
-    },
-  },
-})
-``` 
-
-Note: The `connectionFilterUsesShortNames` option was removed in v1.0.0-alpha.6.  To restore the old functionality, you can use this:
-``` js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
-    connectionFilterOperatorNames: {
-      equalTo: "eq",
-      notEqualTo: "ne",
-      lessThan: "lt",
-      lessThanOrEqualTo: "lte",
-      greaterThan: "gt",
-      greaterThanOrEqualTo: "gte",
-      in: "in",
-      notIn: "nin",
-      contains: "cont",
-      notContains: "ncont",
-      containsInsensitive: "conti",
-      notContainsInsensitive: "nconti",
-      startsWith: "starts",
-      notStartsWith: "nstarts",
-      startsWithInsensitive: "startsi",
-      notStartsWithInsensitive: "nstartsi",
-      endsWith: "ends",
-      notEndsWith: "nends",
-      endsWithInsensitive: "endsi",
-      notEndsWithInsensitive: "nendsi",
-      like: "like",
-      notLike: "nlike",
-      likeInsensitive: "ilike",
-      notLikeInsensitive: "nilike",
     },
   },
 })
