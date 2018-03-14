@@ -401,4 +401,20 @@ module.exports = function PgConnectionArgFilterPlugin(
       });
     }
   );
+
+  builder.hook("build", build => {
+    return build.extend(build, {
+      escapeLikeWildcards(val) {
+        if ("string" !== typeof val) {
+          throw new Error("escapeLikeWildcards called on non-string value");
+        } else {
+          return val
+            .split("%")
+            .join("\\%")
+            .split("_")
+            .join("\\_");
+        }
+      },
+    });
+  });
 };
