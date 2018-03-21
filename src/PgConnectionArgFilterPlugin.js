@@ -261,10 +261,16 @@ module.exports = function PgConnectionArgFilterPlugin(
         connectionFilterOperators,
       } = build;
       const {
-        scope: { isPgFieldConnection, pgFieldIntrospection: table },
+        scope: { isPgFieldConnection, pgFieldIntrospection: source },
         addArgDataGenerator,
+        field,
+        Self,
       } = context;
-      if (!isPgFieldConnection || !table || table.kind !== "class") {
+      if (
+        !isPgFieldConnection ||
+        !source ||
+        (source.kind !== "class" && source.kind !== "procedure")
+      ) {
         return args;
       }
 
@@ -272,31 +278,38 @@ module.exports = function PgConnectionArgFilterPlugin(
       addArgDataGenerator(function connectionFilter({ filter }) {
         return {
           pgQuery: queryBuilder => {
+            // Standard columns
             const attrByFieldName = introspectionResultsByKind.attribute
-              .filter(attr => attr.classId === table.id)
+              .filter(
+                attr =>
+                  source.kind === "class"
+                    ? attr.classId === source.id
+                    : attr.class.typeId === source.returnTypeId
+              )
               .filter(attr => pgColumnFilter(attr, build, context))
               .reduce((memo, attr) => {
                 const fieldName = inflection.column(
                   attr.name,
-                  table.name,
-                  table.namespace && table.namespace.name
+                  source.name,
+                  source.namespace && source.namespace.name
                 );
                 memo[fieldName] = attr;
                 return memo;
               }, {});
 
+            // Computed columns
             const procByFieldName = introspectionResultsByKind.procedure
               .filter(proc => proc.isStable)
-              .filter(proc => proc.namespaceId === table.namespaceId)
-              .filter(proc => proc.name.startsWith(`${table.name}_`))
+              .filter(proc => proc.namespaceId === source.namespaceId)
+              .filter(proc => proc.name.startsWith(`${source.name}_`))
               .reduce((memo, proc) => {
                 const pseudoColumnName = proc.name.substr(
-                  table.name.length + 1
+                  source.name.length + 1
                 );
                 const fieldName = inflection.column(
                   pseudoColumnName,
-                  table.name,
-                  table.namespace.name
+                  source.name,
+                  source.namespace.name
                 );
                 memo[fieldName] = proc;
                 return memo;
@@ -306,6 +319,7 @@ module.exports = function PgConnectionArgFilterPlugin(
               const operator = connectionFilterOperators[operatorName];
               const inputResolver = operator.options.inputResolver;
 
+              // Standard columns
               const attr = attrByFieldName[fieldName];
               if (attr != null) {
                 const identifier = sql.query`${queryBuilder.getTableAlias()}.${sql.identifier(
@@ -329,6 +343,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                 return operator.resolveWhereClause(identifier, val, input);
               }
 
+              // Computed columns
               const proc = procByFieldName[fieldName];
               if (proc != null) {
                 const procReturnType =
@@ -390,15 +405,26 @@ module.exports = function PgConnectionArgFilterPlugin(
       });
 
       // Add filter argument for each Connection
-      const tableTypeName = pgGetGqlTypeByTypeId(table.type.id).name;
+      const returnTypeId =
+        source.kind === "class" ? source.type.id : source.returnTypeId;
+      const tableTypeName = pgGetGqlTypeByTypeId(returnTypeId).name;
       const TableFilterType = getTypeByName(`${tableTypeName}Filter`);
-      return extend(args, {
-        filter: {
-          description:
-            "A filter to be used in determining which values should be returned by the collection.",
-          type: TableFilterType,
+      if (TableFilterType == null) {
+        return args;
+      }
+      return extend(
+        args,
+        {
+          filter: {
+            description:
+              "A filter to be used in determining which values should be returned by the collection.",
+            type: TableFilterType,
+          },
         },
-      });
+        `Adding connection filter arg to field '${field.name}' of '${
+          Self.name
+        }'`
+      );
     }
   );
 

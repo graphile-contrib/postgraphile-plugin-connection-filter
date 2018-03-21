@@ -3065,6 +3065,9 @@ type Person implements Node {
     # Read all values in the set before (above) this cursor.
     before: Cursor
 
+    # A filter to be used in determining which values should be returned by the collection.
+    filter: PersonFilter
+
     # Only read the first \`n\` values of the set.
     first: Int
 
@@ -3971,6 +3974,9 @@ type Query implements Node {
 
     # Read all values in the set before (above) this cursor.
     before: Cursor
+
+    # A filter to be used in determining which values should be returned by the collection.
+    filter: PersonFilter
 
     # Only read the first \`n\` values of the set.
     first: Int
