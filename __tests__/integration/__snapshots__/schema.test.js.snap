@@ -128,6 +128,9 @@ input AnIntFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: AnInt
 
@@ -192,6 +195,9 @@ input AnotherIntFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: AnotherInt
@@ -291,6 +297,9 @@ input BigFloatFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values less than this value.
   lessThan: BigFloat
 
@@ -365,6 +374,9 @@ input BigIntFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: BigInt
 
@@ -391,6 +403,9 @@ input BooleanFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Boolean
@@ -424,6 +439,9 @@ input ColorFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Color
@@ -1061,6 +1079,9 @@ input DateFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values less than this value.
   lessThan: Date
 
@@ -1139,6 +1160,9 @@ input DatetimeFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values less than this value.
   lessThan: Datetime
@@ -1704,6 +1728,9 @@ input EmailFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: Email
 
@@ -1880,6 +1907,9 @@ input FloatFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values less than this value.
   lessThan: Float
@@ -2093,6 +2123,9 @@ input IntFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values less than this value.
   lessThan: Int
 
@@ -2226,6 +2259,9 @@ input JSONFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: JSON
@@ -4264,6 +4300,9 @@ input StringFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values less than this value.
   lessThan: String
 
@@ -4574,6 +4613,9 @@ input TimeFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values less than this value.
   lessThan: Time
@@ -8320,6 +8362,9 @@ input BigFloatFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values less than this value.
   lessThan: BigFloat
 
@@ -8352,6 +8397,9 @@ input BooleanFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values not equal to this value.
   ne: Boolean
@@ -9078,6 +9126,9 @@ input FloatFilter {
   # Checks for null or non-null values.
   is: NullOrNotNull
 
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
   # Checks for values less than this value.
   lessThan: Float
 
@@ -9198,6 +9249,9 @@ input IntFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values less than this value.
   lessThan: Int
@@ -10383,6 +10437,9 @@ input StringFilter {
 
   # Checks for null or non-null values.
   is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
 
   # Checks for values less than this value.
   lessThan: String

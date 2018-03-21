@@ -759,6 +759,83 @@ Object {
       },
       "totalCount": 2,
     },
+    "boolean_isNull_false": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": "0.1",
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 2,
+            "int": 2,
+            "numeric": "0.2",
+            "real": 0.2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 3,
+            "int": 3,
+            "numeric": "0.3",
+            "real": 0.3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 4,
+            "int": 4,
+            "numeric": "0.4",
+            "real": 0.4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "boolean_isNull_true": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+          "node": Object {
+            "boolean": null,
+            "id": 5,
+            "int": null,
+            "numeric": null,
+            "real": null,
+            "string": null,
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+      },
+      "totalCount": 1,
+    },
     "boolean_notDistinctFrom_true": Object {
       "edges": Array [
         Object {
@@ -824,83 +901,6 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
       },
       "totalCount": 2,
-    },
-    "boolean_null_false": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
-    },
-    "boolean_null_true": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 1,
     },
     "computed_equalTo_test_computed": Object {
       "edges": Array [
@@ -1518,7 +1518,7 @@ Object {
       },
       "totalCount": 1,
     },
-    "string_is_not_null": Object {
+    "string_isNull_false": Object {
       "edges": Array [
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
@@ -1573,7 +1573,7 @@ Object {
       },
       "totalCount": 4,
     },
-    "string_is_null": Object {
+    "string_isNull_true": Object {
       "edges": Array [
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
@@ -1942,83 +1942,6 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
       },
       "totalCount": 2,
-    },
-    "string_null_false": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
-    },
-    "string_null_true": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 1,
     },
     "string_similarTo_te_or_st": Object {
       "edges": Array [

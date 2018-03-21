@@ -109,22 +109,10 @@ The following filter operators are exposed by default:
 
 <summary>Null values</summary>
 
-NOTE: The syntax for filtering null values will be standardized before the v1.0.0 release.  There are currently two options:
-
 ``` graphql
 query {
   allPosts(filter: {
-    body: { null: true }
-  }) {
-    ...
-  }
-}
-```
-
-``` graphql
-query {
-  allPosts(filter: {
-    body: { is: NULL }
+    body: { isNull: true }
   }) {
     ...
   }
@@ -137,22 +125,10 @@ query {
 
 <summary>Non-null values</summary>
 
-NOTE: The syntax for filtering null values will standardized before the v1.0.0 release.  There are currently two options:
-
 ``` graphql
 query {
   allPosts(filter: {
-    body: { null: false }
-  }) {
-    ...
-  }
-}
-```
-
-``` graphql
-query {
-  allPosts(filter: {
-    body: { is: NOT_NULL }
+    body: { isNull: false }
   }) {
     ...
   }
@@ -202,7 +178,7 @@ Note: Objects with multiple keys are interpreted with an implicit `AND` between 
 ``` graphql
 query {
   allPosts(filter: {
-    body: { null: false },
+    body: { isNull: false },
     createdAt: { greaterThan: "2016-01-01" }
   }) {
     ...
@@ -294,7 +270,7 @@ Restrict filtering to specific operators:
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterAllowedOperators: [
-      "null",
+      "isNull",
       "equalTo",
       "notEqualTo",
       "distinctFrom",

@@ -48,6 +48,15 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
           }`
       );
       addConnectionFilterOperator(
+        "isNull",
+        "If set to true, checks for null values.  If set to false, checks for non-null values.",
+        () => GraphQLBoolean,
+        (identifier, val, input) =>
+          sql.query`${identifier} ${
+            input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`
+      );
+      addConnectionFilterOperator(
         "equalTo",
         "Checks for values equal to this value.",
         typeName => getTypeByName(typeName),

@@ -1,8 +1,6 @@
 query {
-  string_is_null: allFilterables(filter: { string: { is: NULL } }) { ...filterableConnection }
-  string_is_not_null: allFilterables(filter: { string: { is: NOT_NULL } }) { ...filterableConnection }
-  string_null_true: allFilterables(filter: { string: { null: true } }) { ...filterableConnection }
-  string_null_false: allFilterables(filter: { string: { null: false } }) { ...filterableConnection }
+  string_isNull_true: allFilterables(filter: { string: { isNull: true } }) { ...filterableConnection }
+  string_isNull_false: allFilterables(filter: { string: { isNull: false } }) { ...filterableConnection }
   string_equalTo_test: allFilterables(filter: { string: { equalTo: "test" } }) { ...filterableConnection }
   string_notEqualTo_test: allFilterables(filter: { string: { notEqualTo: "test" } }) { ...filterableConnection }
   string_distinctFrom_test: allFilterables(filter: { string: { distinctFrom: "test" } }) { ...filterableConnection }
@@ -33,8 +31,8 @@ query {
   string_notSimilarTo_te_or_st: allFilterables(filter:{ string: { notSimilarTo: "%(te|st)%" } }) { ...filterableConnection }
   int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
   int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
-  boolean_null_true: allFilterables(filter: { boolean: { null: true } }) { ...filterableConnection }
-  boolean_null_false: allFilterables(filter: { boolean: { null: false } }) { ...filterableConnection }
+  boolean_isNull_true: allFilterables(filter: { boolean: { isNull: true } }) { ...filterableConnection }
+  boolean_isNull_false: allFilterables(filter: { boolean: { isNull: false } }) { ...filterableConnection }
   boolean_equalTo_true: allFilterables(filter: { boolean: { equalTo: true } }) { ...filterableConnection }
   boolean_notEqualTo_true: allFilterables(filter: { boolean: { notEqualTo: true } }) { ...filterableConnection }
   boolean_distinctFrom_true: allFilterables(filter: { boolean: { distinctFrom: true } }) { ...filterableConnection }
