@@ -1,6 +1,10 @@
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
-  { pgInflection: inflection }
+  {
+    pgInflection: inflection,
+    connectionFilterComputedColumns = true,
+    connectionFilterSetofFunctions = true,
+  }
 ) {
   builder.hook("init", (_, build) => {
     const {
@@ -19,7 +23,6 @@ module.exports = function PgConnectionArgFilterPlugin(
       pgColumnFilter,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
-      connectionFilterComputedColumns,
     } = build;
 
     const getOrCreateFieldFilterTypeByFieldTypeName = fieldTypeName => {
@@ -269,7 +272,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (
         !isPgFieldConnection ||
         !source ||
-        (source.kind !== "class" && source.kind !== "procedure")
+        (source.kind !== "class" && (source.kind !== "procedure" || !connectionFilterSetofFunctions))
       ) {
         return args;
       }

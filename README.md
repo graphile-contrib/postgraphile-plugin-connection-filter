@@ -23,11 +23,13 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
 By default, this plugin:
 - Exposes a large number of filter operators, including some that can perform expensive pattern matching.
-- Exposes PostGraphile "computed columns" as filterable fields, which can result in expensive operations.
+- Allows filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/), which can result in expensive operations.
+- Allows filtering on functions that return `setof`, which can result in expensive operations.
 
 To protect your server, you can:
-- Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` plugin options to limit the fields and operators exposed through GraphQL.
-- Use the `connectionFilterComputedColumns` option to disable the computed columns functionality.
+- Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` options to limit the filterable fields and operators exposed through GraphQL.
+- Set `connectionFilterComputedColumns: false` to prevent filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/).
+- Set `connectionFilterSetofFunctions: false` to prevent filtering on functions that return `setof`.
 
 ## Getting Started
 
@@ -359,6 +361,22 @@ postgraphile(pgConfig, schema, {
       equalTo: "eq",
       notEqualTo: "ne",
     },
+  },
+})
+```
+
+</details>
+
+<details>
+
+<summary>connectionFilterSetofFunctions</summary>
+
+Enable/disable filtering on functions that return `setof`:
+
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterSetofFunctions: false, // default: true
   },
 })
 ```
