@@ -272,7 +272,8 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (
         !isPgFieldConnection ||
         !source ||
-        (source.kind !== "class" && (source.kind !== "procedure" || !connectionFilterSetofFunctions))
+        (source.kind !== "class" &&
+          (source.kind !== "procedure" || !connectionFilterSetofFunctions))
       ) {
         return args;
       }
