@@ -84,10 +84,10 @@ The following filter operators are exposed by default:
 | >= | greaterThanOrEqualTo | Scalar |
 | IN | in | Array |
 | NOT IN | notIn | Array |
-| LIKE '%...%' | contains | Scalar |
-| NOT LIKE '%...%' | notContains | Scalar |
-| ILIKE '%...%' | containsInsensitive | Scalar |
-| NOT ILIKE '%...%' | notContainsInsensitive | Scalar |
+| LIKE '%...%' | includes | Scalar |
+| NOT LIKE '%...%' | notIncludes | Scalar |
+| ILIKE '%...%' | includesInsensitive | Scalar |
+| NOT ILIKE '%...%' | notIncludesInsensitive | Scalar |
 | LIKE '...%' | startsWith | Scalar |
 | NOT LIKE '...%' | notStartsWith | Scalar |
 | ILIKE '...%' | startsWithInsensitive | Scalar |
@@ -102,6 +102,8 @@ The following filter operators are exposed by default:
 | NOT ILIKE '...' | notLikeInsensitive | Scalar |
 | SIMILAR TO '...' | similarTo | Scalar |
 | NOT SIMILAR TO '...' | notSimilarTo | Scalar |
+| @> | contains | JSON |
+| <@ | containedBy | JSON |
 
 ## Examples
 
