@@ -298,7 +298,8 @@ create table a.filterable (
   "int" int,
   "real" real,
   "numeric" numeric,
-  "boolean" boolean
+  "boolean" boolean,
+  "jsonb" jsonb
 );
 
 create function a.filterable_computed(filterable a.filterable) returns text as $$

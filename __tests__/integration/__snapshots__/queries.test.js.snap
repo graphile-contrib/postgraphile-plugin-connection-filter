@@ -1177,6 +1177,42 @@ Object {
       },
       "totalCount": 2,
     },
+    "jsonb_containedBy_object": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": "{\\"int\\":4,\\"string\\":\\"test\\",\\"boolean\\":false}",
+        },
+      ],
+    },
+    "jsonb_contains_boolean": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "jsonb": "{\\"int\\":1,\\"string\\":\\"TEST\\",\\"boolean\\":true}",
+        },
+        Object {
+          "id": 2,
+          "jsonb": "{\\"int\\":2,\\"string\\":\\"Test\\",\\"boolean\\":true}",
+        },
+      ],
+    },
+    "jsonb_contains_int": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "jsonb": "{\\"int\\":2,\\"string\\":\\"Test\\",\\"boolean\\":true}",
+        },
+      ],
+    },
+    "jsonb_contains_string": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": "{\\"int\\":4,\\"string\\":\\"test\\",\\"boolean\\":false}",
+        },
+      ],
+    },
     "not_int_equalTo_2_or_string_endsWith_t": Object {
       "edges": Array [
         Object {

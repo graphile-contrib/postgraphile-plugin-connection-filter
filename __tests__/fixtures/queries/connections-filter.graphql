@@ -40,6 +40,10 @@ query {
   not_string_equalTo_test: allFilterables(filter: { not: { string: { equalTo: "test" } } }) { ...filterableConnection }
   not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...filterableConnection }
   computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...filterableConnection }
+  jsonb_contains_string: allFilterables(filter: { jsonb: { contains: "{\"string\":\"test\"}" } }) { ...filterableJsonbConnection }
+  jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...filterableJsonbConnection }
+  jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...filterableJsonbConnection }
+  jsonb_containedBy_object: allFilterables(filter: { jsonb: { containedBy: "{\"string\":\"test\",\"int\":4,\"boolean\":false,\"foo\":\"bar\"}" } }) { ...filterableJsonbConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
@@ -60,5 +64,12 @@ fragment filterableConnection on FilterablesConnection {
       numeric
       boolean
     }
+  }
+}
+
+fragment filterableJsonbConnection on FilterablesConnection {
+  nodes {
+    id
+    jsonb
   }
 }

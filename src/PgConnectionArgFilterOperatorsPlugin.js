@@ -392,6 +392,28 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
           allowedFieldTypes: ["String"],
         }
       );
+      addConnectionFilterOperator(
+        "contains",
+        "Checks for JSON containing this JSON.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} @> ${val}`;
+        },
+        {
+          allowedFieldTypes: ["JSON"],
+        }
+      );
+      addConnectionFilterOperator(
+        "containedBy",
+        "Checks for JSON contained by this JSON.",
+        typeName => getTypeByName(typeName),
+        (identifier, val) => {
+          return sql.query`${identifier} <@ ${val}`;
+        },
+        {
+          allowedFieldTypes: ["JSON"],
+        }
+      );
       return _;
     }
   );

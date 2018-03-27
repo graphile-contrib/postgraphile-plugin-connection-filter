@@ -1762,6 +1762,7 @@ type Filterable implements Node {
   computed: String
   id: Int!
   int: Int
+  jsonb: JSON
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
@@ -1781,6 +1782,9 @@ input FilterableCondition {
 
   # Checks for equality with the object’s \`int\` field.
   int: Int
+
+  # Checks for equality with the object’s \`jsonb\` field.
+  jsonb: JSON
 
   # Checks for equality with the object’s \`numeric\` field.
   numeric: BigFloat
@@ -1809,6 +1813,9 @@ input FilterableFilter {
   # Filter by the object’s \`int\` field.
   int: IntFilter
 
+  # Filter by the object’s \`jsonb\` field.
+  jsonb: JSONFilter
+
   # Negates the expression.
   not: FilterableFilter
 
@@ -1830,6 +1837,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
+  jsonb: JSON
   numeric: BigFloat
   real: Float
   string: String
@@ -1840,6 +1848,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
+  jsonb: JSON
   numeric: BigFloat
   real: Float
   string: String
@@ -1877,6 +1886,8 @@ enum FilterablesOrderBy {
   ID_DESC
   INT_ASC
   INT_DESC
+  JSONB_ASC
+  JSONB_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC
@@ -2248,6 +2259,12 @@ type JsonbIdentityMutationPlpgsqlWithDefaultPayload {
 
 # A filter to be used against JSON fields. All fields are combined with a logical ‘and.’
 input JSONFilter {
+  # Checks for JSON contained by this JSON.
+  containedBy: JSON
+
+  # Checks for JSON containing this JSON.
+  contains: JSON
+
   # Checks for values not equal to this value, treating null like an ordinary value.
   distinctFrom: JSON
 
@@ -6334,6 +6351,7 @@ type Filterable implements Node {
   computed: String
   id: Int!
   int: Int
+  jsonb: JSON
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
@@ -6353,6 +6371,9 @@ input FilterableCondition {
 
   # Checks for equality with the object’s \`int\` field.
   int: Int
+
+  # Checks for equality with the object’s \`jsonb\` field.
+  jsonb: JSON
 
   # Checks for equality with the object’s \`numeric\` field.
   numeric: BigFloat
@@ -6381,6 +6402,9 @@ input FilterableFilter {
   # Filter by the object’s \`int\` field.
   int: IntFilter
 
+  # Filter by the object’s \`jsonb\` field.
+  jsonb: JSONFilter
+
   # Negates the expression.
   not: FilterableFilter
 
@@ -6402,6 +6426,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
+  jsonb: JSON
   numeric: BigFloat
   real: Float
   string: String
@@ -6412,6 +6437,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
+  jsonb: JSON
   numeric: BigFloat
   real: Float
   string: String
@@ -6449,6 +6475,8 @@ enum FilterablesOrderBy {
   ID_DESC
   INT_ASC
   INT_DESC
+  JSONB_ASC
+  JSONB_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC
@@ -6558,6 +6586,18 @@ input IntFilter {
 
   # Checks for values not equal to this value.
   notEqualTo: Int
+}
+
+# A JavaScript object encoded in the JSON format as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+# A filter to be used against JSON fields. All fields are combined with a logical ‘and.’
+input JSONFilter {
+  # Checks for values equal to this value.
+  equalTo: JSON
+
+  # Checks for values not equal to this value.
+  notEqualTo: JSON
 }
 
 # The root mutation type which contains root level fields which mutate data.
@@ -8980,6 +9020,7 @@ type Filterable implements Node {
   computed: String
   id: Int!
   int: Int
+  jsonb: JSON
 
   # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   nodeId: ID!
@@ -8999,6 +9040,9 @@ input FilterableCondition {
 
   # Checks for equality with the object’s \`int\` field.
   int: Int
+
+  # Checks for equality with the object’s \`jsonb\` field.
+  jsonb: JSON
 
   # Checks for equality with the object’s \`numeric\` field.
   numeric: BigFloat
@@ -9027,6 +9071,9 @@ input FilterableFilter {
   # Filter by the object’s \`int\` field.
   int: IntFilter
 
+  # Filter by the object’s \`jsonb\` field.
+  jsonb: JSONFilter
+
   # Negates the expression.
   not: FilterableFilter
 
@@ -9048,6 +9095,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
+  jsonb: JSON
   numeric: BigFloat
   real: Float
   string: String
@@ -9058,6 +9106,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
+  jsonb: JSON
   numeric: BigFloat
   real: Float
   string: String
@@ -9095,6 +9144,8 @@ enum FilterablesOrderBy {
   ID_DESC
   INT_ASC
   INT_DESC
+  JSONB_ASC
+  JSONB_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC
@@ -9267,6 +9318,45 @@ input IntFilter {
 
   # Checks for values not in this list.
   notIn: [Int!]
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  null: Boolean
+}
+
+# A JavaScript object encoded in the JSON format as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+# A filter to be used against JSON fields. All fields are combined with a logical ‘and.’
+input JSONFilter {
+  # Checks for JSON contained by this JSON.
+  containedBy: JSON
+
+  # Checks for JSON containing this JSON.
+  contains: JSON
+
+  # Checks for values not equal to this value, treating null like an ordinary value.
+  distinctFrom: JSON
+
+  # Checks for values equal to this value.
+  eq: JSON
+
+  # Checks for values in this list.
+  in: [JSON!]
+
+  # Checks for null or non-null values.
+  is: NullOrNotNull
+
+  # If set to true, checks for null values.  If set to false, checks for non-null values.
+  isNull: Boolean
+
+  # Checks for values not equal to this value.
+  ne: JSON
+
+  # Checks for values equal to this value, treating null like an ordinary value.
+  notDistinctFrom: JSON
+
+  # Checks for values not in this list.
+  notIn: [JSON!]
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   null: Boolean
