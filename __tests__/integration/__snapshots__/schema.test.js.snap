@@ -4270,12 +4270,6 @@ enum SimilarTable2SOrderBy {
 
 # A filter to be used against String fields. All fields are combined with a logical ‘and.’
 input StringFilter {
-  # Checks for strings containing this value.  Case sensitive.
-  contains: String
-
-  # Checks for strings containing this value.  Case insensitive.
-  containsInsensitive: String
-
   # Checks for values not equal to this value, treating null like an ordinary value.
   distinctFrom: String
 
@@ -4297,6 +4291,12 @@ input StringFilter {
   # Checks for values in this list.
   in: [String!]
 
+  # Checks for strings that include this value.  Case sensitive.
+  includes: String
+
+  # Checks for strings that include this value.  Case insensitive.
+  includesInsensitive: String
+
   # Checks for null or non-null values.
   is: NullOrNotNull
 
@@ -4315,12 +4315,6 @@ input StringFilter {
   # Raw SQL 'ilike', wildcards must be present and are not escaped
   likeInsensitive: String
 
-  # Checks for strings that do not contain this value.  Case sensitive.
-  notContains: String
-
-  # Checks for strings that do not not contain this value.  Case insensitive.
-  notContainsInsensitive: String
-
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: String
 
@@ -4335,6 +4329,12 @@ input StringFilter {
 
   # Checks for values not in this list.
   notIn: [String!]
+
+  # Checks for strings that do not include this value.  Case sensitive.
+  notIncludes: String
+
+  # Checks for strings that do not not include this value.  Case insensitive.
+  notIncludesInsensitive: String
 
   # Raw SQL 'not like', wildcards must be present and are not escaped
   notLike: String
@@ -10408,12 +10408,6 @@ enum SimilarTable2SOrderBy {
 
 # A filter to be used against String fields. All fields are combined with a logical ‘and.’
 input StringFilter {
-  # Checks for strings containing this value.  Case sensitive.
-  contains: String
-
-  # Checks for strings containing this value.  Case insensitive.
-  containsInsensitive: String
-
   # Checks for values not equal to this value, treating null like an ordinary value.
   distinctFrom: String
 
@@ -10434,6 +10428,12 @@ input StringFilter {
 
   # Checks for values in this list.
   in: [String!]
+
+  # Checks for strings that include this value.  Case sensitive.
+  includes: String
+
+  # Checks for strings that include this value.  Case insensitive.
+  includesInsensitive: String
 
   # Checks for null or non-null values.
   is: NullOrNotNull
@@ -10456,12 +10456,6 @@ input StringFilter {
   # Checks for values not equal to this value.
   ne: String
 
-  # Checks for strings that do not contain this value.  Case sensitive.
-  notContains: String
-
-  # Checks for strings that do not not contain this value.  Case insensitive.
-  notContainsInsensitive: String
-
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: String
 
@@ -10473,6 +10467,12 @@ input StringFilter {
 
   # Checks for values not in this list.
   notIn: [String!]
+
+  # Checks for strings that do not include this value.  Case sensitive.
+  notIncludes: String
+
+  # Checks for strings that do not not include this value.  Case insensitive.
+  notIncludesInsensitive: String
 
   # Raw SQL 'not like', wildcards must be present and are not escaped
   notLike: String

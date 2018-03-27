@@ -11,10 +11,10 @@ query {
   int_greaterThanOrEqualTo_2: allFilterables(filter: { int: { greaterThanOrEqualTo: 2 } }) { ...filterableConnection }
   int_in_2_3: allFilterables(filter: { int: { in: [2, 3] } }) { ...filterableConnection }
   int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...filterableConnection }
-  string_contains_t: allFilterables(filter: { string: { contains: "t" } }) { ...filterableConnection }
-  string_containsInsensitive_t: allFilterables(filter: { string: { containsInsensitive: "t" } }) { ...filterableConnection }
-  string_notContains_t: allFilterables(filter: { string: { notContains: "t" } }) { ...filterableConnection }
-  string_notContainsInsensitive_t: allFilterables(filter: { string: { notContainsInsensitive: "t" } }) { ...filterableConnection }
+  string_contains_t: allFilterables(filter: { string: { includes: "t" } }) { ...filterableConnection }
+  string_containsInsensitive_t: allFilterables(filter: { string: { includesInsensitive: "t" } }) { ...filterableConnection }
+  string_notContains_t: allFilterables(filter: { string: { notIncludes: "t" } }) { ...filterableConnection }
+  string_notContainsInsensitive_t: allFilterables(filter: { string: { notIncludesInsensitive: "t" } }) { ...filterableConnection }
   string_startsWith_t: allFilterables(filter: { string: { startsWith: "t" } }) { ...filterableConnection }
   string_startsWithInsensitive_t: allFilterables(filter: { string: { startsWithInsensitive: "t" } }) { ...filterableConnection }
   string_notStartsWith_t: allFilterables(filter: { string: { notStartsWith: "t" } }) { ...filterableConnection }

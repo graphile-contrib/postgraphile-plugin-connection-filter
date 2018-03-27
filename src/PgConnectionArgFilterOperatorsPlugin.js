@@ -183,8 +183,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addConnectionFilterOperator(
-        "contains",
-        "Checks for strings containing this value.  Case sensitive.",
+        "includes",
+        "Checks for strings that include this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} LIKE ${val}`;
@@ -195,8 +195,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addConnectionFilterOperator(
-        "notContains",
-        "Checks for strings that do not contain this value.  Case sensitive.",
+        "notIncludes",
+        "Checks for strings that do not include this value.  Case sensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} NOT LIKE ${val}`;
@@ -207,8 +207,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addConnectionFilterOperator(
-        "containsInsensitive",
-        "Checks for strings containing this value.  Case insensitive.",
+        "includesInsensitive",
+        "Checks for strings that include this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} ILIKE ${val}`;
@@ -219,8 +219,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         }
       );
       addConnectionFilterOperator(
-        "notContainsInsensitive",
-        "Checks for strings that do not not contain this value.  Case insensitive.",
+        "notIncludesInsensitive",
+        "Checks for strings that do not not include this value.  Case insensitive.",
         typeName => getTypeByName(typeName),
         (identifier, val) => {
           return sql.query`${identifier} NOT ILIKE ${val}`;
