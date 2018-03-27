@@ -7,6 +7,21 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
 > **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
 
+## Breaking change in beta.4
+
+The `contains` string comparison operator was renamed to `includes` to make room for JSONB operators `contains` and `containedBy`. To maintain the old names, you can specify the following in `graphileBuildOptions`:
+
+```js
+connectionFilterOperatorNames: {
+  includes: "contains",
+  includesInsensitive: "containsInsensitive",
+  notIncludes: "notContains",
+  notIncludesInsensitive: "notContainsInsensitive",
+  contains: "jsonbContains",
+  containedBy: "jsonbContainedBy"
+}
+```
+
 ## Compatibility
 
 | PostGraphile version | Plugin version |
