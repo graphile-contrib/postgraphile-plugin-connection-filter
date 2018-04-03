@@ -103,6 +103,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "Datetime",
             "Date",
             "Time",
+            "BigInt",
             "BigFloat",
           ],
         }
@@ -122,6 +123,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "Datetime",
             "Date",
             "Time",
+            "BigInt",
             "BigFloat",
           ],
         }
@@ -141,6 +143,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "Datetime",
             "Date",
             "Time",
+            "BigInt",
             "BigFloat",
           ],
         }
@@ -160,6 +163,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "Datetime",
             "Date",
             "Time",
+            "BigInt",
             "BigFloat",
           ],
         }

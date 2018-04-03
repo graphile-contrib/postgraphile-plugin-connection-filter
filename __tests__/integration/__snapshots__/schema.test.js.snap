@@ -368,6 +368,12 @@ input BigIntFilter {
   # Checks for values equal to this value.
   equalTo: BigInt
 
+  # Checks for values greater than this value.
+  greaterThan: BigInt
+
+  # Checks for values greater than or equal to this value.
+  greaterThanOrEqualTo: BigInt
+
   # Checks for values in this list.
   in: [BigInt!]
 
@@ -376,6 +382,12 @@ input BigIntFilter {
 
   # If set to true, checks for null values.  If set to false, checks for non-null values.
   isNull: Boolean
+
+  # Checks for values less than this value.
+  lessThan: BigInt
+
+  # Checks for values less than or equal to this value.
+  lessThanOrEqualTo: BigInt
 
   # Checks for values equal to this value, treating null like an ordinary value.
   notDistinctFrom: BigInt
