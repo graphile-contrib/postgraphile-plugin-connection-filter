@@ -370,35 +370,47 @@ module.exports = function PgConnectionArgFilterPlugin(
             }
 
             function resolveWhereLogic(obj) {
-              return sql.query`(${sql.join(
-                Object.keys(obj).map(key => {
-                  if (key === "or") {
-                    return sql.query`(${sql.join(
-                      obj[key].map(o => {
-                        return resolveWhereLogic(o);
-                      }),
-                      ") or ("
-                    )})`;
-                  } else if (key === "and") {
-                    return sql.query`(${sql.join(
-                      obj[key].map(o => {
-                        return resolveWhereLogic(o);
-                      }),
-                      ") and ("
-                    )})`;
-                  } else if (key === "not") {
-                    return sql.query`NOT (${resolveWhereLogic(obj[key])})`;
-                  } else {
-                    return sql.query`(${sql.join(
-                      Object.keys(obj[key]).map(k => {
-                        return resolveWhereComparison(key, k, obj[key][k]);
-                      }),
-                      ") and ("
-                    )})`;
+              // Ignore fields where the expression is {}
+              const entries = Object.entries(obj).filter(
+                ([, value]) => Object.keys(value).length > 0
+              );
+              // If no fields remain, return TRUE
+              if (entries.length === 0) {
+                return sql.query`TRUE`;
+              }
+              const whereLogic = entries.map(([key, value]) => {
+                if (key === "or") {
+                  return sql.query`(${sql.join(
+                    value.map(o => {
+                      return resolveWhereLogic(o);
+                    }),
+                    ") or ("
+                  )})`;
+                } else if (key === "and") {
+                  return sql.query`(${sql.join(
+                    value.map(o => {
+                      return resolveWhereLogic(o);
+                    }),
+                    ") and ("
+                  )})`;
+                } else if (key === "not") {
+                  return sql.query`NOT (${resolveWhereLogic(value)})`;
+                } else {
+                  // Ignore filter expressions where the value is null
+                  const e = Object.entries(value).filter(([, v]) => v != null);
+                  // If no filter expressions remain, return TRUE
+                  if (e.length === 0) {
+                    return sql.query`TRUE`;
                   }
-                }),
-                ") and ("
-              )})`;
+                  return sql.query`(${sql.join(
+                    Object.entries(value).map(([k, v]) =>
+                      resolveWhereComparison(key, k, v)
+                    ),
+                    ") and ("
+                  )})`;
+                }
+              });
+              return sql.query`(${sql.join(whereLogic, ") and (")})`;
             }
 
             if (filter != null) {
