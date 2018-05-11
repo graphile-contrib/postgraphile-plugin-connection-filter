@@ -1,7 +1,8 @@
+const { omit } = require("graphile-build-pg");
+
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
-    pgInflection: inflection,
     connectionFilterComputedColumns = true,
     connectionFilterSetofFunctions = true,
   }
@@ -21,6 +22,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLEnumType,
       },
       pgColumnFilter,
+      inflection,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
     } = build;
@@ -33,8 +35,9 @@ module.exports = function PgConnectionArgFilterPlugin(
           {
             name: fieldFilterTypeName,
             description: `A filter to be used against ${fieldTypeName} fields. All fields are combined with a logical ‘and.’`,
-            fields: ({ fieldWithHooks }) =>
-              Object.keys(connectionFilterOperators).reduce(
+            fields: context => {
+              const { fieldWithHooks } = context;
+              return Object.keys(connectionFilterOperators).reduce(
                 (memo, operatorName) => {
                   const operator = connectionFilterOperators[operatorName];
                   const allowedFieldTypes = operator.options.allowedFieldTypes;
@@ -50,7 +53,8 @@ module.exports = function PgConnectionArgFilterPlugin(
                   return memo;
                 },
                 {}
-              ),
+              );
+            },
           },
           {
             isPgConnectionFilterFilter: true,
@@ -98,13 +102,10 @@ module.exports = function PgConnectionArgFilterPlugin(
 
     // Add *Filter type for each Connection type
     introspectionResultsByKind.class
-      .filter(table => table.isSelectable)
+      .filter(table => table.isSelectable && !omit(table, "filter"))
       .filter(table => !!table.namespace)
       .forEach(table => {
-        const tableTypeName = inflection.tableType(
-          table.name,
-          table.namespace.name
-        );
+        const tableTypeName = inflection.tableType(table);
         newWithHooks(
           GraphQLInputObjectType,
           {
@@ -117,12 +118,9 @@ module.exports = function PgConnectionArgFilterPlugin(
               const attrFields = introspectionResultsByKind.attribute
                 .filter(attr => attr.classId === table.id)
                 .filter(attr => pgColumnFilter(attr, build, context))
+                .filter(attr => !omit(attr, "filter"))
                 .reduce((memo, attr) => {
-                  const fieldName = inflection.column(
-                    attr.name,
-                    table.name,
-                    table.namespace.name
-                  );
+                  const fieldName = inflection.column(attr);
                   const fieldType =
                     pgGetGqlInputTypeByTypeId(attr.typeId) || GraphQLString;
                   return extendFilterFields(
@@ -150,6 +148,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     .filter(proc => proc.name.startsWith(`${table.name}_`))
                     .filter(proc => proc.argTypeIds.length > 0)
                     .filter(proc => proc.argTypeIds[0] === tableType.id)
+                    .filter(proc => !omit(proc, "filter"))
                     .reduce((memo, proc) => {
                       const argTypes = proc.argTypeIds.map(
                         typeId => introspectionResultsByKind.typeById[typeId]
@@ -174,10 +173,10 @@ module.exports = function PgConnectionArgFilterPlugin(
                       const pseudoColumnName = proc.name.substr(
                         table.name.length + 1
                       );
-                      const fieldName = inflection.column(
+                      const fieldName = inflection.computedColumn(
                         pseudoColumnName,
-                        table.name,
-                        table.namespace.name
+                        proc,
+                        table
                       );
                       const fieldType = pgGetGqlInputTypeByTypeId(
                         proc.returnTypeId
@@ -261,6 +260,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgGetGqlTypeByTypeId,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgColumnFilter,
+        inflection,
         connectionFilterOperators,
       } = build;
       const {
@@ -273,7 +273,8 @@ module.exports = function PgConnectionArgFilterPlugin(
         !isPgFieldConnection ||
         !source ||
         (source.kind !== "class" &&
-          (source.kind !== "procedure" || !connectionFilterSetofFunctions))
+          (source.kind !== "procedure" || !connectionFilterSetofFunctions)) ||
+        omit(source, "filter")
       ) {
         return args;
       }
@@ -291,12 +292,9 @@ module.exports = function PgConnectionArgFilterPlugin(
                     : attr.class.typeId === source.returnTypeId
               )
               .filter(attr => pgColumnFilter(attr, build, context))
+              .filter(attr => !omit(attr, "filter"))
               .reduce((memo, attr) => {
-                const fieldName = inflection.column(
-                  attr.name,
-                  source.name,
-                  source.namespace && source.namespace.name
-                );
+                const fieldName = inflection.column(attr);
                 memo[fieldName] = attr;
                 return memo;
               }, {});
@@ -306,14 +304,15 @@ module.exports = function PgConnectionArgFilterPlugin(
               .filter(proc => proc.isStable)
               .filter(proc => proc.namespaceId === source.namespaceId)
               .filter(proc => proc.name.startsWith(`${source.name}_`))
+              .filter(proc => !omit(proc, "filter"))
               .reduce((memo, proc) => {
                 const pseudoColumnName = proc.name.substr(
                   source.name.length + 1
                 );
-                const fieldName = inflection.column(
+                const fieldName = inflection.computedColumn(
                   pseudoColumnName,
-                  source.name,
-                  source.namespace.name
+                  proc,
+                  source
                 );
                 memo[fieldName] = proc;
                 return memo;

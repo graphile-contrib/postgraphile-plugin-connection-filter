@@ -17,7 +17,7 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "postgraphile": "^4.0.0-beta.0"
+    "postgraphile": "^4.0.0-beta.8"
   },
   "devDependencies": {
     "eslint": "^4.0.0",
@@ -27,7 +27,7 @@
     "graphql": "^0.10.5",
     "jest": "^20.0.4",
     "pg": ">=6.1.0 <8",
-    "postgraphile-core": "^4.0.0-beta.0",
+    "postgraphile-core": "^4.0.0-beta.6",
     "prettier": "^1.4.4"
   },
   "jest": {
