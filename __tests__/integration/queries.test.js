@@ -20,7 +20,7 @@ const queryFileNames = readdirSync(queriesDir);
 let queryResults = [];
 
 const kitchenSinkData = () =>
-  readFile(`${__dirname}/../kitchen-sink-data.sql`, "utf8");
+  readFile(`${__dirname}/../p-data.sql`, "utf8");
 
 beforeAll(() => {
   // Get a few GraphQL schema instance that we can query.
@@ -29,9 +29,9 @@ beforeAll(() => {
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
     const [normal, classicIds, dynamicJson] = await Promise.all([
-      createPostGraphQLSchema(pgClient, ["a", "b", "c"], { appendPlugins: [require("../../index.js")] }),
-      createPostGraphQLSchema(pgClient, ["a", "b", "c"], { classicIds: true, appendPlugins: [require("../../index.js")] }),
-      createPostGraphQLSchema(pgClient, ["a", "b", "c"], { dynamicJson: true, appendPlugins: [require("../../index.js")] }),
+      createPostGraphQLSchema(pgClient, ["p"], { appendPlugins: [require("../../index.js")] }),
+      createPostGraphQLSchema(pgClient, ["p"], { classicIds: true, appendPlugins: [require("../../index.js")] }),
+      createPostGraphQLSchema(pgClient, ["p"], { dynamicJson: true, appendPlugins: [require("../../index.js")] }),
     ]);
     debug(printSchema(normal));
     return {

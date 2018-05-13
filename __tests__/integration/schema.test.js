@@ -14,7 +14,7 @@ const testFixtures = [
   {
     name: "prints a schema with the filter plugin",
     createSchema: client =>
-      createPostGraphQLSchema(client, ["a", "b", "c"], {
+      createPostGraphQLSchema(client, ["p"], {
         appendPlugins: [require("../../index.js")]
       })
   },
@@ -22,7 +22,7 @@ const testFixtures = [
     name:
       "prints a schema with the filter plugin and the connectionFilterAllowedOperators option",
     createSchema: client =>
-      createPostGraphQLSchema(client, ["a"], {
+      createPostGraphQLSchema(client, ["p"], {
         appendPlugins: [require("../../index.js")],
         graphileBuildOptions: {
           connectionFilterAllowedOperators: ["equalTo", "notEqualTo"]
@@ -33,7 +33,7 @@ const testFixtures = [
     name:
       "prints a schema with the filter plugin and the connectionFilterOperatorNames option",
     createSchema: client =>
-      createPostGraphQLSchema(client, ["a"], {
+      createPostGraphQLSchema(client, ["p"], {
         appendPlugins: [require("../../index.js")],
         graphileBuildOptions: {
           connectionFilterOperatorNames: {

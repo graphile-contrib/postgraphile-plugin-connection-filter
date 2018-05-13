@@ -1,8 +1,8 @@
-drop schema if exists a cascade;
+drop schema if exists p cascade;
 
-create schema a;
+create schema p;
 
-create table a.filterable (
+create table p.filterable (
   id serial primary key,
   "string" text,
   "int" int,
@@ -12,6 +12,6 @@ create table a.filterable (
   "jsonb" jsonb
 );
 
-create function a.filterable_computed(filterable a.filterable) returns text as $$
+create function p.filterable_computed(filterable p.filterable) returns text as $$
   select filterable.string || ' computed'
 $$ language sql stable;
