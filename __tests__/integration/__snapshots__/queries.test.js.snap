@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`connections-filter.dynamic-json.graphql 1`] = `
+Object {
+  "data": Object {
+    "a": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": Object {
+            "boolean": false,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+    },
+    "b": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": Object {
+            "boolean": false,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+    },
+    "c": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": Object {
+            "boolean": false,
+            "int": 4,
+            "string": "test",
+          },
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`connections-filter.graphql 1`] = `
 Object {
   "data": Object {

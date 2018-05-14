@@ -1,6 +1,6 @@
 const { graphql } = require("graphql");
 const { withPgClient } = require("../helpers");
-const { createPostGraphQLSchema } = require("postgraphile-core");
+const { createPostGraphileSchema } = require("postgraphile-core");
 const { readdirSync, readFile: rawReadFile } = require("fs");
 const { resolve: resolvePath } = require("path");
 const { printSchema } = require("graphql/utilities");
@@ -28,15 +28,16 @@ beforeAll(() => {
     // Different fixtures need different schemas with different configurations.
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
-    const [normal, classicIds, dynamicJson] = await Promise.all([
-      createPostGraphQLSchema(pgClient, ["p"], { appendPlugins: [require("../../index.js")] }),
-      createPostGraphQLSchema(pgClient, ["p"], { classicIds: true, appendPlugins: [require("../../index.js")] }),
-      createPostGraphQLSchema(pgClient, ["p"], { dynamicJson: true, appendPlugins: [require("../../index.js")] }),
+    const [
+      normal,
+      dynamicJson,
+    ] = await Promise.all([
+      createPostGraphileSchema(pgClient, ["p"], { appendPlugins: [require("../../index.js")] }),
+      createPostGraphileSchema(pgClient, ["p"], { dynamicJson: true, appendPlugins: [require("../../index.js")] }),
     ]);
     debug(printSchema(normal));
     return {
       normal,
-      classicIds,
       dynamicJson,
     };
   });
@@ -64,12 +65,12 @@ beforeAll(() => {
           // Get the appropriate GraphQL schema for this fixture. We want to test
           // some specific fixtures against a schema configured slightly
           // differently.
-          const gqlSchema =
-            fileName === "classic-ids.graphql"
-              ? gqlSchemas.classicIds
-              : fileName === "dynamic-json.graphql"
-                ? gqlSchemas.dynamicJson
-                : gqlSchemas.normal;
+          const schemas = {
+            "connections-filter.dynamic-json.graphql": gqlSchemas.dynamicJson,
+          };
+          const gqlSchema = schemas[fileName]
+            ? schemas[fileName]
+            : gqlSchemas.normal;
           // Return the result of our GraphQL query.
           const result = await graphql(gqlSchema, query, null, {
             pgClient: pgClient,
