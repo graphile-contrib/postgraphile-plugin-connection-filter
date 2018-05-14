@@ -117,6 +117,7 @@ type DeleteFilterablePayload {
 type Filterable implements Node {
   boolean: Boolean
   computed: String
+  computed2: String
   id: Int!
   int: Int
   jsonb: JSON
@@ -149,9 +150,6 @@ input FilterableCondition {
 
   \\"\\"\\"Checks for equality with the object’s \`numeric\` field.\\"\\"\\"
   numeric: BigFloat
-
-  \\"\\"\\"Checks for equality with the object’s \`real\` field.\\"\\"\\"
-  real: Float
 
   \\"\\"\\"Checks for equality with the object’s \`string\` field.\\"\\"\\"
   string: String
@@ -187,9 +185,6 @@ input FilterableFilter {
 
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FilterableFilter!]
-
-  \\"\\"\\"Filter by the object’s \`real\` field.\\"\\"\\"
-  real: FloatFilter
 
   \\"\\"\\"Filter by the object’s \`string\` field.\\"\\"\\"
   string: StringFilter
@@ -264,17 +259,6 @@ enum FilterablesOrderBy {
   REAL_DESC
   STRING_ASC
   STRING_DESC
-}
-
-\\"\\"\\"
-A filter to be used against Float fields. All fields are combined with a logical ‘and.’
-\\"\\"\\"
-input FloatFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  equalTo: Float
-
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  notEqualTo: Float
 }
 
 \\"\\"\\"

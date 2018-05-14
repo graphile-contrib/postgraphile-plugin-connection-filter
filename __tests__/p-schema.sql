@@ -12,6 +12,14 @@ create table p.filterable (
   "jsonb" jsonb
 );
 
+comment on column p.filterable.real is E'@omit filter';
+
 create function p.filterable_computed(filterable p.filterable) returns text as $$
   select filterable.string || ' computed'
 $$ language sql stable;
+
+create function p.filterable_computed2(filterable p.filterable) returns text as $$
+  select filterable.string || ' computed2'
+$$ language sql stable;
+
+comment on function p.filterable_computed2(p.filterable) is E'@omit filter';

@@ -187,6 +187,7 @@ type DeleteFilterablePayload {
 type Filterable implements Node {
   boolean: Boolean
   computed: String
+  computed2: String
   id: Int!
   int: Int
   jsonb: JSON
@@ -219,9 +220,6 @@ input FilterableCondition {
 
   \\"\\"\\"Checks for equality with the object’s \`numeric\` field.\\"\\"\\"
   numeric: BigFloat
-
-  \\"\\"\\"Checks for equality with the object’s \`real\` field.\\"\\"\\"
-  real: Float
 
   \\"\\"\\"Checks for equality with the object’s \`string\` field.\\"\\"\\"
   string: String
@@ -257,9 +255,6 @@ input FilterableFilter {
 
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FilterableFilter!]
-
-  \\"\\"\\"Filter by the object’s \`real\` field.\\"\\"\\"
-  real: FloatFilter
 
   \\"\\"\\"Filter by the object’s \`string\` field.\\"\\"\\"
   string: StringFilter
@@ -334,58 +329,6 @@ enum FilterablesOrderBy {
   REAL_DESC
   STRING_ASC
   STRING_DESC
-}
-
-\\"\\"\\"
-A filter to be used against Float fields. All fields are combined with a logical ‘and.’
-\\"\\"\\"
-input FloatFilter {
-  \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
-  distinctFrom: Float
-
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  equalTo: Float
-
-  \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
-  greaterThan: Float
-
-  \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
-  greaterThanOrEqualTo: Float
-
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
-  in: [Float!]
-
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  isNull: Boolean
-
-  \\"\\"\\"Checks for values less than this value.\\"\\"\\"
-  lessThan: Float
-
-  \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
-  lessThanOrEqualTo: Float
-
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
-  notDistinctFrom: Float
-
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  notEqualTo: Float
-
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
-  notIn: [Float!]
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 }
 
 \\"\\"\\"
