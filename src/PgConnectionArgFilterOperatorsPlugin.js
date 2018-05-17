@@ -33,28 +33,37 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             },
             {}
           ),
-        (identifier, val, input) =>
+        (identifier, val) =>
           sql.query`${identifier} ${
-            input === "NULL" ? sql.query`IS NULL` : sql.query`IS NOT NULL`
-          }`
+            val === "NULL" ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`,
+        {
+          resolveWithRawInput: true,
+        }
       );
       addConnectionFilterOperator(
         "null",
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
         () => GraphQLBoolean,
-        (identifier, val, input) =>
+        (identifier, val) =>
           sql.query`${identifier} ${
-            input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
-          }`
+            val ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`,
+        {
+          resolveWithRawInput: true,
+        }
       );
       addConnectionFilterOperator(
         "isNull",
         "If set to true, checks for null values.  If set to false, checks for non-null values.",
         () => GraphQLBoolean,
-        (identifier, val, input) =>
+        (identifier, val) =>
           sql.query`${identifier} ${
-            input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
-          }`
+            val ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`,
+        {
+          resolveWithRawInput: true,
+        }
       );
       addConnectionFilterOperator(
         "equalTo",

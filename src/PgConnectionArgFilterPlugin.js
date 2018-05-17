@@ -318,6 +318,33 @@ module.exports = function PgConnectionArgFilterPlugin(
                 return memo;
               }, {});
 
+            const valFromInput = (input, inputResolver, pgType) =>
+              Array.isArray(input)
+                ? pgType.isPgArray
+                  ? sql.query`${gql2pg(
+                      (inputResolver && inputResolver(input)) || input,
+                      pgType
+                    )}`
+                  : sql.query`(${sql.join(
+                      input.map(
+                        i =>
+                          sql.query`${gql2pg(
+                            (inputResolver && inputResolver(i)) || i,
+                            pgType
+                          )}`
+                      ),
+                      ","
+                    )})`
+                : pgType.isPgArray
+                  ? sql.query`${gql2pg(
+                      (inputResolver && inputResolver(input)) || input,
+                      pgType.arrayItemType
+                    )}`
+                  : sql.query`${gql2pg(
+                      (inputResolver && inputResolver(input)) || input,
+                      pgType
+                    )}`;
+
             function resolveWhereComparison(fieldName, operatorName, input) {
               const operator = connectionFilterOperators[operatorName];
               const inputResolver = operator.options.inputResolver;
@@ -327,23 +354,11 @@ module.exports = function PgConnectionArgFilterPlugin(
               if (attr != null) {
                 const identifier = sql.query`${queryBuilder.getTableAlias()}.${sql.identifier(
                   attr.name
-                )}`;
-                const val = Array.isArray(input)
-                  ? sql.query`(${sql.join(
-                      input.map(
-                        i =>
-                          sql.query`${gql2pg(
-                            (inputResolver && inputResolver(i)) || i,
-                            attr.type
-                          )}`
-                      ),
-                      ","
-                    )})`
-                  : sql.query`${gql2pg(
-                      (inputResolver && inputResolver(input)) || input,
-                      attr.type
                     )}`;
-                return operator.resolveWhereClause(identifier, val, input);
+                const val = operator.options.resolveWithRawInput
+                  ? input
+                  : valFromInput(input, inputResolver, attr.type);
+                return operator.resolveWhereClause(identifier, val);
               }
 
               // Computed columns
@@ -356,11 +371,10 @@ module.exports = function PgConnectionArgFilterPlugin(
                 )}.${sql.identifier(
                   proc.name
                 )}(${queryBuilder.getTableAlias()})`;
-                const val = sql.query`${gql2pg(
-                  (inputResolver && inputResolver(input)) || input,
-                  procReturnType
-                )}`;
-                return operator.resolveWhereClause(identifier, val, input);
+                const val = operator.options.resolveWithRawInput
+                  ? input
+                  : valFromInput(input, inputResolver, procReturnType);
+                return operator.resolveWhereClause(identifier, val);
               }
 
               throw new Error(
