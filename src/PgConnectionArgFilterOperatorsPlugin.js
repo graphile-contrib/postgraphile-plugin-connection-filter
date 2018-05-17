@@ -39,6 +39,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
           }`,
         {
           resolveWithRawInput: true,
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
@@ -51,6 +52,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
           }`,
         {
           resolveWithRawInput: true,
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
@@ -63,44 +65,57 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
           }`,
         {
           resolveWithRawInput: true,
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "equalTo",
         "Checks for values equal to this value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} = ${val}`;
+        },
+        {
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "notEqualTo",
         "Checks for values not equal to this value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} <> ${val}`;
+        },
+        {
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "distinctFrom",
         "Checks for values not equal to this value, treating null like an ordinary value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} IS DISTINCT FROM ${val}`;
+        },
+        {
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "notDistinctFrom",
         "Checks for values equal to this value, treating null like an ordinary value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} IS NOT DISTINCT FROM ${val}`;
+        },
+        {
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "lessThan",
         "Checks for values less than this value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} < ${val}`;
         },
@@ -115,12 +130,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "BigInt",
             "BigFloat",
           ],
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "lessThanOrEqualTo",
         "Checks for values less than or equal to this value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} <= ${val}`;
         },
@@ -135,12 +151,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "BigInt",
             "BigFloat",
           ],
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "greaterThan",
         "Checks for values greater than this value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} > ${val}`;
         },
@@ -155,12 +172,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "BigInt",
             "BigFloat",
           ],
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "greaterThanOrEqualTo",
         "Checks for values greater than or equal to this value.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} >= ${val}`;
         },
@@ -175,13 +193,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             "BigInt",
             "BigFloat",
           ],
+          allowedListTypes: ["NonList", "List"],
         }
       );
       addConnectionFilterOperator(
         "in",
         "Checks for values in this list.",
-        typeName =>
-          new GraphQLList(new GraphQLNonNull(getTypeByName(typeName))),
+        fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
         (identifier, val) => {
           return sql.query`${identifier} IN ${val}`;
         }
@@ -189,8 +207,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notIn",
         "Checks for values not in this list.",
-        typeName =>
-          new GraphQLList(new GraphQLNonNull(getTypeByName(typeName))),
+        fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
         (identifier, val) => {
           return sql.query`${identifier} NOT IN ${val}`;
         }
@@ -198,7 +215,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "includes",
         "Checks for strings that include this value.  Case sensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} LIKE ${val}`;
         },
@@ -210,7 +227,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notIncludes",
         "Checks for strings that do not include this value.  Case sensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT LIKE ${val}`;
         },
@@ -222,7 +239,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "includesInsensitive",
         "Checks for strings that include this value.  Case insensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} ILIKE ${val}`;
         },
@@ -234,7 +251,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notIncludesInsensitive",
         "Checks for strings that do not not include this value.  Case insensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT ILIKE ${val}`;
         },
@@ -246,7 +263,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "startsWith",
         "Checks for strings starting with this value.  Case sensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} LIKE ${val}`;
         },
@@ -258,7 +275,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notStartsWith",
         "Checks for strings that do not start with this value.  Case sensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT LIKE ${val}`;
         },
@@ -270,7 +287,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "startsWithInsensitive",
         "Checks for strings starting with this value.  Case insensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} ILIKE ${val}`;
         },
@@ -282,7 +299,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notStartsWithInsensitive",
         "Checks for strings that do not start with this value.  Case insensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT ILIKE ${val}`;
         },
@@ -294,7 +311,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "endsWith",
         "Checks for strings ending with this value.  Case sensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} LIKE ${val}`;
         },
@@ -306,7 +323,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notEndsWith",
         "Checks for strings that do not end with this value.  Case sensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT LIKE ${val}`;
         },
@@ -318,7 +335,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "endsWithInsensitive",
         "Checks for strings ending with this value.  Case insensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} ILIKE ${val}`;
         },
@@ -330,7 +347,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notEndsWithInsensitive",
         "Checks for strings that do not end with this value.  Case insensitive.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT ILIKE ${val}`;
         },
@@ -342,7 +359,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "like",
         "Raw SQL 'like', wildcards must be present and are not escaped",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} LIKE ${val}`;
         },
@@ -353,7 +370,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notLike",
         "Raw SQL 'not like', wildcards must be present and are not escaped",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT LIKE ${val}`;
         },
@@ -364,7 +381,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "likeInsensitive",
         "Raw SQL 'ilike', wildcards must be present and are not escaped",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} ILIKE ${val}`;
         },
@@ -375,7 +392,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notLikeInsensitive",
         "Raw SQL 'not ilike', wildcards must be present and are not escaped",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT ILIKE ${val}`;
         },
@@ -386,7 +403,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "similarTo",
         "Raw SQL 'similar to', wildcards are not escaped",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} SIMILAR TO ${val}`;
         },
@@ -397,7 +414,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "notSimilarTo",
         "Raw SQL 'not similar to', wildcards are not escaped",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} NOT SIMILAR TO ${val}`;
         },
@@ -408,7 +425,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "contains",
         "Checks for JSON containing this JSON.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} @> ${val}`;
         },
@@ -419,12 +436,118 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator(
         "containedBy",
         "Checks for JSON contained by this JSON.",
-        typeName => getTypeByName(typeName),
+        fieldType => fieldType,
         (identifier, val) => {
           return sql.query`${identifier} <@ ${val}`;
         },
         {
           allowedFieldTypes: ["JSON"],
+        }
+      );
+      addConnectionFilterOperator(
+        "anyEqualTo",
+        "Checks for any values equal to this value.",
+        fieldType => fieldType.ofType,
+        (identifier, val) => {
+          return sql.query`${val} = ANY(${identifier})`;
+        },
+        {
+          allowedListTypes: ["List"],
+        }
+      );
+      addConnectionFilterOperator(
+        "anyNotEqualTo",
+        "Checks for any values not equal to this value.",
+        fieldType => fieldType.ofType,
+        (identifier, val) => {
+          return sql.query`${val} <> ANY(${identifier})`;
+        },
+        {
+          allowedListTypes: ["List"],
+        }
+      );
+      addConnectionFilterOperator(
+        "anyLessThan",
+        "Checks for any values less than this value.",
+        fieldType => fieldType.ofType,
+        (identifier, val) => {
+          return sql.query`${val} > ANY(${identifier})`;
+        },
+        {
+          allowedFieldTypes: [
+            "String",
+            "Int",
+            "Float",
+            "Datetime",
+            "Date",
+            "Time",
+            "BigInt",
+            "BigFloat",
+          ],
+          allowedListTypes: ["List"],
+        }
+      );
+      addConnectionFilterOperator(
+        "anyLessThanOrEqualTo",
+        "Checks for any values less than or equal to this value.",
+        fieldType => fieldType.ofType,
+        (identifier, val) => {
+          return sql.query`${val} >= ANY(${identifier})`;
+        },
+        {
+          allowedFieldTypes: [
+            "String",
+            "Int",
+            "Float",
+            "Datetime",
+            "Date",
+            "Time",
+            "BigInt",
+            "BigFloat",
+          ],
+          allowedListTypes: ["List"],
+        }
+      );
+      addConnectionFilterOperator(
+        "anyGreaterThan",
+        "Checks for any values greater than this value.",
+        fieldType => fieldType.ofType,
+        (identifier, val) => {
+          return sql.query`${val} < ANY(${identifier})`;
+        },
+        {
+          allowedFieldTypes: [
+            "String",
+            "Int",
+            "Float",
+            "Datetime",
+            "Date",
+            "Time",
+            "BigInt",
+            "BigFloat",
+          ],
+          allowedListTypes: ["List"],
+        }
+      );
+      addConnectionFilterOperator(
+        "anyGreaterThanOrEqualTo",
+        "Checks for any values greater than or equal to this value.",
+        fieldType => fieldType.ofType,
+        (identifier, val) => {
+          return sql.query`${val} <= ANY(${identifier})`;
+        },
+        {
+          allowedFieldTypes: [
+            "String",
+            "Int",
+            "Float",
+            "Datetime",
+            "Date",
+            "Time",
+            "BigInt",
+            "BigFloat",
+          ],
+          allowedListTypes: ["List"],
         }
       );
       return _;

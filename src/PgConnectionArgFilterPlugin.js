@@ -27,27 +27,40 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterOperators,
     } = build;
 
-    const getOrCreateFieldFilterTypeByFieldTypeName = fieldTypeName => {
-      const fieldFilterTypeName = `${fieldTypeName}Filter`;
+    const getOrCreateFieldFilterTypeFromFieldType = fieldType => {
+      const isListType = fieldType instanceof GraphQLList;
+      const fieldBaseTypeName = isListType
+        ? fieldType.ofType.name
+        : fieldType.name;
+      const fieldFilterTypeName = isListType
+        ? `${fieldBaseTypeName}ListFilter`
+        : `${fieldBaseTypeName}Filter`;
       if (!getTypeByName(fieldFilterTypeName)) {
         newWithHooks(
           GraphQLInputObjectType,
           {
             name: fieldFilterTypeName,
-            description: `A filter to be used against ${fieldTypeName} fields. All fields are combined with a logical ‘and.’`,
+            description: `A filter to be used against ${fieldBaseTypeName}${
+              isListType ? " list" : ""
+            } fields. All fields are combined with a logical ‘and.’`,
             fields: context => {
               const { fieldWithHooks } = context;
               return Object.keys(connectionFilterOperators).reduce(
                 (memo, operatorName) => {
                   const operator = connectionFilterOperators[operatorName];
                   const allowedFieldTypes = operator.options.allowedFieldTypes;
-                  if (
+                  const fieldTypeIsAllowed =
                     !allowedFieldTypes ||
-                    allowedFieldTypes.includes(fieldTypeName)
-                  ) {
+                    allowedFieldTypes.includes(fieldBaseTypeName);
+                  const allowedListTypes = operator.options
+                    .allowedListTypes || ["NonList"];
+                  const listTypeIsAllowed = isListType
+                    ? allowedListTypes.includes("List")
+                    : allowedListTypes.includes("NonList");
+                  if (fieldTypeIsAllowed && listTypeIsAllowed) {
                     memo[operatorName] = fieldWithHooks(operatorName, {
                       description: operator.description,
-                      type: operator.resolveType(fieldTypeName),
+                      type: operator.resolveType(fieldType),
                     });
                   }
                   return memo;
@@ -65,25 +78,28 @@ module.exports = function PgConnectionArgFilterPlugin(
     };
 
     const extendFilterFields = (memo, fieldName, fieldType, fieldWithHooks) => {
-      if (
-        !(
-          fieldType instanceof GraphQLScalarType ||
-          fieldType instanceof GraphQLEnumType
-        ) ||
-        !fieldType.name
-      ) {
+      const isListType = fieldType instanceof GraphQLList;
+      const isScalarType = isListType
+        ? fieldType.ofType instanceof GraphQLScalarType
+        : fieldType instanceof GraphQLScalarType;
+      const isEnumType = isListType
+        ? fieldType.ofType instanceof GraphQLEnumType
+        : fieldType instanceof GraphQLEnumType;
+      if (!(isScalarType || isEnumType)) {
         return memo;
       }
-      const fieldTypeName = fieldType.name;
+      const fieldBaseTypeName = isListType
+        ? fieldType.ofType.name
+        : fieldType.name;
       // Check whether this field type is filterable
       if (
         connectionFilterAllowedFieldTypes &&
-        !connectionFilterAllowedFieldTypes.includes(fieldTypeName)
+        !connectionFilterAllowedFieldTypes.includes(fieldBaseTypeName)
       ) {
         return memo;
       }
-      const fieldFilterType = getOrCreateFieldFilterTypeByFieldTypeName(
-        fieldTypeName
+      const fieldFilterType = getOrCreateFieldFilterTypeFromFieldType(
+        fieldType
       );
       if (fieldFilterType != null) {
         memo[fieldName] = fieldWithHooks(
@@ -354,7 +370,7 @@ module.exports = function PgConnectionArgFilterPlugin(
               if (attr != null) {
                 const identifier = sql.query`${queryBuilder.getTableAlias()}.${sql.identifier(
                   attr.name
-                    )}`;
+                )}`;
                 const val = operator.options.resolveWithRawInput
                   ? input
                   : valFromInput(input, inputResolver, attr.type);
