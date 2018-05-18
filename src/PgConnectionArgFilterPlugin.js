@@ -3,6 +3,7 @@ const { omit } = require("graphile-build-pg");
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
+    connectionFilterLists = true,
     connectionFilterComputedColumns = true,
     connectionFilterSetofFunctions = true,
   }
@@ -29,6 +30,9 @@ module.exports = function PgConnectionArgFilterPlugin(
 
     const getOrCreateFieldFilterTypeFromFieldType = fieldType => {
       const isListType = fieldType instanceof GraphQLList;
+      if (isListType && !connectionFilterLists) {
+        return null;
+      }
       const fieldBaseTypeName = isListType
         ? fieldType.ofType.name
         : fieldType.name;
