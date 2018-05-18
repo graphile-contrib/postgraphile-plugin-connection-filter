@@ -44,6 +44,22 @@ query {
   jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...filterableJsonbConnection }
   jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...filterableJsonbConnection }
   jsonb_containedBy_object: allFilterables(filter: { jsonb: { containedBy: "{\"string\":\"test\",\"int\":4,\"boolean\":false,\"foo\":\"bar\"}" } }) { ...filterableJsonbConnection }
+  intArray_isNull_true: allFilterables(filter: { intArray: { isNull: true } }) { ...filterableIntArrayConnection }
+  intArray_isNull_false: allFilterables(filter: { intArray: { isNull: false } }) { ...filterableIntArrayConnection }
+  intArray_distinctFrom_2_20: allFilterables(filter: { intArray: { distinctFrom: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_notDistinctFrom_2_20: allFilterables(filter: { intArray: { notDistinctFrom: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_equalTo_2_20: allFilterables(filter: { intArray: { equalTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_notEqualTo_2_20: allFilterables(filter: { intArray: { notEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_lessThan_2_20: allFilterables(filter: { intArray: { lessThan: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_lessThanOrEqualTo_2_20: allFilterables(filter: { intArray: { lessThanOrEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_greaterThan_2_20: allFilterables(filter: { intArray: { greaterThan: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_greaterThanOrEqualTo_2_20: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
@@ -71,5 +87,12 @@ fragment filterableJsonbConnection on FilterablesConnection {
   nodes {
     id
     jsonb
+  }
+}
+
+fragment filterableIntArrayConnection on FilterablesConnection {
+  nodes {
+    id
+    intArray
   }
 }

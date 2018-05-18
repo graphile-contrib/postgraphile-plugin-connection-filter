@@ -9,7 +9,8 @@ create table p.filterable (
   "real" real,
   "numeric" numeric,
   "boolean" boolean,
-  "jsonb" jsonb
+  "jsonb" jsonb,
+  "int_array" int[]
 );
 
 comment on column p.filterable.real is E'@omit filter';

@@ -288,6 +288,330 @@ Object {
       },
       "totalCount": 1,
     },
+    "intArray_anyEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_anyGreaterThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_anyGreaterThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_anyLessThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_anyLessThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+      ],
+    },
+    "intArray_anyNotEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_distinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+        Object {
+          "id": 5,
+          "intArray": null,
+        },
+      ],
+    },
+    "intArray_equalTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_greaterThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_greaterThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "intArray": null,
+        },
+      ],
+    },
+    "intArray_lessThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_lessThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+      ],
+    },
+    "intArray_notDistinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_notEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
     "int_equalTo_2_and_string_endsWith_t": Object {
       "edges": Array [
         Object {

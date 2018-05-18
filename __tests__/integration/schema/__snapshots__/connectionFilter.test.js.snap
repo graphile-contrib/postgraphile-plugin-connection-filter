@@ -190,6 +190,7 @@ type Filterable implements Node {
   computed2: String
   id: Int!
   int: Int
+  intArray: [Int]
   jsonb: JSON
 
   \\"\\"\\"
@@ -214,6 +215,9 @@ input FilterableCondition {
 
   \\"\\"\\"Checks for equality with the object’s \`int\` field.\\"\\"\\"
   int: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`intArray\` field.\\"\\"\\"
+  intArray: [Int]
 
   \\"\\"\\"Checks for equality with the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSON
@@ -244,6 +248,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`int\` field.\\"\\"\\"
   int: IntFilter
 
+  \\"\\"\\"Filter by the object’s \`intArray\` field.\\"\\"\\"
+  intArray: IntListFilter
+
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
 
@@ -265,6 +272,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
+  intArray: [Int]
   jsonb: JSON
   numeric: BigFloat
   real: Float
@@ -278,6 +286,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
+  intArray: [Int]
   jsonb: JSON
   numeric: BigFloat
   real: Float
@@ -316,6 +325,8 @@ enum FilterablesOrderBy {
   BOOLEAN_DESC
   ID_ASC
   ID_DESC
+  INT_ARRAY_ASC
+  INT_ARRAY_DESC
   INT_ASC
   INT_DESC
   JSONB_ASC
@@ -376,6 +387,70 @@ input IntFilter {
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [Int!]
+
+  \\"\\"\\"
+  If set to true, checks for null values.  If set to false, checks for non-null values.
+  \\"\\"\\"
+  null: Boolean
+}
+
+\\"\\"\\"
+A filter to be used against Int list fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntListFilter {
+  \\"\\"\\"Checks for any values equal to this value.\\"\\"\\"
+  anyEqualTo: Int
+
+  \\"\\"\\"Checks for any values greater than this value.\\"\\"\\"
+  anyGreaterThan: Int
+
+  \\"\\"\\"Checks for any values greater than or equal to this value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Int
+
+  \\"\\"\\"Checks for any values less than this value.\\"\\"\\"
+  anyLessThan: Int
+
+  \\"\\"\\"Checks for any values less than or equal to this value.\\"\\"\\"
+  anyLessThanOrEqualTo: Int
+
+  \\"\\"\\"Checks for any values not equal to this value.\\"\\"\\"
+  anyNotEqualTo: Int
+
+  \\"\\"\\"
+  Checks for values not equal to this value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Int]
+
+  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  equalTo: [Int]
+
+  \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
+  greaterThan: [Int]
+
+  \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
+  greaterThanOrEqualTo: [Int]
+
+  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
+  is: NullOrNotNull
+
+  \\"\\"\\"
+  If set to true, checks for null values.  If set to false, checks for non-null values.
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Checks for values less than this value.\\"\\"\\"
+  lessThan: [Int]
+
+  \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
+  lessThanOrEqualTo: [Int]
+
+  \\"\\"\\"
+  Checks for values equal to this value, treating null like an ordinary value.
+  \\"\\"\\"
+  notDistinctFrom: [Int]
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: [Int]
 
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.

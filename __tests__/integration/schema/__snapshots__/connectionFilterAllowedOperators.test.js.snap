@@ -120,6 +120,7 @@ type Filterable implements Node {
   computed2: String
   id: Int!
   int: Int
+  intArray: [Int]
   jsonb: JSON
 
   \\"\\"\\"
@@ -144,6 +145,9 @@ input FilterableCondition {
 
   \\"\\"\\"Checks for equality with the object’s \`int\` field.\\"\\"\\"
   int: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`intArray\` field.\\"\\"\\"
+  intArray: [Int]
 
   \\"\\"\\"Checks for equality with the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSON
@@ -174,6 +178,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`int\` field.\\"\\"\\"
   int: IntFilter
 
+  \\"\\"\\"Filter by the object’s \`intArray\` field.\\"\\"\\"
+  intArray: IntListFilter
+
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
 
@@ -195,6 +202,7 @@ input FilterableInput {
   boolean: Boolean
   id: Int
   int: Int
+  intArray: [Int]
   jsonb: JSON
   numeric: BigFloat
   real: Float
@@ -208,6 +216,7 @@ input FilterablePatch {
   boolean: Boolean
   id: Int
   int: Int
+  intArray: [Int]
   jsonb: JSON
   numeric: BigFloat
   real: Float
@@ -246,6 +255,8 @@ enum FilterablesOrderBy {
   BOOLEAN_DESC
   ID_ASC
   ID_DESC
+  INT_ARRAY_ASC
+  INT_ARRAY_DESC
   INT_ASC
   INT_DESC
   JSONB_ASC
@@ -270,6 +281,17 @@ input IntFilter {
 
   \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
   notEqualTo: Int
+}
+
+\\"\\"\\"
+A filter to be used against Int list fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntListFilter {
+  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  equalTo: [Int]
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: [Int]
 }
 
 \\"\\"\\"
