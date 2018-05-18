@@ -45,11 +45,13 @@ By default, this plugin:
 - Exposes a large number of filter operators, including some that can perform expensive pattern matching.
 - Allows filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/), which can result in expensive operations.
 - Allows filtering on functions that return `setof`, which can result in expensive operations.
+- Allows filtering on List fields (Postgres arrays), which can result in expensive operations.
 
 To protect your server, you can:
 - Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` options to limit the filterable fields and operators exposed through GraphQL.
 - Set `connectionFilterComputedColumns: false` to prevent filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/).
 - Set `connectionFilterSetofFunctions: false` to prevent filtering on functions that return `setof`.
+- Set `connectionFilterLists: false` to prevent filtering on List fields (Postgres arrays).
 
 ## Getting Started
 
