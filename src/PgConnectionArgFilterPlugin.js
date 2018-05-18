@@ -41,7 +41,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           {
             name: fieldFilterTypeName,
             description: `A filter to be used against ${fieldBaseTypeName}${
-              isListType ? " list" : ""
+              isListType ? " List" : ""
             } fields. All fields are combined with a logical ‘and.’`,
             fields: context => {
               const { fieldWithHooks } = context;

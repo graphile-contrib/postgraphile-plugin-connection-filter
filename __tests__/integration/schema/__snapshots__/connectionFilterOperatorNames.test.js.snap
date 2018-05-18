@@ -395,7 +395,7 @@ input IntFilter {
 }
 
 \\"\\"\\"
-A filter to be used against Int list fields. All fields are combined with a logical ‘and.’
+A filter to be used against Int List fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntListFilter {
   \\"\\"\\"Checks for any values equal to this value.\\"\\"\\"
