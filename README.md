@@ -83,47 +83,66 @@ app.listen(5000);
 The following filter operators are exposed by default:
 
 ### Logical Operators
-| Postgres operator | GraphQL field | Type
+| Postgres operator | GraphQL field | GraphQL field type
 | --- | --- | --- |
-| AND | and | Array |
-| OR | or | Array |
+| AND | and | List |
+| OR | or | List |
 | NOT | not | Object |
 
 ### Comparison Operators
-| Postgres expression | GraphQL field | Type |
+| Postgres expression | GraphQL field | GraphQL field type |
 | --- | --- | --- |
-| IS NULL | is | Enum (`NULL`, `NOT_NULL`) |
-| IS NULL | null | Boolean |
-| = | equalTo | Scalar |
-| <> | notEqualTo | Scalar |
-| IS DISTINCT FROM | distinctFrom | Scalar |
-| IS NOT DISTINCT FROM | notDistinctFrom | Scalar |
-| < | lessThan | Scalar |
-| <= | lessThanOrEqualTo | Scalar |
-| > | greaterThan | Scalar |
-| >= | greaterThanOrEqualTo | Scalar |
-| IN | in | Array |
-| NOT IN | notIn | Array |
-| LIKE '%...%' | includes | Scalar |
-| NOT LIKE '%...%' | notIncludes | Scalar |
-| ILIKE '%...%' | includesInsensitive | Scalar |
-| NOT ILIKE '%...%' | notIncludesInsensitive | Scalar |
-| LIKE '...%' | startsWith | Scalar |
-| NOT LIKE '...%' | notStartsWith | Scalar |
-| ILIKE '...%' | startsWithInsensitive | Scalar |
-| NOT ILIKE '...%' | notStartsWithInsensitive | Scalar |
-| LIKE '%...' | endsWith | Scalar |
-| NOT LIKE '%...' | notEndsWith | Scalar |
-| ILIKE '%...' | endsWithInsensitive | Scalar |
-| NOT ILIKE '%...' | notEndsWithInsensitive | Scalar |
-| LIKE '...' | like | Scalar |
-| NOT LIKE '...' | notLike | Scalar |
-| ILIKE '...' | likeInsensitive | Scalar |
-| NOT ILIKE '...' | notLikeInsensitive | Scalar |
-| SIMILAR TO '...' | similarTo | Scalar |
-| NOT SIMILAR TO '...' | notSimilarTo | Scalar |
+| IS [NOT] NULL | isNull | Boolean |
+| = | equalTo | Scalar/Enum |
+| <> | notEqualTo | Scalar/Enum |
+| IS DISTINCT FROM | distinctFrom | Scalar/Enum |
+| IS NOT DISTINCT FROM | notDistinctFrom | Scalar/Enum |
+| < | lessThan | Scalar/Enum |
+| <= | lessThanOrEqualTo | Scalar/Enum |
+| > | greaterThan | Scalar/Enum |
+| >= | greaterThanOrEqualTo | Scalar/Enum |
+| IN | in | List |
+| NOT IN | notIn | List |
+| LIKE '%...%' | includes | String |
+| NOT LIKE '%...%' | notIncludes | String |
+| ILIKE '%...%' | includesInsensitive | String |
+| NOT ILIKE '%...%' | notIncludesInsensitive | String |
+| LIKE '...%' | startsWith | String |
+| NOT LIKE '...%' | notStartsWith | String |
+| ILIKE '...%' | startsWithInsensitive | String |
+| NOT ILIKE '...%' | notStartsWithInsensitive | String |
+| LIKE '%...' | endsWith | String |
+| NOT LIKE '%...' | notEndsWith | String |
+| ILIKE '%...' | endsWithInsensitive | String |
+| NOT ILIKE '%...' | notEndsWithInsensitive | String |
+| LIKE '...' | like | String |
+| NOT LIKE '...' | notLike | String |
+| ILIKE '...' | likeInsensitive | String |
+| NOT ILIKE '...' | notLikeInsensitive | String |
+| SIMILAR TO '...' | similarTo | String |
+| NOT SIMILAR TO '...' | notSimilarTo | String |
 | @> | contains | JSON |
 | <@ | containedBy | JSON |
+
+### List Comparison Operators
+
+| Postgres expression | GraphQL field | GraphQL field type |
+| --- | --- | --- |
+| IS [NOT] NULL | isNull | Boolean |
+| = | equalTo | List |
+| <> | notEqualTo | List |
+| IS DISTINCT FROM | distinctFrom | List |
+| IS NOT DISTINCT FROM | notDistinctFrom | List |
+| < | lessThan | List |
+| <= | lessThanOrEqualTo | List |
+| > | greaterThan | List |
+| >= | greaterThanOrEqualTo | List |
+| = ANY() | anyEqualTo | Scalar/Enum |
+| <> ANY() | anyNotEqualTo | Scalar/Enum |
+| > ANY() | anyLessThan | Scalar/Enum |
+| >= ANY() | anyLessThanOrEqualTo | Scalar/Enum |
+| < ANY() | anyGreaterThan | Scalar/Enum |
+| <= ANY() | anyGreaterThanOrEqualTo | Scalar/Enum |
 
 ## Examples
 
@@ -340,6 +359,22 @@ Enable/disable filtering by computed columns:
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterComputedColumns: false, // default: true
+  },
+})
+```
+
+</details>
+
+<details>
+
+<summary>connectionFilterLists</summary>
+
+Enable/disable filtering on List fields:
+
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterLists: false, // default: true
   },
 })
 ```
