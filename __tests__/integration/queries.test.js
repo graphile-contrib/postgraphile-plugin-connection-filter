@@ -19,8 +19,7 @@ const queriesDir = `${__dirname}/../fixtures/queries`;
 const queryFileNames = readdirSync(queriesDir);
 let queryResults = [];
 
-const kitchenSinkData = () =>
-  readFile(`${__dirname}/../p-data.sql`, "utf8");
+const kitchenSinkData = () => readFile(`${__dirname}/../p-data.sql`, "utf8");
 
 beforeAll(() => {
   // Get a few GraphQL schema instance that we can query.
@@ -28,12 +27,14 @@ beforeAll(() => {
     // Different fixtures need different schemas with different configurations.
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
-    const [
-      normal,
-      dynamicJson,
-    ] = await Promise.all([
-      createPostGraphileSchema(pgClient, ["p"], { appendPlugins: [require("../../index.js")] }),
-      createPostGraphileSchema(pgClient, ["p"], { dynamicJson: true, appendPlugins: [require("../../index.js")] }),
+    const [normal, dynamicJson] = await Promise.all([
+      createPostGraphileSchema(pgClient, ["p"], {
+        appendPlugins: [require("../../index.js")],
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        dynamicJson: true,
+        appendPlugins: [require("../../index.js")],
+      }),
     ]);
     debug(printSchema(normal));
     return {
