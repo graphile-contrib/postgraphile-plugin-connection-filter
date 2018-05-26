@@ -1,59 +1,11 @@
 module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
   builder.hook("init", (_, build) => {
     const {
-      newWithHooks,
-      getTypeByName,
       addConnectionFilterOperator,
       escapeLikeWildcards,
       pgSql: sql,
-      graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull, GraphQLEnumType },
+      graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
     } = build;
-    addConnectionFilterOperator(
-      "is",
-      "Checks for null or non-null values.",
-      () =>
-        getTypeByName("NullOrNotNull") ||
-        newWithHooks(
-          GraphQLEnumType,
-          {
-            name: "NullOrNotNull",
-            values: {
-              NULL: { value: "NULL" },
-              NOT_NULL: { value: "NOT NULL" },
-            },
-          },
-          {}
-        ),
-      (identifier, val) => {
-        console.warn(
-          "*** The `is` operator is deprecated and will be removed prior to v1.0.0 of this plugin. Please use the `isNull` operator instead. ***"
-        );
-        return sql.query`${identifier} ${
-          val === "NULL" ? sql.query`IS NULL` : sql.query`IS NOT NULL`
-        }`;
-      },
-      {
-        resolveWithRawInput: true,
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "null",
-      "If set to true, checks for null values.  If set to false, checks for non-null values.",
-      () => GraphQLBoolean,
-      (identifier, val) => {
-        console.warn(
-          "*** The `null` operator is deprecated and will be removed prior to v1.0.0 of this plugin. Please use the `isNull` operator instead. ***"
-        );
-        return sql.query`${identifier} ${
-          val ? sql.query`IS NULL` : sql.query`IS NOT NULL`
-        }`;
-      },
-      {
-        resolveWithRawInput: true,
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
     addConnectionFilterOperator(
       "isNull",
       "If set to true, checks for null values.  If set to false, checks for non-null values.",

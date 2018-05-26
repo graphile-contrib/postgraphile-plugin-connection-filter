@@ -27,9 +27,6 @@ input BigFloatFilter {
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [BigFloat!]
 
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.
   \\"\\"\\"
@@ -51,11 +48,6 @@ input BigFloatFilter {
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [BigFloat!]
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 }
 
 \\"\\"\\"
@@ -73,9 +65,6 @@ input BooleanFilter {
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [Boolean!]
 
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.
   \\"\\"\\"
@@ -91,11 +80,6 @@ input BooleanFilter {
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [Boolean!]
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 }
 
 \\"\\"\\"All input for the create \`Filterable\` mutation.\\"\\"\\"
@@ -363,9 +347,6 @@ input IntFilter {
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [Int!]
 
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.
   \\"\\"\\"
@@ -387,11 +368,6 @@ input IntFilter {
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [Int!]
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 }
 
 \\"\\"\\"
@@ -430,9 +406,6 @@ input IntListFilter {
   \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
   greaterThanOrEqualTo: [Int]
 
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.
   \\"\\"\\"
@@ -451,11 +424,6 @@ input IntListFilter {
 
   \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
   notEqualTo: [Int]
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 }
 
 \\"\\"\\"
@@ -484,9 +452,6 @@ input JSONFilter {
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [JSON!]
 
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.
   \\"\\"\\"
@@ -502,11 +467,6 @@ input JSONFilter {
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [JSON!]
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 }
 
 \\"\\"\\"
@@ -562,11 +522,6 @@ interface Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
-}
-
-enum NullOrNotNull {
-  NOT_NULL
-  NULL
 }
 
 \\"\\"\\"Information about pagination in a connection.\\"\\"\\"
@@ -680,9 +635,6 @@ input StringFilter {
   \\"\\"\\"Checks for strings that include this value.  Case insensitive.\\"\\"\\"
   includesInsensitive: String
 
-  \\"\\"\\"Checks for null or non-null values.\\"\\"\\"
-  is: NullOrNotNull
-
   \\"\\"\\"
   If set to true, checks for null values.  If set to false, checks for non-null values.
   \\"\\"\\"
@@ -745,11 +697,6 @@ input StringFilter {
   Checks for strings that do not start with this value.  Case insensitive.
   \\"\\"\\"
   notStartsWithInsensitive: String
-
-  \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
-  \\"\\"\\"
-  null: Boolean
 
   \\"\\"\\"Raw SQL 'similar to', wildcards are not escaped\\"\\"\\"
   similarTo: String
