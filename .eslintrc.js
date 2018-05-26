@@ -1,6 +1,10 @@
 module.exports = {
   parserOptions: {
     sourceType: "module",
+    ecmaVersion: 2017,
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true
+    },
   },
   extends: ["eslint:recommended", "prettier"],
   plugins: ["prettier"],
