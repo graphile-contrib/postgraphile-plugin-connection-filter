@@ -7,10 +7,9 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
 > **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
 
+## Breaking change in beta.9
 
-## Future breaking changes
-
-The `is` and `null` operators are deprecated and will be removed prior to v1.0.0. Please use the `isNull` operator instead.
+The deprecated `is` and `null` operators were removed. Use the `isNull` operator instead.
 
 ## Breaking change in beta.7
 
