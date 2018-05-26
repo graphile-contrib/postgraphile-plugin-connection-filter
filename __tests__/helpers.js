@@ -54,9 +54,7 @@ const withRootDb = fn => withDbFromUrl(process.env.TEST_DATABASE_URL, fn);
 let prepopulatedDBKeepalive;
 
 const populateDatabase = async client => {
-  await client.query(
-    await readFilePromise(`${__dirname}/p-data.sql`, "utf8")
-  );
+  await client.query(await readFilePromise(`${__dirname}/p-data.sql`, "utf8"));
   return {};
 };
 
