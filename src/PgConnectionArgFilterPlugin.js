@@ -320,23 +320,53 @@ module.exports = function PgConnectionArgFilterPlugin(
               }, {});
 
             // Computed columns
-            const procByFieldName = introspectionResultsByKind.procedure
-              .filter(proc => proc.isStable)
-              .filter(proc => proc.namespaceId === source.namespaceId)
-              .filter(proc => proc.name.startsWith(`${source.name}_`))
-              .filter(proc => !omit(proc, "filter"))
-              .reduce((memo, proc) => {
-                const pseudoColumnName = proc.name.substr(
-                  source.name.length + 1
-                );
-                const fieldName = inflection.computedColumn(
-                  pseudoColumnName,
-                  proc,
-                  source
-                );
-                memo[fieldName] = proc;
-                return memo;
-              }, {});
+            const table =
+              source.kind === "class"
+                ? source
+                : introspectionResultsByKind.typeById[source.returnTypeId] &&
+                  introspectionResultsByKind.typeById[source.returnTypeId]
+                    .class;
+            const procByFieldName = table
+              ? introspectionResultsByKind.procedure
+                  .filter(proc => proc.isStable)
+                  .filter(proc => proc.namespaceId === table.namespaceId)
+                  .filter(proc => proc.name.startsWith(`${table.name}_`))
+                  .filter(proc => proc.argTypeIds.length > 0)
+                  .filter(proc => proc.argTypeIds[0] === table.typeId)
+                  .filter(proc => !omit(proc, "filter"))
+                  .reduce((memo, proc) => {
+                    const argTypes = proc.argTypeIds.map(
+                      typeId => introspectionResultsByKind.typeById[typeId]
+                    );
+                    if (
+                      argTypes
+                        .slice(1)
+                        .some(
+                          type =>
+                            type.type === "c" &&
+                            type.class &&
+                            type.class.isSelectable
+                        )
+                    ) {
+                      // Accepts two input tables? Skip.
+                      return memo;
+                    }
+                    if (argTypes.length > 1) {
+                      // Accepts arguments? Skip.
+                      return memo;
+                    }
+                    const pseudoColumnName = proc.name.substr(
+                      table.name.length + 1
+                    );
+                    const fieldName = inflection.computedColumn(
+                      pseudoColumnName,
+                      proc,
+                      table
+                    );
+                    memo[fieldName] = proc;
+                    return memo;
+                  }, {})
+              : {};
 
             const valFromInput = (input, inputResolver, pgType) =>
               Array.isArray(input)
