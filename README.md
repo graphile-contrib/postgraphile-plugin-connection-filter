@@ -57,6 +57,8 @@ To protect your server, you can:
 - Set `connectionFilterSetofFunctions: false` to prevent filtering on functions that return `setof`.
 - Set `connectionFilterLists: false` to prevent filtering on List fields (Postgres arrays).
 
+Also see the [Production Considerations](https://www.graphile.org/postgraphile/production) page of the official PostGraphile docs, which discusses query whitelisting.
+
 ## Getting Started
 
 ### CLI
