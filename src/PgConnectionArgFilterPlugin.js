@@ -284,13 +284,18 @@ module.exports = function PgConnectionArgFilterPlugin(
         connectionFilterOperators,
       } = build;
       const {
-        scope: { isPgFieldConnection, pgFieldIntrospection: source },
+        scope: {
+          isPgFieldConnection,
+          isPgFieldSimpleCollection,
+          pgFieldIntrospection: source,
+        },
         addArgDataGenerator,
         field,
         Self,
       } = context;
+      const shouldAddFilter = isPgFieldConnection || isPgFieldSimpleCollection;
       if (
-        !isPgFieldConnection ||
+        !shouldAddFilter ||
         !source ||
         (source.kind !== "class" &&
           (source.kind !== "procedure" || !connectionFilterSetofFunctions)) ||

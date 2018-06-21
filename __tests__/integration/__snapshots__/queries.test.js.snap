@@ -1791,3 +1791,20 @@ Object {
   },
 }
 `;
+
+exports[`connections-filter.simple-collections.graphql 1`] = `
+Object {
+  "data": Object {
+    "string_isNull_true": Array [
+      Object {
+        "boolean": null,
+        "id": 5,
+        "int": null,
+        "numeric": null,
+        "real": null,
+        "string": null,
+      },
+    ],
+  },
+}
+`;

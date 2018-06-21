@@ -1146,26 +1146,26 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
-graphile-build-pg@4.0.0-beta.6:
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-4.0.0-beta.6.tgz#9ba7d7ea2a19273c34446b3e8ec4a88fdb80121f"
+graphile-build-pg@4.0.0-rc.1, graphile-build-pg@^4.0.0-beta.6:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/graphile-build-pg/-/graphile-build-pg-4.0.0-rc.1.tgz#178b6389b5dfe8d1793d5a3f16ce5ca7bb567d98"
   dependencies:
     chalk "^2.1.0"
     debug ">=2 <3"
-    graphile-build "4.0.0-beta.6"
+    graphile-build "4.0.0-rc.1"
     graphql-iso-date "^3.2.0"
     jsonwebtoken "^8.1.1"
     lodash ">=4 <5"
     lru-cache "4.1.1"
-    pg-sql2 "2.0.0"
+    pg-sql2 "2.1.0"
     postgres-interval "1.1.1"
 
-graphile-build@4.0.0-beta.6:
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-4.0.0-beta.6.tgz#d3f15b16213c15728e72cfaa3adc733c690726a4"
+graphile-build@4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/graphile-build/-/graphile-build-4.0.0-rc.1.tgz#c6037491498fd498b129c3b1053ced9d6cc5bd3f"
   dependencies:
     debug ">=2 <3"
-    graphql-parse-resolve-info "4.0.0-beta.6"
+    graphql-parse-resolve-info "4.0.0-rc.1"
     lodash ">=4 <5"
     pluralize "7.0.0"
 
@@ -1173,9 +1173,9 @@ graphql-iso-date@^3.2.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/graphql-iso-date/-/graphql-iso-date-3.5.0.tgz#55a1be0efa8d28c1453afd2eb5ce1d052189a513"
 
-graphql-parse-resolve-info@4.0.0-beta.6:
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/graphql-parse-resolve-info/-/graphql-parse-resolve-info-4.0.0-beta.6.tgz#daa2e492617e5d6abde2ef0fb535403fcadecca0"
+graphql-parse-resolve-info@4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/graphql-parse-resolve-info/-/graphql-parse-resolve-info-4.0.0-rc.1.tgz#66ce65d4ef004000c69f2c34e2b10dc7aab74e6e"
   dependencies:
     debug ">=2 <3"
 
@@ -2410,9 +2410,9 @@ pg-pool@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/pg-pool/-/pg-pool-2.0.3.tgz#c022032c8949f312a4f91fb6409ce04076be3257"
 
-pg-sql2@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/pg-sql2/-/pg-sql2-2.0.0.tgz#9b89c0fc31d99450f08777d5b3501e27f81d3d2e"
+pg-sql2@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/pg-sql2/-/pg-sql2-2.1.0.tgz#f86978278451482099e4f8e8db8b7486ecb67e3f"
   dependencies:
     debug ">=2 <3"
 
@@ -2465,12 +2465,12 @@ posix-character-classes@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
 
-postgraphile-core@^4.0.0-beta.6:
-  version "4.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-4.0.0-beta.6.tgz#f7427ae22e2efd8b549d512603e1b075cc9321ab"
+postgraphile-core@^4.0.0-beta.8:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-4.0.0-rc.1.tgz#b980ae3e658acaee760d465cfe1b727a465a3027"
   dependencies:
-    graphile-build "4.0.0-beta.6"
-    graphile-build-pg "4.0.0-beta.6"
+    graphile-build "4.0.0-rc.1"
+    graphile-build-pg "4.0.0-rc.1"
 
 postgres-array@~1.0.0:
   version "1.0.2"
