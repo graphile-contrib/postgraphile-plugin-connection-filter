@@ -142,7 +142,8 @@ module.exports = function PgConnectionArgFilterPlugin(
                 .reduce((memo, attr) => {
                   const fieldName = inflection.column(attr);
                   const fieldType =
-                    pgGetGqlInputTypeByTypeId(attr.typeId) || GraphQLString;
+                    pgGetGqlInputTypeByTypeId(attr.typeId, attr.typeModifier) ||
+                    GraphQLString;
                   return extendFilterFields(
                     memo,
                     fieldName,
@@ -199,7 +200,8 @@ module.exports = function PgConnectionArgFilterPlugin(
                         table
                       );
                       const fieldType = pgGetGqlInputTypeByTypeId(
-                        proc.returnTypeId
+                        proc.returnTypeId,
+                        null
                       );
                       return extendFilterFields(
                         memo,
@@ -491,7 +493,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       // Add filter argument for each Connection
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
-      const tableTypeName = pgGetGqlTypeByTypeId(returnTypeId).name;
+      const tableTypeName = pgGetGqlTypeByTypeId(returnTypeId, null).name;
       const TableFilterType = getTypeByName(`${tableTypeName}Filter`);
       if (TableFilterType == null) {
         return args;
