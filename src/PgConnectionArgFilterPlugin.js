@@ -415,7 +415,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                 const val = operator.options.resolveWithRawInput
                   ? input
                   : valFromInput(input, inputResolver, attr.type);
-                return operator.resolveWhereClause(identifier, val);
+                return operator.resolveWhereClause(identifier, val, fieldName, queryBuilder);
               }
 
               // Computed columns
@@ -431,7 +431,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                 const val = operator.options.resolveWithRawInput
                   ? input
                   : valFromInput(input, inputResolver, procReturnType);
-                return operator.resolveWhereClause(identifier, val);
+                return operator.resolveWhereClause(identifier, val, fieldName, queryBuilder);
               }
 
               throw new Error(
