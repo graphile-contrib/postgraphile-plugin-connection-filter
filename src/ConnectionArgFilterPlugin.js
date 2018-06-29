@@ -1,6 +1,10 @@
 module.exports = function ConnectionArgFilterPlugin(
   builder,
-  { connectionFilterAllowedFieldTypes, connectionFilterOperatorNames = {} } = {}
+  {
+    connectionFilterAllowedFieldTypes,
+    connectionFilterAllowedOperators,
+    connectionFilterOperatorNames = {},
+  } = {}
 ) {
   builder.hook("build", build => {
     const connectionFilterOperators = {};
@@ -34,31 +38,20 @@ module.exports = function ConnectionArgFilterPlugin(
               "'"
           );
         }
-        connectionFilterOperators[name] = {
-          name,
-          description,
-          resolveType,
-          resolveWhereClause,
-          options,
-        };
-      },
-      connectionFilterAllowedFieldTypes,
-    });
-  });
-
-  builder.hook("build", build => {
-    return build.extend(build, {
-      escapeLikeWildcards(val) {
-        if ("string" !== typeof val) {
-          throw new Error("escapeLikeWildcards called on non-string value");
-        } else {
-          return val
-            .split("%")
-            .join("\\%")
-            .split("_")
-            .join("\\_");
+        if (
+          !connectionFilterAllowedOperators ||
+          connectionFilterAllowedOperators.includes(defaultName)
+        ) {
+          connectionFilterOperators[name] = {
+            name,
+            description,
+            resolveType,
+            resolveWhereClause,
+            options,
+          };
         }
       },
+      connectionFilterAllowedFieldTypes,
     });
   });
 };

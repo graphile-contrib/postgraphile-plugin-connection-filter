@@ -1,6 +1,6 @@
 const { graphql } = require("graphql");
 const { withPgClient } = require("../helpers");
-const { createPostGraphQLSchema } = require("postgraphile-core");
+const { createPostGraphileSchema } = require("postgraphile-core");
 const { readdirSync, readFile: rawReadFile } = require("fs");
 const { resolve: resolvePath } = require("path");
 const { printSchema } = require("graphql/utilities");
@@ -19,8 +19,7 @@ const queriesDir = `${__dirname}/../fixtures/queries`;
 const queryFileNames = readdirSync(queriesDir);
 let queryResults = [];
 
-const kitchenSinkData = () =>
-  readFile(`${__dirname}/../kitchen-sink-data.sql`, "utf8");
+const kitchenSinkData = () => readFile(`${__dirname}/../p-data.sql`, "utf8");
 
 beforeAll(() => {
   // Get a few GraphQL schema instance that we can query.
@@ -28,16 +27,24 @@ beforeAll(() => {
     // Different fixtures need different schemas with different configurations.
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
-    const [normal, classicIds, dynamicJson] = await Promise.all([
-      createPostGraphQLSchema(pgClient, ["a", "b", "c"], { appendPlugins: [require("../../index.js")] }),
-      createPostGraphQLSchema(pgClient, ["a", "b", "c"], { classicIds: true, appendPlugins: [require("../../index.js")] }),
-      createPostGraphQLSchema(pgClient, ["a", "b", "c"], { dynamicJson: true, appendPlugins: [require("../../index.js")] }),
+    const [normal, dynamicJson, simpleCollections] = await Promise.all([
+      createPostGraphileSchema(pgClient, ["p"], {
+        appendPlugins: [require("../../index.js")],
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        dynamicJson: true,
+        appendPlugins: [require("../../index.js")],
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        simpleCollections: "only",
+        appendPlugins: [require("../../index.js")],
+      }),
     ]);
     debug(printSchema(normal));
     return {
       normal,
-      classicIds,
       dynamicJson,
+      simpleCollections,
     };
   });
 
@@ -64,12 +71,14 @@ beforeAll(() => {
           // Get the appropriate GraphQL schema for this fixture. We want to test
           // some specific fixtures against a schema configured slightly
           // differently.
-          const gqlSchema =
-            fileName === "classic-ids.graphql"
-              ? gqlSchemas.classicIds
-              : fileName === "dynamic-json.graphql"
-                ? gqlSchemas.dynamicJson
-                : gqlSchemas.normal;
+          const schemas = {
+            "connections-filter.dynamic-json.graphql": gqlSchemas.dynamicJson,
+            "connections-filter.simple-collections.graphql":
+              gqlSchemas.simpleCollections,
+          };
+          const gqlSchema = schemas[fileName]
+            ? schemas[fileName]
+            : gqlSchemas.normal;
           // Return the result of our GraphQL query.
           const result = await graphql(gqlSchema, query, null, {
             pgClient: pgClient,

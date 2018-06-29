@@ -1,6 +1,6 @@
 query {
-  string_null_true: allFilterables(filter: { string: { null: true } }) { ...filterableConnection }
-  string_null_false: allFilterables(filter: { string: { null: false } }) { ...filterableConnection }
+  string_isNull_true: allFilterables(filter: { string: { isNull: true } }) { ...filterableConnection }
+  string_isNull_false: allFilterables(filter: { string: { isNull: false } }) { ...filterableConnection }
   string_equalTo_test: allFilterables(filter: { string: { equalTo: "test" } }) { ...filterableConnection }
   string_notEqualTo_test: allFilterables(filter: { string: { notEqualTo: "test" } }) { ...filterableConnection }
   string_distinctFrom_test: allFilterables(filter: { string: { distinctFrom: "test" } }) { ...filterableConnection }
@@ -11,10 +11,10 @@ query {
   int_greaterThanOrEqualTo_2: allFilterables(filter: { int: { greaterThanOrEqualTo: 2 } }) { ...filterableConnection }
   int_in_2_3: allFilterables(filter: { int: { in: [2, 3] } }) { ...filterableConnection }
   int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...filterableConnection }
-  string_contains_t: allFilterables(filter: { string: { contains: "t" } }) { ...filterableConnection }
-  string_containsInsensitive_t: allFilterables(filter: { string: { containsInsensitive: "t" } }) { ...filterableConnection }
-  string_notContains_t: allFilterables(filter: { string: { notContains: "t" } }) { ...filterableConnection }
-  string_notContainsInsensitive_t: allFilterables(filter: { string: { notContainsInsensitive: "t" } }) { ...filterableConnection }
+  string_contains_t: allFilterables(filter: { string: { includes: "t" } }) { ...filterableConnection }
+  string_containsInsensitive_t: allFilterables(filter: { string: { includesInsensitive: "t" } }) { ...filterableConnection }
+  string_notContains_t: allFilterables(filter: { string: { notIncludes: "t" } }) { ...filterableConnection }
+  string_notContainsInsensitive_t: allFilterables(filter: { string: { notIncludesInsensitive: "t" } }) { ...filterableConnection }
   string_startsWith_t: allFilterables(filter: { string: { startsWith: "t" } }) { ...filterableConnection }
   string_startsWithInsensitive_t: allFilterables(filter: { string: { startsWithInsensitive: "t" } }) { ...filterableConnection }
   string_notStartsWith_t: allFilterables(filter: { string: { notStartsWith: "t" } }) { ...filterableConnection }
@@ -31,14 +31,35 @@ query {
   string_notSimilarTo_te_or_st: allFilterables(filter:{ string: { notSimilarTo: "%(te|st)%" } }) { ...filterableConnection }
   int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
   int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
-  boolean_null_true: allFilterables(filter: { boolean: { null: true } }) { ...filterableConnection }
-  boolean_null_false: allFilterables(filter: { boolean: { null: false } }) { ...filterableConnection }
+  boolean_isNull_true: allFilterables(filter: { boolean: { isNull: true } }) { ...filterableConnection }
+  boolean_isNull_false: allFilterables(filter: { boolean: { isNull: false } }) { ...filterableConnection }
   boolean_equalTo_true: allFilterables(filter: { boolean: { equalTo: true } }) { ...filterableConnection }
   boolean_notEqualTo_true: allFilterables(filter: { boolean: { notEqualTo: true } }) { ...filterableConnection }
   boolean_distinctFrom_true: allFilterables(filter: { boolean: { distinctFrom: true } }) { ...filterableConnection }
   boolean_notDistinctFrom_true: allFilterables(filter: { boolean: { notDistinctFrom: true } }) { ...filterableConnection }
   not_string_equalTo_test: allFilterables(filter: { not: { string: { equalTo: "test" } } }) { ...filterableConnection }
   not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...filterableConnection }
+  computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...filterableConnection }
+  jsonb_contains_string: allFilterables(filter: { jsonb: { contains: "{\"string\":\"test\"}" } }) { ...filterableJsonbConnection }
+  jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...filterableJsonbConnection }
+  jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...filterableJsonbConnection }
+  jsonb_containedBy_object: allFilterables(filter: { jsonb: { containedBy: "{\"string\":\"test\",\"int\":4,\"boolean\":false,\"foo\":\"bar\"}" } }) { ...filterableJsonbConnection }
+  intArray_isNull_true: allFilterables(filter: { intArray: { isNull: true } }) { ...filterableIntArrayConnection }
+  intArray_isNull_false: allFilterables(filter: { intArray: { isNull: false } }) { ...filterableIntArrayConnection }
+  intArray_distinctFrom_2_20: allFilterables(filter: { intArray: { distinctFrom: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_notDistinctFrom_2_20: allFilterables(filter: { intArray: { notDistinctFrom: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_equalTo_2_20: allFilterables(filter: { intArray: { equalTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_notEqualTo_2_20: allFilterables(filter: { intArray: { notEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_lessThan_2_20: allFilterables(filter: { intArray: { lessThan: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_lessThanOrEqualTo_2_20: allFilterables(filter: { intArray: { lessThanOrEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_greaterThan_2_20: allFilterables(filter: { intArray: { greaterThan: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_greaterThanOrEqualTo_2_20: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
+  intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...filterableIntArrayConnection }
+  intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
@@ -59,5 +80,19 @@ fragment filterableConnection on FilterablesConnection {
       numeric
       boolean
     }
+  }
+}
+
+fragment filterableJsonbConnection on FilterablesConnection {
+  nodes {
+    id
+    jsonb
+  }
+}
+
+fragment filterableIntArrayConnection on FilterablesConnection {
+  nodes {
+    id
+    intArray
   }
 }

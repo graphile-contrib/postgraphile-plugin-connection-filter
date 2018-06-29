@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-plugin-connection-filter",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-beta.13",
   "description": "Advanced filtering of Connections in PostGraphile",
   "main": "index.js",
   "scripts": {
@@ -8,26 +8,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mattbretl/postgraphile-plugin-connection-filter.git"
+    "url": "git+https://github.com/graphile-contrib/postgraphile-plugin-connection-filter.git"
   },
   "author": "Matt Bretl",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mattbretl/postgraphile-plugin-connection-filter/issues"
+    "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "graphile-build-pg": "^4.0.0-beta.6"
+  },
   "peerDependencies": {
-    "postgraphile": "4.0.0-alpha2.30"
+    "postgraphile": "^4.0.0-beta.8"
   },
   "devDependencies": {
     "eslint": "^4.0.0",
     "eslint-config-prettier": "2.3.0",
     "eslint-plugin-jest": "^20.0.3",
     "eslint-plugin-prettier": "^2.1.2",
-    "graphql": "^0.10.5",
+    "graphql": ">=0.9 <0.14",
     "jest": "^20.0.4",
-    "pg": ">=6 <7",
-    "postgraphile-core": "0.1.0-alpha.37 || 0.1.0-alpha.38",
+    "pg": ">=6.1.0 <8",
+    "postgraphile-core": "^4.0.0-beta.8",
     "prettier": "^1.4.4"
   },
   "jest": {

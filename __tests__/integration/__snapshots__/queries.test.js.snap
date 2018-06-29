@@ -1,679 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`connections.graphql 1`] = `
+exports[`connections-filter.dynamic-json.graphql 1`] = `
 Object {
   "data": Object {
     "a": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 6,
-    },
-    "b": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": true,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 6,
-    },
-    "c": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": true,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 6,
-    },
-    "d": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJuYW1lX2FzYyIsWyJCdWRkIERlZXkiLDNdXQ==",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2FzYyIsWyJKb2UgVHVja2VyIiw1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2FzYyIsWyJKb2huIFNtaXRoIiwxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2FzYyIsWyJLYXRocnluIFJhbWlyZXoiLDRdXQ==",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2FzYyIsWyJTYXJhIFNtaXRoIiwyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2FzYyIsWyJUd2VudHkgU2V2ZW50d28iLDZdXQ==",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJuYW1lX2FzYyIsWyJUd2VudHkgU2V2ZW50d28iLDZdXQ==",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJuYW1lX2FzYyIsWyJCdWRkIERlZXkiLDNdXQ==",
-      },
-      "totalCount": 6,
-    },
-    "e": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJuYW1lX2Rlc2MiLFsiVHdlbnR5IFNldmVudHdvIiw2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2Rlc2MiLFsiU2FyYSBTbWl0aCIsMl1d",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2Rlc2MiLFsiS2F0aHJ5biBSYW1pcmV6Iiw0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2Rlc2MiLFsiSm9obiBTbWl0aCIsMV1d",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2Rlc2MiLFsiSm9lIFR1Y2tlciIsNV1d",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJuYW1lX2Rlc2MiLFsiQnVkZCBEZWV5IiwzXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJuYW1lX2Rlc2MiLFsiQnVkZCBEZWV5IiwzXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJuYW1lX2Rlc2MiLFsiVHdlbnR5IFNldmVudHdvIiw2XV0=",
-      },
-      "totalCount": 6,
-    },
-    "f": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-        "hasNextPage": true,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 6,
-    },
-    "g": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": true,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 6,
-    },
-    "h": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJuYXR1cmFsIiwxXQ==",
-          "node": Object {
-            "constant": 2,
-            "name": "John Smith",
-            "x": 1,
-          },
-        },
-        Object {
-          "cursor": "WyJuYXR1cmFsIiwyXQ==",
-          "node": Object {
-            "constant": 2,
-            "name": "Sara Smith",
-            "x": 2,
-          },
-        },
-        Object {
-          "cursor": "WyJuYXR1cmFsIiwzXQ==",
-          "node": Object {
-            "constant": 2,
-            "name": "Budd Deey",
-            "x": 3,
-          },
-        },
-        Object {
-          "cursor": "WyJuYXR1cmFsIiw0XQ==",
-          "node": Object {
-            "constant": 2,
-            "name": "Kathryn Ramirez",
-            "x": 4,
-          },
-        },
-        Object {
-          "cursor": "WyJuYXR1cmFsIiw1XQ==",
-          "node": Object {
-            "constant": 2,
-            "name": "Joe Tucker",
-            "x": 5,
-          },
-        },
-        Object {
-          "cursor": "WyJuYXR1cmFsIiw2XQ==",
-          "node": Object {
-            "constant": 2,
-            "name": "Twenty Seventwo",
-            "x": 6,
-          },
-        },
-      ],
-    },
-    "i": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJjb25zdGFudF9hc2MiLDFd",
-          "node": Object {
-            "constant": 2,
-            "name": "John Smith",
-            "x": 1,
-          },
-        },
-        Object {
-          "cursor": "WyJjb25zdGFudF9hc2MiLDJd",
-          "node": Object {
-            "constant": 2,
-            "name": "Sara Smith",
-            "x": 2,
-          },
-        },
-        Object {
-          "cursor": "WyJjb25zdGFudF9hc2MiLDNd",
-          "node": Object {
-            "constant": 2,
-            "name": "Budd Deey",
-            "x": 3,
-          },
-        },
-        Object {
-          "cursor": "WyJjb25zdGFudF9hc2MiLDRd",
-          "node": Object {
-            "constant": 2,
-            "name": "Kathryn Ramirez",
-            "x": 4,
-          },
-        },
-        Object {
-          "cursor": "WyJjb25zdGFudF9hc2MiLDVd",
-          "node": Object {
-            "constant": 2,
-            "name": "Joe Tucker",
-            "x": 5,
-          },
-        },
-        Object {
-          "cursor": "WyJjb25zdGFudF9hc2MiLDZd",
-          "node": Object {
-            "constant": 2,
-            "name": "Twenty Seventwo",
-            "x": 6,
-          },
-        },
-      ],
-    },
-    "j": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "authorId": 2,
-            "headline": "No… It’s a thing; it’s like a plan, but with more greatness.",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs4XV0=",
-          "node": Object {
-            "authorId": 2,
-            "headline": "It’s a fez. I wear a fez now. Fezes are cool.",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxMF1d",
-          "node": Object {
-            "authorId": 2,
-            "headline": "What’s with you kids? Every other day it’s food, food, food.",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxMF1d",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 3,
-    },
-    "k": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "authorId": 2,
-            "headline": "No… It’s a thing; it’s like a plan, but with more greatness.",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs4XV0=",
-          "node": Object {
-            "authorId": 2,
-            "headline": "It’s a fez. I wear a fez now. Fezes are cool.",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs4XV0=",
-        "hasNextPage": true,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 3,
-    },
-    "l": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJoZWFkbGluZV9hc2MiLFsiWW91IGhpdCBtZSB3aXRoIGEgY3JpY2tldCBiYXQuIiw0XV0=",
-          "node": Object {
-            "authorId": 1,
-            "headline": "You hit me with a cricket bat.",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJoZWFkbGluZV9hc2MiLFsiWW91IGhpdCBtZSB3aXRoIGEgY3JpY2tldCBiYXQuIiw0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": true,
-        "startCursor": "WyJoZWFkbGluZV9hc2MiLFsiWW91IGhpdCBtZSB3aXRoIGEgY3JpY2tldCBiYXQuIiw0XV0=",
-      },
-      "totalCount": 4,
-    },
-    "m": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": true,
-        "hasPreviousPage": true,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 6,
-    },
-    "n": Object {
-      "edges": Array [],
-      "pageInfo": Object {
-        "endCursor": null,
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": null,
-      },
-      "totalCount": 6,
-    },
-    "o": Object {
       "nodes": Array [
         Object {
-          "rowId": 2,
+          "id": 4,
+          "jsonb": Object {
+            "boolean": false,
+            "int": 4,
+            "string": "test",
+          },
         },
       ],
     },
-    "p": Object {
-      "edges": Array [
+    "b": Object {
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
+          "id": 4,
+          "jsonb": Object {
+            "boolean": false,
+            "int": 4,
+            "string": "test",
           },
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": true,
-        "hasPreviousPage": true,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-      },
-      "totalCount": 6,
     },
-    "q": Object {
-      "edges": Array [
+    "c": Object {
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "email": "budd.deey@email.com",
-            "id": 3,
-            "name": "Budd Deey",
+          "id": 4,
+          "jsonb": Object {
+            "boolean": false,
+            "int": 4,
+            "string": "test",
           },
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": true,
-        "hasPreviousPage": true,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 6,
-    },
-    "r": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": true,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-      },
-      "totalCount": 6,
-    },
-    "s": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "email": "john.smith@email.com",
-            "id": 1,
-            "name": "John Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "email": "sara.smith@email.com",
-            "id": 2,
-            "name": "Sara Smith",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "email": "kathryn.ramirez@email.com",
-            "id": 4,
-            "name": "Kathryn Ramirez",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "email": "joe.tucker@email.com",
-            "id": 5,
-            "name": "Joe Tucker",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-          "node": Object {
-            "email": "graphile-build.issue.27.exists@example.com",
-            "id": 6,
-            "name": "Twenty Seventwo",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs2XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 5,
-    },
-    "t": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJhdXRob3JfaWRfZGVzYyIsImhlYWRsaW5lX2Rlc2MiLFs1LCJQbGVhc2UsIERvbi1Cb3TigKYgbG9vayBpbnRvIHlvdXIgaGFyZCBkcml2ZSwgYW5kIG9wZW4geW91ciBtZXJjeSBmaWxlISIsNV1d",
-          "node": Object {
-            "authorId": 5,
-            "headline": "Please, Don-Bot… look into your hard drive, and open your mercy file!",
-          },
-        },
-        Object {
-          "cursor": "WyJhdXRob3JfaWRfZGVzYyIsImhlYWRsaW5lX2Rlc2MiLFszLCJZb3Uga25vdyBob3cgSSBzb21ldGltZXMgaGF2ZSByZWFsbHkgYnJpbGxpYW50IGlkZWFzPyIsOV1d",
-          "node": Object {
-            "authorId": 3,
-            "headline": "You know how I sometimes have really brilliant ideas?",
-          },
-        },
-        Object {
-          "cursor": "WyJhdXRob3JfaWRfZGVzYyIsImhlYWRsaW5lX2Rlc2MiLFszLCJUaGV54oCZcmUgbm90IGFsaWVucywgdGhleeKAmXJlIEVhcnRo4oCmbGllbnMhIiwxMV1d",
-          "node": Object {
-            "authorId": 3,
-            "headline": "They’re not aliens, they’re Earth…liens!",
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJhdXRob3JfaWRfZGVzYyIsImhlYWRsaW5lX2Rlc2MiLFszLCJUaGV54oCZcmUgbm90IGFsaWVucywgdGhleeKAmXJlIEVhcnRo4oCmbGllbnMhIiwxMV1d",
-        "hasNextPage": true,
-        "hasPreviousPage": false,
-        "startCursor": "WyJhdXRob3JfaWRfZGVzYyIsImhlYWRsaW5lX2Rlc2MiLFs1LCJQbGVhc2UsIERvbi1Cb3TigKYgbG9vayBpbnRvIHlvdXIgaGFyZCBkcml2ZSwgYW5kIG9wZW4geW91ciBtZXJjeSBmaWxlISIsNV1d",
-      },
-      "totalCount": 11,
     },
   },
 }
@@ -759,6 +123,83 @@ Object {
       },
       "totalCount": 2,
     },
+    "boolean_isNull_false": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": "0.1",
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 2,
+            "int": 2,
+            "numeric": "0.2",
+            "real": 0.2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 3,
+            "int": 3,
+            "numeric": "0.3",
+            "real": 0.3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 4,
+            "int": 4,
+            "numeric": "0.4",
+            "real": 0.4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "boolean_isNull_true": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+          "node": Object {
+            "boolean": null,
+            "id": 5,
+            "int": null,
+            "numeric": null,
+            "real": null,
+            "string": null,
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+      },
+      "totalCount": 1,
+    },
     "boolean_notDistinctFrom_true": Object {
       "edges": Array [
         Object {
@@ -825,41 +266,8 @@ Object {
       },
       "totalCount": 2,
     },
-    "boolean_null_false": Object {
+    "computed_equalTo_test_computed": Object {
       "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
-        },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
           "node": Object {
@@ -876,31 +284,333 @@ Object {
         "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
-    },
-    "boolean_null_true": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
       },
       "totalCount": 1,
+    },
+    "intArray_anyEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_anyGreaterThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_anyGreaterThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_anyLessThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_anyLessThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+      ],
+    },
+    "intArray_anyNotEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_distinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+        Object {
+          "id": 5,
+          "intArray": null,
+        },
+      ],
+    },
+    "intArray_equalTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_greaterThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_greaterThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "intArray": null,
+        },
+      ],
+    },
+    "intArray_lessThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_lessThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+      ],
+    },
+    "intArray_notDistinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_notEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
     },
     "int_equalTo_2_and_string_endsWith_t": Object {
       "edges": Array [
@@ -1154,6 +864,42 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
       },
       "totalCount": 2,
+    },
+    "jsonb_containedBy_object": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": "{\\"int\\":4,\\"string\\":\\"test\\",\\"boolean\\":false}",
+        },
+      ],
+    },
+    "jsonb_contains_boolean": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "jsonb": "{\\"int\\":1,\\"string\\":\\"TEST\\",\\"boolean\\":true}",
+        },
+        Object {
+          "id": 2,
+          "jsonb": "{\\"int\\":2,\\"string\\":\\"Test\\",\\"boolean\\":true}",
+        },
+      ],
+    },
+    "jsonb_contains_int": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "jsonb": "{\\"int\\":2,\\"string\\":\\"Test\\",\\"boolean\\":true}",
+        },
+      ],
+    },
+    "jsonb_contains_string": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "jsonb": "{\\"int\\":4,\\"string\\":\\"test\\",\\"boolean\\":false}",
+        },
+      ],
     },
     "not_int_equalTo_2_or_string_endsWith_t": Object {
       "edges": Array [
@@ -1493,6 +1239,83 @@ Object {
         "hasNextPage": false,
         "hasPreviousPage": false,
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+      },
+      "totalCount": 1,
+    },
+    "string_isNull_false": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 1,
+            "int": 1,
+            "numeric": "0.1",
+            "real": 0.1,
+            "string": "TEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
+          "node": Object {
+            "boolean": true,
+            "id": 2,
+            "int": 2,
+            "numeric": "0.2",
+            "real": 0.2,
+            "string": "Test",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 3,
+            "int": 3,
+            "numeric": "0.3",
+            "real": 0.3,
+            "string": "tEST",
+          },
+        },
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+          "node": Object {
+            "boolean": false,
+            "id": 4,
+            "int": 4,
+            "numeric": "0.4",
+            "real": 0.4,
+            "string": "test",
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+      },
+      "totalCount": 4,
+    },
+    "string_isNull_true": Object {
+      "edges": Array [
+        Object {
+          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+          "node": Object {
+            "boolean": null,
+            "id": 5,
+            "int": null,
+            "numeric": null,
+            "real": null,
+            "string": null,
+          },
+        },
+      ],
+      "pageInfo": Object {
+        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
+        "hasNextPage": false,
+        "hasPreviousPage": false,
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
       },
       "totalCount": 1,
     },
@@ -1844,19 +1667,8 @@ Object {
       },
       "totalCount": 2,
     },
-    "string_null_false": Object {
+    "string_similarTo_te_or_st": Object {
       "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
-        },
         Object {
           "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
           "node": Object {
@@ -1866,17 +1678,6 @@ Object {
             "numeric": "0.2",
             "real": 0.2,
             "string": "Test",
-          },
-        },
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
           },
         },
         Object {
@@ -1895,31 +1696,9 @@ Object {
         "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
         "hasNextPage": false,
         "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
+        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
       },
-      "totalCount": 4,
-    },
-    "string_null_true": Object {
-      "edges": Array [
-        Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
-        },
-      ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 1,
+      "totalCount": 2,
     },
     "string_similarTo_te_or_st": Object {
       "edges": Array [
@@ -2042,6 +1821,23 @@ Object {
       },
       "totalCount": 2,
     },
+  },
+}
+`;
+
+exports[`connections-filter.simple-collections.graphql 1`] = `
+Object {
+  "data": Object {
+    "string_isNull_true": Array [
+      Object {
+        "boolean": null,
+        "id": 5,
+        "int": null,
+        "numeric": null,
+        "real": null,
+        "string": null,
+      },
+    ],
   },
 }
 `;
