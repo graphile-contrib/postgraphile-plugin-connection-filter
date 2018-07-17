@@ -131,6 +131,11 @@ The following filter operators are exposed by default:
 | NOT SIMILAR TO '...' | notSimilarTo | String |
 | @> | contains | JSON |
 | <@ | containedBy | JSON |
+| &lt;&lt; | inetContainedBy | inet |
+| &lt;&lt;= | inetContainedByOrEquals | inet |
+| &gt;&gt; | inetContains | inet |
+| &gt;&gt;= | inetContainsOrEquals | inet |
+| &amp;&amp; | inetContainsOrIsContainedBy | inet |
 
 ### List Comparison Operators
 

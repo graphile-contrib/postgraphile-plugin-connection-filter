@@ -60,6 +60,11 @@ query {
   intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
   intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...filterableIntArrayConnection }
   intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  inet_inetContainedBy: allFilterables(filter: { inet: { inetContainedBy: "192.168.0/24" } }) { ...filterableInetConnection }
+  inet_inetContainedByOrEquals: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.0/24" } }) { ...filterableInetConnection }
+  inet_inetContains: allFilterables(filter: { inet: { inetContains: "192.168.0.1" } }) { ...filterableInetConnection }
+  inet_inetContainsOrEquals: allFilterables(filter: { inet: { inetContainsOrEquals: "192.168.0.1" } }) { ...filterableInetConnection }
+  inet_inetContainsOrIsContainedBy: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "192.168.1/24" } }) { ...filterableInetConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
@@ -94,5 +99,12 @@ fragment filterableIntArrayConnection on FilterablesConnection {
   nodes {
     id
     intArray
+  }
+}
+
+fragment filterableInetConnection on FilterablesConnection {
+  nodes {
+    id
+    inet
   }
 }

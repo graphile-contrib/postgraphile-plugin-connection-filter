@@ -380,14 +380,16 @@ module.exports = function PgConnectionArgFilterPlugin(
                 ? pgType.isPgArray
                   ? sql.query`${gql2pg(
                       (inputResolver && inputResolver(input)) || input,
-                      pgType
+                      pgType,
+                      null
                     )}`
                   : sql.query`(${sql.join(
                       input.map(
                         i =>
                           sql.query`${gql2pg(
                             (inputResolver && inputResolver(i)) || i,
-                            pgType
+                            pgType,
+                            null
                           )}`
                       ),
                       ","
@@ -395,11 +397,13 @@ module.exports = function PgConnectionArgFilterPlugin(
                 : pgType.isPgArray
                   ? sql.query`${gql2pg(
                       (inputResolver && inputResolver(input)) || input,
-                      pgType.arrayItemType
+                      pgType.arrayItemType,
+                      null
                     )}`
                   : sql.query`${gql2pg(
                       (inputResolver && inputResolver(input)) || input,
-                      pgType
+                      pgType,
+                      null
                     )}`;
 
             function resolveWhereComparison(fieldName, operatorName, input) {
