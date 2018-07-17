@@ -288,6 +288,62 @@ Object {
       },
       "totalCount": 1,
     },
+    "inet_inetContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "inet": "192.168.0.1",
+        },
+        Object {
+          "id": 4,
+          "inet": "192.168.0.3",
+        },
+      ],
+    },
+    "inet_inetContainedByOrEquals": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "inet": "192.168.0.1",
+        },
+        Object {
+          "id": 3,
+          "inet": "192.168.0.0/24",
+        },
+        Object {
+          "id": 4,
+          "inet": "192.168.0.3",
+        },
+      ],
+    },
+    "inet_inetContains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "192.168.0.0/24",
+        },
+      ],
+    },
+    "inet_inetContainsOrEquals": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "inet": "192.168.0.1",
+        },
+        Object {
+          "id": 3,
+          "inet": "192.168.0.0/24",
+        },
+      ],
+    },
+    "inet_inetContainsOrIsContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "inet": "192.168.1.1",
+        },
+      ],
+    },
     "intArray_anyEqualTo_2": Object {
       "nodes": Array [
         Object {

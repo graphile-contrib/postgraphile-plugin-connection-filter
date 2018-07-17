@@ -501,6 +501,61 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         allowedListTypes: ["List"],
       }
     );
+    addConnectionFilterOperator(
+      "inetContainedBy",
+      "Checks if an inet is contained by another inet",
+      fieldType => fieldType,
+      (identifier, val) => {
+        return sql.query`${identifier} << ${val}`;
+      },
+      {
+        allowedFieldTypes: ["Inet"],
+      }
+    );
+    addConnectionFilterOperator(
+      "inetContainedByOrEquals",
+      "Checks if an inet is contained by or equals another inet",
+      fieldType => fieldType,
+      (identifier, val) => {
+        return sql.query`${identifier} <<= ${val}`;
+      },
+      {
+        allowedFieldTypes: ["Inet"],
+      }
+    );
+    addConnectionFilterOperator(
+      "inetContains",
+      "Checks if an inet contains another inet",
+      fieldType => fieldType,
+      (identifier, val) => {
+        return sql.query`${identifier} >> ${val}`;
+      },
+      {
+        allowedFieldTypes: ["Inet"],
+      }
+    );
+    addConnectionFilterOperator(
+      "inetContainsOrEquals",
+      "Checks if an inet contains or equals another inet",
+      fieldType => fieldType,
+      (identifier, val) => {
+        return sql.query`${identifier} >>= ${val}`;
+      },
+      {
+        allowedFieldTypes: ["Inet"],
+      }
+    );
+    addConnectionFilterOperator(
+      "inetContainsOrIsContainedBy",
+      "Checks if an inet contains or is contained by another inet",
+      fieldType => fieldType,
+      (identifier, val) => {
+        return sql.query`${identifier} && ${val}`;
+      },
+      {
+        allowedFieldTypes: ["Inet"],
+      }
+    );
     return _;
   });
 };
