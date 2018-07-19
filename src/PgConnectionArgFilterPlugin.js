@@ -375,19 +375,26 @@ module.exports = function PgConnectionArgFilterPlugin(
                   }, {})
               : {};
 
-            const valFromInput = (input, inputResolver, pgType) =>
+            const valFromInput = (
+              input,
+              inputResolver,
+              pgType,
+              pgTypeModifier
+            ) =>
               Array.isArray(input)
                 ? pgType.isPgArray
                   ? sql.query`${gql2pg(
                       (inputResolver && inputResolver(input)) || input,
-                      pgType
+                      pgType,
+                      pgTypeModifier
                     )}`
                   : sql.query`(${sql.join(
                       input.map(
                         i =>
                           sql.query`${gql2pg(
                             (inputResolver && inputResolver(i)) || i,
-                            pgType
+                            pgType,
+                            pgTypeModifier
                           )}`
                       ),
                       ","
@@ -395,11 +402,13 @@ module.exports = function PgConnectionArgFilterPlugin(
                 : pgType.isPgArray
                   ? sql.query`${gql2pg(
                       (inputResolver && inputResolver(input)) || input,
-                      pgType.arrayItemType
+                      pgType.arrayItemType,
+                      pgTypeModifier
                     )}`
                   : sql.query`${gql2pg(
                       (inputResolver && inputResolver(input)) || input,
-                      pgType
+                      pgType,
+                      pgTypeModifier
                     )}`;
 
             function resolveWhereComparison(fieldName, operatorName, input) {
@@ -414,7 +423,12 @@ module.exports = function PgConnectionArgFilterPlugin(
                 )}`;
                 const val = operator.options.resolveWithRawInput
                   ? input
-                  : valFromInput(input, inputResolver, attr.type);
+                  : valFromInput(
+                      input,
+                      inputResolver,
+                      attr.type,
+                      attr.typeModifier
+                    );
                 return operator.resolveWhereClause(
                   identifier,
                   val,
@@ -435,7 +449,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                 )}(${queryBuilder.getTableAlias()})`;
                 const val = operator.options.resolveWithRawInput
                   ? input
-                  : valFromInput(input, inputResolver, procReturnType);
+                  : valFromInput(input, inputResolver, procReturnType, null);
                 return operator.resolveWhereClause(
                   identifier,
                   val,
