@@ -173,6 +173,7 @@ type Filterable implements Node {
   computed: String
   computed2: String
   id: Int!
+  inet: InternetAddress
   int: Int
   intArray: [Int]
   jsonb: JSON
@@ -196,6 +197,9 @@ input FilterableCondition {
 
   \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
   id: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`inet\` field.\\"\\"\\"
+  inet: InternetAddress
 
   \\"\\"\\"Checks for equality with the object’s \`int\` field.\\"\\"\\"
   int: Int
@@ -229,6 +233,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
 
+  \\"\\"\\"Filter by the object’s \`inet\` field.\\"\\"\\"
+  inet: InternetAddressFilter
+
   \\"\\"\\"Filter by the object’s \`int\` field.\\"\\"\\"
   int: IntFilter
 
@@ -255,6 +262,7 @@ input FilterableFilter {
 input FilterableInput {
   boolean: Boolean
   id: Int
+  inet: InternetAddress
   int: Int
   intArray: [Int]
   jsonb: JSON
@@ -269,6 +277,7 @@ Represents an update to a \`Filterable\`. Fields that are set will be updated.
 input FilterablePatch {
   boolean: Boolean
   id: Int
+  inet: InternetAddress
   int: Int
   intArray: [Int]
   jsonb: JSON
@@ -309,6 +318,8 @@ enum FilterablesOrderBy {
   BOOLEAN_DESC
   ID_ASC
   ID_DESC
+  INET_ASC
+  INET_DESC
   INT_ARRAY_ASC
   INT_ARRAY_DESC
   INT_ASC
@@ -324,6 +335,56 @@ enum FilterablesOrderBy {
   REAL_DESC
   STRING_ASC
   STRING_DESC
+}
+
+\\"\\"\\"An IPv4 or IPv6 host address, and optionally its subnet.\\"\\"\\"
+scalar InternetAddress
+
+\\"\\"\\"
+A filter to be used against InternetAddress fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input InternetAddressFilter {
+  \\"\\"\\"
+  Checks for values not equal to this value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: InternetAddress
+
+  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  equalTo: InternetAddress
+
+  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  in: [InternetAddress!]
+
+  \\"\\"\\"Checks if an inet is contained by another inet\\"\\"\\"
+  inetContainedBy: InternetAddress
+
+  \\"\\"\\"Checks if an inet is contained by or equals another inet\\"\\"\\"
+  inetContainedByOrEquals: InternetAddress
+
+  \\"\\"\\"Checks if an inet contains another inet\\"\\"\\"
+  inetContains: InternetAddress
+
+  \\"\\"\\"Checks if an inet contains or equals another inet\\"\\"\\"
+  inetContainsOrEquals: InternetAddress
+
+  \\"\\"\\"Checks if an inet contains or is contained by another inet\\"\\"\\"
+  inetContainsOrIsContainedBy: InternetAddress
+
+  \\"\\"\\"
+  If set to true, checks for null values.  If set to false, checks for non-null values.
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"
+  Checks for values equal to this value, treating null like an ordinary value.
+  \\"\\"\\"
+  notDistinctFrom: InternetAddress
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: InternetAddress
+
+  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  notIn: [InternetAddress!]
 }
 
 \\"\\"\\"
