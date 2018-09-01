@@ -42,6 +42,7 @@ connectionFilterOperatorNames: {
 | 4.0.0-alpha2.33 | 1.0.0-alpha.9 - 1.0.0-alpha.10 |
 | 4.0.0-beta.0 - 4.0.0-beta.7 | 1.0.0-beta.0 - 1.0.0-beta.6 |
 | 4.0.0-beta.8 or later | 1.0.0-beta.7 or later |
+| 4.0.0-rc.4 or later | 1.0.0-beta.15 or later |
 
 ## Performance and Security
 
@@ -131,6 +132,12 @@ The following filter operators are exposed by default:
 | NOT SIMILAR TO '...' | notSimilarTo | String |
 | @> | contains | JSON |
 | <@ | containedBy | JSON |
+| &lt;&lt; | inetContainedBy | InternetAddress |
+| &lt;&lt;= | inetContainedByOrEquals | InternetAddress |
+| &gt;&gt; | inetContains | InternetAddress |
+| &gt;&gt;= | inetContainsOrEquals | InternetAddress |
+| &amp;&amp; | inetContainsOrIsContainedBy | InternetAddress |
+
 
 ### List Comparison Operators
 
