@@ -7,6 +7,10 @@ This plugin adds a `filter` argument to Connection types in PostGraphile v4.
 
 > **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
 
+## Breaking change in beta.15
+
+The v1.0.0-beta.15 release of this plugin relies on the `pgOmit` function introduced in PostGraphile v4.0.0-rc.2 and the `inet` type support introduced in PostGraphile v4.0.0-rc.4.  As a result, the PostGraphile peer dependency was bumped to v4.0.0-rc.4 or later.
+
 ## Breaking change in beta.9
 
 The deprecated `is` and `null` operators were removed. Use the `isNull` operator instead.
@@ -41,7 +45,7 @@ connectionFilterOperatorNames: {
 | 4.0.0-alpha2.30 | 1.0.0-alpha.7 - 1.0.0-alpha.8 |
 | 4.0.0-alpha2.33 | 1.0.0-alpha.9 - 1.0.0-alpha.10 |
 | 4.0.0-beta.0 - 4.0.0-beta.7 | 1.0.0-beta.0 - 1.0.0-beta.6 |
-| 4.0.0-beta.8 or later | 1.0.0-beta.7 or later |
+| 4.0.0-beta.8 - 4.0.0-rc.3 | 1.0.0-beta.7 - 1.0.0-beta.14 |
 | 4.0.0-rc.4 or later | 1.0.0-beta.15 or later |
 
 ## Performance and Security
