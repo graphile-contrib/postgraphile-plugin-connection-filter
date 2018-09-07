@@ -1,5 +1,3 @@
-const { omit } = require("graphile-build-pg");
-
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
@@ -23,6 +21,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLEnumType,
       },
       pgColumnFilter,
+      pgOmit: omit,
       inflection,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
@@ -282,6 +281,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgGetGqlTypeByTypeId,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgColumnFilter,
+        pgOmit: omit,
         inflection,
         connectionFilterOperators,
       } = build;

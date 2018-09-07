@@ -15,9 +15,6 @@
   "bugs": {
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
-  "dependencies": {
-    "graphile-build-pg": "^4.0.0-rc.4"
-  },
   "peerDependencies": {
     "postgraphile": "^4.0.0-rc.4"
   },
@@ -29,7 +26,7 @@
     "graphql": ">=0.9 <0.14",
     "jest": "^20.0.4",
     "pg": ">=6.1.0 <8",
-    "postgraphile-core": "^4.0.0-rc.4",
+    "postgraphile-core": "^4.0.0-rc.9",
     "prettier": "^1.4.4"
   },
   "jest": {
