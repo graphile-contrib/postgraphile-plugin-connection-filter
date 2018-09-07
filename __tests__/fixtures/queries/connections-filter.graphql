@@ -60,6 +60,14 @@ query {
   intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
   intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...filterableIntArrayConnection }
   intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
+  inet_containedBy: allFilterables(filter: { inet: { inetContainedBy: "192.168.0.0/24" } }) { ...filterableInetConnection }
+  inet_containedByOrEquals_ContainedBy: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.0/24" } }) { ...filterableInetConnection }
+  inet_containedByOrEquals_Equals: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.1" } }) { ...filterableInetConnection }
+  inet_contains: allFilterables(filter: { inet: { inetContains: "10.0.0.1" } }) { ...filterableInetConnection }
+  inet_containsOrEquals_Contains: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.2" } }) { ...filterableInetConnection }
+  inet_containsOrEquals_Equals: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.1/24" } }) { ...filterableInetConnection }
+  inet_containsOrIsContainedBy_Contains: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "172.168.1.0/24" } }) { ...filterableInetConnection }
+  inet_containsOrIsContainedBy_ContainedBy: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "10.0.0.5" } }) { ...filterableInetConnection }
 }
 
 fragment filterableConnection on FilterablesConnection {
@@ -94,5 +102,12 @@ fragment filterableIntArrayConnection on FilterablesConnection {
   nodes {
     id
     intArray
+  }
+}
+
+fragment filterableInetConnection on FilterablesConnection {
+  nodes {
+    id
+    inet
   }
 }

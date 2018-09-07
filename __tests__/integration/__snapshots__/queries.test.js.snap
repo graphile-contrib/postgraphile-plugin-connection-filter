@@ -288,6 +288,70 @@ Object {
       },
       "totalCount": 1,
     },
+    "inet_containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "inet": "192.168.0.1",
+        },
+      ],
+    },
+    "inet_containedByOrEquals_ContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "inet": "192.168.1.1",
+        },
+      ],
+    },
+    "inet_containedByOrEquals_Equals": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "inet": "192.168.1.1",
+        },
+      ],
+    },
+    "inet_contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "inet_containsOrEquals_Contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "inet_containsOrEquals_Equals": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "inet_containsOrIsContainedBy_ContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "inet_containsOrIsContainedBy_Contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "inet": "172.168.1.1",
+        },
+      ],
+    },
     "intArray_anyEqualTo_2": Object {
       "nodes": Array [
         Object {
