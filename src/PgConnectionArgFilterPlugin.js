@@ -22,7 +22,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           GraphQLInputObjectType,
           {
             description: `A filter to be used against \`${tableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-            name: `${tableTypeName}Filter`,
+            name: inflection.filterType(tableTypeName),
             fields: context => {
               const { fieldWithHooks } = context;
 
@@ -34,7 +34,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     description: `Checks for all expressions in this list.`,
                     type: new GraphQLList(
                       new GraphQLNonNull(
-                        getTypeByName(`${tableTypeName}Filter`)
+                        getTypeByName(inflection.filterType(tableTypeName))
                       )
                     ),
                   },
@@ -48,7 +48,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     description: `Checks for any expressions in this list.`,
                     type: new GraphQLList(
                       new GraphQLNonNull(
-                        getTypeByName(`${tableTypeName}Filter`)
+                        getTypeByName(inflection.filterType(tableTypeName))
                       )
                     ),
                   },
@@ -60,7 +60,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                   "not",
                   {
                     description: `Negates the expression.`,
-                    type: getTypeByName(`${tableTypeName}Filter`),
+                    type: getTypeByName(inflection.filterType(tableTypeName)),
                   },
                   {
                     isPgConnectionFilterOperatorLogical: true,
@@ -87,6 +87,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgSql: sql,
         extend,
         getTypeByName,
+        inflection,
         pgGetGqlTypeByTypeId,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
@@ -181,7 +182,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
       const tableTypeName = pgGetGqlTypeByTypeId(returnTypeId, null).name;
-      const TableFilterType = getTypeByName(`${tableTypeName}Filter`);
+      const TableFilterType = getTypeByName(
+        inflection.filterType(tableTypeName)
+      );
       if (TableFilterType == null) {
         return args;
       }
@@ -212,6 +215,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLScalarType,
         GraphQLEnumType,
       },
+      inflection,
       pgSql: sql,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
@@ -229,8 +233,8 @@ module.exports = function PgConnectionArgFilterPlugin(
         ? fieldType.ofType.name
         : fieldType.name;
       const fieldFilterTypeName = isListType
-        ? `${fieldBaseTypeName}ListFilter`
-        : `${fieldBaseTypeName}Filter`;
+        ? inflection.filterFieldListType(fieldBaseTypeName)
+        : inflection.filterFieldType(fieldBaseTypeName);
       if (!getTypeByName(fieldFilterTypeName)) {
         newWithHooks(
           GraphQLInputObjectType,
