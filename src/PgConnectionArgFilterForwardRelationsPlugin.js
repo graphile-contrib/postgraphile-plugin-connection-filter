@@ -139,16 +139,14 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
           foreignSchema.name,
           foreignTable.name
         )} as ${foreignTableAlias}
-        where (${
-          sql.join(
-            keys.map((key, i) => {
-              return sql.fragment`${sourceAlias}.${sql.identifier(
-                key.name
-              )} = ${foreignTableAlias}.${sql.identifier(foreignKeys[i].name)}`;
-            }),
-            ") and ("
-          ) /* FIXME - after this point, we need to check for additional nested relations, or find a way to make them unqueryable */
-        }) 
+        where (${sql.join(
+          keys.map((key, i) => {
+            return sql.fragment`${sourceAlias}.${sql.identifier(
+              key.name
+            )} = ${foreignTableAlias}.${sql.identifier(foreignKeys[i].name)}`;
+          }),
+          ") and ("
+        )}) 
           and (${sql.query`(${sql.join(
             Object.entries(fieldValue).map(
               ([foreignFieldName, foreignFieldValue]) => {
