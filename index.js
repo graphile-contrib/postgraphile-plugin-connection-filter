@@ -6,5 +6,9 @@ module.exports = function PostGraphileConnectionFilterPlugin(builder, options) {
     builder,
     options
   );
+  require("./src/PgConnectionArgFilterForwardRelationsPlugin.js")(
+    builder,
+    options
+  );
   require("./src/PgConnectionArgFilterOperatorsPlugin.js")(builder, options);
 };
