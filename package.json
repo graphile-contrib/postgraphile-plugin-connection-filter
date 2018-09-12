@@ -4,6 +4,7 @@
   "description": "Advanced filtering of Connections in PostGraphile",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint src/*.js",
     "test": "scripts/test"
   },
   "repository": {
