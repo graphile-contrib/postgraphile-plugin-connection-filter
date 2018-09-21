@@ -27,7 +27,7 @@
     "graphql": ">=0.9 <0.14",
     "jest": "23.5.0",
     "pg": ">=6.1.0 <8",
-    "postgraphile-core": "^4.0.0-rc.9",
+    "postgraphile-core": "^4.0.0-rc.11",
     "prettier": "1.14.2"
   },
   "jest": {
