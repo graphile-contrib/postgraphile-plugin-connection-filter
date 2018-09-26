@@ -1856,6 +1856,33 @@ Object {
 }
 `;
 
+exports[`connections-filter.relations.graphql 1`] = `
+Object {
+  "data": Object {
+    "forward_name_equalTo_forward2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "string": "Test",
+        },
+      ],
+    },
+    "parent_name_equalTo_parent2": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "string": "tEST",
+        },
+        Object {
+          "id": 4,
+          "string": "test",
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`connections-filter.simple-collections.graphql 1`] = `
 Object {
   "data": Object {

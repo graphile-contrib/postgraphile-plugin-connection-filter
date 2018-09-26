@@ -27,13 +27,24 @@ beforeAll(() => {
     // Different fixtures need different schemas with different configurations.
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
-    const [normal, dynamicJson, simpleCollections] = await Promise.all([
+    const [
+      normal,
+      dynamicJson,
+      relations,
+      simpleCollections,
+    ] = await Promise.all([
       createPostGraphileSchema(pgClient, ["p"], {
         appendPlugins: [require("../../index.js")],
       }),
       createPostGraphileSchema(pgClient, ["p"], {
         dynamicJson: true,
         appendPlugins: [require("../../index.js")],
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        appendPlugins: [require("../../index.js")],
+        graphileBuildOptions: {
+          connectionFilterRelations: true,
+        },
       }),
       createPostGraphileSchema(pgClient, ["p"], {
         simpleCollections: "only",
@@ -44,6 +55,7 @@ beforeAll(() => {
     return {
       normal,
       dynamicJson,
+      relations,
       simpleCollections,
     };
   });
@@ -73,6 +85,7 @@ beforeAll(() => {
           // differently.
           const schemas = {
             "connections-filter.dynamic-json.graphql": gqlSchemas.dynamicJson,
+            "connections-filter.relations.graphql": gqlSchemas.relations,
             "connections-filter.simple-collections.graphql":
               gqlSchemas.simpleCollections,
           };

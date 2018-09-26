@@ -1,0 +1,11 @@
+query {
+  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...filterableConnection }
+  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...filterableConnection }
+}
+
+fragment filterableConnection on FilterablesConnection {
+  nodes {
+    id
+    string
+  }
+}
