@@ -215,7 +215,6 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLList,
         GraphQLScalarType,
         GraphQLEnumType,
-        GraphQLNonNull,
       },
       inflection,
       pgSql: sql,
@@ -285,10 +284,6 @@ module.exports = function PgConnectionArgFilterPlugin(
       fieldWithHooks,
       newWithHooks
     ) => {
-      if (fieldType instanceof GraphQLNonNull) {
-        // eslint-disable-next-line
-        console.log("got one!!!!!!!!!!");
-      }
       const namedType = getNamedType(fieldType);
       const isScalarType = namedType instanceof GraphQLScalarType;
       const isEnumType = namedType instanceof GraphQLEnumType;
