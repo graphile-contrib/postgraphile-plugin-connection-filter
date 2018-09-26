@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prints a schema with the filter plugin and the connectionFilterOperatorNames option 1`] = `
+exports[`prints a schema with the filter plugin and the connectionFilterRelations option 1`] = `
 "type Backward implements Node {
   \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
   filterableByFilterableId: Filterable
@@ -35,6 +35,9 @@ A filter to be used against \`Backward\` object types. All fields are combined w
 input BackwardFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [BackwardFilter!]
+
+  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` field.\\"\\"\\"
+  filterableByFilterableId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
   filterableId: IntFilter
@@ -122,7 +125,7 @@ input BigFloatFilter {
   distinctFrom: BigFloat
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: BigFloat
+  equalTo: BigFloat
 
   \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
   greaterThan: BigFloat
@@ -144,13 +147,13 @@ input BigFloatFilter {
   \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
   lessThanOrEqualTo: BigFloat
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: BigFloat
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
   notDistinctFrom: BigFloat
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: BigFloat
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [BigFloat!]
@@ -166,7 +169,7 @@ input BooleanFilter {
   distinctFrom: Boolean
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: Boolean
+  equalTo: Boolean
 
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [Boolean!]
@@ -176,13 +179,13 @@ input BooleanFilter {
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: Boolean
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
   notDistinctFrom: Boolean
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: Boolean
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [Boolean!]
@@ -221,6 +224,9 @@ A filter to be used against \`Child\` object types. All fields are combined with
 input ChildFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ChildFilter!]
+
+  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` field.\\"\\"\\"
+  filterableByFilterableId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
   filterableId: IntFilter
@@ -978,11 +984,17 @@ input FilterableFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [FilterableFilter!]
 
+  \\"\\"\\"Filter by the object’s \`backwardByFilterableId\` field.\\"\\"\\"
+  backwardByFilterableId: BackwardFilter
+
   \\"\\"\\"Filter by the object’s \`boolean\` field.\\"\\"\\"
   boolean: BooleanFilter
 
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`forwardByForwardId\` field.\\"\\"\\"
+  forwardByForwardId: ForwardFilter
 
   \\"\\"\\"Filter by the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: IntFilter
@@ -1010,6 +1022,9 @@ input FilterableFilter {
 
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FilterableFilter!]
+
+  \\"\\"\\"Filter by the object’s \`parentByParentId\` field.\\"\\"\\"
+  parentByParentId: ParentFilter
 
   \\"\\"\\"Filter by the object’s \`parentId\` field.\\"\\"\\"
   parentId: IntFilter
@@ -1169,6 +1184,9 @@ input ForwardFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ForwardFilter!]
 
+  \\"\\"\\"Filter by the object’s \`filterableByForwardId\` field.\\"\\"\\"
+  filterableByForwardId: FilterableFilter
+
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
 
@@ -1246,7 +1264,7 @@ input InternetAddressFilter {
   distinctFrom: InternetAddress
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: InternetAddress
+  equalTo: InternetAddress
 
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [InternetAddress!]
@@ -1271,13 +1289,13 @@ input InternetAddressFilter {
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: InternetAddress
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
   notDistinctFrom: InternetAddress
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: InternetAddress
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [InternetAddress!]
@@ -1293,7 +1311,7 @@ input IntFilter {
   distinctFrom: Int
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: Int
+  equalTo: Int
 
   \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
   greaterThan: Int
@@ -1315,13 +1333,13 @@ input IntFilter {
   \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
   lessThanOrEqualTo: Int
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: Int
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
   notDistinctFrom: Int
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: Int
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [Int!]
@@ -1355,7 +1373,7 @@ input IntListFilter {
   distinctFrom: [Int]
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: [Int]
+  equalTo: [Int]
 
   \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
   greaterThan: [Int]
@@ -1374,13 +1392,13 @@ input IntListFilter {
   \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
   lessThanOrEqualTo: [Int]
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: [Int]
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
   notDistinctFrom: [Int]
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: [Int]
 }
 
 \\"\\"\\"
@@ -1404,7 +1422,7 @@ input JSONFilter {
   distinctFrom: JSON
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: JSON
+  equalTo: JSON
 
   \\"\\"\\"Checks for values in this list.\\"\\"\\"
   in: [JSON!]
@@ -1414,13 +1432,13 @@ input JSONFilter {
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: JSON
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
   notDistinctFrom: JSON
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: JSON
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [JSON!]
@@ -2133,7 +2151,7 @@ input StringFilter {
   endsWithInsensitive: String
 
   \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
-  eq: String
+  equalTo: String
 
   \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
   greaterThan: String
@@ -2167,9 +2185,6 @@ input StringFilter {
   \\"\\"\\"Raw SQL 'ilike', wildcards must be present and are not escaped\\"\\"\\"
   likeInsensitive: String
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
-  ne: String
-
   \\"\\"\\"
   Checks for values equal to this value, treating null like an ordinary value.
   \\"\\"\\"
@@ -2182,6 +2197,9 @@ input StringFilter {
   Checks for strings that do not end with this value.  Case insensitive.
   \\"\\"\\"
   notEndsWithInsensitive: String
+
+  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  notEqualTo: String
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [String!]

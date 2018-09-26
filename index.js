@@ -16,11 +16,15 @@ module.exports = function PostGraphileConnectionFilterPlugin(builder, options) {
   }
 
   if (connectionFilterRelations) {
-  require("./src/PgConnectionArgFilterForwardRelationsPlugin.js")(
-    builder,
-    options
-  );
+    require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js")(
+      builder,
+      options
+    );
+    require("./src/PgConnectionArgFilterForwardRelationsPlugin.js")(
+      builder,
+      options
+    );
   }
-  
+
   require("./src/PgConnectionArgFilterOperatorsPlugin.js")(builder, options);
 };

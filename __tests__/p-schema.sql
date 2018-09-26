@@ -28,6 +28,18 @@ create table p.filterable (
 
 comment on column p.filterable.real is E'@omit filter';
 
+create table p.backward (
+  id serial primary key,
+  "name" text not null,
+  "filterable_id" int unique references p.filterable (id)
+);
+
+create table p.child (
+  id serial primary key,
+  "name" text not null,
+  "filterable_id" int references p.filterable (id)
+);
+
 create table p.unfilterable (
   id serial primary key,
   "string" text
