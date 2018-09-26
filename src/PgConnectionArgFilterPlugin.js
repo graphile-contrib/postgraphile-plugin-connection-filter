@@ -210,10 +210,12 @@ module.exports = function PgConnectionArgFilterPlugin(
       getTypeByName,
       gql2pg,
       graphql: {
+        getNamedType,
         GraphQLInputObjectType,
         GraphQLList,
         GraphQLScalarType,
         GraphQLEnumType,
+        GraphQLNonNull,
       },
       inflection,
       pgSql: sql,
@@ -229,18 +231,17 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (isListType && !connectionFilterLists) {
         return null;
       }
-      const fieldBaseTypeName = isListType
-        ? fieldType.ofType.name
-        : fieldType.name;
+      const namedType = getNamedType(fieldType);
+      const namedTypeName = namedType.name;
       const fieldFilterTypeName = isListType
-        ? inflection.filterFieldListType(fieldBaseTypeName)
-        : inflection.filterFieldType(fieldBaseTypeName);
+        ? inflection.filterFieldListType(namedTypeName)
+        : inflection.filterFieldType(namedTypeName);
       if (!getTypeByName(fieldFilterTypeName)) {
         newWithHooks(
           GraphQLInputObjectType,
           {
             name: fieldFilterTypeName,
-            description: `A filter to be used against ${fieldBaseTypeName}${
+            description: `A filter to be used against ${namedTypeName}${
               isListType ? " List" : ""
             } fields. All fields are combined with a logical ‘and.’`,
             fields: context => {
@@ -251,7 +252,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                   const allowedFieldTypes = operator.options.allowedFieldTypes;
                   const fieldTypeIsAllowed =
                     !allowedFieldTypes ||
-                    allowedFieldTypes.includes(fieldBaseTypeName);
+                    allowedFieldTypes.includes(namedTypeName);
                   const allowedListTypes = operator.options
                     .allowedListTypes || ["NonList"];
                   const listTypeIsAllowed = isListType
@@ -284,23 +285,20 @@ module.exports = function PgConnectionArgFilterPlugin(
       fieldWithHooks,
       newWithHooks
     ) => {
-      const isListType = fieldType instanceof GraphQLList;
-      const isScalarType = isListType
-        ? fieldType.ofType instanceof GraphQLScalarType
-        : fieldType instanceof GraphQLScalarType;
-      const isEnumType = isListType
-        ? fieldType.ofType instanceof GraphQLEnumType
-        : fieldType instanceof GraphQLEnumType;
+      if (fieldType instanceof GraphQLNonNull) {
+        // eslint-disable-next-line
+        console.log("got one!!!!!!!!!!");
+      }
+      const namedType = getNamedType(fieldType);
+      const isScalarType = namedType instanceof GraphQLScalarType;
+      const isEnumType = namedType instanceof GraphQLEnumType;
       if (!(isScalarType || isEnumType)) {
         return memo;
       }
-      const fieldBaseTypeName = isListType
-        ? fieldType.ofType.name
-        : fieldType.name;
       // Check whether this field type is filterable
       if (
         connectionFilterAllowedFieldTypes &&
-        !connectionFilterAllowedFieldTypes.includes(fieldBaseTypeName)
+        !connectionFilterAllowedFieldTypes.includes(namedType.name)
       ) {
         return memo;
       }
