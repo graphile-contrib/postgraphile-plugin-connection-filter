@@ -439,6 +439,6 @@ postgraphile(pgConfig, schema, {
 
 To establish a test environment, create an empty Postgres database (e.g. `graphile_build_test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile_build_test`).  Ensure that `psql` is installed locally and then run:
 ``` bash
-npm install
-npm test
+yarn
+npm run test
 ```
