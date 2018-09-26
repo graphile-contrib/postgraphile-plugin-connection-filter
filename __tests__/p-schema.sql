@@ -16,6 +16,13 @@ create table p.filterable (
 
 comment on column p.filterable.real is E'@omit filter';
 
+create table p.unfilterable (
+  id serial primary key,
+  "string" text
+);
+
+comment on table p.unfilterable is E'@omit filter';
+
 create function p.filterable_computed(filterable p.filterable) returns text as $$
   select filterable.string || ' computed'
 $$ language sql stable;

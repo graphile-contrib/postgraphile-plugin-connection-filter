@@ -1,15 +1,10 @@
-module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
-  builder,
-  { connectionFilterComputedColumns = true }
-) {
+module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
       newWithHooks,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgGetGqlInputTypeByTypeId,
-      pgOmit: omit,
-      inflection,
+      computedColumnProcsByFieldNameFromTable,
       extendFilterFields,
     } = build;
     const {
@@ -19,73 +14,70 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
 
     if (!isPgConnectionFilter) return fields;
 
-    const tableType = introspectionResultsByKind.type.filter(
-      type =>
-        type.type === "c" &&
-        type.namespaceId === table.namespaceId &&
-        type.classId === table.id
-    )[0];
-    if (!tableType) {
-      throw new Error("Could not determine the type for this table");
-    }
-    const procFields = connectionFilterComputedColumns
-      ? introspectionResultsByKind.procedure
-          .filter(proc => proc.isStable)
-          .filter(proc => proc.namespaceId === table.namespaceId)
-          .filter(proc => proc.name.startsWith(`${table.name}_`))
-          .filter(proc => proc.argTypeIds.length > 0)
-          .filter(proc => proc.argTypeIds[0] === tableType.id)
-          .filter(proc => !omit(proc, "filter"))
-          .reduce((memo, proc) => {
-            const argTypes = proc.argTypeIds.map(
-              typeId => introspectionResultsByKind.typeById[typeId]
-            );
-            if (
-              argTypes
-                .slice(1)
-                .some(
-                  type =>
-                    type.type === "c" && type.class && type.class.isSelectable
-                )
-            ) {
-              // Accepts two input tables? Skip.
-              return memo;
-            }
-            if (argTypes.length > 1) {
-              // Accepts arguments? Skip.
-              return memo;
-            }
-            const pseudoColumnName = proc.name.substr(table.name.length + 1);
-            const fieldName = inflection.computedColumn(
-              pseudoColumnName,
-              proc,
-              table
-            );
-            const fieldType = pgGetGqlInputTypeByTypeId(
-              proc.returnTypeId,
-              null
-            );
-            return extendFilterFields(
-              memo,
-              fieldName,
-              fieldType,
-              fieldWithHooks,
-              newWithHooks
-            );
-          }, {})
-      : {};
+    const procFields = Object.entries(
+      computedColumnProcsByFieldNameFromTable(table)
+    ).reduce((memo, [fieldName, proc]) => {
+      const fieldType = pgGetGqlInputTypeByTypeId(proc.returnTypeId, null);
+      return extendFilterFields(
+        memo,
+        fieldName,
+        fieldType,
+        fieldWithHooks,
+        newWithHooks
+      );
+    }, {});
 
     return extend(fields, procFields);
   });
 
   builder.hook("build", build => {
     const {
+      extend,
       inflection,
+      pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgOmit: omit,
       pgSql: sql,
       resolveWhereComparison,
       connectionFilterFieldResolvers,
     } = build;
+
+    const computedColumnProcsByFieldNameFromTable = table => {
+      return introspectionResultsByKind.procedure
+        .filter(proc => proc.isStable)
+        .filter(proc => proc.namespaceId === table.namespaceId)
+        .filter(proc => proc.name.startsWith(`${table.name}_`))
+        .filter(proc => proc.argTypeIds.length > 0)
+        .filter(proc => proc.argTypeIds[0] === table.typeId)
+        .filter(proc => !omit(proc, "filter"))
+        .reduce((memo, proc) => {
+          const argTypes = proc.argTypeIds.map(
+            typeId => introspectionResultsByKind.typeById[typeId]
+          );
+          if (
+            argTypes
+              .slice(1)
+              .some(
+                type =>
+                  type.type === "c" && type.class && type.class.isSelectable
+              )
+          ) {
+            // Accepts two input tables? Skip.
+            return memo;
+          }
+          if (argTypes.length > 1) {
+            // Accepts arguments? Skip.
+            return memo;
+          }
+          const pseudoColumnName = proc.name.substr(table.name.length + 1);
+          const fieldName = inflection.computedColumn(
+            pseudoColumnName,
+            proc,
+            table
+          );
+          memo[fieldName] = proc;
+          return memo;
+        }, {});
+    };
 
     const resolve = ({
       sourceAlias,
@@ -100,41 +92,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
           : introspectionResultsByKind.typeById[source.returnTypeId] &&
             introspectionResultsByKind.typeById[source.returnTypeId].class;
       const procByFieldName = table
-        ? introspectionResultsByKind.procedure
-            .filter(proc => proc.isStable)
-            .filter(proc => proc.namespaceId === table.namespaceId)
-            .filter(proc => proc.name.startsWith(`${table.name}_`))
-            .filter(proc => proc.argTypeIds.length > 0)
-            .filter(proc => proc.argTypeIds[0] === table.typeId)
-            .filter(proc => !omit(proc, "filter"))
-            .reduce((memo, proc) => {
-              const argTypes = proc.argTypeIds.map(
-                typeId => introspectionResultsByKind.typeById[typeId]
-              );
-              if (
-                argTypes
-                  .slice(1)
-                  .some(
-                    type =>
-                      type.type === "c" && type.class && type.class.isSelectable
-                  )
-              ) {
-                // Accepts two input tables? Skip.
-                return memo;
-              }
-              if (argTypes.length > 1) {
-                // Accepts arguments? Skip.
-                return memo;
-              }
-              const pseudoColumnName = proc.name.substr(table.name.length + 1);
-              const fieldName = inflection.computedColumn(
-                pseudoColumnName,
-                proc,
-                table
-              );
-              memo[fieldName] = proc;
-              return memo;
-            }, {})
+        ? computedColumnProcsByFieldNameFromTable(table)
         : {};
       const proc = procByFieldName[fieldName];
       if (proc == null) return null;
@@ -160,6 +118,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
 
     connectionFilterFieldResolvers.push(resolve);
 
-    return build;
+    return extend(build, {
+      computedColumnProcsByFieldNameFromTable,
+    });
   });
 };

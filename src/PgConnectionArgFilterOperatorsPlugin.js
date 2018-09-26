@@ -4,7 +4,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator,
       escapeLikeWildcards,
       pgSql: sql,
-      graphql: { GraphQLBoolean, GraphQLList, GraphQLNonNull },
+      graphql: { getNamedType, GraphQLBoolean, GraphQLList, GraphQLNonNull },
     } = build;
     addConnectionFilterOperator(
       "isNull",
@@ -398,7 +398,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     addConnectionFilterOperator(
       "anyEqualTo",
       "Checks for any values equal to this value.",
-      fieldType => fieldType.ofType,
+      fieldType => getNamedType(fieldType),
       (identifier, val) => {
         return sql.query`${val} = ANY(${identifier})`;
       },
@@ -409,7 +409,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     addConnectionFilterOperator(
       "anyNotEqualTo",
       "Checks for any values not equal to this value.",
-      fieldType => fieldType.ofType,
+      fieldType => getNamedType(fieldType),
       (identifier, val) => {
         return sql.query`${val} <> ANY(${identifier})`;
       },
@@ -420,7 +420,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     addConnectionFilterOperator(
       "anyLessThan",
       "Checks for any values less than this value.",
-      fieldType => fieldType.ofType,
+      fieldType => getNamedType(fieldType),
       (identifier, val) => {
         return sql.query`${val} > ANY(${identifier})`;
       },
@@ -441,7 +441,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     addConnectionFilterOperator(
       "anyLessThanOrEqualTo",
       "Checks for any values less than or equal to this value.",
-      fieldType => fieldType.ofType,
+      fieldType => getNamedType(fieldType),
       (identifier, val) => {
         return sql.query`${val} >= ANY(${identifier})`;
       },
@@ -462,7 +462,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     addConnectionFilterOperator(
       "anyGreaterThan",
       "Checks for any values greater than this value.",
-      fieldType => fieldType.ofType,
+      fieldType => getNamedType(fieldType),
       (identifier, val) => {
         return sql.query`${val} < ANY(${identifier})`;
       },
@@ -483,7 +483,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
     addConnectionFilterOperator(
       "anyGreaterThanOrEqualTo",
       "Checks for any values greater than or equal to this value.",
-      fieldType => fieldType.ofType,
+      fieldType => getNamedType(fieldType),
       (identifier, val) => {
         return sql.query`${val} <= ANY(${identifier})`;
       },

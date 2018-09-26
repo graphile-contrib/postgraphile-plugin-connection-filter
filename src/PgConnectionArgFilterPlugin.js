@@ -22,7 +22,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           GraphQLInputObjectType,
           {
             description: `A filter to be used against \`${tableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-            name: `${tableTypeName}Filter`,
+            name: inflection.filterType(tableTypeName),
             fields: context => {
               const { fieldWithHooks } = context;
 
@@ -34,7 +34,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     description: `Checks for all expressions in this list.`,
                     type: new GraphQLList(
                       new GraphQLNonNull(
-                        getTypeByName(`${tableTypeName}Filter`)
+                        getTypeByName(inflection.filterType(tableTypeName))
                       )
                     ),
                   },
@@ -48,7 +48,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                     description: `Checks for any expressions in this list.`,
                     type: new GraphQLList(
                       new GraphQLNonNull(
-                        getTypeByName(`${tableTypeName}Filter`)
+                        getTypeByName(inflection.filterType(tableTypeName))
                       )
                     ),
                   },
@@ -60,7 +60,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                   "not",
                   {
                     description: `Negates the expression.`,
-                    type: getTypeByName(`${tableTypeName}Filter`),
+                    type: getTypeByName(inflection.filterType(tableTypeName)),
                   },
                   {
                     isPgConnectionFilterOperatorLogical: true,
@@ -87,6 +87,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgSql: sql,
         extend,
         getTypeByName,
+        inflection,
         pgGetGqlTypeByTypeId,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
@@ -181,7 +182,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
       const tableTypeName = pgGetGqlTypeByTypeId(returnTypeId, null).name;
-      const TableFilterType = getTypeByName(`${tableTypeName}Filter`);
+      const TableFilterType = getTypeByName(
+        inflection.filterType(tableTypeName)
+      );
       if (TableFilterType == null) {
         return args;
       }
@@ -207,11 +210,13 @@ module.exports = function PgConnectionArgFilterPlugin(
       getTypeByName,
       gql2pg,
       graphql: {
+        getNamedType,
         GraphQLInputObjectType,
         GraphQLList,
         GraphQLScalarType,
         GraphQLEnumType,
       },
+      inflection,
       pgSql: sql,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperators,
@@ -225,18 +230,17 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (isListType && !connectionFilterLists) {
         return null;
       }
-      const fieldBaseTypeName = isListType
-        ? fieldType.ofType.name
-        : fieldType.name;
+      const namedType = getNamedType(fieldType);
+      const namedTypeName = namedType.name;
       const fieldFilterTypeName = isListType
-        ? `${fieldBaseTypeName}ListFilter`
-        : `${fieldBaseTypeName}Filter`;
+        ? inflection.filterFieldListType(namedTypeName)
+        : inflection.filterFieldType(namedTypeName);
       if (!getTypeByName(fieldFilterTypeName)) {
         newWithHooks(
           GraphQLInputObjectType,
           {
             name: fieldFilterTypeName,
-            description: `A filter to be used against ${fieldBaseTypeName}${
+            description: `A filter to be used against ${namedTypeName}${
               isListType ? " List" : ""
             } fields. All fields are combined with a logical ‘and.’`,
             fields: context => {
@@ -247,7 +251,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                   const allowedFieldTypes = operator.options.allowedFieldTypes;
                   const fieldTypeIsAllowed =
                     !allowedFieldTypes ||
-                    allowedFieldTypes.includes(fieldBaseTypeName);
+                    allowedFieldTypes.includes(namedTypeName);
                   const allowedListTypes = operator.options
                     .allowedListTypes || ["NonList"];
                   const listTypeIsAllowed = isListType
@@ -280,23 +284,16 @@ module.exports = function PgConnectionArgFilterPlugin(
       fieldWithHooks,
       newWithHooks
     ) => {
-      const isListType = fieldType instanceof GraphQLList;
-      const isScalarType = isListType
-        ? fieldType.ofType instanceof GraphQLScalarType
-        : fieldType instanceof GraphQLScalarType;
-      const isEnumType = isListType
-        ? fieldType.ofType instanceof GraphQLEnumType
-        : fieldType instanceof GraphQLEnumType;
+      const namedType = getNamedType(fieldType);
+      const isScalarType = namedType instanceof GraphQLScalarType;
+      const isEnumType = namedType instanceof GraphQLEnumType;
       if (!(isScalarType || isEnumType)) {
         return memo;
       }
-      const fieldBaseTypeName = isListType
-        ? fieldType.ofType.name
-        : fieldType.name;
       // Check whether this field type is filterable
       if (
         connectionFilterAllowedFieldTypes &&
-        !connectionFilterAllowedFieldTypes.includes(fieldBaseTypeName)
+        !connectionFilterAllowedFieldTypes.includes(namedType.name)
       ) {
         return memo;
       }

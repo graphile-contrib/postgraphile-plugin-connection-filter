@@ -50,26 +50,20 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
 
     const resolve = ({
       sourceAlias,
-      source,
+      source: table,
       fieldName,
       fieldValue,
       introspectionResultsByKind,
     }) => {
-      const attrByFieldName = introspectionResultsByKind.attribute
-        .filter(
-          attr =>
-            source.kind === "class"
-              ? attr.classId === source.id
-              : attr.class.typeId === source.returnTypeId
-        )
-        //.filter(attr => pgColumnFilter(attr, build, context))
+      const attr = introspectionResultsByKind.attribute
+        .filter(attr => attr.classId === table.id)
         .filter(attr => !omit(attr, "filter"))
         .reduce((memo, attr) => {
-          const fieldName = inflection.column(attr);
-          memo[fieldName] = attr;
+          if (fieldName === inflection.column(attr)) {
+            return attr;
+          }
           return memo;
-        }, {});
-      const attr = attrByFieldName[fieldName];
+        }, null);
 
       if (attr == null) return null;
 
