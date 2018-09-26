@@ -123,14 +123,20 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       introspectionResultsByKind,
       connectionFilterFieldResolvers,
     }) => {
+      const forwardRelationFieldInfo = forwardRelationFieldInfoFromTable(
+        source,
+        introspectionResultsByKind
+      )[fieldName];
+
+      if (forwardRelationFieldInfo == null) return null;
+
       const {
         foreignSchema,
         foreignTable,
         foreignKeys,
         keys,
-      } = forwardRelationFieldInfoFromTable(source, introspectionResultsByKind)[
-        fieldName
-      ];
+      } = forwardRelationFieldInfo;
+
       const foreignTableAlias = sql.identifier(Symbol());
       if (foreignTable == null) return null;
 
