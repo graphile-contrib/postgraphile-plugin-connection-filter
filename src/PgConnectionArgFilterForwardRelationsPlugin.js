@@ -1,4 +1,4 @@
-module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
+module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
