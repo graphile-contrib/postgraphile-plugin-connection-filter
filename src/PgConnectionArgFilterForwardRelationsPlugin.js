@@ -19,7 +19,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
     ).reduce((memo, curr) => {
       const [fieldName, { foreignTable }] = curr;
       const foreignTableTypeName = inflection.tableType(foreignTable);
-      const type = getTypeByName(`${foreignTableTypeName}Filter`);
+      const type = getTypeByName(inflection.filterType(foreignTableTypeName));
       if (type != null) {
         memo[fieldName] = fieldWithHooks(
           fieldName,
@@ -47,7 +47,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       connectionFilterFieldResolvers,
     } = build;
 
-    // *** This code was copied from PgForwardRelationPlugin.js ***
+    // *** Much of this code was copied from PgForwardRelationPlugin.js ***
     const forwardRelationFieldInfoFromTable = (
       table,
       introspectionResultsByKind
