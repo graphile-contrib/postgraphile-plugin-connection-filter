@@ -1,7 +1,113 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`prints a schema with the filter plugin and the connectionFilterOperatorNames option 1`] = `
-"\\"\\"\\"
+"type Backward implements Node {
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+  filterableId: Int
+  id: Int!
+  name: String!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A condition to be used against \`Backward\` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+\\"\\"\\"
+input BackwardCondition {
+  \\"\\"\\"Checks for equality with the object’s \`filterableId\` field.\\"\\"\\"
+  filterableId: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
+  id: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
+  name: String
+}
+
+\\"\\"\\"
+A filter to be used against \`Backward\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BackwardFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [BackwardFilter!]
+
+  \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
+  filterableId: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: BackwardFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [BackwardFilter!]
+}
+
+\\"\\"\\"An input for mutations affecting \`Backward\`\\"\\"\\"
+input BackwardInput {
+  filterableId: Int
+  id: Int
+  name: String!
+}
+
+\\"\\"\\"
+Represents an update to a \`Backward\`. Fields that are set will be updated.
+\\"\\"\\"
+input BackwardPatch {
+  filterableId: Int
+  id: Int
+  name: String
+}
+
+\\"\\"\\"A connection to a list of \`Backward\` values.\\"\\"\\"
+type BackwardsConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`Backward\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [BackwardsEdge!]!
+
+  \\"\\"\\"A list of \`Backward\` objects.\\"\\"\\"
+  nodes: [Backward]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`Backward\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`Backward\` edge in the connection.\\"\\"\\"
+type BackwardsEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`Backward\` at the end of the edge.\\"\\"\\"
+  node: Backward
+}
+
+\\"\\"\\"Methods to use when ordering \`Backward\`.\\"\\"\\"
+enum BackwardsOrderBy {
+  FILTERABLE_ID_ASC
+  FILTERABLE_ID_DESC
+  ID_ASC
+  ID_DESC
+  NAME_ASC
+  NAME_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+\\"\\"\\"
 A floating point number that requires more precision than IEEE 754 binary 64
 \\"\\"\\"
 scalar BigFloat
@@ -80,6 +186,187 @@ input BooleanFilter {
 
   \\"\\"\\"Checks for values not in this list.\\"\\"\\"
   notIn: [Boolean!]
+}
+
+type Child implements Node {
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Child\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+  filterableId: Int
+  id: Int!
+  name: String!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A condition to be used against \`Child\` object types. All fields are tested for equality and combined with a logical ‘and.’
+\\"\\"\\"
+input ChildCondition {
+  \\"\\"\\"Checks for equality with the object’s \`filterableId\` field.\\"\\"\\"
+  filterableId: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
+  id: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
+  name: String
+}
+
+\\"\\"\\"
+A filter to be used against \`Child\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input ChildFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [ChildFilter!]
+
+  \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
+  filterableId: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: ChildFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [ChildFilter!]
+}
+
+\\"\\"\\"An input for mutations affecting \`Child\`\\"\\"\\"
+input ChildInput {
+  filterableId: Int
+  id: Int
+  name: String!
+}
+
+\\"\\"\\"
+Represents an update to a \`Child\`. Fields that are set will be updated.
+\\"\\"\\"
+input ChildPatch {
+  filterableId: Int
+  id: Int
+  name: String
+}
+
+\\"\\"\\"A connection to a list of \`Child\` values.\\"\\"\\"
+type ChildrenConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`Child\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [ChildrenEdge!]!
+
+  \\"\\"\\"A list of \`Child\` objects.\\"\\"\\"
+  nodes: [Child]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`Child\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`Child\` edge in the connection.\\"\\"\\"
+type ChildrenEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`Child\` at the end of the edge.\\"\\"\\"
+  node: Child
+}
+
+\\"\\"\\"Methods to use when ordering \`Child\`.\\"\\"\\"
+enum ChildrenOrderBy {
+  FILTERABLE_ID_ASC
+  FILTERABLE_ID_DESC
+  ID_ASC
+  ID_DESC
+  NAME_ASC
+  NAME_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+\\"\\"\\"All input for the create \`Backward\` mutation.\\"\\"\\"
+input CreateBackwardInput {
+  \\"\\"\\"The \`Backward\` to be created by this mutation.\\"\\"\\"
+  backward: BackwardInput!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+}
+
+\\"\\"\\"The output of our create \`Backward\` mutation.\\"\\"\\"
+type CreateBackwardPayload {
+  \\"\\"\\"The \`Backward\` that was created by this mutation.\\"\\"\\"
+  backward: Backward
+
+  \\"\\"\\"An edge for our \`Backward\`. May be used by Relay 1.\\"\\"\\"
+  backwardEdge(
+    \\"\\"\\"The method to use when ordering \`Backward\`.\\"\\"\\"
+    orderBy: [BackwardsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardsEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
+\\"\\"\\"All input for the create \`Child\` mutation.\\"\\"\\"
+input CreateChildInput {
+  \\"\\"\\"The \`Child\` to be created by this mutation.\\"\\"\\"
+  child: ChildInput!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+}
+
+\\"\\"\\"The output of our create \`Child\` mutation.\\"\\"\\"
+type CreateChildPayload {
+  \\"\\"\\"The \`Child\` that was created by this mutation.\\"\\"\\"
+  child: Child
+
+  \\"\\"\\"An edge for our \`Child\`. May be used by Relay 1.\\"\\"\\"
+  childEdge(
+    \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
+    orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ChildrenEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Child\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
 }
 
 \\"\\"\\"All input for the create \`Filterable\` mutation.\\"\\"\\"
@@ -230,6 +517,118 @@ type CreateUnfilterablePayload {
 
 \\"\\"\\"A location in a connection that can be used for resuming pagination.\\"\\"\\"
 scalar Cursor
+
+\\"\\"\\"All input for the \`deleteBackwardByFilterableId\` mutation.\\"\\"\\"
+input DeleteBackwardByFilterableIdInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  filterableId: Int!
+}
+
+\\"\\"\\"All input for the \`deleteBackwardById\` mutation.\\"\\"\\"
+input DeleteBackwardByIdInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  id: Int!
+}
+
+\\"\\"\\"All input for the \`deleteBackward\` mutation.\\"\\"\\"
+input DeleteBackwardInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`Backward\` to be deleted.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our delete \`Backward\` mutation.\\"\\"\\"
+type DeleteBackwardPayload {
+  \\"\\"\\"The \`Backward\` that was deleted by this mutation.\\"\\"\\"
+  backward: Backward
+
+  \\"\\"\\"An edge for our \`Backward\`. May be used by Relay 1.\\"\\"\\"
+  backwardEdge(
+    \\"\\"\\"The method to use when ordering \`Backward\`.\\"\\"\\"
+    orderBy: [BackwardsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardsEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+  deletedBackwardId: ID
+
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
+\\"\\"\\"All input for the \`deleteChildById\` mutation.\\"\\"\\"
+input DeleteChildByIdInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  id: Int!
+}
+
+\\"\\"\\"All input for the \`deleteChild\` mutation.\\"\\"\\"
+input DeleteChildInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`Child\` to be deleted.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our delete \`Child\` mutation.\\"\\"\\"
+type DeleteChildPayload {
+  \\"\\"\\"The \`Child\` that was deleted by this mutation.\\"\\"\\"
+  child: Child
+
+  \\"\\"\\"An edge for our \`Child\`. May be used by Relay 1.\\"\\"\\"
+  childEdge(
+    \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
+    orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ChildrenEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+  deletedChildId: ID
+
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Child\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
 
 \\"\\"\\"All input for the \`deleteFilterableByForwardId\` mutation.\\"\\"\\"
 input DeleteFilterableByForwardIdInput {
@@ -440,7 +839,77 @@ type DeleteUnfilterablePayload {
 }
 
 type Filterable implements Node {
+  \\"\\"\\"Reads a single \`Backward\` that is related to this \`Filterable\`.\\"\\"\\"
+  backwardByFilterableId: Backward
+
+  \\"\\"\\"Reads and enables pagination through a set of \`Backward\`.\\"\\"\\"
+  backwardsByFilterableId(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: BackwardCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: BackwardFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`Backward\`.\\"\\"\\"
+    orderBy: [BackwardsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardsConnection! @deprecated(reason: \\"Please use backwardByFilterableId instead\\")
   boolean: Boolean
+
+  \\"\\"\\"Reads and enables pagination through a set of \`Child\`.\\"\\"\\"
+  childrenByFilterableId(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: ChildCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: ChildFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
+    orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ChildrenConnection!
   computed: String
   computed2: String
 
@@ -961,6 +1430,22 @@ input JSONFilter {
 The root mutation type which contains root level fields which mutate data.
 \\"\\"\\"
 type Mutation {
+  \\"\\"\\"Creates a single \`Backward\`.\\"\\"\\"
+  createBackward(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: CreateBackwardInput!
+  ): CreateBackwardPayload
+
+  \\"\\"\\"Creates a single \`Child\`.\\"\\"\\"
+  createChild(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: CreateChildInput!
+  ): CreateChildPayload
+
   \\"\\"\\"Creates a single \`Filterable\`.\\"\\"\\"
   createFilterable(
     \\"\\"\\"
@@ -992,6 +1477,46 @@ type Mutation {
     \\"\\"\\"
     input: CreateUnfilterableInput!
   ): CreateUnfilterablePayload
+
+  \\"\\"\\"Deletes a single \`Backward\` using its globally unique id.\\"\\"\\"
+  deleteBackward(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteBackwardInput!
+  ): DeleteBackwardPayload
+
+  \\"\\"\\"Deletes a single \`Backward\` using a unique key.\\"\\"\\"
+  deleteBackwardByFilterableId(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteBackwardByFilterableIdInput!
+  ): DeleteBackwardPayload
+
+  \\"\\"\\"Deletes a single \`Backward\` using a unique key.\\"\\"\\"
+  deleteBackwardById(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteBackwardByIdInput!
+  ): DeleteBackwardPayload
+
+  \\"\\"\\"Deletes a single \`Child\` using its globally unique id.\\"\\"\\"
+  deleteChild(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteChildInput!
+  ): DeleteChildPayload
+
+  \\"\\"\\"Deletes a single \`Child\` using a unique key.\\"\\"\\"
+  deleteChildById(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteChildByIdInput!
+  ): DeleteChildPayload
 
   \\"\\"\\"Deletes a single \`Filterable\` using its globally unique id.\\"\\"\\"
   deleteFilterable(
@@ -1064,6 +1589,46 @@ type Mutation {
     \\"\\"\\"
     input: DeleteUnfilterableByIdInput!
   ): DeleteUnfilterablePayload
+
+  \\"\\"\\"Updates a single \`Backward\` using its globally unique id and a patch.\\"\\"\\"
+  updateBackward(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateBackwardInput!
+  ): UpdateBackwardPayload
+
+  \\"\\"\\"Updates a single \`Backward\` using a unique key and a patch.\\"\\"\\"
+  updateBackwardByFilterableId(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateBackwardByFilterableIdInput!
+  ): UpdateBackwardPayload
+
+  \\"\\"\\"Updates a single \`Backward\` using a unique key and a patch.\\"\\"\\"
+  updateBackwardById(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateBackwardByIdInput!
+  ): UpdateBackwardPayload
+
+  \\"\\"\\"Updates a single \`Child\` using its globally unique id and a patch.\\"\\"\\"
+  updateChild(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateChildInput!
+  ): UpdateChildPayload
+
+  \\"\\"\\"Updates a single \`Child\` using a unique key and a patch.\\"\\"\\"
+  updateChildById(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateChildByIdInput!
+  ): UpdateChildPayload
 
   \\"\\"\\"
   Updates a single \`Filterable\` using its globally unique id and a patch.
@@ -1292,6 +1857,74 @@ enum ParentsOrderBy {
 
 \\"\\"\\"The root query type which gives access points into the data universe.\\"\\"\\"
 type Query implements Node {
+  \\"\\"\\"Reads and enables pagination through a set of \`Backward\`.\\"\\"\\"
+  allBackwards(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: BackwardCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: BackwardFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`Backward\`.\\"\\"\\"
+    orderBy: [BackwardsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardsConnection
+
+  \\"\\"\\"Reads and enables pagination through a set of \`Child\`.\\"\\"\\"
+  allChildren(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: ChildCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: ChildFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
+    orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ChildrenConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`Filterable\`.\\"\\"\\"
   allFilterables(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -1417,6 +2050,21 @@ type Query implements Node {
     \\"\\"\\"The method to use when ordering \`Unfilterable\`.\\"\\"\\"
     orderBy: [UnfilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): UnfilterablesConnection
+
+  \\"\\"\\"Reads a single \`Backward\` using its globally unique \`ID\`.\\"\\"\\"
+  backward(
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`Backward\`.\\"\\"\\"
+    nodeId: ID!
+  ): Backward
+  backwardByFilterableId(filterableId: Int!): Backward
+  backwardById(id: Int!): Backward
+
+  \\"\\"\\"Reads a single \`Child\` using its globally unique \`ID\`.\\"\\"\\"
+  child(
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`Child\`.\\"\\"\\"
+    nodeId: ID!
+  ): Child
+  childById(id: Int!): Child
 
   \\"\\"\\"Reads a single \`Filterable\` using its globally unique \`ID\`.\\"\\"\\"
   filterable(
@@ -1634,6 +2282,141 @@ enum UnfilterablesOrderBy {
   PRIMARY_KEY_DESC
   STRING_ASC
   STRING_DESC
+}
+
+\\"\\"\\"All input for the \`updateBackwardByFilterableId\` mutation.\\"\\"\\"
+input UpdateBackwardByFilterableIdInput {
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`Backward\` being updated.
+  \\"\\"\\"
+  backwardPatch: BackwardPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  filterableId: Int!
+}
+
+\\"\\"\\"All input for the \`updateBackwardById\` mutation.\\"\\"\\"
+input UpdateBackwardByIdInput {
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`Backward\` being updated.
+  \\"\\"\\"
+  backwardPatch: BackwardPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  id: Int!
+}
+
+\\"\\"\\"All input for the \`updateBackward\` mutation.\\"\\"\\"
+input UpdateBackwardInput {
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`Backward\` being updated.
+  \\"\\"\\"
+  backwardPatch: BackwardPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`Backward\` to be updated.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our update \`Backward\` mutation.\\"\\"\\"
+type UpdateBackwardPayload {
+  \\"\\"\\"The \`Backward\` that was updated by this mutation.\\"\\"\\"
+  backward: Backward
+
+  \\"\\"\\"An edge for our \`Backward\`. May be used by Relay 1.\\"\\"\\"
+  backwardEdge(
+    \\"\\"\\"The method to use when ordering \`Backward\`.\\"\\"\\"
+    orderBy: [BackwardsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardsEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
+\\"\\"\\"All input for the \`updateChildById\` mutation.\\"\\"\\"
+input UpdateChildByIdInput {
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`Child\` being updated.
+  \\"\\"\\"
+  childPatch: ChildPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  id: Int!
+}
+
+\\"\\"\\"All input for the \`updateChild\` mutation.\\"\\"\\"
+input UpdateChildInput {
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`Child\` being updated.
+  \\"\\"\\"
+  childPatch: ChildPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`Child\` to be updated.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our update \`Child\` mutation.\\"\\"\\"
+type UpdateChildPayload {
+  \\"\\"\\"The \`Child\` that was updated by this mutation.\\"\\"\\"
+  child: Child
+
+  \\"\\"\\"An edge for our \`Child\`. May be used by Relay 1.\\"\\"\\"
+  childEdge(
+    \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
+    orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ChildrenEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Child\`.\\"\\"\\"
+  filterableByFilterableId: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
 }
 
 \\"\\"\\"All input for the \`updateFilterableByForwardId\` mutation.\\"\\"\\"

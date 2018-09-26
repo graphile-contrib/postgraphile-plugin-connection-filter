@@ -15,3 +15,14 @@ insert into p.filterable (id, string, int, real, numeric, boolean, jsonb, int_ar
   (4, 'test', 4, 0.4, 0.4, false, '{"string":"test","int":4,"boolean":false}', '{4, 40}', '172.168.1.1', 2, 4),
   (5, null, null, null, null, null, null, null, null, null, null);
 
+insert into p.backward(id, name, filterable_id) values
+  (1, 'backward1', 1),
+  (2, 'backward2', 2),
+  (3, 'backward3', 3),
+  (4, 'backward4', 4);
+
+insert into p.child(id, name, filterable_id) values
+  (1, 'child1', 1),
+  (2, 'child2', 1),
+  (3, 'child3', 2),
+  (4, 'child4', 2);
