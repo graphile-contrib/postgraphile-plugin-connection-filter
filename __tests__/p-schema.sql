@@ -2,6 +2,16 @@ drop schema if exists p cascade;
 
 create schema p;
 
+create table p.parent (
+  id serial primary key,
+  "name" text not null
+);
+
+create table p.forward (
+  id serial primary key,
+  "name" text not null
+);
+
 create table p.filterable (
   id serial primary key,
   "string" text,
@@ -11,7 +21,9 @@ create table p.filterable (
   "boolean" boolean,
   "jsonb" jsonb,
   "int_array" int[],
-  "inet" inet
+  "inet" inet,
+  "parent_id" int references p.parent (id),
+  "forward_id" int unique references p.forward (id)
 );
 
 comment on column p.filterable.real is E'@omit filter';
