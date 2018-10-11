@@ -46,6 +46,45 @@ Object {
 exports[`connections-filter.graphql 1`] = `
 Object {
   "data": Object {
+    "allFilterables_computedSetofChild_name_equalTo_child2": Object {
+      "nodes": Array [
+        Object {
+          "computedSetofChild": Object {
+            "nodes": Array [
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "computedSetofChild": Object {
+            "nodes": Array [],
+          },
+          "id": 2,
+        },
+        Object {
+          "computedSetofChild": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "computedSetofChild": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "computedSetofChild": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
     "boolean_distinctFrom_true": Object {
       "edges": Array [
         Object {
@@ -287,6 +326,17 @@ Object {
         "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
       },
       "totalCount": 1,
+    },
+    "filterableById_1_computedSetofChild_name_equalTo_child2": Object {
+      "computedSetofChild": Object {
+        "nodes": Array [
+          Object {
+            "id": 2,
+            "name": "child2",
+          },
+        ],
+      },
+      "id": 1,
     },
     "inet_containedBy": Object {
       "nodes": Array [

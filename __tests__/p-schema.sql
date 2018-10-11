@@ -56,3 +56,9 @@ create function p.filterable_computed2(filterable p.filterable) returns text as 
 $$ language sql stable;
 
 comment on function p.filterable_computed2(p.filterable) is E'@omit filter';
+
+create function p.filterable_computed_setof_child(f p.filterable) returns setof p.child as $$
+  select p.child.*
+  from p.child
+  where filterable_id = f.id;
+$$ language sql stable;
