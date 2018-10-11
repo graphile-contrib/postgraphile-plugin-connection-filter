@@ -3,7 +3,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
     const {
       extend,
       newWithHooks,
-      pgGetGqlInputTypeByTypeId,
+      pgGetGqlInputTypeByTypeIdAndModifier,
       computedColumnProcsByFieldNameFromTable,
       extendFilterFields,
     } = build;
@@ -17,7 +17,10 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
     const procFields = Object.entries(
       computedColumnProcsByFieldNameFromTable(table)
     ).reduce((memo, [fieldName, proc]) => {
-      const fieldType = pgGetGqlInputTypeByTypeId(proc.returnTypeId, null);
+      const fieldType = pgGetGqlInputTypeByTypeIdAndModifier(
+        proc.returnTypeId,
+        null
+      );
       return extendFilterFields(
         memo,
         fieldName,

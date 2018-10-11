@@ -4,7 +4,7 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       extend,
       newWithHooks,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlInputTypeByTypeId,
+      pgGetGqlInputTypeByTypeIdAndModifier,
       graphql: { GraphQLString },
       pgColumnFilter,
       pgOmit: omit,
@@ -25,8 +25,10 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       .reduce((memo, attr) => {
         const fieldName = inflection.column(attr);
         const fieldType =
-          pgGetGqlInputTypeByTypeId(attr.typeId, attr.typeModifier) ||
-          GraphQLString;
+          pgGetGqlInputTypeByTypeIdAndModifier(
+            attr.typeId,
+            attr.typeModifier
+          ) || GraphQLString;
         return extendFilterFields(
           memo,
           fieldName,

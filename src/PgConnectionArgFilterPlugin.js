@@ -88,7 +88,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         extend,
         getTypeByName,
         inflection,
-        pgGetGqlTypeByTypeId,
+        pgGetGqlTypeByTypeIdAndModifier,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
         connectionFilterFieldResolvers,
@@ -181,7 +181,8 @@ module.exports = function PgConnectionArgFilterPlugin(
       // Add filter argument for each Connection
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
-      const tableTypeName = pgGetGqlTypeByTypeId(returnTypeId, null).name;
+      const tableTypeName = pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null)
+        .name;
       const TableFilterType = getTypeByName(
         inflection.filterType(tableTypeName)
       );
