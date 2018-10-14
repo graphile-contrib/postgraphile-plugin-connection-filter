@@ -116,10 +116,10 @@ scalar BigFloat
 A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input BigFloatFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: BigFloat
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: BigFloat
 }
 
@@ -127,10 +127,10 @@ input BigFloatFilter {
 A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input BooleanFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Boolean
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: Boolean
 }
 
@@ -1212,10 +1212,10 @@ scalar InternetAddress
 A filter to be used against InternetAddress fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input InternetAddressFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: InternetAddress
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: InternetAddress
 }
 
@@ -1223,10 +1223,10 @@ input InternetAddressFilter {
 A filter to be used against Int fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Int
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: Int
 }
 
@@ -1234,10 +1234,10 @@ input IntFilter {
 A filter to be used against Int List fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntListFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: [Int]
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: [Int]
 }
 
@@ -1250,10 +1250,10 @@ scalar JSON
 A filter to be used against JSON fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input JSONFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: JSON
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: JSON
 }
 
@@ -1952,10 +1952,10 @@ type Query implements Node {
 A filter to be used against String fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input StringFilter {
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: String
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: String
 }
 

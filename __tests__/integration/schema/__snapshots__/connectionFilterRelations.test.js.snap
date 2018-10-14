@@ -120,42 +120,40 @@ A filter to be used against BigFloat fields. All fields are combined with a logi
 \\"\\"\\"
 input BigFloatFilter {
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: BigFloat
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: BigFloat
 
-  \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: BigFloat
 
-  \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: BigFloat
 
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [BigFloat!]
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values less than this value.\\"\\"\\"
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: BigFloat
 
-  \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: BigFloat
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: BigFloat
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: BigFloat
 
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [BigFloat!]
 }
 
@@ -164,30 +162,28 @@ A filter to be used against Boolean fields. All fields are combined with a logic
 \\"\\"\\"
 input BooleanFilter {
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: Boolean
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Boolean
 
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [Boolean!]
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: Boolean
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: Boolean
 
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Boolean!]
 }
 
@@ -1285,45 +1281,43 @@ A filter to be used against InternetAddress fields. All fields are combined with
 \\"\\"\\"
 input InternetAddressFilter {
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: InternetAddress
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: InternetAddress
 
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [InternetAddress!]
 
-  \\"\\"\\"Checks if an inet is contained by another inet\\"\\"\\"
+  \\"\\"\\"Contained by the specified internet address.\\"\\"\\"
   inetContainedBy: InternetAddress
 
-  \\"\\"\\"Checks if an inet is contained by or equals another inet\\"\\"\\"
+  \\"\\"\\"Contained by or equal to the specified internet address.\\"\\"\\"
   inetContainedByOrEquals: InternetAddress
 
-  \\"\\"\\"Checks if an inet contains another inet\\"\\"\\"
+  \\"\\"\\"Contains the specified internet address.\\"\\"\\"
   inetContains: InternetAddress
 
-  \\"\\"\\"Checks if an inet contains or equals another inet\\"\\"\\"
+  \\"\\"\\"Contains or is equal to the specified internet address.\\"\\"\\"
   inetContainsOrEquals: InternetAddress
 
-  \\"\\"\\"Checks if an inet contains or is contained by another inet\\"\\"\\"
+  \\"\\"\\"Contains or is contained by the specified internet address.\\"\\"\\"
   inetContainsOrIsContainedBy: InternetAddress
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: InternetAddress
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: InternetAddress
 
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [InternetAddress!]
 }
 
@@ -1332,42 +1326,40 @@ A filter to be used against Int fields. All fields are combined with a logical �
 \\"\\"\\"
 input IntFilter {
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: Int
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Int
 
-  \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: Int
 
-  \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: Int
 
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [Int!]
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values less than this value.\\"\\"\\"
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: Int
 
-  \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: Int
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: Int
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: Int
 
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Int!]
 }
 
@@ -1375,55 +1367,53 @@ input IntFilter {
 A filter to be used against Int List fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntListFilter {
-  \\"\\"\\"Checks for any values equal to this value.\\"\\"\\"
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
   anyEqualTo: Int
 
-  \\"\\"\\"Checks for any values greater than this value.\\"\\"\\"
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
   anyGreaterThan: Int
 
-  \\"\\"\\"Checks for any values greater than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
   anyGreaterThanOrEqualTo: Int
 
-  \\"\\"\\"Checks for any values less than this value.\\"\\"\\"
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
   anyLessThan: Int
 
-  \\"\\"\\"Checks for any values less than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
   anyLessThanOrEqualTo: Int
 
-  \\"\\"\\"Checks for any values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
   anyNotEqualTo: Int
 
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: [Int]
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: [Int]
 
-  \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: [Int]
 
-  \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: [Int]
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values less than this value.\\"\\"\\"
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: [Int]
 
-  \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: [Int]
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: [Int]
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: [Int]
 }
 
@@ -1436,37 +1426,35 @@ scalar JSON
 A filter to be used against JSON fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input JSONFilter {
-  \\"\\"\\"Checks for JSON contained by this JSON.\\"\\"\\"
+  \\"\\"\\"Contained by the specified JSON.\\"\\"\\"
   containedBy: JSON
 
-  \\"\\"\\"Checks for JSON containing this JSON.\\"\\"\\"
+  \\"\\"\\"Contains the specified JSON.\\"\\"\\"
   contains: JSON
 
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: JSON
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: JSON
 
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [JSON!]
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: JSON
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: JSON
 
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [JSON!]
 }
 
@@ -2166,104 +2154,112 @@ A filter to be used against String fields. All fields are combined with a logica
 \\"\\"\\"
 input StringFilter {
   \\"\\"\\"
-  Checks for values not equal to this value, treating null like an ordinary value.
+  Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
   distinctFrom: String
 
-  \\"\\"\\"Checks for strings ending with this value.  Case sensitive.\\"\\"\\"
+  \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
   endsWith: String
 
-  \\"\\"\\"Checks for strings ending with this value.  Case insensitive.\\"\\"\\"
+  \\"\\"\\"Ends with the specified string (case-insensitive).\\"\\"\\"
   endsWithInsensitive: String
 
-  \\"\\"\\"Checks for values equal to this value.\\"\\"\\"
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: String
 
-  \\"\\"\\"Checks for values greater than this value.\\"\\"\\"
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: String
 
-  \\"\\"\\"Checks for values greater than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: String
 
-  \\"\\"\\"Checks for values in this list.\\"\\"\\"
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [String!]
 
-  \\"\\"\\"Checks for strings that include this value.  Case sensitive.\\"\\"\\"
+  \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
   includes: String
 
-  \\"\\"\\"Checks for strings that include this value.  Case insensitive.\\"\\"\\"
+  \\"\\"\\"Contains the specified string (case-insensitive).\\"\\"\\"
   includesInsensitive: String
 
   \\"\\"\\"
-  If set to true, checks for null values.  If set to false, checks for non-null values.
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
 
-  \\"\\"\\"Checks for values less than this value.\\"\\"\\"
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: String
 
-  \\"\\"\\"Checks for values less than or equal to this value.\\"\\"\\"
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: String
 
-  \\"\\"\\"Raw SQL 'like', wildcards must be present and are not escaped\\"\\"\\"
+  \\"\\"\\"
+  Matches the specified pattern (case-sensitive). An underscore (_) matches any
+  single character; a percent sign (%) matches any sequence of zero or more characters.
+  \\"\\"\\"
   like: String
 
-  \\"\\"\\"Raw SQL 'ilike', wildcards must be present and are not escaped\\"\\"\\"
+  \\"\\"\\"
+  Matches the specified pattern (case-insensitive). An underscore (_) matches
+  any single character; a percent sign (%) matches any sequence of zero or more characters.
+  \\"\\"\\"
   likeInsensitive: String
 
-  \\"\\"\\"
-  Checks for values equal to this value, treating null like an ordinary value.
-  \\"\\"\\"
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: String
 
-  \\"\\"\\"Checks for strings that do not end with this value.  Case sensitive.\\"\\"\\"
+  \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
   notEndsWith: String
 
-  \\"\\"\\"
-  Checks for strings that do not end with this value.  Case insensitive.
-  \\"\\"\\"
+  \\"\\"\\"Does not end with the specified string (case-insensitive).\\"\\"\\"
   notEndsWithInsensitive: String
 
-  \\"\\"\\"Checks for values not equal to this value.\\"\\"\\"
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: String
 
-  \\"\\"\\"Checks for values not in this list.\\"\\"\\"
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [String!]
 
-  \\"\\"\\"Checks for strings that do not include this value.  Case sensitive.\\"\\"\\"
+  \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
   notIncludes: String
 
-  \\"\\"\\"
-  Checks for strings that do not not include this value.  Case insensitive.
-  \\"\\"\\"
+  \\"\\"\\"Does not contain the specified string (case-insensitive).\\"\\"\\"
   notIncludesInsensitive: String
 
-  \\"\\"\\"Raw SQL 'not like', wildcards must be present and are not escaped\\"\\"\\"
+  \\"\\"\\"
+  Does not match the specified pattern (case-sensitive). An underscore (_)
+  matches any single character; a percent sign (%) matches any sequence of zero
+  or more characters.
+  \\"\\"\\"
   notLike: String
 
-  \\"\\"\\"Raw SQL 'not ilike', wildcards must be present and are not escaped\\"\\"\\"
+  \\"\\"\\"
+  Does not match the specified pattern (case-insensitive). An underscore (_)
+  matches any single character; a percent sign (%) matches any sequence of zero
+  or more characters.
+  \\"\\"\\"
   notLikeInsensitive: String
 
-  \\"\\"\\"Raw SQL 'not similar to', wildcards are not escaped\\"\\"\\"
+  \\"\\"\\"
+  Does not match the specified pattern using the SQL standard's definition of a regular expression.
+  \\"\\"\\"
   notSimilarTo: String
 
-  \\"\\"\\"
-  Checks for strings that do not start with this value.  Case sensitive.
-  \\"\\"\\"
+  \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
   notStartsWith: String
 
-  \\"\\"\\"
-  Checks for strings that do not start with this value.  Case insensitive.
-  \\"\\"\\"
+  \\"\\"\\"Does not start with the specified string (case-insensitive).\\"\\"\\"
   notStartsWithInsensitive: String
 
-  \\"\\"\\"Raw SQL 'similar to', wildcards are not escaped\\"\\"\\"
+  \\"\\"\\"
+  Matches the specified pattern using the SQL standard's definition of a regular expression.
+  \\"\\"\\"
   similarTo: String
 
-  \\"\\"\\"Checks for strings starting with this value.  Case sensitive.\\"\\"\\"
+  \\"\\"\\"Starts with the specified string (case-sensitive).\\"\\"\\"
   startsWith: String
 
-  \\"\\"\\"Checks for strings starting with this value.  Case insensitive.\\"\\"\\"
+  \\"\\"\\"Starts with the specified string (case-insensitive).\\"\\"\\"
   startsWithInsensitive: String
 }
 
