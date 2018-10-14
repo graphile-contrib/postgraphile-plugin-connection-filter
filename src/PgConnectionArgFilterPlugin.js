@@ -320,7 +320,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       return memo;
     };
 
-    const valFromInput = (input, inputResolver, pgType, pgTypeModifier) =>
+    const sqlValueFromInput = (input, inputResolver, pgType, pgTypeModifier) =>
       Array.isArray(input)
         ? pgType.isPgArray
           ? sql.query`${gql2pg(
@@ -370,17 +370,17 @@ module.exports = function PgConnectionArgFilterPlugin(
         throw new Error(`Unable to resolve operator '${operatorName}'`);
       }
       const inputResolver = operator.options.inputResolver;
-      const val = operator.options.resolveWithRawInput
+      const value = operator.options.resolveWithRawInput
         ? input
-        : valFromInput(input, inputResolver, pgType, pgTypeModifier);
-      return operator.resolveWhereClause(identifier, val);
+        : sqlValueFromInput(input, inputResolver, pgType, pgTypeModifier);
+      return operator.resolveWhereClause(identifier, value);
     };
 
-    const escapeLikeWildcards = val => {
-      if ("string" !== typeof val) {
-        throw new Error("escapeLikeWildcards called on non-string value");
+    const escapeLikeWildcards = input => {
+      if ("string" !== typeof input) {
+        throw new Error("Non-string input was provided to escapeLikeWildcards");
       } else {
-        return val
+        return input
           .split("%")
           .join("\\%")
           .split("_")
