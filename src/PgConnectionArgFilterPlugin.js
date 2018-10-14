@@ -216,11 +216,14 @@ module.exports = function PgConnectionArgFilterPlugin(
         GraphQLList,
         GraphQLScalarType,
         GraphQLEnumType,
+        GraphQLString,
       },
       inflection,
+      pgGetGqlInputTypeByTypeIdAndModifier,
       pgSql: sql,
       connectionFilterAllowedFieldTypes,
-      connectionFilterOperators,
+      connectionFilterOperatorsByFieldType,
+      connectionFilterOperatorsGlobal,
     } = build;
 
     const getOrCreateFieldFilterTypeFromFieldType = (
@@ -246,19 +249,19 @@ module.exports = function PgConnectionArgFilterPlugin(
             } fields. All fields are combined with a logical ‘and.’`,
             fields: context => {
               const { fieldWithHooks } = context;
-              return Object.keys(connectionFilterOperators).reduce(
-                (memo, operatorName) => {
-                  const operator = connectionFilterOperators[operatorName];
-                  const allowedFieldTypes = operator.options.allowedFieldTypes;
-                  const fieldTypeIsAllowed =
-                    !allowedFieldTypes ||
-                    allowedFieldTypes.includes(namedTypeName);
+              const operators = Object.assign(
+                {},
+                connectionFilterOperatorsGlobal,
+                connectionFilterOperatorsByFieldType[namedTypeName]
+              );
+              return Object.entries(operators).reduce(
+                (memo, [operatorName, operator]) => {
                   const allowedListTypes = operator.options
                     .allowedListTypes || ["NonList"];
                   const listTypeIsAllowed = isListType
                     ? allowedListTypes.includes("List")
                     : allowedListTypes.includes("NonList");
-                  if (fieldTypeIsAllowed && listTypeIsAllowed) {
+                  if (listTypeIsAllowed) {
                     memo[operatorName] = fieldWithHooks(operatorName, {
                       description: operator.description,
                       type: operator.resolveType(fieldType),
@@ -355,7 +358,17 @@ module.exports = function PgConnectionArgFilterPlugin(
       pgType,
       pgTypeModifier
     ) => {
-      const operator = connectionFilterOperators[operatorName];
+      const fieldType = getNamedType(
+        pgGetGqlInputTypeByTypeIdAndModifier(pgType.id, pgTypeModifier) ||
+          GraphQLString
+      );
+      const operator =
+        connectionFilterOperatorsGlobal[operatorName] ||
+        (connectionFilterOperatorsByFieldType[fieldType.name] &&
+          connectionFilterOperatorsByFieldType[fieldType.name][operatorName]);
+      if (!operator) {
+        throw new Error(`Unable to resolve operator '${operatorName}'`);
+      }
       const inputResolver = operator.options.inputResolver;
       const val = operator.options.resolveWithRawInput
         ? input
