@@ -10,9 +10,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "isNull",
       "If set to true, checks for null values.  If set to false, checks for non-null values.",
       () => GraphQLBoolean,
-      (identifier, val) =>
+      (identifier, value) =>
         sql.query`${identifier} ${
-          val ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          value ? sql.query`IS NULL` : sql.query`IS NOT NULL`
         }`,
       {
         resolveWithRawInput: true,
@@ -23,9 +23,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "equalTo",
       "Checks for values equal to this value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} = ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} = ${value}`,
       {
         allowedListTypes: ["NonList", "List"],
       }
@@ -34,9 +32,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notEqualTo",
       "Checks for values not equal to this value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} <> ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} <> ${value}`,
       {
         allowedListTypes: ["NonList", "List"],
       }
@@ -45,9 +41,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "distinctFrom",
       "Checks for values not equal to this value, treating null like an ordinary value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} IS DISTINCT FROM ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} IS DISTINCT FROM ${value}`,
       {
         allowedListTypes: ["NonList", "List"],
       }
@@ -56,9 +50,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notDistinctFrom",
       "Checks for values equal to this value, treating null like an ordinary value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} IS NOT DISTINCT FROM ${val}`;
-      },
+      (identifier, value) =>
+        sql.query`${identifier} IS NOT DISTINCT FROM ${value}`,
       {
         allowedListTypes: ["NonList", "List"],
       }
@@ -67,9 +60,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "lessThan",
       "Checks for values less than this value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} < ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} < ${value}`,
       {
         allowedFieldTypes: [
           "String",
@@ -88,9 +79,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "lessThanOrEqualTo",
       "Checks for values less than or equal to this value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} <= ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} <= ${value}`,
       {
         allowedFieldTypes: [
           "String",
@@ -109,9 +98,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "greaterThan",
       "Checks for values greater than this value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} > ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} > ${value}`,
       {
         allowedFieldTypes: [
           "String",
@@ -130,9 +117,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "greaterThanOrEqualTo",
       "Checks for values greater than or equal to this value.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} >= ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} >= ${value}`,
       {
         allowedFieldTypes: [
           "String",
@@ -151,25 +136,19 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "in",
       "Checks for values in this list.",
       fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
-      (identifier, val) => {
-        return sql.query`${identifier} IN ${val}`;
-      }
+      (identifier, value) => sql.query`${identifier} IN ${value}`
     );
     addConnectionFilterOperator(
       "notIn",
       "Checks for values not in this list.",
       fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
-      (identifier, val) => {
-        return sql.query`${identifier} NOT IN ${val}`;
-      }
+      (identifier, value) => sql.query`${identifier} NOT IN ${value}`
     );
     addConnectionFilterOperator(
       "includes",
       "Checks for strings that include this value.  Case sensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}%`,
@@ -179,9 +158,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notIncludes",
       "Checks for strings that do not include this value.  Case sensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}%`,
@@ -191,9 +168,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "includesInsensitive",
       "Checks for strings that include this value.  Case insensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}%`,
@@ -203,9 +178,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notIncludesInsensitive",
       "Checks for strings that do not not include this value.  Case insensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}%`,
@@ -215,9 +188,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "startsWith",
       "Checks for strings starting with this value.  Case sensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `${escapeLikeWildcards(input)}%`,
@@ -227,9 +198,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notStartsWith",
       "Checks for strings that do not start with this value.  Case sensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `${escapeLikeWildcards(input)}%`,
@@ -239,9 +208,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "startsWithInsensitive",
       "Checks for strings starting with this value.  Case insensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `${escapeLikeWildcards(input)}%`,
@@ -251,9 +218,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notStartsWithInsensitive",
       "Checks for strings that do not start with this value.  Case insensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `${escapeLikeWildcards(input)}%`,
@@ -263,9 +228,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "endsWith",
       "Checks for strings ending with this value.  Case sensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}`,
@@ -275,9 +238,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notEndsWith",
       "Checks for strings that do not end with this value.  Case sensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}`,
@@ -287,9 +248,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "endsWithInsensitive",
       "Checks for strings ending with this value.  Case insensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}`,
@@ -299,9 +258,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notEndsWithInsensitive",
       "Checks for strings that do not end with this value.  Case insensitive.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
         inputResolver: input => `%${escapeLikeWildcards(input)}`,
@@ -311,9 +268,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "like",
       "Raw SQL 'like', wildcards must be present and are not escaped",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
       }
@@ -322,9 +277,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notLike",
       "Raw SQL 'not like', wildcards must be present and are not escaped",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT LIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
       }
@@ -333,9 +286,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "likeInsensitive",
       "Raw SQL 'ilike', wildcards must be present and are not escaped",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
       }
@@ -344,9 +295,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notLikeInsensitive",
       "Raw SQL 'not ilike', wildcards must be present and are not escaped",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT ILIKE ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
       {
         allowedFieldTypes: ["String"],
       }
@@ -355,9 +304,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "similarTo",
       "Raw SQL 'similar to', wildcards are not escaped",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} SIMILAR TO ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} SIMILAR TO ${value}`,
       {
         allowedFieldTypes: ["String"],
       }
@@ -366,9 +313,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "notSimilarTo",
       "Raw SQL 'not similar to', wildcards are not escaped",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} NOT SIMILAR TO ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} NOT SIMILAR TO ${value}`,
       {
         allowedFieldTypes: ["String"],
       }
@@ -377,9 +322,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "contains",
       "Checks for JSON containing this JSON.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} @> ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} @> ${value}`,
       {
         allowedFieldTypes: ["JSON"],
       }
@@ -388,9 +331,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "containedBy",
       "Checks for JSON contained by this JSON.",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} <@ ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} <@ ${value}`,
       {
         allowedFieldTypes: ["JSON"],
       }
@@ -399,9 +340,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "anyEqualTo",
       "Checks for any values equal to this value.",
       fieldType => getNamedType(fieldType),
-      (identifier, val) => {
-        return sql.query`${val} = ANY(${identifier})`;
-      },
+      (identifier, value) => sql.query`${value} = ANY(${identifier})`,
       {
         allowedListTypes: ["List"],
       }
@@ -410,9 +349,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "anyNotEqualTo",
       "Checks for any values not equal to this value.",
       fieldType => getNamedType(fieldType),
-      (identifier, val) => {
-        return sql.query`${val} <> ANY(${identifier})`;
-      },
+      (identifier, value) => sql.query`${value} <> ANY(${identifier})`,
       {
         allowedListTypes: ["List"],
       }
@@ -421,9 +358,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "anyLessThan",
       "Checks for any values less than this value.",
       fieldType => getNamedType(fieldType),
-      (identifier, val) => {
-        return sql.query`${val} > ANY(${identifier})`;
-      },
+      (identifier, value) => sql.query`${value} > ANY(${identifier})`,
       {
         allowedFieldTypes: [
           "String",
@@ -442,9 +377,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "anyLessThanOrEqualTo",
       "Checks for any values less than or equal to this value.",
       fieldType => getNamedType(fieldType),
-      (identifier, val) => {
-        return sql.query`${val} >= ANY(${identifier})`;
-      },
+      (identifier, value) => sql.query`${value} >= ANY(${identifier})`,
       {
         allowedFieldTypes: [
           "String",
@@ -463,9 +396,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "anyGreaterThan",
       "Checks for any values greater than this value.",
       fieldType => getNamedType(fieldType),
-      (identifier, val) => {
-        return sql.query`${val} < ANY(${identifier})`;
-      },
+      (identifier, value) => sql.query`${value} < ANY(${identifier})`,
       {
         allowedFieldTypes: [
           "String",
@@ -484,9 +415,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "anyGreaterThanOrEqualTo",
       "Checks for any values greater than or equal to this value.",
       fieldType => getNamedType(fieldType),
-      (identifier, val) => {
-        return sql.query`${val} <= ANY(${identifier})`;
-      },
+      (identifier, value) => sql.query`${value} <= ANY(${identifier})`,
       {
         allowedFieldTypes: [
           "String",
@@ -505,9 +434,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "inetContainedBy",
       "Checks if an inet is contained by another inet",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} << ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} << ${value}`,
       {
         allowedFieldTypes: ["InternetAddress"],
       }
@@ -516,9 +443,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "inetContainedByOrEquals",
       "Checks if an inet is contained by or equals another inet",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} <<= ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} <<= ${value}`,
       {
         allowedFieldTypes: ["InternetAddress"],
       }
@@ -527,9 +452,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "inetContains",
       "Checks if an inet contains another inet",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} >> ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} >> ${value}`,
       {
         allowedFieldTypes: ["InternetAddress"],
       }
@@ -538,9 +461,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "inetContainsOrEquals",
       "Checks if an inet contains or equals another inet",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} >>= ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} >>= ${value}`,
       {
         allowedFieldTypes: ["InternetAddress"],
       }
@@ -549,9 +470,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "inetContainsOrIsContainedBy",
       "Checks if an inet contains or is contained by another inet",
       fieldType => fieldType,
-      (identifier, val) => {
-        return sql.query`${identifier} && ${val}`;
-      },
+      (identifier, value) => sql.query`${identifier} && ${value}`,
       {
         allowedFieldTypes: ["InternetAddress"],
       }
