@@ -1,117 +1,138 @@
 query {
-  string_isNull_true: allFilterables(filter: { string: { isNull: true } }) { ...filterableConnection }
-  string_isNull_false: allFilterables(filter: { string: { isNull: false } }) { ...filterableConnection }
-  string_equalTo_test: allFilterables(filter: { string: { equalTo: "test" } }) { ...filterableConnection }
-  string_notEqualTo_test: allFilterables(filter: { string: { notEqualTo: "test" } }) { ...filterableConnection }
-  string_distinctFrom_test: allFilterables(filter: { string: { distinctFrom: "test" } }) { ...filterableConnection }
-  string_notDistinctFrom_test: allFilterables(filter: { string: { notDistinctFrom: "test" } }) { ...filterableConnection }
-  int_lessThan_2: allFilterables(filter: { int: { lessThan: 2 } }) { ...filterableConnection }
-  int_lessThanOrEqualTo_2: allFilterables(filter: { int: { lessThanOrEqualTo: 2 } }) { ...filterableConnection }
-  int_greaterThan_2: allFilterables(filter: { int: { greaterThan: 2 } }) { ...filterableConnection }
-  int_greaterThanOrEqualTo_2: allFilterables(filter: { int: { greaterThanOrEqualTo: 2 } }) { ...filterableConnection }
-  int_in_2_3: allFilterables(filter: { int: { in: [2, 3] } }) { ...filterableConnection }
-  int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...filterableConnection }
-  string_contains_t: allFilterables(filter: { string: { includes: "t" } }) { ...filterableConnection }
-  string_containsInsensitive_t: allFilterables(filter: { string: { includesInsensitive: "t" } }) { ...filterableConnection }
-  string_notContains_t: allFilterables(filter: { string: { notIncludes: "t" } }) { ...filterableConnection }
-  string_notContainsInsensitive_t: allFilterables(filter: { string: { notIncludesInsensitive: "t" } }) { ...filterableConnection }
-  string_startsWith_t: allFilterables(filter: { string: { startsWith: "t" } }) { ...filterableConnection }
-  string_startsWithInsensitive_t: allFilterables(filter: { string: { startsWithInsensitive: "t" } }) { ...filterableConnection }
-  string_notStartsWith_t: allFilterables(filter: { string: { notStartsWith: "t" } }) { ...filterableConnection }
-  string_notStartsWithInsensitive_t: allFilterables(filter: { string: { notStartsWithInsensitive: "t" } }) { ...filterableConnection }
-  string_endsWith_t: allFilterables(filter: { string: { endsWith: "t" } }) { ...filterableConnection }
-  string_endsWithInsensitive_t: allFilterables(filter: { string: { endsWithInsensitive: "t" } }) { ...filterableConnection }
-  string_notEndsWith_t: allFilterables(filter: { string: { notEndsWith: "t" } }) { ...filterableConnection }
-  string_notEndsWithInsensitive_t: allFilterables(filter: { string: { notEndsWithInsensitive: "t" } }) { ...filterableConnection }
-  string_like_es: allFilterables(filter: { string: { like: "%es%" } }) { ...filterableConnection }
-  string_likeInsensitive_es: allFilterables(filter: { string: { likeInsensitive: "%es%" } }) { ...filterableConnection }
-  string_notLike_es: allFilterables(filter: { string: { notLike: "%es%" } }) { ...filterableConnection }
-  string_notLikeInsensitive_es: allFilterables(filter: { string: { notLikeInsensitive: "%es%" } }) { ...filterableConnection }
-  string_similarTo_te_or_st: allFilterables(filter:{ string: { similarTo: "%(te|st)%" } }) { ...filterableConnection }
-  string_notSimilarTo_te_or_st: allFilterables(filter:{ string: { notSimilarTo: "%(te|st)%" } }) { ...filterableConnection }
-  int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
-  int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...filterableConnection }
-  boolean_isNull_true: allFilterables(filter: { boolean: { isNull: true } }) { ...filterableConnection }
-  boolean_isNull_false: allFilterables(filter: { boolean: { isNull: false } }) { ...filterableConnection }
-  boolean_equalTo_true: allFilterables(filter: { boolean: { equalTo: true } }) { ...filterableConnection }
-  boolean_notEqualTo_true: allFilterables(filter: { boolean: { notEqualTo: true } }) { ...filterableConnection }
-  boolean_distinctFrom_true: allFilterables(filter: { boolean: { distinctFrom: true } }) { ...filterableConnection }
-  boolean_notDistinctFrom_true: allFilterables(filter: { boolean: { notDistinctFrom: true } }) { ...filterableConnection }
-  not_string_equalTo_test: allFilterables(filter: { not: { string: { equalTo: "test" } } }) { ...filterableConnection }
-  not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...filterableConnection }
-  computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...filterableConnection }
-  jsonb_contains_string: allFilterables(filter: { jsonb: { contains: "{\"string\":\"test\"}" } }) { ...filterableJsonbConnection }
-  jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...filterableJsonbConnection }
-  jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...filterableJsonbConnection }
-  jsonb_containedBy_object: allFilterables(filter: { jsonb: { containedBy: "{\"string\":\"test\",\"int\":4,\"boolean\":false,\"foo\":\"bar\"}" } }) { ...filterableJsonbConnection }
-  intArray_isNull_true: allFilterables(filter: { intArray: { isNull: true } }) { ...filterableIntArrayConnection }
-  intArray_isNull_false: allFilterables(filter: { intArray: { isNull: false } }) { ...filterableIntArrayConnection }
-  intArray_distinctFrom_2_20: allFilterables(filter: { intArray: { distinctFrom: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_notDistinctFrom_2_20: allFilterables(filter: { intArray: { notDistinctFrom: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_equalTo_2_20: allFilterables(filter: { intArray: { equalTo: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_notEqualTo_2_20: allFilterables(filter: { intArray: { notEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_lessThan_2_20: allFilterables(filter: { intArray: { lessThan: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_lessThanOrEqualTo_2_20: allFilterables(filter: { intArray: { lessThanOrEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_greaterThan_2_20: allFilterables(filter: { intArray: { greaterThan: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_greaterThanOrEqualTo_2_20: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [2, 20] } }) { ...filterableIntArrayConnection }
-  intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...filterableIntArrayConnection }
-  intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...filterableIntArrayConnection }
-  intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...filterableIntArrayConnection }
-  intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
-  intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...filterableIntArrayConnection }
-  intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...filterableIntArrayConnection }
-  inet_containedBy: allFilterables(filter: { inet: { inetContainedBy: "192.168.0.0/24" } }) { ...filterableInetConnection }
-  inet_containedByOrEquals_ContainedBy: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.0/24" } }) { ...filterableInetConnection }
-  inet_containedByOrEquals_Equals: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.1" } }) { ...filterableInetConnection }
-  inet_contains: allFilterables(filter: { inet: { inetContains: "10.0.0.1" } }) { ...filterableInetConnection }
-  inet_containsOrEquals_Contains: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.2" } }) { ...filterableInetConnection }
-  inet_containsOrEquals_Equals: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.1/24" } }) { ...filterableInetConnection }
-  inet_containsOrIsContainedBy_Contains: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "172.168.1.0/24" } }) { ...filterableInetConnection }
-  inet_containsOrIsContainedBy_ContainedBy: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "10.0.0.5" } }) { ...filterableInetConnection }
-  enum_equalTo_OK: allFilterables(filter: { enum: { equalTo: OK } }) { nodes { id, enum } }
+  string_isNull_true: allFilterables(filter: { string: { isNull: true } }) { ...stringConnection }
+  string_isNull_false: allFilterables(filter: { string: { isNull: false } }) { ...stringConnection }
+  string_equalTo_test: allFilterables(filter: { string: { equalTo: "test" } }) { ...stringConnection }
+  string_notEqualTo_test: allFilterables(filter: { string: { notEqualTo: "test" } }) { ...stringConnection }
+  string_distinctFrom_test: allFilterables(filter: { string: { distinctFrom: "test" } }) { ...stringConnection }
+  string_notDistinctFrom_test: allFilterables(filter: { string: { notDistinctFrom: "test" } }) { ...stringConnection }
+  int_lessThan_2: allFilterables(filter: { int: { lessThan: 2 } }) { ...intConnection }
+  int_lessThanOrEqualTo_2: allFilterables(filter: { int: { lessThanOrEqualTo: 2 } }) { ...intConnection }
+  int_greaterThan_2: allFilterables(filter: { int: { greaterThan: 2 } }) { ...intConnection }
+  int_greaterThanOrEqualTo_2: allFilterables(filter: { int: { greaterThanOrEqualTo: 2 } }) { ...intConnection }
+  int_in_2_3: allFilterables(filter: { int: { in: [2, 3] } }) { ...intConnection }
+  int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...intConnection }
+  string_contains_t: allFilterables(filter: { string: { includes: "t" } }) { ...stringConnection }
+  string_containsInsensitive_t: allFilterables(filter: { string: { includesInsensitive: "t" } }) { ...stringConnection }
+  string_notContains_t: allFilterables(filter: { string: { notIncludes: "t" } }) { ...stringConnection }
+  string_notContainsInsensitive_t: allFilterables(filter: { string: { notIncludesInsensitive: "t" } }) { ...stringConnection }
+  string_startsWith_t: allFilterables(filter: { string: { startsWith: "t" } }) { ...stringConnection }
+  string_startsWithInsensitive_t: allFilterables(filter: { string: { startsWithInsensitive: "t" } }) { ...stringConnection }
+  string_notStartsWith_t: allFilterables(filter: { string: { notStartsWith: "t" } }) { ...stringConnection }
+  string_notStartsWithInsensitive_t: allFilterables(filter: { string: { notStartsWithInsensitive: "t" } }) { ...stringConnection }
+  string_endsWith_t: allFilterables(filter: { string: { endsWith: "t" } }) { ...stringConnection }
+  string_endsWithInsensitive_t: allFilterables(filter: { string: { endsWithInsensitive: "t" } }) { ...stringConnection }
+  string_notEndsWith_t: allFilterables(filter: { string: { notEndsWith: "t" } }) { ...stringConnection }
+  string_notEndsWithInsensitive_t: allFilterables(filter: { string: { notEndsWithInsensitive: "t" } }) { ...stringConnection }
+  string_like_es: allFilterables(filter: { string: { like: "%es%" } }) { ...stringConnection }
+  string_likeInsensitive_es: allFilterables(filter: { string: { likeInsensitive: "%es%" } }) { ...stringConnection }
+  string_notLike_es: allFilterables(filter: { string: { notLike: "%es%" } }) { ...stringConnection }
+  string_notLikeInsensitive_es: allFilterables(filter: { string: { notLikeInsensitive: "%es%" } }) { ...stringConnection }
+  string_similarTo_te_or_st: allFilterables(filter:{ string: { similarTo: "%(te|st)%" } }) { ...stringConnection }
+  string_notSimilarTo_te_or_st: allFilterables(filter:{ string: { notSimilarTo: "%(te|st)%" } }) { ...stringConnection }
+  int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...stringAndIntConnection }
+  int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...stringAndIntConnection }
+  boolean_isNull_true: allFilterables(filter: { boolean: { isNull: true } }) { ...booleanConnection }
+  boolean_isNull_false: allFilterables(filter: { boolean: { isNull: false } }) { ...booleanConnection }
+  boolean_equalTo_true: allFilterables(filter: { boolean: { equalTo: true } }) { ...booleanConnection }
+  boolean_notEqualTo_true: allFilterables(filter: { boolean: { notEqualTo: true } }) { ...booleanConnection }
+  boolean_distinctFrom_true: allFilterables(filter: { boolean: { distinctFrom: true } }) { ...booleanConnection }
+  boolean_notDistinctFrom_true: allFilterables(filter: { boolean: { notDistinctFrom: true } }) { ...booleanConnection }
+  not_string_equalTo_test: allFilterables(filter: { not: { string: { equalTo: "test" } } }) { ...stringConnection }
+  not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...stringAndIntConnection }
+  computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...computedConnection }
+  jsonb_contains_string: allFilterables(filter: { jsonb: { contains: "{\"string\":\"test\"}" } }) { ...jsonbConnection }
+  jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...jsonbConnection }
+  jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...jsonbConnection }
+  jsonb_containedBy_object: allFilterables(filter: { jsonb: { containedBy: "{\"string\":\"test\",\"int\":4,\"boolean\":false,\"foo\":\"bar\"}" } }) { ...jsonbConnection }
+  intArray_isNull_true: allFilterables(filter: { intArray: { isNull: true } }) { ...intArrayConnection }
+  intArray_isNull_false: allFilterables(filter: { intArray: { isNull: false } }) { ...intArrayConnection }
+  intArray_distinctFrom_2_20: allFilterables(filter: { intArray: { distinctFrom: [2, 20] } }) { ...intArrayConnection }
+  intArray_notDistinctFrom_2_20: allFilterables(filter: { intArray: { notDistinctFrom: [2, 20] } }) { ...intArrayConnection }
+  intArray_equalTo_2_20: allFilterables(filter: { intArray: { equalTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_notEqualTo_2_20: allFilterables(filter: { intArray: { notEqualTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_lessThan_2_20: allFilterables(filter: { intArray: { lessThan: [2, 20] } }) { ...intArrayConnection }
+  intArray_lessThanOrEqualTo_2_20: allFilterables(filter: { intArray: { lessThanOrEqualTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_greaterThan_2_20: allFilterables(filter: { intArray: { greaterThan: [2, 20] } }) { ...intArrayConnection }
+  intArray_greaterThanOrEqualTo_2_20: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...intArrayConnection }
+  intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...intArrayConnection }
+  intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...intArrayConnection }
+  intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...intArrayConnection }
+  intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...intArrayConnection }
+  intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...intArrayConnection }
+  inet_containedBy: allFilterables(filter: { inet: { inetContainedBy: "192.168.0.0/24" } }) { ...inetConnection }
+  inet_containedByOrEquals_ContainedBy: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.0/24" } }) { ...inetConnection }
+  inet_containedByOrEquals_Equals: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.1" } }) { ...inetConnection }
+  inet_contains: allFilterables(filter: { inet: { inetContains: "10.0.0.1" } }) { ...inetConnection }
+  inet_containsOrEquals_Contains: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.2" } }) { ...inetConnection }
+  inet_containsOrEquals_Equals: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.1/24" } }) { ...inetConnection }
+  inet_containsOrIsContainedBy_Contains: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "172.168.1.0/24" } }) { ...inetConnection }
+  inet_containsOrIsContainedBy_ContainedBy: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "10.0.0.5" } }) { ...inetConnection }
+  enum_equalTo_OK: allFilterables(filter: { enum: { equalTo: OK } }) { ...enumConnection }
   allFilterables_computedSetofChild_name_equalTo_child2: allFilterables { nodes { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } } }
   filterableById_1_computedSetofChild_name_equalTo_child2: filterableById(id: 1) { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } }
 }
 
-fragment filterableConnection on FilterablesConnection {
-  pageInfo {
-    startCursor
-    endCursor
-    hasNextPage
-    hasPreviousPage
-  }
-  totalCount
-  edges {
-    cursor
-    node {
-      id
-      string
-      int
-      real
-      numeric
-      boolean
-    }
+fragment stringConnection on FilterablesConnection {
+  nodes {
+    id
+    string
   }
 }
 
-fragment filterableJsonbConnection on FilterablesConnection {
+fragment intConnection on FilterablesConnection {
+  nodes {
+    id
+    string
+  }
+}
+
+fragment stringAndIntConnection on FilterablesConnection {
+  nodes {
+    id
+    string
+  }
+}
+
+fragment booleanConnection on FilterablesConnection {
+  nodes {
+    id
+    boolean
+  }
+}
+
+fragment computedConnection on FilterablesConnection {
+  nodes {
+    id
+    boolean
+  }
+}
+
+fragment jsonbConnection on FilterablesConnection {
   nodes {
     id
     jsonb
   }
 }
 
-fragment filterableIntArrayConnection on FilterablesConnection {
+fragment intArrayConnection on FilterablesConnection {
   nodes {
     id
     intArray
   }
 }
 
-fragment filterableInetConnection on FilterablesConnection {
+fragment inetConnection on FilterablesConnection {
   nodes {
     id
     inet
+  }
+}
+
+fragment enumConnection on FilterablesConnection {
+  nodes {
+    id
+    enum
   }
 }
 

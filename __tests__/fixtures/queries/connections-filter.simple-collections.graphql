@@ -1,12 +1,8 @@
 query {
-  string_isNull_true: allFilterablesList(filter: { string: { isNull: true } }) { ...filterableList }
+  string_isNull_true: allFilterablesList(filter: { string: { isNull: true } }) { ...stringList }
 }
 
-fragment filterableList on Filterable {
+fragment stringList on Filterable {
   id
   string
-  int
-  real
-  numeric
-  boolean
 }

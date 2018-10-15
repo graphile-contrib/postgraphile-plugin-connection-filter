@@ -1,17 +1,17 @@
 query dynamicJsonQuery($myVal: String = "test", $myVal2: JSONFilter = { contains: { string: "test" } }) {
   # All three of these should result in the same value
   a: allFilterables(filter: { jsonb: { contains: { string: $myVal } } }) {
-    ...filterableJsonbConnection
+    ...jsonbConnection
   }
   b: allFilterables(filter: { jsonb: { contains: { string: "test" } } }) {
-    ...filterableJsonbConnection
+    ...jsonbConnection
   }
   c: allFilterables(filter: { jsonb: $myVal2 }) {
-    ...filterableJsonbConnection
+    ...jsonbConnection
   }
 }
 
-fragment filterableJsonbConnection on FilterablesConnection {
+fragment jsonbConnection on FilterablesConnection {
   nodes {
     id
     jsonb

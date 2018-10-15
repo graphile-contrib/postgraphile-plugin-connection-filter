@@ -86,246 +86,92 @@ Object {
       ],
     },
     "boolean_distinctFrom_true": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "boolean": false,
+          "id": 3,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "boolean": false,
+          "id": 4,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
+          "boolean": null,
+          "id": 5,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 3,
     },
     "boolean_equalTo_true": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "boolean": true,
+          "id": 1,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "boolean": true,
+          "id": 2,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "boolean_isNull_false": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "boolean": true,
+          "id": 1,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "boolean": true,
+          "id": 2,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "boolean": false,
+          "id": 3,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "boolean": false,
+          "id": 4,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "boolean_isNull_true": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
+          "boolean": null,
+          "id": 5,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 1,
     },
     "boolean_notDistinctFrom_true": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "boolean": true,
+          "id": 1,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "boolean": true,
+          "id": 2,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "boolean_notEqualTo_true": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "boolean": false,
+          "id": 3,
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "boolean": false,
+          "id": 4,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 2,
     },
     "computed_equalTo_test_computed": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "boolean": false,
+          "id": 4,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-      },
-      "totalCount": 1,
     },
     "enum_equalTo_OK": Object {
       "nodes": Array [
@@ -735,257 +581,96 @@ Object {
       ],
     },
     "int_equalTo_2_and_string_endsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 1,
     },
     "int_equalTo_2_or_string_endsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 2,
     },
     "int_greaterThanOrEqualTo_2": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 3,
     },
     "int_greaterThan_2": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 2,
     },
     "int_in_2_3": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 2,
     },
     "int_lessThanOrEqualTo_2": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "int_lessThan_2": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 1,
     },
     "int_notIn_2_3": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "jsonb_containedBy_object": Object {
       "nodes": Array [
@@ -1024,891 +709,324 @@ Object {
       ],
     },
     "not_int_equalTo_2_or_string_endsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "not_string_equalTo_test": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 3,
     },
     "string_containsInsensitive_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "string_contains_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 3,
     },
     "string_distinctFrom_test": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
+          "id": 5,
+          "string": null,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "string_endsWithInsensitive_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "string_endsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 2,
     },
     "string_equalTo_test": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-      },
-      "totalCount": 1,
     },
     "string_isNull_false": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "string_isNull_true": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-          "node": Object {
-            "boolean": null,
-            "id": 5,
-            "int": null,
-            "numeric": null,
-            "real": null,
-            "string": null,
-          },
+          "id": 5,
+          "string": null,
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs1XV0=",
-      },
-      "totalCount": 1,
     },
     "string_likeInsensitive_es": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "string_like_es": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 2,
     },
     "string_notContainsInsensitive_t": Object {
-      "edges": Array [],
-      "pageInfo": Object {
-        "endCursor": null,
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": null,
-      },
-      "totalCount": 0,
+      "nodes": Array [],
     },
     "string_notContains_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 1,
     },
     "string_notDistinctFrom_test": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-      },
-      "totalCount": 1,
     },
     "string_notEndsWithInsensitive_t": Object {
-      "edges": Array [],
-      "pageInfo": Object {
-        "endCursor": null,
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": null,
-      },
-      "totalCount": 0,
+      "nodes": Array [],
     },
     "string_notEndsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "string_notEqualTo_test": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 3,
     },
     "string_notLikeInsensitive_es": Object {
-      "edges": Array [],
-      "pageInfo": Object {
-        "endCursor": null,
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": null,
-      },
-      "totalCount": 0,
+      "nodes": Array [],
     },
     "string_notLike_es": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "string_notSimilarTo_te_or_st": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "string_notStartsWithInsensitive_t": Object {
-      "edges": Array [],
-      "pageInfo": Object {
-        "endCursor": null,
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": null,
-      },
-      "totalCount": 0,
+      "nodes": Array [],
     },
     "string_notStartsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 2,
     },
     "string_similarTo_te_or_st": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-      },
-      "totalCount": 2,
     },
     "string_startsWithInsensitive_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 1,
-            "int": 1,
-            "numeric": "0.1",
-            "real": 0.1,
-            "string": "TEST",
-          },
+          "id": 1,
+          "string": "TEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsyXV0=",
-          "node": Object {
-            "boolean": true,
-            "id": 2,
-            "int": 2,
-            "numeric": "0.2",
-            "real": 0.2,
-            "string": "Test",
-          },
+          "id": 2,
+          "string": "Test",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFsxXV0=",
-      },
-      "totalCount": 4,
     },
     "string_startsWith_t": Object {
-      "edges": Array [
+      "nodes": Array [
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 3,
-            "int": 3,
-            "numeric": "0.3",
-            "real": 0.3,
-            "string": "tEST",
-          },
+          "id": 3,
+          "string": "tEST",
         },
         Object {
-          "cursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-          "node": Object {
-            "boolean": false,
-            "id": 4,
-            "int": 4,
-            "numeric": "0.4",
-            "real": 0.4,
-            "string": "test",
-          },
+          "id": 4,
+          "string": "test",
         },
       ],
-      "pageInfo": Object {
-        "endCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFs0XV0=",
-        "hasNextPage": false,
-        "hasPreviousPage": false,
-        "startCursor": "WyJwcmltYXJ5X2tleV9hc2MiLFszXV0=",
-      },
-      "totalCount": 2,
     },
   },
 }
@@ -1954,11 +1072,7 @@ Object {
   "data": Object {
     "string_isNull_true": Array [
       Object {
-        "boolean": null,
         "id": 5,
-        "int": null,
-        "numeric": null,
-        "real": null,
         "string": null,
       },
     ],

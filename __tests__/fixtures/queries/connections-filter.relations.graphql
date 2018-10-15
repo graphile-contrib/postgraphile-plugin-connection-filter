@@ -1,11 +1,11 @@
 query {
-  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...filterableConnection }
-  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...filterableConnection }
-  backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...filterableConnection }
-  #child_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {name: {equalTo: "child2"}}}) { ...filterableConnection }
+  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...stringConnection }
+  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...stringConnection }
+  backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...stringConnection }
+  #child_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {name: {equalTo: "child2"}}}) { ...stringConnection }
 }
 
-fragment filterableConnection on FilterablesConnection {
+fragment stringConnection on FilterablesConnection {
   nodes {
     id
     string
