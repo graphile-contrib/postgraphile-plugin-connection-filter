@@ -884,6 +884,7 @@ type Filterable implements Node {
     \\"\\"\\"
     offset: Int
   ): ChildrenConnection!
+  enum: Mood
 
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
@@ -914,6 +915,9 @@ for equality and combined with a logical ‘and.’
 input FilterableCondition {
   \\"\\"\\"Checks for equality with the object’s \`boolean\` field.\\"\\"\\"
   boolean: Boolean
+
+  \\"\\"\\"Checks for equality with the object’s \`enum\` field.\\"\\"\\"
+  enum: Mood
 
   \\"\\"\\"Checks for equality with the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: Int
@@ -956,6 +960,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
 
+  \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
+  enum: MoodFilter
+
   \\"\\"\\"Filter by the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: IntFilter
 
@@ -993,6 +1000,7 @@ input FilterableFilter {
 \\"\\"\\"An input for mutations affecting \`Filterable\`\\"\\"\\"
 input FilterableInput {
   boolean: Boolean
+  enum: Mood
   forwardId: Int
   id: Int
   inet: InternetAddress
@@ -1010,6 +1018,7 @@ Represents an update to a \`Filterable\`. Fields that are set will be updated.
 \\"\\"\\"
 input FilterablePatch {
   boolean: Boolean
+  enum: Mood
   forwardId: Int
   id: Int
   inet: InternetAddress
@@ -1052,6 +1061,8 @@ type FilterablesEdge {
 enum FilterablesOrderBy {
   BOOLEAN_ASC
   BOOLEAN_DESC
+  ENUM_ASC
+  ENUM_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
   ID_ASC
@@ -1255,6 +1266,23 @@ input JSONFilter {
 
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: JSON
+}
+
+enum Mood {
+  HAPPY
+  OK
+  SAD
+}
+
+\\"\\"\\"
+A filter to be used against Mood fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input MoodFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Mood
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Mood
 }
 
 \\"\\"\\"

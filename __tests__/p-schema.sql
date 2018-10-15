@@ -12,6 +12,8 @@ create table p.forward (
   "name" text not null
 );
 
+create type p.mood as enum ('sad', 'ok', 'happy');
+
 create table p.filterable (
   id serial primary key,
   "string" text,
@@ -22,6 +24,7 @@ create table p.filterable (
   "jsonb" jsonb,
   "int_array" int[],
   "inet" inet,
+  "enum" p.mood,
   "parent_id" int references p.parent (id),
   "forward_id" int unique references p.forward (id)
 );

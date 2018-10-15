@@ -327,6 +327,14 @@ Object {
       },
       "totalCount": 1,
     },
+    "enum_equalTo_OK": Object {
+      "nodes": Array [
+        Object {
+          "enum": "OK",
+          "id": 2,
+        },
+      ],
+    },
     "filterableById_1_computedSetofChild_name_equalTo_child2": Object {
       "computedSetofChild": Object {
         "nodes": Array [

@@ -68,6 +68,7 @@ query {
   inet_containsOrEquals_Equals: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.1/24" } }) { ...filterableInetConnection }
   inet_containsOrIsContainedBy_Contains: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "172.168.1.0/24" } }) { ...filterableInetConnection }
   inet_containsOrIsContainedBy_ContainedBy: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "10.0.0.5" } }) { ...filterableInetConnection }
+  enum_equalTo_OK: allFilterables(filter: { enum: { equalTo: OK } }) { nodes { id, enum } }
   allFilterables_computedSetofChild_name_equalTo_child2: allFilterables { nodes { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } } }
   filterableById_1_computedSetofChild_name_equalTo_child2: filterableById(id: 1) { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } }
 }

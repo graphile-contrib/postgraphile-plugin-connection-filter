@@ -940,6 +940,7 @@ type Filterable implements Node {
     \\"\\"\\"
     offset: Int
   ): ChildrenConnection!
+  enum: Mood
 
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
@@ -970,6 +971,9 @@ for equality and combined with a logical ‘and.’
 input FilterableCondition {
   \\"\\"\\"Checks for equality with the object’s \`boolean\` field.\\"\\"\\"
   boolean: Boolean
+
+  \\"\\"\\"Checks for equality with the object’s \`enum\` field.\\"\\"\\"
+  enum: Mood
 
   \\"\\"\\"Checks for equality with the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: Int
@@ -1015,6 +1019,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
 
+  \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
+  enum: MoodFilter
+
   \\"\\"\\"Filter by the object’s \`forwardByForwardId\` field.\\"\\"\\"
   forwardByForwardId: ForwardFilter
 
@@ -1058,6 +1065,7 @@ input FilterableFilter {
 \\"\\"\\"An input for mutations affecting \`Filterable\`\\"\\"\\"
 input FilterableInput {
   boolean: Boolean
+  enum: Mood
   forwardId: Int
   id: Int
   inet: InternetAddress
@@ -1075,6 +1083,7 @@ Represents an update to a \`Filterable\`. Fields that are set will be updated.
 \\"\\"\\"
 input FilterablePatch {
   boolean: Boolean
+  enum: Mood
   forwardId: Int
   id: Int
   inet: InternetAddress
@@ -1117,6 +1126,8 @@ type FilterablesEdge {
 enum FilterablesOrderBy {
   BOOLEAN_ASC
   BOOLEAN_DESC
+  ENUM_ASC
+  ENUM_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
   ID_ASC
@@ -1456,6 +1467,42 @@ input JSONFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [JSON!]
+}
+
+enum Mood {
+  HAPPY
+  OK
+  SAD
+}
+
+\\"\\"\\"
+A filter to be used against Mood fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input MoodFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: Mood
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Mood
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [Mood!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: Mood
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Mood
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [Mood!]
 }
 
 \\"\\"\\"
