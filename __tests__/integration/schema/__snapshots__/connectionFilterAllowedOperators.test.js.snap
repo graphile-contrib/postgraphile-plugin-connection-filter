@@ -858,6 +858,7 @@ type Filterable implements Node {
   ): ChildrenConnection!
   computed: String
   computed2: String
+  computedIntArray: [Int]
 
   \\"\\"\\"Reads and enables pagination through a set of \`Child\`.\\"\\"\\"
   computedSetofChild(
@@ -959,6 +960,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`computedIntArray\` field.\\"\\"\\"
+  computedIntArray: IntListFilter
 
   \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
   enum: MoodFilter

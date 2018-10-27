@@ -165,6 +165,14 @@ Object {
         },
       ],
     },
+    "computedIntArray_equalTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "boolean": true,
+          "id": 2,
+        },
+      ],
+    },
     "computed_equalTo_test_computed": Object {
       "nodes": Array [
         Object {

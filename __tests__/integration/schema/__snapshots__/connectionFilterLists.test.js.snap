@@ -908,6 +908,7 @@ type Filterable implements Node {
   ): ChildrenConnection!
   computed: String
   computed2: String
+  computedIntArray: [Int]
 
   \\"\\"\\"Reads and enables pagination through a set of \`Child\`.\\"\\"\\"
   computedSetofChild(
