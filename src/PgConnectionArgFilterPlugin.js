@@ -277,7 +277,7 @@ module.exports = function PgConnectionArgFilterPlugin(
             )}`;
 
     const resolveWhereComparison = (
-      identifier,
+      sqlIdentifier,
       operatorName,
       input,
       pgType,
@@ -294,11 +294,14 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (!operator) {
         throw new Error(`Unable to resolve operator '${operatorName}'`);
       }
+      if (input == null && !operator.options.processNull) {
+        return null;
+      }
       const inputResolver = operator.options.inputResolver;
-      const value = operator.options.resolveWithRawInput
+      const sqlValue = operator.options.resolveWithRawInput
         ? input
         : sqlValueFromInput(input, inputResolver, pgType, pgTypeModifier);
-      return operator.resolveWhereClause(identifier, value);
+      return operator.resolveWhereClause(sqlIdentifier, sqlValue, input);
     };
 
     const escapeLikeWildcards = input => {

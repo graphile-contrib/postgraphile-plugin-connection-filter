@@ -10,12 +10,11 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "isNull",
       "Is null (if `true` is specified) or is not null (if `false` is specified).",
       () => GraphQLBoolean,
-      (identifier, value) =>
+      (identifier, _value, input) =>
         sql.query`${identifier} ${
-          value ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
         }`,
       {
-        resolveWithRawInput: true,
         allowedListTypes: ["NonList", "List"],
       }
     );
