@@ -1040,6 +1040,79 @@ Object {
 }
 `;
 
+exports[`connections-filter.null-and-empty.graphql 1`] = `
+Object {
+  "data": Object {
+    "a": Object {
+      "totalCount": 5,
+    },
+    "b": Object {
+      "totalCount": 5,
+    },
+    "c": Object {
+      "totalCount": 5,
+    },
+    "d": Object {
+      "totalCount": 5,
+    },
+    "e": Object {
+      "totalCount": 5,
+    },
+    "f": Object {
+      "totalCount": 5,
+    },
+    "g": Object {
+      "totalCount": 5,
+    },
+    "h": Object {
+      "totalCount": 5,
+    },
+    "i": Object {
+      "totalCount": 5,
+    },
+    "j": Object {
+      "totalCount": 5,
+    },
+    "k": Object {
+      "totalCount": 5,
+    },
+    "l": Object {
+      "totalCount": 5,
+    },
+    "n": Object {
+      "totalCount": 5,
+    },
+    "o": Object {
+      "totalCount": 5,
+    },
+    "q": Object {
+      "totalCount": 5,
+    },
+    "r": Object {
+      "totalCount": 5,
+    },
+    "t": Object {
+      "totalCount": 5,
+    },
+    "u": Object {
+      "totalCount": 5,
+    },
+    "w": Object {
+      "totalCount": 5,
+    },
+    "x": Object {
+      "totalCount": 5,
+    },
+    "y": Object {
+      "totalCount": 5,
+    },
+    "z": Object {
+      "totalCount": 5,
+    },
+  },
+}
+`;
+
 exports[`connections-filter.relations.graphql 1`] = `
 Object {
   "data": Object {
