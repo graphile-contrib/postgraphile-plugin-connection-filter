@@ -177,14 +177,14 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
 
       const sqlIdentifier = sql.identifier(table.namespace.name, table.name);
 
-      const sqlKeysMatch = sql.join(
+      const sqlKeysMatch = sql.query`(${sql.join(
         keys.map((key, i) => {
           return sql.fragment`${tableAlias}.${sql.identifier(
             key.name
           )} = ${sourceAlias}.${sql.identifier(foreignKeys[i].name)}`;
         }),
         ") and ("
-      );
+      )})`;
 
       const tableTypeName = inflection.tableType(table);
       const tableFilterTypeName = inflection.filterType(tableTypeName);
@@ -197,7 +197,8 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
 
       return sqlFragment == null
         ? null
-        : sql.query`exists(
+        : sql.query`\
+      exists(
         select 1 from ${sqlIdentifier} as ${tableAlias}
         where ${sqlKeysMatch} and
           (${sqlFragment})

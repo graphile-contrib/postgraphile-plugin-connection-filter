@@ -121,14 +121,14 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         foreignTable.name
       );
 
-      const sqlKeysMatch = sql.join(
+      const sqlKeysMatch = sql.query`(${sql.join(
         keys.map((key, i) => {
           return sql.fragment`${sourceAlias}.${sql.identifier(
             key.name
           )} = ${foreignTableAlias}.${sql.identifier(foreignKeys[i].name)}`;
         }),
         ") and ("
-      );
+      )})`;
 
       const foreignTableTypeName = inflection.tableType(foreignTable);
       const foreignTableFilterTypeName = inflection.filterType(
