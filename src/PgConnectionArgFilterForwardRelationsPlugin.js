@@ -2,63 +2,31 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
-      getTypeByName,
       inflection,
+      pgOmit: omit,
+      getTypeByName,
+      pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      forwardRelationFieldInfoFromTable,
+      connectionFilterResolve,
+      connectionFilterFieldResolversByTypeNameAndFieldName,
     } = build;
     const {
       fieldWithHooks,
       scope: { pgIntrospection: table, isPgConnectionFilter },
+      Self,
     } = context;
 
     if (!isPgConnectionFilter) return fields;
 
-    const forwardRelationFields = Object.entries(
-      forwardRelationFieldInfoFromTable(table, introspectionResultsByKind)
-    ).reduce((memo, curr) => {
-      const [fieldName, { foreignTable }] = curr;
-      const foreignTableTypeName = inflection.tableType(foreignTable);
-      const type = getTypeByName(inflection.filterType(foreignTableTypeName));
-      if (type != null) {
-        memo[fieldName] = fieldWithHooks(
-          fieldName,
-          {
-            description: `Filter by the object’s \`${fieldName}\` field.`,
-            type,
-          },
-          {
-            isPgConnectionFilterField: true,
-          }
-        );
-      }
-      return memo;
-    }, {});
+    const foreignKeyConstraints = introspectionResultsByKind.constraint
+      .filter(con => con.type === "f")
+      .filter(con => con.classId === table.id);
+    const attributes = introspectionResultsByKind.attribute
+      .filter(attr => attr.classId === table.id)
+      .sort((a, b) => a.num - b.num);
 
-    return extend(fields, forwardRelationFields);
-  });
-
-  builder.hook("build", build => {
-    const {
-      extend,
-      inflection,
-      pgOmit: omit,
-      pgSql: sql,
-      connectionFilterFieldResolvers,
-    } = build;
-
-    // *** Much of this code was copied from PgForwardRelationPlugin.js ***
-    const forwardRelationFieldInfoFromTable = (
-      table,
-      introspectionResultsByKind
-    ) => {
-      const foreignKeyConstraints = introspectionResultsByKind.constraint
-        .filter(con => con.type === "f")
-        .filter(con => con.classId === table.id);
-      const attributes = introspectionResultsByKind.attribute
-        .filter(attr => attr.classId === table.id)
-        .sort((a, b) => a.num - b.num);
-      return foreignKeyConstraints.reduce((memo, constraint) => {
+    const forwardRelationInfoByFieldName = foreignKeyConstraints.reduce(
+      (memo, constraint) => {
         if (omit(constraint, "read")) {
           return memo;
         }
@@ -72,9 +40,6 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         if (omit(foreignTable, "read")) {
           return memo;
         }
-        const foreignSchema = introspectionResultsByKind.namespace.filter(
-          n => n.id === foreignTable.namespaceId
-        )[0];
         const foreignAttributes = introspectionResultsByKind.attribute
           .filter(attr => attr.classId === constraint.foreignClassId)
           .sort((a, b) => a.num - b.num);
@@ -104,7 +69,6 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
 
         memo = extend(memo, {
           [fieldName]: {
-            foreignSchema,
             foreignTable,
             foreignKeys,
             keys,
@@ -112,73 +76,87 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         });
 
         return memo;
-      }, {});
-    };
+      },
+      {}
+    );
 
-    const resolve = ({
-      sourceAlias,
-      source,
-      fieldName,
-      fieldValue,
-      introspectionResultsByKind,
-      connectionFilterFieldResolvers,
-    }) => {
-      const forwardRelationFieldInfo = forwardRelationFieldInfoFromTable(
-        source,
-        introspectionResultsByKind
-      )[fieldName];
+    const forwardRelationFields = Object.entries(
+      forwardRelationInfoByFieldName
+    ).reduce((memo, curr) => {
+      const [fieldName, { foreignTable }] = curr;
+      const foreignTableTypeName = inflection.tableType(foreignTable);
+      const foreignTableFilterTypeName = inflection.filterType(
+        foreignTableTypeName
+      );
+      const type = getTypeByName(foreignTableFilterTypeName);
+      if (type != null) {
+        memo[fieldName] = fieldWithHooks(
+          fieldName,
+          {
+            description: `Filter by the object’s \`${fieldName}\` field.`,
+            type,
+          },
+          {
+            isPgConnectionFilterField: true,
+          }
+        );
+      }
+      return memo;
+    }, {});
 
-      if (forwardRelationFieldInfo == null) return null;
+    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+      if (fieldValue == null) return null;
 
       const {
-        foreignSchema,
         foreignTable,
         foreignKeys,
         keys,
-      } = forwardRelationFieldInfo;
+      } = forwardRelationInfoByFieldName[fieldName];
 
       const foreignTableAlias = sql.identifier(Symbol());
       if (foreignTable == null) return null;
 
-      return sql.query`exists(
-        select 1 from ${sql.identifier(
-          foreignSchema.name,
-          foreignTable.name
-        )} as ${foreignTableAlias}
-        where (${sql.join(
-          keys.map((key, i) => {
-            return sql.fragment`${sourceAlias}.${sql.identifier(
-              key.name
-            )} = ${foreignTableAlias}.${sql.identifier(foreignKeys[i].name)}`;
-          }),
-          ") and ("
-        )}) 
-          and (${sql.query`(${sql.join(
-            Object.entries(fieldValue).map(
-              ([foreignFieldName, foreignFieldValue]) => {
-                // Try to resolve field
-                for (const resolve of connectionFilterFieldResolvers) {
-                  const resolved = resolve({
-                    sourceAlias: foreignTableAlias,
-                    source: foreignTable,
-                    fieldName: foreignFieldName,
-                    fieldValue: foreignFieldValue,
-                    introspectionResultsByKind,
-                    connectionFilterFieldResolvers,
-                  });
-                  if (resolved != null) return resolved;
-                }
-              }
-            ),
-            ") and ("
-          )})`})
+      const sqlIdentifier = sql.identifier(
+        foreignTable.namespace.name,
+        foreignTable.name
+      );
+
+      const sqlKeysMatch = sql.join(
+        keys.map((key, i) => {
+          return sql.fragment`${sourceAlias}.${sql.identifier(
+            key.name
+          )} = ${foreignTableAlias}.${sql.identifier(foreignKeys[i].name)}`;
+        }),
+        ") and ("
+      );
+
+      const foreignTableTypeName = inflection.tableType(foreignTable);
+      const foreignTableFilterTypeName = inflection.filterType(
+        foreignTableTypeName
+      );
+
+      const sqlFragment = connectionFilterResolve(
+        fieldValue,
+        foreignTableAlias,
+        foreignTableFilterTypeName
+      );
+
+      return sqlFragment == null
+        ? null
+        : sql.query`\
+      exists(
+        select 1 from ${sqlIdentifier} as ${foreignTableAlias}
+        where ${sqlKeysMatch} and
+          (${sqlFragment})
       )`;
     };
 
-    connectionFilterFieldResolvers.push(resolve);
+    for (const fieldName of Object.keys(forwardRelationInfoByFieldName)) {
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
+        fieldName
+      ] = resolve;
+    }
 
-    return extend(build, {
-      forwardRelationFieldInfoFromTable,
-    });
+    return extend(fields, forwardRelationFields);
   });
 };

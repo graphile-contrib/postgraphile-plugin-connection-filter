@@ -9,73 +9,36 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
-      getTypeByName,
       inflection,
+      pgOmit: omit,
+      getTypeByName,
+      pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      backwardRelationFieldInfoFromTable,
+      connectionFilterResolve,
+      connectionFilterFieldResolversByTypeNameAndFieldName,
     } = build;
     const {
       fieldWithHooks,
       scope: { pgIntrospection: foreignTable, isPgConnectionFilter },
+      Self,
     } = context;
 
     if (!isPgConnectionFilter) return fields;
 
-    const backwardRelationFields = Object.entries(
-      backwardRelationFieldInfoFromTable(
-        foreignTable,
-        introspectionResultsByKind
-      )
-    ).reduce((memo, curr) => {
-      const [fieldName, { table }] = curr;
-      const tableTypeName = inflection.tableType(table);
-      const type = getTypeByName(inflection.filterType(tableTypeName));
-      if (type != null) {
-        memo[fieldName] = fieldWithHooks(
-          fieldName,
-          {
-            description: `Filter by the object’s \`${fieldName}\` field.`,
-            type,
-          },
-          {
-            isPgConnectionFilterField: true,
-          }
-        );
-      }
-      return memo;
-    }, {});
+    const foreignKeyConstraints = introspectionResultsByKind.constraint
+      .filter(con => con.type === "f")
+      .filter(con => con.foreignClassId === foreignTable.id);
+    const foreignAttributes = introspectionResultsByKind.attribute
+      .filter(attr => attr.classId === foreignTable.id)
+      .sort((a, b) => a.num - b.num);
 
-    return extend(fields, backwardRelationFields);
-  });
-
-  builder.hook("build", build => {
-    const {
-      extend,
-      inflection,
-      pgOmit: omit,
-      pgSql: sql,
-      connectionFilterFieldResolvers,
-    } = build;
-
-    // *** Much of this code was copied from PgBackwardRelationPlugin.js ***
-    const backwardRelationFieldInfoFromTable = (
-      foreignTable,
-      introspectionResultsByKind
-    ) => {
-      // This is a relation in which WE are foreign
-      const foreignKeyConstraints = introspectionResultsByKind.constraint
-        .filter(con => con.type === "f")
-        .filter(con => con.foreignClassId === foreignTable.id);
-      const foreignAttributes = introspectionResultsByKind.attribute
-        .filter(attr => attr.classId === foreignTable.id)
-        .sort((a, b) => a.num - b.num);
-      return foreignKeyConstraints.reduce((memo, constraint) => {
+    const backwardRelationInfoByFieldName = foreignKeyConstraints.reduce(
+      (memo, constraint) => {
         if (omit(constraint, "read")) {
           return memo;
         }
+
         const table = introspectionResultsByKind.classById[constraint.classId];
-        const foreignTable =
-          introspectionResultsByKind.classById[constraint.foreignClassId];
         if (!table) {
           throw new Error(
             `Could not find the table that referenced us (constraint: ${
@@ -176,66 +139,77 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
         }
 
         return memo;
-      }, {});
-    };
+      },
+      {}
+    );
 
-    const resolve = ({
-      sourceAlias,
-      source,
-      fieldName,
-      fieldValue,
-      introspectionResultsByKind,
-      connectionFilterFieldResolvers,
-    }) => {
-      const backwardRelationFieldInfo = backwardRelationFieldInfoFromTable(
-        source,
-        introspectionResultsByKind
-      )[fieldName];
+    const backwardRelationFields = Object.entries(
+      backwardRelationInfoByFieldName
+    ).reduce((memo, curr) => {
+      const [fieldName, { table }] = curr;
+      const tableTypeName = inflection.tableType(table);
+      const tableFilterTypeName = inflection.filterType(tableTypeName);
+      const type = getTypeByName(tableFilterTypeName);
+      if (type != null) {
+        memo[fieldName] = fieldWithHooks(
+          fieldName,
+          {
+            description: `Filter by the object’s \`${fieldName}\` field.`,
+            type,
+          },
+          {
+            isPgConnectionFilterField: true,
+          }
+        );
+      }
+      return memo;
+    }, {});
 
-      if (backwardRelationFieldInfo == null) return null;
+    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+      if (fieldValue == null) return null;
 
-      const { table, foreignKeys, keys } = backwardRelationFieldInfo;
+      const { table, foreignKeys, keys } = backwardRelationInfoByFieldName[
+        fieldName
+      ];
 
       const tableAlias = sql.identifier(Symbol());
       if (table == null) return null;
 
-      return sql.query`exists(
-        select 1 from ${sql.identifier(
-          table.namespace.name,
-          table.name
-        )} as ${tableAlias}
-        where (${sql.join(
-          keys.map((key, i) => {
-            return sql.fragment`${tableAlias}.${sql.identifier(
-              key.name
-            )} = ${sourceAlias}.${sql.identifier(foreignKeys[i].name)}`;
-          }),
-          ") and ("
-        )}) 
-          and (${sql.query`(${sql.join(
-            Object.entries(fieldValue).map(([fieldName, fieldValue]) => {
-              // Try to resolve field
-              for (const resolve of connectionFilterFieldResolvers) {
-                const resolved = resolve({
-                  sourceAlias: tableAlias,
-                  source: table,
-                  fieldName,
-                  fieldValue,
-                  introspectionResultsByKind,
-                  connectionFilterFieldResolvers,
-                });
-                if (resolved != null) return resolved;
-              }
-            }),
-            ") and ("
-          )})`})
+      const sqlIdentifier = sql.identifier(table.namespace.name, table.name);
+
+      const sqlKeysMatch = sql.join(
+        keys.map((key, i) => {
+          return sql.fragment`${tableAlias}.${sql.identifier(
+            key.name
+          )} = ${sourceAlias}.${sql.identifier(foreignKeys[i].name)}`;
+        }),
+        ") and ("
+      );
+
+      const tableTypeName = inflection.tableType(table);
+      const tableFilterTypeName = inflection.filterType(tableTypeName);
+
+      const sqlFragment = connectionFilterResolve(
+        fieldValue,
+        tableAlias,
+        tableFilterTypeName
+      );
+
+      return sqlFragment == null
+        ? null
+        : sql.query`exists(
+        select 1 from ${sqlIdentifier} as ${tableAlias}
+        where ${sqlKeysMatch} and
+          (${sqlFragment})
       )`;
     };
 
-    connectionFilterFieldResolvers.push(resolve);
+    for (const fieldName of Object.keys(backwardRelationInfoByFieldName)) {
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
+        fieldName
+      ] = resolve;
+    }
 
-    return extend(build, {
-      backwardRelationFieldInfoFromTable,
-    });
+    return extend(fields, backwardRelationFields);
   });
 };

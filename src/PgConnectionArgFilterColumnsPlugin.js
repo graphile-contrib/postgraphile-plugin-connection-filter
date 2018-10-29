@@ -3,96 +3,89 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
     const {
       extend,
       newWithHooks,
+      pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgGetGqlInputTypeByTypeIdAndModifier,
       graphql: { GraphQLString },
       pgColumnFilter,
       pgOmit: omit,
       inflection,
-      extendFilterFields,
+      connectionFilterField,
+      resolveWhereComparison,
+      connectionFilterFieldResolversByTypeNameAndFieldName,
     } = build;
     const {
       fieldWithHooks,
       scope: { pgIntrospection: table, isPgConnectionFilter },
+      Self,
     } = context;
 
     if (!isPgConnectionFilter) return fields;
 
-    const attrFields = introspectionResultsByKind.attribute
+    connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {};
+
+    const attrByFieldName = introspectionResultsByKind.attribute
       .filter(attr => attr.classId === table.id)
       .filter(attr => pgColumnFilter(attr, build, context))
       .filter(attr => !omit(attr, "filter"))
       .reduce((memo, attr) => {
         const fieldName = inflection.column(attr);
+        memo[fieldName] = attr;
+        return memo;
+      }, {});
+
+    const attrFields = Object.entries(attrByFieldName).reduce(
+      (memo, [fieldName, attr]) => {
         const fieldType =
           pgGetGqlInputTypeByTypeIdAndModifier(
             attr.typeId,
             attr.typeModifier
-          ) || GraphQLString;
-        return extendFilterFields(
-          memo,
+          ) || GraphQLString; // TODO: Remove `|| GraphQLString` before v1.0.0
+        const fieldSpec = connectionFilterField(
           fieldName,
           fieldType,
           fieldWithHooks,
           newWithHooks
         );
-      }, {});
-
-    return extend(fields, attrFields);
-  });
-
-  builder.hook("build", build => {
-    const {
-      inflection,
-      pgOmit: omit,
-      pgSql: sql,
-      resolveWhereComparison,
-      connectionFilterFieldResolvers,
-    } = build;
-
-    const resolve = ({
-      sourceAlias,
-      source,
-      fieldName,
-      fieldValue,
-      introspectionResultsByKind,
-    }) => {
-      const attr = introspectionResultsByKind.attribute
-        .filter(
-          attr =>
-            source.kind === "class"
-              ? attr.classId === source.id
-              : attr.class.typeId === source.returnTypeId
-        )
-        .filter(attr => !omit(attr, "filter"))
-        .reduce((memo, attr) => {
-          if (fieldName === inflection.column(attr)) {
-            return attr;
-          }
+        if (!fieldSpec) {
           return memo;
-        }, null);
+        }
+        return extend(memo, { [fieldName]: fieldSpec });
+      },
+      {}
+    );
 
-      if (attr == null) return null;
+    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+      if (fieldValue == null) return null;
 
-      return sql.query`(${sql.join(
-        Object.entries(fieldValue).map(([operatorName, input]) => {
-          const identifier = sql.query`${sourceAlias}.${sql.identifier(
+      const attr = attrByFieldName[fieldName];
+
+      const sqlFragments = Object.entries(fieldValue)
+        .map(([operatorName, input]) => {
+          const sqlIdentifier = sql.query`${sourceAlias}.${sql.identifier(
             attr.name
           )}`;
           return resolveWhereComparison(
-            identifier,
+            sqlIdentifier,
             operatorName,
             input,
             attr.type,
             attr.typeModifier
           );
-        }),
-        ") and ("
-      )})`;
+        })
+        .filter(x => x != null);
+
+      return sqlFragments.length === 0
+        ? null
+        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
     };
 
-    connectionFilterFieldResolvers.push(resolve);
+    for (const fieldName of Object.keys(attrByFieldName)) {
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
+        fieldName
+      ] = resolve;
+    }
 
-    return build;
+    return extend(fields, attrFields);
   });
 };
