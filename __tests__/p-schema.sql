@@ -12,6 +12,13 @@ create table p.forward (
   "name" text not null
 );
 
+create table p.forward_compound (
+  forward_compound_1 int,
+  forward_compound_2 int,
+  "name" text,
+  primary key ("forward_compound_1", "forward_compound_2")
+);
+
 create type p.mood as enum ('sad', 'ok', 'happy');
 
 create table p.filterable (
@@ -26,7 +33,13 @@ create table p.filterable (
   "inet" inet,
   "enum" p.mood,
   "parent_id" int references p.parent (id),
-  "forward_id" int unique references p.forward (id)
+  "forward_id" int unique references p.forward (id),
+  "forward_compound_1" int,
+  "forward_compound_2" int,
+  "backward_compound_1" int,
+  "backward_compound_2" int,
+  unique ("backward_compound_1", "backward_compound_2"),
+  foreign key ("forward_compound_1", "forward_compound_2") references p.forward_compound ("forward_compound_1", "forward_compound_2")
 );
 
 comment on column p.filterable.real is E'@omit filter';
@@ -35,6 +48,14 @@ create table p.backward (
   id serial primary key,
   "name" text not null,
   "filterable_id" int unique references p.filterable (id)
+);
+
+create table p.backward_compound (
+  backward_compound_1 int,
+  backward_compound_2 int,
+  "name" text,
+  primary key ("backward_compound_1", "backward_compound_2"),
+  foreign key ("backward_compound_1", "backward_compound_2") references p.filterable ("backward_compound_1", "backward_compound_2")
 );
 
 create table p.child (

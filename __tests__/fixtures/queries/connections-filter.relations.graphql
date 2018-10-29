@@ -3,6 +3,8 @@ query {
   forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...stringConnection }
   backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...stringConnection }
   #child_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {name: {equalTo: "child2"}}}) { ...stringConnection }
+  forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...stringConnection }
+  backwardCompound_name_equalTo_backwardCompound12: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2: {name: {equalTo: "backwardCompound12"}}}) { ...stringConnection }
 }
 
 fragment stringConnection on FilterablesConnection {

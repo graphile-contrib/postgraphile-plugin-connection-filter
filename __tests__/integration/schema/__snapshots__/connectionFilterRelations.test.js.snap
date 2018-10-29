@@ -14,6 +14,122 @@ exports[`prints a schema with the filter plugin and the connectionFilterRelation
   nodeId: ID!
 }
 
+type BackwardCompound implements Node {
+  backwardCompound1: Int!
+  backwardCompound2: Int!
+
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`BackwardCompound\`.
+  \\"\\"\\"
+  filterableByBackwardCompound1AndBackwardCompound2: Filterable
+  name: String
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A condition to be used against \`BackwardCompound\` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+\\"\\"\\"
+input BackwardCompoundCondition {
+  \\"\\"\\"Checks for equality with the object’s \`backwardCompound1\` field.\\"\\"\\"
+  backwardCompound1: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`backwardCompound2\` field.\\"\\"\\"
+  backwardCompound2: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
+  name: String
+}
+
+\\"\\"\\"
+A filter to be used against \`BackwardCompound\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BackwardCompoundFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [BackwardCompoundFilter!]
+
+  \\"\\"\\"Filter by the object’s \`backwardCompound1\` field.\\"\\"\\"
+  backwardCompound1: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`backwardCompound2\` field.\\"\\"\\"
+  backwardCompound2: IntFilter
+
+  \\"\\"\\"
+  Filter by the object’s \`filterableByBackwardCompound1AndBackwardCompound2\` field.
+  \\"\\"\\"
+  filterableByBackwardCompound1AndBackwardCompound2: FilterableFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: BackwardCompoundFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [BackwardCompoundFilter!]
+}
+
+\\"\\"\\"An input for mutations affecting \`BackwardCompound\`\\"\\"\\"
+input BackwardCompoundInput {
+  backwardCompound1: Int!
+  backwardCompound2: Int!
+  name: String
+}
+
+\\"\\"\\"
+Represents an update to a \`BackwardCompound\`. Fields that are set will be updated.
+\\"\\"\\"
+input BackwardCompoundPatch {
+  backwardCompound1: Int
+  backwardCompound2: Int
+  name: String
+}
+
+\\"\\"\\"A connection to a list of \`BackwardCompound\` values.\\"\\"\\"
+type BackwardCompoundsConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`BackwardCompound\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [BackwardCompoundsEdge!]!
+
+  \\"\\"\\"A list of \`BackwardCompound\` objects.\\"\\"\\"
+  nodes: [BackwardCompound]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"
+  The count of *all* \`BackwardCompound\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`BackwardCompound\` edge in the connection.\\"\\"\\"
+type BackwardCompoundsEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`BackwardCompound\` at the end of the edge.\\"\\"\\"
+  node: BackwardCompound
+}
+
+\\"\\"\\"Methods to use when ordering \`BackwardCompound\`.\\"\\"\\"
+enum BackwardCompoundsOrderBy {
+  BACKWARD_COMPOUND_1_ASC
+  BACKWARD_COMPOUND_1_DESC
+  BACKWARD_COMPOUND_2_ASC
+  BACKWARD_COMPOUND_2_DESC
+  NAME_ASC
+  NAME_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
 \\"\\"\\"
 A condition to be used against \`Backward\` object types. All fields are tested
 for equality and combined with a logical ‘and.’
@@ -295,6 +411,46 @@ enum ChildrenOrderBy {
   PRIMARY_KEY_DESC
 }
 
+\\"\\"\\"All input for the create \`BackwardCompound\` mutation.\\"\\"\\"
+input CreateBackwardCompoundInput {
+  \\"\\"\\"The \`BackwardCompound\` to be created by this mutation.\\"\\"\\"
+  backwardCompound: BackwardCompoundInput!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+}
+
+\\"\\"\\"The output of our create \`BackwardCompound\` mutation.\\"\\"\\"
+type CreateBackwardCompoundPayload {
+  \\"\\"\\"The \`BackwardCompound\` that was created by this mutation.\\"\\"\\"
+  backwardCompound: BackwardCompound
+
+  \\"\\"\\"An edge for our \`BackwardCompound\`. May be used by Relay 1.\\"\\"\\"
+  backwardCompoundEdge(
+    \\"\\"\\"The method to use when ordering \`BackwardCompound\`.\\"\\"\\"
+    orderBy: [BackwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardCompoundsEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`BackwardCompound\`.
+  \\"\\"\\"
+  filterableByBackwardCompound1AndBackwardCompound2: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
 \\"\\"\\"All input for the create \`Backward\` mutation.\\"\\"\\"
 input CreateBackwardInput {
   \\"\\"\\"The \`Backward\` to be created by this mutation.\\"\\"\\"
@@ -403,8 +559,48 @@ type CreateFilterablePayload {
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
 
+  \\"\\"\\"
+  Reads a single \`ForwardCompound\` that is related to this \`Filterable\`.
+  \\"\\"\\"
+  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
+
   \\"\\"\\"Reads a single \`Parent\` that is related to this \`Filterable\`.\\"\\"\\"
   parentByParentId: Parent
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
+\\"\\"\\"All input for the create \`ForwardCompound\` mutation.\\"\\"\\"
+input CreateForwardCompoundInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"The \`ForwardCompound\` to be created by this mutation.\\"\\"\\"
+  forwardCompound: ForwardCompoundInput!
+}
+
+\\"\\"\\"The output of our create \`ForwardCompound\` mutation.\\"\\"\\"
+type CreateForwardCompoundPayload {
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"The \`ForwardCompound\` that was created by this mutation.\\"\\"\\"
+  forwardCompound: ForwardCompound
+
+  \\"\\"\\"An edge for our \`ForwardCompound\`. May be used by Relay 1.\\"\\"\\"
+  forwardCompoundEdge(
+    \\"\\"\\"The method to use when ordering \`ForwardCompound\`.\\"\\"\\"
+    orderBy: [ForwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ForwardCompoundsEdge
 
   \\"\\"\\"
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -540,6 +736,63 @@ input DeleteBackwardByIdInput {
   id: Int!
 }
 
+\\"\\"\\"
+All input for the \`deleteBackwardCompoundByBackwardCompound1AndBackwardCompound2\` mutation.
+\\"\\"\\"
+input DeleteBackwardCompoundByBackwardCompound1AndBackwardCompound2Input {
+  backwardCompound1: Int!
+  backwardCompound2: Int!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+}
+
+\\"\\"\\"All input for the \`deleteBackwardCompound\` mutation.\\"\\"\\"
+input DeleteBackwardCompoundInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`BackwardCompound\` to be deleted.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our delete \`BackwardCompound\` mutation.\\"\\"\\"
+type DeleteBackwardCompoundPayload {
+  \\"\\"\\"The \`BackwardCompound\` that was deleted by this mutation.\\"\\"\\"
+  backwardCompound: BackwardCompound
+
+  \\"\\"\\"An edge for our \`BackwardCompound\`. May be used by Relay 1.\\"\\"\\"
+  backwardCompoundEdge(
+    \\"\\"\\"The method to use when ordering \`BackwardCompound\`.\\"\\"\\"
+    orderBy: [BackwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardCompoundsEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+  deletedBackwardCompoundId: ID
+
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`BackwardCompound\`.
+  \\"\\"\\"
+  filterableByBackwardCompound1AndBackwardCompound2: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
 \\"\\"\\"All input for the \`deleteBackward\` mutation.\\"\\"\\"
 input DeleteBackwardInput {
   \\"\\"\\"
@@ -632,6 +885,20 @@ type DeleteChildPayload {
   query: Query
 }
 
+\\"\\"\\"
+All input for the \`deleteFilterableByBackwardCompound1AndBackwardCompound2\` mutation.
+\\"\\"\\"
+input DeleteFilterableByBackwardCompound1AndBackwardCompound2Input {
+  backwardCompound1: Int!
+  backwardCompound2: Int!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+}
+
 \\"\\"\\"All input for the \`deleteFilterableByForwardId\` mutation.\\"\\"\\"
 input DeleteFilterableByForwardIdInput {
   \\"\\"\\"
@@ -687,6 +954,11 @@ type DeleteFilterablePayload {
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
 
+  \\"\\"\\"
+  Reads a single \`ForwardCompound\` that is related to this \`Filterable\`.
+  \\"\\"\\"
+  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
+
   \\"\\"\\"Reads a single \`Parent\` that is related to this \`Filterable\`.\\"\\"\\"
   parentByParentId: Parent
 
@@ -704,6 +976,57 @@ input DeleteForwardByIdInput {
   \\"\\"\\"
   clientMutationId: String
   id: Int!
+}
+
+\\"\\"\\"
+All input for the \`deleteForwardCompoundByForwardCompound1AndForwardCompound2\` mutation.
+\\"\\"\\"
+input DeleteForwardCompoundByForwardCompound1AndForwardCompound2Input {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  forwardCompound1: Int!
+  forwardCompound2: Int!
+}
+
+\\"\\"\\"All input for the \`deleteForwardCompound\` mutation.\\"\\"\\"
+input DeleteForwardCompoundInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`ForwardCompound\` to be deleted.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our delete \`ForwardCompound\` mutation.\\"\\"\\"
+type DeleteForwardCompoundPayload {
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+  deletedForwardCompoundId: ID
+
+  \\"\\"\\"The \`ForwardCompound\` that was deleted by this mutation.\\"\\"\\"
+  forwardCompound: ForwardCompound
+
+  \\"\\"\\"An edge for our \`ForwardCompound\`. May be used by Relay 1.\\"\\"\\"
+  forwardCompoundEdge(
+    \\"\\"\\"The method to use when ordering \`ForwardCompound\`.\\"\\"\\"
+    orderBy: [ForwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ForwardCompoundsEdge
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
 }
 
 \\"\\"\\"All input for the \`deleteForward\` mutation.\\"\\"\\"
@@ -843,6 +1166,47 @@ type DeleteUnfilterablePayload {
 type Filterable implements Node {
   \\"\\"\\"Reads a single \`Backward\` that is related to this \`Filterable\`.\\"\\"\\"
   backwardByFilterableId: Backward
+  backwardCompound1: Int
+  backwardCompound2: Int
+
+  \\"\\"\\"
+  Reads a single \`BackwardCompound\` that is related to this \`Filterable\`.
+  \\"\\"\\"
+  backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompound
+
+  \\"\\"\\"Reads and enables pagination through a set of \`BackwardCompound\`.\\"\\"\\"
+  backwardCompoundsByBackwardCompound1AndBackwardCompound2(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: BackwardCompoundCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: BackwardCompoundFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`BackwardCompound\`.\\"\\"\\"
+    orderBy: [BackwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardCompoundsConnection! @deprecated(reason: \\"Please use backwardCompoundByBackwardCompound1AndBackwardCompound2 instead\\")
 
   \\"\\"\\"Reads and enables pagination through a set of \`Backward\`.\\"\\"\\"
   backwardsByFilterableId(
@@ -970,6 +1334,13 @@ type Filterable implements Node {
 
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
+  forwardCompound1: Int
+  forwardCompound2: Int
+
+  \\"\\"\\"
+  Reads a single \`ForwardCompound\` that is related to this \`Filterable\`.
+  \\"\\"\\"
+  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
   forwardId: Int
   id: Int!
   inet: InternetAddress
@@ -1015,11 +1386,23 @@ A condition to be used against \`Filterable\` object types. All fields are teste
 for equality and combined with a logical ‘and.’
 \\"\\"\\"
 input FilterableCondition {
+  \\"\\"\\"Checks for equality with the object’s \`backwardCompound1\` field.\\"\\"\\"
+  backwardCompound1: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`backwardCompound2\` field.\\"\\"\\"
+  backwardCompound2: Int
+
   \\"\\"\\"Checks for equality with the object’s \`boolean\` field.\\"\\"\\"
   boolean: Boolean
 
   \\"\\"\\"Checks for equality with the object’s \`enum\` field.\\"\\"\\"
   enum: Mood
+
+  \\"\\"\\"Checks for equality with the object’s \`forwardCompound1\` field.\\"\\"\\"
+  forwardCompound1: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`forwardCompound2\` field.\\"\\"\\"
+  forwardCompound2: Int
 
   \\"\\"\\"Checks for equality with the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: Int
@@ -1059,6 +1442,17 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`backwardByFilterableId\` field.\\"\\"\\"
   backwardByFilterableId: BackwardFilter
 
+  \\"\\"\\"Filter by the object’s \`backwardCompound1\` field.\\"\\"\\"
+  backwardCompound1: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`backwardCompound2\` field.\\"\\"\\"
+  backwardCompound2: IntFilter
+
+  \\"\\"\\"
+  Filter by the object’s \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` field.
+  \\"\\"\\"
+  backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompoundFilter
+
   \\"\\"\\"Filter by the object’s \`boolean\` field.\\"\\"\\"
   boolean: BooleanFilter
 
@@ -1073,6 +1467,17 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`forwardByForwardId\` field.\\"\\"\\"
   forwardByForwardId: ForwardFilter
+
+  \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
+  forwardCompound1: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`forwardCompound2\` field.\\"\\"\\"
+  forwardCompound2: IntFilter
+
+  \\"\\"\\"
+  Filter by the object’s \`forwardCompoundByForwardCompound1AndForwardCompound2\` field.
+  \\"\\"\\"
+  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompoundFilter
 
   \\"\\"\\"Filter by the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: IntFilter
@@ -1113,8 +1518,12 @@ input FilterableFilter {
 
 \\"\\"\\"An input for mutations affecting \`Filterable\`\\"\\"\\"
 input FilterableInput {
+  backwardCompound1: Int
+  backwardCompound2: Int
   boolean: Boolean
   enum: Mood
+  forwardCompound1: Int
+  forwardCompound2: Int
   forwardId: Int
   id: Int
   inet: InternetAddress
@@ -1131,8 +1540,12 @@ input FilterableInput {
 Represents an update to a \`Filterable\`. Fields that are set will be updated.
 \\"\\"\\"
 input FilterablePatch {
+  backwardCompound1: Int
+  backwardCompound2: Int
   boolean: Boolean
   enum: Mood
+  forwardCompound1: Int
+  forwardCompound2: Int
   forwardId: Int
   id: Int
   inet: InternetAddress
@@ -1173,10 +1586,18 @@ type FilterablesEdge {
 
 \\"\\"\\"Methods to use when ordering \`Filterable\`.\\"\\"\\"
 enum FilterablesOrderBy {
+  BACKWARD_COMPOUND_1_ASC
+  BACKWARD_COMPOUND_1_DESC
+  BACKWARD_COMPOUND_2_ASC
+  BACKWARD_COMPOUND_2_DESC
   BOOLEAN_ASC
   BOOLEAN_DESC
   ENUM_ASC
   ENUM_DESC
+  FORWARD_COMPOUND_1_ASC
+  FORWARD_COMPOUND_1_DESC
+  FORWARD_COMPOUND_2_ASC
+  FORWARD_COMPOUND_2_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
   ID_ASC
@@ -1246,6 +1667,145 @@ type Forward implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
+}
+
+type ForwardCompound implements Node {
+  \\"\\"\\"Reads and enables pagination through a set of \`Filterable\`.\\"\\"\\"
+  filterablesByForwardCompound1AndForwardCompound2(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: FilterableCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: FilterableFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`Filterable\`.\\"\\"\\"
+    orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FilterablesConnection!
+  forwardCompound1: Int!
+  forwardCompound2: Int!
+  name: String
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A condition to be used against \`ForwardCompound\` object types. All fields are
+tested for equality and combined with a logical ‘and.’
+\\"\\"\\"
+input ForwardCompoundCondition {
+  \\"\\"\\"Checks for equality with the object’s \`forwardCompound1\` field.\\"\\"\\"
+  forwardCompound1: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`forwardCompound2\` field.\\"\\"\\"
+  forwardCompound2: Int
+
+  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
+  name: String
+}
+
+\\"\\"\\"
+A filter to be used against \`ForwardCompound\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input ForwardCompoundFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [ForwardCompoundFilter!]
+
+  \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
+  forwardCompound1: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`forwardCompound2\` field.\\"\\"\\"
+  forwardCompound2: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: ForwardCompoundFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [ForwardCompoundFilter!]
+}
+
+\\"\\"\\"An input for mutations affecting \`ForwardCompound\`\\"\\"\\"
+input ForwardCompoundInput {
+  forwardCompound1: Int!
+  forwardCompound2: Int!
+  name: String
+}
+
+\\"\\"\\"
+Represents an update to a \`ForwardCompound\`. Fields that are set will be updated.
+\\"\\"\\"
+input ForwardCompoundPatch {
+  forwardCompound1: Int
+  forwardCompound2: Int
+  name: String
+}
+
+\\"\\"\\"A connection to a list of \`ForwardCompound\` values.\\"\\"\\"
+type ForwardCompoundsConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`ForwardCompound\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [ForwardCompoundsEdge!]!
+
+  \\"\\"\\"A list of \`ForwardCompound\` objects.\\"\\"\\"
+  nodes: [ForwardCompound]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"
+  The count of *all* \`ForwardCompound\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`ForwardCompound\` edge in the connection.\\"\\"\\"
+type ForwardCompoundsEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`ForwardCompound\` at the end of the edge.\\"\\"\\"
+  node: ForwardCompound
+}
+
+\\"\\"\\"Methods to use when ordering \`ForwardCompound\`.\\"\\"\\"
+enum ForwardCompoundsOrderBy {
+  FORWARD_COMPOUND_1_ASC
+  FORWARD_COMPOUND_1_DESC
+  FORWARD_COMPOUND_2_ASC
+  FORWARD_COMPOUND_2_DESC
+  NAME_ASC
+  NAME_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
 }
 
 \\"\\"\\"
@@ -1566,6 +2126,14 @@ type Mutation {
     input: CreateBackwardInput!
   ): CreateBackwardPayload
 
+  \\"\\"\\"Creates a single \`BackwardCompound\`.\\"\\"\\"
+  createBackwardCompound(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: CreateBackwardCompoundInput!
+  ): CreateBackwardCompoundPayload
+
   \\"\\"\\"Creates a single \`Child\`.\\"\\"\\"
   createChild(
     \\"\\"\\"
@@ -1589,6 +2157,14 @@ type Mutation {
     \\"\\"\\"
     input: CreateForwardInput!
   ): CreateForwardPayload
+
+  \\"\\"\\"Creates a single \`ForwardCompound\`.\\"\\"\\"
+  createForwardCompound(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: CreateForwardCompoundInput!
+  ): CreateForwardCompoundPayload
 
   \\"\\"\\"Creates a single \`Parent\`.\\"\\"\\"
   createParent(
@@ -1630,6 +2206,22 @@ type Mutation {
     input: DeleteBackwardByIdInput!
   ): DeleteBackwardPayload
 
+  \\"\\"\\"Deletes a single \`BackwardCompound\` using its globally unique id.\\"\\"\\"
+  deleteBackwardCompound(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteBackwardCompoundInput!
+  ): DeleteBackwardCompoundPayload
+
+  \\"\\"\\"Deletes a single \`BackwardCompound\` using a unique key.\\"\\"\\"
+  deleteBackwardCompoundByBackwardCompound1AndBackwardCompound2(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteBackwardCompoundByBackwardCompound1AndBackwardCompound2Input!
+  ): DeleteBackwardCompoundPayload
+
   \\"\\"\\"Deletes a single \`Child\` using its globally unique id.\\"\\"\\"
   deleteChild(
     \\"\\"\\"
@@ -1652,6 +2244,14 @@ type Mutation {
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     \\"\\"\\"
     input: DeleteFilterableInput!
+  ): DeleteFilterablePayload
+
+  \\"\\"\\"Deletes a single \`Filterable\` using a unique key.\\"\\"\\"
+  deleteFilterableByBackwardCompound1AndBackwardCompound2(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteFilterableByBackwardCompound1AndBackwardCompound2Input!
   ): DeleteFilterablePayload
 
   \\"\\"\\"Deletes a single \`Filterable\` using a unique key.\\"\\"\\"
@@ -1685,6 +2285,22 @@ type Mutation {
     \\"\\"\\"
     input: DeleteForwardByIdInput!
   ): DeleteForwardPayload
+
+  \\"\\"\\"Deletes a single \`ForwardCompound\` using its globally unique id.\\"\\"\\"
+  deleteForwardCompound(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteForwardCompoundInput!
+  ): DeleteForwardCompoundPayload
+
+  \\"\\"\\"Deletes a single \`ForwardCompound\` using a unique key.\\"\\"\\"
+  deleteForwardCompoundByForwardCompound1AndForwardCompound2(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteForwardCompoundByForwardCompound1AndForwardCompound2Input!
+  ): DeleteForwardCompoundPayload
 
   \\"\\"\\"Deletes a single \`Parent\` using its globally unique id.\\"\\"\\"
   deleteParent(
@@ -1742,6 +2358,24 @@ type Mutation {
     input: UpdateBackwardByIdInput!
   ): UpdateBackwardPayload
 
+  \\"\\"\\"
+  Updates a single \`BackwardCompound\` using its globally unique id and a patch.
+  \\"\\"\\"
+  updateBackwardCompound(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateBackwardCompoundInput!
+  ): UpdateBackwardCompoundPayload
+
+  \\"\\"\\"Updates a single \`BackwardCompound\` using a unique key and a patch.\\"\\"\\"
+  updateBackwardCompoundByBackwardCompound1AndBackwardCompound2(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateBackwardCompoundByBackwardCompound1AndBackwardCompound2Input!
+  ): UpdateBackwardCompoundPayload
+
   \\"\\"\\"Updates a single \`Child\` using its globally unique id and a patch.\\"\\"\\"
   updateChild(
     \\"\\"\\"
@@ -1766,6 +2400,14 @@ type Mutation {
     The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
     \\"\\"\\"
     input: UpdateFilterableInput!
+  ): UpdateFilterablePayload
+
+  \\"\\"\\"Updates a single \`Filterable\` using a unique key and a patch.\\"\\"\\"
+  updateFilterableByBackwardCompound1AndBackwardCompound2(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateFilterableByBackwardCompound1AndBackwardCompound2Input!
   ): UpdateFilterablePayload
 
   \\"\\"\\"Updates a single \`Filterable\` using a unique key and a patch.\\"\\"\\"
@@ -1799,6 +2441,24 @@ type Mutation {
     \\"\\"\\"
     input: UpdateForwardByIdInput!
   ): UpdateForwardPayload
+
+  \\"\\"\\"
+  Updates a single \`ForwardCompound\` using its globally unique id and a patch.
+  \\"\\"\\"
+  updateForwardCompound(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateForwardCompoundInput!
+  ): UpdateForwardCompoundPayload
+
+  \\"\\"\\"Updates a single \`ForwardCompound\` using a unique key and a patch.\\"\\"\\"
+  updateForwardCompoundByForwardCompound1AndForwardCompound2(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateForwardCompoundByForwardCompound1AndForwardCompound2Input!
+  ): UpdateForwardCompoundPayload
 
   \\"\\"\\"Updates a single \`Parent\` using its globally unique id and a patch.\\"\\"\\"
   updateParent(
@@ -1985,6 +2645,40 @@ enum ParentsOrderBy {
 
 \\"\\"\\"The root query type which gives access points into the data universe.\\"\\"\\"
 type Query implements Node {
+  \\"\\"\\"Reads and enables pagination through a set of \`BackwardCompound\`.\\"\\"\\"
+  allBackwardCompounds(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: BackwardCompoundCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: BackwardCompoundFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`BackwardCompound\`.\\"\\"\\"
+    orderBy: [BackwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardCompoundsConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`Backward\`.\\"\\"\\"
   allBackwards(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -2087,6 +2781,40 @@ type Query implements Node {
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): FilterablesConnection
 
+  \\"\\"\\"Reads and enables pagination through a set of \`ForwardCompound\`.\\"\\"\\"
+  allForwardCompounds(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A condition to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    condition: ForwardCompoundCondition
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: ForwardCompoundFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`ForwardCompound\`.\\"\\"\\"
+    orderBy: [ForwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ForwardCompoundsConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`Forward\`.\\"\\"\\"
   allForwards(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -2187,6 +2915,15 @@ type Query implements Node {
   backwardByFilterableId(filterableId: Int!): Backward
   backwardById(id: Int!): Backward
 
+  \\"\\"\\"Reads a single \`BackwardCompound\` using its globally unique \`ID\`.\\"\\"\\"
+  backwardCompound(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`BackwardCompound\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): BackwardCompound
+  backwardCompoundByBackwardCompound1AndBackwardCompound2(backwardCompound1: Int!, backwardCompound2: Int!): BackwardCompound
+
   \\"\\"\\"Reads a single \`Child\` using its globally unique \`ID\`.\\"\\"\\"
   child(
     \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`Child\`.\\"\\"\\"
@@ -2201,6 +2938,7 @@ type Query implements Node {
     \\"\\"\\"
     nodeId: ID!
   ): Filterable
+  filterableByBackwardCompound1AndBackwardCompound2(backwardCompound1: Int!, backwardCompound2: Int!): Filterable
   filterableByForwardId(forwardId: Int!): Filterable
   filterableById(id: Int!): Filterable
 
@@ -2210,6 +2948,15 @@ type Query implements Node {
     nodeId: ID!
   ): Forward
   forwardById(id: Int!): Forward
+
+  \\"\\"\\"Reads a single \`ForwardCompound\` using its globally unique \`ID\`.\\"\\"\\"
+  forwardCompound(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`ForwardCompound\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): ForwardCompound
+  forwardCompoundByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): ForwardCompound
 
   \\"\\"\\"Fetches an object given its globally unique \`ID\`.\\"\\"\\"
   node(
@@ -2450,6 +3197,72 @@ input UpdateBackwardByIdInput {
   id: Int!
 }
 
+\\"\\"\\"
+All input for the \`updateBackwardCompoundByBackwardCompound1AndBackwardCompound2\` mutation.
+\\"\\"\\"
+input UpdateBackwardCompoundByBackwardCompound1AndBackwardCompound2Input {
+  backwardCompound1: Int!
+  backwardCompound2: Int!
+
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`BackwardCompound\` being updated.
+  \\"\\"\\"
+  backwardCompoundPatch: BackwardCompoundPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+}
+
+\\"\\"\\"All input for the \`updateBackwardCompound\` mutation.\\"\\"\\"
+input UpdateBackwardCompoundInput {
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`BackwardCompound\` being updated.
+  \\"\\"\\"
+  backwardCompoundPatch: BackwardCompoundPatch!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`BackwardCompound\` to be updated.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our update \`BackwardCompound\` mutation.\\"\\"\\"
+type UpdateBackwardCompoundPayload {
+  \\"\\"\\"The \`BackwardCompound\` that was updated by this mutation.\\"\\"\\"
+  backwardCompound: BackwardCompound
+
+  \\"\\"\\"An edge for our \`BackwardCompound\`. May be used by Relay 1.\\"\\"\\"
+  backwardCompoundEdge(
+    \\"\\"\\"The method to use when ordering \`BackwardCompound\`.\\"\\"\\"
+    orderBy: [BackwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): BackwardCompoundsEdge
+
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`BackwardCompound\`.
+  \\"\\"\\"
+  filterableByBackwardCompound1AndBackwardCompound2: Filterable
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
 \\"\\"\\"All input for the \`updateBackward\` mutation.\\"\\"\\"
 input UpdateBackwardInput {
   \\"\\"\\"
@@ -2555,6 +3368,25 @@ type UpdateChildPayload {
   query: Query
 }
 
+\\"\\"\\"
+All input for the \`updateFilterableByBackwardCompound1AndBackwardCompound2\` mutation.
+\\"\\"\\"
+input UpdateFilterableByBackwardCompound1AndBackwardCompound2Input {
+  backwardCompound1: Int!
+  backwardCompound2: Int!
+
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`Filterable\` being updated.
+  \\"\\"\\"
+  filterablePatch: FilterablePatch!
+}
+
 \\"\\"\\"All input for the \`updateFilterableByForwardId\` mutation.\\"\\"\\"
 input UpdateFilterableByForwardIdInput {
   \\"\\"\\"
@@ -2624,6 +3456,11 @@ type UpdateFilterablePayload {
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
 
+  \\"\\"\\"
+  Reads a single \`ForwardCompound\` that is related to this \`Filterable\`.
+  \\"\\"\\"
+  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
+
   \\"\\"\\"Reads a single \`Parent\` that is related to this \`Filterable\`.\\"\\"\\"
   parentByParentId: Parent
 
@@ -2646,6 +3483,66 @@ input UpdateForwardByIdInput {
   \\"\\"\\"
   forwardPatch: ForwardPatch!
   id: Int!
+}
+
+\\"\\"\\"
+All input for the \`updateForwardCompoundByForwardCompound1AndForwardCompound2\` mutation.
+\\"\\"\\"
+input UpdateForwardCompoundByForwardCompound1AndForwardCompound2Input {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  forwardCompound1: Int!
+  forwardCompound2: Int!
+
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`ForwardCompound\` being updated.
+  \\"\\"\\"
+  forwardCompoundPatch: ForwardCompoundPatch!
+}
+
+\\"\\"\\"All input for the \`updateForwardCompound\` mutation.\\"\\"\\"
+input UpdateForwardCompoundInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`ForwardCompound\` being updated.
+  \\"\\"\\"
+  forwardCompoundPatch: ForwardCompoundPatch!
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`ForwardCompound\` to be updated.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our update \`ForwardCompound\` mutation.\\"\\"\\"
+type UpdateForwardCompoundPayload {
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"The \`ForwardCompound\` that was updated by this mutation.\\"\\"\\"
+  forwardCompound: ForwardCompound
+
+  \\"\\"\\"An edge for our \`ForwardCompound\`. May be used by Relay 1.\\"\\"\\"
+  forwardCompoundEdge(
+    \\"\\"\\"The method to use when ordering \`ForwardCompound\`.\\"\\"\\"
+    orderBy: [ForwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ForwardCompoundsEdge
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
 }
 
 \\"\\"\\"All input for the \`updateForward\` mutation.\\"\\"\\"

@@ -1116,7 +1116,23 @@ Object {
 exports[`connections-filter.relations.graphql 1`] = `
 Object {
   "data": Object {
+    "backwardCompound_name_equalTo_backwardCompound12": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "string": "Test",
+        },
+      ],
+    },
     "backward_name_equalTo_backward2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "string": "Test",
+        },
+      ],
+    },
+    "forwardCompound_name_equalTo_forwardCompound12": Object {
       "nodes": Array [
         Object {
           "id": 2,
