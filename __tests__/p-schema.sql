@@ -71,6 +71,17 @@ create function p.filterable_computed_int_array(f p.filterable) returns int[] as
     end;
 $$ language sql stable;
 
+create function p.filterable_computed_setof_int(f p.filterable) returns setof int as $$
+  values (42), (43);
+$$ language sql stable;
+
+create function p.filterable_computed_child(f p.filterable) returns p.child as $$
+  select p.child.*
+  from p.child
+  where filterable_id = f.id
+  limit 1;
+$$ language sql stable;
+
 create function p.filterable_computed_setof_child(f p.filterable) returns setof p.child as $$
   select p.child.*
   from p.child
