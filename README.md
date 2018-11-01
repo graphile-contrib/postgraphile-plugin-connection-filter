@@ -3,23 +3,31 @@
 # postgraphile-plugin-connection-filter
 This plugin adds a `filter` argument for advanced filtering of list types.
 
-> **Note:** This plugin targets the beta/RC releases of PostGraphile v4. See the Compatibility table below for details.
-
 > **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
 
-## Breaking change in beta.15
+## Compatibility
+
+| PostGraphile version | Plugin version |
+| --- | --- |
+| 4.0.0-beta.0 - 4.0.0-beta.7 | 1.0.0-beta.0 - 1.0.0-beta.6 |
+| 4.0.0-beta.8 - 4.0.0-rc.3 | 1.0.0-beta.7 - 1.0.0-beta.14 |
+| 4.0.0-rc.4 or later | 1.0.0-beta.15 or later |
+
+## Breaking Changes
+
+#### beta.15
 
 The v1.0.0-beta.15 release of this plugin relies on the `pgOmit` function introduced in PostGraphile v4.0.0-rc.2 and the `inet` type support introduced in PostGraphile v4.0.0-rc.4.  As a result, the PostGraphile peer dependency was bumped to v4.0.0-rc.4 or later.
 
-## Breaking change in beta.9
+#### beta.9
 
 The deprecated `is` and `null` operators were removed. Use the `isNull` operator instead.
 
-## Breaking change in beta.7
+#### beta.7
 
 The v1.0.0-beta.7 release of this plugin uses the pluggable inflector and [smart comments](https://www.graphile.org/postgraphile/smart-comments/) functionality introduced in PostGraphile v4.0.0-beta.8.  As a result, the PostGraphile peer dependency was bumped to v4.0.0-beta.8 or later.
 
-## Breaking change in beta.4
+#### beta.4
 
 The `contains` string comparison operator was renamed to `includes` to make room for JSONB operators `contains` and `containedBy`. To maintain the old names, you can specify the following in `graphileBuildOptions`:
 
@@ -33,20 +41,6 @@ connectionFilterOperatorNames: {
   containedBy: "jsonbContainedBy"
 }
 ```
-
-## Compatibility
-
-| PostGraphile version | Plugin version |
-| --- | --- |
-| 4.0.0-alpha2.20 | 1.0.0-alpha.0 |
-| 4.0.0-alpha2.21 - 4.0.0-alpha2.25 | 1.0.0-alpha.1 |
-| 4.0.0-alpha2.26 | 1.0.0-alpha.2 - 1.0.0-alpha.3 |
-| 4.0.0-alpha2.27 - 4.0.0-alpha2.28 | 1.0.0-alpha.4 - 1.0.0-alpha.6 |
-| 4.0.0-alpha2.30 | 1.0.0-alpha.7 - 1.0.0-alpha.8 |
-| 4.0.0-alpha2.33 | 1.0.0-alpha.9 - 1.0.0-alpha.10 |
-| 4.0.0-beta.0 - 4.0.0-beta.7 | 1.0.0-beta.0 - 1.0.0-beta.6 |
-| 4.0.0-beta.8 - 4.0.0-rc.3 | 1.0.0-beta.7 - 1.0.0-beta.14 |
-| 4.0.0-rc.4 or later | 1.0.0-beta.15 or later |
 
 ## Performance and Security
 
@@ -269,7 +263,7 @@ query {
 
 <details>
 
-<summary>Nested logic</summary>
+<summary>Compound logic</summary>
 
 ``` graphql
 query {
@@ -290,7 +284,7 @@ query {
 
 <details>
 
-<summary>Related tables</summary>
+<summary>Relations: Nested</summary>
 
 ``` graphql
 query {
@@ -311,6 +305,50 @@ query {
   }
 }
 ```
+
+</details>
+
+<details>
+
+<summary>Relations: Root-level, many-to-one</summary>
+
+> Requires `connectionFilterRelations: true`
+
+``` graphql
+query {
+  allPosts(filter: {
+    personByAuthorId: { createdAt: { greaterThan: "2018-01-01" } }
+  }) {
+    ...
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary>Relations: Root-level, one-to-one</summary>
+
+> Requires `connectionFilterRelations: true`
+
+``` graphql
+query {
+  allPeople(filter: {
+    accountByPersonId: { status: { equalTo: ACTIVE } }
+  }) {
+    ...
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary>Relations: Root-level, one-to-many</summary>
+
+Not supported yet. [#26](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues/26#issuecomment-424810349)
 
 </details>
 
