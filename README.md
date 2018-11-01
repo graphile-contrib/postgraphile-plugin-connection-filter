@@ -459,6 +459,22 @@ postgraphile(pgConfig, schema, {
 
 <details>
 
+<summary>connectionFilterRelations</summary>
+
+Enable/disable filtering on related fields:
+
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterRelations: true, // default: false
+  },
+})
+```
+
+</details>
+
+<details>
+
 <summary>connectionFilterSetofFunctions</summary>
 
 Enable/disable filtering on functions that return `setof`:
