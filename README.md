@@ -3,44 +3,7 @@
 # postgraphile-plugin-connection-filter
 This plugin adds a `filter` argument for advanced filtering of list types.
 
-> **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section for details.
-
-## Compatibility
-
-| PostGraphile version | Plugin version |
-| --- | --- |
-| 4.0.0-beta.0 - 4.0.0-beta.7 | 1.0.0-beta.0 - 1.0.0-beta.6 |
-| 4.0.0-beta.8 - 4.0.0-rc.3 | 1.0.0-beta.7 - 1.0.0-beta.14 |
-| 4.0.0-rc.4 or later | 1.0.0-beta.15 or later |
-
-## Breaking Changes
-
-#### beta.15
-
-The v1.0.0-beta.15 release of this plugin relies on the `pgOmit` function introduced in PostGraphile v4.0.0-rc.2 and the `inet` type support introduced in PostGraphile v4.0.0-rc.4.  As a result, the PostGraphile peer dependency was bumped to v4.0.0-rc.4 or later.
-
-#### beta.9
-
-The deprecated `is` and `null` operators were removed. Use the `isNull` operator instead.
-
-#### beta.7
-
-The v1.0.0-beta.7 release of this plugin uses the pluggable inflector and [smart comments](https://www.graphile.org/postgraphile/smart-comments/) functionality introduced in PostGraphile v4.0.0-beta.8.  As a result, the PostGraphile peer dependency was bumped to v4.0.0-beta.8 or later.
-
-#### beta.4
-
-The `contains` string comparison operator was renamed to `includes` to make room for JSONB operators `contains` and `containedBy`. To maintain the old names, you can specify the following in `graphileBuildOptions`:
-
-```js
-connectionFilterOperatorNames: {
-  includes: "contains",
-  includesInsensitive: "containsInsensitive",
-  notIncludes: "notContains",
-  notIncludesInsensitive: "notContainsInsensitive",
-  contains: "jsonbContains",
-  containedBy: "jsonbContainedBy"
-}
-```
+> **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section below for details.
 
 ## Performance and Security
 
