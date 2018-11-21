@@ -31,21 +31,6 @@ type BackwardCompound implements Node {
 }
 
 \\"\\"\\"
-A condition to be used against \`BackwardCompound\` object types. All fields are
-tested for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input BackwardCompoundCondition {
-  \\"\\"\\"Checks for equality with the object’s \`backwardCompound1\` field.\\"\\"\\"
-  backwardCompound1: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`backwardCompound2\` field.\\"\\"\\"
-  backwardCompound2: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
-  name: String
-}
-
-\\"\\"\\"
 A filter to be used against \`BackwardCompound\` object types. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input BackwardCompoundFilter {
@@ -123,21 +108,6 @@ enum BackwardCompoundsOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-}
-
-\\"\\"\\"
-A condition to be used against \`Backward\` object types. All fields are tested
-for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input BackwardCondition {
-  \\"\\"\\"Checks for equality with the object’s \`filterableId\` field.\\"\\"\\"
-  filterableId: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
-  id: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
-  name: String
 }
 
 \\"\\"\\"
@@ -306,20 +276,6 @@ type Child implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
-}
-
-\\"\\"\\"
-A condition to be used against \`Child\` object types. All fields are tested for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input ChildCondition {
-  \\"\\"\\"Checks for equality with the object’s \`filterableId\` field.\\"\\"\\"
-  filterableId: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
-  id: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
-  name: String
 }
 
 \\"\\"\\"
@@ -1172,11 +1128,6 @@ type Filterable implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: BackwardCompoundCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: BackwardCompoundFilter
@@ -1204,11 +1155,6 @@ type Filterable implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: BackwardCondition
 
     \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
@@ -1239,11 +1185,6 @@ type Filterable implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: ChildCondition
 
     \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
@@ -1368,57 +1309,6 @@ type FilterableComputedSetofIntEdge {
 
   \\"\\"\\"The \`Int\` at the end of the edge.\\"\\"\\"
   node: Int
-}
-
-\\"\\"\\"
-A condition to be used against \`Filterable\` object types. All fields are tested
-for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input FilterableCondition {
-  \\"\\"\\"Checks for equality with the object’s \`backwardCompound1\` field.\\"\\"\\"
-  backwardCompound1: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`backwardCompound2\` field.\\"\\"\\"
-  backwardCompound2: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`boolean\` field.\\"\\"\\"
-  boolean: Boolean
-
-  \\"\\"\\"Checks for equality with the object’s \`enum\` field.\\"\\"\\"
-  enum: Mood
-
-  \\"\\"\\"Checks for equality with the object’s \`forwardCompound1\` field.\\"\\"\\"
-  forwardCompound1: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`forwardCompound2\` field.\\"\\"\\"
-  forwardCompound2: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`forwardId\` field.\\"\\"\\"
-  forwardId: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
-  id: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`inet\` field.\\"\\"\\"
-  inet: InternetAddress
-
-  \\"\\"\\"Checks for equality with the object’s \`int\` field.\\"\\"\\"
-  int: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`intArray\` field.\\"\\"\\"
-  intArray: [Int]
-
-  \\"\\"\\"Checks for equality with the object’s \`jsonb\` field.\\"\\"\\"
-  jsonb: JSON
-
-  \\"\\"\\"Checks for equality with the object’s \`numeric\` field.\\"\\"\\"
-  numeric: BigFloat
-
-  \\"\\"\\"Checks for equality with the object’s \`parentId\` field.\\"\\"\\"
-  parentId: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`string\` field.\\"\\"\\"
-  string: String
 }
 
 \\"\\"\\"
@@ -1600,11 +1490,6 @@ type Forward implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: FilterableCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: FilterableFilter
@@ -1643,11 +1528,6 @@ type ForwardCompound implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: FilterableCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: FilterableFilter
@@ -1675,21 +1555,6 @@ type ForwardCompound implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
-}
-
-\\"\\"\\"
-A condition to be used against \`ForwardCompound\` object types. All fields are
-tested for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input ForwardCompoundCondition {
-  \\"\\"\\"Checks for equality with the object’s \`forwardCompound1\` field.\\"\\"\\"
-  forwardCompound1: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`forwardCompound2\` field.\\"\\"\\"
-  forwardCompound2: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
-  name: String
 }
 
 \\"\\"\\"
@@ -1770,17 +1635,6 @@ enum ForwardCompoundsOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-}
-
-\\"\\"\\"
-A condition to be used against \`Forward\` object types. All fields are tested for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input ForwardCondition {
-  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
-  id: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
-  name: String
 }
 
 \\"\\"\\"
@@ -2435,11 +2289,6 @@ type Parent implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: FilterableCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: FilterableFilter
@@ -2466,17 +2315,6 @@ type Parent implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
-}
-
-\\"\\"\\"
-A condition to be used against \`Parent\` object types. All fields are tested for equality and combined with a logical ‘and.’
-\\"\\"\\"
-input ParentCondition {
-  \\"\\"\\"Checks for equality with the object’s \`id\` field.\\"\\"\\"
-  id: Int
-
-  \\"\\"\\"Checks for equality with the object’s \`name\` field.\\"\\"\\"
-  name: String
 }
 
 \\"\\"\\"
@@ -2561,11 +2399,6 @@ type Query implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: BackwardCompoundCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: BackwardCompoundFilter
@@ -2593,11 +2426,6 @@ type Query implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: BackwardCondition
 
     \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
@@ -2629,11 +2457,6 @@ type Query implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: ChildCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: ChildFilter
@@ -2661,11 +2484,6 @@ type Query implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: FilterableCondition
 
     \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
@@ -2697,11 +2515,6 @@ type Query implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: ForwardCompoundCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: ForwardCompoundFilter
@@ -2731,11 +2544,6 @@ type Query implements Node {
     before: Cursor
 
     \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: ForwardCondition
-
-    \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
     \\"\\"\\"
     filter: ForwardFilter
@@ -2763,11 +2571,6 @@ type Query implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A condition to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    condition: ParentCondition
 
     \\"\\"\\"
     A filter to be used in determining which values should be returned by the collection.
