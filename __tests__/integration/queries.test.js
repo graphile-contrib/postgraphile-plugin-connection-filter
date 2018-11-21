@@ -34,13 +34,16 @@ beforeAll(() => {
       simpleCollections,
     ] = await Promise.all([
       createPostGraphileSchema(pgClient, ["p"], {
+        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
       }),
       createPostGraphileSchema(pgClient, ["p"], {
         dynamicJson: true,
+        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
       }),
       createPostGraphileSchema(pgClient, ["p"], {
+        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
         graphileBuildOptions: {
           connectionFilterRelations: true,
@@ -48,6 +51,7 @@ beforeAll(() => {
       }),
       createPostGraphileSchema(pgClient, ["p"], {
         simpleCollections: "only",
+        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
       }),
     ]);
