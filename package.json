@@ -16,9 +16,6 @@
   "bugs": {
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
-  "peerDependencies": {
-    "postgraphile": "^4.0.0"
-  },
   "devDependencies": {
     "eslint": "^4.0.0",
     "eslint-config-prettier": "2.3.0",
