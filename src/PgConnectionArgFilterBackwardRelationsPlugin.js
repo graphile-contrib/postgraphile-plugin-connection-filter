@@ -9,13 +9,15 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
+      newWithHooks,
       inflection,
       pgOmit: omit,
-      getTypeByName,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterTypesByTypeName,
+      newFilterType,
     } = build;
     const {
       fieldWithHooks,
@@ -24,6 +26,8 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
     } = context;
 
     if (!isPgConnectionFilter) return fields;
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
 
     const foreignKeyConstraints = introspectionResultsByKind.constraint
       .filter(con => con.type === "f")
@@ -149,13 +153,15 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       const [fieldName, { table }] = curr;
       const tableTypeName = inflection.tableType(table);
       const tableFilterTypeName = inflection.filterType(tableTypeName);
-      const type = getTypeByName(tableFilterTypeName);
-      if (type != null) {
+      const FilterType =
+        connectionFilterTypesByTypeName[tableFilterTypeName] ||
+        newFilterType(newWithHooks, tableFilterTypeName, table, tableTypeName);
+      if (FilterType != null) {
         memo[fieldName] = fieldWithHooks(
           fieldName,
           {
             description: `Filter by the object’s \`${fieldName}\` field.`,
-            type,
+            type: FilterType,
           },
           {
             isPgConnectionFilterField: true,

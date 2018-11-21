@@ -2,46 +2,18 @@ module.exports = function PgConnectionArgFilterPlugin(
   builder,
   { connectionFilterLists = true, connectionFilterSetofFunctions = true }
 ) {
-  builder.hook("init", (_, build) => {
-    const {
-      newWithHooks,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      graphql: { GraphQLInputObjectType },
-      pgOmit: omit,
-      inflection,
-    } = build;
-
-    // Add *Filter type for each Connection type
-    introspectionResultsByKind.class
-      .filter(table => table.isSelectable && !omit(table, "filter"))
-      .filter(table => !!table.namespace)
-      .forEach(table => {
-        const tableTypeName = inflection.tableType(table);
-        newWithHooks(
-          GraphQLInputObjectType,
-          {
-            description: `A filter to be used against \`${tableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-            name: inflection.filterType(tableTypeName),
-                  },
-                  {
-            pgIntrospection: table,
-            isPgConnectionFilter: true,
-          }
-        );
-      });
-    return _;
-  });
-
   builder.hook(
     "GraphQLObjectType:fields:field:args",
     (args, build, context) => {
       const {
         extend,
         getTypeByName,
+        newWithHooks,
         inflection,
         pgGetGqlTypeByTypeIdAndModifier,
         pgOmit: omit,
         connectionFilterResolve,
+        newFilterType,
       } = build;
       const {
         scope: {
@@ -66,11 +38,13 @@ module.exports = function PgConnectionArgFilterPlugin(
 
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
-      const tableTypeName = pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null)
+      const sourceTypeName = pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null)
         .name;
-      const filterTypeName = inflection.filterType(tableTypeName);
-      const TableFilterType = getTypeByName(filterTypeName);
-      if (TableFilterType == null) {
+      const filterTypeName = inflection.filterType(sourceTypeName);
+      const FilterType =
+        getTypeByName(filterTypeName) ||
+        newFilterType(newWithHooks, filterTypeName, source, sourceTypeName);
+      if (FilterType == null) {
         return args;
       }
 
@@ -98,7 +72,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           filter: {
             description:
               "A filter to be used in determining which values should be returned by the collection.",
-            type: TableFilterType,
+            type: FilterType,
           },
         },
         `Adding connection filter arg to field '${field.name}' of '${
@@ -130,6 +104,7 @@ module.exports = function PgConnectionArgFilterPlugin(
     } = build;
 
     const connectionFilterFieldResolversByTypeNameAndFieldName = {};
+    const connectionFilterTypesByTypeName = {};
 
     const connectionFilterResolve = (obj, sourceAlias, typeName) => {
       if (obj == null) return null;
@@ -304,6 +279,25 @@ module.exports = function PgConnectionArgFilterPlugin(
       return operator.resolveWhereClause(sqlIdentifier, sqlValue, input);
     };
 
+    const newFilterType = (
+      newWithHooks,
+      filterTypeName,
+      source,
+      sourceTypeName
+    ) =>
+      newWithHooks(
+        GraphQLInputObjectType,
+        {
+          description: `A filter to be used against \`${sourceTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+          name: filterTypeName,
+        },
+        {
+          pgIntrospection: source,
+          isPgConnectionFilter: true,
+        },
+        true
+      );
+
     const escapeLikeWildcards = input => {
       if ("string" !== typeof input) {
         throw new Error("Non-string input was provided to escapeLikeWildcards");
@@ -317,10 +311,12 @@ module.exports = function PgConnectionArgFilterPlugin(
     };
 
     return extend(build, {
+      connectionFilterTypesByTypeName,
       connectionFilterFieldResolversByTypeNameAndFieldName,
       connectionFilterResolve,
       connectionFilterField,
       resolveWhereComparison,
+      newFilterType,
       escapeLikeWildcards,
     });
   });

@@ -2,13 +2,15 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
+      newWithHooks,
       inflection,
       pgOmit: omit,
-      getTypeByName,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterTypesByTypeName,
+      newFilterType,
     } = build;
     const {
       fieldWithHooks,
@@ -17,6 +19,8 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
     } = context;
 
     if (!isPgConnectionFilter) return fields;
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
 
     const foreignKeyConstraints = introspectionResultsByKind.constraint
       .filter(con => con.type === "f")
@@ -88,13 +92,20 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       const foreignTableFilterTypeName = inflection.filterType(
         foreignTableTypeName
       );
-      const type = getTypeByName(foreignTableFilterTypeName);
-      if (type != null) {
+      const FilterType =
+        connectionFilterTypesByTypeName[foreignTableFilterTypeName] ||
+        newFilterType(
+          newWithHooks,
+          foreignTableFilterTypeName,
+          foreignTable,
+          foreignTableTypeName
+        );
+      if (FilterType != null) {
         memo[fieldName] = fieldWithHooks(
           fieldName,
           {
             description: `Filter by the object’s \`${fieldName}\` field.`,
-            type,
+            type: FilterType,
           },
           {
             isPgConnectionFilterField: true,
