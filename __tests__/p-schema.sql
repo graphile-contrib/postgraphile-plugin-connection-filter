@@ -71,6 +71,14 @@ create table p.unfilterable (
 
 comment on table p.unfilterable is E'@omit filter';
 
+create table p.fully_omitted (
+  id serial primary key,
+  "string" text
+);
+
+comment on column p.fully_omitted.id is '@omit filter';
+comment on column p.fully_omitted."string" is '@omit filter';
+
 create function p.filterable_computed(filterable p.filterable) returns text as $$
   select filterable.string || ' computed'
 $$ language sql stable;

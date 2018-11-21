@@ -599,6 +599,41 @@ type CreateForwardPayload {
   query: Query
 }
 
+\\"\\"\\"All input for the create \`FullyOmitted\` mutation.\\"\\"\\"
+input CreateFullyOmittedInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"The \`FullyOmitted\` to be created by this mutation.\\"\\"\\"
+  fullyOmitted: FullyOmittedInput!
+}
+
+\\"\\"\\"The output of our create \`FullyOmitted\` mutation.\\"\\"\\"
+type CreateFullyOmittedPayload {
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"The \`FullyOmitted\` that was created by this mutation.\\"\\"\\"
+  fullyOmitted: FullyOmitted
+
+  \\"\\"\\"An edge for our \`FullyOmitted\`. May be used by Relay 1.\\"\\"\\"
+  fullyOmittedEdge(
+    \\"\\"\\"The method to use when ordering \`FullyOmitted\`.\\"\\"\\"
+    orderBy: [FullyOmittedsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FullyOmittedsEdge
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
 \\"\\"\\"All input for the create \`Parent\` mutation.\\"\\"\\"
 input CreateParentInput {
   \\"\\"\\"
@@ -1016,6 +1051,54 @@ type DeleteForwardPayload {
     \\"\\"\\"The method to use when ordering \`Forward\`.\\"\\"\\"
     orderBy: [ForwardsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ForwardsEdge
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
+\\"\\"\\"All input for the \`deleteFullyOmittedById\` mutation.\\"\\"\\"
+input DeleteFullyOmittedByIdInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+  id: Int!
+}
+
+\\"\\"\\"All input for the \`deleteFullyOmitted\` mutation.\\"\\"\\"
+input DeleteFullyOmittedInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`FullyOmitted\` to be deleted.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our delete \`FullyOmitted\` mutation.\\"\\"\\"
+type DeleteFullyOmittedPayload {
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+  deletedFullyOmittedId: ID
+
+  \\"\\"\\"The \`FullyOmitted\` that was deleted by this mutation.\\"\\"\\"
+  fullyOmitted: FullyOmitted
+
+  \\"\\"\\"An edge for our \`FullyOmitted\`. May be used by Relay 1.\\"\\"\\"
+  fullyOmittedEdge(
+    \\"\\"\\"The method to use when ordering \`FullyOmitted\`.\\"\\"\\"
+    orderBy: [FullyOmittedsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FullyOmittedsEdge
 
   \\"\\"\\"
   Our root query field type. Allows us to run any query from our mutation payload.
@@ -1747,6 +1830,67 @@ enum ForwardsOrderBy {
   PRIMARY_KEY_DESC
 }
 
+type FullyOmitted implements Node {
+  id: Int!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+  string: String
+}
+
+\\"\\"\\"An input for mutations affecting \`FullyOmitted\`\\"\\"\\"
+input FullyOmittedInput {
+  id: Int
+  string: String
+}
+
+\\"\\"\\"
+Represents an update to a \`FullyOmitted\`. Fields that are set will be updated.
+\\"\\"\\"
+input FullyOmittedPatch {
+  id: Int
+  string: String
+}
+
+\\"\\"\\"A connection to a list of \`FullyOmitted\` values.\\"\\"\\"
+type FullyOmittedsConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`FullyOmitted\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [FullyOmittedsEdge!]!
+
+  \\"\\"\\"A list of \`FullyOmitted\` objects.\\"\\"\\"
+  nodes: [FullyOmitted]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`FullyOmitted\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`FullyOmitted\` edge in the connection.\\"\\"\\"
+type FullyOmittedsEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`FullyOmitted\` at the end of the edge.\\"\\"\\"
+  node: FullyOmitted
+}
+
+\\"\\"\\"Methods to use when ordering \`FullyOmitted\`.\\"\\"\\"
+enum FullyOmittedsOrderBy {
+  ID_ASC
+  ID_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+  STRING_ASC
+  STRING_DESC
+}
+
 \\"\\"\\"An IPv4 or IPv6 host address, and optionally its subnet.\\"\\"\\"
 scalar InternetAddress
 
@@ -2020,6 +2164,14 @@ type Mutation {
     input: CreateForwardCompoundInput!
   ): CreateForwardCompoundPayload
 
+  \\"\\"\\"Creates a single \`FullyOmitted\`.\\"\\"\\"
+  createFullyOmitted(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: CreateFullyOmittedInput!
+  ): CreateFullyOmittedPayload
+
   \\"\\"\\"Creates a single \`Parent\`.\\"\\"\\"
   createParent(
     \\"\\"\\"
@@ -2155,6 +2307,22 @@ type Mutation {
     \\"\\"\\"
     input: DeleteForwardCompoundByForwardCompound1AndForwardCompound2Input!
   ): DeleteForwardCompoundPayload
+
+  \\"\\"\\"Deletes a single \`FullyOmitted\` using its globally unique id.\\"\\"\\"
+  deleteFullyOmitted(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteFullyOmittedInput!
+  ): DeleteFullyOmittedPayload
+
+  \\"\\"\\"Deletes a single \`FullyOmitted\` using a unique key.\\"\\"\\"
+  deleteFullyOmittedById(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: DeleteFullyOmittedByIdInput!
+  ): DeleteFullyOmittedPayload
 
   \\"\\"\\"Deletes a single \`Parent\` using its globally unique id.\\"\\"\\"
   deleteParent(
@@ -2313,6 +2481,24 @@ type Mutation {
     \\"\\"\\"
     input: UpdateForwardCompoundByForwardCompound1AndForwardCompound2Input!
   ): UpdateForwardCompoundPayload
+
+  \\"\\"\\"
+  Updates a single \`FullyOmitted\` using its globally unique id and a patch.
+  \\"\\"\\"
+  updateFullyOmitted(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateFullyOmittedInput!
+  ): UpdateFullyOmittedPayload
+
+  \\"\\"\\"Updates a single \`FullyOmitted\` using a unique key and a patch.\\"\\"\\"
+  updateFullyOmittedById(
+    \\"\\"\\"
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    \\"\\"\\"
+    input: UpdateFullyOmittedByIdInput!
+  ): UpdateFullyOmittedPayload
 
   \\"\\"\\"Updates a single \`Parent\` using its globally unique id and a patch.\\"\\"\\"
   updateParent(
@@ -2657,6 +2843,30 @@ type Query implements Node {
     orderBy: [ForwardsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ForwardsConnection
 
+  \\"\\"\\"Reads and enables pagination through a set of \`FullyOmitted\`.\\"\\"\\"
+  allFullyOmitteds(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`FullyOmitted\`.\\"\\"\\"
+    orderBy: [FullyOmittedsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FullyOmittedsConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`Parent\`.\\"\\"\\"
   allParents(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -2760,6 +2970,15 @@ type Query implements Node {
     nodeId: ID!
   ): ForwardCompound
   forwardCompoundByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): ForwardCompound
+
+  \\"\\"\\"Reads a single \`FullyOmitted\` using its globally unique \`ID\`.\\"\\"\\"
+  fullyOmitted(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`FullyOmitted\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): FullyOmitted
+  fullyOmittedById(id: Int!): FullyOmitted
 
   \\"\\"\\"Fetches an object given its globally unique \`ID\`.\\"\\"\\"
   node(
@@ -3383,6 +3602,63 @@ type UpdateForwardPayload {
     \\"\\"\\"The method to use when ordering \`Forward\`.\\"\\"\\"
     orderBy: [ForwardsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ForwardsEdge
+
+  \\"\\"\\"
+  Our root query field type. Allows us to run any query from our mutation payload.
+  \\"\\"\\"
+  query: Query
+}
+
+\\"\\"\\"All input for the \`updateFullyOmittedById\` mutation.\\"\\"\\"
+input UpdateFullyOmittedByIdInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`FullyOmitted\` being updated.
+  \\"\\"\\"
+  fullyOmittedPatch: FullyOmittedPatch!
+  id: Int!
+}
+
+\\"\\"\\"All input for the \`updateFullyOmitted\` mutation.\\"\\"\\"
+input UpdateFullyOmittedInput {
+  \\"\\"\\"
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"
+  An object where the defined keys will be set on the \`FullyOmitted\` being updated.
+  \\"\\"\\"
+  fullyOmittedPatch: FullyOmittedPatch!
+
+  \\"\\"\\"
+  The globally unique \`ID\` which will identify a single \`FullyOmitted\` to be updated.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"The output of our update \`FullyOmitted\` mutation.\\"\\"\\"
+type UpdateFullyOmittedPayload {
+  \\"\\"\\"
+  The exact same \`clientMutationId\` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  \\"\\"\\"
+  clientMutationId: String
+
+  \\"\\"\\"The \`FullyOmitted\` that was updated by this mutation.\\"\\"\\"
+  fullyOmitted: FullyOmitted
+
+  \\"\\"\\"An edge for our \`FullyOmitted\`. May be used by Relay 1.\\"\\"\\"
+  fullyOmittedEdge(
+    \\"\\"\\"The method to use when ordering \`FullyOmitted\`.\\"\\"\\"
+    orderBy: [FullyOmittedsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FullyOmittedsEdge
 
   \\"\\"\\"
   Our root query field type. Allows us to run any query from our mutation payload.
