@@ -48,6 +48,12 @@ app.use(
 app.listen(5000);
 ```
 
+## Handling `null` and empty objects
+
+By default, this plugin will throw an error when `null` literals or empty objects (`{}` and `[]`) are included in `filter` input objects. This prevents queries with ambiguous semantics such as `filter: { field: null }` and `filter: { field: { equalTo: null } }` from returning unexpected results. For background on this decision, see https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues/58.
+
+To allow `null`, `{}`, and `[]` in inputs, use the `connectionFilterAllowNullInput` and `connectionFilterAllowEmptyObjectInput` options documented under [Plugin Options](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#plugin-options). Please note that even with `connectionFilterAllowNullInput` enabled, `null` is never interpreted as a SQL `NULL`; fields with `null` values are simply ignored when resolving the query.
+
 ## Operators
 
 The following filter operators are exposed by default:
