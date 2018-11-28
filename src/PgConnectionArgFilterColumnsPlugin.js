@@ -10,8 +10,9 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       pgColumnFilter,
       pgOmit: omit,
       inflection,
-      connectionFilterField,
+      connectionFilterOperatorsType,
       resolveWhereComparison,
+      connectionFilterTypesByTypeName,
       connectionFilterFieldResolversByTypeNameAndFieldName,
     } = build;
     const {
@@ -21,6 +22,8 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
     } = context;
 
     if (!isPgConnectionFilter) return fields;
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
 
     connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {};
 
@@ -41,16 +44,25 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
             attr.typeId,
             attr.typeModifier
           ) || GraphQLString; // TODO: Remove `|| GraphQLString` before v1.0.0
-        const fieldSpec = connectionFilterField(
-          fieldName,
+        const OperatorsType = connectionFilterOperatorsType(
           fieldType,
-          fieldWithHooks,
           newWithHooks
         );
-        if (!fieldSpec) {
+        if (!OperatorsType) {
           return memo;
         }
-        return extend(memo, { [fieldName]: fieldSpec });
+        return extend(memo, {
+          [fieldName]: fieldWithHooks(
+            fieldName,
+            {
+              description: `Filter by the object’s \`${fieldName}\` field.`,
+              type: OperatorsType,
+            },
+            {
+              isPgConnectionFilterField: true,
+            }
+          ),
+        });
       },
       {}
     );

@@ -17,7 +17,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
       connectionFilterTypesByTypeName,
-      newFilterType,
+      connectionFilterType,
     } = build;
     const {
       fieldWithHooks,
@@ -153,9 +153,12 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       const [fieldName, { table }] = curr;
       const tableTypeName = inflection.tableType(table);
       const tableFilterTypeName = inflection.filterType(tableTypeName);
-      const FilterType =
-        connectionFilterTypesByTypeName[tableFilterTypeName] ||
-        newFilterType(newWithHooks, tableFilterTypeName, table, tableTypeName);
+      const FilterType = connectionFilterType(
+        newWithHooks,
+        tableFilterTypeName,
+        table,
+        tableTypeName
+      );
       if (FilterType != null) {
         memo[fieldName] = fieldWithHooks(
           fieldName,

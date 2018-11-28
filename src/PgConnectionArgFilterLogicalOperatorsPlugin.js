@@ -4,6 +4,7 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
       extend,
       graphql: { GraphQLList, GraphQLNonNull },
       pgSql: sql,
+      connectionFilterTypesByTypeName,
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
     } = build;
@@ -14,6 +15,8 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
     } = context;
 
     if (!isPgConnectionFilter) return fields;
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
 
     if (Object.keys(fields).length === 0) {
       // Skip adding these operators if they would be the only fields

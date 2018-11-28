@@ -9,7 +9,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       pgSql: sql,
       resolveWhereComparison,
       inflection,
-      connectionFilterField,
+      connectionFilterTypesByTypeName,
+      connectionFilterOperatorsType,
       connectionFilterFieldResolversByTypeNameAndFieldName,
     } = build;
     const {
@@ -19,6 +20,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
     } = context;
 
     if (!isPgConnectionFilter) return fields;
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
 
     const procByFieldName = introspectionResultsByKind.procedure
       .filter(proc => proc.isStable)
@@ -65,16 +68,25 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
           proc.returnTypeId,
           null
         );
-        const fieldSpec = connectionFilterField(
-          fieldName,
+        const OperatorsType = connectionFilterOperatorsType(
           fieldType,
-          fieldWithHooks,
           newWithHooks
         );
-        if (!fieldSpec) {
+        if (!OperatorsType) {
           return memo;
         }
-        return extend(memo, { [fieldName]: fieldSpec });
+        return extend(memo, {
+          [fieldName]: fieldWithHooks(
+            fieldName,
+            {
+              description: `Filter by the object’s \`${fieldName}\` field.`,
+              type: OperatorsType,
+            },
+            {
+              isPgConnectionFilterField: true,
+            }
+          ),
+        });
       },
       {}
     );

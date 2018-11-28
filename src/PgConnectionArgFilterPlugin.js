@@ -2,18 +2,18 @@ module.exports = function PgConnectionArgFilterPlugin(
   builder,
   { connectionFilterLists = true, connectionFilterSetofFunctions = true }
 ) {
+  // Add `filter` input argument to connection and simple collection types
   builder.hook(
     "GraphQLObjectType:fields:field:args",
     (args, build, context) => {
       const {
         extend,
-        getTypeByName,
         newWithHooks,
         inflection,
         pgGetGqlTypeByTypeIdAndModifier,
         pgOmit: omit,
         connectionFilterResolve,
-        newFilterType,
+        connectionFilterType,
       } = build;
       const {
         scope: {
@@ -41,9 +41,12 @@ module.exports = function PgConnectionArgFilterPlugin(
       const sourceTypeName = pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null)
         .name;
       const filterTypeName = inflection.filterType(sourceTypeName);
-      const FilterType =
-        getTypeByName(filterTypeName) ||
-        newFilterType(newWithHooks, filterTypeName, source, sourceTypeName);
+      const FilterType = connectionFilterType(
+        newWithHooks,
+        filterTypeName,
+        source,
+        sourceTypeName
+      );
       if (FilterType == null) {
         return args;
       }
@@ -82,10 +85,59 @@ module.exports = function PgConnectionArgFilterPlugin(
     }
   );
 
+  // Add operator fields to IntFilter, StringFilter, etc.
+  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
+    const {
+      extend,
+      graphql: { getNamedType, GraphQLList },
+      connectionFilterOperatorsGlobal,
+      connectionFilterOperatorsByFieldType,
+      connectionFilterTypesByTypeName,
+    } = build;
+    const {
+      scope: { isPgConnectionFilterOperators, parentFieldType },
+      fieldWithHooks,
+      Self,
+    } = context;
+    if (!isPgConnectionFilterOperators) {
+      return fields;
+    }
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
+
+    const isListType = parentFieldType instanceof GraphQLList;
+    const namedType = getNamedType(parentFieldType);
+    const namedTypeName = namedType.name;
+
+    const operators = {
+      ...connectionFilterOperatorsGlobal,
+      ...connectionFilterOperatorsByFieldType[namedTypeName],
+    };
+    const operatorFields = Object.entries(operators).reduce(
+      (memo, [operatorName, operator]) => {
+        const allowedListTypes = operator.options.allowedListTypes || [
+          "NonList",
+        ];
+        const listTypeIsAllowed = isListType
+          ? allowedListTypes.includes("List")
+          : allowedListTypes.includes("NonList");
+        if (listTypeIsAllowed) {
+          memo[operatorName] = fieldWithHooks(operatorName, {
+            description: operator.description,
+            type: operator.resolveType(parentFieldType),
+          });
+        }
+        return memo;
+      },
+      {}
+    );
+
+    return extend(fields, operatorFields);
+  });
+
   builder.hook("build", build => {
     const {
       extend,
-      getTypeByName,
       gql2pg,
       graphql: {
         getNamedType,
@@ -129,67 +181,8 @@ module.exports = function PgConnectionArgFilterPlugin(
         : sql.query`(${sql.join(sqlFragments, ") and (")})`;
     };
 
-    const getOrCreateFieldFilterTypeFromFieldType = (
-      fieldType,
-      newWithHooks
-    ) => {
-      const isListType = fieldType instanceof GraphQLList;
-      if (isListType && !connectionFilterLists) {
-        return null;
-      }
-      const namedType = getNamedType(fieldType);
-      const namedTypeName = namedType.name;
-      const fieldFilterTypeName = isListType
-        ? inflection.filterFieldListType(namedTypeName)
-        : inflection.filterFieldType(namedTypeName);
-      if (!getTypeByName(fieldFilterTypeName)) {
-        newWithHooks(
-          GraphQLInputObjectType,
-          {
-            name: fieldFilterTypeName,
-            description: `A filter to be used against ${namedTypeName}${
-              isListType ? " List" : ""
-            } fields. All fields are combined with a logical ‘and.’`,
-            fields: context => {
-              const { fieldWithHooks } = context;
-              const operators = Object.assign(
-                {},
-                connectionFilterOperatorsGlobal,
-                connectionFilterOperatorsByFieldType[namedTypeName]
-              );
-              return Object.entries(operators).reduce(
-                (memo, [operatorName, operator]) => {
-                  const allowedListTypes = operator.options
-                    .allowedListTypes || ["NonList"];
-                  const listTypeIsAllowed = isListType
-                    ? allowedListTypes.includes("List")
-                    : allowedListTypes.includes("NonList");
-                  if (listTypeIsAllowed) {
-                    memo[operatorName] = fieldWithHooks(operatorName, {
-                      description: operator.description,
-                      type: operator.resolveType(fieldType),
-                    });
-                  }
-                  return memo;
-                },
-                {}
-              );
-            },
-          },
-          {
-            isPgConnectionFilterFilter: true,
-          }
-        );
-      }
-      return getTypeByName(fieldFilterTypeName);
-    };
-
-    const connectionFilterField = (
-      fieldName,
-      fieldType,
-      fieldWithHooks,
-      newWithHooks
-    ) => {
+    // Get or create types like IntFilter, StringFilter, etc.
+    const connectionFilterOperatorsType = (fieldType, newWithHooks) => {
       const namedType = getNamedType(fieldType);
       const isScalarType = namedType instanceof GraphQLScalarType;
       const isEnumType = namedType instanceof GraphQLEnumType;
@@ -203,20 +196,31 @@ module.exports = function PgConnectionArgFilterPlugin(
       ) {
         return null;
       }
-      const fieldFilterType = getOrCreateFieldFilterTypeFromFieldType(
-        fieldType,
-        newWithHooks
-      );
-      if (!fieldFilterType) return null;
-      return fieldWithHooks(
-          fieldName,
+
+      const isListType = fieldType instanceof GraphQLList;
+      if (isListType && !connectionFilterLists) {
+        return null;
+      }
+      const operatorsTypeName = isListType
+        ? inflection.filterFieldListType(namedType.name)
+        : inflection.filterFieldType(namedType.name);
+
+      return (
+        connectionFilterTypesByTypeName[operatorsTypeName] ||
+        newWithHooks(
+          GraphQLInputObjectType,
           {
-            description: `Filter by the object’s \`${fieldName}\` field.`,
-            type: fieldFilterType,
+            name: operatorsTypeName,
+            description: `A filter to be used against ${namedType.name}${
+              isListType ? " List" : ""
+            } fields. All fields are combined with a logical ‘and.’`,
           },
           {
-            isPgConnectionFilterField: true,
-          }
+            isPgConnectionFilterOperators: true,
+            parentFieldType: fieldType,
+          },
+          true
+        )
         );
     };
 
@@ -279,12 +283,13 @@ module.exports = function PgConnectionArgFilterPlugin(
       return operator.resolveWhereClause(sqlIdentifier, sqlValue, input);
     };
 
-    const newFilterType = (
+    const connectionFilterType = (
       newWithHooks,
       filterTypeName,
       source,
       sourceTypeName
     ) =>
+      connectionFilterTypesByTypeName[filterTypeName] ||
       newWithHooks(
         GraphQLInputObjectType,
         {
@@ -314,9 +319,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterTypesByTypeName,
       connectionFilterFieldResolversByTypeNameAndFieldName,
       connectionFilterResolve,
-      connectionFilterField,
+      connectionFilterOperatorsType,
+      connectionFilterType,
       resolveWhereComparison,
-      newFilterType,
       escapeLikeWildcards,
     });
   });

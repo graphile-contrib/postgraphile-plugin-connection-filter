@@ -10,7 +10,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
       connectionFilterTypesByTypeName,
-      newFilterType,
+      connectionFilterType,
     } = build;
     const {
       fieldWithHooks,
@@ -92,14 +92,12 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       const foreignTableFilterTypeName = inflection.filterType(
         foreignTableTypeName
       );
-      const FilterType =
-        connectionFilterTypesByTypeName[foreignTableFilterTypeName] ||
-        newFilterType(
-          newWithHooks,
-          foreignTableFilterTypeName,
-          foreignTable,
-          foreignTableTypeName
-        );
+      const FilterType = connectionFilterType(
+        newWithHooks,
+        foreignTableFilterTypeName,
+        foreignTable,
+        foreignTableTypeName
+      );
       if (FilterType != null) {
         memo[fieldName] = fieldWithHooks(
           fieldName,
