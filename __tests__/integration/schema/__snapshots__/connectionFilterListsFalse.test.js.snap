@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prints a schema with the filter plugin and the connectionFilterLists option 1`] = `
+exports[`prints a schema with the filter plugin and the \`connectionFilterLists: false\` option 1`] = `
 "type Backward implements Node {
   \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
   filterableByFilterableId: Filterable
