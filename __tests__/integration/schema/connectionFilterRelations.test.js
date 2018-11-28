@@ -6,6 +6,8 @@ test(
   core.test(["p"], {
     skipPlugins: [PgConnectionArgCondition],
     appendPlugins: [require("../../../index.js")],
+    disableDefaultMutations: true,
+    legacyRelations: "omit",
     graphileBuildOptions: {
       connectionFilterRelations: true,
     },
