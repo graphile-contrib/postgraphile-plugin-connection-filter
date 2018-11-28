@@ -182,7 +182,10 @@ module.exports = function PgConnectionArgFilterPlugin(
     };
 
     const isEmptyObject = obj =>
-      obj !== null && typeof obj === "object" && Object.keys(obj).length === 0;
+      typeof obj === "object" &&
+      obj !== null &&
+      !Array.isArray(obj) &&
+      Object.keys(obj).length === 0;
 
     const connectionFilterResolve = (obj, sourceAlias, typeName) => {
       if (obj == null) return handleNullInput();
