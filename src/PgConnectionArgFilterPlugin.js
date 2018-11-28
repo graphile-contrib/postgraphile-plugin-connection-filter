@@ -1,6 +1,11 @@
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
-  { connectionFilterLists = true, connectionFilterSetofFunctions = true }
+  {
+    connectionFilterLists = true,
+    connectionFilterSetofFunctions = true,
+    connectionFilterAllowNullInput = false,
+    connectionFilterAllowEmptyObjectInput = false,
+  }
 ) {
   // Add `filter` input argument to connection and simple collection types
   builder.hook(
@@ -52,12 +57,12 @@ module.exports = function PgConnectionArgFilterPlugin(
       }
 
       // Generate SQL where clause from filter argument
-      addArgDataGenerator(function connectionFilter({ filter }) {
+      addArgDataGenerator(function connectionFilter(args) {
         return {
           pgQuery: queryBuilder => {
-            if (filter != null) {
+            if (args.hasOwnProperty("filter")) {
               const sqlFragment = connectionFilterResolve(
-                filter,
+                args.filter,
                 queryBuilder.getTableAlias(),
                 filterTypeName
               );
@@ -158,11 +163,36 @@ module.exports = function PgConnectionArgFilterPlugin(
     const connectionFilterFieldResolversByTypeNameAndFieldName = {};
     const connectionFilterTypesByTypeName = {};
 
+    const handleNullInput = () => {
+      if (!connectionFilterAllowNullInput) {
+        throw new Error(
+          "Null literals are forbidden in filter argument input."
+        );
+      }
+      return null;
+    };
+
+    const handleEmptyObjectInput = () => {
+      if (!connectionFilterAllowEmptyObjectInput) {
+        throw new Error(
+          "Empty objects are forbidden in filter argument input."
+        );
+      }
+      return null;
+    };
+
+    const isEmptyObject = obj =>
+      obj !== null && typeof obj === "object" && Object.keys(obj).length === 0;
+
     const connectionFilterResolve = (obj, sourceAlias, typeName) => {
-      if (obj == null) return null;
+      if (obj == null) return handleNullInput();
+      if (isEmptyObject(obj)) return handleEmptyObjectInput();
 
       const sqlFragments = Object.entries(obj)
         .map(([key, value]) => {
+          if (value == null) return handleNullInput();
+          if (isEmptyObject(value)) return handleEmptyObjectInput();
+
           const resolversByFieldName =
             connectionFilterFieldResolversByTypeNameAndFieldName[typeName];
           if (resolversByFieldName && resolversByFieldName[key]) {
@@ -262,6 +292,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       pgType,
       pgTypeModifier
     ) => {
+      if (input == null) return handleNullInput();
+      if (isEmptyObject(input)) return handleEmptyObjectInput();
+
       const fieldType = getNamedType(
         pgGetGqlInputTypeByTypeIdAndModifier(pgType.id, pgTypeModifier) ||
           GraphQLString
