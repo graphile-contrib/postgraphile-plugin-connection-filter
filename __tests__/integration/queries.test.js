@@ -32,15 +32,16 @@ beforeAll(() => {
       dynamicJson,
       relations,
       simpleCollections,
+      nullAndEmptyAllowed,
     ] = await Promise.all([
       createPostGraphileSchema(pgClient, ["p"], {
         skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        dynamicJson: true,
         skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
+        dynamicJson: true,
       }),
       createPostGraphileSchema(pgClient, ["p"], {
         skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
@@ -50,9 +51,17 @@ beforeAll(() => {
         },
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        simpleCollections: "only",
         skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
+        simpleCollections: "only",
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        appendPlugins: [require("../../index.js")],
+        graphileBuildOptions: {
+          connectionFilterAllowNullInput: true,
+          connectionFilterAllowEmptyObjectInput: true,
+        },
       }),
     ]);
     debug(printSchema(normal));
@@ -61,6 +70,7 @@ beforeAll(() => {
       dynamicJson,
       relations,
       simpleCollections,
+      nullAndEmptyAllowed,
     };
   });
 
@@ -92,6 +102,8 @@ beforeAll(() => {
             "connections-filter.relations.graphql": gqlSchemas.relations,
             "connections-filter.simple-collections.graphql":
               gqlSchemas.simpleCollections,
+            "connections-filter.null-and-empty-allowed.graphql":
+              gqlSchemas.nullAndEmptyAllowed,
           };
           const gqlSchema = schemas[fileName]
             ? schemas[fileName]

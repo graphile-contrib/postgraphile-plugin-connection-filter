@@ -1,4 +1,5 @@
-# all queries in this file should result in no filter being applied, thus returning all rows
+# All queries in this file should throw an error
+# (queries are an exact copy of null-and-empty-allowed.graphql)
 query {
   a: allFilterables(filter: null) {
     totalCount
