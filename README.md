@@ -452,6 +452,44 @@ postgraphile(pgConfig, schema, {
 
 </details>
 
+<details>
+
+<summary>connectionFilterAllowNullInput</summary>
+
+Allow/forbid `null` literals in input:
+
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterAllowNullInput: true, // default: false
+  },
+})
+```
+
+When `false`, passing `null` as a field value will throw an error.
+When `true`, passing `null` as a field value is equivalent to omitting the field.
+
+</details>
+
+<details>
+
+<summary>connectionFilterAllowEmptyObjectInput</summary>
+
+Allow/forbid empty objects (`{}` and `[]`) in input:
+
+``` js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterAllowEmptyObjectInput: true, // default: false
+  },
+})
+```
+
+When `false`, passing `{}` or `[]` as a field value will throw an error.
+When `true`, passing `{}` or `[]` as a field value is equivalent to omitting the field.
+
+</details>
+
 ## Development
 
 To establish a test environment, create an empty Postgres database (e.g. `graphile_build_test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile_build_test`).  Ensure that `psql` is installed locally and then run:
