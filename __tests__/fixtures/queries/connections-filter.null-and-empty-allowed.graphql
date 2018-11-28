@@ -1,0 +1,71 @@
+# All queries in this file should result in no filter being applied, thus returning all rows
+# (queries are an exact copy of null-and-empty-forbidden.graphql)
+query {
+  a: allFilterables(filter: null) {
+    totalCount
+  }
+  b: allFilterables(filter: {}) {
+    totalCount
+  }
+  c: allFilterables(filter: { string: null }) {
+    totalCount
+  }
+  d: allFilterables(filter: { string: {} }) {
+    totalCount
+  }
+  e: allFilterables(filter: { string: null, int: null }) {
+    totalCount
+  }
+  f: allFilterables(filter: { string: {}, int: {} }) {
+    totalCount
+  }
+  g: allFilterables(filter: { string: null, int: {} }) {
+    totalCount
+  }
+  h: allFilterables(filter: { string: { equalTo: null } }) {
+    totalCount
+  }
+  i: allFilterables(filter: { string: { equalTo: null, notEqualTo: null } }) {
+    totalCount
+  }
+  j: allFilterables(
+    filter: {
+      string: { equalTo: null, notEqualTo: null }
+      int: { equalTo: null }
+      numeric: {}
+      boolean: null
+    }
+  ) {
+    totalCount
+  }
+  k: allFilterables(filter: { and: null }) {
+    totalCount
+  }
+  l: allFilterables(filter: { and: [{}] }) {
+    totalCount
+  }
+  m: allFilterables(filter: { and: [{}, {}] }) {
+    totalCount
+  }
+  n: allFilterables(filter: { or: null }) {
+    totalCount
+  }
+  o: allFilterables(filter: { or: [{}] }) {
+    totalCount
+  }
+  p: allFilterables(filter: { or: [{}, {}] }) {
+    totalCount
+  }
+  q: allFilterables(filter: { not: null }) {
+    totalCount
+  }
+  r: allFilterables(filter: { not: {} }) {
+    totalCount
+  }
+  s: allFilterables(filter: { not: { string: null } }) {
+    totalCount
+  }
+  t: allFilterables(filter: { not: { string: {} } }) {
+    totalCount
+  }
+}

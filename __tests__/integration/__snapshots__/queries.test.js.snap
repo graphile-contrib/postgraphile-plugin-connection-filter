@@ -1040,7 +1040,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.null-and-empty.graphql 1`] = `
+exports[`connections-filter.null-and-empty-allowed.graphql 1`] = `
 Object {
   "data": Object {
     "a": Object {
@@ -1079,10 +1079,16 @@ Object {
     "l": Object {
       "totalCount": 5,
     },
+    "m": Object {
+      "totalCount": 5,
+    },
     "n": Object {
       "totalCount": 5,
     },
     "o": Object {
+      "totalCount": 5,
+    },
+    "p": Object {
       "totalCount": 5,
     },
     "q": Object {
@@ -1091,25 +1097,62 @@ Object {
     "r": Object {
       "totalCount": 5,
     },
+    "s": Object {
+      "totalCount": 5,
+    },
     "t": Object {
       "totalCount": 5,
     },
-    "u": Object {
-      "totalCount": 5,
-    },
-    "w": Object {
-      "totalCount": 5,
-    },
-    "x": Object {
-      "totalCount": 5,
-    },
-    "y": Object {
-      "totalCount": 5,
-    },
-    "z": Object {
-      "totalCount": 5,
-    },
   },
+}
+`;
+
+exports[`connections-filter.null-and-empty-forbidden.graphql 1`] = `
+Object {
+  "data": Object {
+    "a": null,
+    "b": null,
+    "c": null,
+    "d": null,
+    "e": null,
+    "f": null,
+    "g": null,
+    "h": null,
+    "i": null,
+    "j": null,
+    "k": null,
+    "l": null,
+    "m": null,
+    "n": null,
+    "o": null,
+    "p": null,
+    "q": null,
+    "r": null,
+    "s": null,
+    "t": null,
+  },
+  "errors": Array [
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+  ],
 }
 `;
 

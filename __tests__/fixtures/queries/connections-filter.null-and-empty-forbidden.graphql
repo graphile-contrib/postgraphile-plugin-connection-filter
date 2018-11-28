@@ -1,4 +1,5 @@
-# all queries in this file should result in no filter being applied, thus returning all rows
+# All queries in this file should throw an error
+# (queries are an exact copy of null-and-empty-allowed.graphql)
 query {
   a: allFilterables(filter: null) {
     totalCount
@@ -40,37 +41,31 @@ query {
   k: allFilterables(filter: { and: null }) {
     totalCount
   }
-  l: allFilterables(filter: { and: [] }) {
+  l: allFilterables(filter: { and: [{}] }) {
     totalCount
   }
-  n: allFilterables(filter: { and: [{}] }) {
+  m: allFilterables(filter: { and: [{}, {}] }) {
     totalCount
   }
-  o: allFilterables(filter: { and: [{}, {}] }) {
+  n: allFilterables(filter: { or: null }) {
     totalCount
   }
-  q: allFilterables(filter: { or: null }) {
+  o: allFilterables(filter: { or: [{}] }) {
     totalCount
   }
-  r: allFilterables(filter: { or: [] }) {
+  p: allFilterables(filter: { or: [{}, {}] }) {
     totalCount
   }
-  t: allFilterables(filter: { or: [{}] }) {
+  q: allFilterables(filter: { not: null }) {
     totalCount
   }
-  u: allFilterables(filter: { or: [{}, {}] }) {
+  r: allFilterables(filter: { not: {} }) {
     totalCount
   }
-  w: allFilterables(filter: { not: null }) {
+  s: allFilterables(filter: { not: { string: null } }) {
     totalCount
   }
-  x: allFilterables(filter: { not: {} }) {
-    totalCount
-  }
-  y: allFilterables(filter: { not: { string: null } }) {
-    totalCount
-  }
-  z: allFilterables(filter: { not: { string: {} } }) {
+  t: allFilterables(filter: { not: { string: {} } }) {
     totalCount
   }
 }
