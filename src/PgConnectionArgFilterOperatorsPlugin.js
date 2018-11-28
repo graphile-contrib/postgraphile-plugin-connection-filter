@@ -430,7 +430,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
-      "inetContainedBy",
+      "containedBy",
       "Contained by the specified internet address.",
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} << ${value}`,
@@ -439,7 +439,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
-      "inetContainedByOrEquals",
+      "containedByOrEqualTo",
       "Contained by or equal to the specified internet address.",
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} <<= ${value}`,
@@ -448,7 +448,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
-      "inetContains",
+      "contains",
       "Contains the specified internet address.",
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} >> ${value}`,
@@ -457,8 +457,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
-      "inetContainsOrEquals",
-      "Contains or is equal to the specified internet address.",
+      "containsOrEqualTo",
+      "Contains or equal to the specified internet address.",
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} >>= ${value}`,
       {
@@ -466,8 +466,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
-      "inetContainsOrIsContainedBy",
-      "Contains or is contained by the specified internet address.",
+      "containsOrContainedBy",
+      "Contains or contained by the specified internet address.",
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} && ${value}`,
       {

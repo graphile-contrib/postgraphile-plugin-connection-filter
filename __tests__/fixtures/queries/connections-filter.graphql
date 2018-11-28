@@ -61,14 +61,14 @@ query {
   intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...intArrayConnection }
   intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...intArrayConnection }
-  inet_containedBy: allFilterables(filter: { inet: { inetContainedBy: "192.168.0.0/24" } }) { ...inetConnection }
-  inet_containedByOrEquals_ContainedBy: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.0/24" } }) { ...inetConnection }
-  inet_containedByOrEquals_Equals: allFilterables(filter: { inet: { inetContainedByOrEquals: "192.168.1.1" } }) { ...inetConnection }
-  inet_contains: allFilterables(filter: { inet: { inetContains: "10.0.0.1" } }) { ...inetConnection }
-  inet_containsOrEquals_Contains: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.2" } }) { ...inetConnection }
-  inet_containsOrEquals_Equals: allFilterables(filter: { inet: { inetContainsOrEquals: "10.0.0.1/24" } }) { ...inetConnection }
-  inet_containsOrIsContainedBy_Contains: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "172.168.1.0/24" } }) { ...inetConnection }
-  inet_containsOrIsContainedBy_ContainedBy: allFilterables(filter: { inet: { inetContainsOrIsContainedBy: "10.0.0.5" } }) { ...inetConnection }
+  inet_containedBy: allFilterables(filter: { inet: { containedBy: "192.168.0.0/24" } }) { ...inetConnection }
+  inet_containedByOrEqualTo_ContainedBy: allFilterables(filter: { inet: { containedByOrEqualTo: "192.168.1.0/24" } }) { ...inetConnection }
+  inet_containedByOrEqualTo_EqualTo: allFilterables(filter: { inet: { containedByOrEqualTo: "192.168.1.1" } }) { ...inetConnection }
+  inet_contains: allFilterables(filter: { inet: { contains: "10.0.0.1" } }) { ...inetConnection }
+  inet_containsOrEqualTo_Contains: allFilterables(filter: { inet: { containsOrEqualTo: "10.0.0.2" } }) { ...inetConnection }
+  inet_containsOrEqualTo_EqualTo: allFilterables(filter: { inet: { containsOrEqualTo: "10.0.0.1/24" } }) { ...inetConnection }
+  inet_containsOrContainedBy_Contains: allFilterables(filter: { inet: { containsOrContainedBy: "172.168.1.0/24" } }) { ...inetConnection }
+  inet_containsOrContainedBy_ContainedBy: allFilterables(filter: { inet: { containsOrContainedBy: "10.0.0.5" } }) { ...inetConnection }
   enum_equalTo_OK: allFilterables(filter: { enum: { equalTo: OK } }) { ...enumConnection }
   allFilterables_computedSetofChild_name_equalTo_child2: allFilterables { nodes { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } } }
   filterableById_1_computedSetofChild_name_equalTo_child2: filterableById(id: 1) { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } }

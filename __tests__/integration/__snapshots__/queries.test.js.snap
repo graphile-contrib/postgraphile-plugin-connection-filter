@@ -208,7 +208,7 @@ Object {
         },
       ],
     },
-    "inet_containedByOrEquals_ContainedBy": Object {
+    "inet_containedByOrEqualTo_ContainedBy": Object {
       "nodes": Array [
         Object {
           "id": 2,
@@ -216,7 +216,7 @@ Object {
         },
       ],
     },
-    "inet_containedByOrEquals_Equals": Object {
+    "inet_containedByOrEqualTo_EqualTo": Object {
       "nodes": Array [
         Object {
           "id": 2,
@@ -232,7 +232,7 @@ Object {
         },
       ],
     },
-    "inet_containsOrEquals_Contains": Object {
+    "inet_containsOrContainedBy_ContainedBy": Object {
       "nodes": Array [
         Object {
           "id": 3,
@@ -240,27 +240,27 @@ Object {
         },
       ],
     },
-    "inet_containsOrEquals_Equals": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "inet": "10.0.0.0/24",
-        },
-      ],
-    },
-    "inet_containsOrIsContainedBy_ContainedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "inet": "10.0.0.0/24",
-        },
-      ],
-    },
-    "inet_containsOrIsContainedBy_Contains": Object {
+    "inet_containsOrContainedBy_Contains": Object {
       "nodes": Array [
         Object {
           "id": 4,
           "inet": "172.168.1.1",
+        },
+      ],
+    },
+    "inet_containsOrEqualTo_Contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "inet_containsOrEqualTo_EqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
         },
       ],
     },

@@ -99,12 +99,11 @@ The following filter operators are exposed by default:
 | NOT SIMILAR TO '...' | notSimilarTo | String |
 | @> | contains | JSON |
 | <@ | containedBy | JSON |
-| &lt;&lt; | inetContainedBy | InternetAddress |
-| &lt;&lt;= | inetContainedByOrEquals | InternetAddress |
-| &gt;&gt; | inetContains | InternetAddress |
-| &gt;&gt;= | inetContainsOrEquals | InternetAddress |
-| &amp;&amp; | inetContainsOrIsContainedBy | InternetAddress |
-
+| << | containedBy | InternetAddress |
+| <<= | containedByOrEqualTo | InternetAddress |
+| >> | contains | InternetAddress |
+| >>= | containsOrEqualTo | InternetAddress |
+| && | containsOrContainedBy | InternetAddress |
 
 ### List Comparison Operators
 

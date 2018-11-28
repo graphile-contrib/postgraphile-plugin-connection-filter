@@ -812,6 +812,21 @@ scalar InternetAddress
 A filter to be used against InternetAddress fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input InternetAddressFilter {
+  \\"\\"\\"Contained by the specified internet address.\\"\\"\\"
+  containedBy: InternetAddress
+
+  \\"\\"\\"Contained by or equal to the specified internet address.\\"\\"\\"
+  containedByOrEqualTo: InternetAddress
+
+  \\"\\"\\"Contains the specified internet address.\\"\\"\\"
+  contains: InternetAddress
+
+  \\"\\"\\"Contains or contained by the specified internet address.\\"\\"\\"
+  containsOrContainedBy: InternetAddress
+
+  \\"\\"\\"Contains or equal to the specified internet address.\\"\\"\\"
+  containsOrEqualTo: InternetAddress
+
   \\"\\"\\"
   Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
@@ -822,21 +837,6 @@ input InternetAddressFilter {
 
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [InternetAddress!]
-
-  \\"\\"\\"Contained by the specified internet address.\\"\\"\\"
-  inetContainedBy: InternetAddress
-
-  \\"\\"\\"Contained by or equal to the specified internet address.\\"\\"\\"
-  inetContainedByOrEquals: InternetAddress
-
-  \\"\\"\\"Contains the specified internet address.\\"\\"\\"
-  inetContains: InternetAddress
-
-  \\"\\"\\"Contains or is equal to the specified internet address.\\"\\"\\"
-  inetContainsOrEquals: InternetAddress
-
-  \\"\\"\\"Contains or is contained by the specified internet address.\\"\\"\\"
-  inetContainsOrIsContainedBy: InternetAddress
 
   \\"\\"\\"
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
