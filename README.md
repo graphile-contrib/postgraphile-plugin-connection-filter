@@ -25,23 +25,25 @@ Also see the [Production Considerations](https://www.graphile.org/postgraphile/p
 
 ### CLI
 
-``` bash
-postgraphile --append-plugins `pwd`/path/to/this/plugin/index.js
+```bash
+yarn add postgraphile
+yarn add postgraphile-plugin-connection-filter
+npx postgraphile --append-plugins postgraphile-plugin-connection-filter
 ```
 
 ### Library
 
-``` js
+```js
 const express = require("express");
 const { postgraphile } = require("postgraphile");
-const PostGraphileConnectionFilterPlugin = require("postgraphile-plugin-connection-filter");
+const ConnectionFilterPlugin = require("postgraphile-plugin-connection-filter");
 
 const app = express();
 
 app.use(
   postgraphile(pgConfig, schema, {
     graphiql: true,
-    appendPlugins: [PostGraphileConnectionFilterPlugin],
+    appendPlugins: [ConnectionFilterPlugin],
   })
 );
 
@@ -131,7 +133,7 @@ The following filter operators are exposed by default:
 
 <summary>Null values</summary>
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     body: { isNull: true }
@@ -147,7 +149,7 @@ query {
 
 <summary>Non-null values</summary>
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     body: { isNull: false }
@@ -163,7 +165,7 @@ query {
 
 <summary>Comparison operator with scalar input</summary>
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     createdAt: { greaterThan: "2016-01-01" }
@@ -179,7 +181,7 @@ query {
 
 <summary>Comparison operator with array input</summary>
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     authorId: { in: [1, 2] }
@@ -197,7 +199,7 @@ query {
 
 Note: Objects with multiple keys are interpreted with an implicit `AND` between the conditions.
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     body: { isNull: false },
@@ -214,7 +216,7 @@ query {
 
 <summary>Logical operator</summary>
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     or: [
@@ -233,7 +235,7 @@ query {
 
 <summary>Compound logic</summary>
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     not: {
@@ -254,7 +256,7 @@ query {
 
 <summary>Relations: Nested</summary>
 
-``` graphql
+```graphql
 query {
   allPeople(filter: {
     firstName: { startsWith:"John" }
@@ -282,7 +284,7 @@ query {
 
 > Requires `connectionFilterRelations: true`
 
-``` graphql
+```graphql
 query {
   allPosts(filter: {
     personByAuthorId: { createdAt: { greaterThan: "2018-01-01" } }
@@ -300,7 +302,7 @@ query {
 
 > Requires `connectionFilterRelations: true`
 
-``` graphql
+```graphql
 query {
   allPeople(filter: {
     accountByPersonId: { status: { equalTo: ACTIVE } }
@@ -332,7 +334,7 @@ When using PostGraphile as a library, the following plugin options can be passed
 
 Restrict filtering to specific operators:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterAllowedOperators: [
@@ -362,7 +364,7 @@ For a full list of the available operators, see the Comparison Operators table a
 
 Restrict filtering to specific field types:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterAllowedFieldTypes: ["String", "Int"],
@@ -378,9 +380,11 @@ The available field types will depend on your database schema.
 
 <summary>connectionFilterComputedColumns</summary>
 
+TODO: VERIFY THAT THE TEST FOR THIS IS ACTUALLY WORKING!
+
 Enable/disable filtering by computed columns:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterComputedColumns: false, // default: true
@@ -394,9 +398,11 @@ postgraphile(pgConfig, schema, {
 
 <summary>connectionFilterLists</summary>
 
+TODO: VERIFY THAT THE TEST FOR THIS IS ACTUALLY WORKING!
+
 Enable/disable filtering on List fields:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterLists: false, // default: true
@@ -412,7 +418,7 @@ postgraphile(pgConfig, schema, {
 
 Use alternative names (e.g. `eq`, `ne`) for operators:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterOperatorNames: {
@@ -431,7 +437,7 @@ postgraphile(pgConfig, schema, {
 
 Enable/disable filtering on related fields:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterRelations: true, // default: false
@@ -445,9 +451,11 @@ postgraphile(pgConfig, schema, {
 
 <summary>connectionFilterSetofFunctions</summary>
 
+TODO: VERIFY THAT THE TEST FOR THIS IS ACTUALLY WORKING!
+
 Enable/disable filtering on functions that return `setof`:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterSetofFunctions: false, // default: true
@@ -463,7 +471,7 @@ postgraphile(pgConfig, schema, {
 
 Allow/forbid `null` literals in input:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterAllowNullInput: true, // default: false
@@ -482,7 +490,7 @@ When `true`, passing `null` as a field value is equivalent to omitting the field
 
 Allow/forbid empty objects (`{}`) in input:
 
-``` js
+```js
 postgraphile(pgConfig, schema, {
   graphileBuildOptions: {
     connectionFilterAllowEmptyObjectInput: true, // default: false
@@ -498,7 +506,7 @@ When `true`, passing `{}` as a field value is equivalent to omitting the field.
 ## Development
 
 To establish a test environment, create an empty Postgres database (e.g. `graphile_build_test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile_build_test`).  Ensure that `psql` is installed locally and then run:
-``` bash
+```bash
 yarn
 npm run test
 ```
