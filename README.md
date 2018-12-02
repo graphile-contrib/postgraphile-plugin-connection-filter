@@ -41,9 +41,9 @@ const ConnectionFilterPlugin = require("postgraphile-plugin-connection-filter");
 const app = express();
 
 app.use(
-  postgraphile(pgConfig, schema, {
-    graphiql: true,
+  postgraphile(process.env.DATABASE_URL, "app_public", {
     appendPlugins: [ConnectionFilterPlugin],
+    graphiql: true,
   })
 );
 
