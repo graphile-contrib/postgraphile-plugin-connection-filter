@@ -324,9 +324,22 @@ module.exports = function PgConnectionArgFilterPlugin(
       filterTypeName,
       source,
       sourceTypeName
-    ) =>
-      connectionFilterTypesByTypeName[filterTypeName] ||
-      newWithHooks(
+    ) => {
+      const existingType = connectionFilterTypesByTypeName[filterTypeName];
+      if (existingType) {
+        if (
+          typeof existingType._fields === "object" &&
+          Object.keys(existingType._fields).length === 0
+        ) {
+          // Existing type is fully defined and
+          // there are no fields, so don't return a type
+          return null;
+        }
+        // Existing type isn't fully defined or is
+        // fully defined with fields, so return it
+        return existingType;
+      }
+      return newWithHooks(
         GraphQLInputObjectType,
         {
           description: `A filter to be used against \`${sourceTypeName}\` object types. All fields are combined with a logical ‘and.’`,
@@ -338,6 +351,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         },
         true
       );
+    };
 
     const escapeLikeWildcards = input => {
       if ("string" !== typeof input) {
