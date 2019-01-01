@@ -24,27 +24,32 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
     }
 
     const logicResolversByFieldName = {
-      and: (arr, sourceAlias) => {
+      and: (arr, sourceAlias, queryBuilder) => {
         const sqlFragments = arr
-          .map(o => connectionFilterResolve(o, sourceAlias, Self.name))
+          .map(o =>
+            connectionFilterResolve(o, sourceAlias, Self.name, queryBuilder)
+          )
           .filter(x => x != null);
         return sqlFragments.length === 0
           ? null
           : sql.query`(${sql.join(sqlFragments, ") and (")})`;
       },
-      or: (arr, sourceAlias) => {
+      or: (arr, sourceAlias, queryBuilder) => {
         const sqlFragments = arr
-          .map(o => connectionFilterResolve(o, sourceAlias, Self.name))
+          .map(o =>
+            connectionFilterResolve(o, sourceAlias, Self.name, queryBuilder)
+          )
           .filter(x => x != null);
         return sqlFragments.length === 0
           ? null
           : sql.query`(${sql.join(sqlFragments, ") or (")})`;
       },
-      not: (obj, sourceAlias) => {
+      not: (obj, sourceAlias, queryBuilder) => {
         const sqlFragment = connectionFilterResolve(
           obj,
           sourceAlias,
-          Self.name
+          Self.name,
+          queryBuilder
         );
         return sqlFragment == null ? null : sql.query`not (${sqlFragment})`;
       },
@@ -83,10 +88,14 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
       ),
     };
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
       if (fieldValue == null) return null;
 
-      return logicResolversByFieldName[fieldName](fieldValue, sourceAlias);
+      return logicResolversByFieldName[fieldName](
+        fieldValue,
+        sourceAlias,
+        queryBuilder
+      );
     };
 
     for (const fieldName of Object.keys(logicResolversByFieldName)) {

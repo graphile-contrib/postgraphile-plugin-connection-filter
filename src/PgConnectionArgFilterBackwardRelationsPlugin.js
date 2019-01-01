@@ -174,7 +174,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       return memo;
     }, {});
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
       if (fieldValue == null) return null;
 
       const { table, foreignKeys, keys } = backwardRelationInfoByFieldName[
@@ -201,7 +201,8 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       const sqlFragment = connectionFilterResolve(
         fieldValue,
         tableAlias,
-        tableFilterTypeName
+        tableFilterTypeName,
+        queryBuilder
       );
 
       return sqlFragment == null

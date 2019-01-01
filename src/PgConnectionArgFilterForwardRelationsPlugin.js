@@ -113,7 +113,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       return memo;
     }, {});
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
       if (fieldValue == null) return null;
 
       const {
@@ -147,7 +147,8 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       const sqlFragment = connectionFilterResolve(
         fieldValue,
         foreignTableAlias,
-        foreignTableFilterTypeName
+        foreignTableFilterTypeName,
+        queryBuilder
       );
 
       return sqlFragment == null
