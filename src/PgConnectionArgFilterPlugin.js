@@ -68,7 +68,7 @@ module.exports = function PgConnectionArgFilterPlugin(
               );
               if (sqlFragment != null) {
                 queryBuilder.where(sqlFragment);
-            }
+              }
             }
           },
         };
@@ -254,7 +254,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           },
           true
         )
-        );
+      );
     };
 
     const sqlValueFromInput = (input, inputResolver, pgType, pgTypeModifier) =>
