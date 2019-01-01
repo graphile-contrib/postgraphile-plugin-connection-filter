@@ -91,7 +91,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       {}
     );
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
       if (fieldValue == null) return null;
 
       const proc = procByFieldName[fieldName];
@@ -108,7 +108,9 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
             operatorName,
             input,
             procReturnType,
-            null
+            null,
+            fieldName,
+            queryBuilder
           );
         })
         .filter(x => x != null);

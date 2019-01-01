@@ -64,11 +64,12 @@ module.exports = function PgConnectionArgFilterPlugin(
               const sqlFragment = connectionFilterResolve(
                 args.filter,
                 queryBuilder.getTableAlias(),
-                filterTypeName
+                filterTypeName,
+                queryBuilder
               );
               if (sqlFragment != null) {
                 queryBuilder.where(sqlFragment);
-            }
+              }
             }
           },
         };
@@ -187,7 +188,12 @@ module.exports = function PgConnectionArgFilterPlugin(
       !Array.isArray(obj) &&
       Object.keys(obj).length === 0;
 
-    const connectionFilterResolve = (obj, sourceAlias, typeName) => {
+    const connectionFilterResolve = (
+      obj,
+      sourceAlias,
+      typeName,
+      queryBuilder
+    ) => {
       if (obj == null) return handleNullInput();
       if (isEmptyObject(obj)) return handleEmptyObjectInput();
 
@@ -203,6 +209,7 @@ module.exports = function PgConnectionArgFilterPlugin(
               sourceAlias,
               fieldName: key,
               fieldValue: value,
+              queryBuilder,
             });
           }
           throw new Error(`Unable to resolve filter field '${key}'`);
@@ -254,7 +261,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           },
           true
         )
-        );
+      );
     };
 
     const sqlValueFromInput = (input, inputResolver, pgType, pgTypeModifier) =>
@@ -293,7 +300,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       operatorName,
       input,
       pgType,
-      pgTypeModifier
+      pgTypeModifier,
+      fieldName,
+      queryBuilder
     ) => {
       if (input == null) return handleNullInput();
       if (isEmptyObject(input)) return handleEmptyObjectInput();
@@ -316,7 +325,13 @@ module.exports = function PgConnectionArgFilterPlugin(
       const sqlValue = operator.options.resolveWithRawInput
         ? input
         : sqlValueFromInput(input, inputResolver, pgType, pgTypeModifier);
-      return operator.resolveWhereClause(sqlIdentifier, sqlValue, input);
+      return operator.resolveWhereClause(
+        sqlIdentifier,
+        sqlValue,
+        input,
+        fieldName,
+        queryBuilder
+      );
     };
 
     const connectionFilterType = (

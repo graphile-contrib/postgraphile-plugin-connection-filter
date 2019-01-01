@@ -67,7 +67,7 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       {}
     );
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue }) => {
+    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
       if (fieldValue == null) return null;
 
       const attr = attrByFieldName[fieldName];
@@ -82,7 +82,9 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
             operatorName,
             input,
             attr.type,
-            attr.typeModifier
+            attr.typeModifier,
+            fieldName,
+            queryBuilder
           );
         })
         .filter(x => x != null);
