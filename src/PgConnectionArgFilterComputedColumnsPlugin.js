@@ -110,7 +110,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
             procReturnType,
             null,
             fieldName,
-            queryBuilder
+            queryBuilder,
+            sourceAlias
           );
         })
         .filter(x => x != null);

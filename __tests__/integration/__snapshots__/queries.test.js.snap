@@ -173,6 +173,9 @@ Object {
         },
       ],
     },
+    "computedIntArray_equalTo_empty": Object {
+      "nodes": Array [],
+    },
     "computed_equalTo_test_computed": Object {
       "nodes": Array [
         Object {
@@ -429,6 +432,42 @@ Object {
         },
       ],
     },
+    "intArray_distinctFrom_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+        Object {
+          "id": 5,
+          "intArray": null,
+        },
+      ],
+    },
     "intArray_equalTo_2_20": Object {
       "nodes": Array [
         Object {
@@ -439,6 +478,9 @@ Object {
           ],
         },
       ],
+    },
+    "intArray_equalTo_empty": Object {
+      "nodes": Array [],
     },
     "intArray_greaterThanOrEqualTo_2_20": Object {
       "nodes": Array [
@@ -465,8 +507,72 @@ Object {
         },
       ],
     },
+    "intArray_greaterThanOrEqualTo_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
     "intArray_greaterThan_2_20": Object {
       "nodes": Array [
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_greaterThan_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
         Object {
           "id": 3,
           "intArray": Array [
@@ -541,6 +647,9 @@ Object {
         },
       ],
     },
+    "intArray_lessThanOrEqualTo_empty": Object {
+      "nodes": Array [],
+    },
     "intArray_lessThan_2_20": Object {
       "nodes": Array [
         Object {
@@ -551,6 +660,9 @@ Object {
           ],
         },
       ],
+    },
+    "intArray_lessThan_empty": Object {
+      "nodes": Array [],
     },
     "intArray_notDistinctFrom_2_20": Object {
       "nodes": Array [
@@ -563,6 +675,9 @@ Object {
         },
       ],
     },
+    "intArray_notDistinctFrom_empty": Object {
+      "nodes": Array [],
+    },
     "intArray_notEqualTo_2_20": Object {
       "nodes": Array [
         Object {
@@ -570,6 +685,38 @@ Object {
           "intArray": Array [
             1,
             10,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
+    "intArray_notEqualTo_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
           ],
         },
         Object {
@@ -648,6 +795,9 @@ Object {
         },
       ],
     },
+    "int_in_empty": Object {
+      "nodes": Array [],
+    },
     "int_lessThanOrEqualTo_2": Object {
       "nodes": Array [
         Object {
@@ -677,6 +827,30 @@ Object {
         Object {
           "id": 4,
           "string": "test",
+        },
+      ],
+    },
+    "int_notIn_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "string": "TEST",
+        },
+        Object {
+          "id": 2,
+          "string": "Test",
+        },
+        Object {
+          "id": 3,
+          "string": "tEST",
+        },
+        Object {
+          "id": 4,
+          "string": "test",
+        },
+        Object {
+          "id": 5,
+          "string": null,
         },
       ],
     },

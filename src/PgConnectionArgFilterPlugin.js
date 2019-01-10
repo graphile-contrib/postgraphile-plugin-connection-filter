@@ -264,37 +264,6 @@ module.exports = function PgConnectionArgFilterPlugin(
       );
     };
 
-    const sqlValueFromInput = (input, inputResolver, pgType, pgTypeModifier) =>
-      Array.isArray(input)
-        ? pgType.isPgArray
-          ? sql.query`${gql2pg(
-              (inputResolver && inputResolver(input)) || input,
-              pgType,
-              pgTypeModifier
-            )}`
-          : sql.query`(${sql.join(
-              input.map(
-                i =>
-                  sql.query`${gql2pg(
-                    (inputResolver && inputResolver(i)) || i,
-                    pgType,
-                    pgTypeModifier
-                  )}`
-              ),
-              ","
-            )})`
-        : pgType.isPgArray
-          ? sql.query`${gql2pg(
-              (inputResolver && inputResolver(input)) || input,
-              pgType.arrayItemType,
-              pgTypeModifier
-            )}`
-          : sql.query`${gql2pg(
-              (inputResolver && inputResolver(input)) || input,
-              pgType,
-              pgTypeModifier
-            )}`;
-
     const resolveWhereComparison = (
       sqlIdentifier,
       operatorName,
@@ -321,10 +290,32 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (input == null && !operator.options.processNull) {
         return null;
       }
-      const inputResolver = operator.options.inputResolver;
+
+      const sqlValueFromInput = (input, pgType, pgTypeModifier) =>
+        sql.query`${gql2pg(
+          (operator.options.inputResolver &&
+            operator.options.inputResolver(input)) ||
+            input,
+          pgType,
+          pgTypeModifier
+        )}`;
+
+      // TODO: Remove `resolveWithRawInput` option before v1.0.0
       const sqlValue = operator.options.resolveWithRawInput
         ? input
-        : sqlValueFromInput(input, inputResolver, pgType, pgTypeModifier);
+        : Array.isArray(input)
+          ? pgType.isPgArray
+            ? sqlValueFromInput(input, pgType, pgTypeModifier)
+            : input.length === 0
+              ? sql.query`(select ${sqlIdentifier} limit 0)`
+              : sql.query`(${sql.join(
+                  input.map(i => sqlValueFromInput(i, pgType, pgTypeModifier)),
+                  ","
+                )})`
+          : pgType.isPgArray
+            ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
+            : sqlValueFromInput(input, pgType, pgTypeModifier);
+
       return operator.resolveWhereClause(
         sqlIdentifier,
         sqlValue,
