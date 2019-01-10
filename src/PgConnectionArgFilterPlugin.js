@@ -304,17 +304,17 @@ module.exports = function PgConnectionArgFilterPlugin(
       const sqlValue = operator.options.resolveWithRawInput
         ? input
         : Array.isArray(input)
-          ? pgType.isPgArray
-            ? sqlValueFromInput(input, pgType, pgTypeModifier)
-            : input.length === 0
-              ? sql.query`(select ${sqlIdentifier} limit 0)`
-              : sql.query`(${sql.join(
-                  input.map(i => sqlValueFromInput(i, pgType, pgTypeModifier)),
-                  ","
-                )})`
-          : pgType.isPgArray
-            ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
-            : sqlValueFromInput(input, pgType, pgTypeModifier);
+        ? pgType.isPgArray
+          ? sqlValueFromInput(input, pgType, pgTypeModifier)
+          : input.length === 0
+          ? sql.query`(select ${sqlIdentifier} limit 0)`
+          : sql.query`(${sql.join(
+              input.map(i => sqlValueFromInput(i, pgType, pgTypeModifier)),
+              ","
+            )})`
+        : pgType.isPgArray
+        ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
+        : sqlValueFromInput(input, pgType, pgTypeModifier);
 
       return operator.resolveWhereClause(
         sqlIdentifier,

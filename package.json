@@ -17,20 +17,23 @@
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
   "devDependencies": {
-    "eslint": "^4.0.0",
-    "eslint-config-prettier": "2.3.0",
+    "eslint": "^5.12.0",
+    "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-jest": "^20.0.3",
-    "eslint-plugin-prettier": "^2.1.2",
+    "eslint-plugin-prettier": "^3.0.1",
     "graphql": ">=0.9 <0.14",
     "jest": "23.5.0",
     "pg": ">=6.1.0 <8",
     "postgraphile-core": "^4.0.0",
-    "prettier": "1.14.2"
+    "prettier": "1.15.3"
   },
   "jest": {
     "testRegex": "__tests__/.*\\.test\\.js$"
   },
   "files": [
     "src"
-  ]
+  ],
+  "engines": {
+    "node": ">=8.6"
+  }
 }
