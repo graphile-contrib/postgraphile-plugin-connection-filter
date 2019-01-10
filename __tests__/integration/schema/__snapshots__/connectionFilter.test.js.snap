@@ -917,6 +917,12 @@ input IntListFilter {
   \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
   anyNotEqualTo: Int
 
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Int]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Int]
+
   \\"\\"\\"
   Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
