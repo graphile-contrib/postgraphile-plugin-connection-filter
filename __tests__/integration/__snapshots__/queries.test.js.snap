@@ -403,6 +403,69 @@ Object {
         },
       ],
     },
+    "intArray_containedBy_2": Object {
+      "nodes": Array [],
+    },
+    "intArray_containedBy_2_3_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_containedBy_empty": Object {
+      "nodes": Array [],
+    },
+    "intArray_contains_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_contains_2_3_20": Object {
+      "nodes": Array [],
+    },
+    "intArray_contains_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "intArray": Array [
+            1,
+            10,
+          ],
+        },
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+        Object {
+          "id": 4,
+          "intArray": Array [
+            4,
+            40,
+          ],
+        },
+      ],
+    },
     "intArray_distinctFrom_2_20": Object {
       "nodes": Array [
         Object {

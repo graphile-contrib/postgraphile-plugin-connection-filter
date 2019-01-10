@@ -336,6 +336,44 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       }
     );
     addConnectionFilterOperator(
+      "contains",
+      "Contains the specified list of values.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} @> ${value}`,
+      {
+        allowedFieldTypes: [
+          "String",
+          "Int",
+          "Float",
+          "Datetime",
+          "Date",
+          "Time",
+          "BigInt",
+          "BigFloat",
+        ],
+        allowedListTypes: ["List"],
+      }
+    );
+    addConnectionFilterOperator(
+      "containedBy",
+      "Contained by the specified list of values.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} <@ ${value}`,
+      {
+        allowedFieldTypes: [
+          "String",
+          "Int",
+          "Float",
+          "Datetime",
+          "Date",
+          "Time",
+          "BigInt",
+          "BigFloat",
+        ],
+        allowedListTypes: ["List"],
+      }
+    );
+    addConnectionFilterOperator(
       "anyEqualTo",
       "Any array item is equal to the specified value.",
       fieldType => getNamedType(fieldType),

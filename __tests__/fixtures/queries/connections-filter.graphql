@@ -66,6 +66,12 @@ query {
   intArray_greaterThan_empty: allFilterables(filter: { intArray: { greaterThan: [] } }) { ...intArrayConnection }
   intArray_greaterThanOrEqualTo_2_20: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [2, 20] } }) { ...intArrayConnection }
   intArray_greaterThanOrEqualTo_empty: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [] } }) { ...intArrayConnection }
+  intArray_contains_empty: allFilterables(filter: { intArray: { contains: [] } }) { ...intArrayConnection }
+  intArray_contains_2: allFilterables(filter: { intArray: { contains: [2] } }) { ...intArrayConnection }
+  intArray_contains_2_3_20: allFilterables(filter: { intArray: { contains: [2, 3, 20] } }) { ...intArrayConnection }
+  intArray_containedBy_empty: allFilterables(filter: { intArray: { containedBy: [] } }) { ...intArrayConnection }
+  intArray_containedBy_2: allFilterables(filter: { intArray: { containedBy: [2] } }) { ...intArrayConnection }
+  intArray_containedBy_2_3_20: allFilterables(filter: { intArray: { containedBy: [2, 3, 20] } }) { ...intArrayConnection }
   intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...intArrayConnection }
