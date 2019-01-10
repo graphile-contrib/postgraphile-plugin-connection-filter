@@ -10,7 +10,9 @@ query {
   int_greaterThan_2: allFilterables(filter: { int: { greaterThan: 2 } }) { ...intConnection }
   int_greaterThanOrEqualTo_2: allFilterables(filter: { int: { greaterThanOrEqualTo: 2 } }) { ...intConnection }
   int_in_2_3: allFilterables(filter: { int: { in: [2, 3] } }) { ...intConnection }
+  int_in_empty: allFilterables(filter: { int: { in: [] } }) { ...intConnection }
   int_notIn_2_3: allFilterables(filter: { int: { notIn: [2, 3] } }) { ...intConnection }
+  int_notIn_empty: allFilterables(filter: { int: { notIn: [] } }) { ...intConnection }
   string_contains_t: allFilterables(filter: { string: { includes: "t" } }) { ...stringConnection }
   string_containsInsensitive_t: allFilterables(filter: { string: { includesInsensitive: "t" } }) { ...stringConnection }
   string_notContains_t: allFilterables(filter: { string: { notIncludes: "t" } }) { ...stringConnection }
@@ -41,6 +43,7 @@ query {
   not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...stringAndIntConnection }
   computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...computedConnection }
   computedIntArray_equalTo_2_20: allFilterables(filter: { computedIntArray: { equalTo: [2, 20] } }) { ...computedConnection }
+  computedIntArray_equalTo_empty: allFilterables(filter: { computedIntArray: { equalTo: [] } }) { ...computedConnection }
   jsonb_contains_string: allFilterables(filter: { jsonb: { contains: "{\"string\":\"test\"}" } }) { ...jsonbConnection }
   jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...jsonbConnection }
   jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...jsonbConnection }
@@ -48,13 +51,21 @@ query {
   intArray_isNull_true: allFilterables(filter: { intArray: { isNull: true } }) { ...intArrayConnection }
   intArray_isNull_false: allFilterables(filter: { intArray: { isNull: false } }) { ...intArrayConnection }
   intArray_distinctFrom_2_20: allFilterables(filter: { intArray: { distinctFrom: [2, 20] } }) { ...intArrayConnection }
+  intArray_distinctFrom_empty: allFilterables(filter: { intArray: { distinctFrom: [] } }) { ...intArrayConnection }
   intArray_notDistinctFrom_2_20: allFilterables(filter: { intArray: { notDistinctFrom: [2, 20] } }) { ...intArrayConnection }
+  intArray_notDistinctFrom_empty: allFilterables(filter: { intArray: { notDistinctFrom: [] } }) { ...intArrayConnection }
   intArray_equalTo_2_20: allFilterables(filter: { intArray: { equalTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_equalTo_empty: allFilterables(filter: { intArray: { equalTo: [] } }) { ...intArrayConnection }
   intArray_notEqualTo_2_20: allFilterables(filter: { intArray: { notEqualTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_notEqualTo_empty: allFilterables(filter: { intArray: { notEqualTo: [] } }) { ...intArrayConnection }
   intArray_lessThan_2_20: allFilterables(filter: { intArray: { lessThan: [2, 20] } }) { ...intArrayConnection }
+  intArray_lessThan_empty: allFilterables(filter: { intArray: { lessThan: [] } }) { ...intArrayConnection }
   intArray_lessThanOrEqualTo_2_20: allFilterables(filter: { intArray: { lessThanOrEqualTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_lessThanOrEqualTo_empty: allFilterables(filter: { intArray: { lessThanOrEqualTo: [] } }) { ...intArrayConnection }
   intArray_greaterThan_2_20: allFilterables(filter: { intArray: { greaterThan: [2, 20] } }) { ...intArrayConnection }
+  intArray_greaterThan_empty: allFilterables(filter: { intArray: { greaterThan: [] } }) { ...intArrayConnection }
   intArray_greaterThanOrEqualTo_2_20: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [2, 20] } }) { ...intArrayConnection }
+  intArray_greaterThanOrEqualTo_empty: allFilterables(filter: { intArray: { greaterThanOrEqualTo: [] } }) { ...intArrayConnection }
   intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...intArrayConnection }
