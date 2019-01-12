@@ -986,6 +986,9 @@ input IntListFilter {
 
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: [Int]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Int]
 }
 
 \\"\\"\\"

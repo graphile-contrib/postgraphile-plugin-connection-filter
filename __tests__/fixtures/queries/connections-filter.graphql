@@ -72,6 +72,9 @@ query {
   intArray_containedBy_empty: allFilterables(filter: { intArray: { containedBy: [] } }) { ...intArrayConnection }
   intArray_containedBy_2: allFilterables(filter: { intArray: { containedBy: [2] } }) { ...intArrayConnection }
   intArray_containedBy_2_3_20: allFilterables(filter: { intArray: { containedBy: [2, 3, 20] } }) { ...intArrayConnection }
+  intArray_overlaps_empty: allFilterables(filter: { intArray: { overlaps: [] } }) { ...intArrayConnection }
+  intArray_overlaps_2: allFilterables(filter: { intArray: { overlaps: [2] } }) { ...intArrayConnection }
+  intArray_overlaps_2_3_20: allFilterables(filter: { intArray: { overlaps: [2, 3, 20] } }) { ...intArrayConnection }
   intArray_anyEqualTo_2: allFilterables(filter: { intArray: { anyEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyNotEqualTo_2: allFilterables(filter: { intArray: { anyNotEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyLessThan_2: allFilterables(filter: { intArray: { anyLessThan: 2 } }) { ...intArrayConnection }

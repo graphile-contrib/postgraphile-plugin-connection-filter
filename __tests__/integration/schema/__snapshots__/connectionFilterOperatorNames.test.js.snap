@@ -953,6 +953,9 @@ input IntListFilter {
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: [Int]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Int]
 }
 
 \\"\\"\\"

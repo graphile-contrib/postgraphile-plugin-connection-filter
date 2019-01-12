@@ -798,6 +798,38 @@ Object {
         },
       ],
     },
+    "intArray_overlaps_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+      ],
+    },
+    "intArray_overlaps_2_3_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "intArray": Array [
+            2,
+            20,
+          ],
+        },
+        Object {
+          "id": 3,
+          "intArray": Array [
+            3,
+            30,
+          ],
+        },
+      ],
+    },
+    "intArray_overlaps_empty": Object {
+      "nodes": Array [],
+    },
     "int_equalTo_2_and_string_endsWith_t": Object {
       "nodes": Array [
         Object {
