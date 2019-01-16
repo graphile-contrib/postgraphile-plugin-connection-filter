@@ -22,15 +22,10 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const foreignKeyConstraints = introspectionResultsByKind.constraint
+    const forwardRelationSpecs = introspectionResultsByKind.constraint
       .filter(con => con.type === "f")
-      .filter(con => con.classId === table.id);
-    const attributes = introspectionResultsByKind.attribute
-      .filter(attr => attr.classId === table.id)
-      .sort((a, b) => a.num - b.num);
-
-    const forwardRelationInfoByFieldName = foreignKeyConstraints.reduce(
-      (memo, constraint) => {
+      .filter(con => con.classId === table.id)
+      .reduce((memo, constraint) => {
         if (omit(constraint, "read")) {
           return memo;
         }
@@ -44,48 +39,53 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         if (omit(foreignTable, "read")) {
           return memo;
         }
-        const foreignAttributes = introspectionResultsByKind.attribute
-          .filter(attr => attr.classId === constraint.foreignClassId)
+        const attributes = introspectionResultsByKind.attribute
+          .filter(attr => attr.classId === table.id)
           .sort((a, b) => a.num - b.num);
-
-        const keys = constraint.keyAttributeNums.map(
+        const foreignAttributes = introspectionResultsByKind.attribute
+          .filter(attr => attr.classId === foreignTable.id)
+          .sort((a, b) => a.num - b.num);
+        const keyAttributes = constraint.keyAttributeNums.map(
           num => attributes.filter(attr => attr.num === num)[0]
         );
-        const foreignKeys = constraint.foreignKeyAttributeNums.map(
+        const foreignKeyAttributes = constraint.foreignKeyAttributeNums.map(
           num => foreignAttributes.filter(attr => attr.num === num)[0]
         );
-        if (!keys.every(_ => _) || !foreignKeys.every(_ => _)) {
-          throw new Error("Could not find key columns!");
-        }
-        if (keys.some(key => omit(key, "read"))) {
+        if (keyAttributes.some(attr => omit(attr, "read"))) {
           return memo;
         }
-        if (foreignKeys.some(key => omit(key, "read"))) {
+        if (foreignKeyAttributes.some(attr => omit(attr, "read"))) {
           return memo;
         }
+        memo.push({
+          table,
+          keyAttributes,
+          foreignTable,
+          foreignKeyAttributes,
+          constraint,
+        });
+        return memo;
+      }, []);
 
+    const forwardRelationSpecByFieldName = forwardRelationSpecs.reduce(
+      (memo, spec) => {
+        const { constraint, foreignTable, keyAttributes } = spec;
         const fieldName = inflection.singleRelationByKeys(
-          keys,
+          keyAttributes,
           foreignTable,
           table,
           constraint
         );
-
         memo = extend(memo, {
-          [fieldName]: {
-            foreignTable,
-            foreignKeys,
-            keys,
-          },
+          [fieldName]: spec,
         });
-
         return memo;
       },
       {}
     );
 
     const forwardRelationFields = Object.entries(
-      forwardRelationInfoByFieldName
+      forwardRelationSpecByFieldName
     ).reduce((memo, curr) => {
       const [fieldName, { foreignTable }] = curr;
       const foreignTableTypeName = inflection.tableType(foreignTable);
@@ -118,9 +118,9 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
 
       const {
         foreignTable,
-        foreignKeys,
-        keys,
-      } = forwardRelationInfoByFieldName[fieldName];
+        foreignKeyAttributes,
+        keyAttributes,
+      } = forwardRelationSpecByFieldName[fieldName];
 
       const foreignTableAlias = sql.identifier(Symbol());
       if (foreignTable == null) return null;
@@ -131,10 +131,12 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       );
 
       const sqlKeysMatch = sql.query`(${sql.join(
-        keys.map((key, i) => {
+        keyAttributes.map((key, i) => {
           return sql.fragment`${sourceAlias}.${sql.identifier(
             key.name
-          )} = ${foreignTableAlias}.${sql.identifier(foreignKeys[i].name)}`;
+          )} = ${foreignTableAlias}.${sql.identifier(
+            foreignKeyAttributes[i].name
+          )}`;
         }),
         ") and ("
       )})`;
@@ -161,7 +163,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       )`;
     };
 
-    for (const fieldName of Object.keys(forwardRelationInfoByFieldName)) {
+    for (const fieldName of Object.keys(forwardRelationSpecByFieldName)) {
       connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
         fieldName
       ] = resolve;
