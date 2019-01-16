@@ -6,6 +6,14 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
   const hasSimpleCollections =
     pgSimpleCollections === "only" || pgSimpleCollections === "both";
 
+  builder.hook("inflection", inflection => {
+    return Object.assign(inflection, {
+      filterManyType(typeName) {
+        return `${typeName}FilterMany`;
+      },
+    });
+  });
+
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -14,6 +22,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       pgOmit: omit,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
+      graphql: { GraphQLInputObjectType, GraphQLBoolean },
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
       connectionFilterTypesByTypeName,
@@ -95,7 +104,32 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
           isOneToMany,
         } = spec;
         if (isOneToMany) {
-          // Not yet implemented
+          function makeFields(isConnection) {
+            if (!omit(foreignTable, "many")) {
+              const fieldName = isConnection
+                ? inflection.manyRelationByKeys(
+                    foreignKeyAttributes,
+                    foreignTable,
+                    table,
+                    foreignConstraint
+                  )
+                : inflection.manyRelationByKeysSimple(
+                    foreignKeyAttributes,
+                    foreignTable,
+                    table,
+                    foreignConstraint
+                  );
+              memo = extend(memo, {
+                [fieldName]: spec,
+              });
+            }
+          }
+          if (hasConnections) {
+            makeFields(true);
+          }
+          if (hasSimpleCollections) {
+            makeFields(false);
+          }
         } else {
           const fieldName = inflection.singleRelationByKeysBackwards(
             foreignKeyAttributes,
@@ -128,7 +162,51 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       );
       if (FilterType != null) {
         if (isOneToMany) {
-          // Not yet implemented
+          const filterManyTypeName = inflection.filterManyType(
+            foreignTableTypeName
+          );
+          if (!connectionFilterTypesByTypeName[filterManyTypeName]) {
+            connectionFilterTypesByTypeName[filterManyTypeName] = newWithHooks(
+              GraphQLInputObjectType,
+              {
+                name: filterManyTypeName,
+                description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+                fields: {
+                  exist: {
+                    description: `A related \`${foreignTableTypeName}\` exists.`,
+                    type: GraphQLBoolean,
+                  },
+                  every: {
+                    description: `Every related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
+                    type: FilterType,
+                  },
+                  some: {
+                    description: `Some related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
+                    type: FilterType,
+                  },
+                  none: {
+                    description: `No related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
+                    type: FilterType,
+                  },
+                },
+              },
+              {
+                isPgConnectionFilterField: true,
+              }
+            );
+          }
+          const FilterManyType =
+            connectionFilterTypesByTypeName[filterManyTypeName];
+          memo[fieldName] = fieldWithHooks(
+            fieldName,
+            {
+              description: `Filter by the object’s \`${fieldName}\` relation.`,
+              type: FilterManyType,
+            },
+            {
+              isPgConnectionFilterField: true,
+            }
+          );
         } else {
           memo[fieldName] = fieldWithHooks(
             fieldName,
@@ -178,7 +256,35 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       );
 
       if (isOneToMany) {
-        // Not yet implemented
+        return sql.join(
+          Object.entries(fieldValue).map(([manyFieldName, manyFieldValue]) => {
+            const sqlSelectWhereKeysMatch = sql.query`select 1 from ${sqlIdentifier} as ${foreignTableAlias} where ${sqlKeysMatch}`;
+
+            if (manyFieldName === "exist") {
+              return sql.query`${
+                manyFieldValue === true ? "" : sql.query`not `
+              }exists(${sqlSelectWhereKeysMatch})`;
+            }
+
+            const sqlFragment = connectionFilterResolve(
+              manyFieldValue,
+              foreignTableAlias,
+              foreignTableFilterTypeName,
+              queryBuilder
+            );
+
+            return sqlFragment == null
+              ? null
+              : manyFieldName === "every"
+              ? sql.query`not exists(${sqlSelectWhereKeysMatch} and not (${sqlFragment}))`
+              : manyFieldName === "some"
+              ? sql.query`exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`
+              : manyFieldName === "none"
+              ? sql.query`not exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`
+              : new Error("Unexpected field name");
+          }),
+          " and "
+        );
       } else {
         const sqlFragment = connectionFilterResolve(
           fieldValue,
