@@ -629,34 +629,10 @@ type Forward implements Node {
 }
 
 type ForwardCompound implements Node {
-  \\"\\"\\"Reads and enables pagination through a set of \`Filterable\`.\\"\\"\\"
-  filterablesByForwardCompound1AndForwardCompound2(
-    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
-    after: Cursor
-
-    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
-    before: Cursor
-
-    \\"\\"\\"
-    A filter to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    filter: FilterableFilter
-
-    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
-    first: Int
-
-    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
-    last: Int
-
-    \\"\\"\\"
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
-    based pagination. May not be used with \`last\`.
-    \\"\\"\\"
-    offset: Int
-
-    \\"\\"\\"The method to use when ordering \`Filterable\`.\\"\\"\\"
-    orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
-  ): FilterablesConnection!
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`ForwardCompound\`.
+  \\"\\"\\"
+  filterableByForwardCompound1AndForwardCompound2: Filterable
   forwardCompound1: Int!
   forwardCompound2: Int!
   name: String
@@ -673,6 +649,11 @@ A filter to be used against \`ForwardCompound\` object types. All fields are com
 input ForwardCompoundFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ForwardCompoundFilter!]
+
+  \\"\\"\\"
+  Filter by the object’s \`filterableByForwardCompound1AndForwardCompound2\` field.
+  \\"\\"\\"
+  filterableByForwardCompound1AndForwardCompound2: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
   forwardCompound1: IntFilter
@@ -1471,6 +1452,7 @@ type Query implements Node {
     nodeId: ID!
   ): Filterable
   filterableByBackwardCompound1AndBackwardCompound2(backwardCompound1: Int!, backwardCompound2: Int!): Filterable
+  filterableByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): Filterable
   filterableByForwardId(forwardId: Int!): Filterable
   filterableById(id: Int!): Filterable
 
