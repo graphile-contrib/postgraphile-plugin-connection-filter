@@ -1,15 +1,40 @@
 query {
-  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...stringConnection }
-  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...stringConnection }
-  backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...stringConnection }
-  #child_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {name: {equalTo: "child2"}}}) { ...stringConnection }
-  forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...stringConnection }
   backwardCompound_name_equalTo_backwardCompound12: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2: {name: {equalTo: "backwardCompound12"}}}) { ...stringConnection }
+  backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...stringConnection }
+  children_every_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {every: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_every_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}}}) { ...childrenConnection }
+  children_every_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
+  children_every_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  children_exist_true: allFilterables(filter: {childrenByFilterableId: {exist: true}}) { ...childrenConnection }
+  children_exist_false: allFilterables(filter: {childrenByFilterableId: {exist: false}}) { ...childrenConnection }
+  children_some_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {some: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_some_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}}}) { ...childrenConnection }
+  children_some_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
+  children_some_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  children_none_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {none: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_none_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}}) { ...childrenConnection }
+  children_none_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
+  children_none_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...stringConnection }
+  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...stringConnection }
+  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...stringConnection }
 }
 
 fragment stringConnection on FilterablesConnection {
   nodes {
     id
     string
+  }
+}
+
+fragment childrenConnection on FilterablesConnection {
+  nodes {
+    id
+    childrenByFilterableId {
+      nodes {
+        id
+        name
+      }
+    }
   }
 }
