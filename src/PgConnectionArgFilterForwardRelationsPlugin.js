@@ -102,7 +102,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         memo[fieldName] = fieldWithHooks(
           fieldName,
           {
-            description: `Filter by the object’s \`${fieldName}\` field.`,
+            description: `Filter by the object’s \`${fieldName}\` relation.`,
             type: FilterType,
           },
           {

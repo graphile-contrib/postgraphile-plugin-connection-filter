@@ -44,7 +44,7 @@ input BackwardCompoundFilter {
   backwardCompound2: IntFilter
 
   \\"\\"\\"
-  Filter by the object’s \`filterableByBackwardCompound1AndBackwardCompound2\` field.
+  Filter by the object’s \`filterableByBackwardCompound1AndBackwardCompound2\` relation.
   \\"\\"\\"
   filterableByBackwardCompound1AndBackwardCompound2: FilterableFilter
 
@@ -106,7 +106,7 @@ input BackwardFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [BackwardFilter!]
 
-  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` field.\\"\\"\\"
+  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` relation.\\"\\"\\"
   filterableByFilterableId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
@@ -261,7 +261,7 @@ input ChildFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ChildFilter!]
 
-  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` field.\\"\\"\\"
+  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` relation.\\"\\"\\"
   filterableByFilterableId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
@@ -474,7 +474,7 @@ input FilterableFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [FilterableFilter!]
 
-  \\"\\"\\"Filter by the object’s \`backwardByFilterableId\` field.\\"\\"\\"
+  \\"\\"\\"Filter by the object’s \`backwardByFilterableId\` relation.\\"\\"\\"
   backwardByFilterableId: BackwardFilter
 
   \\"\\"\\"Filter by the object’s \`backwardCompound1\` field.\\"\\"\\"
@@ -484,7 +484,7 @@ input FilterableFilter {
   backwardCompound2: IntFilter
 
   \\"\\"\\"
-  Filter by the object’s \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` field.
+  Filter by the object’s \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` relation.
   \\"\\"\\"
   backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompoundFilter
 
@@ -500,7 +500,7 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
   enum: MoodFilter
 
-  \\"\\"\\"Filter by the object’s \`forwardByForwardId\` field.\\"\\"\\"
+  \\"\\"\\"Filter by the object’s \`forwardByForwardId\` relation.\\"\\"\\"
   forwardByForwardId: ForwardFilter
 
   \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
@@ -510,7 +510,7 @@ input FilterableFilter {
   forwardCompound2: IntFilter
 
   \\"\\"\\"
-  Filter by the object’s \`forwardCompoundByForwardCompound1AndForwardCompound2\` field.
+  Filter by the object’s \`forwardCompoundByForwardCompound1AndForwardCompound2\` relation.
   \\"\\"\\"
   forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompoundFilter
 
@@ -541,7 +541,7 @@ input FilterableFilter {
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FilterableFilter!]
 
-  \\"\\"\\"Filter by the object’s \`parentByParentId\` field.\\"\\"\\"
+  \\"\\"\\"Filter by the object’s \`parentByParentId\` relation.\\"\\"\\"
   parentByParentId: ParentFilter
 
   \\"\\"\\"Filter by the object’s \`parentId\` field.\\"\\"\\"
@@ -651,7 +651,7 @@ input ForwardCompoundFilter {
   and: [ForwardCompoundFilter!]
 
   \\"\\"\\"
-  Filter by the object’s \`filterableByForwardCompound1AndForwardCompound2\` field.
+  Filter by the object’s \`filterableByForwardCompound1AndForwardCompound2\` relation.
   \\"\\"\\"
   filterableByForwardCompound1AndForwardCompound2: FilterableFilter
 
@@ -719,7 +719,7 @@ input ForwardFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ForwardFilter!]
 
-  \\"\\"\\"Filter by the object’s \`filterableByForwardId\` field.\\"\\"\\"
+  \\"\\"\\"Filter by the object’s \`filterableByForwardId\` relation.\\"\\"\\"
   filterableByForwardId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
