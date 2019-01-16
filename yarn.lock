@@ -3348,7 +3348,7 @@ posix-character-classes@^0.1.0:
   resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
-postgraphile-core@^4.0.0:
+postgraphile-core@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/postgraphile-core/-/postgraphile-core-4.0.1.tgz#96419a61fc223eb5065373a8fc889eccce50bfd1"
   integrity sha512-nwLW1JmrC+diUdipCcJwD03ZdFxFopWBvzn3Qc2qdRq6MC8tMzjhzLVruOhGgLXZ1FDVjbvTrI/FURYsPiFbcQ==
