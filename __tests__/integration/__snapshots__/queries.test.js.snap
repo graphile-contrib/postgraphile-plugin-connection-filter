@@ -1444,6 +1444,366 @@ Object {
         },
       ],
     },
+    "children_every_name_equalTo_child2": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_every_name_startsWith_c": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_every_name_startsWith_c_and_exist_false": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_every_name_startsWith_c_and_exist_true": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+      ],
+    },
+    "children_exist_false": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_exist_true": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+      ],
+    },
+    "children_none_name_equalTo_child2": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_startsWith_c": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_startsWith_c_and_exist_false": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_startsWith_c_and_exist_true": Object {
+      "nodes": Array [],
+    },
+    "children_some_name_equalTo_child2": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+      ],
+    },
+    "children_some_name_startsWith_c": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+      ],
+    },
+    "children_some_name_startsWith_c_and_exist_false": Object {
+      "nodes": Array [],
+    },
+    "children_some_name_startsWith_c_and_exist_true": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+      ],
+    },
     "forwardCompound_name_equalTo_forwardCompound12": Object {
       "nodes": Array [
         Object {
@@ -1472,7 +1832,55 @@ Object {
         },
       ],
     },
+    "x_backward_empty": null,
+    "x_backward_name_empty": null,
+    "x_backward_name_equalTo_null": null,
+    "x_backward_name_null": null,
+    "x_backward_null": null,
+    "x_children_empty": null,
+    "x_children_every_empty": null,
+    "x_children_every_name_empty": null,
+    "x_children_every_name_equalTo_null": null,
+    "x_children_every_name_null": null,
+    "x_children_every_null": null,
+    "x_children_exist_null": null,
+    "x_children_null": null,
+    "x_forward_empty": null,
+    "x_forward_name_empty": null,
+    "x_forward_name_equalTo_null": null,
+    "x_forward_name_null": null,
+    "x_forward_null": null,
+    "x_parent_empty": null,
+    "x_parent_name_empty": null,
+    "x_parent_name_equalTo_null": null,
+    "x_parent_name_null": null,
+    "x_parent_null": null,
   },
+  "errors": Array [
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
+  ],
 }
 `;
 

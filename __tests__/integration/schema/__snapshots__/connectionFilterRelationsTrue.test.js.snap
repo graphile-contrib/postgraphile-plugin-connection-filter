@@ -280,6 +280,29 @@ input ChildFilter {
   or: [ChildFilter!]
 }
 
+\\"\\"\\"
+A filter to be used against many \`Child\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input ChildFilterMany {
+  \\"\\"\\"
+  Every related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  \\"\\"\\"
+  every: ChildFilter
+
+  \\"\\"\\"A related \`Child\` exists.\\"\\"\\"
+  exist: Boolean
+
+  \\"\\"\\"
+  No related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  \\"\\"\\"
+  none: ChildFilter
+
+  \\"\\"\\"
+  Some related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  \\"\\"\\"
+  some: ChildFilter
+}
+
 \\"\\"\\"A connection to a list of \`Child\` values.\\"\\"\\"
 type ChildrenConnection {
   \\"\\"\\"
@@ -491,6 +514,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`boolean\` field.\\"\\"\\"
   boolean: BooleanFilter
 
+  \\"\\"\\"Filter by the object’s \`childrenByFilterableId\` relation.\\"\\"\\"
+  childrenByFilterableId: ChildFilterMany
+
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
 
@@ -549,6 +575,29 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`string\` field.\\"\\"\\"
   string: StringFilter
+}
+
+\\"\\"\\"
+A filter to be used against many \`Filterable\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input FilterableFilterMany {
+  \\"\\"\\"
+  Every related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  \\"\\"\\"
+  every: FilterableFilter
+
+  \\"\\"\\"A related \`Filterable\` exists.\\"\\"\\"
+  exist: Boolean
+
+  \\"\\"\\"
+  No related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  \\"\\"\\"
+  none: FilterableFilter
+
+  \\"\\"\\"
+  Some related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  \\"\\"\\"
+  some: FilterableFilter
 }
 
 \\"\\"\\"A connection to a list of \`Filterable\` values.\\"\\"\\"
@@ -1116,6 +1165,9 @@ A filter to be used against \`Parent\` object types. All fields are combined wit
 input ParentFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ParentFilter!]
+
+  \\"\\"\\"Filter by the object’s \`filterablesByParentId\` relation.\\"\\"\\"
+  filterablesByParentId: FilterableFilterMany
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter

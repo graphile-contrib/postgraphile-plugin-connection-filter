@@ -318,7 +318,43 @@ query {
 
 <summary>Relations: Root-level, one-to-many</summary>
 
-Not supported yet. [#26](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues/26#issuecomment-424810349)
+> Requires `connectionFilterRelations: true`
+
+One-to-many relation fields require the filter criteria to be nested under `every`, `some`, or `none`.
+
+```graphql
+query {
+  allPeople(filter: {
+    postsByAuthorId: {
+      some: {
+        status: { equalTo: PUBLISHED }
+      }
+    }
+  }) {
+    nodes {
+      id
+      createdAt
+    }
+  }
+}
+```
+
+There is also an `exist` Boolean field for evaluating whether any related objects exist.
+
+```graphql
+query {
+  allPeople(filter: {
+    postsByAuthorId: {
+      exist: true
+    }
+  }) {
+    nodes {
+      id
+      createdAt
+    }
+  }
+}
+```
 
 </details>
 

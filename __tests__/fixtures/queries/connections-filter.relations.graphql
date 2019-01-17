@@ -1,15 +1,64 @@
 query {
-  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...stringConnection }
-  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...stringConnection }
-  backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...stringConnection }
-  #child_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {name: {equalTo: "child2"}}}) { ...stringConnection }
-  forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...stringConnection }
   backwardCompound_name_equalTo_backwardCompound12: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2: {name: {equalTo: "backwardCompound12"}}}) { ...stringConnection }
+  backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...stringConnection }
+  children_every_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {every: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_every_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}}}) { ...childrenConnection }
+  children_every_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
+  children_every_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  children_exist_true: allFilterables(filter: {childrenByFilterableId: {exist: true}}) { ...childrenConnection }
+  children_exist_false: allFilterables(filter: {childrenByFilterableId: {exist: false}}) { ...childrenConnection }
+  children_some_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {some: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_some_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}}}) { ...childrenConnection }
+  children_some_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
+  children_some_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  children_none_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {none: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_none_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}}) { ...childrenConnection }
+  children_none_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
+  children_none_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...stringConnection }
+  forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...stringConnection }
+  parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...stringConnection }
+  # the following should all fail due to null and empty object checks:
+  x_backward_name_equalTo_null: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: null}}}) { ...stringConnection }
+  x_backward_name_null: allFilterables(filter: {backwardByFilterableId: {name: null}}) { ...stringConnection }
+  x_backward_name_empty: allFilterables(filter: {backwardByFilterableId: {name: {}}}) { ...stringConnection }
+  x_backward_null: allFilterables(filter: {backwardByFilterableId: null}) { ...stringConnection }
+  x_backward_empty: allFilterables(filter: {backwardByFilterableId: {}}) { ...stringConnection }
+  x_children_every_name_equalTo_null: allFilterables(filter: {childrenByFilterableId: {every: {name: {equalTo: null}}}}) { ...childrenConnection }
+  x_children_every_name_null: allFilterables(filter: {childrenByFilterableId: {every: {name: null}}}) { ...childrenConnection }
+  x_children_every_name_empty: allFilterables(filter: {childrenByFilterableId: {every: {name: {}}}}) { ...childrenConnection }
+  x_children_every_null: allFilterables(filter: {childrenByFilterableId: {every: null}}) { ...childrenConnection }
+  x_children_every_empty: allFilterables(filter: {childrenByFilterableId: {every: {}}}) { ...childrenConnection }
+  x_children_null: allFilterables(filter: {childrenByFilterableId: null}) { ...childrenConnection }
+  x_children_empty: allFilterables(filter: {childrenByFilterableId: {}}) { ...childrenConnection }
+  x_children_exist_null: allFilterables(filter: {childrenByFilterableId: {exist: null}}) { ...childrenConnection }
+  x_forward_name_equalTo_null: allFilterables(filter: {forwardByForwardId: {name: {equalTo: null}}}) { ...stringConnection }
+  x_forward_name_null: allFilterables(filter: {forwardByForwardId: {name: null}}) { ...stringConnection }
+  x_forward_name_empty: allFilterables(filter: {forwardByForwardId: {name: {}}}) { ...stringConnection }
+  x_forward_null: allFilterables(filter: {forwardByForwardId: null}) { ...stringConnection }
+  x_forward_empty: allFilterables(filter: {forwardByForwardId: {}}) { ...stringConnection }
+  x_parent_name_equalTo_null: allFilterables(filter: {parentByParentId: {name: {equalTo: null}}}) { ...stringConnection }
+  x_parent_name_null: allFilterables(filter: {parentByParentId: {name: null}}) { ...stringConnection }
+  x_parent_name_empty: allFilterables(filter: {parentByParentId: {name: {}}}) { ...stringConnection }
+  x_parent_null: allFilterables(filter: {parentByParentId: null}) { ...stringConnection }
+  x_parent_empty: allFilterables(filter: {parentByParentId: {}}) { ...stringConnection }
 }
 
 fragment stringConnection on FilterablesConnection {
   nodes {
     id
     string
+  }
+}
+
+fragment childrenConnection on FilterablesConnection {
+  nodes {
+    id
+    childrenByFilterableId {
+      nodes {
+        id
+        name
+      }
+    }
   }
 }
