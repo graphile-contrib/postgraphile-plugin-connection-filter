@@ -25,8 +25,6 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {};
-
     const attrByFieldName = introspectionResultsByKind.attribute
       .filter(attr => attr.classId === table.id)
       .filter(attr => pgColumnFilter(attr, build, context))
@@ -96,9 +94,10 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(attrByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
-        fieldName
-      ] = resolve;
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
+        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
+        [fieldName]: resolve,
+      };
     }
 
     return extend(fields, attrFields);

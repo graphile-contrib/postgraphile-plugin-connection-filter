@@ -22,7 +22,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       pgOmit: omit,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      graphql: { GraphQLInputObjectType, GraphQLBoolean },
+      graphql: { GraphQLInputObjectType },
       connectionFilterResolve,
       connectionFilterFieldResolversByTypeNameAndFieldName,
       connectionFilterTypesByTypeName,
@@ -260,9 +260,10 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
     };
 
     for (const fieldName of Object.keys(backwardRelationSpecByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
-        fieldName
-      ] = resolve;
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
+        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
+        [fieldName]: resolve,
+      };
     }
 
     return extend(fields, backwardRelationFields);
@@ -395,13 +396,11 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       }
     };
 
-    for (const manyFieldName of Object.keys(manyFields)) {
-      if (!connectionFilterFieldResolversByTypeNameAndFieldName[Self.name]) {
-        connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {};
-      }
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
-        manyFieldName
-      ] = resolve;
+    for (const fieldName of Object.keys(manyFields)) {
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
+        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
+        [fieldName]: resolve,
+      };
     }
 
     return extend(fields, manyFields);

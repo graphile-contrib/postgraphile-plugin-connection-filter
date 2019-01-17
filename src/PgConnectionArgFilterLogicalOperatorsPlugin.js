@@ -99,9 +99,10 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(logicResolversByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
-        fieldName
-      ] = resolve;
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
+        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
+        [fieldName]: resolve,
+      };
     }
 
     return extend(fields, logicalOperatorFields);

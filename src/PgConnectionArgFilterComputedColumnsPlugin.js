@@ -122,9 +122,10 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(procByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name][
-        fieldName
-      ] = resolve;
+      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
+        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
+        [fieldName]: resolve,
+      };
     }
 
     return extend(fields, procFields);
