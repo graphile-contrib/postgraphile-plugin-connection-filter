@@ -1884,6 +1884,25 @@ Object {
 }
 `;
 
+exports[`connections-filter.set-functions.graphql 1`] = `
+Object {
+  "data": Object {
+    "funcReturnsTableMultiCol_col2_equalTo_out2": Object {
+      "nodes": Array [
+        Object {
+          "col2": "out2",
+        },
+      ],
+    },
+    "funcReturnsTableOneCol_0_equalTo_43": Object {
+      "nodes": Array [
+        43,
+      ],
+    },
+  },
+}
+`;
+
 exports[`connections-filter.simple-collections.graphql 1`] = `
 Object {
   "data": Object {

@@ -1,0 +1,15 @@
+query {
+  funcReturnsTableOneCol_0_equalTo_43: funcReturnsTableOneCol(
+    i: 0
+    filter: { equalTo: 43 }
+  ) {
+    nodes
+  }
+  funcReturnsTableMultiCol_col2_equalTo_out2: funcReturnsTableMultiCol(
+    filter: { col2: { equalTo: "out2" } }
+  ) {
+    nodes {
+      col2
+    }
+  }
+}

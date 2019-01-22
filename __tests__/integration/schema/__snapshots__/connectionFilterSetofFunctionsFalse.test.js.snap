@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prints a schema with the filter plugin and the \`connectionFilterRelations: true\` option 1`] = `
+exports[`prints a schema with the filter plugin and the \`connectionFilterSetofFunctions: false\` option 1`] = `
 "type Backward implements Node {
   \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
   filterableByFilterableId: Filterable
@@ -42,11 +42,6 @@ input BackwardCompoundFilter {
 
   \\"\\"\\"Filter by the object’s \`backwardCompound2\` field.\\"\\"\\"
   backwardCompound2: IntFilter
-
-  \\"\\"\\"
-  Filter by the object’s \`filterableByBackwardCompound1AndBackwardCompound2\` relation.
-  \\"\\"\\"
-  filterableByBackwardCompound1AndBackwardCompound2: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
   name: StringFilter
@@ -105,9 +100,6 @@ A filter to be used against \`Backward\` object types. All fields are combined w
 input BackwardFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [BackwardFilter!]
-
-  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` relation.\\"\\"\\"
-  filterableByFilterableId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
   filterableId: IntFilter
@@ -261,9 +253,6 @@ input ChildFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ChildFilter!]
 
-  \\"\\"\\"Filter by the object’s \`filterableByFilterableId\` relation.\\"\\"\\"
-  filterableByFilterableId: FilterableFilter
-
   \\"\\"\\"Filter by the object’s \`filterableId\` field.\\"\\"\\"
   filterableId: IntFilter
 
@@ -278,29 +267,6 @@ input ChildFilter {
 
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [ChildFilter!]
-}
-
-\\"\\"\\"
-A filter to be used against many \`Child\` object types. All fields are combined with a logical ‘and.’
-\\"\\"\\"
-input ChildFilterMany {
-  \\"\\"\\"
-  Every related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
-  \\"\\"\\"
-  every: ChildFilter
-
-  \\"\\"\\"A related \`Child\` exists.\\"\\"\\"
-  exist: Boolean
-
-  \\"\\"\\"
-  No related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
-  \\"\\"\\"
-  none: ChildFilter
-
-  \\"\\"\\"
-  Some related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
-  \\"\\"\\"
-  some: ChildFilter
 }
 
 \\"\\"\\"A connection to a list of \`Child\` values.\\"\\"\\"
@@ -398,11 +364,6 @@ type Filterable implements Node {
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
 
-    \\"\\"\\"
-    A filter to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    filter: ChildFilter
-
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int
 
@@ -421,11 +382,6 @@ type Filterable implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A filter to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    filter: IntFilter
 
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int
@@ -497,25 +453,14 @@ input FilterableFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [FilterableFilter!]
 
-  \\"\\"\\"Filter by the object’s \`backwardByFilterableId\` relation.\\"\\"\\"
-  backwardByFilterableId: BackwardFilter
-
   \\"\\"\\"Filter by the object’s \`backwardCompound1\` field.\\"\\"\\"
   backwardCompound1: IntFilter
 
   \\"\\"\\"Filter by the object’s \`backwardCompound2\` field.\\"\\"\\"
   backwardCompound2: IntFilter
 
-  \\"\\"\\"
-  Filter by the object’s \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` relation.
-  \\"\\"\\"
-  backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompoundFilter
-
   \\"\\"\\"Filter by the object’s \`boolean\` field.\\"\\"\\"
   boolean: BooleanFilter
-
-  \\"\\"\\"Filter by the object’s \`childrenByFilterableId\` relation.\\"\\"\\"
-  childrenByFilterableId: ChildFilterMany
 
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
@@ -526,19 +471,11 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
   enum: MoodFilter
 
-  \\"\\"\\"Filter by the object’s \`forwardByForwardId\` relation.\\"\\"\\"
-  forwardByForwardId: ForwardFilter
-
   \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
   forwardCompound1: IntFilter
 
   \\"\\"\\"Filter by the object’s \`forwardCompound2\` field.\\"\\"\\"
   forwardCompound2: IntFilter
-
-  \\"\\"\\"
-  Filter by the object’s \`forwardCompoundByForwardCompound1AndForwardCompound2\` relation.
-  \\"\\"\\"
-  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompoundFilter
 
   \\"\\"\\"Filter by the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: IntFilter
@@ -567,37 +504,11 @@ input FilterableFilter {
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FilterableFilter!]
 
-  \\"\\"\\"Filter by the object’s \`parentByParentId\` relation.\\"\\"\\"
-  parentByParentId: ParentFilter
-
   \\"\\"\\"Filter by the object’s \`parentId\` field.\\"\\"\\"
   parentId: IntFilter
 
   \\"\\"\\"Filter by the object’s \`string\` field.\\"\\"\\"
   string: StringFilter
-}
-
-\\"\\"\\"
-A filter to be used against many \`Filterable\` object types. All fields are combined with a logical ‘and.’
-\\"\\"\\"
-input FilterableFilterMany {
-  \\"\\"\\"
-  Every related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
-  \\"\\"\\"
-  every: FilterableFilter
-
-  \\"\\"\\"A related \`Filterable\` exists.\\"\\"\\"
-  exist: Boolean
-
-  \\"\\"\\"
-  No related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
-  \\"\\"\\"
-  none: FilterableFilter
-
-  \\"\\"\\"
-  Some related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
-  \\"\\"\\"
-  some: FilterableFilter
 }
 
 \\"\\"\\"A connection to a list of \`Filterable\` values.\\"\\"\\"
@@ -699,11 +610,6 @@ input ForwardCompoundFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ForwardCompoundFilter!]
 
-  \\"\\"\\"
-  Filter by the object’s \`filterableByForwardCompound1AndForwardCompound2\` relation.
-  \\"\\"\\"
-  filterableByForwardCompound1AndForwardCompound2: FilterableFilter
-
   \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
   forwardCompound1: IntFilter
 
@@ -767,9 +673,6 @@ A filter to be used against \`Forward\` object types. All fields are combined wi
 input ForwardFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ForwardFilter!]
-
-  \\"\\"\\"Filter by the object’s \`filterableByForwardId\` relation.\\"\\"\\"
-  filterableByForwardId: FilterableFilter
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
@@ -892,26 +795,6 @@ type FuncReturnsTableMultiColEdge {
 type FuncReturnsTableMultiColRecord {
   col1: Int
   col2: String
-}
-
-\\"\\"\\"
-A filter to be used against \`FuncReturnsTableMultiColRecord\` object types. All fields are combined with a logical ‘and.’
-\\"\\"\\"
-input FuncReturnsTableMultiColRecordFilter {
-  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
-  and: [FuncReturnsTableMultiColRecordFilter!]
-
-  \\"\\"\\"Filter by the object’s \`col1\` field.\\"\\"\\"
-  col1: IntFilter
-
-  \\"\\"\\"Filter by the object’s \`col2\` field.\\"\\"\\"
-  col2: StringFilter
-
-  \\"\\"\\"Negates the expression.\\"\\"\\"
-  not: FuncReturnsTableMultiColRecordFilter
-
-  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
-  or: [FuncReturnsTableMultiColRecordFilter!]
 }
 
 \\"\\"\\"A connection to a list of \`Int\` values.\\"\\"\\"
@@ -1231,9 +1114,6 @@ A filter to be used against \`Parent\` object types. All fields are combined wit
 input ParentFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ParentFilter!]
-
-  \\"\\"\\"Filter by the object’s \`filterablesByParentId\` relation.\\"\\"\\"
-  filterablesByParentId: FilterableFilterMany
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
@@ -1605,11 +1485,6 @@ type Query implements Node {
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
 
-    \\"\\"\\"
-    A filter to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    filter: FuncReturnsTableMultiColRecordFilter
-
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int
     i: Int
@@ -1629,11 +1504,6 @@ type Query implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
-
-    \\"\\"\\"
-    A filter to be used in determining which values should be returned by the collection.
-    \\"\\"\\"
-    filter: IntFilter
 
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int
