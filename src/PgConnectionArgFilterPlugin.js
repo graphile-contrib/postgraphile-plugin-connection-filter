@@ -43,14 +43,16 @@ module.exports = function PgConnectionArgFilterPlugin(
 
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
-      const sourceTypeName = pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null)
-        .name;
-      const filterTypeName = inflection.filterType(sourceTypeName);
+      const nodeTypeName =
+        returnTypeId === "2249" // returns `RECORD`
+          ? inflection.recordFunctionReturnType(source)
+          : pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null).name;
+      const filterTypeName = inflection.filterType(nodeTypeName);
       const FilterType = connectionFilterType(
         newWithHooks,
         filterTypeName,
         source,
-        sourceTypeName
+        nodeTypeName
       );
       if (FilterType == null) {
         return args;
@@ -329,7 +331,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       newWithHooks,
       filterTypeName,
       source,
-      sourceTypeName
+      nodeTypeName
     ) => {
       const existingType = connectionFilterTypesByTypeName[filterTypeName];
       if (existingType) {
@@ -348,7 +350,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       return newWithHooks(
         GraphQLInputObjectType,
         {
-          description: `A filter to be used against \`${sourceTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+          description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
           name: filterTypeName,
         },
         {
