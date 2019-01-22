@@ -1,10 +1,10 @@
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
-    connectionFilterLists = true,
-    connectionFilterSetofFunctions = true,
-    connectionFilterAllowNullInput = false,
-    connectionFilterAllowEmptyObjectInput = false,
+    connectionFilterLists,
+    connectionFilterSetofFunctions,
+    connectionFilterAllowNullInput,
+    connectionFilterAllowEmptyObjectInput,
   }
 ) {
   // Add `filter` input argument to connection and simple collection types

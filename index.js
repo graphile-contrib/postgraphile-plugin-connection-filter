@@ -1,8 +1,26 @@
-module.exports = function PostGraphileConnectionFilterPlugin(builder, options) {
+module.exports = function PostGraphileConnectionFilterPlugin(
+  builder,
+  configOptions
+) {
+  const defaultOptions = {
+    //connectionFilterAllowedOperators,
+    //connectionFilterAllowedFieldTypes,
+    connectionFilterComputedColumns: true,
+    connectionFilterLists: true,
+    //connectionFilterOperatorNames,
+    connectionFilterRelations: false,
+    connectionFilterSetofFunctions: true,
+    connectionFilterAllowNullInput: false,
+    connectionFilterAllowEmptyObjectInput: false,
+  };
+  const options = {
+    ...defaultOptions,
+    ...configOptions,
+  };
   const {
-    connectionFilterComputedColumns = true,
-    connectionFilterSetofFunctions = true,
-    connectionFilterRelations = false,
+    connectionFilterComputedColumns,
+    connectionFilterSetofFunctions,
+    connectionFilterRelations,
   } = options;
 
   require("./src/ConnectionArgFilterPlugin.js")(builder, options);

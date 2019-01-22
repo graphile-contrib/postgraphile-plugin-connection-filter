@@ -3,8 +3,8 @@ module.exports = function ConnectionArgFilterPlugin(
   {
     connectionFilterAllowedFieldTypes,
     connectionFilterAllowedOperators,
-    connectionFilterOperatorNames = {},
-  } = {}
+    connectionFilterOperatorNames,
+  }
 ) {
   builder.hook("build", build => {
     const connectionFilterOperatorsByFieldType = {};
@@ -35,7 +35,9 @@ module.exports = function ConnectionArgFilterPlugin(
 
       // If `connectionFilterOperatorNames` is specified, override the operator name
       const operatorName =
-        connectionFilterOperatorNames[defaultName] || defaultName;
+        (connectionFilterOperatorNames &&
+          connectionFilterOperatorNames[defaultName]) ||
+        defaultName;
 
       // If `connectionFilterAllowedOperators` is specified and this operator isn't included, skip it
       if (
