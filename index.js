@@ -10,6 +10,7 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     //connectionFilterOperatorNames,
     connectionFilterRelations: false,
     connectionFilterSetofFunctions: true,
+    connectionFilterLogicalOperators: true,
     connectionFilterAllowNullInput: false,
     connectionFilterAllowEmptyObjectInput: false,
   };
@@ -21,6 +22,7 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     connectionFilterComputedColumns,
     connectionFilterSetofFunctions,
     connectionFilterRelations,
+    connectionFilterLogicalOperators,
   } = options;
 
   require("./src/ConnectionArgFilterPlugin.js")(builder, options);
@@ -52,9 +54,12 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     );
   }
 
+  if (connectionFilterLogicalOperators) {
+    require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js")(
+      builder,
+      options
+    );
+  }
+
   require("./src/PgConnectionArgFilterOperatorsPlugin.js")(builder, options);
-  require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js")(
-    builder,
-    options
-  );
 };

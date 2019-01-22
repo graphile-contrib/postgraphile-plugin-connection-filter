@@ -503,6 +503,22 @@ postgraphile(pgConfig, schema, {
 
 <details>
 
+<summary>connectionFilterLogicalOperators</summary>
+
+Enable/disable filtering with logical operators (`and`/`or`/`not`):
+
+```js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterLogicalOperators: false, // default: true
+  },
+})
+```
+
+</details>
+
+<details>
+
 <summary>connectionFilterAllowNullInput</summary>
 
 Allow/forbid `null` literals in input:
