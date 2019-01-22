@@ -11,7 +11,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       inflection,
       connectionFilterTypesByTypeName,
       connectionFilterOperatorsType,
-      connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterRegisterResolver,
     } = build;
     const {
       fieldWithHooks,
@@ -122,10 +122,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(procByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
-        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
-        [fieldName]: resolve,
-      };
+      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 
     return extend(fields, procFields);

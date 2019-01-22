@@ -8,7 +8,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       connectionFilterResolve,
-      connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
       connectionFilterType,
     } = build;
@@ -164,10 +164,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(forwardRelationSpecByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
-        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
-        [fieldName]: resolve,
-      };
+      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 
     return extend(fields, forwardRelationFields);

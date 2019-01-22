@@ -21,7 +21,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
         pgSql: sql,
-        connectionFilterFieldResolversByTypeNameAndFieldName,
+        connectionFilterRegisterResolver,
         connectionFilterOperatorsType,
         connectionFilterResolve,
         connectionFilterType,
@@ -100,12 +100,7 @@ module.exports = function PgConnectionArgFilterPlugin(
             ? null
             : sql.query`(${sql.join(sqlFragments, ") and (")})`;
         };
-        connectionFilterFieldResolversByTypeNameAndFieldName[fieldTypeName] = {
-          ...connectionFilterFieldResolversByTypeNameAndFieldName[
-            fieldTypeName
-          ],
-          filter: resolve,
-        };
+        connectionFilterRegisterResolver(fieldTypeName, "filter", resolve);
 
         // Generate SQL where clause from filter argument
         addArgDataGenerator(function connectionFilter(args) {
@@ -127,33 +122,33 @@ module.exports = function PgConnectionArgFilterPlugin(
         });
       } else {
         FilterType = connectionFilterType(
-        newWithHooks,
-        filterTypeName,
-        source,
-        nodeTypeName
-      );
-      if (FilterType == null) {
-        return args;
-      }
+          newWithHooks,
+          filterTypeName,
+          source,
+          nodeTypeName
+        );
+        if (FilterType == null) {
+          return args;
+        }
 
-      // Generate SQL where clause from filter argument
-      addArgDataGenerator(function connectionFilter(args) {
-        return {
-          pgQuery: queryBuilder => {
-            if (args.hasOwnProperty("filter")) {
-              const sqlFragment = connectionFilterResolve(
-                args.filter,
-                queryBuilder.getTableAlias(),
-                filterTypeName,
-                queryBuilder
-              );
-              if (sqlFragment != null) {
-                queryBuilder.where(sqlFragment);
+        // Generate SQL where clause from filter argument
+        addArgDataGenerator(function connectionFilter(args) {
+          return {
+            pgQuery: queryBuilder => {
+              if (args.hasOwnProperty("filter")) {
+                const sqlFragment = connectionFilterResolve(
+                  args.filter,
+                  queryBuilder.getTableAlias(),
+                  filterTypeName,
+                  queryBuilder
+                );
+                if (sqlFragment != null) {
+                  queryBuilder.where(sqlFragment);
+                }
               }
-            }
-          },
-        };
-      });
+            },
+          };
+        });
       }
 
       return extend(
@@ -242,8 +237,15 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterOperatorsGlobal,
     } = build;
 
-    const connectionFilterFieldResolversByTypeNameAndFieldName = {};
+    const connectionFilterResolvers = {};
     const connectionFilterTypesByTypeName = {};
+
+    const connectionFilterRegisterResolver = (typeName, fieldName, resolve) => {
+      connectionFilterResolvers[typeName] = extend(
+        connectionFilterResolvers[typeName] || {},
+        { [fieldName]: resolve }
+      );
+    };
 
     const handleNullInput = () => {
       if (!connectionFilterAllowNullInput) {
@@ -283,8 +285,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           if (value == null) return handleNullInput();
           if (isEmptyObject(value)) return handleEmptyObjectInput();
 
-          const resolversByFieldName =
-            connectionFilterFieldResolversByTypeNameAndFieldName[typeName];
+          const resolversByFieldName = connectionFilterResolvers[typeName];
           if (resolversByFieldName && resolversByFieldName[key]) {
             return resolversByFieldName[key]({
               sourceAlias,
@@ -454,7 +455,7 @@ module.exports = function PgConnectionArgFilterPlugin(
 
     return extend(build, {
       connectionFilterTypesByTypeName,
-      connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterRegisterResolver,
       connectionFilterResolve,
       connectionFilterOperatorsType,
       connectionFilterType,

@@ -10,7 +10,7 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       connectionFilterOperatorsType,
       resolveWhereComparison,
       connectionFilterTypesByTypeName,
-      connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterRegisterResolver,
     } = build;
     const {
       fieldWithHooks,
@@ -129,10 +129,7 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(outputArgByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
-        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
-        [fieldName]: resolve,
-      };
+      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 
     return extend(fields, outputArgFields);

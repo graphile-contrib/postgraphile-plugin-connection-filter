@@ -6,7 +6,7 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
       pgSql: sql,
       connectionFilterTypesByTypeName,
       connectionFilterResolve,
-      connectionFilterFieldResolversByTypeNameAndFieldName,
+      connectionFilterRegisterResolver,
     } = build;
     const {
       fieldWithHooks,
@@ -99,10 +99,7 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
     };
 
     for (const fieldName of Object.keys(logicResolversByFieldName)) {
-      connectionFilterFieldResolversByTypeNameAndFieldName[Self.name] = {
-        ...connectionFilterFieldResolversByTypeNameAndFieldName[Self.name],
-        [fieldName]: resolve,
-      };
+      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 
     return extend(fields, logicalOperatorFields);
