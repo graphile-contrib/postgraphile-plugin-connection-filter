@@ -14,11 +14,18 @@ module.exports = function PgConnectionArgFilterPlugin(
       const {
         extend,
         newWithHooks,
+        getTypeByName,
         inflection,
+        graphql: { getNamedType, GraphQLScalarType, GraphQLEnumType },
         pgGetGqlTypeByTypeIdAndModifier,
+        pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
+        pgSql: sql,
+        connectionFilterFieldResolversByTypeNameAndFieldName,
+        connectionFilterOperatorsType,
         connectionFilterResolve,
         connectionFilterType,
+        resolveWhereComparison,
       } = build;
       const {
         scope: {
@@ -43,14 +50,87 @@ module.exports = function PgConnectionArgFilterPlugin(
 
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
-      const sourceTypeName = pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null)
-        .name;
-      const filterTypeName = inflection.filterType(sourceTypeName);
-      const FilterType = connectionFilterType(
+      const nodeTypeName =
+        returnTypeId === "2249" // returns `RECORD`
+          ? inflection.recordFunctionReturnType(source)
+          : pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null).name;
+      const filterTypeName = inflection.filterType(nodeTypeName);
+      const nodeType = getTypeByName(nodeTypeName);
+      if (!nodeType) {
+        return args;
+      }
+      const isScalarType = nodeType instanceof GraphQLScalarType;
+      const isEnumType = nodeType instanceof GraphQLEnumType;
+
+      let FilterType;
+
+      if (isScalarType || isEnumType) {
+        FilterType = connectionFilterOperatorsType(nodeType, newWithHooks);
+        if (FilterType == null) {
+          return args;
+        }
+
+        const fieldTypeName = getNamedType(field.type).name;
+
+        const resolve = ({
+          sourceAlias,
+          fieldName,
+          fieldValue,
+          queryBuilder,
+        }) => {
+          if (fieldValue == null) return null;
+
+          const pgType = introspectionResultsByKind.typeById[returnTypeId];
+          const sqlFragments = Object.entries(fieldValue)
+            .map(([operatorName, input]) => {
+              return resolveWhereComparison(
+                sourceAlias,
+                operatorName,
+                input,
+                pgType,
+                null,
+                fieldName,
+                queryBuilder,
+                sourceAlias
+              );
+            })
+            .filter(x => x != null);
+
+          return sqlFragments.length === 0
+            ? null
+            : sql.query`(${sql.join(sqlFragments, ") and (")})`;
+        };
+        connectionFilterFieldResolversByTypeNameAndFieldName[fieldTypeName] = {
+          ...connectionFilterFieldResolversByTypeNameAndFieldName[
+            fieldTypeName
+          ],
+          filter: resolve,
+        };
+
+        // Generate SQL where clause from filter argument
+        addArgDataGenerator(function connectionFilter(args) {
+          return {
+            pgQuery: queryBuilder => {
+              if (args.hasOwnProperty("filter")) {
+                const sqlFragment = connectionFilterResolve(
+                  { filter: args.filter },
+                  queryBuilder.getTableAlias(),
+                  fieldTypeName,
+                  queryBuilder
+                );
+                if (sqlFragment != null) {
+                  queryBuilder.where(sqlFragment);
+                }
+              }
+            },
+          };
+        });
+      } else {
+        FilterType = connectionFilterType(
         newWithHooks,
         filterTypeName,
         source,
-        sourceTypeName
+        nodeTypeName
       );
       if (FilterType == null) {
         return args;
@@ -74,6 +154,7 @@ module.exports = function PgConnectionArgFilterPlugin(
           },
         };
       });
+      }
 
       return extend(
         args,
@@ -329,7 +410,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       newWithHooks,
       filterTypeName,
       source,
-      sourceTypeName
+      nodeTypeName
     ) => {
       const existingType = connectionFilterTypesByTypeName[filterTypeName];
       if (existingType) {
@@ -348,7 +429,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       return newWithHooks(
         GraphQLInputObjectType,
         {
-          description: `A filter to be used against \`${sourceTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+          description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
           name: filterTypeName,
         },
         {

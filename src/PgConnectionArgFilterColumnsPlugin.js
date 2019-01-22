@@ -21,7 +21,7 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       Self,
     } = context;
 
-    if (!isPgConnectionFilter) return fields;
+    if (!isPgConnectionFilter || table.kind !== "class") return fields;
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 

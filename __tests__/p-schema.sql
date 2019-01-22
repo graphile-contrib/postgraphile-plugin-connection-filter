@@ -117,3 +117,15 @@ create function p.filterable_computed_setof_child(f p.filterable) returns setof 
   from p.child
   where filterable_id = f.id;
 $$ language sql stable;
+
+create function p.func_returns_table_one_col(i int) returns table (col1 int) as $$
+  select i + 42 as col1
+  union
+  select i + 43 as col1;
+$$ language sql stable;
+
+create function p.func_returns_table_multi_col(i int) returns table (col1 int, col2 text) as $$
+  select i + 42 as col1, 'out'::text as col2
+  union
+  select i + 43 as col1, 'out2'::text as col2;
+$$ language sql stable;

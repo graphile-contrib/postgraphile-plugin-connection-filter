@@ -34,7 +34,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       Self,
     } = context;
 
-    if (!isPgConnectionFilter) return fields;
+    if (!isPgConnectionFilter || table.kind !== "class") return fields;
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 

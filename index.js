@@ -1,6 +1,7 @@
 module.exports = function PostGraphileConnectionFilterPlugin(builder, options) {
   const {
     connectionFilterComputedColumns = true,
+    connectionFilterSetofFunctions = true,
     connectionFilterRelations = false,
   } = options;
 
@@ -10,6 +11,13 @@ module.exports = function PostGraphileConnectionFilterPlugin(builder, options) {
 
   if (connectionFilterComputedColumns) {
     require("./src/PgConnectionArgFilterComputedColumnsPlugin.js")(
+      builder,
+      options
+    );
+  }
+
+  if (connectionFilterSetofFunctions) {
+    require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js")(
       builder,
       options
     );
