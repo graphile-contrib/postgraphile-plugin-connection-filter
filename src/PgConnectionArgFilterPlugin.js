@@ -20,12 +20,11 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgGetGqlTypeByTypeIdAndModifier,
         pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
-        pgSql: sql,
         connectionFilterRegisterResolver,
         connectionFilterOperatorsType,
         connectionFilterResolve,
+        connectionFilterResolvePredicates,
         connectionFilterType,
-        resolveWhereComparison,
       } = build;
       const {
         scope: {
@@ -80,25 +79,19 @@ module.exports = function PgConnectionArgFilterPlugin(
         }) => {
           if (fieldValue == null) return null;
 
+          const sqlIdentifier = sourceAlias;
           const pgType = introspectionResultsByKind.typeById[returnTypeId];
-          const sqlFragments = Object.entries(fieldValue)
-            .map(([operatorName, input]) => {
-              return resolveWhereComparison(
-                sourceAlias,
-                operatorName,
-                input,
-                pgType,
-                null,
-                fieldName,
-                queryBuilder,
-                sourceAlias
-              );
-            })
-            .filter(x => x != null);
+          const pgTypeModifier = null;
 
-          return sqlFragments.length === 0
-            ? null
-            : sql.query`(${sql.join(sqlFragments, ") and (")})`;
+          return connectionFilterResolvePredicates({
+            sourceAlias,
+            fieldName,
+            fieldValue,
+            queryBuilder,
+            sqlIdentifier,
+            pgType,
+            pgTypeModifier,
+          });
         };
         connectionFilterRegisterResolver(fieldTypeName, "filter", resolve);
 
@@ -240,13 +233,6 @@ module.exports = function PgConnectionArgFilterPlugin(
     const connectionFilterResolvers = {};
     const connectionFilterTypesByTypeName = {};
 
-    const connectionFilterRegisterResolver = (typeName, fieldName, resolve) => {
-      connectionFilterResolvers[typeName] = extend(
-        connectionFilterResolvers[typeName] || {},
-        { [fieldName]: resolve }
-      );
-    };
-
     const handleNullInput = () => {
       if (!connectionFilterAllowNullInput) {
         throw new Error(
@@ -270,6 +256,13 @@ module.exports = function PgConnectionArgFilterPlugin(
       obj !== null &&
       !Array.isArray(obj) &&
       Object.keys(obj).length === 0;
+
+    const connectionFilterRegisterResolver = (typeName, fieldName, resolve) => {
+      connectionFilterResolvers[typeName] = extend(
+        connectionFilterResolvers[typeName] || {},
+        { [fieldName]: resolve }
+      );
+    };
 
     const connectionFilterResolve = (
       obj,
@@ -298,6 +291,34 @@ module.exports = function PgConnectionArgFilterPlugin(
         })
         .filter(x => x != null);
 
+      return sqlFragments.length === 0
+        ? null
+        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
+    };
+
+    const connectionFilterResolvePredicates = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      queryBuilder,
+      sqlIdentifier,
+      pgType,
+      pgTypeModifier,
+    }) => {
+      const sqlFragments = Object.entries(fieldValue)
+        .map(([operatorName, input]) =>
+          resolvePredicate(
+            sqlIdentifier,
+            operatorName,
+            input,
+            pgType,
+            pgTypeModifier,
+            fieldName,
+            queryBuilder,
+            sourceAlias
+          )
+        )
+        .filter(x => x != null);
       return sqlFragments.length === 0
         ? null
         : sql.query`(${sql.join(sqlFragments, ") and (")})`;
@@ -346,7 +367,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       );
     };
 
-    const resolveWhereComparison = (
+    const resolvePredicate = (
       sqlIdentifier,
       operatorName,
       input,
@@ -457,9 +478,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterTypesByTypeName,
       connectionFilterRegisterResolver,
       connectionFilterResolve,
+      connectionFilterResolvePredicates,
       connectionFilterOperatorsType,
       connectionFilterType,
-      resolveWhereComparison,
       escapeLikeWildcards,
     });
   });

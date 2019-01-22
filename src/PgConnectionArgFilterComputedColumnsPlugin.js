@@ -7,11 +7,11 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       pgGetGqlInputTypeByTypeIdAndModifier,
       pgOmit: omit,
       pgSql: sql,
-      resolveWhereComparison,
       inflection,
-      connectionFilterTypesByTypeName,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
+      connectionFilterResolvePredicates,
+      connectionFilterTypesByTypeName,
     } = build;
     const {
       fieldWithHooks,
@@ -95,30 +95,21 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       if (fieldValue == null) return null;
 
       const proc = procByFieldName[fieldName];
+      const sqlIdentifier = sql.query`${sql.identifier(
+        proc.namespace.name
+      )}.${sql.identifier(proc.name)}(${sourceAlias})`;
+      const pgType = introspectionResultsByKind.typeById[proc.returnTypeId];
+      const pgTypeModifier = null;
 
-      const sqlFragments = Object.entries(fieldValue)
-        .map(([operatorName, input]) => {
-          const procReturnType =
-            introspectionResultsByKind.typeById[proc.returnTypeId];
-          const sqlIdentifier = sql.query`${sql.identifier(
-            proc.namespace.name
-          )}.${sql.identifier(proc.name)}(${sourceAlias})`;
-          return resolveWhereComparison(
-            sqlIdentifier,
-            operatorName,
-            input,
-            procReturnType,
-            null,
-            fieldName,
-            queryBuilder,
-            sourceAlias
-          );
-        })
-        .filter(x => x != null);
-
-      return sqlFragments.length === 0
-        ? null
-        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
+      return connectionFilterResolvePredicates({
+        sourceAlias,
+        fieldName,
+        fieldValue,
+        queryBuilder,
+        sqlIdentifier,
+        pgType,
+        pgTypeModifier,
+      });
     };
 
     for (const fieldName of Object.keys(procByFieldName)) {

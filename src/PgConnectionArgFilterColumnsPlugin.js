@@ -11,9 +11,9 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       pgOmit: omit,
       inflection,
       connectionFilterOperatorsType,
-      resolveWhereComparison,
-      connectionFilterTypesByTypeName,
       connectionFilterRegisterResolver,
+      connectionFilterResolvePredicates,
+      connectionFilterTypesByTypeName,
     } = build;
     const {
       fieldWithHooks,
@@ -69,28 +69,21 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       if (fieldValue == null) return null;
 
       const attr = attrByFieldName[fieldName];
+      const sqlIdentifier = sql.query`${sourceAlias}.${sql.identifier(
+        attr.name
+      )}`;
+      const pgType = attr.type;
+      const pgTypeModifier = attr.typeModifier;
 
-      const sqlFragments = Object.entries(fieldValue)
-        .map(([operatorName, input]) => {
-          const sqlIdentifier = sql.query`${sourceAlias}.${sql.identifier(
-            attr.name
-          )}`;
-          return resolveWhereComparison(
-            sqlIdentifier,
-            operatorName,
-            input,
-            attr.type,
-            attr.typeModifier,
-            fieldName,
-            queryBuilder,
-            sourceAlias
-          );
-        })
-        .filter(x => x != null);
-
-      return sqlFragments.length === 0
-        ? null
-        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
+      return connectionFilterResolvePredicates({
+        sourceAlias,
+        fieldName,
+        fieldValue,
+        queryBuilder,
+        sqlIdentifier,
+        pgType,
+        pgTypeModifier,
+      });
     };
 
     for (const fieldName of Object.keys(attrByFieldName)) {

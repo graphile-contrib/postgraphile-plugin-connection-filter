@@ -8,9 +8,9 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       pgGetGqlTypeByTypeIdAndModifier,
       inflection,
       connectionFilterOperatorsType,
-      resolveWhereComparison,
-      connectionFilterTypesByTypeName,
       connectionFilterRegisterResolver,
+      connectionFilterResolvePredicates,
+      connectionFilterTypesByTypeName,
     } = build;
     const {
       fieldWithHooks,
@@ -105,27 +105,21 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
 
       const outputArg = outputArgByFieldName[fieldName];
 
-      const sqlFragments = Object.entries(fieldValue)
-        .map(([operatorName, input]) => {
-          const sqlIdentifier = sql.query`${sourceAlias}.${sql.identifier(
-            outputArg.name
-          )}`;
-          return resolveWhereComparison(
-            sqlIdentifier,
-            operatorName,
-            input,
-            outputArg.type,
-            outputArg.typeModifier,
-            fieldName,
-            queryBuilder,
-            sourceAlias
-          );
-        })
-        .filter(x => x != null);
+      const sqlIdentifier = sql.query`${sourceAlias}.${sql.identifier(
+        outputArg.name
+      )}`;
+      const pgType = outputArg.type;
+      const pgTypeModifier = outputArg.typeModifier;
 
-      return sqlFragments.length === 0
-        ? null
-        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
+      return connectionFilterResolvePredicates({
+        sourceAlias,
+        fieldName,
+        fieldValue,
+        queryBuilder,
+        sqlIdentifier,
+        pgType,
+        pgTypeModifier,
+      });
     };
 
     for (const fieldName of Object.keys(outputArgByFieldName)) {
