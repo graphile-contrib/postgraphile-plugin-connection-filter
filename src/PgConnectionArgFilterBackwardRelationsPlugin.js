@@ -104,7 +104,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
           isOneToMany,
         } = spec;
         if (isOneToMany) {
-          function makeFields(isConnection) {
+          const makeFields = isConnection => {
             if (!omit(foreignTable, "many")) {
               const fieldName = isConnection
                 ? inflection.manyRelationByKeys(
@@ -123,7 +123,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
                 [fieldName]: spec,
               });
             }
-          }
+          };
           if (hasConnections) {
             makeFields(true);
           }

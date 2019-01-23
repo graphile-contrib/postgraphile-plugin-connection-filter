@@ -250,6 +250,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       },
       inflection,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
+      pgGetGqlInputTypeByTypeIdAndModifier,
       pgGetGqlTypeByTypeIdAndModifier,
       pgSql: sql,
       connectionFilterAllowedFieldTypes,

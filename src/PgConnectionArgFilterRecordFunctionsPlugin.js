@@ -6,6 +6,7 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       inflection,
+      describePgEntity,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
       connectionFilterResolvePredicates,
