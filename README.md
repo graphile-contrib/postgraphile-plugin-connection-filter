@@ -416,8 +416,6 @@ The available field types will depend on your database schema.
 
 <summary>connectionFilterComputedColumns</summary>
 
-TODO: VERIFY THAT THE TEST FOR THIS IS ACTUALLY WORKING!
-
 Enable/disable filtering by computed columns:
 
 ```js
@@ -433,8 +431,6 @@ postgraphile(pgConfig, schema, {
 <details>
 
 <summary>connectionFilterLists</summary>
-
-TODO: VERIFY THAT THE TEST FOR THIS IS ACTUALLY WORKING!
 
 Enable/disable filtering on List fields:
 
@@ -486,8 +482,6 @@ postgraphile(pgConfig, schema, {
 <details>
 
 <summary>connectionFilterSetofFunctions</summary>
-
-TODO: VERIFY THAT THE TEST FOR THIS IS ACTUALLY WORKING!
 
 Enable/disable filtering on functions that return `setof`:
 
