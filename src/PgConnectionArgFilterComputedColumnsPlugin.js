@@ -7,6 +7,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       pgGetGqlInputTypeByTypeIdAndModifier,
       pgOmit: omit,
       pgSql: sql,
+      graphql: { getNamedType, GraphQLEnumType, GraphQLScalarType },
       inflection,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
@@ -58,6 +59,16 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
           proc,
           table
         );
+        const fieldType = pgGetGqlInputTypeByTypeIdAndModifier(
+          proc.returnTypeId,
+          null
+        );
+        const namedType = getNamedType(fieldType);
+        const isScalarType = namedType instanceof GraphQLScalarType;
+        const isEnumType = namedType instanceof GraphQLEnumType;
+        if (!(isScalarType || isEnumType)) {
+          return memo;
+        }
         memo[fieldName] = proc;
         return memo;
       }, {});

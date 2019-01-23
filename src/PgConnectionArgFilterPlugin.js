@@ -327,11 +327,7 @@ module.exports = function PgConnectionArgFilterPlugin(
     // Get or create types like IntFilter, StringFilter, etc.
     const connectionFilterOperatorsType = (fieldType, newWithHooks) => {
       const namedType = getNamedType(fieldType);
-      const isScalarType = namedType instanceof GraphQLScalarType;
-      const isEnumType = namedType instanceof GraphQLEnumType;
-      if (!(isScalarType || isEnumType)) {
-        return null;
-      }
+
       // Check whether this field type is filterable
       if (
         connectionFilterAllowedFieldTypes &&
