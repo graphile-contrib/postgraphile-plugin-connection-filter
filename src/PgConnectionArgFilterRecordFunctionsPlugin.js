@@ -5,7 +5,6 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       newWithHooks,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlTypeByTypeIdAndModifier,
       inflection,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
@@ -70,16 +69,10 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
 
     const outputArgFields = Object.entries(outputArgByFieldName).reduce(
       (memo, [fieldName, outputArg]) => {
-        const fieldType = pgGetGqlTypeByTypeIdAndModifier(
+        const OperatorsType = connectionFilterOperatorsType(
+          newWithHooks,
           outputArg.type.id,
           null
-        );
-        if (!fieldType) {
-          return memo;
-        }
-        const OperatorsType = connectionFilterOperatorsType(
-          fieldType,
-          newWithHooks
         );
         if (!OperatorsType) {
           return memo;
@@ -122,7 +115,7 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       });
     };
 
-    for (const fieldName of Object.keys(outputArgByFieldName)) {
+    for (const fieldName of Object.keys(outputArgFields)) {
       connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 

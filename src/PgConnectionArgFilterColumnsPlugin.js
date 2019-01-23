@@ -5,8 +5,6 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       newWithHooks,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlInputTypeByTypeIdAndModifier,
-      graphql: { GraphQLString },
       pgColumnFilter,
       pgOmit: omit,
       inflection,
@@ -37,14 +35,10 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
 
     const attrFields = Object.entries(attrByFieldName).reduce(
       (memo, [fieldName, attr]) => {
-        const fieldType =
-          pgGetGqlInputTypeByTypeIdAndModifier(
-            attr.typeId,
-            attr.typeModifier
-          ) || GraphQLString; // TODO: Remove `|| GraphQLString` before v1.0.0
         const OperatorsType = connectionFilterOperatorsType(
-          fieldType,
-          newWithHooks
+          newWithHooks,
+          attr.typeId,
+          attr.typeModifier
         );
         if (!OperatorsType) {
           return memo;
@@ -86,7 +80,7 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       });
     };
 
-    for (const fieldName of Object.keys(attrByFieldName)) {
+    for (const fieldName of Object.keys(attrFields)) {
       connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 

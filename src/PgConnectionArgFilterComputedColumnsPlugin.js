@@ -4,10 +4,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       extend,
       newWithHooks,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlInputTypeByTypeIdAndModifier,
       pgOmit: omit,
       pgSql: sql,
-      graphql: { getNamedType, GraphQLEnumType, GraphQLScalarType },
       inflection,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
@@ -59,29 +57,16 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
           proc,
           table
         );
-        const fieldType = pgGetGqlInputTypeByTypeIdAndModifier(
-          proc.returnTypeId,
-          null
-        );
-        const namedType = getNamedType(fieldType);
-        const isScalarType = namedType instanceof GraphQLScalarType;
-        const isEnumType = namedType instanceof GraphQLEnumType;
-        if (!(isScalarType || isEnumType)) {
-          return memo;
-        }
         memo[fieldName] = proc;
         return memo;
       }, {});
 
     const procFields = Object.entries(procByFieldName).reduce(
       (memo, [fieldName, proc]) => {
-        const fieldType = pgGetGqlInputTypeByTypeIdAndModifier(
+        const OperatorsType = connectionFilterOperatorsType(
+          newWithHooks,
           proc.returnTypeId,
           null
-        );
-        const OperatorsType = connectionFilterOperatorsType(
-          fieldType,
-          newWithHooks
         );
         if (!OperatorsType) {
           return memo;
@@ -123,7 +108,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       });
     };
 
-    for (const fieldName of Object.keys(procByFieldName)) {
+    for (const fieldName of Object.keys(procFields)) {
       connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 

@@ -64,7 +64,11 @@ module.exports = function PgConnectionArgFilterPlugin(
       let FilterType;
 
       if (isScalarType || isEnumType) {
-        FilterType = connectionFilterOperatorsType(nodeType, newWithHooks);
+        FilterType = connectionFilterOperatorsType(
+          newWithHooks,
+          returnTypeId,
+          null
+        );
         if (FilterType == null) {
           return args;
         }
@@ -165,28 +169,52 @@ module.exports = function PgConnectionArgFilterPlugin(
     const {
       extend,
       graphql: { getNamedType, GraphQLList },
+      pgGetGqlTypeByTypeIdAndModifier,
+      pgGetGqlInputTypeByTypeIdAndModifier,
+      pgIntrospectionResultsByKind: introspectionResultsByKind,
       connectionFilterOperatorsGlobal,
       connectionFilterOperatorsByFieldType,
       connectionFilterTypesByTypeName,
     } = build;
     const {
-      scope: { isPgConnectionFilterOperators, parentFieldType },
+      scope: { isPgConnectionFilterOperators, pgTypeId, pgTypeModifier },
       fieldWithHooks,
       Self,
     } = context;
-    if (!isPgConnectionFilterOperators) {
+    if (!isPgConnectionFilterOperators || !pgTypeId) {
       return fields;
     }
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const isListType = parentFieldType instanceof GraphQLList;
-    const namedType = getNamedType(parentFieldType);
-    const namedTypeName = namedType.name;
+    const fieldType = pgGetGqlTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
+    const fieldInputType = pgGetGqlInputTypeByTypeIdAndModifier(
+      pgTypeId,
+      pgTypeModifier
+    );
+    const pgType = introspectionResultsByKind.typeById[pgTypeId];
+    const fieldBaseInputType = pgType.isPgArray
+      ? pgGetGqlInputTypeByTypeIdAndModifier(
+          pgType.arrayItemType.id,
+          pgTypeModifier
+        )
+      : pgType.rangeSubTypeId
+      ? pgGetGqlInputTypeByTypeIdAndModifier(
+          pgType.rangeSubTypeId,
+          pgTypeModifier
+        )
+      : fieldInputType;
+
+    if (!fieldType || !fieldInputType || !fieldBaseInputType) {
+      return fields;
+    }
+
+    const isListType = fieldType instanceof GraphQLList;
+    const namedType = getNamedType(fieldType);
 
     const operators = {
       ...connectionFilterOperatorsGlobal,
-      ...connectionFilterOperatorsByFieldType[namedTypeName],
+      ...connectionFilterOperatorsByFieldType[namedType.name],
     };
     const operatorFields = Object.entries(operators).reduce(
       (memo, [operatorName, operator]) => {
@@ -199,7 +227,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         if (listTypeIsAllowed) {
           memo[operatorName] = fieldWithHooks(operatorName, {
             description: operator.description,
-            type: operator.resolveType(parentFieldType),
+            type: operator.resolveType(fieldInputType, fieldBaseInputType),
           });
         }
         return memo;
@@ -218,12 +246,11 @@ module.exports = function PgConnectionArgFilterPlugin(
         getNamedType,
         GraphQLInputObjectType,
         GraphQLList,
-        GraphQLScalarType,
-        GraphQLEnumType,
         GraphQLString,
       },
       inflection,
-      pgGetGqlInputTypeByTypeIdAndModifier,
+      pgIntrospectionResultsByKind: introspectionResultsByKind,
+      pgGetGqlTypeByTypeIdAndModifier,
       pgSql: sql,
       connectionFilterAllowedFieldTypes,
       connectionFilterOperatorsByFieldType,
@@ -325,7 +352,23 @@ module.exports = function PgConnectionArgFilterPlugin(
     };
 
     // Get or create types like IntFilter, StringFilter, etc.
-    const connectionFilterOperatorsType = (fieldType, newWithHooks) => {
+    const connectionFilterOperatorsType = (
+      newWithHooks,
+      pgTypeId,
+      pgTypeModifier
+    ) => {
+      const pgType = introspectionResultsByKind.typeById[pgTypeId];
+      if (!["b", "e", "r"].includes(pgType.type)) {
+        // Not a base, enum, or range type? Skip.
+        return null;
+      }
+      const fieldType = pgGetGqlTypeByTypeIdAndModifier(
+        pgTypeId,
+        pgTypeModifier
+      );
+      if (!fieldType) {
+        return null;
+      }
       const namedType = getNamedType(fieldType);
 
       // Check whether this field type is filterable
@@ -356,7 +399,8 @@ module.exports = function PgConnectionArgFilterPlugin(
           },
           {
             isPgConnectionFilterOperators: true,
-            parentFieldType: fieldType,
+            pgTypeId,
+            pgTypeModifier,
           },
           true
         )
