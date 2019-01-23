@@ -242,15 +242,9 @@ module.exports = function PgConnectionArgFilterPlugin(
     const {
       extend,
       gql2pg,
-      graphql: {
-        getNamedType,
-        GraphQLInputObjectType,
-        GraphQLList,
-        GraphQLString,
-      },
+      graphql: { getNamedType, GraphQLInputObjectType, GraphQLList },
       inflection,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlInputTypeByTypeIdAndModifier,
       pgGetGqlTypeByTypeIdAndModifier,
       pgSql: sql,
       connectionFilterAllowedFieldTypes,
@@ -421,8 +415,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (isEmptyObject(input)) return handleEmptyObjectInput();
 
       const fieldType = getNamedType(
-        pgGetGqlInputTypeByTypeIdAndModifier(pgType.id, pgTypeModifier) ||
-          GraphQLString
+        pgGetGqlTypeByTypeIdAndModifier(pgType.id, pgTypeModifier)
       );
       const operator =
         connectionFilterOperatorsGlobal[operatorName] ||
@@ -431,22 +424,19 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (!operator) {
         throw new Error(`Unable to resolve operator '${operatorName}'`);
       }
-      if (input == null && !operator.options.processNull) {
-        return null;
-      }
 
-      const sqlValueFromInput = (input, pgType, pgTypeModifier) =>
-        sql.query`${gql2pg(
-          (operator.options.inputResolver &&
-            operator.options.inputResolver(input)) ||
-            input,
+      const { inputResolver, sqlValueResolver } = operator.options;
+
+      const sqlValueFromInput = (input, pgType, pgTypeModifier) => {
+        return gql2pg(
+          inputResolver ? inputResolver(input) : input,
           pgType,
           pgTypeModifier
-        )}`;
+        );
+      };
 
-      // TODO: Remove `resolveWithRawInput` option before v1.0.0
-      const sqlValue = operator.options.resolveWithRawInput
-        ? input
+      const sqlValue = sqlValueResolver
+        ? sqlValueResolver(input, pgType, pgTypeModifier)
         : Array.isArray(input)
         ? pgType.isPgArray
           ? sqlValueFromInput(input, pgType, pgTypeModifier)
