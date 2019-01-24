@@ -896,6 +896,7 @@ type Filterable implements Node {
   parentByParentId: Parent
   parentId: Int
   text: String
+  textArray: [String]
   textOmitFilter: String
   timestampRange: DatetimeRange
   timestamptzRange: DatetimeRange
@@ -1015,6 +1016,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`text\` field.\\"\\"\\"
   text: StringFilter
 
+  \\"\\"\\"Filter by the object’s \`textArray\` field.\\"\\"\\"
+  textArray: StringListFilter
+
   \\"\\"\\"Filter by the object’s \`timestampRange\` field.\\"\\"\\"
   timestampRange: DatetimeRangeFilter
 
@@ -1105,6 +1109,8 @@ enum FilterablesOrderBy {
   PARENT_ID_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+  TEXT_ARRAY_ASC
+  TEXT_ARRAY_DESC
   TEXT_ASC
   TEXT_DESC
   TEXT_OMIT_FILTER_ASC
@@ -2373,6 +2379,69 @@ input StringFilter {
 
   \\"\\"\\"Starts with the specified string (case-insensitive).\\"\\"\\"
   startsWithInsensitive: String
+}
+
+\\"\\"\\"
+A filter to be used against String List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input StringListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: String
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: String
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: String
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: String
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: String
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: String
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [String]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [String]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [String]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [String]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [String]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [String]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [String]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [String]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [String]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [String]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [String]
 }
 
 type Unfilterable implements Node {

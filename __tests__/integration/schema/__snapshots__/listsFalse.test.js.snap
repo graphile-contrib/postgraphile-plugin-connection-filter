@@ -896,6 +896,7 @@ type Filterable implements Node {
   parentByParentId: Parent
   parentId: Int
   text: String
+  textArray: [String]
   textOmitFilter: String
   timestampRange: DatetimeRange
   timestamptzRange: DatetimeRange
@@ -1099,6 +1100,8 @@ enum FilterablesOrderBy {
   PARENT_ID_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+  TEXT_ARRAY_ASC
+  TEXT_ARRAY_DESC
   TEXT_ASC
   TEXT_DESC
   TEXT_OMIT_FILTER_ASC
