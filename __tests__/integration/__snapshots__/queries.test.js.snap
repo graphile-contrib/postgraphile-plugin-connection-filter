@@ -1,41 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`dynamic-json.graphql 1`] = `
-Object {
-  "data": Object {
-    "a": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "b": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "c": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "d": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`filters.graphql 1`] = `
+exports[`computedColumns.graphql 1`] = `
 Object {
   "data": Object {
     "allFilterables_computedSetofChild_name_equalTo_child2": Object {
@@ -45,7 +10,6 @@ Object {
             "nodes": Array [
               Object {
                 "id": 2,
-                "name": "child2",
               },
             ],
           },
@@ -80,7 +44,6 @@ Object {
     "computedIntArray_equalTo_2_20": Object {
       "nodes": Array [
         Object {
-          "boolean": true,
           "id": 2,
         },
       ],
@@ -91,7 +54,6 @@ Object {
     "computed_equalTo_test_computed": Object {
       "nodes": Array [
         Object {
-          "boolean": false,
           "id": 4,
         },
       ],
@@ -101,1011 +63,43 @@ Object {
         "nodes": Array [
           Object {
             "id": 2,
-            "name": "child2",
           },
         ],
       },
       "id": 1,
     },
-    "intArray_anyEqualTo_2": Object {
+  },
+}
+`;
+
+exports[`dynamicJson.graphql 1`] = `
+Object {
+  "data": Object {
+    "a": Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
         },
       ],
     },
-    "intArray_anyGreaterThanOrEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_anyGreaterThan_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_anyLessThanOrEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-      ],
-    },
-    "intArray_anyLessThan_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-      ],
-    },
-    "intArray_anyNotEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_containedBy_2": Object {
-      "nodes": Array [],
-    },
-    "intArray_containedBy_2_3_20": Object {
+    "b": Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
         },
       ],
     },
-    "intArray_containedBy_empty": Object {
-      "nodes": Array [],
-    },
-    "intArray_contains_2": Object {
+    "c": Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
         },
       ],
     },
-    "intArray_contains_2_3_20": Object {
-      "nodes": Array [],
-    },
-    "intArray_contains_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_distinctFrom_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-        Object {
-          "id": 5,
-          "intArray": null,
-        },
-      ],
-    },
-    "intArray_distinctFrom_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-        Object {
-          "id": 5,
-          "intArray": null,
-        },
-      ],
-    },
-    "intArray_equalTo_2_20": Object {
+    "d": Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-      ],
-    },
-    "intArray_equalTo_empty": Object {
-      "nodes": Array [],
-    },
-    "intArray_greaterThanOrEqualTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_greaterThanOrEqualTo_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_greaterThan_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_greaterThan_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_isNull_false": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_isNull_true": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-          "intArray": null,
-        },
-      ],
-    },
-    "intArray_lessThanOrEqualTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-      ],
-    },
-    "intArray_lessThanOrEqualTo_empty": Object {
-      "nodes": Array [],
-    },
-    "intArray_lessThan_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-      ],
-    },
-    "intArray_lessThan_empty": Object {
-      "nodes": Array [],
-    },
-    "intArray_notDistinctFrom_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-      ],
-    },
-    "intArray_notDistinctFrom_empty": Object {
-      "nodes": Array [],
-    },
-    "intArray_notEqualTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_notEqualTo_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "intArray": Array [
-            1,
-            10,
-          ],
-        },
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-        Object {
-          "id": 4,
-          "intArray": Array [
-            4,
-            40,
-          ],
-        },
-      ],
-    },
-    "intArray_overlaps_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-      ],
-    },
-    "intArray_overlaps_2_3_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "intArray": Array [
-            2,
-            20,
-          ],
-        },
-        Object {
-          "id": 3,
-          "intArray": Array [
-            3,
-            30,
-          ],
-        },
-      ],
-    },
-    "intArray_overlaps_empty": Object {
-      "nodes": Array [],
-    },
-    "int_equalTo_2_and_string_endsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-      ],
-    },
-    "int_equalTo_2_or_string_endsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "int_greaterThanOrEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "int_greaterThan_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "int_in_2_3": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "int_in_empty": Object {
-      "nodes": Array [],
-    },
-    "int_lessThanOrEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-      ],
-    },
-    "int_lessThan_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-      ],
-    },
-    "int_notIn_2_3": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "int_notIn_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-        Object {
-          "id": 5,
-          "string": null,
-        },
-      ],
-    },
-    "not_int_equalTo_2_or_string_endsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "not_string_equalTo_test": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "string_containsInsensitive_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_contains_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_distinctFrom_test": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 5,
-          "string": null,
-        },
-      ],
-    },
-    "string_endsWithInsensitive_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_endsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_equalTo_test": Object {
-      "nodes": Array [
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_isNull_false": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_isNull_true": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-          "string": null,
-        },
-      ],
-    },
-    "string_likeInsensitive_es": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_like_es": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_notContainsInsensitive_t": Object {
-      "nodes": Array [],
-    },
-    "string_notContains_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-      ],
-    },
-    "string_notDistinctFrom_test": Object {
-      "nodes": Array [
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_notEndsWithInsensitive_t": Object {
-      "nodes": Array [],
-    },
-    "string_notEndsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "string_notEqualTo_test": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "string_notLikeInsensitive_es": Object {
-      "nodes": Array [],
-    },
-    "string_notLike_es": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "string_notSimilarTo_te_or_st": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-      ],
-    },
-    "string_notStartsWithInsensitive_t": Object {
-      "nodes": Array [],
-    },
-    "string_notStartsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-      ],
-    },
-    "string_similarTo_te_or_st": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_startsWithInsensitive_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "string": "TEST",
-        },
-        Object {
-          "id": 2,
-          "string": "Test",
-        },
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
-        },
-      ],
-    },
-    "string_startsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "string": "tEST",
-        },
-        Object {
-          "id": 4,
-          "string": "test",
         },
       ],
     },
@@ -1113,7 +107,54 @@ Object {
 }
 `;
 
-exports[`null-and-empty-allowed.graphql 1`] = `
+exports[`logicalOperators.graphql 1`] = `
+Object {
+  "data": Object {
+    "int4_equalTo_2_and_text_endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4_equalTo_2_or_text_endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "not_int4_equalTo_2_or_text_endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "not_text_equalTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`nullAndEmptyAllowed.graphql 1`] = `
 Object {
   "data": Object {
     "a": Object {
@@ -1180,7 +221,7 @@ Object {
 }
 `;
 
-exports[`null-and-empty-forbidden.graphql 1`] = `
+exports[`nullAndEmptyForbidden.graphql 1`] = `
 Object {
   "data": Object {
     "a": null,
@@ -1236,7 +277,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "string": "Test",
+          "text": "Test",
         },
       ],
     },
@@ -1244,7 +285,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "string": "Test",
+          "text": "Test",
         },
       ],
     },
@@ -1612,7 +653,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "string": "Test",
+          "text": "Test",
         },
       ],
     },
@@ -1620,7 +661,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "string": "Test",
+          "text": "Test",
         },
       ],
     },
@@ -1628,11 +669,11 @@ Object {
       "nodes": Array [
         Object {
           "id": 3,
-          "string": "tEST",
+          "text": "tEST",
         },
         Object {
           "id": 4,
-          "string": "test",
+          "text": "test",
         },
       ],
     },
@@ -1688,7 +729,7 @@ Object {
 }
 `;
 
-exports[`set-functions.graphql 1`] = `
+exports[`setofFunctions.graphql 1`] = `
 Object {
   "data": Object {
     "funcReturnsTableMultiCol_col2_equalTo_out2": Object {
@@ -1707,20 +748,20 @@ Object {
 }
 `;
 
-exports[`simple-collections.graphql 1`] = `
+exports[`simpleCollections.graphql 1`] = `
 Object {
   "data": Object {
-    "string_isNull_true": Array [
+    "text_isNull_true": Array [
       Object {
         "id": 5,
-        "string": null,
+        "text": null,
       },
     ],
   },
 }
 `;
 
-exports[`types.boolean.graphql 1`] = `
+exports[`types.bool.graphql 1`] = `
 Object {
   "data": Object {
     "distinctFrom": Object {
@@ -1785,6 +826,255 @@ Object {
         Object {
           "id": 1,
         },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.char4.graphql 1`] = `
+Object {
+  "data": Object {
+    "containsInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "contains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "distinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "endsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "equalTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "likeInsensitive_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "like_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notContainsInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notContains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "notDistinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notEndsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notEndsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notEqualTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notLikeInsensitive_es": Object {
+      "nodes": Array [],
+    },
+    "notLike_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notSimilarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notStartsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notStartsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "similarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWith_t": Object {
+      "nodes": Array [
         Object {
           "id": 3,
         },
@@ -2165,6 +1455,418 @@ Object {
           "id": 4,
         },
       ],
+    },
+  },
+}
+`;
+
+exports[`types.int4.graphql 1`] = `
+Object {
+  "data": Object {
+    "int4_greaterThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4_greaterThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4_in_2_3": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "int4_in_empty": Object {
+      "nodes": Array [],
+    },
+    "int4_lessThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4_lessThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "int4_notIn_2_3": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4_notIn_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.int4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "int4Array_anyEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_anyGreaterThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_anyGreaterThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_anyLessThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_anyLessThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "int4Array_anyNotEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_containedBy_2": Object {
+      "nodes": Array [],
+    },
+    "int4Array_containedBy_2_3_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_containedBy_empty": Object {
+      "nodes": Array [],
+    },
+    "int4Array_contains_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_contains_2_3_20": Object {
+      "nodes": Array [],
+    },
+    "int4Array_contains_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_distinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "int4Array_distinctFrom_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "int4Array_equalTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_equalTo_empty": Object {
+      "nodes": Array [],
+    },
+    "int4Array_greaterThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_greaterThanOrEqualTo_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_greaterThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_greaterThan_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "int4Array_lessThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_lessThanOrEqualTo_empty": Object {
+      "nodes": Array [],
+    },
+    "int4Array_lessThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "int4Array_lessThan_empty": Object {
+      "nodes": Array [],
+    },
+    "int4Array_notDistinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_notDistinctFrom_empty": Object {
+      "nodes": Array [],
+    },
+    "int4Array_notEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_notEqualTo_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "int4Array_overlaps_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "int4Array_overlaps_2_3_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "int4Array_overlaps_empty": Object {
+      "nodes": Array [],
     },
   },
 }
@@ -2713,6 +2415,255 @@ Object {
       ],
     },
     "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.text.graphql 1`] = `
+Object {
+  "data": Object {
+    "containsInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "contains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "distinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "endsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "equalTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "likeInsensitive_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "like_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notContainsInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notContains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "notDistinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notEndsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notEndsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notEqualTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notLikeInsensitive_es": Object {
+      "nodes": Array [],
+    },
+    "notLike_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notSimilarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notStartsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notStartsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "similarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWith_t": Object {
       "nodes": Array [
         Object {
           "id": 3,

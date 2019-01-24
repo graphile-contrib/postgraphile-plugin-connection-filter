@@ -1,0 +1,41 @@
+query {
+  int4Array_isNull_true: allFilterables(filter: { int4Array: { isNull: true } }) { ...nodes }
+  int4Array_isNull_false: allFilterables(filter: { int4Array: { isNull: false } }) { ...nodes }
+  int4Array_distinctFrom_2_20: allFilterables(filter: { int4Array: { distinctFrom: [2, 20] } }) { ...nodes }
+  int4Array_distinctFrom_empty: allFilterables(filter: { int4Array: { distinctFrom: [] } }) { ...nodes }
+  int4Array_notDistinctFrom_2_20: allFilterables(filter: { int4Array: { notDistinctFrom: [2, 20] } }) { ...nodes }
+  int4Array_notDistinctFrom_empty: allFilterables(filter: { int4Array: { notDistinctFrom: [] } }) { ...nodes }
+  int4Array_equalTo_2_20: allFilterables(filter: { int4Array: { equalTo: [2, 20] } }) { ...nodes }
+  int4Array_equalTo_empty: allFilterables(filter: { int4Array: { equalTo: [] } }) { ...nodes }
+  int4Array_notEqualTo_2_20: allFilterables(filter: { int4Array: { notEqualTo: [2, 20] } }) { ...nodes }
+  int4Array_notEqualTo_empty: allFilterables(filter: { int4Array: { notEqualTo: [] } }) { ...nodes }
+  int4Array_lessThan_2_20: allFilterables(filter: { int4Array: { lessThan: [2, 20] } }) { ...nodes }
+  int4Array_lessThan_empty: allFilterables(filter: { int4Array: { lessThan: [] } }) { ...nodes }
+  int4Array_lessThanOrEqualTo_2_20: allFilterables(filter: { int4Array: { lessThanOrEqualTo: [2, 20] } }) { ...nodes }
+  int4Array_lessThanOrEqualTo_empty: allFilterables(filter: { int4Array: { lessThanOrEqualTo: [] } }) { ...nodes }
+  int4Array_greaterThan_2_20: allFilterables(filter: { int4Array: { greaterThan: [2, 20] } }) { ...nodes }
+  int4Array_greaterThan_empty: allFilterables(filter: { int4Array: { greaterThan: [] } }) { ...nodes }
+  int4Array_greaterThanOrEqualTo_2_20: allFilterables(filter: { int4Array: { greaterThanOrEqualTo: [2, 20] } }) { ...nodes }
+  int4Array_greaterThanOrEqualTo_empty: allFilterables(filter: { int4Array: { greaterThanOrEqualTo: [] } }) { ...nodes }
+  int4Array_contains_empty: allFilterables(filter: { int4Array: { contains: [] } }) { ...nodes }
+  int4Array_contains_2: allFilterables(filter: { int4Array: { contains: [2] } }) { ...nodes }
+  int4Array_contains_2_3_20: allFilterables(filter: { int4Array: { contains: [2, 3, 20] } }) { ...nodes }
+  int4Array_containedBy_empty: allFilterables(filter: { int4Array: { containedBy: [] } }) { ...nodes }
+  int4Array_containedBy_2: allFilterables(filter: { int4Array: { containedBy: [2] } }) { ...nodes }
+  int4Array_containedBy_2_3_20: allFilterables(filter: { int4Array: { containedBy: [2, 3, 20] } }) { ...nodes }
+  int4Array_overlaps_empty: allFilterables(filter: { int4Array: { overlaps: [] } }) { ...nodes }
+  int4Array_overlaps_2: allFilterables(filter: { int4Array: { overlaps: [2] } }) { ...nodes }
+  int4Array_overlaps_2_3_20: allFilterables(filter: { int4Array: { overlaps: [2, 3, 20] } }) { ...nodes }
+  int4Array_anyEqualTo_2: allFilterables(filter: { int4Array: { anyEqualTo: 2 } }) { ...nodes }
+  int4Array_anyNotEqualTo_2: allFilterables(filter: { int4Array: { anyNotEqualTo: 2 } }) { ...nodes }
+  int4Array_anyLessThan_2: allFilterables(filter: { int4Array: { anyLessThan: 2 } }) { ...nodes }
+  int4Array_anyLessThanOrEqualTo_2: allFilterables(filter: { int4Array: { anyLessThanOrEqualTo: 2 } }) { ...nodes }
+  int4Array_anyGreaterThan_2: allFilterables(filter: { int4Array: { anyGreaterThan: 2 } }) { ...nodes }
+  int4Array_anyGreaterThanOrEqualTo_2: allFilterables(filter: { int4Array: { anyGreaterThanOrEqualTo: 2 } }) { ...nodes }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

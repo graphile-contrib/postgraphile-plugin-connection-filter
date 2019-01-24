@@ -1,0 +1,8 @@
+query {
+  text_isNull_true: allFilterablesList(filter: { text: { isNull: true } }) { ...textList }
+}
+
+fragment textList on Filterable {
+  id
+  text
+}

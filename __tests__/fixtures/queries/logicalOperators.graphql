@@ -1,0 +1,30 @@
+query {
+  int4_equalTo_2_or_text_endsWith_t: allFilterables(
+    filter: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+  ) {
+    ...nodes
+  }
+  int4_equalTo_2_and_text_endsWith_t: allFilterables(
+    filter: { and: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+  ) {
+    ...nodes
+  }
+  not_text_equalTo_test: allFilterables(
+    filter: { not: { text: { equalTo: "test" } } }
+  ) {
+    ...nodes
+  }
+  not_int4_equalTo_2_or_text_endsWith_t: allFilterables(
+    filter: {
+      not: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+    }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

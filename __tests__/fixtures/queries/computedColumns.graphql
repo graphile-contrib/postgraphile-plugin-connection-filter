@@ -1,0 +1,19 @@
+query {
+  computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...computedConnection }
+  computedIntArray_equalTo_2_20: allFilterables(filter: { computedIntArray: { equalTo: [2, 20] } }) { ...computedConnection }
+  computedIntArray_equalTo_empty: allFilterables(filter: { computedIntArray: { equalTo: [] } }) { ...computedConnection }
+  allFilterables_computedSetofChild_name_equalTo_child2: allFilterables { nodes { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } } }
+  filterableById_1_computedSetofChild_name_equalTo_child2: filterableById(id: 1) { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } }
+}
+
+fragment computedConnection on FilterablesConnection {
+  nodes {
+    id
+  }
+}
+
+fragment childConnection on ChildrenConnection {
+  nodes {
+    id
+  }
+}

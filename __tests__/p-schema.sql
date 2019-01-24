@@ -25,13 +25,15 @@ create type p."composite" as (a int, b text);
 
 create table p.filterable (
   id serial primary key,
-  "string" text,
-  "int" int,
-  "real" real,
+  "text" text,
+  "char4" char(4),
+  "int4" int4,
+  "float4" float4,
+  "float8" float8,
   "numeric" numeric,
-  "boolean" boolean,
+  "bool" bool,
   "jsonb" jsonb,
-  "int_array" int[],
+  "int4_array" int[],
   "int4_range" int4range,
   "int8_range" int8range,
   "numeric_range" numrange,
@@ -46,14 +48,16 @@ create table p.filterable (
   "forward_compound_2" int,
   "backward_compound_1" int,
   "backward_compound_2" int,
+  "json" json, -- FIXME: should not be filterable!
   "composite_column" p."composite", -- not filterable
   "forward_column" p.forward, -- not filterable
+  "text_omit_filter" text, -- not filterable
   unique ("forward_compound_1", "forward_compound_2"),
   unique ("backward_compound_1", "backward_compound_2"),
   foreign key ("forward_compound_1", "forward_compound_2") references p.forward_compound ("forward_compound_1", "forward_compound_2")
 );
 
-comment on column p.filterable.real is E'@omit filter';
+comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
 create table p.backward (
   id serial primary key,
@@ -77,25 +81,25 @@ create table p.child (
 
 create table p.unfilterable (
   id serial primary key,
-  "string" text
+  "text" text
 );
 
 comment on table p.unfilterable is E'@omit filter';
 
 create table p.fully_omitted (
   id serial primary key,
-  "string" text
+  "text" text
 );
 
 comment on column p.fully_omitted.id is '@omit filter';
-comment on column p.fully_omitted."string" is '@omit filter';
+comment on column p.fully_omitted."text" is '@omit filter';
 
 create function p.filterable_computed(filterable p.filterable) returns text as $$
-  select filterable.string || ' computed'
+  select filterable."text" || ' computed'
 $$ language sql stable;
 
 create function p.filterable_computed2(filterable p.filterable) returns text as $$
-  select filterable.string || ' computed2'
+  select filterable."text" || ' computed2'
 $$ language sql stable;
 
 comment on function p.filterable_computed2(p.filterable) is E'@omit filter';

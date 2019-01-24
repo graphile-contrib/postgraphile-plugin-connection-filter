@@ -1,5 +1,5 @@
 # All queries in this file should result in no filter being applied, thus returning all rows
-# (queries are an exact copy of null-and-empty-forbidden.graphql)
+# (queries are an exact copy of nullAndEmptyForbidden.graphql)
 query {
   a: allFilterables(filter: null) {
     totalCount
@@ -7,33 +7,33 @@ query {
   b: allFilterables(filter: {}) {
     totalCount
   }
-  c: allFilterables(filter: { string: null }) {
+  c: allFilterables(filter: { text: null }) {
     totalCount
   }
-  d: allFilterables(filter: { string: {} }) {
+  d: allFilterables(filter: { text: {} }) {
     totalCount
   }
-  e: allFilterables(filter: { string: null, int: null }) {
+  e: allFilterables(filter: { text: null, int4: null }) {
     totalCount
   }
-  f: allFilterables(filter: { string: {}, int: {} }) {
+  f: allFilterables(filter: { text: {}, int4: {} }) {
     totalCount
   }
-  g: allFilterables(filter: { string: null, int: {} }) {
+  g: allFilterables(filter: { text: null, int4: {} }) {
     totalCount
   }
-  h: allFilterables(filter: { string: { equalTo: null } }) {
+  h: allFilterables(filter: { text: { equalTo: null } }) {
     totalCount
   }
-  i: allFilterables(filter: { string: { equalTo: null, notEqualTo: null } }) {
+  i: allFilterables(filter: { text: { equalTo: null, notEqualTo: null } }) {
     totalCount
   }
   j: allFilterables(
     filter: {
-      string: { equalTo: null, notEqualTo: null }
-      int: { equalTo: null }
+      text: { equalTo: null, notEqualTo: null }
+      int4: { equalTo: null }
       numeric: {}
-      boolean: null
+      bool: null
     }
   ) {
     totalCount
@@ -62,10 +62,10 @@ query {
   r: allFilterables(filter: { not: {} }) {
     totalCount
   }
-  s: allFilterables(filter: { not: { string: null } }) {
+  s: allFilterables(filter: { not: { text: null } }) {
     totalCount
   }
-  t: allFilterables(filter: { not: { string: {} } }) {
+  t: allFilterables(filter: { not: { text: {} } }) {
     totalCount
   }
 }

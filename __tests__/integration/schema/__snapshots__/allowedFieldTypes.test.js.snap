@@ -350,7 +350,8 @@ type Filterable implements Node {
   Reads a single \`BackwardCompound\` that is related to this \`Filterable\`.
   \\"\\"\\"
   backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompound
-  boolean: Boolean
+  bool: Boolean
+  char4: String
 
   \\"\\"\\"Reads and enables pagination through a set of \`Child\`.\\"\\"\\"
   childrenByFilterableId(
@@ -437,6 +438,8 @@ type Filterable implements Node {
   ): FilterableComputedSetofIntConnection!
   dateRange: DateRange
   enum: Mood
+  float4: Float
+  float8: Float
 
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
@@ -451,10 +454,11 @@ type Filterable implements Node {
   forwardId: Int
   id: Int!
   inet: InternetAddress
-  int: Int
+  int4: Int
+  int4Array: [Int]
   int4Range: IntRange
   int8Range: BigIntRange
-  intArray: [Int]
+  json: JSON
   jsonb: JSON
 
   \\"\\"\\"
@@ -467,8 +471,8 @@ type Filterable implements Node {
   \\"\\"\\"Reads a single \`Parent\` that is related to this \`Filterable\`.\\"\\"\\"
   parentByParentId: Parent
   parentId: Int
-  real: Float
-  string: String
+  text: String
+  textOmitFilter: String
   timestampRange: DatetimeRange
   timestamptzRange: DatetimeRange
 }
@@ -506,6 +510,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`backwardCompound2\` field.\\"\\"\\"
   backwardCompound2: IntFilter
 
+  \\"\\"\\"Filter by the object’s \`char4\` field.\\"\\"\\"
+  char4: StringFilter
+
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
 
@@ -524,11 +531,11 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
 
-  \\"\\"\\"Filter by the object’s \`int\` field.\\"\\"\\"
-  int: IntFilter
+  \\"\\"\\"Filter by the object’s \`int4\` field.\\"\\"\\"
+  int4: IntFilter
 
-  \\"\\"\\"Filter by the object’s \`intArray\` field.\\"\\"\\"
-  intArray: IntListFilter
+  \\"\\"\\"Filter by the object’s \`int4Array\` field.\\"\\"\\"
+  int4Array: IntListFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: FilterableFilter
@@ -539,8 +546,8 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`parentId\` field.\\"\\"\\"
   parentId: IntFilter
 
-  \\"\\"\\"Filter by the object’s \`string\` field.\\"\\"\\"
-  string: StringFilter
+  \\"\\"\\"Filter by the object’s \`text\` field.\\"\\"\\"
+  text: StringFilter
 }
 
 \\"\\"\\"A connection to a list of \`Filterable\` values.\\"\\"\\"
@@ -575,14 +582,20 @@ enum FilterablesOrderBy {
   BACKWARD_COMPOUND_1_DESC
   BACKWARD_COMPOUND_2_ASC
   BACKWARD_COMPOUND_2_DESC
-  BOOLEAN_ASC
-  BOOLEAN_DESC
+  BOOL_ASC
+  BOOL_DESC
+  CHAR4_ASC
+  CHAR4_DESC
   COMPOSITE_COLUMN_ASC
   COMPOSITE_COLUMN_DESC
   DATE_RANGE_ASC
   DATE_RANGE_DESC
   ENUM_ASC
   ENUM_DESC
+  FLOAT4_ASC
+  FLOAT4_DESC
+  FLOAT8_ASC
+  FLOAT8_DESC
   FORWARD_COLUMN_ASC
   FORWARD_COLUMN_DESC
   FORWARD_COMPOUND_1_ASC
@@ -595,14 +608,16 @@ enum FilterablesOrderBy {
   ID_DESC
   INET_ASC
   INET_DESC
-  INT_ARRAY_ASC
-  INT_ARRAY_DESC
-  INT_ASC
-  INT_DESC
+  INT4_ARRAY_ASC
+  INT4_ARRAY_DESC
+  INT4_ASC
+  INT4_DESC
   INT4_RANGE_ASC
   INT4_RANGE_DESC
   INT8_RANGE_ASC
   INT8_RANGE_DESC
+  JSON_ASC
+  JSON_DESC
   JSONB_ASC
   JSONB_DESC
   NATURAL
@@ -614,10 +629,10 @@ enum FilterablesOrderBy {
   PARENT_ID_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  REAL_ASC
-  REAL_DESC
-  STRING_ASC
-  STRING_DESC
+  TEXT_ASC
+  TEXT_DESC
+  TEXT_OMIT_FILTER_ASC
+  TEXT_OMIT_FILTER_DESC
   TIMESTAMP_RANGE_ASC
   TIMESTAMP_RANGE_DESC
   TIMESTAMPTZ_RANGE_ASC
@@ -779,7 +794,7 @@ type FullyOmitted implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
-  string: String
+  text: String
 }
 
 \\"\\"\\"A connection to a list of \`FullyOmitted\` values.\\"\\"\\"
@@ -815,8 +830,8 @@ enum FullyOmittedsOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  STRING_ASC
-  STRING_DESC
+  TEXT_ASC
+  TEXT_DESC
 }
 
 \\"\\"\\"A connection to a list of \`FuncReturnsTableMultiColRecord\` values.\\"\\"\\"
@@ -1661,7 +1676,7 @@ type Unfilterable implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
-  string: String
+  text: String
 }
 
 \\"\\"\\"A connection to a list of \`Unfilterable\` values.\\"\\"\\"
@@ -1697,8 +1712,8 @@ enum UnfilterablesOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  STRING_ASC
-  STRING_DESC
+  TEXT_ASC
+  TEXT_DESC
 }
 "
 `;

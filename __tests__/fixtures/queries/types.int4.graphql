@@ -1,0 +1,16 @@
+query {
+  int4_lessThan_2: allFilterables(filter: { int4: { lessThan: 2 } }) { ...nodes }
+  int4_lessThanOrEqualTo_2: allFilterables(filter: { int4: { lessThanOrEqualTo: 2 } }) { ...nodes }
+  int4_greaterThan_2: allFilterables(filter: { int4: { greaterThan: 2 } }) { ...nodes }
+  int4_greaterThanOrEqualTo_2: allFilterables(filter: { int4: { greaterThanOrEqualTo: 2 } }) { ...nodes }
+  int4_in_2_3: allFilterables(filter: { int4: { in: [2, 3] } }) { ...nodes }
+  int4_in_empty: allFilterables(filter: { int4: { in: [] } }) { ...nodes }
+  int4_notIn_2_3: allFilterables(filter: { int4: { notIn: [2, 3] } }) { ...nodes }
+  int4_notIn_empty: allFilterables(filter: { int4: { notIn: [] } }) { ...nodes }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

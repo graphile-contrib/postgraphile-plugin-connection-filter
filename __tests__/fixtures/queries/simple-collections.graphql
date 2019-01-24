@@ -1,8 +1,0 @@
-query {
-  string_isNull_true: allFilterablesList(filter: { string: { isNull: true } }) { ...stringList }
-}
-
-fragment stringList on Filterable {
-  id
-  string
-}

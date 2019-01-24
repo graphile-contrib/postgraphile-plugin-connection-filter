@@ -1,0 +1,31 @@
+query bool($val: Boolean = true) {
+  distinctFrom: allFilterables(filter: { bool: { distinctFrom: $val } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { bool: { equalTo: $val } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { bool: { in: [$val] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { bool: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { bool: { notDistinctFrom: $val } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { bool: { notEqualTo: $val } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { bool: { notIn: [$val] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}
