@@ -992,9 +992,6 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`int8Range\` field.\\"\\"\\"
   int8Range: BigIntRangeFilter
 
-  \\"\\"\\"Filter by the object’s \`json\` field.\\"\\"\\"
-  json: JSONFilter
-
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
 
