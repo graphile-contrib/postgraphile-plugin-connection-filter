@@ -1,179 +1,69 @@
-query {
-  adjacentTo: allFilterables(
-    filter: {
-      numericRange: {
-        adjacentTo: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
-  ) {
+query numericRange(
+  $val: BigFloatRangeInput = {
+    start: { value: "2", inclusive: true }
+    end: { value: "3", inclusive: false }
+  }
+  $elementVal: BigFloat = "2"
+) {
+  adjacentTo: allFilterables(filter: { numericRange: { adjacentTo: $val } }) {
     ...nodes
   }
-  containedBy: allFilterables(
-    filter: {
-      numericRange: {
-        containedBy: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
-  ) {
+  containedBy: allFilterables(filter: { numericRange: { containedBy: $val } }) {
     ...nodes
   }
-  contains: allFilterables(
-    filter: {
-      numericRange: {
-        contains: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
-  ) {
+  contains: allFilterables(filter: { numericRange: { contains: $val } }) {
     ...nodes
   }
-  containsElement: allFilterables(filter: { numericRange: { containsElement: "2" } }) {
+  containsElement: allFilterables(
+    filter: { numericRange: { containsElement: $elementVal } }
+  ) {
     ...nodes
   }
   distinctFrom: allFilterables(
-    filter: {
-      numericRange: {
-        distinctFrom: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
+    filter: { numericRange: { distinctFrom: $val } }
   ) {
     ...nodes
   }
-  equalTo: allFilterables(
-    filter: {
-      numericRange: {
-        equalTo: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
-  ) {
+  equalTo: allFilterables(filter: { numericRange: { equalTo: $val } }) {
     ...nodes
   }
-  in: allFilterables(
-    filter: {
-      numericRange: {
-        in: [
-          {
-            start: { value: "2", inclusive: true }
-            end: { value: "3", inclusive: false }
-          }
-        ]
-      }
-    }
-  ) {
+  in: allFilterables(filter: { numericRange: { in: [$val] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { numericRange: { isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allFilterables(
-    filter: {
-      numericRange: {
-        notDistinctFrom: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
+    filter: { numericRange: { notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(
-    filter: {
-      numericRange: {
-        notEqualTo: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
-  ) {
+  notEqualTo: allFilterables(filter: { numericRange: { notEqualTo: $val } }) {
     ...nodes
   }
   notExtendsLeftOf: allFilterables(
-    filter: {
-      numericRange: {
-        notExtendsLeftOf: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
+    filter: { numericRange: { notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allFilterables(
-    filter: {
-      numericRange: {
-        notExtendsRightOf: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
+    filter: { numericRange: { notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allFilterables(
-    filter: {
-      numericRange: {
-        notIn: [
-          {
-            start: { value: "2", inclusive: true }
-            end: { value: "3", inclusive: false }
-          }
-        ]
-      }
-    }
-  ) {
+  notIn: allFilterables(filter: { numericRange: { notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allFilterables(
-    filter: {
-      numericRange: {
-        overlaps: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
-  ) {
+  overlaps: allFilterables(filter: { numericRange: { overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allFilterables(
-    filter: {
-      numericRange: {
-        strictlyLeftOf: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
+    filter: { numericRange: { strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allFilterables(
-    filter: {
-      numericRange: {
-        strictlyRightOf: {
-          start: { value: "2", inclusive: true }
-          end: { value: "3", inclusive: false }
-        }
-      }
-    }
+    filter: { numericRange: { strictlyRightOf: $val } }
   ) {
     ...nodes
   }

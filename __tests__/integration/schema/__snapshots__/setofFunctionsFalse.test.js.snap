@@ -509,6 +509,11 @@ enum ChildrenOrderBy {
   PRIMARY_KEY_DESC
 }
 
+type Composite {
+  a: Int
+  b: String
+}
+
 \\"\\"\\"A location in a connection that can be used for resuming pagination.\\"\\"\\"
 scalar Cursor
 
@@ -755,6 +760,7 @@ type Filterable implements Node {
     \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection!
+  compositeColumn: Composite
   computed: String
   computed2: String
   computedChild: Child
@@ -804,6 +810,7 @@ type Filterable implements Node {
 
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardByForwardId: Forward
+  forwardColumn: Forward
   forwardCompound1: Int
   forwardCompound2: Int
 
@@ -973,10 +980,14 @@ enum FilterablesOrderBy {
   BACKWARD_COMPOUND_2_DESC
   BOOLEAN_ASC
   BOOLEAN_DESC
+  COMPOSITE_COLUMN_ASC
+  COMPOSITE_COLUMN_DESC
   DATE_RANGE_ASC
   DATE_RANGE_DESC
   ENUM_ASC
   ENUM_DESC
+  FORWARD_COLUMN_ASC
+  FORWARD_COLUMN_DESC
   FORWARD_COMPOUND_1_ASC
   FORWARD_COMPOUND_1_DESC
   FORWARD_COMPOUND_2_ASC

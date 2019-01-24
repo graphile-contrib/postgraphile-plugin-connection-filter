@@ -1,0 +1,31 @@
+query enum($val: Mood = OK) {
+  distinctFrom: allFilterables(filter: { enum: { distinctFrom: $val } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { enum: { equalTo: $val } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { enum: { in: [$val] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { enum: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { enum: { notDistinctFrom: $val } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { enum: { notEqualTo: $val } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { enum: { notIn: [$val] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

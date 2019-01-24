@@ -33,21 +33,11 @@ query {
   string_notSimilarTo_te_or_st: allFilterables(filter:{ string: { notSimilarTo: "%(te|st)%" } }) { ...stringConnection }
   int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...stringAndIntConnection }
   int_equalTo_2_and_string_endsWith_t: allFilterables(filter: { and: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] }) { ...stringAndIntConnection }
-  boolean_isNull_true: allFilterables(filter: { boolean: { isNull: true } }) { ...booleanConnection }
-  boolean_isNull_false: allFilterables(filter: { boolean: { isNull: false } }) { ...booleanConnection }
-  boolean_equalTo_true: allFilterables(filter: { boolean: { equalTo: true } }) { ...booleanConnection }
-  boolean_notEqualTo_true: allFilterables(filter: { boolean: { notEqualTo: true } }) { ...booleanConnection }
-  boolean_distinctFrom_true: allFilterables(filter: { boolean: { distinctFrom: true } }) { ...booleanConnection }
-  boolean_notDistinctFrom_true: allFilterables(filter: { boolean: { notDistinctFrom: true } }) { ...booleanConnection }
   not_string_equalTo_test: allFilterables(filter: { not: { string: { equalTo: "test" } } }) { ...stringConnection }
   not_int_equalTo_2_or_string_endsWith_t: allFilterables(filter: { not: { or: [{ int: { equalTo: 2 } }, { string: { endsWith: "t" } }] } }) { ...stringAndIntConnection }
   computed_equalTo_test_computed: allFilterables(filter: { computed: { equalTo: "test computed" } }) { ...computedConnection }
   computedIntArray_equalTo_2_20: allFilterables(filter: { computedIntArray: { equalTo: [2, 20] } }) { ...computedConnection }
   computedIntArray_equalTo_empty: allFilterables(filter: { computedIntArray: { equalTo: [] } }) { ...computedConnection }
-  jsonb_contains_string: allFilterables(filter: { jsonb: { contains: "{\"string\":\"test\"}" } }) { ...jsonbConnection }
-  jsonb_contains_int: allFilterables(filter: { jsonb: { contains: "{\"int\":2}" } }) { ...jsonbConnection }
-  jsonb_contains_boolean: allFilterables(filter: { jsonb: { contains: "{\"boolean\":true}" } }) { ...jsonbConnection }
-  jsonb_containedBy_object: allFilterables(filter: { jsonb: { containedBy: "{\"string\":\"test\",\"int\":4,\"boolean\":false,\"foo\":\"bar\"}" } }) { ...jsonbConnection }
   intArray_isNull_true: allFilterables(filter: { intArray: { isNull: true } }) { ...intArrayConnection }
   intArray_isNull_false: allFilterables(filter: { intArray: { isNull: false } }) { ...intArrayConnection }
   intArray_distinctFrom_2_20: allFilterables(filter: { intArray: { distinctFrom: [2, 20] } }) { ...intArrayConnection }
@@ -81,15 +71,6 @@ query {
   intArray_anyLessThanOrEqualTo_2: allFilterables(filter: { intArray: { anyLessThanOrEqualTo: 2 } }) { ...intArrayConnection }
   intArray_anyGreaterThan_2: allFilterables(filter: { intArray: { anyGreaterThan: 2 } }) { ...intArrayConnection }
   intArray_anyGreaterThanOrEqualTo_2: allFilterables(filter: { intArray: { anyGreaterThanOrEqualTo: 2 } }) { ...intArrayConnection }
-  inet_containedBy: allFilterables(filter: { inet: { containedBy: "192.168.0.0/24" } }) { ...inetConnection }
-  inet_containedByOrEqualTo_ContainedBy: allFilterables(filter: { inet: { containedByOrEqualTo: "192.168.1.0/24" } }) { ...inetConnection }
-  inet_containedByOrEqualTo_EqualTo: allFilterables(filter: { inet: { containedByOrEqualTo: "192.168.1.1" } }) { ...inetConnection }
-  inet_contains: allFilterables(filter: { inet: { contains: "10.0.0.1" } }) { ...inetConnection }
-  inet_containsOrEqualTo_Contains: allFilterables(filter: { inet: { containsOrEqualTo: "10.0.0.2" } }) { ...inetConnection }
-  inet_containsOrEqualTo_EqualTo: allFilterables(filter: { inet: { containsOrEqualTo: "10.0.0.1/24" } }) { ...inetConnection }
-  inet_containsOrContainedBy_Contains: allFilterables(filter: { inet: { containsOrContainedBy: "172.168.1.0/24" } }) { ...inetConnection }
-  inet_containsOrContainedBy_ContainedBy: allFilterables(filter: { inet: { containsOrContainedBy: "10.0.0.5" } }) { ...inetConnection }
-  enum_equalTo_OK: allFilterables(filter: { enum: { equalTo: OK } }) { ...enumConnection }
   allFilterables_computedSetofChild_name_equalTo_child2: allFilterables { nodes { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } } }
   filterableById_1_computedSetofChild_name_equalTo_child2: filterableById(id: 1) { id, computedSetofChild(filter: { name: { equalTo: "child2" } }) { ...childConnection } }
 }
@@ -115,13 +96,6 @@ fragment stringAndIntConnection on FilterablesConnection {
   }
 }
 
-fragment booleanConnection on FilterablesConnection {
-  nodes {
-    id
-    boolean
-  }
-}
-
 fragment computedConnection on FilterablesConnection {
   nodes {
     id
@@ -129,31 +103,10 @@ fragment computedConnection on FilterablesConnection {
   }
 }
 
-fragment jsonbConnection on FilterablesConnection {
-  nodes {
-    id
-    jsonb
-  }
-}
-
 fragment intArrayConnection on FilterablesConnection {
   nodes {
     id
     intArray
-  }
-}
-
-fragment inetConnection on FilterablesConnection {
-  nodes {
-    id
-    inet
-  }
-}
-
-fragment enumConnection on FilterablesConnection {
-  nodes {
-    id
-    enum
   }
 }
 

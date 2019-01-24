@@ -1,0 +1,37 @@
+query jsonb($val: JSON = "{\"key2\":2}") {
+  containedBy: allFilterables(filter: { jsonb: { containedBy: $val } }) {
+    ...nodes
+  }
+  contains: allFilterables(filter: { jsonb: { contains: $val } }) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(filter: { jsonb: { distinctFrom: $val } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { jsonb: { equalTo: $val } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { jsonb: { in: [$val] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { jsonb: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { jsonb: { notDistinctFrom: $val } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { jsonb: { notEqualTo: $val } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { jsonb: { notIn: [$val] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

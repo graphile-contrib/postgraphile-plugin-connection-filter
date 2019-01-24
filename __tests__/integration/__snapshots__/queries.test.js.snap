@@ -6,36 +6,28 @@ Object {
     "a": Object {
       "nodes": Array [
         Object {
-          "id": 4,
-          "jsonb": Object {
-            "boolean": false,
-            "int": 4,
-            "string": "test",
-          },
+          "id": 2,
         },
       ],
     },
     "b": Object {
       "nodes": Array [
         Object {
-          "id": 4,
-          "jsonb": Object {
-            "boolean": false,
-            "int": 4,
-            "string": "test",
-          },
+          "id": 2,
         },
       ],
     },
     "c": Object {
       "nodes": Array [
         Object {
-          "id": 4,
-          "jsonb": Object {
-            "boolean": false,
-            "int": 4,
-            "string": "test",
-          },
+          "id": 2,
+        },
+      ],
+    },
+    "d": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
         },
       ],
     },
@@ -85,86 +77,6 @@ Object {
         },
       ],
     },
-    "boolean_distinctFrom_true": Object {
-      "nodes": Array [
-        Object {
-          "boolean": false,
-          "id": 3,
-        },
-        Object {
-          "boolean": false,
-          "id": 4,
-        },
-        Object {
-          "boolean": null,
-          "id": 5,
-        },
-      ],
-    },
-    "boolean_equalTo_true": Object {
-      "nodes": Array [
-        Object {
-          "boolean": true,
-          "id": 1,
-        },
-        Object {
-          "boolean": true,
-          "id": 2,
-        },
-      ],
-    },
-    "boolean_isNull_false": Object {
-      "nodes": Array [
-        Object {
-          "boolean": true,
-          "id": 1,
-        },
-        Object {
-          "boolean": true,
-          "id": 2,
-        },
-        Object {
-          "boolean": false,
-          "id": 3,
-        },
-        Object {
-          "boolean": false,
-          "id": 4,
-        },
-      ],
-    },
-    "boolean_isNull_true": Object {
-      "nodes": Array [
-        Object {
-          "boolean": null,
-          "id": 5,
-        },
-      ],
-    },
-    "boolean_notDistinctFrom_true": Object {
-      "nodes": Array [
-        Object {
-          "boolean": true,
-          "id": 1,
-        },
-        Object {
-          "boolean": true,
-          "id": 2,
-        },
-      ],
-    },
-    "boolean_notEqualTo_true": Object {
-      "nodes": Array [
-        Object {
-          "boolean": false,
-          "id": 3,
-        },
-        Object {
-          "boolean": false,
-          "id": 4,
-        },
-      ],
-    },
     "computedIntArray_equalTo_2_20": Object {
       "nodes": Array [
         Object {
@@ -184,14 +96,6 @@ Object {
         },
       ],
     },
-    "enum_equalTo_OK": Object {
-      "nodes": Array [
-        Object {
-          "enum": "OK",
-          "id": 2,
-        },
-      ],
-    },
     "filterableById_1_computedSetofChild_name_equalTo_child2": Object {
       "computedSetofChild": Object {
         "nodes": Array [
@@ -202,70 +106,6 @@ Object {
         ],
       },
       "id": 1,
-    },
-    "inet_containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "inet": "192.168.0.1",
-        },
-      ],
-    },
-    "inet_containedByOrEqualTo_ContainedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "inet": "192.168.1.1",
-        },
-      ],
-    },
-    "inet_containedByOrEqualTo_EqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "inet": "192.168.1.1",
-        },
-      ],
-    },
-    "inet_contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "inet": "10.0.0.0/24",
-        },
-      ],
-    },
-    "inet_containsOrContainedBy_ContainedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "inet": "10.0.0.0/24",
-        },
-      ],
-    },
-    "inet_containsOrContainedBy_Contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 4,
-          "inet": "172.168.1.1",
-        },
-      ],
-    },
-    "inet_containsOrEqualTo_Contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "inet": "10.0.0.0/24",
-        },
-      ],
-    },
-    "inet_containsOrEqualTo_EqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-          "inet": "10.0.0.0/24",
-        },
-      ],
     },
     "intArray_anyEqualTo_2": Object {
       "nodes": Array [
@@ -946,42 +786,6 @@ Object {
         Object {
           "id": 5,
           "string": null,
-        },
-      ],
-    },
-    "jsonb_containedBy_object": Object {
-      "nodes": Array [
-        Object {
-          "id": 4,
-          "jsonb": "{\\"int\\":4,\\"string\\":\\"test\\",\\"boolean\\":false}",
-        },
-      ],
-    },
-    "jsonb_contains_boolean": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-          "jsonb": "{\\"int\\":1,\\"string\\":\\"TEST\\",\\"boolean\\":true}",
-        },
-        Object {
-          "id": 2,
-          "jsonb": "{\\"int\\":2,\\"string\\":\\"Test\\",\\"boolean\\":true}",
-        },
-      ],
-    },
-    "jsonb_contains_int": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-          "jsonb": "{\\"int\\":2,\\"string\\":\\"Test\\",\\"boolean\\":true}",
-        },
-      ],
-    },
-    "jsonb_contains_string": Object {
-      "nodes": Array [
-        Object {
-          "id": 4,
-          "jsonb": "{\\"int\\":4,\\"string\\":\\"test\\",\\"boolean\\":false}",
         },
       ],
     },
@@ -1916,6 +1720,83 @@ Object {
 }
 `;
 
+exports[`types.boolean.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.dateRange.graphql 1`] = `
 Object {
   "data": Object {
@@ -2059,6 +1940,224 @@ Object {
     },
     "strictlyRightOf": Object {
       "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.enum.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.inet.graphql 1`] = `
+Object {
+  "data": Object {
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "inet": "192.168.0.1",
+        },
+      ],
+    },
+    "containedByOrEqualTo_ContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "inet": "192.168.1.1",
+        },
+      ],
+    },
+    "containedByOrEqualTo_EqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "inet": "192.168.1.1",
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "containsOrContainedBy_ContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "containsOrContainedBy_Contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+          "inet": "172.168.1.1",
+        },
+      ],
+    },
+    "containsOrEqualTo_Contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "containsOrEqualTo_EqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+          "inet": "10.0.0.0/24",
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 3,
         },
@@ -2369,6 +2468,97 @@ Object {
     },
     "strictlyRightOf": Object {
       "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.jsonb.graphql 1`] = `
+Object {
+  "data": Object {
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 3,
         },

@@ -21,6 +21,8 @@ create table p.forward_compound (
 
 create type p.mood as enum ('sad', 'ok', 'happy');
 
+create type p."composite" as (a int, b text);
+
 create table p.filterable (
   id serial primary key,
   "string" text,
@@ -44,6 +46,8 @@ create table p.filterable (
   "forward_compound_2" int,
   "backward_compound_1" int,
   "backward_compound_2" int,
+  "composite_column" p."composite", -- not filterable
+  "forward_column" p.forward, -- not filterable
   unique ("forward_compound_1", "forward_compound_2"),
   unique ("backward_compound_1", "backward_compound_2"),
   foreign key ("forward_compound_1", "forward_compound_2") references p.forward_compound ("forward_compound_1", "forward_compound_2")

@@ -1,181 +1,71 @@
-query {
-  adjacentTo: allFilterables(
-    filter: {
-      timestampRange: {
-        adjacentTo: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
-  ) {
+query timestampRange(
+  $val: DatetimeRangeInput = {
+    start: { value: "1999-02-01 00:00", inclusive: true }
+    end: { value: "1999-03-01 00:00", inclusive: false }
+  }
+  $elementVal: Datetime = "1999-02-01 00:00"
+) {
+  adjacentTo: allFilterables(filter: { timestampRange: { adjacentTo: $val } }) {
     ...nodes
   }
   containedBy: allFilterables(
-    filter: {
-      timestampRange: {
-        containedBy: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { containedBy: $val } }
   ) {
     ...nodes
   }
-  contains: allFilterables(
-    filter: {
-      timestampRange: {
-        contains: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
-  ) {
+  contains: allFilterables(filter: { timestampRange: { contains: $val } }) {
     ...nodes
   }
   containsElement: allFilterables(
-    filter: { timestampRange: { containsElement: "1999-02-01 00:00" } }
+    filter: { timestampRange: { containsElement: $elementVal } }
   ) {
     ...nodes
   }
   distinctFrom: allFilterables(
-    filter: {
-      timestampRange: {
-        distinctFrom: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { distinctFrom: $val } }
   ) {
     ...nodes
   }
-  equalTo: allFilterables(
-    filter: {
-      timestampRange: {
-        equalTo: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
-  ) {
+  equalTo: allFilterables(filter: { timestampRange: { equalTo: $val } }) {
     ...nodes
   }
-  in: allFilterables(
-    filter: {
-      timestampRange: {
-        in: [
-          {
-            start: { value: "1999-02-01 00:00", inclusive: true }
-            end: { value: "1999-03-01 00:00", inclusive: false }
-          }
-        ]
-      }
-    }
-  ) {
+  in: allFilterables(filter: { timestampRange: { in: [$val] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { timestampRange: { isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allFilterables(
-    filter: {
-      timestampRange: {
-        notDistinctFrom: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(
-    filter: {
-      timestampRange: {
-        notEqualTo: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
-  ) {
+  notEqualTo: allFilterables(filter: { timestampRange: { notEqualTo: $val } }) {
     ...nodes
   }
   notExtendsLeftOf: allFilterables(
-    filter: {
-      timestampRange: {
-        notExtendsLeftOf: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allFilterables(
-    filter: {
-      timestampRange: {
-        notExtendsRightOf: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allFilterables(
-    filter: {
-      timestampRange: {
-        notIn: [
-          {
-            start: { value: "1999-02-01 00:00", inclusive: true }
-            end: { value: "1999-03-01 00:00", inclusive: false }
-          }
-        ]
-      }
-    }
-  ) {
+  notIn: allFilterables(filter: { timestampRange: { notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allFilterables(
-    filter: {
-      timestampRange: {
-        overlaps: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
-  ) {
+  overlaps: allFilterables(filter: { timestampRange: { overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allFilterables(
-    filter: {
-      timestampRange: {
-        strictlyLeftOf: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allFilterables(
-    filter: {
-      timestampRange: {
-        strictlyRightOf: {
-          start: { value: "1999-02-01 00:00", inclusive: true }
-          end: { value: "1999-03-01 00:00", inclusive: false }
-        }
-      }
-    }
+    filter: { timestampRange: { strictlyRightOf: $val } }
   ) {
     ...nodes
   }

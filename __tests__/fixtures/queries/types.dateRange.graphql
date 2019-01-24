@@ -1,179 +1,67 @@
-query {
-  adjacentTo: allFilterables(
-    filter: {
-      dateRange: {
-        adjacentTo: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
+query dateRange(
+  $val: DateRangeInput = {
+    start: { value: "1999-02-01", inclusive: true }
+    end: { value: "1999-03-01", inclusive: false }
+  }
+  $elementVal: Date = "1999-02-01"
+) {
+  adjacentTo: allFilterables(filter: { dateRange: { adjacentTo: $val } }) {
+    ...nodes
+  }
+  containedBy: allFilterables(filter: { dateRange: { containedBy: $val } }) {
+    ...nodes
+  }
+  contains: allFilterables(filter: { dateRange: { contains: $val } }) {
+    ...nodes
+  }
+  containsElement: allFilterables(
+    filter: { dateRange: { containsElement: $elementVal } }
   ) {
     ...nodes
   }
-  containedBy: allFilterables(
-    filter: {
-      dateRange: {
-        containedBy: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
-  ) {
+  distinctFrom: allFilterables(filter: { dateRange: { distinctFrom: $val } }) {
     ...nodes
   }
-  contains: allFilterables(
-    filter: {
-      dateRange: {
-        contains: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
-  ) {
+  equalTo: allFilterables(filter: { dateRange: { equalTo: $val } }) {
     ...nodes
   }
-  containsElement: allFilterables(filter: { dateRange: { containsElement: "1999-02-01" } }) {
-    ...nodes
-  }
-  distinctFrom: allFilterables(
-    filter: {
-      dateRange: {
-        distinctFrom: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
-  ) {
-    ...nodes
-  }
-  equalTo: allFilterables(
-    filter: {
-      dateRange: {
-        equalTo: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
-  ) {
-    ...nodes
-  }
-  in: allFilterables(
-    filter: {
-      dateRange: {
-        in: [
-          {
-            start: { value: "1999-02-01", inclusive: true }
-            end: { value: "1999-03-01", inclusive: false }
-          }
-        ]
-      }
-    }
-  ) {
+  in: allFilterables(filter: { dateRange: { in: [$val] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { dateRange: { isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allFilterables(
-    filter: {
-      dateRange: {
-        notDistinctFrom: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
+    filter: { dateRange: { notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(
-    filter: {
-      dateRange: {
-        notEqualTo: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
-  ) {
+  notEqualTo: allFilterables(filter: { dateRange: { notEqualTo: $val } }) {
     ...nodes
   }
   notExtendsLeftOf: allFilterables(
-    filter: {
-      dateRange: {
-        notExtendsLeftOf: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
+    filter: { dateRange: { notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allFilterables(
-    filter: {
-      dateRange: {
-        notExtendsRightOf: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
+    filter: { dateRange: { notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allFilterables(
-    filter: {
-      dateRange: {
-        notIn: [
-          {
-            start: { value: "1999-02-01", inclusive: true }
-            end: { value: "1999-03-01", inclusive: false }
-          }
-        ]
-      }
-    }
-  ) {
+  notIn: allFilterables(filter: { dateRange: { notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allFilterables(
-    filter: {
-      dateRange: {
-        overlaps: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
-  ) {
+  overlaps: allFilterables(filter: { dateRange: { overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allFilterables(
-    filter: {
-      dateRange: {
-        strictlyLeftOf: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
+    filter: { dateRange: { strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allFilterables(
-    filter: {
-      dateRange: {
-        strictlyRightOf: {
-          start: { value: "1999-02-01", inclusive: true }
-          end: { value: "1999-03-01", inclusive: false }
-        }
-      }
-    }
+    filter: { dateRange: { strictlyRightOf: $val } }
   ) {
     ...nodes
   }
