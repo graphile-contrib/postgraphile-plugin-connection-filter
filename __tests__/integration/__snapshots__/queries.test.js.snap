@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`connections-filter.dynamic-json.graphql 1`] = `
+exports[`dynamic-json.graphql 1`] = `
 Object {
   "data": Object {
     "a": Object {
@@ -43,7 +43,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.graphql 1`] = `
+exports[`filters.graphql 1`] = `
 Object {
   "data": Object {
     "allFilterables_computedSetofChild_name_equalTo_child2": Object {
@@ -1309,7 +1309,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.null-and-empty-allowed.graphql 1`] = `
+exports[`null-and-empty-allowed.graphql 1`] = `
 Object {
   "data": Object {
     "a": Object {
@@ -1376,7 +1376,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.null-and-empty-forbidden.graphql 1`] = `
+exports[`null-and-empty-forbidden.graphql 1`] = `
 Object {
   "data": Object {
     "a": null,
@@ -1425,7 +1425,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.relations.graphql 1`] = `
+exports[`relations.graphql 1`] = `
 Object {
   "data": Object {
     "backwardCompound_name_equalTo_backwardCompound12": Object {
@@ -1884,7 +1884,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.set-functions.graphql 1`] = `
+exports[`set-functions.graphql 1`] = `
 Object {
   "data": Object {
     "funcReturnsTableMultiCol_col2_equalTo_out2": Object {
@@ -1903,7 +1903,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.simple-collections.graphql 1`] = `
+exports[`simple-collections.graphql 1`] = `
 Object {
   "data": Object {
     "string_isNull_true": Array [
@@ -1916,7 +1916,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.types.dateRange.graphql 1`] = `
+exports[`types.dateRange.graphql 1`] = `
 Object {
   "data": Object {
     "adjacentTo": Object {
@@ -2071,7 +2071,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.types.int4Range.graphql 1`] = `
+exports[`types.int4Range.graphql 1`] = `
 Object {
   "data": Object {
     "adjacentTo": Object {
@@ -2226,7 +2226,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.types.int8Range.graphql 1`] = `
+exports[`types.int8Range.graphql 1`] = `
 Object {
   "data": Object {
     "adjacentTo": Object {
@@ -2381,7 +2381,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.types.numericRange.graphql 1`] = `
+exports[`types.numericRange.graphql 1`] = `
 Object {
   "data": Object {
     "adjacentTo": Object {
@@ -2536,7 +2536,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.types.timestampRange.graphql 1`] = `
+exports[`types.timestampRange.graphql 1`] = `
 Object {
   "data": Object {
     "adjacentTo": Object {
@@ -2691,7 +2691,7 @@ Object {
 }
 `;
 
-exports[`connections-filter.types.timestamptzRange.graphql 1`] = `
+exports[`types.timestamptzRange.graphql 1`] = `
 Object {
   "data": Object {
     "adjacentTo": Object {

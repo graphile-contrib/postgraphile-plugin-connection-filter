@@ -98,12 +98,10 @@ beforeAll(() => {
           // some specific fixtures against a schema configured slightly
           // differently.
           const schemas = {
-            "connections-filter.dynamic-json.graphql": gqlSchemas.dynamicJson,
-            "connections-filter.relations.graphql": gqlSchemas.relations,
-            "connections-filter.simple-collections.graphql":
-              gqlSchemas.simpleCollections,
-            "connections-filter.null-and-empty-allowed.graphql":
-              gqlSchemas.nullAndEmptyAllowed,
+            "dynamic-json.graphql": gqlSchemas.dynamicJson,
+            "relations.graphql": gqlSchemas.relations,
+            "simple-collections.graphql": gqlSchemas.simpleCollections,
+            "null-and-empty-allowed.graphql": gqlSchemas.nullAndEmptyAllowed,
           };
           const gqlSchema = schemas[fileName]
             ? schemas[fileName]
