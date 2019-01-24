@@ -357,6 +357,10 @@ module.exports = function PgConnectionArgFilterPlugin(
         // Not a base, enum, or range type? Skip.
         return null;
       }
+      if (pgType.id === "114") {
+        // `json` type has no operators
+        return null;
+      }
       const fieldType = pgGetGqlTypeByTypeIdAndModifier(
         pgTypeId,
         pgTypeModifier
