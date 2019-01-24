@@ -14,12 +14,12 @@ insert into p.forward_compound(forward_compound_1, forward_compound_2, name) val
   (2, 1, 'forwardCompound21'),
   (2, 2, 'forwardCompound22');
 
-insert into p.filterable (id, string, int, real, numeric, boolean, jsonb, int_array, inet, enum, parent_id, forward_id, forward_compound_1, forward_compound_2, backward_compound_1, backward_compound_2) values
-  (1, 'TEST', 1, 0.1, 0.1, true, '{"string":"TEST","int":1,"boolean":true}', '{1, 10}', '192.168.0.1', 'sad', 1, 1, 1, 1, 1, 1),
-  (2, 'Test', 2, 0.2, 0.2, true, '{"string":"Test","int":2,"boolean":true}', '{2, 20}', '192.168.1.1', 'ok', 1, 2, 1, 2, 1, 2),
-  (3, 'tEST', 3, 0.3, 0.3, false, '{"string":"tEST","int":3,"boolean":false}', '{3, 30}', '10.0.0.0/24', 'happy', 2, 3, 2, 1, 2, 1),
-  (4, 'test', 4, 0.4, 0.4, false, '{"string":"test","int":4,"boolean":false}', '{4, 40}', '172.168.1.1', 'happy', 2, 4, 2, 2, 2, 2),
-  (5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+insert into p.filterable (id, string, int, real, numeric, boolean, jsonb, int_array, int4_range, int8_range, numeric_range, timestamp_range, timestamptz_range, date_range, inet, enum, parent_id, forward_id, forward_compound_1, forward_compound_2, backward_compound_1, backward_compound_2) values
+  (1, 'TEST', 1, 0.1, 0.1, true, '{"string":"TEST","int":1,"boolean":true}', '{1, 10}', '[1,2)', '[1,2)', '[1,2)', '[1999-01-01 00:00, 1999-02-01 00:00)', '[1999-01-01 00:00, 1999-02-01 00:00)', '[1999-01-01, 1999-02-01)', '192.168.0.1', 'sad', 1, 1, 1, 1, 1, 1),
+  (2, 'Test', 2, 0.2, 0.2, true, '{"string":"Test","int":2,"boolean":true}', '{2, 20}', '[2,3)', '[2,3)', '[2,3)', '[1999-02-01 00:00, 1999-03-01 00:00)', '[1999-02-01 00:00, 1999-03-01 00:00)', '[1999-02-01, 1999-03-01)', '192.168.1.1', 'ok', 1, 2, 1, 2, 1, 2),
+  (3, 'tEST', 3, 0.3, 0.3, false, '{"string":"tEST","int":3,"boolean":false}', '{3, 30}', '[3,4)', '[3,4)', '[3,4)', '[1999-03-01 00:00, 1999-04-01 00:00)', '[1999-03-01 00:00, 1999-04-01 00:00)', '[1999-03-01, 1999-04-01)', '10.0.0.0/24', 'happy', 2, 3, 2, 1, 2, 1),
+  (4, 'test', 4, 0.4, 0.4, false, '{"string":"test","int":4,"boolean":false}', '{4, 40}', '[4,5)', '[4,5)', '[4,5)', '[1999-04-01 00:00, 1999-05-01 00:00)', '[1999-04-01 00:00, 1999-05-01 00:00)', '[1999-04-01, 1999-05-01)', '172.168.1.1', 'happy', 2, 4, 2, 2, 2, 2),
+  (5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 insert into p.backward(id, name, filterable_id) values
   (1, 'backward1', 1),

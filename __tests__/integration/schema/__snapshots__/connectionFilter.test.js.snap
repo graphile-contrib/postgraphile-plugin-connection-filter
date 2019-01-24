@@ -203,6 +203,207 @@ input BigFloatFilter {
   notIn: [BigFloat!]
 }
 
+\\"\\"\\"A range of \`BigFloat\`.\\"\\"\\"
+type BigFloatRange {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: BigFloatRangeBound
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: BigFloatRangeBound
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+type BigFloatRangeBound {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: BigFloat!
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+input BigFloatRangeBoundInput {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: BigFloat!
+}
+
+\\"\\"\\"
+A filter to be used against BigFloatRange fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigFloatRangeFilter {
+  \\"\\"\\"Adjacent to the specified range.\\"\\"\\"
+  adjacentTo: BigFloatRangeInput
+
+  \\"\\"\\"Contained by the specified range.\\"\\"\\"
+  containedBy: BigFloatRangeInput
+
+  \\"\\"\\"Contains the specified range.\\"\\"\\"
+  contains: BigFloatRangeInput
+
+  \\"\\"\\"Contains the specified value.\\"\\"\\"
+  containsElement: BigFloat
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: BigFloatRangeInput
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: BigFloatRangeInput
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [BigFloatRangeInput!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: BigFloatRangeInput
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: BigFloatRangeInput
+
+  \\"\\"\\"Does not extend left of the specified range.\\"\\"\\"
+  notExtendsLeftOf: BigFloatRangeInput
+
+  \\"\\"\\"Does not extend right of the specified range.\\"\\"\\"
+  notExtendsRightOf: BigFloatRangeInput
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [BigFloatRangeInput!]
+
+  \\"\\"\\"Overlaps the specified range.\\"\\"\\"
+  overlaps: BigFloatRangeInput
+
+  \\"\\"\\"Strictly left of the specified range.\\"\\"\\"
+  strictlyLeftOf: BigFloatRangeInput
+
+  \\"\\"\\"Strictly right of the specified range.\\"\\"\\"
+  strictlyRightOf: BigFloatRangeInput
+}
+
+\\"\\"\\"A range of \`BigFloat\`.\\"\\"\\"
+input BigFloatRangeInput {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: BigFloatRangeBoundInput
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: BigFloatRangeBoundInput
+}
+
+\\"\\"\\"
+A signed eight-byte integer. The upper big integer values are greater then the
+max value for a JavaScript number. Therefore all big integers will be output as
+strings and not numbers.
+\\"\\"\\"
+scalar BigInt
+
+\\"\\"\\"A range of \`BigInt\`.\\"\\"\\"
+type BigIntRange {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: BigIntRangeBound
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: BigIntRangeBound
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+type BigIntRangeBound {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: BigInt!
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+input BigIntRangeBoundInput {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: BigInt!
+}
+
+\\"\\"\\"
+A filter to be used against BigIntRange fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigIntRangeFilter {
+  \\"\\"\\"Adjacent to the specified range.\\"\\"\\"
+  adjacentTo: BigIntRangeInput
+
+  \\"\\"\\"Contained by the specified range.\\"\\"\\"
+  containedBy: BigIntRangeInput
+
+  \\"\\"\\"Contains the specified range.\\"\\"\\"
+  contains: BigIntRangeInput
+
+  \\"\\"\\"Contains the specified value.\\"\\"\\"
+  containsElement: BigInt
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: BigIntRangeInput
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: BigIntRangeInput
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [BigIntRangeInput!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: BigIntRangeInput
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: BigIntRangeInput
+
+  \\"\\"\\"Does not extend left of the specified range.\\"\\"\\"
+  notExtendsLeftOf: BigIntRangeInput
+
+  \\"\\"\\"Does not extend right of the specified range.\\"\\"\\"
+  notExtendsRightOf: BigIntRangeInput
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [BigIntRangeInput!]
+
+  \\"\\"\\"Overlaps the specified range.\\"\\"\\"
+  overlaps: BigIntRangeInput
+
+  \\"\\"\\"Strictly left of the specified range.\\"\\"\\"
+  strictlyLeftOf: BigIntRangeInput
+
+  \\"\\"\\"Strictly right of the specified range.\\"\\"\\"
+  strictlyRightOf: BigIntRangeInput
+}
+
+\\"\\"\\"A range of \`BigInt\`.\\"\\"\\"
+input BigIntRangeInput {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: BigIntRangeBoundInput
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: BigIntRangeBoundInput
+}
+
 \\"\\"\\"
 A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
@@ -311,6 +512,209 @@ enum ChildrenOrderBy {
 \\"\\"\\"A location in a connection that can be used for resuming pagination.\\"\\"\\"
 scalar Cursor
 
+\\"\\"\\"The day, does not include a time.\\"\\"\\"
+scalar Date
+
+\\"\\"\\"A range of \`Date\`.\\"\\"\\"
+type DateRange {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: DateRangeBound
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: DateRangeBound
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+type DateRangeBound {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: Date!
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+input DateRangeBoundInput {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: Date!
+}
+
+\\"\\"\\"
+A filter to be used against DateRange fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateRangeFilter {
+  \\"\\"\\"Adjacent to the specified range.\\"\\"\\"
+  adjacentTo: DateRangeInput
+
+  \\"\\"\\"Contained by the specified range.\\"\\"\\"
+  containedBy: DateRangeInput
+
+  \\"\\"\\"Contains the specified range.\\"\\"\\"
+  contains: DateRangeInput
+
+  \\"\\"\\"Contains the specified value.\\"\\"\\"
+  containsElement: Date
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: DateRangeInput
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: DateRangeInput
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [DateRangeInput!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: DateRangeInput
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: DateRangeInput
+
+  \\"\\"\\"Does not extend left of the specified range.\\"\\"\\"
+  notExtendsLeftOf: DateRangeInput
+
+  \\"\\"\\"Does not extend right of the specified range.\\"\\"\\"
+  notExtendsRightOf: DateRangeInput
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [DateRangeInput!]
+
+  \\"\\"\\"Overlaps the specified range.\\"\\"\\"
+  overlaps: DateRangeInput
+
+  \\"\\"\\"Strictly left of the specified range.\\"\\"\\"
+  strictlyLeftOf: DateRangeInput
+
+  \\"\\"\\"Strictly right of the specified range.\\"\\"\\"
+  strictlyRightOf: DateRangeInput
+}
+
+\\"\\"\\"A range of \`Date\`.\\"\\"\\"
+input DateRangeInput {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: DateRangeBoundInput
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: DateRangeBoundInput
+}
+
+\\"\\"\\"
+A point in time as described by the [ISO
+8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
+\\"\\"\\"
+scalar Datetime
+
+\\"\\"\\"A range of \`Datetime\`.\\"\\"\\"
+type DatetimeRange {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: DatetimeRangeBound
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: DatetimeRangeBound
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+type DatetimeRangeBound {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: Datetime!
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+input DatetimeRangeBoundInput {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: Datetime!
+}
+
+\\"\\"\\"
+A filter to be used against DatetimeRange fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DatetimeRangeFilter {
+  \\"\\"\\"Adjacent to the specified range.\\"\\"\\"
+  adjacentTo: DatetimeRangeInput
+
+  \\"\\"\\"Contained by the specified range.\\"\\"\\"
+  containedBy: DatetimeRangeInput
+
+  \\"\\"\\"Contains the specified range.\\"\\"\\"
+  contains: DatetimeRangeInput
+
+  \\"\\"\\"Contains the specified value.\\"\\"\\"
+  containsElement: Datetime
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: DatetimeRangeInput
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: DatetimeRangeInput
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [DatetimeRangeInput!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: DatetimeRangeInput
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: DatetimeRangeInput
+
+  \\"\\"\\"Does not extend left of the specified range.\\"\\"\\"
+  notExtendsLeftOf: DatetimeRangeInput
+
+  \\"\\"\\"Does not extend right of the specified range.\\"\\"\\"
+  notExtendsRightOf: DatetimeRangeInput
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [DatetimeRangeInput!]
+
+  \\"\\"\\"Overlaps the specified range.\\"\\"\\"
+  overlaps: DatetimeRangeInput
+
+  \\"\\"\\"Strictly left of the specified range.\\"\\"\\"
+  strictlyLeftOf: DatetimeRangeInput
+
+  \\"\\"\\"Strictly right of the specified range.\\"\\"\\"
+  strictlyRightOf: DatetimeRangeInput
+}
+
+\\"\\"\\"A range of \`Datetime\`.\\"\\"\\"
+input DatetimeRangeInput {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: DatetimeRangeBoundInput
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: DatetimeRangeBoundInput
+}
+
 type Filterable implements Node {
   \\"\\"\\"Reads a single \`Backward\` that is related to this \`Filterable\`.\\"\\"\\"
   backwardByFilterableId: Backward
@@ -405,6 +809,7 @@ type Filterable implements Node {
     \\"\\"\\"
     offset: Int
   ): FilterableComputedSetofIntConnection!
+  dateRange: DateRange
   enum: Mood
 
   \\"\\"\\"Reads a single \`Forward\` that is related to this \`Filterable\`.\\"\\"\\"
@@ -420,6 +825,8 @@ type Filterable implements Node {
   id: Int!
   inet: InternetAddress
   int: Int
+  int4Range: IntRange
+  int8Range: BigIntRange
   intArray: [Int]
   jsonb: JSON
 
@@ -428,12 +835,15 @@ type Filterable implements Node {
   \\"\\"\\"
   nodeId: ID!
   numeric: BigFloat
+  numericRange: BigFloatRange
 
   \\"\\"\\"Reads a single \`Parent\` that is related to this \`Filterable\`.\\"\\"\\"
   parentByParentId: Parent
   parentId: Int
   real: Float
   string: String
+  timestampRange: DatetimeRange
+  timestamptzRange: DatetimeRange
 }
 
 \\"\\"\\"A connection to a list of \`Int\` values.\\"\\"\\"
@@ -478,6 +888,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`computedIntArray\` field.\\"\\"\\"
   computedIntArray: IntListFilter
 
+  \\"\\"\\"Filter by the object’s \`dateRange\` field.\\"\\"\\"
+  dateRange: DateRangeFilter
+
   \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
   enum: MoodFilter
 
@@ -499,6 +912,12 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`int\` field.\\"\\"\\"
   int: IntFilter
 
+  \\"\\"\\"Filter by the object’s \`int4Range\` field.\\"\\"\\"
+  int4Range: IntRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`int8Range\` field.\\"\\"\\"
+  int8Range: BigIntRangeFilter
+
   \\"\\"\\"Filter by the object’s \`intArray\` field.\\"\\"\\"
   intArray: IntListFilter
 
@@ -511,6 +930,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`numeric\` field.\\"\\"\\"
   numeric: BigFloatFilter
 
+  \\"\\"\\"Filter by the object’s \`numericRange\` field.\\"\\"\\"
+  numericRange: BigFloatRangeFilter
+
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FilterableFilter!]
 
@@ -519,6 +941,12 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`string\` field.\\"\\"\\"
   string: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`timestampRange\` field.\\"\\"\\"
+  timestampRange: DatetimeRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`timestamptzRange\` field.\\"\\"\\"
+  timestamptzRange: DatetimeRangeFilter
 }
 
 \\"\\"\\"A connection to a list of \`Filterable\` values.\\"\\"\\"
@@ -555,6 +983,8 @@ enum FilterablesOrderBy {
   BACKWARD_COMPOUND_2_DESC
   BOOLEAN_ASC
   BOOLEAN_DESC
+  DATE_RANGE_ASC
+  DATE_RANGE_DESC
   ENUM_ASC
   ENUM_DESC
   FORWARD_COMPOUND_1_ASC
@@ -571,11 +1001,17 @@ enum FilterablesOrderBy {
   INT_ARRAY_DESC
   INT_ASC
   INT_DESC
+  INT4_RANGE_ASC
+  INT4_RANGE_DESC
+  INT8_RANGE_ASC
+  INT8_RANGE_DESC
   JSONB_ASC
   JSONB_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC
+  NUMERIC_RANGE_ASC
+  NUMERIC_RANGE_DESC
   PARENT_ID_ASC
   PARENT_ID_DESC
   PRIMARY_KEY_ASC
@@ -584,6 +1020,10 @@ enum FilterablesOrderBy {
   REAL_DESC
   STRING_ASC
   STRING_DESC
+  TIMESTAMP_RANGE_ASC
+  TIMESTAMP_RANGE_DESC
+  TIMESTAMPTZ_RANGE_ASC
+  TIMESTAMPTZ_RANGE_DESC
 }
 
 type Forward implements Node {
@@ -998,6 +1438,103 @@ input IntListFilter {
 
   \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
   overlaps: [Int]
+}
+
+\\"\\"\\"A range of \`Int\`.\\"\\"\\"
+type IntRange {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: IntRangeBound
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: IntRangeBound
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+type IntRangeBound {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: Int!
+}
+
+\\"\\"\\"
+The value at one end of a range. A range can either include this value, or not.
+\\"\\"\\"
+input IntRangeBoundInput {
+  \\"\\"\\"Whether or not the value of this bound is included in the range.\\"\\"\\"
+  inclusive: Boolean!
+
+  \\"\\"\\"The value at one end of our range.\\"\\"\\"
+  value: Int!
+}
+
+\\"\\"\\"
+A filter to be used against IntRange fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntRangeFilter {
+  \\"\\"\\"Adjacent to the specified range.\\"\\"\\"
+  adjacentTo: IntRangeInput
+
+  \\"\\"\\"Contained by the specified range.\\"\\"\\"
+  containedBy: IntRangeInput
+
+  \\"\\"\\"Contains the specified range.\\"\\"\\"
+  contains: IntRangeInput
+
+  \\"\\"\\"Contains the specified value.\\"\\"\\"
+  containsElement: Int
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: IntRangeInput
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: IntRangeInput
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [IntRangeInput!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: IntRangeInput
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: IntRangeInput
+
+  \\"\\"\\"Does not extend left of the specified range.\\"\\"\\"
+  notExtendsLeftOf: IntRangeInput
+
+  \\"\\"\\"Does not extend right of the specified range.\\"\\"\\"
+  notExtendsRightOf: IntRangeInput
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [IntRangeInput!]
+
+  \\"\\"\\"Overlaps the specified range.\\"\\"\\"
+  overlaps: IntRangeInput
+
+  \\"\\"\\"Strictly left of the specified range.\\"\\"\\"
+  strictlyLeftOf: IntRangeInput
+
+  \\"\\"\\"Strictly right of the specified range.\\"\\"\\"
+  strictlyRightOf: IntRangeInput
+}
+
+\\"\\"\\"A range of \`Int\`.\\"\\"\\"
+input IntRangeInput {
+  \\"\\"\\"The ending bound of our range.\\"\\"\\"
+  end: IntRangeBoundInput
+
+  \\"\\"\\"The starting bound of our range.\\"\\"\\"
+  start: IntRangeBoundInput
 }
 
 \\"\\"\\"

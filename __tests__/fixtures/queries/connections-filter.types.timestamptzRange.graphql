@@ -1,0 +1,188 @@
+query {
+  adjacentTo: allFilterables(
+    filter: {
+      timestamptzRange: {
+        adjacentTo: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  containedBy: allFilterables(
+    filter: {
+      timestamptzRange: {
+        containedBy: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  contains: allFilterables(
+    filter: {
+      timestamptzRange: {
+        contains: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  containsElement: allFilterables(
+    filter: { timestamptzRange: { containsElement: "1999-02-01 00:00" } }
+  ) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(
+    filter: {
+      timestamptzRange: {
+        distinctFrom: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  equalTo: allFilterables(
+    filter: {
+      timestamptzRange: {
+        equalTo: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(
+    filter: {
+      timestamptzRange: {
+        in: [
+          {
+            start: { value: "1999-02-01 00:00", inclusive: true }
+            end: { value: "1999-03-01 00:00", inclusive: false }
+          }
+        ]
+      }
+    }
+  ) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { timestamptzRange: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: {
+      timestamptzRange: {
+        notDistinctFrom: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(
+    filter: {
+      timestamptzRange: {
+        notEqualTo: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notExtendsLeftOf: allFilterables(
+    filter: {
+      timestamptzRange: {
+        notExtendsLeftOf: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notExtendsRightOf: allFilterables(
+    filter: {
+      timestamptzRange: {
+        notExtendsRightOf: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notIn: allFilterables(
+    filter: {
+      timestamptzRange: {
+        notIn: [
+          {
+            start: { value: "1999-02-01 00:00", inclusive: true }
+            end: { value: "1999-03-01 00:00", inclusive: false }
+          }
+        ]
+      }
+    }
+  ) {
+    ...nodes
+  }
+  overlaps: allFilterables(
+    filter: {
+      timestamptzRange: {
+        overlaps: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  strictlyLeftOf: allFilterables(
+    filter: {
+      timestamptzRange: {
+        strictlyLeftOf: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  strictlyRightOf: allFilterables(
+    filter: {
+      timestamptzRange: {
+        strictlyRightOf: {
+          start: { value: "1999-02-01 00:00", inclusive: true }
+          end: { value: "1999-03-01 00:00", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

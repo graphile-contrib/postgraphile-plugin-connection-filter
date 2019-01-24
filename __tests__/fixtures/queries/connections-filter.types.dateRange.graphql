@@ -1,0 +1,186 @@
+query {
+  adjacentTo: allFilterables(
+    filter: {
+      dateRange: {
+        adjacentTo: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  containedBy: allFilterables(
+    filter: {
+      dateRange: {
+        containedBy: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  contains: allFilterables(
+    filter: {
+      dateRange: {
+        contains: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  containsElement: allFilterables(filter: { dateRange: { containsElement: "1999-02-01" } }) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(
+    filter: {
+      dateRange: {
+        distinctFrom: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  equalTo: allFilterables(
+    filter: {
+      dateRange: {
+        equalTo: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(
+    filter: {
+      dateRange: {
+        in: [
+          {
+            start: { value: "1999-02-01", inclusive: true }
+            end: { value: "1999-03-01", inclusive: false }
+          }
+        ]
+      }
+    }
+  ) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { dateRange: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: {
+      dateRange: {
+        notDistinctFrom: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(
+    filter: {
+      dateRange: {
+        notEqualTo: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notExtendsLeftOf: allFilterables(
+    filter: {
+      dateRange: {
+        notExtendsLeftOf: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notExtendsRightOf: allFilterables(
+    filter: {
+      dateRange: {
+        notExtendsRightOf: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notIn: allFilterables(
+    filter: {
+      dateRange: {
+        notIn: [
+          {
+            start: { value: "1999-02-01", inclusive: true }
+            end: { value: "1999-03-01", inclusive: false }
+          }
+        ]
+      }
+    }
+  ) {
+    ...nodes
+  }
+  overlaps: allFilterables(
+    filter: {
+      dateRange: {
+        overlaps: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  strictlyLeftOf: allFilterables(
+    filter: {
+      dateRange: {
+        strictlyLeftOf: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  strictlyRightOf: allFilterables(
+    filter: {
+      dateRange: {
+        strictlyRightOf: {
+          start: { value: "1999-02-01", inclusive: true }
+          end: { value: "1999-03-01", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

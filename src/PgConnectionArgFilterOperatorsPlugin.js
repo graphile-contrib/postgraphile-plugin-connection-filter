@@ -4,6 +4,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       addConnectionFilterOperator,
       escapeLikeWildcards,
       pgSql: sql,
+      gql2pg,
+      pgIntrospectionResultsByKind: introspectionResultsByKind,
       graphql: { getNamedType, GraphQLBoolean, GraphQLList, GraphQLNonNull },
     } = build;
     addConnectionFilterOperator(
@@ -529,6 +531,112 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       (identifier, value) => sql.query`${identifier} && ${value}`,
       {
         allowedFieldTypes: ["InternetAddress"],
+      }
+    );
+    const rangeTypeNames = [
+      "IntRange",
+      "DatetimeRange",
+      "DateRange",
+      "BigIntRange",
+      "BigFloatRange",
+    ];
+    addConnectionFilterOperator(
+      "containsElement",
+      "Contains the specified value.",
+      (_fieldInputType, fieldBaseInputType) => fieldBaseInputType,
+      (identifier, value) => sql.query`${identifier} @> ${value}`,
+      {
+        sqlValueResolver: (input, pgType, pgTypeModifier) => {
+          const rangeSubType =
+            introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
+          return sql.query`${gql2pg(
+            input,
+            pgType.rangeSubTypeId,
+            pgTypeModifier
+          )}::${sql.identifier(rangeSubType.namespaceName, rangeSubType.name)}`;
+        },
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "contains",
+      "Contains the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} @> ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "containedBy",
+      "Contained by the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} <@ ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "overlaps",
+      "Overlaps the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} && ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "strictlyLeftOf",
+      "Strictly left of the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} << ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "strictlyRightOf",
+      "Strictly right of the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} >> ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "notExtendsRightOf",
+      "Does not extend right of the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} &< ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "notExtendsLeftOf",
+      "Does not extend left of the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} &> ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
+      }
+    );
+    addConnectionFilterOperator(
+      "adjacentTo",
+      "Adjacent to the specified range.",
+      fieldType => fieldType,
+      (identifier, value) => sql.query`${identifier} -|- ${value}`,
+      {
+        allowedFieldTypes: rangeTypeNames,
+        allowedListTypes: ["NonList"],
       }
     );
     return _;

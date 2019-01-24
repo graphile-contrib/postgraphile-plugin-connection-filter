@@ -1,0 +1,186 @@
+query {
+  adjacentTo: allFilterables(
+    filter: {
+      int8Range: {
+        adjacentTo: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  containedBy: allFilterables(
+    filter: {
+      int8Range: {
+        containedBy: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  contains: allFilterables(
+    filter: {
+      int8Range: {
+        contains: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  containsElement: allFilterables(filter: { int8Range: { containsElement: "2" } }) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(
+    filter: {
+      int8Range: {
+        distinctFrom: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  equalTo: allFilterables(
+    filter: {
+      int8Range: {
+        equalTo: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(
+    filter: {
+      int8Range: {
+        in: [
+          {
+            start: { value: "2", inclusive: true }
+            end: { value: "3", inclusive: false }
+          }
+        ]
+      }
+    }
+  ) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { int8Range: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: {
+      int8Range: {
+        notDistinctFrom: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(
+    filter: {
+      int8Range: {
+        notEqualTo: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notExtendsLeftOf: allFilterables(
+    filter: {
+      int8Range: {
+        notExtendsLeftOf: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notExtendsRightOf: allFilterables(
+    filter: {
+      int8Range: {
+        notExtendsRightOf: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  notIn: allFilterables(
+    filter: {
+      int8Range: {
+        notIn: [
+          {
+            start: { value: "2", inclusive: true }
+            end: { value: "3", inclusive: false }
+          }
+        ]
+      }
+    }
+  ) {
+    ...nodes
+  }
+  overlaps: allFilterables(
+    filter: {
+      int8Range: {
+        overlaps: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  strictlyLeftOf: allFilterables(
+    filter: {
+      int8Range: {
+        strictlyLeftOf: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+  strictlyRightOf: allFilterables(
+    filter: {
+      int8Range: {
+        strictlyRightOf: {
+          start: { value: "2", inclusive: true }
+          end: { value: "3", inclusive: false }
+        }
+      }
+    }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}
