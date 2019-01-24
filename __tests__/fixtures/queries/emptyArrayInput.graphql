@@ -1,0 +1,29 @@
+query {
+  # TODO: add more checks here
+  int4_in_empty: allFilterables(filter: { int4: { in: [] } }) {
+    totalCount
+  }
+  int4_notIn_empty: allFilterables(filter: { int4: { notIn: [] } }) {
+    totalCount
+  }
+  # `and: []` is ignored when resolving the SQL query
+  logical_and_empty: allFilterables(filter: { and: [] }) {
+    totalCount
+  }
+  # `or: []` is ignored when resolving the SQL query
+  logical_or_empty: allFilterables(filter: { or: [] }) {
+    totalCount
+  }
+  # all of this nested logic is ignored when resolving the SQL query
+  logical_nested: allFilterables(
+    filter: { not: { and: [{ or: [] }], or: [{ and: [] }, { or: [] }] } }
+  ) {
+    totalCount
+  }
+  logical_not_and_empty: allFilterables(filter: { not: { and: [] } }) {
+    totalCount
+  }
+  logical_not_or_empty: allFilterables(filter: { not: { or: [] } }) {
+    totalCount
+  }
+}

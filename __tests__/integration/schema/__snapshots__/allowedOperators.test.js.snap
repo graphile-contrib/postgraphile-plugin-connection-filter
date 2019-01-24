@@ -230,6 +230,17 @@ strings and not numbers.
 \\"\\"\\"
 scalar BigInt
 
+\\"\\"\\"
+A filter to be used against BigInt fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigIntFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: BigInt
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: BigInt
+}
+
 \\"\\"\\"A range of \`BigInt\`.\\"\\"\\"
 type BigIntRange {
   \\"\\"\\"The ending bound of our range.\\"\\"\\"
@@ -600,9 +611,11 @@ type Filterable implements Node {
   forwardId: Int
   id: Int!
   inet: InternetAddress
+  int2: Int
   int4: Int
   int4Array: [Int]
   int4Range: IntRange
+  int8: BigInt
   int8Range: BigIntRange
   json: JSON
   jsonb: JSON
@@ -695,6 +708,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`inet\` field.\\"\\"\\"
   inet: InternetAddressFilter
 
+  \\"\\"\\"Filter by the object’s \`int2\` field.\\"\\"\\"
+  int2: IntFilter
+
   \\"\\"\\"Filter by the object’s \`int4\` field.\\"\\"\\"
   int4: IntFilter
 
@@ -703,6 +719,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`int4Range\` field.\\"\\"\\"
   int4Range: IntRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`int8\` field.\\"\\"\\"
+  int8: BigIntFilter
 
   \\"\\"\\"Filter by the object’s \`int8Range\` field.\\"\\"\\"
   int8Range: BigIntRangeFilter
@@ -796,12 +815,16 @@ enum FilterablesOrderBy {
   ID_DESC
   INET_ASC
   INET_DESC
+  INT2_ASC
+  INT2_DESC
   INT4_ARRAY_ASC
   INT4_ARRAY_DESC
   INT4_ASC
   INT4_DESC
   INT4_RANGE_ASC
   INT4_RANGE_DESC
+  INT8_ASC
+  INT8_DESC
   INT8_RANGE_ASC
   INT8_RANGE_DESC
   JSON_ASC

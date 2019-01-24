@@ -1,12 +1,41 @@
-query {
-  int4_lessThan_2: allFilterables(filter: { int4: { lessThan: 2 } }) { ...nodes }
-  int4_lessThanOrEqualTo_2: allFilterables(filter: { int4: { lessThanOrEqualTo: 2 } }) { ...nodes }
-  int4_greaterThan_2: allFilterables(filter: { int4: { greaterThan: 2 } }) { ...nodes }
-  int4_greaterThanOrEqualTo_2: allFilterables(filter: { int4: { greaterThanOrEqualTo: 2 } }) { ...nodes }
-  int4_in_2_3: allFilterables(filter: { int4: { in: [2, 3] } }) { ...nodes }
-  int4_in_empty: allFilterables(filter: { int4: { in: [] } }) { ...nodes }
-  int4_notIn_2_3: allFilterables(filter: { int4: { notIn: [2, 3] } }) { ...nodes }
-  int4_notIn_empty: allFilterables(filter: { int4: { notIn: [] } }) { ...nodes }
+query int4($v2: Int = 2, $v3: Int = 3) {
+  distinctFrom: allFilterables(filter: { int4: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { int4: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { int4: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { int4: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { int4: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { int4: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { int4: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { int4: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { int4: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { int4: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { int4: { notIn: [$v2, $v3] } }) {
+    ...nodes
+  }
 }
 
 fragment nodes on FilterablesConnection {
