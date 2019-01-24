@@ -37,6 +37,7 @@ create table p.filterable (
   "jsonb" jsonb,
   "text_array" text[],
   "int4_array" int[],
+  "json_array" json[],
   "int4_range" int4range,
   "int8_range" int8range,
   "numeric_range" numrange,
