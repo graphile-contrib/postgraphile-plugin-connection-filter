@@ -883,6 +883,7 @@ type Filterable implements Node {
   int8: BigInt
   int8Range: BigIntRange
   json: JSON
+  jsonArray: [JSON]
   jsonb: JSON
 
   \\"\\"\\"
@@ -986,9 +987,6 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`int8Range\` field.\\"\\"\\"
   int8Range: BigIntRangeFilter
 
-  \\"\\"\\"Filter by the object’s \`json\` field.\\"\\"\\"
-  json: JSONFilter
-
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
 
@@ -1090,6 +1088,8 @@ enum FilterablesOrderBy {
   INT8_DESC
   INT8_RANGE_ASC
   INT8_RANGE_DESC
+  JSON_ARRAY_ASC
+  JSON_ARRAY_DESC
   JSON_ASC
   JSON_DESC
   JSONB_ASC
