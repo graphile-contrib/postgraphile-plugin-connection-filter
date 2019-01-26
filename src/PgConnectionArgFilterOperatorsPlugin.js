@@ -8,6 +8,31 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       graphql: { getNamedType, GraphQLBoolean, GraphQLList, GraphQLNonNull },
     } = build;
+
+    const simpleTypeNames = [
+      "BigFloat",
+      "BigInt",
+      //"BitString",
+      //"Boolean",
+      "Date",
+      "Datetime",
+      "Float",
+      "Int",
+      //"InternetAddress",
+      //"Interval",
+      //"JSON",
+      "String",
+      "Time",
+      //"UUID",
+    ];
+    const rangeTypeNames = [
+      "BigFloatRange",
+      "BigIntRange",
+      "DateRange",
+      "DatetimeRange",
+      "IntRange",
+    ];
+
     addConnectionFilterOperator(
       "isNull",
       "Is null (if `true` is specified) or is not null (if `false` is specified).",
@@ -63,16 +88,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} < ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["NonList", "List"],
       }
     );
@@ -82,16 +98,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} <= ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["NonList", "List"],
       }
     );
@@ -101,16 +108,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} > ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["NonList", "List"],
       }
     );
@@ -120,16 +118,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} >= ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["NonList", "List"],
       }
     );
@@ -343,16 +332,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} @> ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -362,16 +342,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} <@ ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -381,16 +352,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => fieldType,
       (identifier, value) => sql.query`${identifier} && ${value}`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -418,16 +380,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => getNamedType(fieldType),
       (identifier, value) => sql.query`${value} > ANY(${identifier})`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -437,16 +390,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => getNamedType(fieldType),
       (identifier, value) => sql.query`${value} >= ANY(${identifier})`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -456,16 +400,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => getNamedType(fieldType),
       (identifier, value) => sql.query`${value} < ANY(${identifier})`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -475,16 +410,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       fieldType => getNamedType(fieldType),
       (identifier, value) => sql.query`${value} <= ANY(${identifier})`,
       {
-        allowedFieldTypes: [
-          "String",
-          "Int",
-          "Float",
-          "Datetime",
-          "Date",
-          "Time",
-          "BigInt",
-          "BigFloat",
-        ],
+        allowedFieldTypes: simpleTypeNames,
         allowedListTypes: ["List"],
       }
     );
@@ -533,13 +459,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
         allowedFieldTypes: ["InternetAddress"],
       }
     );
-    const rangeTypeNames = [
-      "IntRange",
-      "DatetimeRange",
-      "DateRange",
-      "BigIntRange",
-      "BigFloatRange",
-    ];
     addConnectionFilterOperator(
       "containsElement",
       "Contains the specified value.",
