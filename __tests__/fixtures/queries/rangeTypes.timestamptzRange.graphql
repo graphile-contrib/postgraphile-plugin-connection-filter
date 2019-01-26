@@ -5,77 +5,77 @@ query timestamptzRange(
   }
   $elementVal: Datetime = "1999-02-01 00:00"
 ) {
-  adjacentTo: allFilterables(
+  adjacentTo: allRangeTypes(
     filter: { timestamptzRange: { adjacentTo: $val } }
   ) {
     ...nodes
   }
-  containedBy: allFilterables(
+  containedBy: allRangeTypes(
     filter: { timestamptzRange: { containedBy: $val } }
   ) {
     ...nodes
   }
-  contains: allFilterables(filter: { timestamptzRange: { contains: $val } }) {
+  contains: allRangeTypes(filter: { timestamptzRange: { contains: $val } }) {
     ...nodes
   }
-  containsElement: allFilterables(
+  containsElement: allRangeTypes(
     filter: { timestamptzRange: { containsElement: $elementVal } }
   ) {
     ...nodes
   }
-  distinctFrom: allFilterables(
+  distinctFrom: allRangeTypes(
     filter: { timestamptzRange: { distinctFrom: $val } }
   ) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { timestamptzRange: { equalTo: $val } }) {
+  equalTo: allRangeTypes(filter: { timestamptzRange: { equalTo: $val } }) {
     ...nodes
   }
-  in: allFilterables(filter: { timestamptzRange: { in: [$val] } }) {
+  in: allRangeTypes(filter: { timestamptzRange: { in: [$val] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { timestamptzRange: { isNull: true } }) {
+  isNull: allRangeTypes(filter: { timestamptzRange: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(
+  notDistinctFrom: allRangeTypes(
     filter: { timestamptzRange: { notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(
+  notEqualTo: allRangeTypes(
     filter: { timestamptzRange: { notEqualTo: $val } }
   ) {
     ...nodes
   }
-  notExtendsLeftOf: allFilterables(
+  notExtendsLeftOf: allRangeTypes(
     filter: { timestamptzRange: { notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
-  notExtendsRightOf: allFilterables(
+  notExtendsRightOf: allRangeTypes(
     filter: { timestamptzRange: { notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allFilterables(filter: { timestamptzRange: { notIn: [$val] } }) {
+  notIn: allRangeTypes(filter: { timestamptzRange: { notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allFilterables(filter: { timestamptzRange: { overlaps: $val } }) {
+  overlaps: allRangeTypes(filter: { timestamptzRange: { overlaps: $val } }) {
     ...nodes
   }
-  strictlyLeftOf: allFilterables(
+  strictlyLeftOf: allRangeTypes(
     filter: { timestamptzRange: { strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
-  strictlyRightOf: allFilterables(
+  strictlyRightOf: allRangeTypes(
     filter: { timestamptzRange: { strictlyRightOf: $val } }
   ) {
     ...nodes
   }
 }
 
-fragment nodes on FilterablesConnection {
+fragment nodes on RangeTypesConnection {
   nodes {
     id
   }

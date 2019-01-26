@@ -1,0 +1,74 @@
+query dateRange(
+  $val: DateRangeInput = {
+    start: { value: "1999-02-01", inclusive: true }
+    end: { value: "1999-03-01", inclusive: false }
+  }
+  $elementVal: Date = "1999-02-01"
+) {
+  adjacentTo: allRangeTypes(filter: { dateRange: { adjacentTo: $val } }) {
+    ...nodes
+  }
+  containedBy: allRangeTypes(filter: { dateRange: { containedBy: $val } }) {
+    ...nodes
+  }
+  contains: allRangeTypes(filter: { dateRange: { contains: $val } }) {
+    ...nodes
+  }
+  containsElement: allRangeTypes(
+    filter: { dateRange: { containsElement: $elementVal } }
+  ) {
+    ...nodes
+  }
+  distinctFrom: allRangeTypes(filter: { dateRange: { distinctFrom: $val } }) {
+    ...nodes
+  }
+  equalTo: allRangeTypes(filter: { dateRange: { equalTo: $val } }) {
+    ...nodes
+  }
+  in: allRangeTypes(filter: { dateRange: { in: [$val] } }) {
+    ...nodes
+  }
+  isNull: allRangeTypes(filter: { dateRange: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allRangeTypes(
+    filter: { dateRange: { notDistinctFrom: $val } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allRangeTypes(filter: { dateRange: { notEqualTo: $val } }) {
+    ...nodes
+  }
+  notExtendsLeftOf: allRangeTypes(
+    filter: { dateRange: { notExtendsLeftOf: $val } }
+  ) {
+    ...nodes
+  }
+  notExtendsRightOf: allRangeTypes(
+    filter: { dateRange: { notExtendsRightOf: $val } }
+  ) {
+    ...nodes
+  }
+  notIn: allRangeTypes(filter: { dateRange: { notIn: [$val] } }) {
+    ...nodes
+  }
+  overlaps: allRangeTypes(filter: { dateRange: { overlaps: $val } }) {
+    ...nodes
+  }
+  strictlyLeftOf: allRangeTypes(
+    filter: { dateRange: { strictlyLeftOf: $val } }
+  ) {
+    ...nodes
+  }
+  strictlyRightOf: allRangeTypes(
+    filter: { dateRange: { strictlyRightOf: $val } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on RangeTypesConnection {
+  nodes {
+    id
+  }
+}

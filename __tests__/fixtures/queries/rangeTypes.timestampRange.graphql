@@ -5,73 +5,73 @@ query timestampRange(
   }
   $elementVal: Datetime = "1999-02-01 00:00"
 ) {
-  adjacentTo: allFilterables(filter: { timestampRange: { adjacentTo: $val } }) {
+  adjacentTo: allRangeTypes(filter: { timestampRange: { adjacentTo: $val } }) {
     ...nodes
   }
-  containedBy: allFilterables(
+  containedBy: allRangeTypes(
     filter: { timestampRange: { containedBy: $val } }
   ) {
     ...nodes
   }
-  contains: allFilterables(filter: { timestampRange: { contains: $val } }) {
+  contains: allRangeTypes(filter: { timestampRange: { contains: $val } }) {
     ...nodes
   }
-  containsElement: allFilterables(
+  containsElement: allRangeTypes(
     filter: { timestampRange: { containsElement: $elementVal } }
   ) {
     ...nodes
   }
-  distinctFrom: allFilterables(
+  distinctFrom: allRangeTypes(
     filter: { timestampRange: { distinctFrom: $val } }
   ) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { timestampRange: { equalTo: $val } }) {
+  equalTo: allRangeTypes(filter: { timestampRange: { equalTo: $val } }) {
     ...nodes
   }
-  in: allFilterables(filter: { timestampRange: { in: [$val] } }) {
+  in: allRangeTypes(filter: { timestampRange: { in: [$val] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { timestampRange: { isNull: true } }) {
+  isNull: allRangeTypes(filter: { timestampRange: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(
+  notDistinctFrom: allRangeTypes(
     filter: { timestampRange: { notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { timestampRange: { notEqualTo: $val } }) {
+  notEqualTo: allRangeTypes(filter: { timestampRange: { notEqualTo: $val } }) {
     ...nodes
   }
-  notExtendsLeftOf: allFilterables(
+  notExtendsLeftOf: allRangeTypes(
     filter: { timestampRange: { notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
-  notExtendsRightOf: allFilterables(
+  notExtendsRightOf: allRangeTypes(
     filter: { timestampRange: { notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allFilterables(filter: { timestampRange: { notIn: [$val] } }) {
+  notIn: allRangeTypes(filter: { timestampRange: { notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allFilterables(filter: { timestampRange: { overlaps: $val } }) {
+  overlaps: allRangeTypes(filter: { timestampRange: { overlaps: $val } }) {
     ...nodes
   }
-  strictlyLeftOf: allFilterables(
+  strictlyLeftOf: allRangeTypes(
     filter: { timestampRange: { strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
-  strictlyRightOf: allFilterables(
+  strictlyRightOf: allRangeTypes(
     filter: { timestampRange: { strictlyRightOf: $val } }
   ) {
     ...nodes
   }
 }
 
-fragment nodes on FilterablesConnection {
+fragment nodes on RangeTypesConnection {
   nodes {
     id
   }

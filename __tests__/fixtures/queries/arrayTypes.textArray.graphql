@@ -1,0 +1,68 @@
+query textArray($v2: [String] = ["2", "3"], $v2_1: String = "2") {
+  anyEqualTo: allArrayTypes(filter: { textArray: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allArrayTypes(filter: { textArray: { anyGreaterThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allArrayTypes(filter: { textArray: { anyGreaterThanOrEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThan: allArrayTypes(filter: { textArray: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allArrayTypes(filter: { textArray: { anyLessThanOrEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyNotEqualTo: allArrayTypes(filter: { textArray: { anyNotEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  containedBy: allArrayTypes(filter: { textArray: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allArrayTypes(filter: { textArray: { contains: $v2 } }) {
+    ...nodes
+  }
+  distinctFrom: allArrayTypes(filter: { textArray: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allArrayTypes(filter: { textArray: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allArrayTypes(filter: { textArray: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allArrayTypes(
+    filter: { textArray: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allArrayTypes(filter: { textArray: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allArrayTypes(filter: { textArray: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allArrayTypes(
+    filter: { textArray: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allArrayTypes(
+    filter: { textArray: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allArrayTypes(filter: { textArray: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allArrayTypes(filter: { textArray: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on ArrayTypesConnection {
+  nodes {
+    id
+  }
+}

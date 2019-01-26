@@ -1,0 +1,29 @@
+query enum($val: Mood = OK) {
+  distinctFrom: allEnumTypes(filter: { enum: { distinctFrom: $val } }) {
+    ...nodes
+  }
+  equalTo: allEnumTypes(filter: { enum: { equalTo: $val } }) {
+    ...nodes
+  }
+  in: allEnumTypes(filter: { enum: { in: [$val] } }) {
+    ...nodes
+  }
+  isNull: allEnumTypes(filter: { enum: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allEnumTypes(filter: { enum: { notDistinctFrom: $val } }) {
+    ...nodes
+  }
+  notEqualTo: allEnumTypes(filter: { enum: { notEqualTo: $val } }) {
+    ...nodes
+  }
+  notIn: allEnumTypes(filter: { enum: { notIn: [$val] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on EnumTypesConnection {
+  nodes {
+    id
+  }
+}

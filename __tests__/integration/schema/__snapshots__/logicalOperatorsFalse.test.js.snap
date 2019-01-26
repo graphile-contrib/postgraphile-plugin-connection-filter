@@ -1,7 +1,227 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`prints a schema with the filter plugin and the \`connectionFilterLogicalOperators: false\` option 1`] = `
-"type Backward implements Node {
+"type ArrayType implements Node {
+  bit4Array: [BitString]
+  boolArray: [Boolean]
+  bpchar4Array: [String]
+  byteaArray: [String]
+  char4Array: [String]
+  cidrArray: [String]
+  dateArray: [Date]
+  float4Array: [Float]
+  float8Array: [Float]
+  id: Int!
+  inetArray: [InternetAddress]
+  int2Array: [Int]
+  int4Array: [Int]
+  int8Array: [BigInt]
+  intervalArray: [Interval]
+  jsonArray: [JSON]
+  jsonbArray: [JSON]
+  macaddr8Array: [String]
+  macaddrArray: [String]
+  moneyArray: [Float]
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+  numericArray: [BigFloat]
+  textArray: [String]
+  timeArray: [Time]
+  timestampArray: [Datetime]
+  timestamptzArray: [Datetime]
+  timetzArray: [Time]
+  uuidArray: [UUID]
+  varbitArray: [BitString]
+  varcharArray: [String]
+  xmlArray: [String]
+}
+
+\\"\\"\\"
+A filter to be used against \`ArrayType\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input ArrayTypeFilter {
+  \\"\\"\\"Filter by the object’s \`bit4Array\` field.\\"\\"\\"
+  bit4Array: BitStringListFilter
+
+  \\"\\"\\"Filter by the object’s \`boolArray\` field.\\"\\"\\"
+  boolArray: BooleanListFilter
+
+  \\"\\"\\"Filter by the object’s \`bpchar4Array\` field.\\"\\"\\"
+  bpchar4Array: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`byteaArray\` field.\\"\\"\\"
+  byteaArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`char4Array\` field.\\"\\"\\"
+  char4Array: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`cidrArray\` field.\\"\\"\\"
+  cidrArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`dateArray\` field.\\"\\"\\"
+  dateArray: DateListFilter
+
+  \\"\\"\\"Filter by the object’s \`float4Array\` field.\\"\\"\\"
+  float4Array: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`float8Array\` field.\\"\\"\\"
+  float8Array: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`inetArray\` field.\\"\\"\\"
+  inetArray: InternetAddressListFilter
+
+  \\"\\"\\"Filter by the object’s \`int2Array\` field.\\"\\"\\"
+  int2Array: IntListFilter
+
+  \\"\\"\\"Filter by the object’s \`int4Array\` field.\\"\\"\\"
+  int4Array: IntListFilter
+
+  \\"\\"\\"Filter by the object’s \`int8Array\` field.\\"\\"\\"
+  int8Array: BigIntListFilter
+
+  \\"\\"\\"Filter by the object’s \`jsonbArray\` field.\\"\\"\\"
+  jsonbArray: JSONListFilter
+
+  \\"\\"\\"Filter by the object’s \`macaddr8Array\` field.\\"\\"\\"
+  macaddr8Array: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`macaddrArray\` field.\\"\\"\\"
+  macaddrArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`moneyArray\` field.\\"\\"\\"
+  moneyArray: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`numericArray\` field.\\"\\"\\"
+  numericArray: BigFloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`textArray\` field.\\"\\"\\"
+  textArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`timeArray\` field.\\"\\"\\"
+  timeArray: TimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timestampArray\` field.\\"\\"\\"
+  timestampArray: DatetimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timestamptzArray\` field.\\"\\"\\"
+  timestamptzArray: DatetimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timetzArray\` field.\\"\\"\\"
+  timetzArray: TimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`uuidArray\` field.\\"\\"\\"
+  uuidArray: UUIDListFilter
+
+  \\"\\"\\"Filter by the object’s \`varbitArray\` field.\\"\\"\\"
+  varbitArray: BitStringListFilter
+
+  \\"\\"\\"Filter by the object’s \`varcharArray\` field.\\"\\"\\"
+  varcharArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`xmlArray\` field.\\"\\"\\"
+  xmlArray: StringListFilter
+}
+
+\\"\\"\\"A connection to a list of \`ArrayType\` values.\\"\\"\\"
+type ArrayTypesConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`ArrayType\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [ArrayTypesEdge!]!
+
+  \\"\\"\\"A list of \`ArrayType\` objects.\\"\\"\\"
+  nodes: [ArrayType]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`ArrayType\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`ArrayType\` edge in the connection.\\"\\"\\"
+type ArrayTypesEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`ArrayType\` at the end of the edge.\\"\\"\\"
+  node: ArrayType
+}
+
+\\"\\"\\"Methods to use when ordering \`ArrayType\`.\\"\\"\\"
+enum ArrayTypesOrderBy {
+  BIT4_ARRAY_ASC
+  BIT4_ARRAY_DESC
+  BOOL_ARRAY_ASC
+  BOOL_ARRAY_DESC
+  BPCHAR4_ARRAY_ASC
+  BPCHAR4_ARRAY_DESC
+  BYTEA_ARRAY_ASC
+  BYTEA_ARRAY_DESC
+  CHAR4_ARRAY_ASC
+  CHAR4_ARRAY_DESC
+  CIDR_ARRAY_ASC
+  CIDR_ARRAY_DESC
+  DATE_ARRAY_ASC
+  DATE_ARRAY_DESC
+  FLOAT4_ARRAY_ASC
+  FLOAT4_ARRAY_DESC
+  FLOAT8_ARRAY_ASC
+  FLOAT8_ARRAY_DESC
+  ID_ASC
+  ID_DESC
+  INET_ARRAY_ASC
+  INET_ARRAY_DESC
+  INT2_ARRAY_ASC
+  INT2_ARRAY_DESC
+  INT4_ARRAY_ASC
+  INT4_ARRAY_DESC
+  INT8_ARRAY_ASC
+  INT8_ARRAY_DESC
+  INTERVAL_ARRAY_ASC
+  INTERVAL_ARRAY_DESC
+  JSON_ARRAY_ASC
+  JSON_ARRAY_DESC
+  JSONB_ARRAY_ASC
+  JSONB_ARRAY_DESC
+  MACADDR_ARRAY_ASC
+  MACADDR_ARRAY_DESC
+  MACADDR8_ARRAY_ASC
+  MACADDR8_ARRAY_DESC
+  MONEY_ARRAY_ASC
+  MONEY_ARRAY_DESC
+  NATURAL
+  NUMERIC_ARRAY_ASC
+  NUMERIC_ARRAY_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+  TEXT_ARRAY_ASC
+  TEXT_ARRAY_DESC
+  TIME_ARRAY_ASC
+  TIME_ARRAY_DESC
+  TIMESTAMP_ARRAY_ASC
+  TIMESTAMP_ARRAY_DESC
+  TIMESTAMPTZ_ARRAY_ASC
+  TIMESTAMPTZ_ARRAY_DESC
+  TIMETZ_ARRAY_ASC
+  TIMETZ_ARRAY_DESC
+  UUID_ARRAY_ASC
+  UUID_ARRAY_DESC
+  VARBIT_ARRAY_ASC
+  VARBIT_ARRAY_DESC
+  VARCHAR_ARRAY_ASC
+  VARCHAR_ARRAY_DESC
+  XML_ARRAY_ASC
+  XML_ARRAY_DESC
+}
+
+type Backward implements Node {
   \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Backward\`.\\"\\"\\"
   filterableByFilterableId: Filterable
   filterableId: Int
@@ -185,6 +405,69 @@ input BigFloatFilter {
   notIn: [BigFloat!]
 }
 
+\\"\\"\\"
+A filter to be used against BigFloat List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigFloatListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BigFloat
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BigFloat
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BigFloat
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BigFloat
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BigFloat
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BigFloat
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BigFloat]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BigFloat]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BigFloat]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigFloat]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BigFloat]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BigFloat]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BigFloat]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BigFloat]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BigFloat]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigFloat]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BigFloat]
+}
+
 \\"\\"\\"A range of \`BigFloat\`.\\"\\"\\"
 type BigFloatRange {
   \\"\\"\\"The ending bound of our range.\\"\\"\\"
@@ -331,6 +614,69 @@ input BigIntFilter {
   notIn: [BigInt!]
 }
 
+\\"\\"\\"
+A filter to be used against BigInt List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigIntListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BigInt
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BigInt
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BigInt
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BigInt
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BigInt
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BigInt
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BigInt]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BigInt]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BigInt]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigInt]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BigInt]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BigInt]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BigInt]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BigInt]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BigInt]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigInt]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BigInt]
+}
+
 \\"\\"\\"A range of \`BigInt\`.\\"\\"\\"
 type BigIntRange {
   \\"\\"\\"The ending bound of our range.\\"\\"\\"
@@ -428,6 +774,69 @@ input BigIntRangeInput {
   start: BigIntRangeBoundInput
 }
 
+\\"\\"\\"A string representing a series of binary bits\\"\\"\\"
+scalar BitString
+
+\\"\\"\\"
+A filter to be used against BitString fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BitStringFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: BitString
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: BitString
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [BitString!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: BitString
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: BitString
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [BitString!]
+}
+
+\\"\\"\\"
+A filter to be used against BitString List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BitStringListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BitString
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BitString
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BitString]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BitString]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BitString]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BitString]
+}
+
 \\"\\"\\"
 A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
@@ -456,6 +865,36 @@ input BooleanFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Boolean!]
+}
+
+\\"\\"\\"
+A filter to be used against Boolean List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BooleanListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Boolean
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Boolean
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Boolean]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Boolean]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Boolean]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Boolean]
 }
 
 type Child implements Node {
@@ -534,6 +973,111 @@ scalar Cursor
 
 \\"\\"\\"The day, does not include a time.\\"\\"\\"
 scalar Date
+
+\\"\\"\\"
+A filter to be used against Date fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: Date
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Date
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Date
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Date
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [Date!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Date
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Date
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: Date
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Date
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [Date!]
+}
+
+\\"\\"\\"
+A filter to be used against Date List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Date
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Date
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Date
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Date
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Date
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Date
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Date]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Date]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Date]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Date]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Date]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Date]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Date]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Date]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Date]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Date]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Date]
+}
 
 \\"\\"\\"A range of \`Date\`.\\"\\"\\"
 type DateRange {
@@ -638,6 +1182,111 @@ A point in time as described by the [ISO
 \\"\\"\\"
 scalar Datetime
 
+\\"\\"\\"
+A filter to be used against Datetime fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DatetimeFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: Datetime
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Datetime
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Datetime
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Datetime
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [Datetime!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Datetime
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Datetime
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: Datetime
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Datetime
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [Datetime!]
+}
+
+\\"\\"\\"
+A filter to be used against Datetime List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DatetimeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Datetime
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Datetime
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Datetime
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Datetime
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Datetime
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Datetime
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Datetime]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Datetime]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Datetime]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Datetime]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Datetime]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Datetime]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Datetime]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Datetime]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Datetime]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Datetime]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Datetime]
+}
+
 \\"\\"\\"A range of \`Datetime\`.\\"\\"\\"
 type DatetimeRange {
   \\"\\"\\"The ending bound of our range.\\"\\"\\"
@@ -735,6 +1384,64 @@ input DatetimeRangeInput {
   start: DatetimeRangeBoundInput
 }
 
+type EnumType implements Node {
+  enum: Mood
+  id: Int!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A filter to be used against \`EnumType\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input EnumTypeFilter {
+  \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
+  enum: MoodFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+}
+
+\\"\\"\\"A connection to a list of \`EnumType\` values.\\"\\"\\"
+type EnumTypesConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`EnumType\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [EnumTypesEdge!]!
+
+  \\"\\"\\"A list of \`EnumType\` objects.\\"\\"\\"
+  nodes: [EnumType]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`EnumType\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`EnumType\` edge in the connection.\\"\\"\\"
+type EnumTypesEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`EnumType\` at the end of the edge.\\"\\"\\"
+  node: EnumType
+}
+
+\\"\\"\\"Methods to use when ordering \`EnumType\`.\\"\\"\\"
+enum EnumTypesOrderBy {
+  ENUM_ASC
+  ENUM_DESC
+  ID_ASC
+  ID_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
 type Filterable implements Node {
   \\"\\"\\"Reads a single \`Backward\` that is related to this \`Filterable\`.\\"\\"\\"
   backwardByFilterableId: Backward
@@ -745,7 +1452,10 @@ type Filterable implements Node {
   Reads a single \`BackwardCompound\` that is related to this \`Filterable\`.
   \\"\\"\\"
   backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompound
+  bit4: BitString
   bool: Boolean
+  bpchar4: String
+  bytea: String
   char4: String
 
   \\"\\"\\"Reads and enables pagination through a set of \`Child\`.\\"\\"\\"
@@ -776,6 +1486,7 @@ type Filterable implements Node {
     \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection!
+  cidr: String
   compositeColumn: Composite
   computed: String
   computed2: String
@@ -831,8 +1542,7 @@ type Filterable implements Node {
     \\"\\"\\"
     offset: Int
   ): FilterableComputedSetofIntConnection!
-  dateRange: DateRange
-  enum: Mood
+  date: Date
   float4: Float
   float8: Float
 
@@ -851,29 +1561,33 @@ type Filterable implements Node {
   inet: InternetAddress
   int2: Int
   int4: Int
-  int4Array: [Int]
-  int4Range: IntRange
   int8: BigInt
-  int8Range: BigIntRange
+  interval: Interval
   json: JSON
-  jsonArray: [JSON]
   jsonb: JSON
+  macaddr: String
+  macaddr8: String
+  money: Float
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   \\"\\"\\"
   nodeId: ID!
   numeric: BigFloat
-  numericRange: BigFloatRange
 
   \\"\\"\\"Reads a single \`Parent\` that is related to this \`Filterable\`.\\"\\"\\"
   parentByParentId: Parent
   parentId: Int
   text: String
-  textArray: [String]
   textOmitFilter: String
-  timestampRange: DatetimeRange
-  timestamptzRange: DatetimeRange
+  time: Time
+  timestamp: Datetime
+  timestamptz: Datetime
+  timetz: Time
+  uuid: UUID
+  varbit: BitString
+  varchar: String
+  xml: String
 }
 
 \\"\\"\\"A connection to a list of \`Int\` values.\\"\\"\\"
@@ -906,11 +1620,23 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`backwardCompound2\` field.\\"\\"\\"
   backwardCompound2: IntFilter
 
+  \\"\\"\\"Filter by the object’s \`bit4\` field.\\"\\"\\"
+  bit4: BitStringFilter
+
   \\"\\"\\"Filter by the object’s \`bool\` field.\\"\\"\\"
   bool: BooleanFilter
 
+  \\"\\"\\"Filter by the object’s \`bpchar4\` field.\\"\\"\\"
+  bpchar4: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`bytea\` field.\\"\\"\\"
+  bytea: StringFilter
+
   \\"\\"\\"Filter by the object’s \`char4\` field.\\"\\"\\"
   char4: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`cidr\` field.\\"\\"\\"
+  cidr: StringFilter
 
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
@@ -918,11 +1644,8 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`computedIntArray\` field.\\"\\"\\"
   computedIntArray: IntListFilter
 
-  \\"\\"\\"Filter by the object’s \`dateRange\` field.\\"\\"\\"
-  dateRange: DateRangeFilter
-
-  \\"\\"\\"Filter by the object’s \`enum\` field.\\"\\"\\"
-  enum: MoodFilter
+  \\"\\"\\"Filter by the object’s \`date\` field.\\"\\"\\"
+  date: DateFilter
 
   \\"\\"\\"Filter by the object’s \`float4\` field.\\"\\"\\"
   float4: FloatFilter
@@ -951,26 +1674,26 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`int4\` field.\\"\\"\\"
   int4: IntFilter
 
-  \\"\\"\\"Filter by the object’s \`int4Array\` field.\\"\\"\\"
-  int4Array: IntListFilter
-
-  \\"\\"\\"Filter by the object’s \`int4Range\` field.\\"\\"\\"
-  int4Range: IntRangeFilter
-
   \\"\\"\\"Filter by the object’s \`int8\` field.\\"\\"\\"
   int8: BigIntFilter
 
-  \\"\\"\\"Filter by the object’s \`int8Range\` field.\\"\\"\\"
-  int8Range: BigIntRangeFilter
+  \\"\\"\\"Filter by the object’s \`interval\` field.\\"\\"\\"
+  interval: IntervalFilter
 
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
 
+  \\"\\"\\"Filter by the object’s \`macaddr\` field.\\"\\"\\"
+  macaddr: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`macaddr8\` field.\\"\\"\\"
+  macaddr8: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`money\` field.\\"\\"\\"
+  money: FloatFilter
+
   \\"\\"\\"Filter by the object’s \`numeric\` field.\\"\\"\\"
   numeric: BigFloatFilter
-
-  \\"\\"\\"Filter by the object’s \`numericRange\` field.\\"\\"\\"
-  numericRange: BigFloatRangeFilter
 
   \\"\\"\\"Filter by the object’s \`parentId\` field.\\"\\"\\"
   parentId: IntFilter
@@ -978,14 +1701,29 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`text\` field.\\"\\"\\"
   text: StringFilter
 
-  \\"\\"\\"Filter by the object’s \`textArray\` field.\\"\\"\\"
-  textArray: StringListFilter
+  \\"\\"\\"Filter by the object’s \`time\` field.\\"\\"\\"
+  time: TimeFilter
 
-  \\"\\"\\"Filter by the object’s \`timestampRange\` field.\\"\\"\\"
-  timestampRange: DatetimeRangeFilter
+  \\"\\"\\"Filter by the object’s \`timestamp\` field.\\"\\"\\"
+  timestamp: DatetimeFilter
 
-  \\"\\"\\"Filter by the object’s \`timestamptzRange\` field.\\"\\"\\"
-  timestamptzRange: DatetimeRangeFilter
+  \\"\\"\\"Filter by the object’s \`timestamptz\` field.\\"\\"\\"
+  timestamptz: DatetimeFilter
+
+  \\"\\"\\"Filter by the object’s \`timetz\` field.\\"\\"\\"
+  timetz: TimeFilter
+
+  \\"\\"\\"Filter by the object’s \`uuid\` field.\\"\\"\\"
+  uuid: UUIDFilter
+
+  \\"\\"\\"Filter by the object’s \`varbit\` field.\\"\\"\\"
+  varbit: BitStringFilter
+
+  \\"\\"\\"Filter by the object’s \`varchar\` field.\\"\\"\\"
+  varchar: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`xml\` field.\\"\\"\\"
+  xml: StringFilter
 }
 
 \\"\\"\\"A connection to a list of \`Filterable\` values.\\"\\"\\"
@@ -1020,16 +1758,22 @@ enum FilterablesOrderBy {
   BACKWARD_COMPOUND_1_DESC
   BACKWARD_COMPOUND_2_ASC
   BACKWARD_COMPOUND_2_DESC
+  BIT4_ASC
+  BIT4_DESC
   BOOL_ASC
   BOOL_DESC
+  BPCHAR4_ASC
+  BPCHAR4_DESC
+  BYTEA_ASC
+  BYTEA_DESC
   CHAR4_ASC
   CHAR4_DESC
+  CIDR_ASC
+  CIDR_DESC
   COMPOSITE_COLUMN_ASC
   COMPOSITE_COLUMN_DESC
-  DATE_RANGE_ASC
-  DATE_RANGE_DESC
-  ENUM_ASC
-  ENUM_DESC
+  DATE_ASC
+  DATE_DESC
   FLOAT4_ASC
   FLOAT4_DESC
   FLOAT8_ASC
@@ -1048,41 +1792,49 @@ enum FilterablesOrderBy {
   INET_DESC
   INT2_ASC
   INT2_DESC
-  INT4_ARRAY_ASC
-  INT4_ARRAY_DESC
   INT4_ASC
   INT4_DESC
-  INT4_RANGE_ASC
-  INT4_RANGE_DESC
   INT8_ASC
   INT8_DESC
-  INT8_RANGE_ASC
-  INT8_RANGE_DESC
-  JSON_ARRAY_ASC
-  JSON_ARRAY_DESC
+  INTERVAL_ASC
+  INTERVAL_DESC
   JSON_ASC
   JSON_DESC
   JSONB_ASC
   JSONB_DESC
+  MACADDR_ASC
+  MACADDR_DESC
+  MACADDR8_ASC
+  MACADDR8_DESC
+  MONEY_ASC
+  MONEY_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC
-  NUMERIC_RANGE_ASC
-  NUMERIC_RANGE_DESC
   PARENT_ID_ASC
   PARENT_ID_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  TEXT_ARRAY_ASC
-  TEXT_ARRAY_DESC
   TEXT_ASC
   TEXT_DESC
   TEXT_OMIT_FILTER_ASC
   TEXT_OMIT_FILTER_DESC
-  TIMESTAMP_RANGE_ASC
-  TIMESTAMP_RANGE_DESC
-  TIMESTAMPTZ_RANGE_ASC
-  TIMESTAMPTZ_RANGE_DESC
+  TIME_ASC
+  TIME_DESC
+  TIMESTAMP_ASC
+  TIMESTAMP_DESC
+  TIMESTAMPTZ_ASC
+  TIMESTAMPTZ_DESC
+  TIMETZ_ASC
+  TIMETZ_DESC
+  UUID_ASC
+  UUID_DESC
+  VARBIT_ASC
+  VARBIT_DESC
+  VARCHAR_ASC
+  VARCHAR_DESC
+  XML_ASC
+  XML_DESC
 }
 
 \\"\\"\\"
@@ -1125,6 +1877,69 @@ input FloatFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Float!]
+}
+
+\\"\\"\\"
+A filter to be used against Float List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input FloatListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Float
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Float
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Float
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Float
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Float
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Float
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Float]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Float]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Float]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Float]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Float]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Float]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Float]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Float]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Float]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Float]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Float]
 }
 
 type Forward implements Node {
@@ -1410,6 +2225,120 @@ input InternetAddressFilter {
 }
 
 \\"\\"\\"
+A filter to be used against InternetAddress List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input InternetAddressListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: InternetAddress
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: InternetAddress
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [InternetAddress]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [InternetAddress]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [InternetAddress]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [InternetAddress]
+}
+
+\\"\\"\\"
+An interval of time that has passed where the smallest distinct unit is a second.
+\\"\\"\\"
+type Interval {
+  \\"\\"\\"A quantity of days.\\"\\"\\"
+  days: Int
+
+  \\"\\"\\"A quantity of hours.\\"\\"\\"
+  hours: Int
+
+  \\"\\"\\"A quantity of minutes.\\"\\"\\"
+  minutes: Int
+
+  \\"\\"\\"A quantity of months.\\"\\"\\"
+  months: Int
+
+  \\"\\"\\"
+  A quantity of seconds. This is the only non-integer field, as all the other
+  fields will dump their overflow into a smaller unit of time. Intervals don’t
+  have a smaller unit than seconds.
+  \\"\\"\\"
+  seconds: Float
+
+  \\"\\"\\"A quantity of years.\\"\\"\\"
+  years: Int
+}
+
+\\"\\"\\"
+A filter to be used against Interval fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntervalFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: IntervalInput
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: IntervalInput
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [IntervalInput!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: IntervalInput
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: IntervalInput
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [IntervalInput!]
+}
+
+\\"\\"\\"
+An interval of time that has passed where the smallest distinct unit is a second.
+\\"\\"\\"
+input IntervalInput {
+  \\"\\"\\"A quantity of days.\\"\\"\\"
+  days: Int
+
+  \\"\\"\\"A quantity of hours.\\"\\"\\"
+  hours: Int
+
+  \\"\\"\\"A quantity of minutes.\\"\\"\\"
+  minutes: Int
+
+  \\"\\"\\"A quantity of months.\\"\\"\\"
+  months: Int
+
+  \\"\\"\\"
+  A quantity of seconds. This is the only non-integer field, as all the other
+  fields will dump their overflow into a smaller unit of time. Intervals don’t
+  have a smaller unit than seconds.
+  \\"\\"\\"
+  seconds: Float
+
+  \\"\\"\\"A quantity of years.\\"\\"\\"
+  years: Int
+}
+
+\\"\\"\\"
 A filter to be used against Int fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntFilter {
@@ -1652,6 +2581,36 @@ input JSONFilter {
   notIn: [JSON!]
 }
 
+\\"\\"\\"
+A filter to be used against JSON List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input JSONListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: JSON
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: JSON
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [JSON]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [JSON]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [JSON]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [JSON]
+}
+
 enum Mood {
   HAPPY
   OK
@@ -1799,6 +2758,35 @@ enum ParentsOrderBy {
 
 \\"\\"\\"The root query type which gives access points into the data universe.\\"\\"\\"
 type Query implements Node {
+  \\"\\"\\"Reads and enables pagination through a set of \`ArrayType\`.\\"\\"\\"
+  allArrayTypes(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: ArrayTypeFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`ArrayType\`.\\"\\"\\"
+    orderBy: [ArrayTypesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): ArrayTypesConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`BackwardCompound\`.\\"\\"\\"
   allBackwardCompounds(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -1885,6 +2873,35 @@ type Query implements Node {
     \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection
+
+  \\"\\"\\"Reads and enables pagination through a set of \`EnumType\`.\\"\\"\\"
+  allEnumTypes(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: EnumTypeFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`EnumType\`.\\"\\"\\"
+    orderBy: [EnumTypesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): EnumTypesConnection
 
   \\"\\"\\"Reads and enables pagination through a set of \`Filterable\`.\\"\\"\\"
   allFilterables(
@@ -2026,6 +3043,35 @@ type Query implements Node {
     orderBy: [ParentsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ParentsConnection
 
+  \\"\\"\\"Reads and enables pagination through a set of \`RangeType\`.\\"\\"\\"
+  allRangeTypes(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: RangeTypeFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`RangeType\`.\\"\\"\\"
+    orderBy: [RangeTypesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): RangeTypesConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`Unfilterable\`.\\"\\"\\"
   allUnfilterables(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -2050,6 +3096,15 @@ type Query implements Node {
     orderBy: [UnfilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): UnfilterablesConnection
 
+  \\"\\"\\"Reads a single \`ArrayType\` using its globally unique \`ID\`.\\"\\"\\"
+  arrayType(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`ArrayType\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): ArrayType
+  arrayTypeById(id: Int!): ArrayType
+
   \\"\\"\\"Reads a single \`Backward\` using its globally unique \`ID\`.\\"\\"\\"
   backward(
     \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`Backward\`.\\"\\"\\"
@@ -2073,6 +3128,13 @@ type Query implements Node {
     nodeId: ID!
   ): Child
   childById(id: Int!): Child
+
+  \\"\\"\\"Reads a single \`EnumType\` using its globally unique \`ID\`.\\"\\"\\"
+  enumType(
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`EnumType\`.\\"\\"\\"
+    nodeId: ID!
+  ): EnumType
+  enumTypeById(id: Int!): EnumType
 
   \\"\\"\\"Reads a single \`Filterable\` using its globally unique \`ID\`.\\"\\"\\"
   filterable(
@@ -2185,6 +3247,15 @@ type Query implements Node {
   \\"\\"\\"
   query: Query!
 
+  \\"\\"\\"Reads a single \`RangeType\` using its globally unique \`ID\`.\\"\\"\\"
+  rangeType(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`RangeType\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): RangeType
+  rangeTypeById(id: Int!): RangeType
+
   \\"\\"\\"Reads a single \`Unfilterable\` using its globally unique \`ID\`.\\"\\"\\"
   unfilterable(
     \\"\\"\\"
@@ -2193,6 +3264,94 @@ type Query implements Node {
     nodeId: ID!
   ): Unfilterable
   unfilterableById(id: Int!): Unfilterable
+}
+
+type RangeType implements Node {
+  dateRange: DateRange
+  id: Int!
+  int4Range: IntRange
+  int8Range: BigIntRange
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+  numericRange: BigFloatRange
+  timestampRange: DatetimeRange
+  timestamptzRange: DatetimeRange
+}
+
+\\"\\"\\"
+A filter to be used against \`RangeType\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input RangeTypeFilter {
+  \\"\\"\\"Filter by the object’s \`dateRange\` field.\\"\\"\\"
+  dateRange: DateRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`int4Range\` field.\\"\\"\\"
+  int4Range: IntRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`int8Range\` field.\\"\\"\\"
+  int8Range: BigIntRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`numericRange\` field.\\"\\"\\"
+  numericRange: BigFloatRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`timestampRange\` field.\\"\\"\\"
+  timestampRange: DatetimeRangeFilter
+
+  \\"\\"\\"Filter by the object’s \`timestamptzRange\` field.\\"\\"\\"
+  timestamptzRange: DatetimeRangeFilter
+}
+
+\\"\\"\\"A connection to a list of \`RangeType\` values.\\"\\"\\"
+type RangeTypesConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`RangeType\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [RangeTypesEdge!]!
+
+  \\"\\"\\"A list of \`RangeType\` objects.\\"\\"\\"
+  nodes: [RangeType]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`RangeType\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`RangeType\` edge in the connection.\\"\\"\\"
+type RangeTypesEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`RangeType\` at the end of the edge.\\"\\"\\"
+  node: RangeType
+}
+
+\\"\\"\\"Methods to use when ordering \`RangeType\`.\\"\\"\\"
+enum RangeTypesOrderBy {
+  DATE_RANGE_ASC
+  DATE_RANGE_DESC
+  ID_ASC
+  ID_DESC
+  INT4_RANGE_ASC
+  INT4_RANGE_DESC
+  INT8_RANGE_ASC
+  INT8_RANGE_DESC
+  NATURAL
+  NUMERIC_RANGE_ASC
+  NUMERIC_RANGE_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+  TIMESTAMP_RANGE_ASC
+  TIMESTAMP_RANGE_DESC
+  TIMESTAMPTZ_RANGE_ASC
+  TIMESTAMPTZ_RANGE_DESC
 }
 
 \\"\\"\\"
@@ -2372,6 +3531,116 @@ input StringListFilter {
   overlaps: [String]
 }
 
+\\"\\"\\"
+The exact time of day, does not include the date. May or may not have a timezone offset.
+\\"\\"\\"
+scalar Time
+
+\\"\\"\\"
+A filter to be used against Time fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input TimeFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: Time
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Time
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Time
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Time
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [Time!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Time
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Time
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: Time
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Time
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [Time!]
+}
+
+\\"\\"\\"
+A filter to be used against Time List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input TimeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Time
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Time
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Time
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Time
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Time
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Time
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Time]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Time]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Time]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Time]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Time]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Time]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Time]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Time]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Time]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Time]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Time]
+}
+
 type Unfilterable implements Node {
   id: Int!
 
@@ -2417,6 +3686,71 @@ enum UnfilterablesOrderBy {
   PRIMARY_KEY_DESC
   TEXT_ASC
   TEXT_DESC
+}
+
+\\"\\"\\"
+A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122).
+\\"\\"\\"
+scalar UUID
+
+\\"\\"\\"
+A filter to be used against UUID fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input UUIDFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: UUID
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: UUID
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [UUID!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: UUID
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: UUID
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [UUID!]
+}
+
+\\"\\"\\"
+A filter to be used against UUID List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input UUIDListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: UUID
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: UUID
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [UUID]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [UUID]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [UUID]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [UUID]
 }
 "
 `;

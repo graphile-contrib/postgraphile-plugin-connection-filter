@@ -25,40 +25,105 @@ create type p."composite" as (a int, b text);
 
 create table p.filterable (
   id serial primary key,
-  "text" text,
+  "bit4" bit(4),
+  "bool" bool,
+  "bpchar4" bpchar(4),
+  "bytea" bytea,
   "char4" char(4),
+  "cidr" cidr,
+  "date" date,
+  "float4" float4,
+  "float8" float8,
+  "inet" inet,
   "int2" int2,
   "int4" int4,
   "int8" int8,
-  "float4" float4,
-  "float8" float8,
-  "numeric" numeric,
-  "bool" bool,
+  "interval" interval,
+  "json" json, -- not filterable
   "jsonb" jsonb,
-  "text_array" text[],
-  "int4_array" int[],
-  "json_array" json[],
-  "int4_range" int4range,
-  "int8_range" int8range,
-  "numeric_range" numrange,
-  "timestamp_range" tsrange,
-  "timestamptz_range" tstzrange,
-  "date_range" daterange,
-  "inet" inet,
-  "enum" p.mood,
+  "macaddr" macaddr,
+  "macaddr8" macaddr8,
+  "money" money,
+  "numeric" numeric,
+  "text" text,
+  "time" time,
+  "timestamp" timestamp,
+  "timestamptz" timestamptz,
+  "timetz" timetz,
+  "uuid" uuid,
+  "varbit" varbit,
+  "varchar" varchar,
+  "xml" xml, -- not filterable
+  "composite_column" p."composite", -- not filterable
+  "forward_column" p.forward, -- not filterable
+  "text_omit_filter" text, -- not filterable
   "parent_id" int references p.parent (id),
   "forward_id" int unique references p.forward (id),
   "forward_compound_1" int,
   "forward_compound_2" int,
   "backward_compound_1" int,
   "backward_compound_2" int,
-  "json" json, -- FIXME: should not be filterable!
-  "composite_column" p."composite", -- not filterable
-  "forward_column" p.forward, -- not filterable
-  "text_omit_filter" text, -- not filterable
   unique ("forward_compound_1", "forward_compound_2"),
   unique ("backward_compound_1", "backward_compound_2"),
   foreign key ("forward_compound_1", "forward_compound_2") references p.forward_compound ("forward_compound_1", "forward_compound_2")
+);
+
+create table p.array_types (
+  id serial primary key,
+  "bit4_array" bit(4)[],
+  "bool_array" bool[],
+  "bpchar4_array" bpchar(4)[],
+  "bytea_array" bytea[],
+  "char4_array" char(4)[],
+  "cidr_array" cidr[],
+  "date_array" date[],
+  "float4_array" float4[],
+  "float8_array" float8[],
+  "inet_array" inet[],
+  "int2_array" int2[],
+  "int4_array" int4[],
+  "int8_array" int8[],
+  "interval_array" interval[], -- FIXME: an InputType isn't being generated for interval[] (PostGraphile bug?), so IntervalListFilter isn't created
+  "json_array" json[], -- not filterable
+  "jsonb_array" jsonb[],
+  "macaddr_array" macaddr[],
+  "macaddr8_array" macaddr8[],
+  "money_array" money[],
+  "numeric_array" numeric[],
+  "text_array" text[],
+  "time_array" time[],
+  "timestamp_array" timestamp[],
+  "timestamptz_array" timestamptz[],
+  "timetz_array" timetz[],
+  "uuid_array" uuid[],
+  "varbit_array" varbit[],
+  "varchar_array" varchar[],
+  "xml_array" xml[] -- not filterable
+);
+
+create table p.range_types (
+  id serial primary key,
+  "date_range" daterange,
+  "int4_range" int4range,
+  "int8_range" int8range,
+  "numeric_range" numrange,
+  "timestamp_range" tsrange,
+  "timestamptz_range" tstzrange
+);
+
+--create table p.range_array_types (
+--  id serial primary key,
+--  "date_range_array" daterange[],
+--  "int4_range_array" int4range[],
+--  "int8_range_array" int8range[],
+--  "numeric_range_array" numrange[],
+--  "timestamp_range_array" tsrange[],
+--  "timestamptz_range_array" tstzrange[]
+--);
+
+create table p.enum_types (
+  id serial primary key,
+  "enum" p.mood
 );
 
 comment on column p.filterable."text_omit_filter" is E'@omit filter';

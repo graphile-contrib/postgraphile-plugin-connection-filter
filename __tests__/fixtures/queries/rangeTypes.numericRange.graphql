@@ -1,0 +1,76 @@
+query numericRange(
+  $val: BigFloatRangeInput = {
+    start: { value: "2", inclusive: true }
+    end: { value: "3", inclusive: false }
+  }
+  $elementVal: BigFloat = "2"
+) {
+  adjacentTo: allRangeTypes(filter: { numericRange: { adjacentTo: $val } }) {
+    ...nodes
+  }
+  containedBy: allRangeTypes(filter: { numericRange: { containedBy: $val } }) {
+    ...nodes
+  }
+  contains: allRangeTypes(filter: { numericRange: { contains: $val } }) {
+    ...nodes
+  }
+  containsElement: allRangeTypes(
+    filter: { numericRange: { containsElement: $elementVal } }
+  ) {
+    ...nodes
+  }
+  distinctFrom: allRangeTypes(
+    filter: { numericRange: { distinctFrom: $val } }
+  ) {
+    ...nodes
+  }
+  equalTo: allRangeTypes(filter: { numericRange: { equalTo: $val } }) {
+    ...nodes
+  }
+  in: allRangeTypes(filter: { numericRange: { in: [$val] } }) {
+    ...nodes
+  }
+  isNull: allRangeTypes(filter: { numericRange: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allRangeTypes(
+    filter: { numericRange: { notDistinctFrom: $val } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allRangeTypes(filter: { numericRange: { notEqualTo: $val } }) {
+    ...nodes
+  }
+  notExtendsLeftOf: allRangeTypes(
+    filter: { numericRange: { notExtendsLeftOf: $val } }
+  ) {
+    ...nodes
+  }
+  notExtendsRightOf: allRangeTypes(
+    filter: { numericRange: { notExtendsRightOf: $val } }
+  ) {
+    ...nodes
+  }
+  notIn: allRangeTypes(filter: { numericRange: { notIn: [$val] } }) {
+    ...nodes
+  }
+  overlaps: allRangeTypes(filter: { numericRange: { overlaps: $val } }) {
+    ...nodes
+  }
+  strictlyLeftOf: allRangeTypes(
+    filter: { numericRange: { strictlyLeftOf: $val } }
+  ) {
+    ...nodes
+  }
+  strictlyRightOf: allRangeTypes(
+    filter: { numericRange: { strictlyRightOf: $val } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on RangeTypesConnection {
+  nodes {
+    id
+  }
+}

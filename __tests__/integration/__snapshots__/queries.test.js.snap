@@ -1,5 +1,524 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`arrayTypes.int4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyLessThan_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyNotEqualTo_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy_2": Object {
+      "nodes": Array [],
+    },
+    "containedBy_2_3_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containedBy_empty": Object {
+      "nodes": Array [],
+    },
+    "contains_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains_2_3_20": Object {
+      "nodes": Array [],
+    },
+    "contains_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "distinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "distinctFrom_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "equalTo_empty": Object {
+      "nodes": Array [],
+    },
+    "greaterThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThan_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThanOrEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualTo_empty": Object {
+      "nodes": Array [],
+    },
+    "lessThan_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThan_empty": Object {
+      "nodes": Array [],
+    },
+    "notDistinctFrom_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom_empty": Object {
+      "nodes": Array [],
+    },
+    "notEqualTo_2_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notEqualTo_empty": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps_2": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "overlaps_2_3_20": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "overlaps_empty": Object {
+      "nodes": Array [],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.textArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`computedColumns.graphql 1`] = `
 Object {
   "data": Object {
@@ -130,6 +649,83 @@ Object {
     },
     "logical_or_empty": Object {
       "totalCount": 5,
+    },
+  },
+}
+`;
+
+exports[`enumTypes.enum.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
     },
   },
 }
@@ -280,7 +876,7 @@ Object {
     [GraphQLError: Empty objects are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Empty objects are forbidden in filter argument input.],
-    [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
@@ -295,6 +891,936 @@ Object {
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Empty objects are forbidden in filter argument input.],
   ],
+}
+`;
+
+exports[`rangeTypes.dateRange.graphql 1`] = `
+Object {
+  "data": Object {
+    "adjacentTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsElement": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "strictlyLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeTypes.int4Range.graphql 1`] = `
+Object {
+  "data": Object {
+    "adjacentTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsElement": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "strictlyLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeTypes.int8Range.graphql 1`] = `
+Object {
+  "data": Object {
+    "adjacentTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsElement": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "strictlyLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeTypes.numericRange.graphql 1`] = `
+Object {
+  "data": Object {
+    "adjacentTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsElement": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "strictlyLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeTypes.timestampRange.graphql 1`] = `
+Object {
+  "data": Object {
+    "adjacentTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsElement": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "strictlyLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeTypes.timestamptzRange.graphql 1`] = `
+Object {
+  "data": Object {
+    "adjacentTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsElement": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notExtendsRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "strictlyLeftOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "strictlyRightOf": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
 }
 `;
 
@@ -1115,238 +2641,6 @@ Object {
 }
 `;
 
-exports[`types.dateRange.graphql 1`] = `
-Object {
-  "data": Object {
-    "adjacentTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containsElement": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "strictlyLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "strictlyRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`types.enum.graphql 1`] = `
-Object {
-  "data": Object {
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
 exports[`types.inet.graphql 1`] = `
 Object {
   "data": Object {
@@ -1722,484 +3016,6 @@ Object {
 }
 `;
 
-exports[`types.int4Array.graphql 1`] = `
-Object {
-  "data": Object {
-    "anyEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "anyGreaterThanOrEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "anyGreaterThan_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "anyLessThanOrEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "anyLessThan_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "anyNotEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "containedBy_2": Object {
-      "nodes": Array [],
-    },
-    "containedBy_2_3_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containedBy_empty": Object {
-      "nodes": Array [],
-    },
-    "contains_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains_2_3_20": Object {
-      "nodes": Array [],
-    },
-    "contains_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "distinctFrom_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "distinctFrom_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "equalTo_empty": Object {
-      "nodes": Array [],
-    },
-    "greaterThanOrEqualTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "greaterThanOrEqualTo_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "greaterThan_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "greaterThan_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "isNull_false": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "isNull_true": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "lessThanOrEqualTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "lessThanOrEqualTo_empty": Object {
-      "nodes": Array [],
-    },
-    "lessThan_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "lessThan_empty": Object {
-      "nodes": Array [],
-    },
-    "notDistinctFrom_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notDistinctFrom_empty": Object {
-      "nodes": Array [],
-    },
-    "notEqualTo_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notEqualTo_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "overlaps_2_3_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "overlaps_empty": Object {
-      "nodes": Array [],
-    },
-  },
-}
-`;
-
-exports[`types.int4Range.graphql 1`] = `
-Object {
-  "data": Object {
-    "adjacentTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containsElement": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "strictlyLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "strictlyRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
 exports[`types.int8.graphql 1`] = `
 Object {
   "data": Object {
@@ -2317,161 +3133,6 @@ Object {
 }
 `;
 
-exports[`types.int8Range.graphql 1`] = `
-Object {
-  "data": Object {
-    "adjacentTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containsElement": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "strictlyLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "strictlyRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
 exports[`types.jsonb.graphql 1`] = `
 Object {
   "data": Object {
@@ -2551,161 +3212,6 @@ Object {
         Object {
           "id": 1,
         },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`types.numericRange.graphql 1`] = `
-Object {
-  "data": Object {
-    "adjacentTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containsElement": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "strictlyLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "strictlyRightOf": Object {
-      "nodes": Array [
         Object {
           "id": 3,
         },
@@ -2954,512 +3460,6 @@ Object {
       ],
     },
     "startsWith_t": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`types.textArray.graphql 1`] = `
-Object {
-  "data": Object {
-    "anyEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "anyGreaterThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "anyGreaterThanOrEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "anyLessThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "anyLessThanOrEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "anyNotEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "greaterThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "greaterThanOrEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "lessThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "lessThanOrEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`types.timestampRange.graphql 1`] = `
-Object {
-  "data": Object {
-    "adjacentTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containsElement": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "strictlyLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "strictlyRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`types.timestamptzRange.graphql 1`] = `
-Object {
-  "data": Object {
-    "adjacentTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
-    },
-    "containedBy": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containsElement": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "distinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "in": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "isNull": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "notDistinctFrom": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notEqualTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notExtendsRightOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "notIn": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "overlaps": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "strictlyLeftOf": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "strictlyRightOf": Object {
       "nodes": Array [
         Object {
           "id": 3,
