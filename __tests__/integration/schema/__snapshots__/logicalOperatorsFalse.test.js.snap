@@ -123,9 +123,6 @@ input ArrayTypeFilter {
 
   \\"\\"\\"Filter by the object’s \`varcharArray\` field.\\"\\"\\"
   varcharArray: StringListFilter
-
-  \\"\\"\\"Filter by the object’s \`xmlArray\` field.\\"\\"\\"
-  xmlArray: StringListFilter
 }
 
 \\"\\"\\"A connection to a list of \`ArrayType\` values.\\"\\"\\"
@@ -1721,9 +1718,6 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`varchar\` field.\\"\\"\\"
   varchar: StringFilter
-
-  \\"\\"\\"Filter by the object’s \`xml\` field.\\"\\"\\"
-  xml: StringFilter
 }
 
 \\"\\"\\"A connection to a list of \`Filterable\` values.\\"\\"\\"

@@ -353,17 +353,54 @@ module.exports = function PgConnectionArgFilterPlugin(
       pgTypeModifier
     ) => {
       const pgType = introspectionResultsByKind.typeById[pgTypeId];
-      if (!["b", "e", "r"].includes(pgType.type)) {
+      const allowedPgTypeTypes = ["b", "e", "r"];
+      if (!allowedPgTypeTypes.includes(pgType.type)) {
         // Not a base, enum, or range type? Skip.
         return null;
       }
+      const pgGetNonArrayType = pgType =>
+        pgType.isPgArray ? pgType.arrayItemType : pgType;
+      const pgGetNonRangeType = pgType =>
+        pgType.rangeSubTypeId
+          ? introspectionResultsByKind.typeById[pgType.rangeSubTypeId]
+          : pgType;
+      const pgGetSimpleType = pgType =>
+        pgGetNonRangeType(pgGetNonArrayType(pgType));
+      const pgSimpleType = pgGetSimpleType(pgType);
+      const allowedPgSimpleTypeIds = [
+        "1560", // bit
+        "16", //   bool
+        "1042", // bpchar
+        "17", //   bytea
+        "18", //   char
+        "650", //  cidr
+        "1082", // date
+        "700", //  float4
+        "701", //  float8
+        "869", //  inet
+        "21", //   int2
+        "23", //   int4
+        "20", //   int8
+        "1186", // interval
+        "3802", // jsonb
+        "829", //  macaddr
+        "774", //  macaddr8
+        "790", //  money
+        "1700", // numeric
+        "25", //   text
+        "1083", // time
+        "1114", // timestamp
+        "1184", // timestamptz
+        "1266", // timetz
+        "2950", // uuid
+        "1562", // varbit
+        "1043", // varchar
+      ];
       if (
-        pgType.id === "114" ||
-        (pgType.isPgArray &&
-          pgType.arrayItemType &&
-          pgType.arrayItemType.id === "114")
+        !allowedPgSimpleTypeIds.includes(pgSimpleType.id) &&
+        pgType.type !== "e" // enum
       ) {
-        // `json` type has no operators; not even equality
+        // Not whitelisted and not an enum? Skip.
         return null;
       }
       const fieldType = pgGetGqlTypeByTypeIdAndModifier(
