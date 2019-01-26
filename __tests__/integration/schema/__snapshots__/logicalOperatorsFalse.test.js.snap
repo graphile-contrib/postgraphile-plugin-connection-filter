@@ -3037,6 +3037,35 @@ type Query implements Node {
     orderBy: [ParentsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ParentsConnection
 
+  \\"\\"\\"Reads and enables pagination through a set of \`RangeArrayType\`.\\"\\"\\"
+  allRangeArrayTypes(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: RangeArrayTypeFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`RangeArrayType\`.\\"\\"\\"
+    orderBy: [RangeArrayTypesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): RangeArrayTypesConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`RangeType\`.\\"\\"\\"
   allRangeTypes(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -3241,6 +3270,15 @@ type Query implements Node {
   \\"\\"\\"
   query: Query!
 
+  \\"\\"\\"Reads a single \`RangeArrayType\` using its globally unique \`ID\`.\\"\\"\\"
+  rangeArrayType(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`RangeArrayType\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): RangeArrayType
+  rangeArrayTypeById(id: Int!): RangeArrayType
+
   \\"\\"\\"Reads a single \`RangeType\` using its globally unique \`ID\`.\\"\\"\\"
   rangeType(
     \\"\\"\\"
@@ -3258,6 +3296,78 @@ type Query implements Node {
     nodeId: ID!
   ): Unfilterable
   unfilterableById(id: Int!): Unfilterable
+}
+
+type RangeArrayType implements Node {
+  dateRangeArray: [DateRange]
+  id: Int!
+  int4RangeArray: [IntRange]
+  int8RangeArray: [BigIntRange]
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+  numericRangeArray: [BigFloatRange]
+  timestampRangeArray: [DatetimeRange]
+  timestamptzRangeArray: [DatetimeRange]
+}
+
+\\"\\"\\"
+A filter to be used against \`RangeArrayType\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input RangeArrayTypeFilter {
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+}
+
+\\"\\"\\"A connection to a list of \`RangeArrayType\` values.\\"\\"\\"
+type RangeArrayTypesConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`RangeArrayType\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [RangeArrayTypesEdge!]!
+
+  \\"\\"\\"A list of \`RangeArrayType\` objects.\\"\\"\\"
+  nodes: [RangeArrayType]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"
+  The count of *all* \`RangeArrayType\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`RangeArrayType\` edge in the connection.\\"\\"\\"
+type RangeArrayTypesEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`RangeArrayType\` at the end of the edge.\\"\\"\\"
+  node: RangeArrayType
+}
+
+\\"\\"\\"Methods to use when ordering \`RangeArrayType\`.\\"\\"\\"
+enum RangeArrayTypesOrderBy {
+  DATE_RANGE_ARRAY_ASC
+  DATE_RANGE_ARRAY_DESC
+  ID_ASC
+  ID_DESC
+  INT4_RANGE_ARRAY_ASC
+  INT4_RANGE_ARRAY_DESC
+  INT8_RANGE_ARRAY_ASC
+  INT8_RANGE_ARRAY_DESC
+  NATURAL
+  NUMERIC_RANGE_ARRAY_ASC
+  NUMERIC_RANGE_ARRAY_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+  TIMESTAMP_RANGE_ARRAY_ASC
+  TIMESTAMP_RANGE_ARRAY_DESC
+  TIMESTAMPTZ_RANGE_ARRAY_ASC
+  TIMESTAMPTZ_RANGE_ARRAY_DESC
 }
 
 type RangeType implements Node {

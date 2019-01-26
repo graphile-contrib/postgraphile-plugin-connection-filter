@@ -111,15 +111,15 @@ create table p.range_types (
   "timestamptz_range" tstzrange
 );
 
---create table p.range_array_types (
---  id serial primary key,
---  "date_range_array" daterange[],
---  "int4_range_array" int4range[],
---  "int8_range_array" int8range[],
---  "numeric_range_array" numrange[],
---  "timestamp_range_array" tsrange[],
---  "timestamptz_range_array" tstzrange[]
---);
+create table p.range_array_types (
+  id serial primary key,
+  "date_range_array" daterange[],
+  "int4_range_array" int4range[],
+  "int8_range_array" int8range[],
+  "numeric_range_array" numrange[],
+  "timestamp_range_array" tsrange[],
+  "timestamptz_range_array" tstzrange[]
+);
 
 create table p.enum_types (
   id serial primary key,
