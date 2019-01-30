@@ -1,6 +1,7 @@
 module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
+    connectionFilterAllowedFieldTypes,
     connectionFilterLists,
     connectionFilterSetofFunctions,
     connectionFilterAllowNullInput,
@@ -16,14 +17,9 @@ module.exports = function PgConnectionArgFilterPlugin(
         newWithHooks,
         getTypeByName,
         inflection,
-        graphql: { getNamedType, GraphQLScalarType, GraphQLEnumType },
         pgGetGqlTypeByTypeIdAndModifier,
-        pgIntrospectionResultsByKind: introspectionResultsByKind,
         pgOmit: omit,
-        connectionFilterRegisterResolver,
-        connectionFilterOperatorsType,
         connectionFilterResolve,
-        connectionFilterResolvePredicates,
         connectionFilterType,
       } = build;
       const {
@@ -58,95 +54,37 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (!nodeType) {
         return args;
       }
-      const isScalarType = nodeType instanceof GraphQLScalarType;
-      const isEnumType = nodeType instanceof GraphQLEnumType;
 
-      let FilterType;
-
-      if (isScalarType || isEnumType) {
-        FilterType = connectionFilterOperatorsType(
-          newWithHooks,
-          returnTypeId,
-          null
-        );
-        if (FilterType == null) {
-          return args;
-        }
-
-        const fieldTypeName = getNamedType(field.type).name;
-
-        const resolve = ({
-          sourceAlias,
-          fieldName,
-          fieldValue,
-          queryBuilder,
-        }) => {
-          if (fieldValue == null) return null;
-
-          const sqlIdentifier = sourceAlias;
-          const pgType = introspectionResultsByKind.typeById[returnTypeId];
-          const pgTypeModifier = null;
-
-          return connectionFilterResolvePredicates({
-            sourceAlias,
-            fieldName,
-            fieldValue,
-            queryBuilder,
-            sqlIdentifier,
-            pgType,
-            pgTypeModifier,
-          });
-        };
-        connectionFilterRegisterResolver(fieldTypeName, "filter", resolve);
-
-        // Generate SQL where clause from filter argument
-        addArgDataGenerator(function connectionFilter(args) {
-          return {
-            pgQuery: queryBuilder => {
-              if (args.hasOwnProperty("filter")) {
-                const sqlFragment = connectionFilterResolve(
-                  { filter: args.filter },
-                  queryBuilder.getTableAlias(),
-                  fieldTypeName,
-                  queryBuilder
-                );
-                if (sqlFragment != null) {
-                  queryBuilder.where(sqlFragment);
-                }
-              }
-            },
-          };
-        });
-      } else {
-        FilterType = connectionFilterType(
-          newWithHooks,
-          filterTypeName,
-          source,
-          nodeTypeName
-        );
-        if (FilterType == null) {
-          return args;
-        }
-
-        // Generate SQL where clause from filter argument
-        addArgDataGenerator(function connectionFilter(args) {
-          return {
-            pgQuery: queryBuilder => {
-              if (args.hasOwnProperty("filter")) {
-                const sqlFragment = connectionFilterResolve(
-                  args.filter,
-                  queryBuilder.getTableAlias(),
-                  filterTypeName,
-                  queryBuilder
-                );
-                if (sqlFragment != null) {
-                  queryBuilder.where(sqlFragment);
-                }
-              }
-            },
-          };
-        });
+      const FilterType = connectionFilterType(
+        newWithHooks,
+        filterTypeName,
+        source,
+        nodeTypeName
+      );
+      if (!FilterType) {
+        return args;
       }
+
+      // Generate SQL where clause from filter argument
+      addArgDataGenerator(function connectionFilter(args) {
+        return {
+          pgQuery: queryBuilder => {
+            if (args.hasOwnProperty("filter")) {
+              const sqlFragment = connectionFilterResolve(
+                args.filter,
+                queryBuilder.getTableAlias(),
+                filterTypeName,
+                queryBuilder,
+                nodeType,
+                null
+              );
+              if (sqlFragment != null) {
+                queryBuilder.where(sqlFragment);
+              }
+            }
+          },
+        };
+      });
 
       return extend(
         args,
@@ -164,92 +102,15 @@ module.exports = function PgConnectionArgFilterPlugin(
     }
   );
 
-  // Add operator fields to IntFilter, StringFilter, etc.
-  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
-    const {
-      extend,
-      graphql: { getNamedType, GraphQLList },
-      pgGetGqlTypeByTypeIdAndModifier,
-      pgGetGqlInputTypeByTypeIdAndModifier,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      connectionFilterOperatorsGlobal,
-      connectionFilterOperatorsByFieldType,
-      connectionFilterTypesByTypeName,
-    } = build;
-    const {
-      scope: { isPgConnectionFilterOperators, pgTypeId, pgTypeModifier },
-      fieldWithHooks,
-      Self,
-    } = context;
-    if (!isPgConnectionFilterOperators || !pgTypeId) {
-      return fields;
-    }
-
-    connectionFilterTypesByTypeName[Self.name] = Self;
-
-    const fieldType = pgGetGqlTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
-    const fieldInputType = pgGetGqlInputTypeByTypeIdAndModifier(
-      pgTypeId,
-      pgTypeModifier
-    );
-    const pgType = introspectionResultsByKind.typeById[pgTypeId];
-    const fieldBaseInputType = pgType.isPgArray
-      ? pgGetGqlInputTypeByTypeIdAndModifier(
-          pgType.arrayItemType.id,
-          pgTypeModifier
-        )
-      : pgType.rangeSubTypeId
-      ? pgGetGqlInputTypeByTypeIdAndModifier(
-          pgType.rangeSubTypeId,
-          pgTypeModifier
-        )
-      : fieldInputType;
-
-    if (!fieldType || !fieldInputType || !fieldBaseInputType) {
-      return fields;
-    }
-
-    const isListType = fieldType instanceof GraphQLList;
-    const namedType = getNamedType(fieldType);
-
-    const operators = {
-      ...connectionFilterOperatorsGlobal,
-      ...connectionFilterOperatorsByFieldType[namedType.name],
-    };
-    const operatorFields = Object.entries(operators).reduce(
-      (memo, [operatorName, operator]) => {
-        const allowedListTypes = operator.options.allowedListTypes || [
-          "NonList",
-        ];
-        const listTypeIsAllowed = isListType
-          ? allowedListTypes.includes("List")
-          : allowedListTypes.includes("NonList");
-        if (listTypeIsAllowed) {
-          memo[operatorName] = fieldWithHooks(operatorName, {
-            description: operator.description,
-            type: operator.resolveType(fieldInputType, fieldBaseInputType),
-          });
-        }
-        return memo;
-      },
-      {}
-    );
-
-    return extend(fields, operatorFields);
-  });
-
   builder.hook("build", build => {
     const {
       extend,
-      gql2pg,
       graphql: { getNamedType, GraphQLInputObjectType, GraphQLList },
       inflection,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
+      pgGetGqlInputTypeByTypeIdAndModifier,
       pgGetGqlTypeByTypeIdAndModifier,
       pgSql: sql,
-      connectionFilterAllowedFieldTypes,
-      connectionFilterOperatorsByFieldType,
-      connectionFilterOperatorsGlobal,
     } = build;
 
     const connectionFilterResolvers = {};
@@ -290,7 +151,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       obj,
       sourceAlias,
       typeName,
-      queryBuilder
+      queryBuilder,
+      pgType,
+      pgTypeModifier
     ) => {
       if (obj == null) return handleNullInput();
       if (isEmptyObject(obj)) return handleEmptyObjectInput();
@@ -307,40 +170,14 @@ module.exports = function PgConnectionArgFilterPlugin(
               fieldName: key,
               fieldValue: value,
               queryBuilder,
+              pgType,
+              pgTypeModifier,
             });
           }
           throw new Error(`Unable to resolve filter field '${key}'`);
         })
         .filter(x => x != null);
 
-      return sqlFragments.length === 0
-        ? null
-        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
-    };
-
-    const connectionFilterResolvePredicates = ({
-      sourceAlias,
-      fieldName,
-      fieldValue,
-      queryBuilder,
-      sqlIdentifier,
-      pgType,
-      pgTypeModifier,
-    }) => {
-      const sqlFragments = Object.entries(fieldValue)
-        .map(([operatorName, input]) =>
-          resolvePredicate(
-            sqlIdentifier,
-            operatorName,
-            input,
-            pgType,
-            pgTypeModifier,
-            fieldName,
-            queryBuilder,
-            sourceAlias
-          )
-        )
-        .filter(x => x != null);
       return sqlFragments.length === 0
         ? null
         : sql.query`(${sql.join(sqlFragments, ") and (")})`;
@@ -411,6 +248,10 @@ module.exports = function PgConnectionArgFilterPlugin(
         return null;
       }
       const namedType = getNamedType(fieldType);
+      const fieldInputType = pgGetGqlInputTypeByTypeIdAndModifier(
+        pgTypeId,
+        pgTypeModifier
+      );
 
       // Check whether this field type is filterable
       if (
@@ -428,6 +269,21 @@ module.exports = function PgConnectionArgFilterPlugin(
         ? inflection.filterFieldListType(namedType.name)
         : inflection.filterFieldType(namedType.name);
 
+      const pgConnectionFilterFieldCategory = pgType.isPgArray
+        ? "Array"
+        : pgType.rangeSubTypeId
+        ? "Range"
+        : pgType.type === "e"
+        ? "Enum"
+        : "Scalar";
+
+      const pgConnectionFilterElementInputType = pgType.rangeSubTypeId
+        ? pgGetGqlInputTypeByTypeIdAndModifier(
+            pgType.rangeSubTypeId,
+            pgTypeModifier
+          )
+        : null;
+
       const existingType = connectionFilterTypesByTypeName[operatorsTypeName];
       if (existingType) {
         if (
@@ -443,76 +299,20 @@ module.exports = function PgConnectionArgFilterPlugin(
         return existingType;
       }
       return newWithHooks(
-          GraphQLInputObjectType,
-          {
-            name: operatorsTypeName,
-            description: `A filter to be used against ${namedType.name}${
-              isListType ? " List" : ""
-            } fields. All fields are combined with a logical ‘and.’`,
-          },
-          {
-            isPgConnectionFilterOperators: true,
-            pgTypeId,
-            pgTypeModifier,
-          },
-          true
-      );
-    };
-
-    const resolvePredicate = (
-      sqlIdentifier,
-      operatorName,
-      input,
-      pgType,
-      pgTypeModifier,
-      fieldName,
-      queryBuilder
-    ) => {
-      if (input == null) return handleNullInput();
-      if (isEmptyObject(input)) return handleEmptyObjectInput();
-
-      const fieldType = getNamedType(
-        pgGetGqlTypeByTypeIdAndModifier(pgType.id, pgTypeModifier)
-      );
-      const operator =
-        connectionFilterOperatorsGlobal[operatorName] ||
-        (connectionFilterOperatorsByFieldType[fieldType.name] &&
-          connectionFilterOperatorsByFieldType[fieldType.name][operatorName]);
-      if (!operator) {
-        throw new Error(`Unable to resolve operator '${operatorName}'`);
-      }
-
-      const { inputResolver, sqlValueResolver } = operator.options;
-
-      const sqlValueFromInput = (input, pgType, pgTypeModifier) => {
-        return gql2pg(
-          inputResolver ? inputResolver(input) : input,
-          pgType,
-          pgTypeModifier
-        );
-      };
-
-      const sqlValue = sqlValueResolver
-        ? sqlValueResolver(input, pgType, pgTypeModifier)
-        : Array.isArray(input)
-        ? pgType.isPgArray
-          ? sqlValueFromInput(input, pgType, pgTypeModifier)
-          : input.length === 0
-          ? sql.query`(select ${sqlIdentifier} limit 0)`
-          : sql.query`(${sql.join(
-              input.map(i => sqlValueFromInput(i, pgType, pgTypeModifier)),
-              ","
-            )})`
-        : pgType.isPgArray
-        ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
-        : sqlValueFromInput(input, pgType, pgTypeModifier);
-
-      return operator.resolveWhereClause(
-        sqlIdentifier,
-        sqlValue,
-        input,
-        fieldName,
-        queryBuilder
+        GraphQLInputObjectType,
+        {
+          name: operatorsTypeName,
+          description: `A filter to be used against ${namedType.name}${
+            isListType ? " List" : ""
+          } fields. All fields are combined with a logical ‘and.’`,
+        },
+        {
+          isPgConnectionFilterOperators: true,
+          pgConnectionFilterFieldCategory,
+          pgConnectionFilterInputType: fieldInputType,
+          pgConnectionFilterElementInputType,
+        },
+        true
       );
     };
 
@@ -566,7 +366,6 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterTypesByTypeName,
       connectionFilterRegisterResolver,
       connectionFilterResolve,
-      connectionFilterResolvePredicates,
       connectionFilterOperatorsType,
       connectionFilterType,
       escapeLikeWildcards,

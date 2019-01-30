@@ -9,7 +9,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       inflection,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
-      connectionFilterResolvePredicates,
+      connectionFilterResolve,
       connectionFilterTypesByTypeName,
     } = build;
     const {
@@ -61,6 +61,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
         return memo;
       }, {});
 
+    const operatorsTypeNameByFieldName = {};
+
     const procFields = Object.entries(procByFieldName).reduce(
       (memo, [fieldName, proc]) => {
         const OperatorsType = connectionFilterOperatorsType(
@@ -71,6 +73,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
         if (!OperatorsType) {
           return memo;
         }
+        operatorsTypeNameByFieldName[fieldName] = OperatorsType.name;
         return extend(memo, {
           [fieldName]: fieldWithHooks(
             fieldName,
@@ -96,16 +99,16 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       )}.${sql.identifier(proc.name)}(${sourceAlias})`;
       const pgType = introspectionResultsByKind.typeById[proc.returnTypeId];
       const pgTypeModifier = null;
+      const filterTypeName = operatorsTypeNameByFieldName[fieldName];
 
-      return connectionFilterResolvePredicates({
-        sourceAlias,
-        fieldName,
+      return connectionFilterResolve(
         fieldValue,
-        queryBuilder,
         sqlIdentifier,
+        filterTypeName,
+        queryBuilder,
         pgType,
-        pgTypeModifier,
-      });
+        pgTypeModifier
+      );
     };
 
     for (const fieldName of Object.keys(procFields)) {

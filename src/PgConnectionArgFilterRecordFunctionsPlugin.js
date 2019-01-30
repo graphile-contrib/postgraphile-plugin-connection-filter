@@ -5,11 +5,12 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       newWithHooks,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
+      pgGetGqlTypeByTypeIdAndModifier,
       inflection,
       describePgEntity,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
-      connectionFilterResolvePredicates,
+      connectionFilterResolve,
       connectionFilterTypesByTypeName,
     } = build;
     const {
@@ -102,18 +103,19 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
       const sqlIdentifier = sql.query`${sourceAlias}.${sql.identifier(
         outputArg.name
       )}`;
-      const pgType = outputArg.type;
-      const pgTypeModifier = outputArg.typeModifier;
 
-      return connectionFilterResolvePredicates({
-        sourceAlias,
-        fieldName,
+      const typeName = pgGetGqlTypeByTypeIdAndModifier(outputArg.type.id, null)
+        .name;
+      const filterTypeName = inflection.filterType(typeName);
+
+      return connectionFilterResolve(
         fieldValue,
-        queryBuilder,
         sqlIdentifier,
-        pgType,
-        pgTypeModifier,
-      });
+        filterTypeName,
+        queryBuilder,
+        outputArg.type,
+        null
+      );
     };
 
     for (const fieldName of Object.keys(outputArgFields)) {

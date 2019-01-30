@@ -1,15 +1,35 @@
-module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
-  builder.hook("init", (_, build) => {
+module.exports = function PgConnectionArgFilterOperatorsPlugin(
+  builder,
+  { connectionFilterAllowedOperators, connectionFilterOperatorNames }
+) {
+  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
-      addConnectionFilterOperator,
-      escapeLikeWildcards,
+      extend,
+      graphql: { getNamedType, GraphQLBoolean, GraphQLNonNull, GraphQLList },
+      pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
       gql2pg,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      graphql: { getNamedType, GraphQLBoolean, GraphQLList, GraphQLNonNull },
+      connectionFilterRegisterResolver,
+      connectionFilterTypesByTypeName,
+      escapeLikeWildcards,
     } = build;
+    const {
+      scope: {
+        isPgConnectionFilterOperators,
+        pgConnectionFilterFieldCategory: category,
+        pgConnectionFilterInputType: inputType,
+        pgConnectionFilterElementInputType: elementInputType,
+      },
+      fieldWithHooks,
+      Self,
+    } = context;
+    if (!isPgConnectionFilterOperators || !category || !inputType) {
+      return fields;
+    }
 
-    const simpleTypeNames = [
+    connectionFilterTypesByTypeName[Self.name] = Self;
+
+    const commonTypeNames = [
       "BigFloat",
       "BigInt",
       //"BitString",
@@ -25,447 +45,375 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
       "Time",
       //"UUID",
     ];
-    const rangeTypeNames = [
-      "BigFloatRange",
-      "BigIntRange",
-      "DateRange",
-      "DatetimeRange",
-      "IntRange",
-    ];
 
-    addConnectionFilterOperator(
-      "isNull",
-      "Is null (if `true` is specified) or is not null (if `false` is specified).",
-      () => GraphQLBoolean,
-      (identifier, _value, input) =>
-        sql.query`${identifier} ${
-          input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
-        }`,
+    const operatorSpecs = [
+      // Null
       {
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "equalTo",
-      "Equal to the specified value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} = ${value}`,
+        name: "isNull",
+        description:
+          "Is null (if `true` is specified) or is not null (if `false` is specified).",
+        resolveType: () => GraphQLBoolean,
+        resolve: (i, _v, input) =>
+          sql.query`${i} ${
+            input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
+          }`,
+      },
+      // Equality
       {
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notEqualTo",
-      "Not equal to the specified value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} <> ${value}`,
+        name: "equalTo",
+        description: "Equal to the specified value.",
+        resolve: (i, v) => sql.query`${i} = ${v}`,
+      },
       {
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "distinctFrom",
-      "Not equal to the specified value, treating null like an ordinary value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} IS DISTINCT FROM ${value}`,
+        name: "notEqualTo",
+        description: "Not equal to the specified value.",
+        resolve: (i, v) => sql.query`${i} <> ${v}`,
+      },
       {
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notDistinctFrom",
-      "Equal to the specified value, treating null like an ordinary value.",
-      fieldType => fieldType,
-      (identifier, value) =>
-        sql.query`${identifier} IS NOT DISTINCT FROM ${value}`,
+        name: "distinctFrom",
+        description:
+          "Not equal to the specified value, treating null like an ordinary value.",
+        resolve: (i, v) => sql.query`${i} IS DISTINCT FROM ${v}`,
+      },
       {
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "lessThan",
-      "Less than the specified value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} < ${value}`,
+        name: "notDistinctFrom",
+        description:
+          "Equal to the specified value, treating null like an ordinary value.",
+        resolve: (i, v) => sql.query`${i} IS NOT DISTINCT FROM ${v}`,
+      },
+      // Inclusion
       {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "lessThanOrEqualTo",
-      "Less than or equal to the specified value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} <= ${value}`,
+        name: "in",
+        description: "Included in the specified list.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
+        resolveType: fieldInputType =>
+          new GraphQLList(new GraphQLNonNull(fieldInputType)),
+        resolve: (i, v) => sql.query`${i} IN ${v}`,
+      },
       {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "greaterThan",
-      "Greater than the specified value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} > ${value}`,
+        name: "notIn",
+        description: "Not included in the specified list.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
+        resolveType: fieldInputType =>
+          new GraphQLList(new GraphQLNonNull(fieldInputType)),
+        resolve: (i, v) => sql.query`${i} NOT IN ${v}`,
+      },
+      // Comparison
       {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "greaterThanOrEqualTo",
-      "Greater than or equal to the specified value.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} >= ${value}`,
+        name: "lessThan",
+        description: "Less than the specified value.",
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} < ${v}`,
+      },
       {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["NonList", "List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "in",
-      "Included in the specified list.",
-      fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
-      (identifier, value) => sql.query`${identifier} IN ${value}`
-    );
-    addConnectionFilterOperator(
-      "notIn",
-      "Not included in the specified list.",
-      fieldType => new GraphQLList(new GraphQLNonNull(fieldType)),
-      (identifier, value) => sql.query`${identifier} NOT IN ${value}`
-    );
-    addConnectionFilterOperator(
-      "includes",
-      "Contains the specified string (case-sensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
+        name: "lessThanOrEqualTo",
+        description: "Less than or equal to the specified value.",
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} <= ${v}`,
+      },
       {
+        name: "greaterThan",
+        description: "Greater than the specified value.",
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} > ${v}`,
+      },
+      {
+        name: "greaterThanOrEqualTo",
+        description: "Greater than or equal to the specified value.",
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} >= ${v}`,
+      },
+      // Pattern matching
+      {
+        name: "includes",
+        description: "Contains the specified string (case-sensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "notIncludes",
-      "Does not contain the specified string (case-sensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} LIKE ${v}`,
+      },
       {
+        name: "notIncludes",
+        description: "Does not contain the specified string (case-sensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "includesInsensitive",
-      "Contains the specified string (case-insensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
+      },
       {
+        name: "includesInsensitive",
+        description: "Contains the specified string (case-insensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "notIncludesInsensitive",
-      "Does not contain the specified string (case-insensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
+      },
       {
+        name: "notIncludesInsensitive",
+        description:
+          "Does not contain the specified string (case-insensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "startsWith",
-      "Starts with the specified string (case-sensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
+      },
       {
+        name: "startsWith",
+        description: "Starts with the specified string (case-sensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "notStartsWith",
-      "Does not start with the specified string (case-sensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
+        resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} LIKE ${v}`,
+      },
       {
+        name: "notStartsWith",
+        description:
+          "Does not start with the specified string (case-sensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "startsWithInsensitive",
-      "Starts with the specified string (case-insensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
+        resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
+      },
       {
+        name: "startsWithInsensitive",
+        description: "Starts with the specified string (case-insensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "notStartsWithInsensitive",
-      "Does not start with the specified string (case-insensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
+        resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
+      },
       {
+        name: "notStartsWithInsensitive",
+        description:
+          "Does not start with the specified string (case-insensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `${escapeLikeWildcards(input)}%`,
-      }
-    );
-    addConnectionFilterOperator(
-      "endsWith",
-      "Ends with the specified string (case-sensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
+        resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
+      },
       {
+        name: "endsWith",
+        description: "Ends with the specified string (case-sensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}`,
-      }
-    );
-    addConnectionFilterOperator(
-      "notEndsWith",
-      "Does not end with the specified string (case-sensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolve: (i, v) => sql.query`${i} LIKE ${v}`,
+      },
       {
+        name: "notEndsWith",
+        description: "Does not end with the specified string (case-sensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}`,
-      }
-    );
-    addConnectionFilterOperator(
-      "endsWithInsensitive",
-      "Ends with the specified string (case-insensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
+      },
       {
+        name: "endsWithInsensitive",
+        description: "Ends with the specified string (case-insensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}`,
-      }
-    );
-    addConnectionFilterOperator(
-      "notEndsWithInsensitive",
-      "Does not end with the specified string (case-insensitive).",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
+      },
       {
+        name: "notEndsWithInsensitive",
+        description:
+          "Does not end with the specified string (case-insensitive).",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-        inputResolver: input => `%${escapeLikeWildcards(input)}`,
-      }
-    );
-    addConnectionFilterOperator(
-      "like",
-      "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} LIKE ${value}`,
+        resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
+      },
       {
+        name: "like",
+        description:
+          "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notLike",
-      "Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT LIKE ${value}`,
+        resolve: (i, v) => sql.query`${i} LIKE ${v}`,
+      },
       {
+        name: "notLike",
+        description:
+          "Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-      }
-    );
-    addConnectionFilterOperator(
-      "likeInsensitive",
-      "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} ILIKE ${value}`,
+        resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
+      },
       {
+        name: "likeInsensitive",
+        description:
+          "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notLikeInsensitive",
-      "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT ILIKE ${value}`,
+        resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
+      },
       {
+        name: "notLikeInsensitive",
+        description:
+          "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-      }
-    );
-    addConnectionFilterOperator(
-      "similarTo",
-      "Matches the specified pattern using the SQL standard's definition of a regular expression.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} SIMILAR TO ${value}`,
+        resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
+      },
       {
+        name: "similarTo",
+        description:
+          "Matches the specified pattern using the SQL standard's definition of a regular expression.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notSimilarTo",
-      "Does not match the specified pattern using the SQL standard's definition of a regular expression.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} NOT SIMILAR TO ${value}`,
+        resolve: (i, v) => sql.query`${i} SIMILAR TO ${v}`,
+      },
       {
+        name: "notSimilarTo",
+        description:
+          "Does not match the specified pattern using the SQL standard's definition of a regular expression.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["String"],
-      }
-    );
-    addConnectionFilterOperator(
-      "contains",
-      "Contains the specified JSON.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} @> ${value}`,
+        resolve: (i, v) => sql.query`${i} NOT SIMILAR TO ${v}`,
+      },
+      // TODO: add regexp operators
+      // JSON
       {
+        name: "contains",
+        description: "Contains the specified JSON.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["JSON"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containedBy",
-      "Contained by the specified JSON.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} <@ ${value}`,
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
       {
+        name: "containedBy",
+        description: "Contained by the specified JSON.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["JSON"],
-      }
-    );
-    addConnectionFilterOperator(
-      "contains",
-      "Contains the specified list of values.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} @> ${value}`,
+        resolve: (i, v) => sql.query`${i} <@ ${v}`,
+      },
+      /*{
+        name: "keyExists",
+        description: "Specified top-level key exists.",
+        allowedFieldTypes: ["JSON"],
+        resolveType: () => GraphQLString,
+        resolve: (i, v) => sql.query`${i} ? ${v}`,
+      },*/
+      // InternetAddress
       {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containedBy",
-      "Contained by the specified list of values.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} <@ ${value}`,
-      {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "overlaps",
-      "Overlaps the specified list of values.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} && ${value}`,
-      {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "anyEqualTo",
-      "Any array item is equal to the specified value.",
-      fieldType => getNamedType(fieldType),
-      (identifier, value) => sql.query`${value} = ANY(${identifier})`,
-      {
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "anyNotEqualTo",
-      "Any array item is not equal to the specified value.",
-      fieldType => getNamedType(fieldType),
-      (identifier, value) => sql.query`${value} <> ANY(${identifier})`,
-      {
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "anyLessThan",
-      "Any array item is less than the specified value.",
-      fieldType => getNamedType(fieldType),
-      (identifier, value) => sql.query`${value} > ANY(${identifier})`,
-      {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "anyLessThanOrEqualTo",
-      "Any array item is less than or equal to the specified value.",
-      fieldType => getNamedType(fieldType),
-      (identifier, value) => sql.query`${value} >= ANY(${identifier})`,
-      {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "anyGreaterThan",
-      "Any array item is greater than the specified value.",
-      fieldType => getNamedType(fieldType),
-      (identifier, value) => sql.query`${value} < ANY(${identifier})`,
-      {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "anyGreaterThanOrEqualTo",
-      "Any array item is greater than or equal to the specified value.",
-      fieldType => getNamedType(fieldType),
-      (identifier, value) => sql.query`${value} <= ANY(${identifier})`,
-      {
-        allowedFieldTypes: simpleTypeNames,
-        allowedListTypes: ["List"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containedBy",
-      "Contained by the specified internet address.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} << ${value}`,
-      {
+        name: "contains",
+        description: "Contains the specified internet address.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["InternetAddress"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containedByOrEqualTo",
-      "Contained by or equal to the specified internet address.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} <<= ${value}`,
+        resolve: (i, v) => sql.query`${i} >> ${v}`,
+      },
       {
+        name: "containsOrEqualTo",
+        description: "Contains or equal to the specified internet address.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["InternetAddress"],
-      }
-    );
-    addConnectionFilterOperator(
-      "contains",
-      "Contains the specified internet address.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} >> ${value}`,
+        resolve: (i, v) => sql.query`${i} >>= ${v}`,
+      },
       {
+        name: "containedBy",
+        description: "Contained by the specified internet address.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["InternetAddress"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containsOrEqualTo",
-      "Contains or equal to the specified internet address.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} >>= ${value}`,
+        resolve: (i, v) => sql.query`${i} << ${v}`,
+      },
       {
+        name: "containedByOrEqualTo",
+        description: "Contained by or equal to the specified internet address.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["InternetAddress"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containsOrContainedBy",
-      "Contains or contained by the specified internet address.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} && ${value}`,
+        resolve: (i, v) => sql.query`${i} <<= ${v}`,
+      },
       {
+        name: "containsOrContainedBy",
+        description: "Contains or contained by the specified internet address.",
+        allowedCategories: ["Scalar", "Enum", "Range"],
         allowedFieldTypes: ["InternetAddress"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containsElement",
-      "Contains the specified value.",
-      (_fieldInputType, fieldBaseInputType) => fieldBaseInputType,
-      (identifier, value) => sql.query`${identifier} @> ${value}`,
+        resolve: (i, v) => sql.query`${i} && ${v}`,
+      },
+      // Array Types
       {
-        sqlValueResolver: (input, pgType, pgTypeModifier) => {
+        name: "contains",
+        description: "Contains the specified list of values.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
+      {
+        name: "containedBy",
+        description: "Contained by the specified list of values.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} <@ ${v}`,
+      },
+      {
+        name: "overlaps",
+        description: "Overlaps the specified list of values.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolve: (i, v) => sql.query`${i} && ${v}`,
+      },
+      {
+        name: "anyEqualTo",
+        description: "Any array item is equal to the specified value.",
+        allowedCategories: ["Array"],
+        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolve: (i, v) => sql.query`${v} = ANY (${i})`,
+      },
+      {
+        name: "anyNotEqualTo",
+        description: "Any array item is not equal to the specified value.",
+        allowedCategories: ["Array"],
+        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolve: (i, v) => sql.query`${v} <> ANY (${i})`,
+      },
+      {
+        name: "anyLessThan",
+        description: "Any array item is less than the specified value.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolve: (i, v) => sql.query`${v} > ANY (${i})`,
+      },
+      {
+        name: "anyLessThanOrEqualTo",
+        description:
+          "Any array item is less than or equal to the specified value.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolve: (i, v) => sql.query`${v} >= ANY (${i})`,
+      },
+      {
+        name: "anyGreaterThan",
+        description: "Any array item is greater than the specified value.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolve: (i, v) => sql.query`${v} < ANY (${i})`,
+      },
+      {
+        name: "anyGreaterThanOrEqualTo",
+        description:
+          "Any array item is greater than or equal to the specified value.",
+        allowedCategories: ["Array"],
+        allowedFieldTypes: commonTypeNames,
+        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolve: (i, v) => sql.query`${v} <= ANY (${i})`,
+      },
+      // Range Types
+      {
+        name: "contains",
+        description: "Contains the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
+      {
+        name: "containsElement",
+        description: "Contains the specified value.",
+        allowedCategories: ["Range"],
+        resolveType: (_fieldInputType, elementInputType) => elementInputType,
+        resolveSqlValue: (input, pgType, pgTypeModifier) => {
           const rangeSubType =
             introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
           return sql.query`${gql2pg(
@@ -474,90 +422,148 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(builder) {
             pgTypeModifier
           )}::${sql.identifier(rangeSubType.namespaceName, rangeSubType.name)}`;
         },
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "contains",
-      "Contains the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} @> ${value}`,
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "containedBy",
-      "Contained by the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} <@ ${value}`,
+        name: "containedBy",
+        description: "Contained by the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} <@ ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "overlaps",
-      "Overlaps the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} && ${value}`,
+        name: "overlaps",
+        description: "Overlaps the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} && ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "strictlyLeftOf",
-      "Strictly left of the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} << ${value}`,
+        name: "strictlyLeftOf",
+        description: "Strictly left of the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} << ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "strictlyRightOf",
-      "Strictly right of the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} >> ${value}`,
+        name: "strictlyRightOf",
+        description: "Strictly right of the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} >> ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notExtendsRightOf",
-      "Does not extend right of the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} &< ${value}`,
+        name: "notExtendsRightOf",
+        description: "Does not extend right of the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} &< ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
-      }
-    );
-    addConnectionFilterOperator(
-      "notExtendsLeftOf",
-      "Does not extend left of the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} &> ${value}`,
+        name: "notExtendsLeftOf",
+        description: "Does not extend left of the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} &> ${v}`,
+      },
       {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
+        name: "adjacentTo",
+        description: "Adjacent to the specified range.",
+        allowedCategories: ["Range"],
+        resolve: (i, v) => sql.query`${i} -|- ${v}`,
+      },
+    ];
+
+    const operatorSpecByFieldName = {};
+
+    const operatorFields = operatorSpecs.reduce((memo, spec) => {
+      const {
+        name,
+        description,
+        allowedFieldTypes,
+        allowedCategories,
+        resolveType,
+      } = spec;
+
+      if (
+        connectionFilterAllowedOperators &&
+        !connectionFilterAllowedOperators.includes(name)
+      ) {
+        return memo;
       }
-    );
-    addConnectionFilterOperator(
-      "adjacentTo",
-      "Adjacent to the specified range.",
-      fieldType => fieldType,
-      (identifier, value) => sql.query`${identifier} -|- ${value}`,
-      {
-        allowedFieldTypes: rangeTypeNames,
-        allowedListTypes: ["NonList"],
+      if (
+        allowedFieldTypes &&
+        !allowedFieldTypes.includes(getNamedType(inputType).name)
+      ) {
+        return memo;
       }
-    );
-    return _;
+      if (allowedCategories && !allowedCategories.includes(category)) {
+        return memo;
+      }
+      const type = resolveType
+        ? resolveType(inputType, elementInputType)
+        : inputType;
+
+      const operatorName =
+        (connectionFilterOperatorNames &&
+          connectionFilterOperatorNames[name]) ||
+        name;
+
+      operatorSpecByFieldName[operatorName] = spec;
+
+      memo[operatorName] = fieldWithHooks(
+        operatorName,
+        {
+          description,
+          type,
+        },
+        {
+          isPgConnectionFilterOperator: true,
+        }
+      );
+      return memo;
+    }, {});
+
+    const resolve = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      pgType,
+      pgTypeModifier,
+    }) => {
+      if (fieldValue == null) return null;
+
+      const sqlIdentifier = sourceAlias;
+
+      const operatorSpec = operatorSpecByFieldName[fieldName];
+      const { resolveInput, resolveSqlValue } = operatorSpec;
+
+      const input = fieldValue;
+
+      const sqlValueFromInput = (input, pgType, pgTypeModifier) => {
+        return gql2pg(
+          resolveInput ? resolveInput(input) : input,
+          pgType,
+          pgTypeModifier
+        );
+      };
+
+      const sqlValue = resolveSqlValue
+        ? resolveSqlValue(input, pgType, pgTypeModifier)
+        : Array.isArray(input)
+        ? pgType.isPgArray
+          ? sqlValueFromInput(input, pgType, pgTypeModifier)
+          : input.length === 0
+          ? sql.query`(select ${sqlIdentifier} limit 0)`
+          : sql.query`(${sql.join(
+              input.map(i => sqlValueFromInput(i, pgType, pgTypeModifier)),
+              ","
+            )})`
+        : pgType.isPgArray
+        ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
+        : sqlValueFromInput(input, pgType, pgTypeModifier);
+
+      return operatorSpec.resolve(sqlIdentifier, sqlValue, input);
+    };
+
+    for (const fieldName of Object.keys(operatorFields)) {
+      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
+    }
+
+    return extend(fields, operatorFields);
   });
 };

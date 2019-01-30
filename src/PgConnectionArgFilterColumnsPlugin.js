@@ -10,7 +10,7 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       inflection,
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
-      connectionFilterResolvePredicates,
+      connectionFilterResolve,
       connectionFilterTypesByTypeName,
     } = build;
     const {
@@ -33,6 +33,8 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
         return memo;
       }, {});
 
+    const operatorsTypeNameByFieldName = {};
+
     const attrFields = Object.entries(attrByFieldName).reduce(
       (memo, [fieldName, attr]) => {
         const OperatorsType = connectionFilterOperatorsType(
@@ -43,6 +45,7 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
         if (!OperatorsType) {
           return memo;
         }
+        operatorsTypeNameByFieldName[fieldName] = OperatorsType.name;
         return extend(memo, {
           [fieldName]: fieldWithHooks(
             fieldName,
@@ -68,16 +71,16 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       )}`;
       const pgType = attr.type;
       const pgTypeModifier = attr.typeModifier;
+      const filterTypeName = operatorsTypeNameByFieldName[fieldName];
 
-      return connectionFilterResolvePredicates({
-        sourceAlias,
-        fieldName,
+      return connectionFilterResolve(
         fieldValue,
-        queryBuilder,
         sqlIdentifier,
+        filterTypeName,
+        queryBuilder,
         pgType,
-        pgTypeModifier,
-      });
+        pgTypeModifier
+      );
     };
 
     for (const fieldName of Object.keys(attrFields)) {
