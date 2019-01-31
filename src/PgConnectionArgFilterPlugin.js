@@ -231,6 +231,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         "1114", // timestamp
         "1184", // timestamptz
         "1266", // timetz
+        "3614", // tsvector
         "2950", // uuid
         "1562", // varbit
         "1043", // varchar
