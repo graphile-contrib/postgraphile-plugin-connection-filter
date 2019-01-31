@@ -238,7 +238,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       ];
       if (
         !allowedPgSimpleTypeIds.includes(pgSimpleType.id) &&
-        pgType.type !== "e" // enum
+        !(pgType.isPgArray
+          ? pgType.arrayItemType.type === "e" // enum[]
+          : pgType.type === "e") // enum
       ) {
         // Not whitelisted and not an enum? Skip.
         return null;

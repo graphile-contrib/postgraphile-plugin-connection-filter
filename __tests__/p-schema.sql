@@ -126,6 +126,11 @@ create table p.enum_types (
   "enum" p.mood
 );
 
+create table p.enum_array_types (
+  id serial primary key,
+  "enum_array" p.mood[]
+);
+
 comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
 create table p.backward (

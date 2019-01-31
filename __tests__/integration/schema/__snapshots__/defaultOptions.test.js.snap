@@ -1543,6 +1543,73 @@ input DatetimeRangeInput {
   start: DatetimeRangeBoundInput
 }
 
+type EnumArrayType implements Node {
+  enumArray: [Mood]
+  id: Int!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A filter to be used against \`EnumArrayType\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input EnumArrayTypeFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [EnumArrayTypeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`enumArray\` field.\\"\\"\\"
+  enumArray: MoodListFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: EnumArrayTypeFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [EnumArrayTypeFilter!]
+}
+
+\\"\\"\\"A connection to a list of \`EnumArrayType\` values.\\"\\"\\"
+type EnumArrayTypesConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`EnumArrayType\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [EnumArrayTypesEdge!]!
+
+  \\"\\"\\"A list of \`EnumArrayType\` objects.\\"\\"\\"
+  nodes: [EnumArrayType]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`EnumArrayType\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`EnumArrayType\` edge in the connection.\\"\\"\\"
+type EnumArrayTypesEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`EnumArrayType\` at the end of the edge.\\"\\"\\"
+  node: EnumArrayType
+}
+
+\\"\\"\\"Methods to use when ordering \`EnumArrayType\`.\\"\\"\\"
+enum EnumArrayTypesOrderBy {
+  ENUM_ARRAY_ASC
+  ENUM_ARRAY_DESC
+  ID_ASC
+  ID_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
 type EnumType implements Node {
   enum: Mood
   id: Int!
@@ -3034,6 +3101,69 @@ input MoodFilter {
   notIn: [Mood!]
 }
 
+\\"\\"\\"
+A filter to be used against Mood List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input MoodListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Mood
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Mood
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Mood
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Mood
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Mood
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Mood
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Mood]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Mood]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Mood]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Mood]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Mood]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Mood]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Mood]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Mood]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Mood]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Mood]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Mood]
+}
+
 \\"\\"\\"An object with a globally unique \`ID\`.\\"\\"\\"
 interface Node {
   \\"\\"\\"
@@ -3269,6 +3399,35 @@ type Query implements Node {
     \\"\\"\\"The method to use when ordering \`Child\`.\\"\\"\\"
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection
+
+  \\"\\"\\"Reads and enables pagination through a set of \`EnumArrayType\`.\\"\\"\\"
+  allEnumArrayTypes(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: EnumArrayTypeFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`EnumArrayType\`.\\"\\"\\"
+    orderBy: [EnumArrayTypesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): EnumArrayTypesConnection
 
   \\"\\"\\"Reads and enables pagination through a set of \`EnumType\`.\\"\\"\\"
   allEnumTypes(
@@ -3640,6 +3799,15 @@ type Query implements Node {
     nodeId: ID!
   ): Child
   childById(id: Int!): Child
+
+  \\"\\"\\"Reads a single \`EnumArrayType\` using its globally unique \`ID\`.\\"\\"\\"
+  enumArrayType(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`EnumArrayType\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): EnumArrayType
+  enumArrayTypeById(id: Int!): EnumArrayType
 
   \\"\\"\\"Reads a single \`EnumType\` using its globally unique \`ID\`.\\"\\"\\"
   enumType(
