@@ -55,14 +55,8 @@ input ArrayTypeFilter {
   \\"\\"\\"Filter by the object’s \`bpchar4Array\` field.\\"\\"\\"
   bpchar4Array: StringListFilter
 
-  \\"\\"\\"Filter by the object’s \`byteaArray\` field.\\"\\"\\"
-  byteaArray: StringListFilter
-
   \\"\\"\\"Filter by the object’s \`char4Array\` field.\\"\\"\\"
   char4Array: StringListFilter
-
-  \\"\\"\\"Filter by the object’s \`cidrArray\` field.\\"\\"\\"
-  cidrArray: StringListFilter
 
   \\"\\"\\"Filter by the object’s \`dateArray\` field.\\"\\"\\"
   dateArray: DateListFilter
@@ -90,12 +84,6 @@ input ArrayTypeFilter {
 
   \\"\\"\\"Filter by the object’s \`jsonbArray\` field.\\"\\"\\"
   jsonbArray: JSONListFilter
-
-  \\"\\"\\"Filter by the object’s \`macaddr8Array\` field.\\"\\"\\"
-  macaddr8Array: StringListFilter
-
-  \\"\\"\\"Filter by the object’s \`macaddrArray\` field.\\"\\"\\"
-  macaddrArray: StringListFilter
 
   \\"\\"\\"Filter by the object’s \`moneyArray\` field.\\"\\"\\"
   moneyArray: FloatListFilter
@@ -1674,14 +1662,8 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`bpchar4\` field.\\"\\"\\"
   bpchar4: StringFilter
 
-  \\"\\"\\"Filter by the object’s \`bytea\` field.\\"\\"\\"
-  bytea: StringFilter
-
   \\"\\"\\"Filter by the object’s \`char4\` field.\\"\\"\\"
   char4: StringFilter
-
-  \\"\\"\\"Filter by the object’s \`cidr\` field.\\"\\"\\"
-  cidr: StringFilter
 
   \\"\\"\\"Filter by the object’s \`date\` field.\\"\\"\\"
   date: DateFilter
@@ -1721,12 +1703,6 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
-
-  \\"\\"\\"Filter by the object’s \`macaddr\` field.\\"\\"\\"
-  macaddr: StringFilter
-
-  \\"\\"\\"Filter by the object’s \`macaddr8\` field.\\"\\"\\"
-  macaddr8: StringFilter
 
   \\"\\"\\"Filter by the object’s \`money\` field.\\"\\"\\"
   money: FloatFilter

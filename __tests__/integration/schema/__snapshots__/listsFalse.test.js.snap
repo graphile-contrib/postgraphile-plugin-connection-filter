@@ -1284,14 +1284,8 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`bpchar4\` field.\\"\\"\\"
   bpchar4: StringFilter
 
-  \\"\\"\\"Filter by the object’s \`bytea\` field.\\"\\"\\"
-  bytea: StringFilter
-
   \\"\\"\\"Filter by the object’s \`char4\` field.\\"\\"\\"
   char4: StringFilter
-
-  \\"\\"\\"Filter by the object’s \`cidr\` field.\\"\\"\\"
-  cidr: StringFilter
 
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
@@ -1334,12 +1328,6 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`jsonb\` field.\\"\\"\\"
   jsonb: JSONFilter
-
-  \\"\\"\\"Filter by the object’s \`macaddr\` field.\\"\\"\\"
-  macaddr: StringFilter
-
-  \\"\\"\\"Filter by the object’s \`macaddr8\` field.\\"\\"\\"
-  macaddr8: StringFilter
 
   \\"\\"\\"Filter by the object’s \`money\` field.\\"\\"\\"
   money: FloatFilter

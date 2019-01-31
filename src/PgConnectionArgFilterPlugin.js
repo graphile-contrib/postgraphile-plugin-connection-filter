@@ -255,6 +255,21 @@ module.exports = function PgConnectionArgFilterPlugin(
         pgTypeId,
         pgTypeModifier
       );
+      const namedInputType = getNamedType(fieldInputType);
+      const actualStringPgTypeIds = [
+        "1042", // bpchar
+        "18", //   char
+        "25", //   text
+        "1043", // varchar
+      ];
+      if (
+        namedInputType &&
+        namedInputType.name === "String" &&
+        !actualStringPgTypeIds.includes(pgSimpleType.id)
+      ) {
+        // Not a real string type? Skip.
+        return null;
+      }
 
       // Check whether this field type is filterable
       if (
