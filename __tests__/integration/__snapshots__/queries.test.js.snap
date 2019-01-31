@@ -1827,6 +1827,26 @@ Object {
 exports[`relations.graphql 1`] = `
 Object {
   "data": Object {
+    "allSideAs_junctionsBySideAId_exist_true": Object {
+      "nodes": Array [
+        Object {
+          "aId": 11,
+        },
+        Object {
+          "aId": 12,
+        },
+      ],
+    },
+    "allSideBs_junctionsBySideBId_exist_true": Object {
+      "nodes": Array [
+        Object {
+          "bId": 21,
+        },
+        Object {
+          "bId": 22,
+        },
+      ],
+    },
     "backwardCompound_name_equalTo_backwardCompound12": Object {
       "nodes": Array [
         Object {

@@ -1,4 +1,6 @@
 query {
+  allSideAs_junctionsBySideAId_exist_true: allSideAs(filter: {junctionsBySideAId: {exist: true}}) { nodes { aId } }
+  allSideBs_junctionsBySideBId_exist_true: allSideBs(filter: {junctionsBySideBId: {exist: true}}) { nodes { bId } }
   backwardCompound_name_equalTo_backwardCompound12: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2: {name: {equalTo: "backwardCompound12"}}}) { ...textConnection }
   backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...textConnection }
   children_every_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {every: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
