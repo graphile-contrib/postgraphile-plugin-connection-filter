@@ -63,3 +63,19 @@ insert into p.child(id, name, filterable_id) values
   (2, 'child2', 1),
   (3, 'child3', 2),
   (4, 'child4', 2);
+
+insert into p.side_a(a_id, name) values
+  (11, 'a11'),
+  (12, 'a12'),
+  (13, 'a13');
+
+insert into p.side_b(b_id, name) values
+  (21, 'b21'),
+  (22, 'b22'),
+  (23, 'b23');
+
+insert into p.junction(side_a_id, side_b_id) values
+  (11, 21),
+  (11, 22),
+  (12, 21);
+  

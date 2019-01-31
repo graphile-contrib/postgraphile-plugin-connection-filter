@@ -8,8 +8,12 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
 
   builder.hook("inflection", inflection => {
     return Object.assign(inflection, {
-      filterManyType(typeName) {
-        return `${typeName}FilterMany`;
+      filterManyType(table, foreignTable) {
+        return this.upperCamelCase(
+          `${this.tableType(table)}-to-many-${this.tableType(
+            foreignTable
+          )}-filter`
+        );
       },
     });
   });
@@ -163,7 +167,8 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       if (FilterType != null) {
         if (isOneToMany) {
           const filterManyTypeName = inflection.filterManyType(
-            foreignTableTypeName
+            table,
+            foreignTable
           );
           if (!connectionFilterTypesByTypeName[filterManyTypeName]) {
             connectionFilterTypesByTypeName[filterManyTypeName] = newWithHooks(
@@ -220,7 +225,8 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
 
       if (isOneToMany) {
         const foreignTableFilterManyTypeName = inflection.filterManyType(
-          foreignTableTypeName
+          table,
+          foreignTable
         );
         const sqlFragment = connectionFilterResolve(
           fieldValue,
