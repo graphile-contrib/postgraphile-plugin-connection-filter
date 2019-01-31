@@ -9,6 +9,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
       gql2pg,
+      connectionFilterOperatorSpecsAdded,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
       escapeLikeWildcards,
@@ -468,6 +469,10 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
     ];
 
+    for (const operatorSpec of connectionFilterOperatorSpecsAdded) {
+      operatorSpecs.push(operatorSpec);
+    }
+
     const operatorSpecByFieldName = {};
 
     const operatorFields = operatorSpecs.reduce((memo, spec) => {
@@ -522,8 +527,10 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       sourceAlias,
       fieldName,
       fieldValue,
+      queryBuilder,
       pgType,
       pgTypeModifier,
+      parentFieldName,
     }) => {
       if (fieldValue == null) return null;
 
@@ -557,7 +564,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
         : sqlValueFromInput(input, pgType, pgTypeModifier);
 
-      return operatorSpec.resolve(sqlIdentifier, sqlValue, input);
+      return operatorSpec.resolve(
+        sqlIdentifier,
+        sqlValue,
+        input,
+        parentFieldName,
+        queryBuilder
+      );
     };
 
     for (const fieldName of Object.keys(operatorFields)) {

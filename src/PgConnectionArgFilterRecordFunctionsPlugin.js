@@ -114,7 +114,8 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
         filterTypeName,
         queryBuilder,
         outputArg.type,
-        null
+        null,
+        fieldName
       );
     };
 

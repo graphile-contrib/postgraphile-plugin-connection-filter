@@ -79,7 +79,8 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
         filterTypeName,
         queryBuilder,
         pgType,
-        pgTypeModifier
+        pgTypeModifier,
+        fieldName
       );
     };
 

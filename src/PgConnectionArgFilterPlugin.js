@@ -153,7 +153,8 @@ module.exports = function PgConnectionArgFilterPlugin(
       typeName,
       queryBuilder,
       pgType,
-      pgTypeModifier
+      pgTypeModifier,
+      parentFieldName
     ) => {
       if (obj == null) return handleNullInput();
       if (isEmptyObject(obj)) return handleEmptyObjectInput();
@@ -172,6 +173,7 @@ module.exports = function PgConnectionArgFilterPlugin(
               queryBuilder,
               pgType,
               pgTypeModifier,
+              parentFieldName,
             });
           }
           throw new Error(`Unable to resolve filter field '${key}'`);
@@ -369,6 +371,63 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterOperatorsType,
       connectionFilterType,
       escapeLikeWildcards,
+    });
+  });
+
+  builder.hook("build", build => {
+    const connectionFilterOperatorSpecsAdded = [];
+
+    const addConnectionFilterOperator = (
+      name,
+      description,
+      resolveType,
+      resolve,
+      options = {}
+    ) => {
+      if (!name) {
+        throw new Error(
+          `Missing argument 'name' in call to 'addConnectionFilterOperator'`
+        );
+      }
+      if (!resolveType) {
+        throw new Error(
+          `Missing argument 'resolveType' in call to 'addConnectionFilterOperator' for operator '${name}'`
+        );
+      }
+      if (!resolve) {
+        throw new Error(
+          `Missing argument 'resolve' in call to 'addConnectionFilterOperator' for operator '${name}'`
+        );
+      }
+
+      const isNonListOnly = x => x.length === 1 && x.includes("NonList");
+      const isListOnly = x => x.length === 1 && x.includes("List");
+
+      const allowedCategories = isNonListOnly
+        ? ["Scalar", "Enum", "Range"]
+        : isListOnly
+        ? ["Array"]
+        : null;
+
+      const allowedFieldTypes = options.allowedFieldTypes
+        ? options.allowedFieldTypes
+        : null;
+
+      const operatorSpec = {
+        name,
+        description,
+        ...(allowedCategories ? { allowedCategories } : null),
+        ...(allowedFieldTypes ? { allowedFieldTypes } : null),
+        resolveType,
+        resolve,
+      };
+
+      connectionFilterOperatorSpecsAdded.push(operatorSpec);
+    };
+
+    return build.extend(build, {
+      addConnectionFilterOperator,
+      connectionFilterOperatorSpecsAdded,
     });
   });
 };
