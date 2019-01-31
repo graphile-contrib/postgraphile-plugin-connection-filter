@@ -1,0 +1,32 @@
+query varchar {
+  isNull_true: allFilterables(filter: { varchar: { isNull: true } }) { ...nodes }
+  isNull_false: allFilterables(filter: { varchar: { isNull: false } }) { ...nodes }
+  equalTo_test: allFilterables(filter: { varchar: { equalTo: "test" } }) { ...nodes }
+  notEqualTo_test: allFilterables(filter: { varchar: { notEqualTo: "test" } }) { ...nodes }
+  distinctFrom_test: allFilterables(filter: { varchar: { distinctFrom: "test" } }) { ...nodes }
+  notDistinctFrom_test: allFilterables(filter: { varchar: { notDistinctFrom: "test" } }) { ...nodes }
+  contains_t: allFilterables(filter: { varchar: { includes: "t" } }) { ...nodes }
+  containsInsensitive_t: allFilterables(filter: { varchar: { includesInsensitive: "t" } }) { ...nodes }
+  notContains_t: allFilterables(filter: { varchar: { notIncludes: "t" } }) { ...nodes }
+  notContainsInsensitive_t: allFilterables(filter: { varchar: { notIncludesInsensitive: "t" } }) { ...nodes }
+  startsWith_t: allFilterables(filter: { varchar: { startsWith: "t" } }) { ...nodes }
+  startsWithInsensitive_t: allFilterables(filter: { varchar: { startsWithInsensitive: "t" } }) { ...nodes }
+  notStartsWith_t: allFilterables(filter: { varchar: { notStartsWith: "t" } }) { ...nodes }
+  notStartsWithInsensitive_t: allFilterables(filter: { varchar: { notStartsWithInsensitive: "t" } }) { ...nodes }
+  endsWith_t: allFilterables(filter: { varchar: { endsWith: "t" } }) { ...nodes }
+  endsWithInsensitive_t: allFilterables(filter: { varchar: { endsWithInsensitive: "t" } }) { ...nodes }
+  notEndsWith_t: allFilterables(filter: { varchar: { notEndsWith: "t" } }) { ...nodes }
+  notEndsWithInsensitive_t: allFilterables(filter: { varchar: { notEndsWithInsensitive: "t" } }) { ...nodes }
+  like_es: allFilterables(filter: { varchar: { like: "%es%" } }) { ...nodes }
+  likeInsensitive_es: allFilterables(filter: { varchar: { likeInsensitive: "%es%" } }) { ...nodes }
+  notLike_es: allFilterables(filter: { varchar: { notLike: "%es%" } }) { ...nodes }
+  notLikeInsensitive_es: allFilterables(filter: { varchar: { notLikeInsensitive: "%es%" } }) { ...nodes }
+  similarTo_te_or_st: allFilterables(filter:{ varchar: { similarTo: "%(te|st)%" } }) { ...nodes }
+  notSimilarTo_te_or_st: allFilterables(filter:{ varchar: { notSimilarTo: "%(te|st)%" } }) { ...nodes }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

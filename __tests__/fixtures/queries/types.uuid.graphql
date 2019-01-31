@@ -1,0 +1,31 @@
+query uuid($v2: UUID = "00000000-0000-0000-0000-000000000002") {
+  distinctFrom: allFilterables(filter: { uuid: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { uuid: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { uuid: { in: [$v2] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { uuid: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { uuid: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { uuid: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { uuid: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

@@ -2335,6 +2335,83 @@ Object {
 }
 `;
 
+exports[`types.bit4.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.bool.graphql 1`] = `
 Object {
   "data": Object {
@@ -2400,6 +2477,255 @@ Object {
         Object {
           "id": 1,
         },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.bpchar4.graphql 1`] = `
+Object {
+  "data": Object {
+    "containsInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "contains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "distinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "endsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "equalTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "likeInsensitive_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "like_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notContainsInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notContains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "notDistinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notEndsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notEndsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notEqualTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notLikeInsensitive_es": Object {
+      "nodes": Array [],
+    },
+    "notLike_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notSimilarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notStartsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notStartsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "similarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWith_t": Object {
+      "nodes": Array [
         Object {
           "id": 3,
         },
@@ -2651,6 +2977,357 @@ Object {
       "nodes": Array [
         Object {
           "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.date.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.float4.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.float8.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
         Object {
           "id": 4,
@@ -3153,6 +3830,83 @@ Object {
 }
 `;
 
+exports[`types.interval.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.jsonb.graphql 1`] = `
 Object {
   "data": Object {
@@ -3244,7 +3998,1107 @@ Object {
 }
 `;
 
+exports[`types.money.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.numeric.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.text.graphql 1`] = `
+Object {
+  "data": Object {
+    "containsInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "contains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "distinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "endsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "endsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "equalTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "likeInsensitive_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "like_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notContainsInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notContains_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "notDistinctFrom_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notEndsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notEndsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notEqualTo_test": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notLikeInsensitive_es": Object {
+      "nodes": Array [],
+    },
+    "notLike_es": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notSimilarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "notStartsWithInsensitive_t": Object {
+      "nodes": Array [],
+    },
+    "notStartsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "similarTo_te_or_st": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWithInsensitive_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "startsWith_t": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.time.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.timestamp.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.timestamptz.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [],
+    },
+    "greaterThan": Object {
+      "nodes": Array [],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [],
+    },
+    "in": Object {
+      "nodes": Array [],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.timetz.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.uuid.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.varbit.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.varchar.graphql 1`] = `
 Object {
   "data": Object {
     "containsInsensitive_t": Object {

@@ -1,0 +1,32 @@
+query bpchar4 {
+  isNull_true: allFilterables(filter: { bpchar4: { isNull: true } }) { ...nodes }
+  isNull_false: allFilterables(filter: { bpchar4: { isNull: false } }) { ...nodes }
+  equalTo_test: allFilterables(filter: { bpchar4: { equalTo: "test" } }) { ...nodes }
+  notEqualTo_test: allFilterables(filter: { bpchar4: { notEqualTo: "test" } }) { ...nodes }
+  distinctFrom_test: allFilterables(filter: { bpchar4: { distinctFrom: "test" } }) { ...nodes }
+  notDistinctFrom_test: allFilterables(filter: { bpchar4: { notDistinctFrom: "test" } }) { ...nodes }
+  contains_t: allFilterables(filter: { bpchar4: { includes: "t" } }) { ...nodes }
+  containsInsensitive_t: allFilterables(filter: { bpchar4: { includesInsensitive: "t" } }) { ...nodes }
+  notContains_t: allFilterables(filter: { bpchar4: { notIncludes: "t" } }) { ...nodes }
+  notContainsInsensitive_t: allFilterables(filter: { bpchar4: { notIncludesInsensitive: "t" } }) { ...nodes }
+  startsWith_t: allFilterables(filter: { bpchar4: { startsWith: "t" } }) { ...nodes }
+  startsWithInsensitive_t: allFilterables(filter: { bpchar4: { startsWithInsensitive: "t" } }) { ...nodes }
+  notStartsWith_t: allFilterables(filter: { bpchar4: { notStartsWith: "t" } }) { ...nodes }
+  notStartsWithInsensitive_t: allFilterables(filter: { bpchar4: { notStartsWithInsensitive: "t" } }) { ...nodes }
+  endsWith_t: allFilterables(filter: { bpchar4: { endsWith: "t" } }) { ...nodes }
+  endsWithInsensitive_t: allFilterables(filter: { bpchar4: { endsWithInsensitive: "t" } }) { ...nodes }
+  notEndsWith_t: allFilterables(filter: { bpchar4: { notEndsWith: "t" } }) { ...nodes }
+  notEndsWithInsensitive_t: allFilterables(filter: { bpchar4: { notEndsWithInsensitive: "t" } }) { ...nodes }
+  like_es: allFilterables(filter: { bpchar4: { like: "%es%" } }) { ...nodes }
+  likeInsensitive_es: allFilterables(filter: { bpchar4: { likeInsensitive: "%es%" } }) { ...nodes }
+  notLike_es: allFilterables(filter: { bpchar4: { notLike: "%es%" } }) { ...nodes }
+  notLikeInsensitive_es: allFilterables(filter: { bpchar4: { notLikeInsensitive: "%es%" } }) { ...nodes }
+  similarTo_te_or_st: allFilterables(filter:{ bpchar4: { similarTo: "%(te|st)%" } }) { ...nodes }
+  notSimilarTo_te_or_st: allFilterables(filter:{ bpchar4: { notSimilarTo: "%(te|st)%" } }) { ...nodes }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

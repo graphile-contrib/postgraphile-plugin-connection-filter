@@ -1,0 +1,45 @@
+query numeric($v2: BigFloat = "0.2", $v3: BigFloat = "0.3") {
+  distinctFrom: allFilterables(filter: { numeric: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { numeric: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { numeric: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { numeric: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { numeric: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { numeric: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { numeric: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { numeric: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { numeric: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { numeric: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { numeric: { notIn: [$v2, $v3] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

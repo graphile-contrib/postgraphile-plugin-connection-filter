@@ -1,0 +1,45 @@
+query date($v2: Date = "1999-02-01", $v3: Date = "1999-03-01") {
+  distinctFrom: allFilterables(filter: { date: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { date: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { date: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { date: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { date: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { date: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { date: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { date: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { date: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { date: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { date: { notIn: [$v2, $v3] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

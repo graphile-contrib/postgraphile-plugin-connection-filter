@@ -1,0 +1,40 @@
+query interval(
+  $v2: IntervalInput = {
+    seconds: 0
+    minutes: 0
+    hours: 0
+    days: 2
+    months: 0
+    years: 0
+  }
+) {
+  distinctFrom: allFilterables(filter: { interval: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { interval: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { interval: { in: [$v2] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { interval: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { interval: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { interval: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { interval: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

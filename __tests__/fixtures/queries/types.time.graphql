@@ -1,0 +1,45 @@
+query time($v2: Time = "00:02:00", $v3: Time = "00:03:00") {
+  distinctFrom: allFilterables(filter: { time: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { time: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { time: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { time: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { time: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { time: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { time: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { time: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { time: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { time: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { time: { notIn: [$v2, $v3] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

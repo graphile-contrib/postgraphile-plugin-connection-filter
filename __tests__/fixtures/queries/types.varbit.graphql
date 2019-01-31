@@ -1,0 +1,31 @@
+query varbit($v2: BitString = "0010") {
+  distinctFrom: allFilterables(filter: { varbit: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { varbit: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { varbit: { in: [$v2] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { varbit: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { varbit: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { varbit: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { varbit: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

@@ -28,9 +28,9 @@ create table p.filterable (
   "bit4" bit(4),
   "bool" bool,
   "bpchar4" bpchar(4),
-  "bytea" bytea,
+  "bytea" bytea, -- treated as String in PostGraphile v4
   "char4" char(4),
-  "cidr" cidr,
+  "cidr" cidr, -- treated as String in PostGraphile v4
   "date" date,
   "float4" float4,
   "float8" float8,
@@ -41,8 +41,8 @@ create table p.filterable (
   "interval" interval,
   "json" json, -- not filterable
   "jsonb" jsonb,
-  "macaddr" macaddr,
-  "macaddr8" macaddr8,
+  "macaddr" macaddr, -- treated as String in PostGraphile v4
+  "macaddr8" macaddr8, -- treated as String in PostGraphile v4
   "money" money,
   "numeric" numeric,
   "text" text,
