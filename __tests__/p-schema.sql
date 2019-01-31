@@ -148,6 +148,22 @@ create table p.child (
   "filterable_id" int references p.filterable (id)
 );
 
+create table p."side_a" (
+  a_id integer primary key,
+  name text not null
+);
+
+create table p."side_b" (
+  b_id integer primary key,
+  name text not null
+);
+
+create table p."junction" (
+  side_a_id integer not null references p."side_a" (a_id),
+  side_b_id integer not null references p."side_b" (b_id),
+  primary key (side_a_id, side_b_id)
+);
+
 create table p.unfilterable (
   id serial primary key,
   "text" text
