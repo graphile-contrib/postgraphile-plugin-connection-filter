@@ -406,6 +406,12 @@ input BigFloatRangeFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: BigFloatRangeInput
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: BigFloatRangeInput
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: BigFloatRangeInput
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [BigFloatRangeInput!]
 
@@ -413,6 +419,12 @@ input BigFloatRangeFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: BigFloatRangeInput
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: BigFloatRangeInput
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: BigFloatRangeInput
@@ -552,6 +564,12 @@ input BigIntRangeFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: BigIntRangeInput
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: BigIntRangeInput
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: BigIntRangeInput
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [BigIntRangeInput!]
 
@@ -559,6 +577,12 @@ input BigIntRangeFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: BigIntRangeInput
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: BigIntRangeInput
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: BigIntRangeInput
@@ -609,6 +633,12 @@ input BitStringFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: BitString
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: BitString
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: BitString
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [BitString!]
 
@@ -616,6 +646,12 @@ input BitStringFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: BitString
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: BitString
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: BitString
@@ -639,6 +675,12 @@ input BooleanFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Boolean
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Boolean
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Boolean
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [Boolean!]
 
@@ -646,6 +688,12 @@ input BooleanFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Boolean
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Boolean
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: Boolean
@@ -840,6 +888,12 @@ input DateRangeFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: DateRangeInput
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: DateRangeInput
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: DateRangeInput
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [DateRangeInput!]
 
@@ -847,6 +901,12 @@ input DateRangeFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: DateRangeInput
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: DateRangeInput
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: DateRangeInput
@@ -985,6 +1045,12 @@ input DatetimeRangeFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: DatetimeRangeInput
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: DatetimeRangeInput
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: DatetimeRangeInput
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [DatetimeRangeInput!]
 
@@ -992,6 +1058,12 @@ input DatetimeRangeFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: DatetimeRangeInput
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: DatetimeRangeInput
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: DatetimeRangeInput
@@ -1813,6 +1885,12 @@ input InternetAddressFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: InternetAddress
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: InternetAddress
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: InternetAddress
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [InternetAddress!]
 
@@ -1820,6 +1898,12 @@ input InternetAddressFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: InternetAddress
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: InternetAddress
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: InternetAddress
@@ -1870,6 +1954,12 @@ input IntervalFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: IntervalInput
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: IntervalInput
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: IntervalInput
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [IntervalInput!]
 
@@ -1877,6 +1967,12 @@ input IntervalFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: IntervalInput
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: IntervalInput
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: IntervalInput
@@ -2012,6 +2108,12 @@ input IntRangeFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: IntRangeInput
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: IntRangeInput
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: IntRangeInput
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [IntRangeInput!]
 
@@ -2019,6 +2121,12 @@ input IntRangeFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: IntRangeInput
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: IntRangeInput
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: IntRangeInput
@@ -2077,6 +2185,12 @@ input JSONFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: JSON
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: JSON
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: JSON
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [JSON!]
 
@@ -2084,6 +2198,12 @@ input JSONFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: JSON
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: JSON
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: JSON
@@ -2185,6 +2305,12 @@ input MoodFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Mood
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Mood
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Mood
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [Mood!]
 
@@ -2192,6 +2318,12 @@ input MoodFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Mood
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Mood
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: Mood
@@ -3572,6 +3704,12 @@ input UUIDFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: UUID
 
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: UUID
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: UUID
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [UUID!]
 
@@ -3579,6 +3717,12 @@ input UUIDFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: UUID
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: UUID
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: UUID

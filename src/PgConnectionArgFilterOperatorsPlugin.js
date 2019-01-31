@@ -30,23 +30,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const commonTypeNames = [
-      "BigFloat",
-      "BigInt",
-      //"BitString",
-      //"Boolean",
-      "Date",
-      "Datetime",
-      "Float",
-      "Int",
-      //"InternetAddress",
-      //"Interval",
-      //"JSON",
-      "String",
-      "Time",
-      //"UUID",
-    ];
-
     const operatorSpecs = [
       // Null
       {
@@ -103,25 +86,21 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       {
         name: "lessThan",
         description: "Less than the specified value.",
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} < ${v}`,
       },
       {
         name: "lessThanOrEqualTo",
         description: "Less than or equal to the specified value.",
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} <= ${v}`,
       },
       {
         name: "greaterThan",
         description: "Greater than the specified value.",
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} > ${v}`,
       },
       {
         name: "greaterThanOrEqualTo",
         description: "Greater than or equal to the specified value.",
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} >= ${v}`,
       },
       // Pattern matching
@@ -337,21 +316,18 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         name: "contains",
         description: "Contains the specified list of values.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} @> ${v}`,
       },
       {
         name: "containedBy",
         description: "Contained by the specified list of values.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} <@ ${v}`,
       },
       {
         name: "overlaps",
         description: "Overlaps the specified list of values.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolve: (i, v) => sql.query`${i} && ${v}`,
       },
       {
@@ -372,7 +348,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         name: "anyLessThan",
         description: "Any array item is less than the specified value.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} > ANY (${i})`,
       },
@@ -381,7 +356,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         description:
           "Any array item is less than or equal to the specified value.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} >= ANY (${i})`,
       },
@@ -389,7 +363,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         name: "anyGreaterThan",
         description: "Any array item is greater than the specified value.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} < ANY (${i})`,
       },
@@ -398,7 +371,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         description:
           "Any array item is greater than or equal to the specified value.",
         allowedCategories: ["Array"],
-        allowedFieldTypes: commonTypeNames,
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} <= ANY (${i})`,
       },
