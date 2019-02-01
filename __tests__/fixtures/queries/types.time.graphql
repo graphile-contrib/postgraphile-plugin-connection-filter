@@ -33,7 +33,7 @@ query time($v2: Time = "00:02:00", $v3: Time = "00:03:00") {
   notEqualTo: allFilterables(filter: { time: { notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { time: { notIn: [$v2, $v3] } }) {
+  notIn: allFilterables(filter: { time: { notIn: [$v2] } }) {
     ...nodes
   }
 }

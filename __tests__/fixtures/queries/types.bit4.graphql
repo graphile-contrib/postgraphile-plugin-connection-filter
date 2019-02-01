@@ -1,19 +1,33 @@
-query bit4($v2: BitString = "0010") {
+query bit4($v2: BitString = "0010", $v3: BitString = "0011") {
   distinctFrom: allFilterables(filter: { bit4: { distinctFrom: $v2 } }) {
     ...nodes
   }
   equalTo: allFilterables(filter: { bit4: { equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { bit4: { in: [$v2] } }) {
+  greaterThan: allFilterables(filter: { bit4: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { bit4: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { bit4: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { bit4: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(
-    filter: { bit4: { notDistinctFrom: $v2 } }
+  lessThan: allFilterables(filter: { bit4: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { bit4: { lessThanOrEqualTo: $v2 } }
   ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { bit4: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
   notEqualTo: allFilterables(filter: { bit4: { notEqualTo: $v2 } }) {

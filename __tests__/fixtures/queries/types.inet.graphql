@@ -1,69 +1,64 @@
-query inet($val: InternetAddress = "192.168.1.1") {
-  containedBy: allFilterables(
-    filter: { inet: { containedBy: "192.168.0.0/24" } }
-  ) {
-    ...inetConnection
-  }
-  containedByOrEqualTo_ContainedBy: allFilterables(
-    filter: { inet: { containedByOrEqualTo: "192.168.1.0/24" } }
-  ) {
-    ...inetConnection
-  }
-  containedByOrEqualTo_EqualTo: allFilterables(
-    filter: { inet: { containedByOrEqualTo: "192.168.1.1" } }
-  ) {
-    ...inetConnection
-  }
-  contains: allFilterables(filter: { inet: { contains: "10.0.0.1" } }) {
-    ...inetConnection
-  }
-  containsOrEqualTo_Contains: allFilterables(
-    filter: { inet: { containsOrEqualTo: "10.0.0.2" } }
-  ) {
-    ...inetConnection
-  }
-  containsOrEqualTo_EqualTo: allFilterables(
-    filter: { inet: { containsOrEqualTo: "10.0.0.1/24" } }
-  ) {
-    ...inetConnection
-  }
-  containsOrContainedBy_Contains: allFilterables(
-    filter: { inet: { containsOrContainedBy: "172.168.1.0/24" } }
-  ) {
-    ...inetConnection
-  }
-  containsOrContainedBy_ContainedBy: allFilterables(
-    filter: { inet: { containsOrContainedBy: "10.0.0.5" } }
-  ) {
-    ...inetConnection
-  }
-  distinctFrom: allFilterables(filter: { inet: { distinctFrom: $val } }) {
+query inet(
+  $v2: InternetAddress = "192.168.1.2"
+  $v3: InternetAddress = "192.168.1.3"
+) {
+  containedBy: allFilterables(filter: { inet: { containedBy: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { inet: { equalTo: $val } }) {
+  containedByOrEqualTo: allFilterables(
+    filter: { inet: { containedByOrEqualTo: $v2 } }
+  ) {
     ...nodes
   }
-  in: allFilterables(filter: { inet: { in: [$val] } }) {
+  contains: allFilterables(filter: { inet: { contains: $v2 } }) {
+    ...nodes
+  }
+  containsOrContainedBy: allFilterables(
+    filter: { inet: { containsOrContainedBy: $v2 } }
+  ) {
+    ...nodes
+  }
+  containsOrEqualTo: allFilterables(
+    filter: { inet: { containsOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(filter: { inet: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { inet: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { inet: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { inet: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { inet: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { inet: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { inet: { notDistinctFrom: $val } }) {
+  lessThan: allFilterables(filter: { inet: { lessThan: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { inet: { notEqualTo: $val } }) {
+  lessThanOrEqualTo: allFilterables(
+    filter: { inet: { lessThanOrEqualTo: $v2 } }
+  ) {
     ...nodes
   }
-  notIn: allFilterables(filter: { inet: { notIn: [$val] } }) {
+  notDistinctFrom: allFilterables(filter: { inet: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
-}
-
-fragment inetConnection on FilterablesConnection {
-  nodes {
-    id
-    inet
+  notEqualTo: allFilterables(filter: { inet: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { inet: { notIn: [$v2] } }) {
+    ...nodes
   }
 }
 

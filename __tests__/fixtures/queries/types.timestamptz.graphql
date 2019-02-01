@@ -36,7 +36,7 @@ query timestamptz(
   notEqualTo: allFilterables(filter: { timestamptz: { notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { timestamptz: { notIn: [$v2, $v3] } }) {
+  notIn: allFilterables(filter: { timestamptz: { notIn: [$v2] } }) {
     ...nodes
   }
 }

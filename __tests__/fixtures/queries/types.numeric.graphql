@@ -33,7 +33,7 @@ query numeric($v2: BigFloat = "0.2", $v3: BigFloat = "0.3") {
   notEqualTo: allFilterables(filter: { numeric: { notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { numeric: { notIn: [$v2, $v3] } }) {
+  notIn: allFilterables(filter: { numeric: { notIn: [$v2] } }) {
     ...nodes
   }
 }

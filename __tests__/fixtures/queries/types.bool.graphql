@@ -1,25 +1,39 @@
-query bool($val: Boolean = true) {
-  distinctFrom: allFilterables(filter: { bool: { distinctFrom: $val } }) {
+query bool($v2: Boolean = true, $v3: Boolean = false) {
+  distinctFrom: allFilterables(filter: { bool: { distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { bool: { equalTo: $val } }) {
+  equalTo: allFilterables(filter: { bool: { equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { bool: { in: [$val] } }) {
+  greaterThan: allFilterables(filter: { bool: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { bool: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { bool: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { bool: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(
-    filter: { bool: { notDistinctFrom: $val } }
+  lessThan: allFilterables(filter: { bool: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { bool: { lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { bool: { notEqualTo: $val } }) {
+  notDistinctFrom: allFilterables(filter: { bool: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { bool: { notIn: [$val] } }) {
+  notEqualTo: allFilterables(filter: { bool: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { bool: { notIn: [$v2] } }) {
     ...nodes
   }
 }

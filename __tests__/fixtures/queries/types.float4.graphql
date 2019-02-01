@@ -33,7 +33,7 @@ query float4($v2: Float = 0.2, $v3: Float = 0.3) {
   notEqualTo: allFilterables(filter: { float4: { notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { float4: { notIn: [$v2, $v3] } }) {
+  notIn: allFilterables(filter: { float4: { notIn: [$v2] } }) {
     ...nodes
   }
 }

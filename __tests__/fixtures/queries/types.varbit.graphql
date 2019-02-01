@@ -1,14 +1,30 @@
-query varbit($v2: BitString = "0010") {
+query varbit($v2: BitString = "0010", $v3: BitString = "0011") {
   distinctFrom: allFilterables(filter: { varbit: { distinctFrom: $v2 } }) {
     ...nodes
   }
   equalTo: allFilterables(filter: { varbit: { equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { varbit: { in: [$v2] } }) {
+  greaterThan: allFilterables(filter: { varbit: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { varbit: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { varbit: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { varbit: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { varbit: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { varbit: { lessThanOrEqualTo: $v2 } }
+  ) {
     ...nodes
   }
   notDistinctFrom: allFilterables(

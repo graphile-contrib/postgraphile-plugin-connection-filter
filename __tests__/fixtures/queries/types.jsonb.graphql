@@ -1,31 +1,45 @@
-query jsonb($val: JSON = "{\"key2\":2}") {
-  containedBy: allFilterables(filter: { jsonb: { containedBy: $val } }) {
+query jsonb($v2: JSON = "{\"key2\":2}", $v3: JSON = "{\"key3\":3}") {
+  containedBy: allFilterables(filter: { jsonb: { containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allFilterables(filter: { jsonb: { contains: $val } }) {
+  contains: allFilterables(filter: { jsonb: { contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allFilterables(filter: { jsonb: { distinctFrom: $val } }) {
+  distinctFrom: allFilterables(filter: { jsonb: { distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { jsonb: { equalTo: $val } }) {
+  equalTo: allFilterables(filter: { jsonb: { equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { jsonb: { in: [$val] } }) {
+  greaterThan: allFilterables(filter: { jsonb: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { jsonb: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { jsonb: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { jsonb: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(
-    filter: { jsonb: { notDistinctFrom: $val } }
+  lessThan: allFilterables(filter: { jsonb: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { jsonb: { lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { jsonb: { notEqualTo: $val } }) {
+  notDistinctFrom: allFilterables(filter: { jsonb: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { jsonb: { notIn: [$val] } }) {
+  notEqualTo: allFilterables(filter: { jsonb: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { jsonb: { notIn: [$v2] } }) {
     ...nodes
   }
 }

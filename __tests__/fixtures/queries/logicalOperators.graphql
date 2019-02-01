@@ -1,22 +1,22 @@
 query {
-  int4_equalTo_2_or_text_endsWith_t: allFilterables(
-    filter: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+  int4_equalTo_2_or_text_endsWith_T: allFilterables(
+    filter: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "T" } }] }
   ) {
     ...nodes
   }
-  int4_equalTo_2_and_text_endsWith_t: allFilterables(
-    filter: { and: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+  int4_equalTo_2_and_text_endsWith_T: allFilterables(
+    filter: { and: [{ int4: { equalTo: 2 } }, { text: { endsWith: "T" } }] }
   ) {
     ...nodes
   }
-  not_text_equalTo_test: allFilterables(
-    filter: { not: { text: { equalTo: "test" } } }
+  not_text_equalTo_TEST: allFilterables(
+    filter: { not: { text: { equalTo: "TEST" } } }
   ) {
     ...nodes
   }
-  not_int4_equalTo_2_or_text_endsWith_t: allFilterables(
+  not_int4_equalTo_2_or_text_endsWith_T: allFilterables(
     filter: {
-      not: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+      not: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "T" } }] }
     }
   ) {
     ...nodes

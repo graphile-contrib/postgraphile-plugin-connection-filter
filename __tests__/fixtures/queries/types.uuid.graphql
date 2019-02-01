@@ -1,19 +1,36 @@
-query uuid($v2: UUID = "00000000-0000-0000-0000-000000000002") {
+query uuid(
+  $v2: UUID = "00000000-0000-0000-0000-000000000002"
+  $v3: UUID = "00000000-0000-0000-0000-000000000003"
+) {
   distinctFrom: allFilterables(filter: { uuid: { distinctFrom: $v2 } }) {
     ...nodes
   }
   equalTo: allFilterables(filter: { uuid: { equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { uuid: { in: [$v2] } }) {
+  greaterThan: allFilterables(filter: { uuid: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { uuid: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { uuid: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { uuid: { isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(
-    filter: { uuid: { notDistinctFrom: $v2 } }
+  lessThan: allFilterables(filter: { uuid: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { uuid: { lessThanOrEqualTo: $v2 } }
   ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { uuid: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
   notEqualTo: allFilterables(filter: { uuid: { notEqualTo: $v2 } }) {

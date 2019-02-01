@@ -7,6 +7,14 @@ query interval(
     months: 0
     years: 0
   }
+  $v3: IntervalInput = {
+    seconds: 0
+    minutes: 0
+    hours: 0
+    days: 3
+    months: 0
+    years: 0
+  }
 ) {
   distinctFrom: allFilterables(filter: { interval: { distinctFrom: $v2 } }) {
     ...nodes
@@ -14,10 +22,26 @@ query interval(
   equalTo: allFilterables(filter: { interval: { equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { interval: { in: [$v2] } }) {
+  greaterThan: allFilterables(filter: { interval: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { interval: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { interval: { in: [$v2, $v3] } }) {
     ...nodes
   }
   isNull: allFilterables(filter: { interval: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { interval: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { interval: { lessThanOrEqualTo: $v2 } }
+  ) {
     ...nodes
   }
   notDistinctFrom: allFilterables(

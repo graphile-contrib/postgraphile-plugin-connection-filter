@@ -33,7 +33,7 @@ query int8($v2: BigInt = "2", $v3: BigInt = "3") {
   notEqualTo: allFilterables(filter: { int8: { notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { int8: { notIn: [$v2, $v3] } }) {
+  notIn: allFilterables(filter: { int8: { notIn: [$v2] } }) {
     ...nodes
   }
 }

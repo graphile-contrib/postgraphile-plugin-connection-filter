@@ -1,28 +1,113 @@
-query text {
-  isNull_true: allFilterables(filter: { text: { isNull: true } }) { ...nodes }
-  isNull_false: allFilterables(filter: { text: { isNull: false } }) { ...nodes }
-  equalTo_test: allFilterables(filter: { text: { equalTo: "test" } }) { ...nodes }
-  notEqualTo_test: allFilterables(filter: { text: { notEqualTo: "test" } }) { ...nodes }
-  distinctFrom_test: allFilterables(filter: { text: { distinctFrom: "test" } }) { ...nodes }
-  notDistinctFrom_test: allFilterables(filter: { text: { notDistinctFrom: "test" } }) { ...nodes }
-  contains_t: allFilterables(filter: { text: { includes: "t" } }) { ...nodes }
-  containsInsensitive_t: allFilterables(filter: { text: { includesInsensitive: "t" } }) { ...nodes }
-  notContains_t: allFilterables(filter: { text: { notIncludes: "t" } }) { ...nodes }
-  notContainsInsensitive_t: allFilterables(filter: { text: { notIncludesInsensitive: "t" } }) { ...nodes }
-  startsWith_t: allFilterables(filter: { text: { startsWith: "t" } }) { ...nodes }
-  startsWithInsensitive_t: allFilterables(filter: { text: { startsWithInsensitive: "t" } }) { ...nodes }
-  notStartsWith_t: allFilterables(filter: { text: { notStartsWith: "t" } }) { ...nodes }
-  notStartsWithInsensitive_t: allFilterables(filter: { text: { notStartsWithInsensitive: "t" } }) { ...nodes }
-  endsWith_t: allFilterables(filter: { text: { endsWith: "t" } }) { ...nodes }
-  endsWithInsensitive_t: allFilterables(filter: { text: { endsWithInsensitive: "t" } }) { ...nodes }
-  notEndsWith_t: allFilterables(filter: { text: { notEndsWith: "t" } }) { ...nodes }
-  notEndsWithInsensitive_t: allFilterables(filter: { text: { notEndsWithInsensitive: "t" } }) { ...nodes }
-  like_es: allFilterables(filter: { text: { like: "%es%" } }) { ...nodes }
-  likeInsensitive_es: allFilterables(filter: { text: { likeInsensitive: "%es%" } }) { ...nodes }
-  notLike_es: allFilterables(filter: { text: { notLike: "%es%" } }) { ...nodes }
-  notLikeInsensitive_es: allFilterables(filter: { text: { notLikeInsensitive: "%es%" } }) { ...nodes }
-  similarTo_te_or_st: allFilterables(filter:{ text: { similarTo: "%(te|st)%" } }) { ...nodes }
-  notSimilarTo_te_or_st: allFilterables(filter:{ text: { notSimilarTo: "%(te|st)%" } }) { ...nodes }
+query text($v2: String = "tEST", $v3: String = "Test") {
+  distinctFrom: allFilterables(filter: { text: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  endsWith: allFilterables(filter: { text: { endsWith: "t" } }) {
+    ...nodes
+  }
+  endsWithInsensitive: allFilterables(
+    filter: { text: { endsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { text: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { text: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { text: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { text: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  includes: allFilterables(filter: { text: { includes: "t" } }) {
+    ...nodes
+  }
+  includesInsensitive: allFilterables(
+    filter: { text: { includesInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { text: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { text: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { text: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  like: allFilterables(filter: { text: { like: "%es%" } }) {
+    ...nodes
+  }
+  likeInsensitive: allFilterables(
+    filter: { text: { likeInsensitive: "%es%" } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { text: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEndsWith: allFilterables(filter: { text: { notEndsWith: "t" } }) {
+    ...nodes
+  }
+  notEndsWithInsensitive: allFilterables(
+    filter: { text: { notEndsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { text: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { text: { notIn: [$v2] } }) {
+    ...nodes
+  }
+  notIncludes: allFilterables(filter: { text: { notIncludes: "t" } }) {
+    ...nodes
+  }
+  notIncludesInsensitive: allFilterables(
+    filter: { text: { notIncludesInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  notLike: allFilterables(filter: { text: { notLike: "%es%" } }) {
+    ...nodes
+  }
+  notLikeInsensitive: allFilterables(
+    filter: { text: { notLikeInsensitive: "%es%" } }
+  ) {
+    ...nodes
+  }
+  notSimilarTo: allFilterables(
+    filter: { text: { notSimilarTo: "%(te|st)%" } }
+  ) {
+    ...nodes
+  }
+  notStartsWith: allFilterables(filter: { text: { notStartsWith: "t" } }) {
+    ...nodes
+  }
+  notStartsWithInsensitive: allFilterables(
+    filter: { text: { notStartsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  similarTo: allFilterables(filter: { text: { similarTo: "%(te|st)%" } }) {
+    ...nodes
+  }
+  startsWith: allFilterables(filter: { text: { startsWith: "t" } }) {
+    ...nodes
+  }
+  startsWithInsensitive: allFilterables(
+    filter: { text: { startsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
 }
 
 fragment nodes on FilterablesConnection {
