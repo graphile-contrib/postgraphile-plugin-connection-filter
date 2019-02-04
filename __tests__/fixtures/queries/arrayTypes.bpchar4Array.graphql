@@ -1,0 +1,80 @@
+query bpchar4Array(
+  $v2: [String] = ["tEST", "Test"]
+  $v2_1: String = "tEST"
+  $v3: [String] = ["Test", "TEST"]
+) {
+  anyEqualTo: allArrayTypes(filter: { bpchar4Array: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allArrayTypes(
+    filter: { bpchar4Array: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allArrayTypes(
+    filter: { bpchar4Array: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allArrayTypes(filter: { bpchar4Array: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allArrayTypes(
+    filter: { bpchar4Array: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allArrayTypes(
+    filter: { bpchar4Array: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allArrayTypes(filter: { bpchar4Array: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allArrayTypes(filter: { bpchar4Array: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allArrayTypes(filter: { bpchar4Array: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allArrayTypes(filter: { bpchar4Array: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allArrayTypes(filter: { bpchar4Array: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allArrayTypes(
+    filter: { bpchar4Array: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allArrayTypes(filter: { bpchar4Array: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allArrayTypes(filter: { bpchar4Array: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allArrayTypes(
+    filter: { bpchar4Array: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allArrayTypes(
+    filter: { bpchar4Array: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allArrayTypes(filter: { bpchar4Array: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allArrayTypes(filter: { bpchar4Array: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on ArrayTypesConnection {
+  nodes {
+    id
+  }
+}

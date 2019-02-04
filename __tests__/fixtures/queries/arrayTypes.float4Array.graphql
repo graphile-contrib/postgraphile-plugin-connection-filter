@@ -1,0 +1,80 @@
+query float4Array(
+  $v2: [Float] = [0.2, 0.3]
+  $v2_1: Float = 0.2
+  $v3: [Float] = [0.3, 0.4]
+) {
+  anyEqualTo: allArrayTypes(filter: { float4Array: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allArrayTypes(
+    filter: { float4Array: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allArrayTypes(
+    filter: { float4Array: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allArrayTypes(filter: { float4Array: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allArrayTypes(
+    filter: { float4Array: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allArrayTypes(
+    filter: { float4Array: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allArrayTypes(filter: { float4Array: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allArrayTypes(filter: { float4Array: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allArrayTypes(filter: { float4Array: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allArrayTypes(filter: { float4Array: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allArrayTypes(filter: { float4Array: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allArrayTypes(
+    filter: { float4Array: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allArrayTypes(filter: { float4Array: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allArrayTypes(filter: { float4Array: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allArrayTypes(
+    filter: { float4Array: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allArrayTypes(
+    filter: { float4Array: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allArrayTypes(filter: { float4Array: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allArrayTypes(filter: { float4Array: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on ArrayTypesConnection {
+  nodes {
+    id
+  }
+}

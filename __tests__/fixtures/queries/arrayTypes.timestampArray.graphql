@@ -1,0 +1,84 @@
+query timestampArray(
+  $v2: [Datetime] = ["1999-02-01 00:00", "1999-03-01 00:00"]
+  $v2_1: Datetime = "1999-02-01 00:00"
+  $v3: [Datetime] = ["1999-03-01 00:00", "1999-04-01 00:00"]
+) {
+  anyEqualTo: allArrayTypes(filter: { timestampArray: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allArrayTypes(
+    filter: { timestampArray: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allArrayTypes(
+    filter: { timestampArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allArrayTypes(
+    filter: { timestampArray: { anyLessThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allArrayTypes(
+    filter: { timestampArray: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allArrayTypes(
+    filter: { timestampArray: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allArrayTypes(filter: { timestampArray: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allArrayTypes(filter: { timestampArray: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allArrayTypes(
+    filter: { timestampArray: { distinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  equalTo: allArrayTypes(filter: { timestampArray: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allArrayTypes(filter: { timestampArray: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allArrayTypes(
+    filter: { timestampArray: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allArrayTypes(filter: { timestampArray: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allArrayTypes(filter: { timestampArray: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allArrayTypes(
+    filter: { timestampArray: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allArrayTypes(
+    filter: { timestampArray: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allArrayTypes(filter: { timestampArray: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allArrayTypes(filter: { timestampArray: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on ArrayTypesConnection {
+  nodes {
+    id
+  }
+}

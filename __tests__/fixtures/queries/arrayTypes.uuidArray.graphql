@@ -1,0 +1,86 @@
+query uuidArray(
+  $v2: [UUID] = [
+    "00000000-0000-0000-0000-000000000002"
+    "00000000-0000-0000-0000-000000000003"
+  ]
+  $v2_1: UUID = "00000000-0000-0000-0000-000000000002"
+  $v3: [UUID] = [
+    "00000000-0000-0000-0000-000000000003"
+    "00000000-0000-0000-0000-000000000004"
+  ]
+) {
+  anyEqualTo: allArrayTypes(filter: { uuidArray: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allArrayTypes(
+    filter: { uuidArray: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allArrayTypes(
+    filter: { uuidArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allArrayTypes(filter: { uuidArray: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allArrayTypes(
+    filter: { uuidArray: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allArrayTypes(
+    filter: { uuidArray: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allArrayTypes(filter: { uuidArray: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allArrayTypes(filter: { uuidArray: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allArrayTypes(filter: { uuidArray: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allArrayTypes(filter: { uuidArray: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allArrayTypes(filter: { uuidArray: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allArrayTypes(
+    filter: { uuidArray: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allArrayTypes(filter: { uuidArray: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allArrayTypes(filter: { uuidArray: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allArrayTypes(
+    filter: { uuidArray: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allArrayTypes(
+    filter: { uuidArray: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allArrayTypes(filter: { uuidArray: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allArrayTypes(filter: { uuidArray: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on ArrayTypesConnection {
+  nodes {
+    id
+  }
+}

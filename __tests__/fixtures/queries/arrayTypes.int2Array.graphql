@@ -1,0 +1,80 @@
+query int2Array(
+  $v2: [Int] = [2, 3]
+  $v2_1: Int = 2
+  $v3: [Int] = [3, 4]
+) {
+  anyEqualTo: allArrayTypes(filter: { int2Array: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allArrayTypes(
+    filter: { int2Array: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allArrayTypes(
+    filter: { int2Array: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allArrayTypes(filter: { int2Array: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allArrayTypes(
+    filter: { int2Array: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allArrayTypes(
+    filter: { int2Array: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allArrayTypes(filter: { int2Array: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allArrayTypes(filter: { int2Array: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allArrayTypes(filter: { int2Array: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allArrayTypes(filter: { int2Array: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allArrayTypes(filter: { int2Array: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allArrayTypes(
+    filter: { int2Array: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allArrayTypes(filter: { int2Array: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allArrayTypes(filter: { int2Array: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allArrayTypes(
+    filter: { int2Array: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allArrayTypes(
+    filter: { int2Array: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allArrayTypes(filter: { int2Array: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allArrayTypes(filter: { int2Array: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on ArrayTypesConnection {
+  nodes {
+    id
+  }
+}

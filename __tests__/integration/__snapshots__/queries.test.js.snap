@@ -1,16 +1,1815 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`arrayTypes.bit4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.boolArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.bpchar4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.char4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.dateArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.float4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.float8Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.inetArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.int2Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`arrayTypes.int4Array.graphql 1`] = `
 Object {
   "data": Object {
-    "anyEqualTo_2": Object {
+    "anyEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
       ],
     },
-    "anyGreaterThanOrEqualTo_2": Object {
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -26,7 +1825,24 @@ Object {
         },
       ],
     },
-    "anyGreaterThan_2": Object {
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -42,79 +1858,21 @@ Object {
         },
       ],
     },
-    "anyLessThanOrEqualTo_2": Object {
+    "containedBy": Object {
       "nodes": Array [
-        Object {
-          "id": 1,
-        },
         Object {
           "id": 2,
         },
       ],
     },
-    "anyLessThan_2": Object {
+    "contains": Object {
       "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "anyNotEqualTo_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
         Object {
           "id": 3,
         },
-        Object {
-          "id": 4,
-        },
       ],
     },
-    "containedBy_2": Object {
-      "nodes": Array [],
-    },
-    "containedBy_2_3_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "containedBy_empty": Object {
-      "nodes": Array [],
-    },
-    "contains_2": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-      ],
-    },
-    "contains_2_3_20": Object {
-      "nodes": Array [],
-    },
-    "contains_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "distinctFrom_2_20": Object {
+    "distinctFrom": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -130,13 +1888,190 @@ Object {
         },
       ],
     },
-    "distinctFrom_empty": Object {
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.int8Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
         Object {
           "id": 3,
@@ -149,21 +2084,15 @@ Object {
         },
       ],
     },
-    "equalTo_2_20": Object {
+    "equalTo": Object {
       "nodes": Array [
         Object {
           "id": 2,
         },
       ],
     },
-    "equalTo_empty": Object {
-      "nodes": Array [],
-    },
-    "greaterThanOrEqualTo_2_20": Object {
+    "greaterThan": Object {
       "nodes": Array [
-        Object {
-          "id": 2,
-        },
         Object {
           "id": 3,
         },
@@ -172,11 +2101,8 @@ Object {
         },
       ],
     },
-    "greaterThanOrEqualTo_empty": Object {
+    "greaterThanOrEqualTo": Object {
       "nodes": Array [
-        Object {
-          "id": 1,
-        },
         Object {
           "id": 2,
         },
@@ -188,56 +2114,21 @@ Object {
         },
       ],
     },
-    "greaterThan_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "greaterThan_empty": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "isNull_false": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "isNull_true": Object {
+    "isNull": Object {
       "nodes": Array [
         Object {
           "id": 5,
         },
       ],
     },
-    "lessThanOrEqualTo_2_20": Object {
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -247,30 +2138,14 @@ Object {
         },
       ],
     },
-    "lessThanOrEqualTo_empty": Object {
-      "nodes": Array [],
-    },
-    "lessThan_2_20": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-      ],
-    },
-    "lessThan_empty": Object {
-      "nodes": Array [],
-    },
-    "notDistinctFrom_2_20": Object {
+    "notDistinctFrom": Object {
       "nodes": Array [
         Object {
           "id": 2,
         },
       ],
     },
-    "notDistinctFrom_empty": Object {
-      "nodes": Array [],
-    },
-    "notEqualTo_2_20": Object {
+    "notEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -283,7 +2158,50 @@ Object {
         },
       ],
     },
-    "notEqualTo_empty": Object {
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.jsonbArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -299,15 +2217,148 @@ Object {
         },
       ],
     },
-    "overlaps_2": Object {
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
       "nodes": Array [
         Object {
           "id": 2,
         },
       ],
     },
-    "overlaps_2_3_20": Object {
+    "contains": Object {
       "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -316,8 +2367,397 @@ Object {
         },
       ],
     },
-    "overlaps_empty": Object {
-      "nodes": Array [],
+  },
+}
+`;
+
+exports[`arrayTypes.moneyArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.numericArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
     },
   },
 }
@@ -408,7 +2848,1379 @@ Object {
     "contains": Object {
       "nodes": Array [
         Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
           "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.timeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.timestampArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.timestamptzArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.timetzArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.uuidArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.varbitArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.varcharArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
         },
       ],
     },
@@ -5088,9 +8900,6 @@ Object {
           "id": 1,
         },
         Object {
-          "id": 2,
-        },
-        Object {
           "id": 3,
         },
         Object {
@@ -5102,16 +8911,44 @@ Object {
       ],
     },
     "equalTo": Object {
-      "nodes": Array [],
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
     },
     "greaterThan": Object {
-      "nodes": Array [],
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
     },
     "greaterThanOrEqualTo": Object {
-      "nodes": Array [],
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
     },
     "in": Object {
-      "nodes": Array [],
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
     },
     "isNull": Object {
       "nodes": Array [
@@ -5125,15 +8962,6 @@ Object {
         Object {
           "id": 1,
         },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
       ],
     },
     "lessThanOrEqualTo": Object {
@@ -5144,24 +8972,19 @@ Object {
         Object {
           "id": 2,
         },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
       ],
     },
     "notDistinctFrom": Object {
-      "nodes": Array [],
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
     },
     "notEqualTo": Object {
       "nodes": Array [
         Object {
           "id": 1,
-        },
-        Object {
-          "id": 2,
         },
         Object {
           "id": 3,
@@ -5175,9 +8998,6 @@ Object {
       "nodes": Array [
         Object {
           "id": 1,
-        },
-        Object {
-          "id": 2,
         },
         Object {
           "id": 3,
