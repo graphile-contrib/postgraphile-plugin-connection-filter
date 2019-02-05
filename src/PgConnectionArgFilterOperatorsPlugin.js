@@ -5,387 +5,404 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
-      graphql: { getNamedType, GraphQLBoolean, GraphQLNonNull, GraphQLList },
+      graphql: {
+        getNamedType,
+        GraphQLBoolean,
+        GraphQLString,
+        GraphQLNonNull,
+        GraphQLList,
+      },
+      pgGetGqlInputTypeByTypeIdAndModifier,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
       gql2pg,
-      connectionFilterOperatorSpecsAdded,
+      connectionFilterDeprecatedOperatorSpecsAdded,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
       escapeLikeWildcards,
     } = build;
     const {
-      scope: {
-        isPgConnectionFilterOperators,
-        pgConnectionFilterFieldCategory: category,
-        pgConnectionFilterInputType: inputType,
-        pgConnectionFilterElementInputType: elementInputType,
-      },
+      scope: { isPgConnectionFilterOperators, pgType, pgTypeModifier },
       fieldWithHooks,
       Self,
     } = context;
-    if (!isPgConnectionFilterOperators || !category || !inputType) {
+    if (!isPgConnectionFilterOperators || !pgType) {
       return fields;
     }
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const operatorSpecs = [
-      // Null
-      {
-        name: "isNull",
+    const fieldInputType = pgGetGqlInputTypeByTypeIdAndModifier(
+      pgType.id,
+      pgTypeModifier
+    );
+    if (!fieldInputType) {
+      return fields;
+    }
+
+    const standardOperators = {
+      isNull: {
         description:
           "Is null (if `true` is specified) or is not null (if `false` is specified).",
         resolveType: () => GraphQLBoolean,
+        resolveSqlValue: () => null, // do not parse
         resolve: (i, _v, input) =>
           sql.query`${i} ${
             input ? sql.query`IS NULL` : sql.query`IS NOT NULL`
           }`,
       },
-      // Equality
-      {
-        name: "equalTo",
+      equalTo: {
         description: "Equal to the specified value.",
         resolve: (i, v) => sql.query`${i} = ${v}`,
       },
-      {
-        name: "notEqualTo",
+      notEqualTo: {
         description: "Not equal to the specified value.",
         resolve: (i, v) => sql.query`${i} <> ${v}`,
       },
-      {
-        name: "distinctFrom",
+      distinctFrom: {
         description:
           "Not equal to the specified value, treating null like an ordinary value.",
         resolve: (i, v) => sql.query`${i} IS DISTINCT FROM ${v}`,
       },
-      {
-        name: "notDistinctFrom",
+      notDistinctFrom: {
         description:
           "Equal to the specified value, treating null like an ordinary value.",
         resolve: (i, v) => sql.query`${i} IS NOT DISTINCT FROM ${v}`,
       },
-      // Inclusion
-      {
-        name: "in",
+      in: {
         description: "Included in the specified list.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
         resolveType: fieldInputType =>
           new GraphQLList(new GraphQLNonNull(fieldInputType)),
         resolve: (i, v) => sql.query`${i} IN ${v}`,
       },
-      {
-        name: "notIn",
+      notIn: {
         description: "Not included in the specified list.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
         resolveType: fieldInputType =>
           new GraphQLList(new GraphQLNonNull(fieldInputType)),
         resolve: (i, v) => sql.query`${i} NOT IN ${v}`,
       },
-      // Comparison
-      {
-        name: "lessThan",
+    };
+    const sortOperators = {
+      lessThan: {
         description: "Less than the specified value.",
         resolve: (i, v) => sql.query`${i} < ${v}`,
       },
-      {
-        name: "lessThanOrEqualTo",
+      lessThanOrEqualTo: {
         description: "Less than or equal to the specified value.",
         resolve: (i, v) => sql.query`${i} <= ${v}`,
       },
-      {
-        name: "greaterThan",
+      greaterThan: {
         description: "Greater than the specified value.",
         resolve: (i, v) => sql.query`${i} > ${v}`,
       },
-      {
-        name: "greaterThanOrEqualTo",
+      greaterThanOrEqualTo: {
         description: "Greater than or equal to the specified value.",
         resolve: (i, v) => sql.query`${i} >= ${v}`,
       },
-      // Pattern matching
-      {
-        name: "includes",
+    };
+    const patternMatchingOperators = {
+      includes: {
         description: "Contains the specified string (case-sensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
-      {
-        name: "notIncludes",
+      notIncludes: {
         description: "Does not contain the specified string (case-sensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
-      {
-        name: "includesInsensitive",
+      includesInsensitive: {
         description: "Contains the specified string (case-insensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
-      {
-        name: "notIncludesInsensitive",
+      notIncludesInsensitive: {
         description:
           "Does not contain the specified string (case-insensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
-      {
-        name: "startsWith",
+      startsWith: {
         description: "Starts with the specified string (case-sensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
-      {
-        name: "notStartsWith",
+      notStartsWith: {
         description:
           "Does not start with the specified string (case-sensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
-      {
-        name: "startsWithInsensitive",
+      startsWithInsensitive: {
         description: "Starts with the specified string (case-insensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
-      {
-        name: "notStartsWithInsensitive",
+      notStartsWithInsensitive: {
         description:
           "Does not start with the specified string (case-insensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
-      {
-        name: "endsWith",
+      endsWith: {
         description: "Ends with the specified string (case-sensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}`,
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
-      {
-        name: "notEndsWith",
+      notEndsWith: {
         description: "Does not end with the specified string (case-sensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}`,
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
-      {
-        name: "endsWithInsensitive",
+      endsWithInsensitive: {
         description: "Ends with the specified string (case-insensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}`,
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
-      {
-        name: "notEndsWithInsensitive",
+      notEndsWithInsensitive: {
         description:
           "Does not end with the specified string (case-insensitive).",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolveInput: input => `%${escapeLikeWildcards(input)}`,
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
-      {
-        name: "like",
+      like: {
         description:
           "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
-      {
-        name: "notLike",
+      notLike: {
         description:
           "Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
-      {
-        name: "likeInsensitive",
+      likeInsensitive: {
         description:
           "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
-      {
-        name: "notLikeInsensitive",
+      notLikeInsensitive: {
         description:
           "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
-      {
-        name: "similarTo",
+      similarTo: {
         description:
           "Matches the specified pattern using the SQL standard's definition of a regular expression.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolve: (i, v) => sql.query`${i} SIMILAR TO ${v}`,
       },
-      {
-        name: "notSimilarTo",
+      notSimilarTo: {
         description:
           "Does not match the specified pattern using the SQL standard's definition of a regular expression.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["String"],
         resolve: (i, v) => sql.query`${i} NOT SIMILAR TO ${v}`,
       },
       // TODO: add regexp operators
-      // JSON
-      {
-        name: "contains",
-        description: "Contains the specified JSON.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["JSON"],
+    };
+    const hstoreOperators = {
+      contains: {
+        description: "Contains the specified KeyValueHash.",
         resolve: (i, v) => sql.query`${i} @> ${v}`,
       },
-      {
-        name: "containedBy",
-        description: "Contained by the specified JSON.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["JSON"],
+      containsKey: {
+        description: "Contains the specified key.",
+        resolveType: () => GraphQLString,
+        resolveSqlValue: input => sql.query`${sql.value(input)}::text`,
+        resolve: (i, v) => sql.query`${i} ? ${v}`,
+      },
+      containsAllKeys: {
+        name: "containsAllKeys",
+        description: "Contains all of the specified keys.",
+        resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
+        resolveSqlValue: input => sql.value(input),
+        resolve: (i, v) => sql.query`${i} ?& ${v}`,
+      },
+      containsAnyKeys: {
+        name: "containsAnyKeys",
+        description: "Contains any of the specified keys.",
+        resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
+        resolveSqlValue: input => sql.value(input),
+        resolve: (i, v) => sql.query`${i} ?| ${v}`,
+      },
+      containedBy: {
+        description: "Contained by the specified KeyValueHash.",
         resolve: (i, v) => sql.query`${i} <@ ${v}`,
       },
-      /*{
-        name: "keyExists",
-        description: "Specified top-level key exists.",
-        allowedFieldTypes: ["JSON"],
+    };
+    const jsonbOperators = {
+      contains: {
+        description: "Contains the specified JSON.",
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
+      /*
+      containsKey: {
+        description: "Contains the specified key.",
         resolveType: () => GraphQLString,
+        resolveSqlValue: input => sql.query`${sql.value(input)}::text`,
         resolve: (i, v) => sql.query`${i} ? ${v}`,
-      },*/
-      // InternetAddress
-      {
-        name: "contains",
+      },
+      containsAllKeys: {
+        name: "containsAllKeys",
+        description: "Contains all of the specified keys.",
+        resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
+        resolveSqlValue: input => sql.value(input),
+        resolve: (i, v) => sql.query`${i} ?& ${v}`,
+      },
+      containsAnyKeys: {
+        name: "containsAnyKeys",
+        description: "Contains any of the specified keys.",
+        resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
+        resolveSqlValue: input => sql.value(input),
+        resolve: (i, v) => sql.query`${i} ?| ${v}`,
+      },
+      */
+      containedBy: {
+        description: "Contained by the specified JSON.",
+        resolve: (i, v) => sql.query`${i} <@ ${v}`,
+      },
+    };
+    const inetOperators = {
+      contains: {
         description: "Contains the specified internet address.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["InternetAddress"],
         resolve: (i, v) => sql.query`${i} >> ${v}`,
       },
-      {
-        name: "containsOrEqualTo",
+      containsOrEqualTo: {
         description: "Contains or equal to the specified internet address.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["InternetAddress"],
         resolve: (i, v) => sql.query`${i} >>= ${v}`,
       },
-      {
-        name: "containedBy",
+      containedBy: {
         description: "Contained by the specified internet address.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["InternetAddress"],
         resolve: (i, v) => sql.query`${i} << ${v}`,
       },
-      {
-        name: "containedByOrEqualTo",
+      containedByOrEqualTo: {
         description: "Contained by or equal to the specified internet address.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["InternetAddress"],
         resolve: (i, v) => sql.query`${i} <<= ${v}`,
       },
-      {
-        name: "containsOrContainedBy",
+      containsOrContainedBy: {
         description: "Contains or contained by the specified internet address.",
-        allowedCategories: ["Scalar", "Enum", "Range"],
-        allowedFieldTypes: ["InternetAddress"],
         resolve: (i, v) => sql.query`${i} && ${v}`,
       },
-      // Array Types
-      {
-        name: "contains",
+    };
+    const operatorSpecsByPgTypeName = {
+      bit: { ...standardOperators, ...sortOperators },
+      bool: { ...standardOperators, ...sortOperators },
+      bpchar: {
+        ...standardOperators,
+        ...sortOperators,
+        ...patternMatchingOperators,
+      },
+      char: {
+        ...standardOperators,
+        ...sortOperators,
+        ...patternMatchingOperators,
+      },
+      date: { ...standardOperators, ...sortOperators },
+      float4: { ...standardOperators, ...sortOperators },
+      float8: { ...standardOperators, ...sortOperators },
+      hstore: {
+        ...standardOperators,
+        ...hstoreOperators,
+      },
+      inet: {
+        ...standardOperators,
+        ...sortOperators,
+        ...inetOperators,
+      },
+      int2: { ...standardOperators, ...sortOperators },
+      int4: { ...standardOperators, ...sortOperators },
+      int8: { ...standardOperators, ...sortOperators },
+      interval: { ...standardOperators, ...sortOperators },
+      jsonb: {
+        ...standardOperators,
+        ...sortOperators,
+        ...jsonbOperators,
+      },
+      macaddr: { ...standardOperators, ...sortOperators },
+      macaddr8: { ...standardOperators, ...sortOperators },
+      money: { ...standardOperators, ...sortOperators },
+      numeric: { ...standardOperators, ...sortOperators },
+      text: {
+        ...standardOperators,
+        ...sortOperators,
+        ...patternMatchingOperators,
+      },
+      time: { ...standardOperators, ...sortOperators },
+      timestamp: { ...standardOperators, ...sortOperators },
+      timestamptz: { ...standardOperators, ...sortOperators },
+      timetz: { ...standardOperators, ...sortOperators },
+      uuid: { ...standardOperators, ...sortOperators },
+      varbit: { ...standardOperators, ...sortOperators },
+      varchar: {
+        ...standardOperators,
+        ...sortOperators,
+        ...patternMatchingOperators,
+      },
+    };
+    const enumOperators = { ...standardOperators, ...sortOperators };
+    const arrayOperators = {
+      isNull: standardOperators.isNull,
+      equalTo: standardOperators.equalTo,
+      notEqualTo: standardOperators.notEqualTo,
+      distinctFrom: standardOperators.distinctFrom,
+      notDistinctFrom: standardOperators.notDistinctFrom,
+      ...sortOperators,
+      contains: {
         description: "Contains the specified list of values.",
-        allowedCategories: ["Array"],
         resolve: (i, v) => sql.query`${i} @> ${v}`,
       },
-      {
-        name: "containedBy",
+      containedBy: {
         description: "Contained by the specified list of values.",
-        allowedCategories: ["Array"],
         resolve: (i, v) => sql.query`${i} <@ ${v}`,
       },
-      {
-        name: "overlaps",
+      overlaps: {
         description: "Overlaps the specified list of values.",
-        allowedCategories: ["Array"],
         resolve: (i, v) => sql.query`${i} && ${v}`,
       },
-      {
-        name: "anyEqualTo",
+      anyEqualTo: {
         description: "Any array item is equal to the specified value.",
-        allowedCategories: ["Array"],
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} = ANY (${i})`,
       },
-      {
-        name: "anyNotEqualTo",
+      anyNotEqualTo: {
         description: "Any array item is not equal to the specified value.",
-        allowedCategories: ["Array"],
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} <> ANY (${i})`,
       },
-      {
-        name: "anyLessThan",
+      anyLessThan: {
         description: "Any array item is less than the specified value.",
-        allowedCategories: ["Array"],
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} > ANY (${i})`,
       },
-      {
-        name: "anyLessThanOrEqualTo",
+      anyLessThanOrEqualTo: {
         description:
           "Any array item is less than or equal to the specified value.",
-        allowedCategories: ["Array"],
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} >= ANY (${i})`,
       },
-      {
-        name: "anyGreaterThan",
+      anyGreaterThan: {
         description: "Any array item is greater than the specified value.",
-        allowedCategories: ["Array"],
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} < ANY (${i})`,
       },
-      {
-        name: "anyGreaterThanOrEqualTo",
+      anyGreaterThanOrEqualTo: {
         description:
           "Any array item is greater than or equal to the specified value.",
-        allowedCategories: ["Array"],
         resolveType: fieldInputType => getNamedType(fieldInputType),
         resolve: (i, v) => sql.query`${v} <= ANY (${i})`,
       },
-      // Range Types
-      {
-        name: "contains",
+    };
+    const rangeOperators = {
+      ...standardOperators,
+      ...sortOperators,
+      contains: {
         description: "Contains the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} @> ${v}`,
       },
-      {
-        name: "containsElement",
+      containsElement: {
         description: "Contains the specified value.",
-        allowedCategories: ["Range"],
-        resolveType: (_fieldInputType, elementInputType) => elementInputType,
+        resolveType: () =>
+          pgGetGqlInputTypeByTypeIdAndModifier(
+            pgType.rangeSubTypeId,
+            pgTypeModifier
+          ),
         resolveSqlValue: (input, pgType, pgTypeModifier) => {
           const rangeSubType =
             introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
@@ -397,103 +414,124 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         },
         resolve: (i, v) => sql.query`${i} @> ${v}`,
       },
-      {
-        name: "containedBy",
+      containedBy: {
         description: "Contained by the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} <@ ${v}`,
       },
-      {
-        name: "overlaps",
+      overlaps: {
         description: "Overlaps the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} && ${v}`,
       },
-      {
-        name: "strictlyLeftOf",
+      strictlyLeftOf: {
         description: "Strictly left of the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} << ${v}`,
       },
-      {
-        name: "strictlyRightOf",
+      strictlyRightOf: {
         description: "Strictly right of the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} >> ${v}`,
       },
-      {
-        name: "notExtendsRightOf",
+      notExtendsRightOf: {
         description: "Does not extend right of the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} &< ${v}`,
       },
-      {
-        name: "notExtendsLeftOf",
+      notExtendsLeftOf: {
         description: "Does not extend left of the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} &> ${v}`,
       },
-      {
-        name: "adjacentTo",
+      adjacentTo: {
         description: "Adjacent to the specified range.",
-        allowedCategories: ["Range"],
         resolve: (i, v) => sql.query`${i} -|- ${v}`,
       },
-    ];
+    };
 
-    for (const operatorSpec of connectionFilterOperatorSpecsAdded) {
-      operatorSpecs.push(operatorSpec);
-    }
-
-    const operatorSpecByFieldName = {};
-
-    const operatorFields = operatorSpecs.reduce((memo, spec) => {
+    for (const deprecatedOperatorSpec of connectionFilterDeprecatedOperatorSpecsAdded) {
       const {
         name,
         description,
         allowedFieldTypes,
-        allowedCategories,
+        allowedListTypes,
         resolveType,
-      } = spec;
-
-      if (
-        connectionFilterAllowedOperators &&
-        !connectionFilterAllowedOperators.includes(name)
-      ) {
-        return memo;
-      }
-      if (
-        allowedFieldTypes &&
-        !allowedFieldTypes.includes(getNamedType(inputType).name)
-      ) {
-        return memo;
-      }
-      if (allowedCategories && !allowedCategories.includes(category)) {
-        return memo;
-      }
-      const type = resolveType
-        ? resolveType(inputType, elementInputType)
-        : inputType;
-
-      const operatorName =
-        (connectionFilterOperatorNames &&
-          connectionFilterOperatorNames[name]) ||
-        name;
-
-      operatorSpecByFieldName[operatorName] = spec;
-
-      memo[operatorName] = fieldWithHooks(
-        operatorName,
-        {
-          description,
-          type,
-        },
-        {
-          isPgConnectionFilterOperator: true,
+        resolve,
+      } = deprecatedOperatorSpec;
+      if (allowedListTypes.includes("List")) {
+        if (arrayOperators[name]) {
+          throw new Error(`Array operator '${name}' already exists.`);
         }
-      );
-      return memo;
-    }, {});
+        arrayOperators[name] = {
+          description,
+          resolveType,
+          resolve,
+        };
+      }
+      if (
+        allowedListTypes.includes["NonList"] &&
+        allowedFieldTypes.includes(fieldInputType.name)
+      ) {
+        if (
+          operatorSpecsByPgTypeName[pgType.name] &&
+          operatorSpecsByPgTypeName[pgType.name][name]
+        ) {
+          throw new Error(
+            `${fieldInputType.name} operator '${name}' already exists.`
+          );
+        }
+        if (!operatorSpecsByPgTypeName[pgType.name]) {
+          operatorSpecsByPgTypeName[pgType.name] = {};
+        }
+        operatorSpecsByPgTypeName[pgType.name][name] = {
+          description,
+          resolveType,
+          resolve,
+        };
+      }
+    }
+
+    const operatorSpecs = pgType.isPgArray
+      ? arrayOperators
+      : pgType.rangeSubTypeId
+      ? rangeOperators
+      : pgType.type === "e"
+      ? enumOperators
+      : operatorSpecsByPgTypeName[pgType.name];
+    if (!operatorSpecs) {
+      return fields;
+    }
+
+    const operatorSpecByFieldName = {};
+
+    const operatorFields = Object.entries(operatorSpecs).reduce(
+      (memo, [name, spec]) => {
+        const { description, resolveType } = spec;
+
+        if (
+          connectionFilterAllowedOperators &&
+          !connectionFilterAllowedOperators.includes(name)
+        ) {
+          return memo;
+        }
+        const type = resolveType ? resolveType(fieldInputType) : fieldInputType;
+
+        const operatorName =
+          (connectionFilterOperatorNames &&
+            connectionFilterOperatorNames[name]) ||
+          name;
+
+        operatorSpecByFieldName[operatorName] = spec;
+
+        memo[operatorName] = fieldWithHooks(
+          operatorName,
+          {
+            description,
+            type,
+          },
+          {
+            isPgConnectionFilterOperator: true,
+          }
+        );
+        return memo;
+      },
+      {}
+    );
 
     const resolve = ({
       sourceAlias,

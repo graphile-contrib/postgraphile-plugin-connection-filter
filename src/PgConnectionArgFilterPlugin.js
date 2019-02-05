@@ -45,6 +45,15 @@ module.exports = function PgConnectionArgFilterPlugin(
 
       const returnTypeId =
         source.kind === "class" ? source.type.id : source.returnTypeId;
+      const returnType =
+        source.kind === "class"
+          ? source.type
+          : build.pgIntrospectionResultsByKind.type.find(
+              t => t.id === returnTypeId
+            );
+      if (!returnType) {
+        return args;
+      }
       const nodeTypeName =
         returnTypeId === "2249" // returns `RECORD`
           ? inflection.recordFunctionReturnType(source)
@@ -75,7 +84,7 @@ module.exports = function PgConnectionArgFilterPlugin(
                 queryBuilder.getTableAlias(),
                 filterTypeName,
                 queryBuilder,
-                nodeType,
+                returnType,
                 null
               );
               if (sqlFragment != null) {
@@ -206,43 +215,9 @@ module.exports = function PgConnectionArgFilterPlugin(
       const pgGetSimpleType = pgType =>
         pgGetNonRangeType(pgGetNonArrayType(pgType));
       const pgSimpleType = pgGetSimpleType(pgType);
-      const allowedPgSimpleTypeIds = [
-        "1560", // bit
-        "16", //   bool
-        "1042", // bpchar
-        "17", //   bytea
-        "18", //   char
-        "650", //  cidr
-        "1082", // date
-        "700", //  float4
-        "701", //  float8
-        "869", //  inet
-        "21", //   int2
-        "23", //   int4
-        "20", //   int8
-        "1186", // interval
-        "3802", // jsonb
-        "829", //  macaddr
-        "774", //  macaddr8
-        "790", //  money
-        "1700", // numeric
-        "25", //   text
-        "1083", // time
-        "1114", // timestamp
-        "1184", // timestamptz
-        "1266", // timetz
-        "3614", // tsvector
-        "2950", // uuid
-        "1562", // varbit
-        "1043", // varchar
-      ];
-      if (
-        !allowedPgSimpleTypeIds.includes(pgSimpleType.id) &&
-        !(pgType.isPgArray
-          ? pgType.arrayItemType.type === "e" // enum[]
-          : pgType.type === "e") // enum
-      ) {
-        // Not whitelisted and not an enum? Skip.
+      if (pgSimpleType.name === "json") {
+        // Skip type creation with `json` so the proper operators
+        // will be created with `jsonb`, if present
         return null;
       }
       const fieldType = pgGetGqlTypeByTypeIdAndModifier(
@@ -289,21 +264,6 @@ module.exports = function PgConnectionArgFilterPlugin(
         ? inflection.filterFieldListType(namedType.name)
         : inflection.filterFieldType(namedType.name);
 
-      const pgConnectionFilterFieldCategory = pgType.isPgArray
-        ? "Array"
-        : pgType.rangeSubTypeId
-        ? "Range"
-        : pgType.type === "e"
-        ? "Enum"
-        : "Scalar";
-
-      const pgConnectionFilterElementInputType = pgType.rangeSubTypeId
-        ? pgGetGqlInputTypeByTypeIdAndModifier(
-            pgType.rangeSubTypeId,
-            pgTypeModifier
-          )
-        : null;
-
       const existingType = connectionFilterTypesByTypeName[operatorsTypeName];
       if (existingType) {
         if (
@@ -328,9 +288,8 @@ module.exports = function PgConnectionArgFilterPlugin(
         },
         {
           isPgConnectionFilterOperators: true,
-          pgConnectionFilterFieldCategory,
-          pgConnectionFilterInputType: fieldInputType,
-          pgConnectionFilterElementInputType,
+          pgType,
+          pgTypeModifier,
         },
         true
       );
@@ -393,7 +352,7 @@ module.exports = function PgConnectionArgFilterPlugin(
   });
 
   builder.hook("build", build => {
-    const connectionFilterOperatorSpecsAdded = [];
+    const connectionFilterDeprecatedOperatorSpecsAdded = [];
 
     const addConnectionFilterOperator = (
       name,
@@ -418,34 +377,31 @@ module.exports = function PgConnectionArgFilterPlugin(
         );
       }
 
-      const isNonListOnly = x => x.length === 1 && x.includes("NonList");
-      const isListOnly = x => x.length === 1 && x.includes("List");
-
+      /*
       const allowedCategories = isNonListOnly
         ? ["Scalar", "Enum", "Range"]
         : isListOnly
         ? ["Array"]
         : null;
+      */
 
-      const allowedFieldTypes = options.allowedFieldTypes
-        ? options.allowedFieldTypes
-        : null;
+      const { allowedFieldTypes, allowedListTypes } = options;
 
-      const operatorSpec = {
+      const deprecatedOperatorSpec = {
         name,
         description,
-        ...(allowedCategories ? { allowedCategories } : null),
         ...(allowedFieldTypes ? { allowedFieldTypes } : null),
+        ...(allowedListTypes ? { allowedListTypes } : ["NonList"]),
         resolveType,
         resolve,
       };
 
-      connectionFilterOperatorSpecsAdded.push(operatorSpec);
+      connectionFilterDeprecatedOperatorSpecsAdded.push(deprecatedOperatorSpec);
     };
 
     return build.extend(build, {
       addConnectionFilterOperator,
-      connectionFilterOperatorSpecsAdded,
+      connectionFilterDeprecatedOperatorSpecsAdded,
     });
   });
 };
