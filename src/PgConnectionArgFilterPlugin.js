@@ -352,7 +352,7 @@ module.exports = function PgConnectionArgFilterPlugin(
   });
 
   builder.hook("build", build => {
-    const connectionFilterDeprecatedOperatorSpecsAdded = [];
+    const connectionFilterOperatorSpecsAdded = [];
 
     const addConnectionFilterOperator = (
       name,
@@ -387,7 +387,7 @@ module.exports = function PgConnectionArgFilterPlugin(
 
       const { allowedFieldTypes, allowedListTypes } = options;
 
-      const deprecatedOperatorSpec = {
+      const spec = {
         name,
         description,
         ...(allowedFieldTypes ? { allowedFieldTypes } : null),
@@ -396,12 +396,12 @@ module.exports = function PgConnectionArgFilterPlugin(
         resolve,
       };
 
-      connectionFilterDeprecatedOperatorSpecsAdded.push(deprecatedOperatorSpec);
+      connectionFilterOperatorSpecsAdded.push(spec);
     };
 
     return build.extend(build, {
       addConnectionFilterOperator,
-      connectionFilterDeprecatedOperatorSpecsAdded,
+      connectionFilterOperatorSpecsAdded,
     });
   });
 };

@@ -16,7 +16,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
       gql2pg,
-      connectionFilterDeprecatedOperatorSpecsAdded,
+      connectionFilterOperatorSpecsAdded,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
       escapeLikeWildcards,
@@ -444,15 +444,15 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
     };
 
-    for (const deprecatedOperatorSpec of connectionFilterDeprecatedOperatorSpecsAdded) {
+    for (const operatorSpec of connectionFilterOperatorSpecsAdded) {
       const {
         name,
         description,
-        allowedFieldTypes,
-        allowedListTypes,
+        allowedFieldTypes = [],
+        allowedListTypes = ["NonList"],
         resolveType,
         resolve,
-      } = deprecatedOperatorSpec;
+      } = operatorSpec;
       if (allowedListTypes.includes("List")) {
         if (arrayOperators[name]) {
           throw new Error(`Array operator '${name}' already exists.`);
@@ -464,7 +464,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         };
       }
       if (
-        allowedListTypes.includes["NonList"] &&
+        allowedListTypes.includes("NonList") &&
         allowedFieldTypes.includes(fieldInputType.name)
       ) {
         if (
