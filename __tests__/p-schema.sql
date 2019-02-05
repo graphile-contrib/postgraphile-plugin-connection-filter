@@ -1,3 +1,5 @@
+create extension if not exists hstore;
+
 drop schema if exists p cascade;
 
 create schema p;
@@ -34,6 +36,7 @@ create table p.filterable (
   "date" date,
   "float4" float4,
   "float8" float8,
+  "hstore" hstore,
   "inet" inet,
   "int2" int2,
   "int4" int4,
@@ -79,6 +82,7 @@ create table p.array_types (
   "date_array" date[],
   "float4_array" float4[],
   "float8_array" float8[],
+  "hstore_array" hstore[],
   "inet_array" inet[],
   "int2_array" int2[],
   "int4_array" int4[],

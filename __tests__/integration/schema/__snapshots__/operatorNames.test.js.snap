@@ -11,6 +11,7 @@ exports[`prints a schema with the filter plugin and the connectionFilterOperator
   dateArray: [Date]
   float4Array: [Float]
   float8Array: [Float]
+  hstoreArray: [KeyValueHash]
   id: Int!
   inetArray: [InternetAddress]
   int2Array: [Int]
@@ -66,6 +67,9 @@ input ArrayTypeFilter {
 
   \\"\\"\\"Filter by the object’s \`float8Array\` field.\\"\\"\\"
   float8Array: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`hstoreArray\` field.\\"\\"\\"
+  hstoreArray: KeyValueHashListFilter
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
@@ -168,6 +172,8 @@ enum ArrayTypesOrderBy {
   FLOAT4_ARRAY_DESC
   FLOAT8_ARRAY_ASC
   FLOAT8_ARRAY_DESC
+  HSTORE_ARRAY_ASC
+  HSTORE_ARRAY_DESC
   ID_ASC
   ID_DESC
   INET_ARRAY_ASC
@@ -1792,6 +1798,7 @@ type Filterable implements Node {
   \\"\\"\\"
   forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
   forwardId: Int
+  hstore: KeyValueHash
   id: Int!
   inet: InternetAddress
   int2: Int
@@ -1893,6 +1900,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`hstore\` field.\\"\\"\\"
+  hstore: KeyValueHashFilter
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
@@ -2015,6 +2025,8 @@ enum FilterablesOrderBy {
   FORWARD_COMPOUND_2_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
+  HSTORE_ASC
+  HSTORE_DESC
   ID_ASC
   ID_DESC
   INET_ASC
@@ -3051,6 +3063,119 @@ enum JunctionsOrderBy {
   SIDE_A_ID_DESC
   SIDE_B_ID_ASC
   SIDE_B_ID_DESC
+}
+
+\\"\\"\\"
+A set of key/value pairs, keys are strings, values may be a string or null. Exposed as a JSON object.
+\\"\\"\\"
+scalar KeyValueHash
+
+\\"\\"\\"
+A filter to be used against KeyValueHash fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input KeyValueHashFilter {
+  \\"\\"\\"Contained by the specified KeyValueHash.\\"\\"\\"
+  containedBy: KeyValueHash
+
+  \\"\\"\\"Contains the specified KeyValueHash.\\"\\"\\"
+  contains: KeyValueHash
+
+  \\"\\"\\"Contains all of the specified keys.\\"\\"\\"
+  containsAllKeys: [String!]
+
+  \\"\\"\\"Contains any of the specified keys.\\"\\"\\"
+  containsAnyKeys: [String!]
+
+  \\"\\"\\"Contains the specified key.\\"\\"\\"
+  containsKey: String
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: KeyValueHash
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  eq: KeyValueHash
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [KeyValueHash!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  ne: KeyValueHash
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: KeyValueHash
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [KeyValueHash!]
+}
+
+\\"\\"\\"
+A filter to be used against KeyValueHash List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input KeyValueHashListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: KeyValueHash
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: KeyValueHash
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: KeyValueHash
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: KeyValueHash
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: KeyValueHash
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: KeyValueHash
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [KeyValueHash]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [KeyValueHash]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [KeyValueHash]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  eq: [KeyValueHash]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [KeyValueHash]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [KeyValueHash]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [KeyValueHash]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [KeyValueHash]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  ne: [KeyValueHash]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [KeyValueHash]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [KeyValueHash]
 }
 
 enum Mood {

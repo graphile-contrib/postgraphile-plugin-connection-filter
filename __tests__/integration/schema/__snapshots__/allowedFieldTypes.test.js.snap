@@ -11,6 +11,7 @@ exports[`prints a schema with the filter plugin and the connectionFilterAllowedF
   dateArray: [Date]
   float4Array: [Float]
   float8Array: [Float]
+  hstoreArray: [KeyValueHash]
   id: Int!
   inetArray: [InternetAddress]
   int2Array: [Int]
@@ -120,6 +121,8 @@ enum ArrayTypesOrderBy {
   FLOAT4_ARRAY_DESC
   FLOAT8_ARRAY_ASC
   FLOAT8_ARRAY_DESC
+  HSTORE_ARRAY_ASC
+  HSTORE_ARRAY_DESC
   ID_ASC
   ID_DESC
   INET_ARRAY_ASC
@@ -752,6 +755,7 @@ type Filterable implements Node {
   \\"\\"\\"
   forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
   forwardId: Int
+  hstore: KeyValueHash
   id: Int!
   inet: InternetAddress
   int2: Int
@@ -924,6 +928,8 @@ enum FilterablesOrderBy {
   FORWARD_COMPOUND_2_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
+  HSTORE_ASC
+  HSTORE_DESC
   ID_ASC
   ID_DESC
   INET_ASC
@@ -1467,6 +1473,11 @@ enum JunctionsOrderBy {
   SIDE_B_ID_ASC
   SIDE_B_ID_DESC
 }
+
+\\"\\"\\"
+A set of key/value pairs, keys are strings, values may be a string or null. Exposed as a JSON object.
+\\"\\"\\"
+scalar KeyValueHash
 
 enum Mood {
   HAPPY

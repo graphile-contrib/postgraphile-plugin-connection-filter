@@ -11,6 +11,7 @@ exports[`prints a schema with the filter plugin and the connectionFilterAllowedO
   dateArray: [Date]
   float4Array: [Float]
   float8Array: [Float]
+  hstoreArray: [KeyValueHash]
   id: Int!
   inetArray: [InternetAddress]
   int2Array: [Int]
@@ -66,6 +67,9 @@ input ArrayTypeFilter {
 
   \\"\\"\\"Filter by the object’s \`float8Array\` field.\\"\\"\\"
   float8Array: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`hstoreArray\` field.\\"\\"\\"
+  hstoreArray: KeyValueHashListFilter
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
@@ -168,6 +172,8 @@ enum ArrayTypesOrderBy {
   FLOAT4_ARRAY_DESC
   FLOAT8_ARRAY_ASC
   FLOAT8_ARRAY_DESC
+  HSTORE_ARRAY_ASC
+  HSTORE_ARRAY_DESC
   ID_ASC
   ID_DESC
   INET_ARRAY_ASC
@@ -1062,6 +1068,7 @@ type Filterable implements Node {
   \\"\\"\\"
   forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
   forwardId: Int
+  hstore: KeyValueHash
   id: Int!
   inet: InternetAddress
   int2: Int
@@ -1163,6 +1170,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`forwardId\` field.\\"\\"\\"
   forwardId: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`hstore\` field.\\"\\"\\"
+  hstore: KeyValueHashFilter
 
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
@@ -1285,6 +1295,8 @@ enum FilterablesOrderBy {
   FORWARD_COMPOUND_2_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
+  HSTORE_ASC
+  HSTORE_DESC
   ID_ASC
   ID_DESC
   INET_ASC
@@ -1879,6 +1891,33 @@ enum JunctionsOrderBy {
   SIDE_A_ID_DESC
   SIDE_B_ID_ASC
   SIDE_B_ID_DESC
+}
+
+\\"\\"\\"
+A set of key/value pairs, keys are strings, values may be a string or null. Exposed as a JSON object.
+\\"\\"\\"
+scalar KeyValueHash
+
+\\"\\"\\"
+A filter to be used against KeyValueHash fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input KeyValueHashFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: KeyValueHash
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: KeyValueHash
+}
+
+\\"\\"\\"
+A filter to be used against KeyValueHash List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input KeyValueHashListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [KeyValueHash]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [KeyValueHash]
 }
 
 enum Mood {

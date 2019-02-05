@@ -1,0 +1,55 @@
+query hstore(
+  $v2: KeyValueHash = {key2:"2"}
+  $v2_1_key: String = "key2"
+  $v3: KeyValueHash = {key3:"3"}
+  $v3_1_key: String = "key3"
+) {
+  containedBy: allFilterables(filter: { hstore: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allFilterables(filter: { hstore: { contains: $v3 } }) {
+    ...nodes
+  }
+  containsAllKeys: allFilterables(
+    filter: { hstore: { containsAllKeys: [$v2_1_key] } }
+  ) {
+    ...nodes
+  }
+  containsAnyKeys: allFilterables(
+    filter: { hstore: { containsAnyKeys: [$v2_1_key, $v3_1_key] } }
+  ) {
+    ...nodes
+  }
+  containsKey: allFilterables(filter: { hstore: { containsKey: $v2_1_key } }) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(filter: { hstore: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { hstore: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  in: allFilterables(filter: { hstore: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { hstore: { isNull: true } }) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(
+    filter: { hstore: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { hstore: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { hstore: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}
