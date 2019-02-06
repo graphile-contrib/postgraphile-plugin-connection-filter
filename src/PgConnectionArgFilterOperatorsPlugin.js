@@ -2,9 +2,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder,
   { connectionFilterAllowedOperators, connectionFilterOperatorNames }
 ) {
-  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
+  builder.hook("build", build => {
     const {
-      extend,
       graphql: {
         getNamedType,
         GraphQLBoolean,
@@ -12,33 +11,12 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         GraphQLNonNull,
         GraphQLList,
       },
-      pgGetGqlInputTypeByTypeIdAndModifier,
+      pgGetGqlTypeByTypeIdAndModifier,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
       gql2pg,
-      connectionFilterOperatorSpecsAdded,
-      connectionFilterRegisterResolver,
-      connectionFilterTypesByTypeName,
       escapeLikeWildcards,
     } = build;
-    const {
-      scope: { isPgConnectionFilterOperators, pgType, pgTypeModifier },
-      fieldWithHooks,
-      Self,
-    } = context;
-    if (!isPgConnectionFilterOperators || !pgType) {
-      return fields;
-    }
-
-    connectionFilterTypesByTypeName[Self.name] = Self;
-
-    const fieldInputType = pgGetGqlInputTypeByTypeIdAndModifier(
-      pgType.id,
-      pgTypeModifier
-    );
-    if (!fieldInputType) {
-      return fields;
-    }
 
     const standardOperators = {
       isNull: {
@@ -281,63 +259,121 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve: (i, v) => sql.query`${i} && ${v}`,
       },
     };
-    const operatorSpecsByPgTypeName = {
-      bit: { ...standardOperators, ...sortOperators },
-      bool: { ...standardOperators, ...sortOperators },
-      bpchar: {
-        ...standardOperators,
-        ...sortOperators,
-        ...patternMatchingOperators,
-      },
-      char: {
-        ...standardOperators,
-        ...sortOperators,
-        ...patternMatchingOperators,
-      },
-      date: { ...standardOperators, ...sortOperators },
-      float4: { ...standardOperators, ...sortOperators },
-      float8: { ...standardOperators, ...sortOperators },
-      hstore: {
-        ...standardOperators,
-        ...hstoreOperators,
-      },
-      inet: {
+
+    const gqlTypeNameFromPgTypeName = pgTypeName => {
+      const pgType = introspectionResultsByKind.type.find(
+        t => t.name === pgTypeName
+      );
+      return pgType ? pgGetGqlTypeByTypeIdAndModifier(pgType.id, null) : null;
+    };
+
+    const _BigFloat = gqlTypeNameFromPgTypeName("numeric") || "BigFloat";
+    const _BigInt = gqlTypeNameFromPgTypeName("int8") || "BigInt";
+    const _BitString = gqlTypeNameFromPgTypeName("varbit") || "BitString";
+    const _Boolean = gqlTypeNameFromPgTypeName("bool") || "Boolean";
+    const _Date = gqlTypeNameFromPgTypeName("date") || "Date";
+    const _Datetime = gqlTypeNameFromPgTypeName("timestamp") || "Datetime";
+    const _Float = gqlTypeNameFromPgTypeName("float4") || "Float";
+    const _Int = gqlTypeNameFromPgTypeName("int2") || "Int";
+    const _InternetAddress =
+      gqlTypeNameFromPgTypeName("inet") || "InternetAddress";
+    const _Interval = gqlTypeNameFromPgTypeName("interval") || "Interval";
+    const _JSON = gqlTypeNameFromPgTypeName("jsonb") || "JSON";
+    const _KeyValueHash = gqlTypeNameFromPgTypeName("hstore") || "KeyValueHash";
+    const _String = gqlTypeNameFromPgTypeName("text") || "String";
+    const _Time = gqlTypeNameFromPgTypeName("time") || "Time";
+    const _UUID = gqlTypeNameFromPgTypeName("uuid") || "UUID";
+
+    const connectionFilterScalarOperators = {
+      [_BigFloat]: { ...standardOperators, ...sortOperators },
+      [_BigInt]: { ...standardOperators, ...sortOperators },
+      [_BitString]: { ...standardOperators, ...sortOperators },
+      [_Boolean]: { ...standardOperators, ...sortOperators },
+      [_Date]: { ...standardOperators, ...sortOperators },
+      [_Datetime]: { ...standardOperators, ...sortOperators },
+      [_Float]: { ...standardOperators, ...sortOperators },
+      [_Int]: { ...standardOperators, ...sortOperators },
+      [_InternetAddress]: {
         ...standardOperators,
         ...sortOperators,
         ...inetOperators,
       },
-      int2: { ...standardOperators, ...sortOperators },
-      int4: { ...standardOperators, ...sortOperators },
-      int8: { ...standardOperators, ...sortOperators },
-      interval: { ...standardOperators, ...sortOperators },
-      jsonb: {
+      [_Interval]: { ...standardOperators, ...sortOperators },
+      [_JSON]: {
         ...standardOperators,
         ...sortOperators,
         ...jsonbOperators,
       },
-      macaddr: { ...standardOperators, ...sortOperators },
-      macaddr8: { ...standardOperators, ...sortOperators },
-      money: { ...standardOperators, ...sortOperators },
-      numeric: { ...standardOperators, ...sortOperators },
-      text: {
+      [_KeyValueHash]: {
+        ...standardOperators,
+        ...hstoreOperators,
+      },
+      [_String]: {
         ...standardOperators,
         ...sortOperators,
         ...patternMatchingOperators,
       },
-      time: { ...standardOperators, ...sortOperators },
-      timestamp: { ...standardOperators, ...sortOperators },
-      timestamptz: { ...standardOperators, ...sortOperators },
-      timetz: { ...standardOperators, ...sortOperators },
-      uuid: { ...standardOperators, ...sortOperators },
-      varbit: { ...standardOperators, ...sortOperators },
-      varchar: {
-        ...standardOperators,
-        ...sortOperators,
-        ...patternMatchingOperators,
+      [_Time]: { ...standardOperators, ...sortOperators },
+      [_UUID]: { ...standardOperators, ...sortOperators },
+    };
+
+    const connectionFilterEnumOperators = {
+      ...standardOperators,
+      ...sortOperators,
+    };
+
+    const connectionFilterRangeOperators = {
+      ...standardOperators,
+      ...sortOperators,
+      contains: {
+        description: "Contains the specified range.",
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
+      containsElement: {
+        description: "Contains the specified value.",
+        resolveType: (_fieldInputType, elementInputType) => elementInputType,
+        resolveSqlValue: (input, pgType, pgTypeModifier) => {
+          const rangeSubType =
+            introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
+          return sql.query`${gql2pg(
+            input,
+            pgType.rangeSubTypeId,
+            pgTypeModifier
+          )}::${sql.identifier(rangeSubType.namespaceName, rangeSubType.name)}`;
+        },
+        resolve: (i, v) => sql.query`${i} @> ${v}`,
+      },
+      containedBy: {
+        description: "Contained by the specified range.",
+        resolve: (i, v) => sql.query`${i} <@ ${v}`,
+      },
+      overlaps: {
+        description: "Overlaps the specified range.",
+        resolve: (i, v) => sql.query`${i} && ${v}`,
+      },
+      strictlyLeftOf: {
+        description: "Strictly left of the specified range.",
+        resolve: (i, v) => sql.query`${i} << ${v}`,
+      },
+      strictlyRightOf: {
+        description: "Strictly right of the specified range.",
+        resolve: (i, v) => sql.query`${i} >> ${v}`,
+      },
+      notExtendsRightOf: {
+        description: "Does not extend right of the specified range.",
+        resolve: (i, v) => sql.query`${i} &< ${v}`,
+      },
+      notExtendsLeftOf: {
+        description: "Does not extend left of the specified range.",
+        resolve: (i, v) => sql.query`${i} &> ${v}`,
+      },
+      adjacentTo: {
+        description: "Adjacent to the specified range.",
+        resolve: (i, v) => sql.query`${i} -|- ${v}`,
       },
     };
-    const enumOperators = { ...standardOperators, ...sortOperators };
-    const arrayOperators = {
+
+    const connectionFilterArrayOperators = {
       isNull: standardOperators.isNull,
       equalTo: standardOperators.equalTo,
       notEqualTo: standardOperators.notEqualTo,
@@ -389,61 +425,51 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve: (i, v) => sql.query`${v} <= ANY (${i})`,
       },
     };
-    const rangeOperators = {
-      ...standardOperators,
-      ...sortOperators,
-      contains: {
-        description: "Contains the specified range.",
-        resolve: (i, v) => sql.query`${i} @> ${v}`,
-      },
-      containsElement: {
-        description: "Contains the specified value.",
-        resolveType: () =>
-          pgGetGqlInputTypeByTypeIdAndModifier(
-            pgType.rangeSubTypeId,
-            pgTypeModifier
-          ),
-        resolveSqlValue: (input, pgType, pgTypeModifier) => {
-          const rangeSubType =
-            introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
-          return sql.query`${gql2pg(
-            input,
-            pgType.rangeSubTypeId,
-            pgTypeModifier
-          )}::${sql.identifier(rangeSubType.namespaceName, rangeSubType.name)}`;
-        },
-        resolve: (i, v) => sql.query`${i} @> ${v}`,
-      },
-      containedBy: {
-        description: "Contained by the specified range.",
-        resolve: (i, v) => sql.query`${i} <@ ${v}`,
-      },
-      overlaps: {
-        description: "Overlaps the specified range.",
-        resolve: (i, v) => sql.query`${i} && ${v}`,
-      },
-      strictlyLeftOf: {
-        description: "Strictly left of the specified range.",
-        resolve: (i, v) => sql.query`${i} << ${v}`,
-      },
-      strictlyRightOf: {
-        description: "Strictly right of the specified range.",
-        resolve: (i, v) => sql.query`${i} >> ${v}`,
-      },
-      notExtendsRightOf: {
-        description: "Does not extend right of the specified range.",
-        resolve: (i, v) => sql.query`${i} &< ${v}`,
-      },
-      notExtendsLeftOf: {
-        description: "Does not extend left of the specified range.",
-        resolve: (i, v) => sql.query`${i} &> ${v}`,
-      },
-      adjacentTo: {
-        description: "Adjacent to the specified range.",
-        resolve: (i, v) => sql.query`${i} -|- ${v}`,
-      },
-    };
 
+    return build.extend(build, {
+      connectionFilterArrayOperators,
+      connectionFilterEnumOperators,
+      connectionFilterRangeOperators,
+      connectionFilterScalarOperators,
+    });
+  });
+
+  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
+    const {
+      extend,
+      pgSql: sql,
+      gql2pg,
+      connectionFilterOperatorSpecsAdded,
+      connectionFilterRegisterResolver,
+      connectionFilterTypesByTypeName,
+      connectionFilterArrayOperators,
+      connectionFilterEnumOperators,
+      connectionFilterRangeOperators,
+      connectionFilterScalarOperators,
+    } = build;
+    const {
+      scope: {
+        isPgConnectionFilterOperators,
+        pgConnectionFilterOperatorsCategory,
+        fieldType,
+        fieldInputType,
+        elementInputType,
+      },
+      fieldWithHooks,
+      Self,
+    } = context;
+    if (
+      !isPgConnectionFilterOperators ||
+      !pgConnectionFilterOperatorsCategory ||
+      !fieldType ||
+      !fieldInputType
+    ) {
+      return fields;
+    }
+
+    connectionFilterTypesByTypeName[Self.name] = Self;
+
+    // Include operators added by other plugins
     for (const operatorSpec of connectionFilterOperatorSpecsAdded) {
       const {
         name,
@@ -454,10 +480,10 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve,
       } = operatorSpec;
       if (allowedListTypes.includes("List")) {
-        if (arrayOperators[name]) {
+        if (connectionFilterArrayOperators[name]) {
           throw new Error(`Array operator '${name}' already exists.`);
         }
-        arrayOperators[name] = {
+        connectionFilterArrayOperators[name] = {
           description,
           resolveType,
           resolve,
@@ -465,20 +491,20 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       }
       if (
         allowedListTypes.includes("NonList") &&
-        allowedFieldTypes.includes(fieldInputType.name)
+        allowedFieldTypes.includes(fieldType.name)
       ) {
         if (
-          operatorSpecsByPgTypeName[pgType.name] &&
-          operatorSpecsByPgTypeName[pgType.name][name]
+          connectionFilterScalarOperators[fieldType.name] &&
+          connectionFilterScalarOperators[fieldType.name][name]
         ) {
           throw new Error(
-            `${fieldInputType.name} operator '${name}' already exists.`
+            `${fieldType.name} operator '${name}' already exists.`
           );
         }
-        if (!operatorSpecsByPgTypeName[pgType.name]) {
-          operatorSpecsByPgTypeName[pgType.name] = {};
+        if (!connectionFilterScalarOperators[fieldType.name]) {
+          connectionFilterScalarOperators[fieldType.name] = {};
         }
-        operatorSpecsByPgTypeName[pgType.name][name] = {
+        connectionFilterScalarOperators[fieldType.name][name] = {
           description,
           resolveType,
           resolve,
@@ -486,13 +512,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       }
     }
 
-    const operatorSpecs = pgType.isPgArray
-      ? arrayOperators
-      : pgType.rangeSubTypeId
-      ? rangeOperators
-      : pgType.type === "e"
-      ? enumOperators
-      : operatorSpecsByPgTypeName[pgType.name];
+    const operatorSpecsByCategory = {
+      Array: connectionFilterArrayOperators,
+      Range: connectionFilterRangeOperators,
+      Enum: connectionFilterEnumOperators,
+      Scalar: connectionFilterScalarOperators[fieldType.name],
+    };
+    const operatorSpecs =
+      operatorSpecsByCategory[pgConnectionFilterOperatorsCategory];
     if (!operatorSpecs) {
       return fields;
     }
@@ -509,7 +536,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         ) {
           return memo;
         }
-        const type = resolveType ? resolveType(fieldInputType) : fieldInputType;
+        const type = resolveType
+          ? resolveType(fieldInputType, elementInputType)
+          : fieldInputType;
 
         const operatorName =
           (connectionFilterOperatorNames &&

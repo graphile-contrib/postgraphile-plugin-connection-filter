@@ -264,6 +264,19 @@ module.exports = function PgConnectionArgFilterPlugin(
         ? inflection.filterFieldListType(namedType.name)
         : inflection.filterFieldType(namedType.name);
 
+      const pgConnectionFilterOperatorsCategory = pgType.isPgArray
+        ? "Array"
+        : pgType.rangeSubTypeId
+        ? "Range"
+        : pgType.type === "e"
+        ? "Enum"
+        : "Scalar";
+
+      const elementInputType = pgGetGqlInputTypeByTypeIdAndModifier(
+        pgSimpleType.id,
+        pgTypeModifier
+      );
+
       const existingType = connectionFilterTypesByTypeName[operatorsTypeName];
       if (existingType) {
         if (
@@ -288,8 +301,10 @@ module.exports = function PgConnectionArgFilterPlugin(
         },
         {
           isPgConnectionFilterOperators: true,
-          pgType,
-          pgTypeModifier,
+          pgConnectionFilterOperatorsCategory,
+          fieldType,
+          fieldInputType,
+          elementInputType,
         },
         true
       );
