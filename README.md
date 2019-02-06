@@ -101,7 +101,7 @@ The following types have additional operators:
 | @> | contains: `JSON` | Contains the specified JSON. |
 | ? | containsKey: `String` | Contains the specified key. |
 | ?& | containsAllKeys `[String]` | Contains all of the specified keys. |
-| ?| | containsAnyKeys: `[String]` | Contains any of the specified keys. |
+| ?\| | containsAnyKeys: `[String]` | Contains any of the specified keys. |
 | <@ | containedBy: `JSON` | Contained by the specified JSON. |
 
 #### KeyValueHash (`hstore`)
@@ -111,7 +111,7 @@ The following types have additional operators:
 | @> | contains: `KeyValueHash` | Contains the specified KeyValueHash. |
 | ? | containsKey: `String` | Contains the specified key. |
 | ?& | containsAllKeys `[String]` | Contains all of the specified keys. |
-| ?| | containsAnyKeys: `[String]` | Contains any of the specified keys. |
+| ?\| | containsAnyKeys: `[String]` | Contains any of the specified keys. |
 | <@ | containedBy: `KeyValueHash` | Contained by the specified KeyValueHash. |
 
 #### String
@@ -154,7 +154,7 @@ Range fields have the same operators as scalar fields, plus the following range 
 | >> | strictlyRightOf: `T` | Strictly right of the specified range. |
 | &< | notExtendsRightOf: `T` | Does not extend right of the specified range. |
 | &> | notExtendsLeftOf: `T` | Does not extend left of the specified range. |
-| -|- | adjacentTo: `T` | Adjacent to the specified range. |
+| -\|- | adjacentTo: `T` | Adjacent to the specified range. |
 
 where `T` is the type of the range field being filtered and `E` is the element type of the range.
 
