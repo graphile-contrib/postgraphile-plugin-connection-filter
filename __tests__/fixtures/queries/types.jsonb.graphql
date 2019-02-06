@@ -1,8 +1,26 @@
-query jsonb($v2: JSON = "{\"key2\":2}", $v3: JSON = "{\"key3\":3}") {
+query jsonb(
+  $v2: JSON = "{\"key2\":2}"
+  $v2_1_key: String = "key2"
+  $v3: JSON = "{\"key3\":3}"
+  $v3_1_key: String = "key3"
+) {
   containedBy: allFilterables(filter: { jsonb: { containedBy: $v2 } }) {
     ...nodes
   }
   contains: allFilterables(filter: { jsonb: { contains: $v3 } }) {
+    ...nodes
+  }
+  containsAllKeys: allFilterables(
+    filter: { jsonb: { containsAllKeys: [$v2_1_key] } }
+  ) {
+    ...nodes
+  }
+  containsAnyKeys: allFilterables(
+    filter: { jsonb: { containsAnyKeys: [$v2_1_key, $v3_1_key] } }
+  ) {
+    ...nodes
+  }
+  containsKey: allFilterables(filter: { jsonb: { containsKey: $v2_1_key } }) {
     ...nodes
   }
   distinctFrom: allFilterables(filter: { jsonb: { distinctFrom: $v2 } }) {

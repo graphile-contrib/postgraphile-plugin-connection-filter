@@ -8116,6 +8116,30 @@ Object {
         },
       ],
     },
+    "containsAllKeys": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsAnyKeys": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "containsKey": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
     "distinctFrom": Object {
       "nodes": Array [
         Object {

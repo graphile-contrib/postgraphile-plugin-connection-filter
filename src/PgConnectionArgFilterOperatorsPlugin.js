@@ -210,7 +210,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         description: "Contains the specified JSON.",
         resolve: (i, v) => sql.query`${i} @> ${v}`,
       },
-      /*
       containsKey: {
         description: "Contains the specified key.",
         resolveType: () => GraphQLString,
@@ -231,7 +230,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolveSqlValue: input => sql.value(input),
         resolve: (i, v) => sql.query`${i} ?| ${v}`,
       },
-      */
       containedBy: {
         description: "Contained by the specified JSON.",
         resolve: (i, v) => sql.query`${i} <@ ${v}`,

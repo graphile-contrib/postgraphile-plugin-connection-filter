@@ -2956,6 +2956,15 @@ input JSONFilter {
   \\"\\"\\"Contains the specified JSON.\\"\\"\\"
   contains: JSON
 
+  \\"\\"\\"Contains all of the specified keys.\\"\\"\\"
+  containsAllKeys: [String!]
+
+  \\"\\"\\"Contains any of the specified keys.\\"\\"\\"
+  containsAnyKeys: [String!]
+
+  \\"\\"\\"Contains the specified key.\\"\\"\\"
+  containsKey: String
+
   \\"\\"\\"
   Not equal to the specified value, treating null like an ordinary value.
   \\"\\"\\"
