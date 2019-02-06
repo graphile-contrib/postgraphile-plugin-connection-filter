@@ -117,6 +117,7 @@ The following types have additional operators:
 #### String
 
 | PostgreSQL | GraphQL | Description |
+| --- | --- | --- |
 | LIKE '%...%' | includes: `String` | Contains the specified string (case-sensitive). |
 | NOT LIKE '%...%' | notIncludes: `String` | Does not contain the specified string (case-sensitive). |
 | ILIKE '%...%' | includesInsensitive: `String` | Contains the specified string (case-insensitive). |
