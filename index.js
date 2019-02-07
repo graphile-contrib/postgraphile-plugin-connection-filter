@@ -19,8 +19,6 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     ...configOptions,
   };
   const {
-    connectionFilterComputedColumns,
-    connectionFilterSetofFunctions,
     connectionFilterRelations,
     connectionFilterLogicalOperators,
   } = options;
@@ -28,20 +26,14 @@ module.exports = function PostGraphileConnectionFilterPlugin(
   require("./src/ConnectionArgFilterPlugin.js")(builder, options);
   require("./src/PgConnectionArgFilterPlugin.js")(builder, options);
   require("./src/PgConnectionArgFilterColumnsPlugin.js")(builder, options);
-
-  if (connectionFilterComputedColumns) {
-    require("./src/PgConnectionArgFilterComputedColumnsPlugin.js")(
-      builder,
-      options
-    );
-  }
-
-  if (connectionFilterSetofFunctions) {
-    require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js")(
-      builder,
-      options
-    );
-  }
+  require("./src/PgConnectionArgFilterComputedColumnsPlugin.js")(
+    builder,
+    options
+  );
+  require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js")(
+    builder,
+    options
+  );
 
   if (connectionFilterRelations) {
     require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js")(

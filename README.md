@@ -495,6 +495,15 @@ postgraphile(pgConfig, schema, {
 })
 ```
 
+Consider setting this to `false` and using `@filterable` [smart comments](https://www.graphile.org/postgraphile/smart-comments/) to selectively enable filtering:
+
+```sql
+create function app_public.foo_computed(foo app_public.foo)
+  returns ... as $$ ... $$ language sql stable;
+
+comment on function app_public.foo_computed(foo app_public.foo) is E'@filterable';
+```
+
 </details>
 
 <details>
@@ -560,6 +569,15 @@ postgraphile(pgConfig, schema, {
     connectionFilterSetofFunctions: false, // default: true
   },
 })
+```
+
+Consider setting this to `false` and using `@filterable` [smart comments](https://www.graphile.org/postgraphile/smart-comments/) to selectively enable filtering:
+
+```sql
+create function app_public.some_foos()
+  returns setof ... as $$ ... $$ language sql stable;
+
+comment on function app_public.some_foos() is E'@filterable';
 ```
 
 </details>
