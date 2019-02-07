@@ -3,7 +3,7 @@ const { readFile } = require("fs");
 const pgConnectionString = require("pg-connection-string");
 
 // This test suite can be flaky. Increase it’s timeout.
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 20;
+jest.setTimeout(1000 * 20);
 
 function readFilePromise(filename, encoding) {
   return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ const withPgClient = async (url, fn) => {
     try {
       await client.release();
     } catch (e) {
-      console.error("Error releasing pgClient", e);
+      console.error("Error releasing pgClient", e); // eslint-disable-line no-console
     }
     await pgPool.end();
   }
