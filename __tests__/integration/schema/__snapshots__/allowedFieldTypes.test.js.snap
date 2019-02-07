@@ -1246,6 +1246,61 @@ type FuncReturnsTableOneColEdge {
   node: Int
 }
 
+\\"\\"\\"
+A connection to a list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` values.
+\\"\\"\\"
+type FuncTaggedFilterableReturnsTableMultiColConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`FuncTaggedFilterableReturnsTableMultiColRecord\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [FuncTaggedFilterableReturnsTableMultiColEdge!]!
+
+  \\"\\"\\"A list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` objects.\\"\\"\\"
+  nodes: [FuncTaggedFilterableReturnsTableMultiColRecord]!
+}
+
+\\"\\"\\"
+A \`FuncTaggedFilterableReturnsTableMultiColRecord\` edge in the connection.
+\\"\\"\\"
+type FuncTaggedFilterableReturnsTableMultiColEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"
+  The \`FuncTaggedFilterableReturnsTableMultiColRecord\` at the end of the edge.
+  \\"\\"\\"
+  node: FuncTaggedFilterableReturnsTableMultiColRecord
+}
+
+\\"\\"\\"
+The return type of our \`funcTaggedFilterableReturnsTableMultiCol\` query.
+\\"\\"\\"
+type FuncTaggedFilterableReturnsTableMultiColRecord {
+  col1: Int
+  col2: String
+}
+
+\\"\\"\\"
+A filter to be used against \`FuncTaggedFilterableReturnsTableMultiColRecord\`
+object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input FuncTaggedFilterableReturnsTableMultiColRecordFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [FuncTaggedFilterableReturnsTableMultiColRecordFilter!]
+
+  \\"\\"\\"Filter by the object’s \`col1\` field.\\"\\"\\"
+  col1: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`col2\` field.\\"\\"\\"
+  col2: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: FuncTaggedFilterableReturnsTableMultiColRecordFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [FuncTaggedFilterableReturnsTableMultiColRecordFilter!]
+}
+
 \\"\\"\\"An IPv4 or IPv6 host address, and optionally its subnet.\\"\\"\\"
 scalar InternetAddress
 
@@ -2253,6 +2308,30 @@ type Query implements Node {
     \\"\\"\\"
     offset: Int
   ): FilterablesConnection!
+  funcTaggedFilterableReturnsTableMultiCol(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: FuncTaggedFilterableReturnsTableMultiColRecordFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+  ): FuncTaggedFilterableReturnsTableMultiColConnection!
 
   \\"\\"\\"Reads a single \`Junction\` using its globally unique \`ID\`.\\"\\"\\"
   junction(

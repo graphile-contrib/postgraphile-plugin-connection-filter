@@ -240,14 +240,22 @@ $$ language sql stable;
 
 -- @filterable smart comments
 
+create function p.filterable_computed_tagged_filterable(filterable p.filterable) returns int as $$
+  select 42;
+$$ language sql stable;
+
+comment on function p.filterable_computed_tagged_filterable (filterable p.filterable) is E'@filterable';
+
 create function p.func_tagged_filterable_returns_setof_filterable() returns setof p.filterable as $$
   select * from p.filterable;
 $$ language sql stable;
 
 comment on function p.func_tagged_filterable_returns_setof_filterable() is E'@filterable';
 
-create function p.filterable_computed_tagged_filterable(filterable p.filterable) returns int as $$
-  select 42;
+create function p.func_tagged_filterable_returns_table_multi_col() returns table (col1 int, col2 text) as $$
+  select 42 as col1, 'out'::text as col2
+  union
+  select 43 as col1, 'out2'::text as col2;
 $$ language sql stable;
 
-comment on function p.filterable_computed_tagged_filterable (filterable p.filterable) is E'@filterable';
+comment on function p.func_tagged_filterable_returns_table_multi_col() is E'@filterable';
