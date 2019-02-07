@@ -32,15 +32,17 @@ module.exports = function PgConnectionArgFilterPlugin(
         field,
         Self,
       } = context;
+
       const shouldAddFilter = isPgFieldConnection || isPgFieldSimpleCollection;
-      if (
-        !shouldAddFilter ||
-        !source ||
-        (source.kind !== "class" &&
-          (source.kind !== "procedure" || !connectionFilterSetofFunctions)) ||
-        omit(source, "filter")
-      ) {
-        return args;
+      if (!shouldAddFilter) return args;
+
+      if (!source) return args;
+      if (omit(source, "filter")) return args;
+
+      if (source.kind === "procedure") {
+        if (!(source.tags.filterable || connectionFilterSetofFunctions)) {
+          return args;
+        }
       }
 
       const returnTypeId =
@@ -54,10 +56,10 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (!returnType) {
         return args;
       }
-      const nodeTypeName =
-        returnTypeId === "2249" // returns `RECORD`
-          ? inflection.recordFunctionReturnType(source)
-          : pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null).name;
+      const isRecordLike = returnTypeId === "2249";
+      const nodeTypeName = isRecordLike
+        ? inflection.recordFunctionReturnType(source)
+        : pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null).name;
       const filterTypeName = inflection.filterType(nodeTypeName);
       const nodeType = getTypeByName(nodeTypeName);
       if (!nodeType) {

@@ -1,4 +1,7 @@
-module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
+module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
+  builder,
+  { connectionFilterComputedColumns }
+) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -13,53 +16,66 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
       connectionFilterTypesByTypeName,
     } = build;
     const {
+      scope: { isPgConnectionFilter, pgIntrospection: table },
       fieldWithHooks,
-      scope: { pgIntrospection: table, isPgConnectionFilter },
       Self,
     } = context;
 
-    if (!isPgConnectionFilter || table.kind !== "class") return fields;
+    if (!isPgConnectionFilter || !table || table.kind !== "class") {
+      return fields;
+    }
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const procByFieldName = introspectionResultsByKind.procedure
-      .filter(proc => proc.isStable)
-      .filter(proc => proc.namespaceId === table.namespaceId)
-      .filter(proc => proc.name.startsWith(`${table.name}_`))
-      .filter(proc => proc.argTypeIds.length > 0)
-      .filter(proc => proc.argTypeIds[0] === table.typeId)
-      .filter(proc => !omit(proc, "filter"))
-      .reduce((memo, proc) => {
-        const argTypes = proc.argTypeIds.map(
-          typeId => introspectionResultsByKind.typeById[typeId]
+    const procByFieldName = introspectionResultsByKind.procedure.reduce(
+      (memo, proc) => {
+        // Must be marked @filterable OR enabled via plugin option
+        if (!(proc.tags.filterable || connectionFilterComputedColumns))
+          return memo;
+
+        // Must not be omitted
+        if (omit(proc, "execute")) return memo;
+        if (omit(proc, "filter")) return memo;
+
+        // Must be a computed column
+        const computedColumnDetails = getComputedColumnDetails(
+          build,
+          table,
+          proc
         );
-        if (
-          argTypes
-            .slice(1)
-            .some(
-              type => type.type === "c" && type.class && type.class.isSelectable
-            )
-        ) {
-          // Accepts two input tables? Skip.
+        if (!computedColumnDetails) return memo;
+        const { pseudoColumnName } = computedColumnDetails;
+
+        // Must have only one required argument
+        const nonOptionalArgumentsCount =
+          proc.argDefaultsNum - proc.inputArgsCount;
+        if (nonOptionalArgumentsCount > 1) {
           return memo;
         }
-        if (argTypes.length > 1) {
-          // Accepts arguments? Skip.
-          return memo;
-        }
-        if (proc.returnsSet) {
-          // Returns setof? Skip.
-          return memo;
-        }
-        const pseudoColumnName = proc.name.substr(table.name.length + 1);
+
+        // Must return a scalar or an array
+        if (proc.returnsSet) return memo;
+        const returnType =
+          introspectionResultsByKind.typeById[proc.returnTypeId];
+        const returnTypeTable =
+          introspectionResultsByKind.classById[returnType.classId];
+        if (returnTypeTable) return memo;
+        const isRecordLike = returnType.id === "2249";
+        if (isRecordLike) return memo;
+        const isVoid = String(returnType.id) === "2278";
+        if (isVoid) return memo;
+
+        // Looks good
         const fieldName = inflection.computedColumn(
           pseudoColumnName,
           proc,
           table
         );
-        memo[fieldName] = proc;
+        memo = build.extend(memo, { [fieldName]: proc });
         return memo;
-      }, {});
+      },
+      {}
+    );
 
     const operatorsTypeNameByFieldName = {};
 
@@ -118,4 +134,36 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(builder) {
 
     return extend(fields, procFields);
   });
+
+  function getComputedColumnDetails(build, table, proc) {
+    if (!proc.isStable) return null;
+    if (proc.namespaceId !== table.namespaceId) return null;
+    if (!proc.name.startsWith(`${table.name}_`)) return null;
+    if (proc.argTypeIds.length < 1) return null;
+    if (proc.argTypeIds[0] !== table.type.id) return null;
+
+    const argTypes = proc.argTypeIds.reduce((prev, typeId, idx) => {
+      if (
+        proc.argModes.length === 0 || // all args are `in`
+        proc.argModes[idx] === "i" || // this arg is `in`
+        proc.argModes[idx] === "b" // this arg is `inout`
+      ) {
+        prev.push(build.pgIntrospectionResultsByKind.typeById[typeId]);
+      }
+      return prev;
+    }, []);
+    if (
+      argTypes
+        .slice(1)
+        .some(
+          type => type.type === "c" && type.class && type.class.isSelectable
+        )
+    ) {
+      // Accepts two input tables? Skip.
+      return null;
+    }
+
+    const pseudoColumnName = proc.name.substr(table.name.length + 1);
+    return { argTypes, pseudoColumnName };
+  }
 };

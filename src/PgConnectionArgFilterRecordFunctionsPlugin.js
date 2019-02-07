@@ -1,4 +1,7 @@
-module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
+module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(
+  builder,
+  { connectionFilterSetofFunctions }
+) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -23,10 +26,13 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(builder) {
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    if (proc.returnTypeId !== "2249") {
-      // Does not return a `RECORD` type
+    // Must return a `RECORD` type
+    const isRecordLike = proc.returnTypeId === "2249";
+    if (!isRecordLike) return fields;
+
+    // Must be marked @filterable OR enabled via plugin option
+    if (!(proc.tags.filterable || connectionFilterSetofFunctions))
       return fields;
-    }
 
     const argModesWithOutput = [
       "o", // OUT,

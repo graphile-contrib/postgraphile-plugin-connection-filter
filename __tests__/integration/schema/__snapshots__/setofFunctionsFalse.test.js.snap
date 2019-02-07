@@ -2452,6 +2452,27 @@ type FuncTaggedFilterableReturnsTableMultiColRecord {
   col2: String
 }
 
+\\"\\"\\"
+A filter to be used against \`FuncTaggedFilterableReturnsTableMultiColRecord\`
+object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input FuncTaggedFilterableReturnsTableMultiColRecordFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [FuncTaggedFilterableReturnsTableMultiColRecordFilter!]
+
+  \\"\\"\\"Filter by the object’s \`col1\` field.\\"\\"\\"
+  col1: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`col2\` field.\\"\\"\\"
+  col2: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: FuncTaggedFilterableReturnsTableMultiColRecordFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [FuncTaggedFilterableReturnsTableMultiColRecordFilter!]
+}
+
 \\"\\"\\"An IPv4 or IPv6 host address, and optionally its subnet.\\"\\"\\"
 scalar InternetAddress
 
@@ -4043,6 +4064,11 @@ type Query implements Node {
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
 
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: FilterableFilter
+
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int
 
@@ -4061,6 +4087,11 @@ type Query implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: FuncTaggedFilterableReturnsTableMultiColRecordFilter
 
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int

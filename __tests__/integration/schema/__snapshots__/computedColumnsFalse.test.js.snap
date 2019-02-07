@@ -1878,6 +1878,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`char4\` field.\\"\\"\\"
   char4: StringFilter
 
+  \\"\\"\\"Filter by the object’s \`computedTaggedFilterable\` field.\\"\\"\\"
+  computedTaggedFilterable: IntFilter
+
   \\"\\"\\"Filter by the object’s \`date\` field.\\"\\"\\"
   date: DateFilter
 
