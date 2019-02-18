@@ -708,6 +708,122 @@ input BooleanFilter {
   notIn: [Boolean!]
 }
 
+scalar Char4Domain
+
+\\"\\"\\"
+A filter to be used against Char4Domain fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input Char4DomainFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: Char4Domain
+
+  \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
+  endsWith: Char4Domain
+
+  \\"\\"\\"Ends with the specified string (case-insensitive).\\"\\"\\"
+  endsWithInsensitive: Char4Domain
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Char4Domain
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Char4Domain
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Char4Domain
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [Char4Domain!]
+
+  \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
+  includes: Char4Domain
+
+  \\"\\"\\"Contains the specified string (case-insensitive).\\"\\"\\"
+  includesInsensitive: Char4Domain
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Char4Domain
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Char4Domain
+
+  \\"\\"\\"
+  Matches the specified pattern (case-sensitive). An underscore (_) matches any
+  single character; a percent sign (%) matches any sequence of zero or more characters.
+  \\"\\"\\"
+  like: Char4Domain
+
+  \\"\\"\\"
+  Matches the specified pattern (case-insensitive). An underscore (_) matches
+  any single character; a percent sign (%) matches any sequence of zero or more characters.
+  \\"\\"\\"
+  likeInsensitive: Char4Domain
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: Char4Domain
+
+  \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
+  notEndsWith: Char4Domain
+
+  \\"\\"\\"Does not end with the specified string (case-insensitive).\\"\\"\\"
+  notEndsWithInsensitive: Char4Domain
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Char4Domain
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [Char4Domain!]
+
+  \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
+  notIncludes: Char4Domain
+
+  \\"\\"\\"Does not contain the specified string (case-insensitive).\\"\\"\\"
+  notIncludesInsensitive: Char4Domain
+
+  \\"\\"\\"
+  Does not match the specified pattern (case-sensitive). An underscore (_)
+  matches any single character; a percent sign (%) matches any sequence of zero
+  or more characters.
+  \\"\\"\\"
+  notLike: Char4Domain
+
+  \\"\\"\\"
+  Does not match the specified pattern (case-insensitive). An underscore (_)
+  matches any single character; a percent sign (%) matches any sequence of zero
+  or more characters.
+  \\"\\"\\"
+  notLikeInsensitive: Char4Domain
+
+  \\"\\"\\"
+  Does not match the specified pattern using the SQL standard's definition of a regular expression.
+  \\"\\"\\"
+  notSimilarTo: Char4Domain
+
+  \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
+  notStartsWith: Char4Domain
+
+  \\"\\"\\"Does not start with the specified string (case-insensitive).\\"\\"\\"
+  notStartsWithInsensitive: Char4Domain
+
+  \\"\\"\\"
+  Matches the specified pattern using the SQL standard's definition of a regular expression.
+  \\"\\"\\"
+  similarTo: Char4Domain
+
+  \\"\\"\\"Starts with the specified string (case-sensitive).\\"\\"\\"
+  startsWith: Char4Domain
+
+  \\"\\"\\"Starts with the specified string (case-insensitive).\\"\\"\\"
+  startsWithInsensitive: Char4Domain
+}
+
 type Child implements Node {
   \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Child\`.\\"\\"\\"
   filterableByFilterableId: Filterable
@@ -793,6 +909,50 @@ scalar Cursor
 
 \\"\\"\\"The day, does not include a time.\\"\\"\\"
 scalar Date
+
+scalar DateDomain
+
+\\"\\"\\"
+A filter to be used against DateDomain fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateDomainFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: DateDomain
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: DateDomain
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: DateDomain
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: DateDomain
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [DateDomain!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: DateDomain
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: DateDomain
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: DateDomain
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: DateDomain
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [DateDomain!]
+}
 
 \\"\\"\\"
 A filter to be used against Date fields. All fields are combined with a logical ‘and.’
@@ -1102,6 +1262,85 @@ input DatetimeRangeInput {
   start: DatetimeRangeBoundInput
 }
 
+type DomainType implements Node {
+  char4Domain: Char4Domain
+  dateDomain: DateDomain
+  id: Int!
+  int4Domain: Int4Domain
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A filter to be used against \`DomainType\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DomainTypeFilter {
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [DomainTypeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`char4Domain\` field.\\"\\"\\"
+  char4Domain: Char4DomainFilter
+
+  \\"\\"\\"Filter by the object’s \`dateDomain\` field.\\"\\"\\"
+  dateDomain: DateDomainFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`int4Domain\` field.\\"\\"\\"
+  int4Domain: Int4DomainFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: DomainTypeFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [DomainTypeFilter!]
+}
+
+\\"\\"\\"A connection to a list of \`DomainType\` values.\\"\\"\\"
+type DomainTypesConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`DomainType\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [DomainTypesEdge!]!
+
+  \\"\\"\\"A list of \`DomainType\` objects.\\"\\"\\"
+  nodes: [DomainType]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`DomainType\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`DomainType\` edge in the connection.\\"\\"\\"
+type DomainTypesEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`DomainType\` at the end of the edge.\\"\\"\\"
+  node: DomainType
+}
+
+\\"\\"\\"Methods to use when ordering \`DomainType\`.\\"\\"\\"
+enum DomainTypesOrderBy {
+  CHAR4_DOMAIN_ASC
+  CHAR4_DOMAIN_DESC
+  DATE_DOMAIN_ASC
+  DATE_DOMAIN_DESC
+  ID_ASC
+  ID_DESC
+  INT4_DOMAIN_ASC
+  INT4_DOMAIN_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
 type EnumArrayType implements Node {
   enumArray: [Mood]
   id: Int!
@@ -1361,6 +1600,7 @@ type Filterable implements Node {
   macaddr: String
   macaddr8: String
   money: Float
+  name: String
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -1478,6 +1718,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`money\` field.\\"\\"\\"
   money: FloatFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: FilterableFilter
@@ -1600,6 +1843,8 @@ enum FilterablesOrderBy {
   MACADDR8_DESC
   MONEY_ASC
   MONEY_DESC
+  NAME_ASC
+  NAME_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC
@@ -1985,6 +2230,50 @@ input FuncTaggedFilterableReturnsTableMultiColRecordFilter {
 
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [FuncTaggedFilterableReturnsTableMultiColRecordFilter!]
+}
+
+scalar Int4Domain
+
+\\"\\"\\"
+A filter to be used against Int4Domain fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input Int4DomainFilter {
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: Int4Domain
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: Int4Domain
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: Int4Domain
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: Int4Domain
+
+  \\"\\"\\"Included in the specified list.\\"\\"\\"
+  in: [Int4Domain!]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: Int4Domain
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: Int4Domain
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: Int4Domain
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: Int4Domain
+
+  \\"\\"\\"Not included in the specified list.\\"\\"\\"
+  notIn: [Int4Domain!]
 }
 
 \\"\\"\\"An IPv4 or IPv6 host address, and optionally its subnet.\\"\\"\\"
@@ -2762,6 +3051,35 @@ type Query implements Node {
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection
 
+  \\"\\"\\"Reads and enables pagination through a set of \`DomainType\`.\\"\\"\\"
+  allDomainTypes(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: DomainTypeFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`DomainType\`.\\"\\"\\"
+    orderBy: [DomainTypesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): DomainTypesConnection
+
   \\"\\"\\"Reads and enables pagination through a set of \`EnumArrayType\`.\\"\\"\\"
   allEnumArrayTypes(
     \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
@@ -3161,6 +3479,15 @@ type Query implements Node {
     nodeId: ID!
   ): Child
   childById(id: Int!): Child
+
+  \\"\\"\\"Reads a single \`DomainType\` using its globally unique \`ID\`.\\"\\"\\"
+  domainType(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`DomainType\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): DomainType
+  domainTypeById(id: Int!): DomainType
 
   \\"\\"\\"Reads a single \`EnumArrayType\` using its globally unique \`ID\`.\\"\\"\\"
   enumArrayType(

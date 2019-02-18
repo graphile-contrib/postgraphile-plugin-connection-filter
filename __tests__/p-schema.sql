@@ -47,6 +47,7 @@ create table p.filterable (
   "macaddr" macaddr, -- treated as String in PostGraphile v4
   "macaddr8" macaddr8, -- treated as String in PostGraphile v4
   "money" money,
+  "name" name,
   "numeric" numeric,
   "text" text,
   "time" time,
@@ -70,6 +71,8 @@ create table p.filterable (
   unique ("backward_compound_1", "backward_compound_2"),
   foreign key ("forward_compound_1", "forward_compound_2") references p.forward_compound ("forward_compound_1", "forward_compound_2")
 );
+
+comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
 create table p.array_types (
   id serial primary key,
@@ -125,6 +128,17 @@ create table p.range_array_types (
   "timestamptz_range_array" tstzrange[]
 );
 
+create domain p.char4_domain as char(4) check (lower(value) = 'test');
+create domain p.date_domain as date check (value >= '1990-01-01'::date);
+create domain p.int4_domain as int4 check (value > 0);
+
+create table p.domain_types (
+  id serial primary key,
+  "char4_domain" p.char4_domain,
+  "date_domain" p.date_domain,
+  "int4_domain" p.int4_domain  
+);
+
 create table p.enum_types (
   id serial primary key,
   "enum" p.mood
@@ -134,8 +148,6 @@ create table p.enum_array_types (
   id serial primary key,
   "enum_array" p.mood[]
 );
-
-comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
 create table p.backward (
   id serial primary key,
