@@ -259,6 +259,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       const actualStringPgTypeIds = [
         "1042", // bpchar
         "18", //   char
+        "19", //   name
         "25", //   text
         "1043", // varchar
       ];
@@ -298,7 +299,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       const rangeElementInputType = pgType.rangeSubTypeId
         ? pgGetGqlInputTypeByTypeIdAndModifier(
             pgType.rangeSubTypeId,
-        pgTypeModifier
+            pgTypeModifier
           )
         : null;
 

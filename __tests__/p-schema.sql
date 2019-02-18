@@ -47,6 +47,7 @@ create table p.filterable (
   "macaddr" macaddr, -- treated as String in PostGraphile v4
   "macaddr8" macaddr8, -- treated as String in PostGraphile v4
   "money" money,
+  "name" name,
   "numeric" numeric,
   "text" text,
   "time" time,
@@ -70,6 +71,8 @@ create table p.filterable (
   unique ("backward_compound_1", "backward_compound_2"),
   foreign key ("forward_compound_1", "forward_compound_2") references p.forward_compound ("forward_compound_1", "forward_compound_2")
 );
+
+comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
 create table p.array_types (
   id serial primary key,
@@ -145,8 +148,6 @@ create table p.enum_array_types (
   id serial primary key,
   "enum_array" p.mood[]
 );
-
-comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
 create table p.backward (
   id serial primary key,

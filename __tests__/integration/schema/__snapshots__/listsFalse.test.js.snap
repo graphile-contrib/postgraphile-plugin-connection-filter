@@ -1600,6 +1600,7 @@ type Filterable implements Node {
   macaddr: String
   macaddr8: String
   money: Float
+  name: String
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -1717,6 +1718,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`money\` field.\\"\\"\\"
   money: FloatFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: FilterableFilter
@@ -1839,6 +1843,8 @@ enum FilterablesOrderBy {
   MACADDR8_DESC
   MONEY_ASC
   MONEY_DESC
+  NAME_ASC
+  NAME_DESC
   NATURAL
   NUMERIC_ASC
   NUMERIC_DESC

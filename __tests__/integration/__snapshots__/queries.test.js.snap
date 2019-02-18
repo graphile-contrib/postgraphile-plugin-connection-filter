@@ -8913,6 +8913,302 @@ Object {
 }
 `;
 
+exports[`types.name.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "endsWith": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "endsWithInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "includes": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "includesInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "like": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "likeInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEndsWith": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notEndsWithInsensitive": Object {
+      "nodes": Array [],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIncludes": Object {
+      "nodes": Array [
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIncludesInsensitive": Object {
+      "nodes": Array [],
+    },
+    "notLike": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notLikeInsensitive": Object {
+      "nodes": Array [],
+    },
+    "notSimilarTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notStartsWith": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notStartsWithInsensitive": Object {
+      "nodes": Array [],
+    },
+    "similarTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "startsWith": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "startsWithInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.numeric.graphql 1`] = `
 Object {
   "data": Object {

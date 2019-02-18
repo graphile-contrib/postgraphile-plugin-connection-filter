@@ -688,6 +688,7 @@ type Filterable implements Node {
   macaddr: String
   macaddr8: String
   money: Float
+  name: String
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.

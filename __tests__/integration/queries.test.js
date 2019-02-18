@@ -111,7 +111,7 @@ beforeAll(() => {
             pgClient: pgClient,
           });
           if (result.errors) {
-            console.log(result.errors.map(e => e.originalError));
+            console.log(result.errors.map(e => e.originalError)); // eslint-disable-line no-console
           }
           return result;
         })
