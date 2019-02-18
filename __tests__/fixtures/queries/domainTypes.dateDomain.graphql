@@ -1,0 +1,47 @@
+query dateDomain($v2: DateDomain = "1999-02-01", $v3: DateDomain = "1999-03-01") {
+  distinctFrom: allDomainTypes(filter: { dateDomain: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allDomainTypes(filter: { dateDomain: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allDomainTypes(filter: { dateDomain: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allDomainTypes(
+    filter: { dateDomain: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allDomainTypes(filter: { dateDomain: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allDomainTypes(filter: { dateDomain: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allDomainTypes(filter: { dateDomain: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allDomainTypes(
+    filter: { dateDomain: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allDomainTypes(
+    filter: { dateDomain: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allDomainTypes(filter: { dateDomain: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allDomainTypes(filter: { dateDomain: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on DomainTypesConnection {
+  nodes {
+    id
+  }
+}

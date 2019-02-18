@@ -1,0 +1,47 @@
+query int4Domain($v2: Int4Domain = 2, $v3: Int4Domain = 3) {
+  distinctFrom: allDomainTypes(filter: { int4Domain: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allDomainTypes(filter: { int4Domain: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allDomainTypes(filter: { int4Domain: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allDomainTypes(
+    filter: { int4Domain: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allDomainTypes(filter: { int4Domain: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allDomainTypes(filter: { int4Domain: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allDomainTypes(filter: { int4Domain: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allDomainTypes(
+    filter: { int4Domain: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allDomainTypes(
+    filter: { int4Domain: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allDomainTypes(filter: { int4Domain: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allDomainTypes(filter: { int4Domain: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on DomainTypesConnection {
+  nodes {
+    id
+  }
+}

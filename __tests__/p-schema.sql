@@ -125,6 +125,17 @@ create table p.range_array_types (
   "timestamptz_range_array" tstzrange[]
 );
 
+create domain p.char4_domain as char(4) check (lower(value) = 'test');
+create domain p.date_domain as date check (value >= '1990-01-01'::date);
+create domain p.int4_domain as int4 check (value > 0);
+
+create table p.domain_types (
+  id serial primary key,
+  "char4_domain" p.char4_domain,
+  "date_domain" p.date_domain,
+  "int4_domain" p.int4_domain  
+);
+
 create table p.enum_types (
   id serial primary key,
   "enum" p.mood

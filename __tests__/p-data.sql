@@ -38,6 +38,14 @@ insert into p.range_types
   (4,  '[1999-04-01, 1999-05-01)', '[4,5)',      '[4,5)',      '[4,5)',         '[1999-04-01 00:00, 1999-05-01 00:00)', '[1999-04-01 00:00, 1999-05-01 00:00)'),
   (5,  null,                       null,         null,         null,            null,                                   null);
 
+insert into p.domain_types
+  (id, char4_domain, date_domain, int4_domain) values
+  (1, 'test', '1999-01-01', 1),
+  (2, 'tEST', '1999-02-01', 2),
+  (3, 'Test', '1999-03-01', 3),
+  (4, 'TEST', '1999-04-01', 4),
+  (5, null,   null,         null);
+
 insert into p.enum_types
   (id, "enum") values
   (1,  'sad'),

@@ -1,0 +1,123 @@
+query char4Domain($v2: Char4Domain = "tEST", $v3: Char4Domain = "Test") {
+  distinctFrom: allDomainTypes(filter: { char4Domain: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  endsWith: allDomainTypes(filter: { char4Domain: { endsWith: "t" } }) {
+    ...nodes
+  }
+  endsWithInsensitive: allDomainTypes(
+    filter: { char4Domain: { endsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  equalTo: allDomainTypes(filter: { char4Domain: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allDomainTypes(filter: { char4Domain: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allDomainTypes(
+    filter: { char4Domain: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allDomainTypes(filter: { char4Domain: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  includes: allDomainTypes(filter: { char4Domain: { includes: "t" } }) {
+    ...nodes
+  }
+  includesInsensitive: allDomainTypes(
+    filter: { char4Domain: { includesInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  isNull: allDomainTypes(filter: { char4Domain: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allDomainTypes(filter: { char4Domain: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allDomainTypes(
+    filter: { char4Domain: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  like: allDomainTypes(filter: { char4Domain: { like: "%es%" } }) {
+    ...nodes
+  }
+  likeInsensitive: allDomainTypes(
+    filter: { char4Domain: { likeInsensitive: "%es%" } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allDomainTypes(
+    filter: { char4Domain: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEndsWith: allDomainTypes(filter: { char4Domain: { notEndsWith: "t" } }) {
+    ...nodes
+  }
+  notEndsWithInsensitive: allDomainTypes(
+    filter: { char4Domain: { notEndsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allDomainTypes(filter: { char4Domain: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allDomainTypes(filter: { char4Domain: { notIn: [$v2] } }) {
+    ...nodes
+  }
+  notIncludes: allDomainTypes(filter: { char4Domain: { notIncludes: "t" } }) {
+    ...nodes
+  }
+  notIncludesInsensitive: allDomainTypes(
+    filter: { char4Domain: { notIncludesInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  notLike: allDomainTypes(filter: { char4Domain: { notLike: "%es%" } }) {
+    ...nodes
+  }
+  notLikeInsensitive: allDomainTypes(
+    filter: { char4Domain: { notLikeInsensitive: "%es%" } }
+  ) {
+    ...nodes
+  }
+  notSimilarTo: allDomainTypes(
+    filter: { char4Domain: { notSimilarTo: "%(te|st)%" } }
+  ) {
+    ...nodes
+  }
+  notStartsWith: allDomainTypes(
+    filter: { char4Domain: { notStartsWith: "t" } }
+  ) {
+    ...nodes
+  }
+  notStartsWithInsensitive: allDomainTypes(
+    filter: { char4Domain: { notStartsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+  similarTo: allDomainTypes(
+    filter: { char4Domain: { similarTo: "%(te|st)%" } }
+  ) {
+    ...nodes
+  }
+  startsWith: allDomainTypes(filter: { char4Domain: { startsWith: "t" } }) {
+    ...nodes
+  }
+  startsWithInsensitive: allDomainTypes(
+    filter: { char4Domain: { startsWithInsensitive: "t" } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on DomainTypesConnection {
+  nodes {
+    id
+  }
+}

@@ -329,7 +329,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
       containsElement: {
         description: "Contains the specified value.",
-        resolveType: (_fieldInputType, elementInputType) => elementInputType,
+        resolveType: (_fieldInputType, rangeElementInputType) =>
+          rangeElementInputType,
         resolveSqlValue: (input, pgType, pgTypeModifier) => {
           const rangeSubType =
             introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
@@ -451,7 +452,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         pgConnectionFilterOperatorsCategory,
         fieldType,
         fieldInputType,
-        elementInputType,
+        rangeElementInputType,
+        domainBaseType,
       },
       fieldWithHooks,
       Self,
@@ -514,6 +516,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       Array: connectionFilterArrayOperators,
       Range: connectionFilterRangeOperators,
       Enum: connectionFilterEnumOperators,
+      Domain: domainBaseType
+        ? connectionFilterScalarOperators[domainBaseType.name]
+        : {},
       Scalar: connectionFilterScalarOperators[fieldType.name],
     };
     const operatorSpecs =
@@ -535,7 +540,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
           return memo;
         }
         const type = resolveType
-          ? resolveType(fieldInputType, elementInputType)
+          ? resolveType(fieldInputType, rangeElementInputType)
           : fieldInputType;
 
         const operatorName =

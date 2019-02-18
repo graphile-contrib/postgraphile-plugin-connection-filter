@@ -137,6 +137,10 @@ The following types have additional operators:
 | SIMILAR TO '...' | similarTo: `String` | Matches the specified pattern using the SQL standard's definition of a regular expression. |
 | NOT SIMILAR TO '...' | notSimilarTo: `String` | Does not match the specified pattern using the SQL standard's definition of a regular expression. |
 
+### Domains
+
+Domain fields have the same operators as the domain's base type. For example, a domain type declared with `create domain ... as text check (...);` would have all of the String operators.
+
 ### Enums
 
 Enum fields have the same operators as scalar fields.

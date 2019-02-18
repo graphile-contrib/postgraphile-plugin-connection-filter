@@ -203,37 +203,58 @@ module.exports = function PgConnectionArgFilterPlugin(
       pgTypeModifier
     ) => {
       const pgType = introspectionResultsByKind.typeById[pgTypeId];
-      const allowedPgTypeTypes = ["b", "e", "r"];
+
+      const allowedPgTypeTypes = ["b", "d", "e", "r"];
       if (!allowedPgTypeTypes.includes(pgType.type)) {
-        // Not a base, enum, or range type? Skip.
+        // Not a base, domain, enum, or range type? Skip.
         return null;
       }
+
+      // Perform some checks on the simple type (after removing array/range/domain wrappers)
       const pgGetNonArrayType = pgType =>
         pgType.isPgArray ? pgType.arrayItemType : pgType;
       const pgGetNonRangeType = pgType =>
         pgType.rangeSubTypeId
           ? introspectionResultsByKind.typeById[pgType.rangeSubTypeId]
           : pgType;
+      const pgGetNonDomainType = pgType =>
+        pgType.type === "d"
+          ? introspectionResultsByKind.typeById[pgType.domainBaseTypeId]
+          : pgType;
       const pgGetSimpleType = pgType =>
-        pgGetNonRangeType(pgGetNonArrayType(pgType));
+        pgGetNonDomainType(pgGetNonRangeType(pgGetNonArrayType(pgType)));
       const pgSimpleType = pgGetSimpleType(pgType);
-      if (pgSimpleType.name === "json") {
-        // Skip type creation with `json` so the proper operators
-        // will be created with `jsonb`, if present
+      if (!pgSimpleType) return null;
+      if (
+        !(
+          pgSimpleType.type === "e" ||
+          (pgSimpleType.type === "b" && !pgSimpleType.isPgArray)
+        )
+      ) {
+        // Haven't found an enum type or a non-array base type? Skip.
         return null;
       }
+      if (pgSimpleType.name === "json") {
+        // The PG `json` type has no valid operators.
+        // Skip filter type creation to allow the proper
+        // operators to be exposed for PG `jsonb` types.
+        return null;
+      }
+
+      // Establish field type and field input type
       const fieldType = pgGetGqlTypeByTypeIdAndModifier(
         pgTypeId,
         pgTypeModifier
       );
-      if (!fieldType) {
-        return null;
-      }
-      const namedType = getNamedType(fieldType);
+      if (!fieldType) return null;
       const fieldInputType = pgGetGqlInputTypeByTypeIdAndModifier(
         pgTypeId,
         pgTypeModifier
       );
+      if (!fieldInputType) return null;
+
+      // Avoid exposing filter operators on unrecognized types that PostGraphile handles as Strings
+      const namedType = getNamedType(fieldType);
       const namedInputType = getNamedType(fieldInputType);
       const actualStringPgTypeIds = [
         "1042", // bpchar
@@ -250,7 +271,7 @@ module.exports = function PgConnectionArgFilterPlugin(
         return null;
       }
 
-      // Check whether this field type is filterable
+      // Respect `connectionFilterAllowedFieldTypes` config option
       if (
         connectionFilterAllowedFieldTypes &&
         !connectionFilterAllowedFieldTypes.includes(namedType.name)
@@ -258,13 +279,11 @@ module.exports = function PgConnectionArgFilterPlugin(
         return null;
       }
 
+      // Respect `connectionFilterLists` config option
       const isListType = fieldType instanceof GraphQLList;
       if (isListType && !connectionFilterLists) {
         return null;
       }
-      const operatorsTypeName = isListType
-        ? inflection.filterFieldListType(namedType.name)
-        : inflection.filterFieldType(namedType.name);
 
       const pgConnectionFilterOperatorsCategory = pgType.isPgArray
         ? "Array"
@@ -272,12 +291,28 @@ module.exports = function PgConnectionArgFilterPlugin(
         ? "Range"
         : pgType.type === "e"
         ? "Enum"
+        : pgType.type === "d"
+        ? "Domain"
         : "Scalar";
 
-      const elementInputType = pgGetGqlInputTypeByTypeIdAndModifier(
-        pgSimpleType.id,
+      const rangeElementInputType = pgType.rangeSubTypeId
+        ? pgGetGqlInputTypeByTypeIdAndModifier(
+            pgType.rangeSubTypeId,
         pgTypeModifier
-      );
+          )
+        : null;
+
+      const domainBaseType =
+        pgType.type === "d"
+          ? pgGetGqlTypeByTypeIdAndModifier(
+              pgType.domainBaseTypeId,
+              pgType.domainTypeModifier
+            )
+          : null;
+
+      const operatorsTypeName = isListType
+        ? inflection.filterFieldListType(namedType.name)
+        : inflection.filterFieldType(namedType.name);
 
       const existingType = connectionFilterTypesByTypeName[operatorsTypeName];
       if (existingType) {
@@ -306,7 +341,8 @@ module.exports = function PgConnectionArgFilterPlugin(
           pgConnectionFilterOperatorsCategory,
           fieldType,
           fieldInputType,
-          elementInputType,
+          rangeElementInputType,
+          domainBaseType,
         },
         true
       );
