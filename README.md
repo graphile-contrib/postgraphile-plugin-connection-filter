@@ -412,23 +412,6 @@ query {
 }
 ```
 
-There is also an `exist` Boolean field for evaluating whether any related objects exist.
-
-```graphql
-query {
-  allPeople(filter: {
-    postsByAuthorId: {
-      exist: true
-    }
-  }) {
-    nodes {
-      id
-      createdAt
-    }
-  }
-}
-```
-
 </details>
 
 For additional examples, see the [tests](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/__tests__/fixtures/queries/filters.graphql).

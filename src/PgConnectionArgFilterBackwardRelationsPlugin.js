@@ -350,7 +350,6 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       newWithHooks,
       inflection,
       pgSql: sql,
-      graphql: { GraphQLBoolean },
       connectionFilterResolve,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
@@ -384,16 +383,6 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
     );
 
     const manyFields = {
-      exist: fieldWithHooks(
-        "exist",
-        {
-          description: `A related \`${foreignTableTypeName}\` exists.`,
-          type: GraphQLBoolean,
-        },
-        {
-          isPgConnectionFilterManyField: true,
-        }
-      ),
       every: fieldWithHooks(
         "every",
         {
@@ -444,31 +433,22 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       )})`;
       const sqlSelectWhereKeysMatch = sql.query`select 1 from ${sqlIdentifier} as ${foreignTableAlias} where ${sqlKeysMatch}`;
 
-      if (fieldName === "exist") {
-        if (fieldValue === true) {
-          return sql.query`exists(${sqlSelectWhereKeysMatch})`;
-        } else if (fieldValue === false) {
-          return sql.query`not exists(${sqlSelectWhereKeysMatch})`;
-        }
-        throw new Error(`Unknown field value: ${fieldValue}`);
-      } else {
-        const sqlFragment = connectionFilterResolve(
-          fieldValue,
-          foreignTableAlias,
-          foreignTableFilterTypeName,
-          queryBuilder
-        );
-        if (sqlFragment == null) {
-          return null;
-        } else if (fieldName === "every") {
-          return sql.query`not exists(${sqlSelectWhereKeysMatch} and not (${sqlFragment}))`;
-        } else if (fieldName === "some") {
-          return sql.query`exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`;
-        } else if (fieldName === "none") {
-          return sql.query`not exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`;
-        }
-        throw new Error(`Unknown field name: ${fieldName}`);
+      const sqlFragment = connectionFilterResolve(
+        fieldValue,
+        foreignTableAlias,
+        foreignTableFilterTypeName,
+        queryBuilder
+      );
+      if (sqlFragment == null) {
+        return null;
+      } else if (fieldName === "every") {
+        return sql.query`not exists(${sqlSelectWhereKeysMatch} and not (${sqlFragment}))`;
+      } else if (fieldName === "some") {
+        return sql.query`exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`;
+      } else if (fieldName === "none") {
+        return sql.query`not exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`;
       }
+      throw new Error(`Unknown field name: ${fieldName}`);
     };
 
     for (const fieldName of Object.keys(manyFields)) {
