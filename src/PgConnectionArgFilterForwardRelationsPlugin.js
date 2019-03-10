@@ -1,10 +1,18 @@
 module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
+  builder.hook("inflection", inflection => ({
+    ...inflection,
+    filterForwardRelationExistsFieldName(relationFieldName) {
+      return `${relationFieldName}Exists`;
+    },
+  }));
+
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       describePgEntity,
       extend,
       newWithHooks,
       inflection,
+      graphql: { GraphQLBoolean },
       pgOmit: omit,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
@@ -97,13 +105,13 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
     };
 
     for (const spec of forwardRelationSpecs) {
-        const { constraint, foreignTable, keyAttributes } = spec;
-        const fieldName = inflection.singleRelationByKeys(
-          keyAttributes,
-          foreignTable,
-          table,
-          constraint
-        );
+      const { constraint, foreignTable, keyAttributes } = spec;
+      const fieldName = inflection.singleRelationByKeys(
+        keyAttributes,
+        foreignTable,
+        table,
+        constraint
+      );
       const foreignTableTypeName = inflection.tableType(foreignTable);
       const foreignTableFilterTypeName = inflection.filterType(
         foreignTableTypeName
@@ -117,7 +125,7 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       if (!ForeignTableFilterType) continue;
 
       addField(
-          fieldName,
+        fieldName,
         `Filter by the object’s \`${fieldName}\` relation.`,
         ForeignTableFilterType,
         resolve,
@@ -125,8 +133,25 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         `Adding connection filter forward relation field from ${describePgEntity(
           table
         )} to ${describePgEntity(foreignTable)}`
+      );
+
+      const keyIsNullable = !keyAttributes.every(attr => attr.isNotNull);
+      if (keyIsNullable) {
+        const existsFieldName = inflection.filterForwardRelationExistsFieldName(
+          fieldName
+        );
+        addField(
+          existsFieldName,
+          `A related \`${fieldName}\` exists.`,
+          GraphQLBoolean,
+          resolveExists,
+          spec,
+          `Adding connection filter forward relation exists field from ${describePgEntity(
+            table
+          )} to ${describePgEntity(foreignTable)}`
         );
       }
+    }
 
     function resolve({ sourceAlias, fieldName, fieldValue, queryBuilder }) {
       if (fieldValue == null) return null;
@@ -138,7 +163,6 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
       } = forwardRelationSpecByFieldName[fieldName];
 
       const foreignTableAlias = sql.identifier(Symbol());
-      if (foreignTable == null) return null;
 
       const sqlIdentifier = sql.identifier(
         foreignTable.namespace.name,
@@ -176,6 +200,40 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         where ${sqlKeysMatch} and
           (${sqlFragment})
       )`;
+    }
+
+    function resolveExists({ sourceAlias, fieldName, fieldValue }) {
+      if (fieldValue == null) return null;
+
+      const {
+        foreignTable,
+        foreignKeyAttributes,
+        keyAttributes,
+      } = forwardRelationSpecByFieldName[fieldName];
+
+      const foreignTableAlias = sql.identifier(Symbol());
+
+      const sqlIdentifier = sql.identifier(
+        foreignTable.namespace.name,
+        foreignTable.name
+      );
+
+      const sqlKeysMatch = sql.query`(${sql.join(
+        keyAttributes.map((key, i) => {
+          return sql.fragment`${sourceAlias}.${sql.identifier(
+            key.name
+          )} = ${foreignTableAlias}.${sql.identifier(
+            foreignKeyAttributes[i].name
+          )}`;
+        }),
+        ") and ("
+      )})`;
+
+      const sqlSelectWhereKeysMatch = sql.query`select 1 from ${sqlIdentifier} as ${foreignTableAlias} where ${sqlKeysMatch}`;
+
+      return fieldValue === true
+        ? sql.query`exists(${sqlSelectWhereKeysMatch})`
+        : sql.query`not exists(${sqlSelectWhereKeysMatch})`;
     }
 
     return fields;

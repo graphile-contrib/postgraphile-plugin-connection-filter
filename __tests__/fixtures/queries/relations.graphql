@@ -1,8 +1,16 @@
 query {
   allSideAs_junctionsBySideAId_exist_true: allSideAs(filter: {junctionsBySideAId: {exist: true}}) { nodes { aId } }
+  allSideAs_junctionsBySideAIdExist_false: allSideAs(filter: {junctionsBySideAIdExist: false}) { nodes { aId } }
+  allSideAs_junctionsBySideAIdExist_true: allSideAs(filter: {junctionsBySideAIdExist: true}) { nodes { aId } }
   allSideBs_junctionsBySideBId_exist_true: allSideBs(filter: {junctionsBySideBId: {exist: true}}) { nodes { bId } }
+  allSideBs_junctionsBySideBIdExist_false: allSideBs(filter: {junctionsBySideBIdExist: false}) { nodes { bId } }
+  allSideBs_junctionsBySideBIdExist_true: allSideBs(filter: {junctionsBySideBIdExist: true}) { nodes { bId } }
   backwardCompound_name_equalTo_backwardCompound12: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2: {name: {equalTo: "backwardCompound12"}}}) { ...textConnection }
+  backwardCompoundExists_false: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2Exists: false}) { ...textConnection }
+  backwardCompoundExists_true: allFilterables(filter: {backwardCompoundByBackwardCompound1AndBackwardCompound2Exists: true}) { ...textConnection }
   backward_name_equalTo_backward2: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: "backward2"}}}) { ...textConnection }
+  backwardExists_false: allFilterables(filter: {backwardByFilterableIdExists: false}) { ...textConnection }
+  backwardExists_true: allFilterables(filter: {backwardByFilterableIdExists: true}) { ...textConnection }
   children_every_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {every: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
   children_every_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}}}) { ...childrenConnection }
   children_every_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {every: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
@@ -17,9 +25,17 @@ query {
   children_none_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}}) { ...childrenConnection }
   children_none_name_startsWith_c_and_exist_true: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}, exist: true}}) { ...childrenConnection }
   children_none_name_startsWith_c_and_exist_false: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}, exist: false}}) { ...childrenConnection }
+  childrenExist_false: allFilterables(filter: {childrenByFilterableIdExist: false}) { ...childrenConnection }
+  childrenExist_true: allFilterables(filter: {childrenByFilterableIdExist: true}) { ...childrenConnection }
   forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...textConnection }
+  forwardCompoundExists_false: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2Exists: false}) { ...textConnection }
+  forwardCompoundExists_true: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2Exists: true}) { ...textConnection }
   forward_name_equalTo_forward2: allFilterables(filter: {forwardByForwardId: {name: {equalTo: "forward2"}}}) { ...textConnection }
+  forwardExists_false: allFilterables(filter: {forwardByForwardIdExists: false}) { ...textConnection }
+  forwardExists_true: allFilterables(filter: {forwardByForwardIdExists: true}) { ...textConnection }
   parent_name_equalTo_parent2: allFilterables(filter: {parentByParentId: {name: {equalTo: "parent2"}}}) { ...textConnection }
+  parentExists_false: allFilterables(filter: {parentByParentIdExists: false}) { ...textConnection }
+  parentExists_true: allFilterables(filter: {parentByParentIdExists: true}) { ...textConnection }
   # the following should all fail due to null and empty object checks:
   x_backward_name_equalTo_null: allFilterables(filter: {backwardByFilterableId: {name: {equalTo: null}}}) { ...textConnection }
   x_backward_name_null: allFilterables(filter: {backwardByFilterableId: {name: null}}) { ...textConnection }

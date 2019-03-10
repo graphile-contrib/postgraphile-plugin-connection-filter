@@ -6175,6 +6175,23 @@ Object {
 exports[`relations.graphql 1`] = `
 Object {
   "data": Object {
+    "allSideAs_junctionsBySideAIdExist_false": Object {
+      "nodes": Array [
+        Object {
+          "aId": 13,
+        },
+      ],
+    },
+    "allSideAs_junctionsBySideAIdExist_true": Object {
+      "nodes": Array [
+        Object {
+          "aId": 11,
+        },
+        Object {
+          "aId": 12,
+        },
+      ],
+    },
     "allSideAs_junctionsBySideAId_exist_true": Object {
       "nodes": Array [
         Object {
@@ -6182,6 +6199,23 @@ Object {
         },
         Object {
           "aId": 12,
+        },
+      ],
+    },
+    "allSideBs_junctionsBySideBIdExist_false": Object {
+      "nodes": Array [
+        Object {
+          "bId": 23,
+        },
+      ],
+    },
+    "allSideBs_junctionsBySideBIdExist_true": Object {
+      "nodes": Array [
+        Object {
+          "bId": 21,
+        },
+        Object {
+          "bId": 22,
         },
       ],
     },
@@ -6195,6 +6229,34 @@ Object {
         },
       ],
     },
+    "backwardCompoundExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "backwardCompoundExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "backwardCompound_name_equalTo_backwardCompound12": Object {
       "nodes": Array [
         Object {
@@ -6203,11 +6265,95 @@ Object {
         },
       ],
     },
+    "backwardExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "backwardExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "backward_name_equalTo_backward2": Object {
       "nodes": Array [
         Object {
           "id": 2,
           "text": "tEST",
+        },
+      ],
+    },
+    "childrenExist_false": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "childrenExist_true": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
         },
       ],
     },
@@ -6571,6 +6717,34 @@ Object {
         },
       ],
     },
+    "forwardCompoundExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "forwardCompoundExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "forwardCompound_name_equalTo_forwardCompound12": Object {
       "nodes": Array [
         Object {
@@ -6579,11 +6753,67 @@ Object {
         },
       ],
     },
+    "forwardExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "forwardExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "forward_name_equalTo_forward2": Object {
       "nodes": Array [
         Object {
           "id": 2,
           "text": "tEST",
+        },
+      ],
+    },
+    "parentExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "parentExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
         },
       ],
     },

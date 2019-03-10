@@ -13,6 +13,12 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
           )}-filter`
         );
       },
+      filterBackwardSingleRelationExistsFieldName(relationFieldName) {
+        return `${relationFieldName}Exists`;
+      },
+      filterBackwardManyRelationExistsFieldName(relationFieldName) {
+        return `${relationFieldName}Exist`;
+      },
     });
   });
 
@@ -25,7 +31,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
       pgOmit: omit,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      graphql: { GraphQLInputObjectType },
+      graphql: { GraphQLInputObjectType, GraphQLBoolean },
       connectionFilterResolve,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
@@ -192,6 +198,20 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
               table
             )} to ${describePgEntity(foreignTable)}`
           );
+
+          const existsFieldName = inflection.filterBackwardManyRelationExistsFieldName(
+            fieldName
+          );
+          addField(
+            existsFieldName,
+            `Some related \`${fieldName}\` exist.`,
+            GraphQLBoolean,
+            resolveExists,
+            spec,
+            `Adding connection filter backward relation exists field from ${describePgEntity(
+              table
+            )} to ${describePgEntity(foreignTable)}`
+          );
         }
       } else {
         const fieldName = inflection.singleRelationByKeysBackwards(
@@ -207,6 +227,20 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
           resolveSingle,
           spec,
           `Adding connection filter backward relation field from ${describePgEntity(
+            table
+          )} to ${describePgEntity(foreignTable)}`
+        );
+
+        const existsFieldName = inflection.filterBackwardSingleRelationExistsFieldName(
+          fieldName
+        );
+        addField(
+          existsFieldName,
+          `A related \`${fieldName}\` exists.`,
+          GraphQLBoolean,
+          resolveExists,
+          spec,
+          `Adding connection filter backward relation exists field from ${describePgEntity(
             table
           )} to ${describePgEntity(foreignTable)}`
         );
@@ -273,6 +307,38 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
         queryBuilder
       );
       return sqlFragment == null ? null : sqlFragment;
+    }
+
+    function resolveExists({ sourceAlias, fieldName, fieldValue }) {
+      if (fieldValue == null) return null;
+
+      const {
+        foreignTable,
+        foreignKeyAttributes,
+        keyAttributes,
+      } = backwardRelationSpecByFieldName[fieldName];
+
+      const foreignTableAlias = sql.identifier(Symbol());
+
+      const sqlIdentifier = sql.identifier(
+        foreignTable.namespace.name,
+        foreignTable.name
+      );
+
+      const sqlKeysMatch = sql.query`(${sql.join(
+        foreignKeyAttributes.map((attr, i) => {
+          return sql.fragment`${foreignTableAlias}.${sql.identifier(
+            attr.name
+          )} = ${sourceAlias}.${sql.identifier(keyAttributes[i].name)}`;
+        }),
+        ") and ("
+      )})`;
+
+      const sqlSelectWhereKeysMatch = sql.query`select 1 from ${sqlIdentifier} as ${foreignTableAlias} where ${sqlKeysMatch}`;
+
+      return fieldValue === true
+        ? sql.query`exists(${sqlSelectWhereKeysMatch})`
+        : sql.query`not exists(${sqlSelectWhereKeysMatch})`;
     }
 
     return fields;
