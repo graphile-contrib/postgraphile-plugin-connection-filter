@@ -1,6 +1,7 @@
 module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
+      describePgEntity,
       extend,
       newWithHooks,
       inflection,
@@ -67,8 +68,35 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         return memo;
       }, []);
 
-    const forwardRelationSpecByFieldName = forwardRelationSpecs.reduce(
-      (memo, spec) => {
+    let forwardRelationSpecByFieldName = {};
+
+    const addField = (fieldName, description, type, resolve, spec, hint) => {
+      // Field
+      fields = extend(
+        fields,
+        {
+          [fieldName]: fieldWithHooks(
+            fieldName,
+            {
+              description,
+              type,
+            },
+            {
+              isPgConnectionFilterField: true,
+            }
+          ),
+        },
+        hint
+      );
+      // Spec for use in resolver
+      forwardRelationSpecByFieldName = extend(forwardRelationSpecByFieldName, {
+        [fieldName]: spec,
+      });
+      // Resolver
+      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
+    };
+
+    for (const spec of forwardRelationSpecs) {
         const { constraint, foreignTable, keyAttributes } = spec;
         const fieldName = inflection.singleRelationByKeys(
           keyAttributes,
@@ -76,44 +104,31 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
           table,
           constraint
         );
-        memo = extend(memo, {
-          [fieldName]: spec,
-        });
-        return memo;
-      },
-      {}
-    );
-
-    const forwardRelationFields = Object.entries(
-      forwardRelationSpecByFieldName
-    ).reduce((memo, curr) => {
-      const [fieldName, { foreignTable }] = curr;
       const foreignTableTypeName = inflection.tableType(foreignTable);
       const foreignTableFilterTypeName = inflection.filterType(
         foreignTableTypeName
       );
-      const FilterType = connectionFilterType(
+      const ForeignTableFilterType = connectionFilterType(
         newWithHooks,
         foreignTableFilterTypeName,
         foreignTable,
         foreignTableTypeName
       );
-      if (FilterType != null) {
-        memo[fieldName] = fieldWithHooks(
+      if (!ForeignTableFilterType) continue;
+
+      addField(
           fieldName,
-          {
-            description: `Filter by the object’s \`${fieldName}\` relation.`,
-            type: FilterType,
-          },
-          {
-            isPgConnectionFilterField: true,
-          }
+        `Filter by the object’s \`${fieldName}\` relation.`,
+        ForeignTableFilterType,
+        resolve,
+        spec,
+        `Adding connection filter forward relation field from ${describePgEntity(
+          table
+        )} to ${describePgEntity(foreignTable)}`
         );
       }
-      return memo;
-    }, {});
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
+    function resolve({ sourceAlias, fieldName, fieldValue, queryBuilder }) {
       if (fieldValue == null) return null;
 
       const {
@@ -161,12 +176,8 @@ module.exports = function PgConnectionArgFilterForwardRelationsPlugin(builder) {
         where ${sqlKeysMatch} and
           (${sqlFragment})
       )`;
-    };
-
-    for (const fieldName of Object.keys(forwardRelationSpecByFieldName)) {
-      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
     }
 
-    return extend(fields, forwardRelationFields);
+    return fields;
   });
 };
