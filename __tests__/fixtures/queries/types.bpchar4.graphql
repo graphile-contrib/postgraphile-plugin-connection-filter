@@ -1,12 +1,12 @@
-query bpchar4($v2: String = "tEST", $v3: String = "Test") {
+query bpchar4($v2: String = "Test", $v3: String = "tEST") {
   distinctFrom: allFilterables(filter: { bpchar4: { distinctFrom: $v2 } }) {
     ...nodes
   }
-  endsWith: allFilterables(filter: { bpchar4: { endsWith: "t" } }) {
+  endsWith: allFilterables(filter: { bpchar4: { endsWith: "T" } }) {
     ...nodes
   }
   endsWithInsensitive: allFilterables(
-    filter: { bpchar4: { endsWithInsensitive: "t" } }
+    filter: { bpchar4: { endsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -24,11 +24,11 @@ query bpchar4($v2: String = "tEST", $v3: String = "Test") {
   in: allFilterables(filter: { bpchar4: { in: [$v2, $v3] } }) {
     ...nodes
   }
-  includes: allFilterables(filter: { bpchar4: { includes: "t" } }) {
+  includes: allFilterables(filter: { bpchar4: { includes: "T" } }) {
     ...nodes
   }
   includesInsensitive: allFilterables(
-    filter: { bpchar4: { includesInsensitive: "t" } }
+    filter: { bpchar4: { includesInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -43,22 +43,22 @@ query bpchar4($v2: String = "tEST", $v3: String = "Test") {
   ) {
     ...nodes
   }
-  like: allFilterables(filter: { bpchar4: { like: "%es%" } }) {
+  like: allFilterables(filter: { bpchar4: { like: "%ES%" } }) {
     ...nodes
   }
   likeInsensitive: allFilterables(
-    filter: { bpchar4: { likeInsensitive: "%es%" } }
+    filter: { bpchar4: { likeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notDistinctFrom: allFilterables(filter: { bpchar4: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEndsWith: allFilterables(filter: { bpchar4: { notEndsWith: "t" } }) {
+  notEndsWith: allFilterables(filter: { bpchar4: { notEndsWith: "T" } }) {
     ...nodes
   }
   notEndsWithInsensitive: allFilterables(
-    filter: { bpchar4: { notEndsWithInsensitive: "t" } }
+    filter: { bpchar4: { notEndsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -68,43 +68,43 @@ query bpchar4($v2: String = "tEST", $v3: String = "Test") {
   notIn: allFilterables(filter: { bpchar4: { notIn: [$v2] } }) {
     ...nodes
   }
-  notIncludes: allFilterables(filter: { bpchar4: { notIncludes: "t" } }) {
+  notIncludes: allFilterables(filter: { bpchar4: { notIncludes: "T" } }) {
     ...nodes
   }
   notIncludesInsensitive: allFilterables(
-    filter: { bpchar4: { notIncludesInsensitive: "t" } }
+    filter: { bpchar4: { notIncludesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notLike: allFilterables(filter: { bpchar4: { notLike: "%es%" } }) {
+  notLike: allFilterables(filter: { bpchar4: { notLike: "%ES%" } }) {
     ...nodes
   }
   notLikeInsensitive: allFilterables(
-    filter: { bpchar4: { notLikeInsensitive: "%es%" } }
+    filter: { bpchar4: { notLikeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notSimilarTo: allFilterables(
-    filter: { bpchar4: { notSimilarTo: "%(te|st)%" } }
+    filter: { bpchar4: { notSimilarTo: "%(TE|ST)%" } }
   ) {
     ...nodes
   }
-  notStartsWith: allFilterables(filter: { bpchar4: { notStartsWith: "t" } }) {
+  notStartsWith: allFilterables(filter: { bpchar4: { notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
-    filter: { bpchar4: { notStartsWithInsensitive: "t" } }
+    filter: { bpchar4: { notStartsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  similarTo: allFilterables(filter: { bpchar4: { similarTo: "%(te|st)%" } }) {
+  similarTo: allFilterables(filter: { bpchar4: { similarTo: "%(TE|ST)%" } }) {
     ...nodes
   }
-  startsWith: allFilterables(filter: { bpchar4: { startsWith: "t" } }) {
+  startsWith: allFilterables(filter: { bpchar4: { startsWith: "T" } }) {
     ...nodes
   }
   startsWithInsensitive: allFilterables(
-    filter: { bpchar4: { startsWithInsensitive: "t" } }
+    filter: { bpchar4: { startsWithInsensitive: "T" } }
   ) {
     ...nodes
   }

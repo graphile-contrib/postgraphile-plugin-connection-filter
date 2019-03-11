@@ -1,12 +1,12 @@
-query char4Domain($v2: Char4Domain = "tEST", $v3: Char4Domain = "Test") {
+query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   distinctFrom: allDomainTypes(filter: { char4Domain: { distinctFrom: $v2 } }) {
     ...nodes
   }
-  endsWith: allDomainTypes(filter: { char4Domain: { endsWith: "t" } }) {
+  endsWith: allDomainTypes(filter: { char4Domain: { endsWith: "T" } }) {
     ...nodes
   }
   endsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { endsWithInsensitive: "t" } }
+    filter: { char4Domain: { endsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -24,11 +24,11 @@ query char4Domain($v2: Char4Domain = "tEST", $v3: Char4Domain = "Test") {
   in: allDomainTypes(filter: { char4Domain: { in: [$v2, $v3] } }) {
     ...nodes
   }
-  includes: allDomainTypes(filter: { char4Domain: { includes: "t" } }) {
+  includes: allDomainTypes(filter: { char4Domain: { includes: "T" } }) {
     ...nodes
   }
   includesInsensitive: allDomainTypes(
-    filter: { char4Domain: { includesInsensitive: "t" } }
+    filter: { char4Domain: { includesInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -43,11 +43,11 @@ query char4Domain($v2: Char4Domain = "tEST", $v3: Char4Domain = "Test") {
   ) {
     ...nodes
   }
-  like: allDomainTypes(filter: { char4Domain: { like: "%es%" } }) {
+  like: allDomainTypes(filter: { char4Domain: { like: "%ES%" } }) {
     ...nodes
   }
   likeInsensitive: allDomainTypes(
-    filter: { char4Domain: { likeInsensitive: "%es%" } }
+    filter: { char4Domain: { likeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
@@ -56,11 +56,11 @@ query char4Domain($v2: Char4Domain = "tEST", $v3: Char4Domain = "Test") {
   ) {
     ...nodes
   }
-  notEndsWith: allDomainTypes(filter: { char4Domain: { notEndsWith: "t" } }) {
+  notEndsWith: allDomainTypes(filter: { char4Domain: { notEndsWith: "T" } }) {
     ...nodes
   }
   notEndsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { notEndsWithInsensitive: "t" } }
+    filter: { char4Domain: { notEndsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -70,47 +70,47 @@ query char4Domain($v2: Char4Domain = "tEST", $v3: Char4Domain = "Test") {
   notIn: allDomainTypes(filter: { char4Domain: { notIn: [$v2] } }) {
     ...nodes
   }
-  notIncludes: allDomainTypes(filter: { char4Domain: { notIncludes: "t" } }) {
+  notIncludes: allDomainTypes(filter: { char4Domain: { notIncludes: "T" } }) {
     ...nodes
   }
   notIncludesInsensitive: allDomainTypes(
-    filter: { char4Domain: { notIncludesInsensitive: "t" } }
+    filter: { char4Domain: { notIncludesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notLike: allDomainTypes(filter: { char4Domain: { notLike: "%es%" } }) {
+  notLike: allDomainTypes(filter: { char4Domain: { notLike: "%ES%" } }) {
     ...nodes
   }
   notLikeInsensitive: allDomainTypes(
-    filter: { char4Domain: { notLikeInsensitive: "%es%" } }
+    filter: { char4Domain: { notLikeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notSimilarTo: allDomainTypes(
-    filter: { char4Domain: { notSimilarTo: "%(te|st)%" } }
+    filter: { char4Domain: { notSimilarTo: "%(TE|ST)%" } }
   ) {
     ...nodes
   }
   notStartsWith: allDomainTypes(
-    filter: { char4Domain: { notStartsWith: "t" } }
+    filter: { char4Domain: { notStartsWith: "T" } }
   ) {
     ...nodes
   }
   notStartsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { notStartsWithInsensitive: "t" } }
+    filter: { char4Domain: { notStartsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
   similarTo: allDomainTypes(
-    filter: { char4Domain: { similarTo: "%(te|st)%" } }
+    filter: { char4Domain: { similarTo: "%(TE|ST)%" } }
   ) {
     ...nodes
   }
-  startsWith: allDomainTypes(filter: { char4Domain: { startsWith: "t" } }) {
+  startsWith: allDomainTypes(filter: { char4Domain: { startsWith: "T" } }) {
     ...nodes
   }
   startsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { startsWithInsensitive: "t" } }
+    filter: { char4Domain: { startsWithInsensitive: "T" } }
   ) {
     ...nodes
   }

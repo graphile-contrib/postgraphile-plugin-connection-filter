@@ -1,12 +1,12 @@
-query text($v2: String = "tEST", $v3: String = "Test") {
+query text($v2: String = "Test", $v3: String = "tEST") {
   distinctFrom: allFilterables(filter: { text: { distinctFrom: $v2 } }) {
     ...nodes
   }
-  endsWith: allFilterables(filter: { text: { endsWith: "t" } }) {
+  endsWith: allFilterables(filter: { text: { endsWith: "T" } }) {
     ...nodes
   }
   endsWithInsensitive: allFilterables(
-    filter: { text: { endsWithInsensitive: "t" } }
+    filter: { text: { endsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -24,11 +24,11 @@ query text($v2: String = "tEST", $v3: String = "Test") {
   in: allFilterables(filter: { text: { in: [$v2, $v3] } }) {
     ...nodes
   }
-  includes: allFilterables(filter: { text: { includes: "t" } }) {
+  includes: allFilterables(filter: { text: { includes: "T" } }) {
     ...nodes
   }
   includesInsensitive: allFilterables(
-    filter: { text: { includesInsensitive: "t" } }
+    filter: { text: { includesInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -43,22 +43,22 @@ query text($v2: String = "tEST", $v3: String = "Test") {
   ) {
     ...nodes
   }
-  like: allFilterables(filter: { text: { like: "%es%" } }) {
+  like: allFilterables(filter: { text: { like: "%ES%" } }) {
     ...nodes
   }
   likeInsensitive: allFilterables(
-    filter: { text: { likeInsensitive: "%es%" } }
+    filter: { text: { likeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notDistinctFrom: allFilterables(filter: { text: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEndsWith: allFilterables(filter: { text: { notEndsWith: "t" } }) {
+  notEndsWith: allFilterables(filter: { text: { notEndsWith: "T" } }) {
     ...nodes
   }
   notEndsWithInsensitive: allFilterables(
-    filter: { text: { notEndsWithInsensitive: "t" } }
+    filter: { text: { notEndsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
@@ -68,43 +68,43 @@ query text($v2: String = "tEST", $v3: String = "Test") {
   notIn: allFilterables(filter: { text: { notIn: [$v2] } }) {
     ...nodes
   }
-  notIncludes: allFilterables(filter: { text: { notIncludes: "t" } }) {
+  notIncludes: allFilterables(filter: { text: { notIncludes: "T" } }) {
     ...nodes
   }
   notIncludesInsensitive: allFilterables(
-    filter: { text: { notIncludesInsensitive: "t" } }
+    filter: { text: { notIncludesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notLike: allFilterables(filter: { text: { notLike: "%es%" } }) {
+  notLike: allFilterables(filter: { text: { notLike: "%ES%" } }) {
     ...nodes
   }
   notLikeInsensitive: allFilterables(
-    filter: { text: { notLikeInsensitive: "%es%" } }
+    filter: { text: { notLikeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notSimilarTo: allFilterables(
-    filter: { text: { notSimilarTo: "%(te|st)%" } }
+    filter: { text: { notSimilarTo: "%(TE|ST)%" } }
   ) {
     ...nodes
   }
-  notStartsWith: allFilterables(filter: { text: { notStartsWith: "t" } }) {
+  notStartsWith: allFilterables(filter: { text: { notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
-    filter: { text: { notStartsWithInsensitive: "t" } }
+    filter: { text: { notStartsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  similarTo: allFilterables(filter: { text: { similarTo: "%(te|st)%" } }) {
+  similarTo: allFilterables(filter: { text: { similarTo: "%(TE|ST)%" } }) {
     ...nodes
   }
-  startsWith: allFilterables(filter: { text: { startsWith: "t" } }) {
+  startsWith: allFilterables(filter: { text: { startsWith: "T" } }) {
     ...nodes
   }
   startsWithInsensitive: allFilterables(
-    filter: { text: { startsWithInsensitive: "t" } }
+    filter: { text: { startsWithInsensitive: "T" } }
   ) {
     ...nodes
   }

@@ -4382,7 +4382,7 @@ Object {
     "computedIntArray_equalTo_empty": Object {
       "nodes": Array [],
     },
-    "computed_equalTo_TEST_computed": Object {
+    "computed_equalTo_test_computed": Object {
       "nodes": Array [
         Object {
           "id": 4,
@@ -5082,14 +5082,14 @@ Object {
 exports[`logicalOperators.graphql 1`] = `
 Object {
   "data": Object {
-    "int4_equalTo_2_and_text_endsWith_T": Object {
+    "int4_equalTo_2_and_text_endsWith_t": Object {
       "nodes": Array [
         Object {
           "id": 2,
         },
       ],
     },
-    "int4_equalTo_2_or_text_endsWith_T": Object {
+    "int4_equalTo_2_or_text_endsWith_t": Object {
       "nodes": Array [
         Object {
           "id": 2,
@@ -5099,7 +5099,7 @@ Object {
         },
       ],
     },
-    "not_int4_equalTo_2_or_text_endsWith_T": Object {
+    "not_int4_equalTo_2_or_text_endsWith_t": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -5109,7 +5109,7 @@ Object {
         },
       ],
     },
-    "not_text_equalTo_TEST": Object {
+    "not_text_equalTo_test": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -6199,7 +6199,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "text": "tEST",
+          "text": "Test",
         },
       ],
     },
@@ -6207,7 +6207,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "text": "tEST",
+          "text": "Test",
         },
       ],
     },
@@ -6575,7 +6575,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "text": "tEST",
+          "text": "Test",
         },
       ],
     },
@@ -6583,7 +6583,7 @@ Object {
       "nodes": Array [
         Object {
           "id": 2,
-          "text": "tEST",
+          "text": "Test",
         },
       ],
     },
@@ -6591,11 +6591,11 @@ Object {
       "nodes": Array [
         Object {
           "id": 3,
-          "text": "Test",
+          "text": "tEST",
         },
         Object {
           "id": 4,
-          "text": "TEST",
+          "text": "test",
         },
       ],
     },
@@ -8968,17 +8968,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -9031,23 +9037,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },

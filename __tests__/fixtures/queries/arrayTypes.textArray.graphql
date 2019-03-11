@@ -1,7 +1,7 @@
 query textArray(
-  $v2: [String] = ["tEST", "Test"]
-  $v2_1: String = "tEST"
-  $v3: [String] = ["Test", "TEST"]
+  $v2: [String] = ["Test", "tEST"]
+  $v2_1: String = "Test"
+  $v3: [String] = ["tEST", "test"]
 ) {
   anyEqualTo: allArrayTypes(filter: { textArray: { anyEqualTo: $v2_1 } }) {
     ...nodes

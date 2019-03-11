@@ -642,8 +642,11 @@ When `true`, passing `{}` as a field value is equivalent to omitting the field.
 
 ## Development
 
-To establish a test environment, create an empty Postgres database (e.g. `graphile_build_test`) and set a `TEST_DATABASE_URL` environment variable with your connection string (e.g. `postgres://localhost:5432/graphile_build_test`).  Ensure that `psql` is installed locally and then run:
+To establish a test environment, create an empty PostgreSQL database with C collation (required for consistent ordering of strings) and set a `TEST_DATABASE_URL` environment variable with your database connection string.
+
 ```bash
+createdb graphile_test_c --template template0 --lc-collate C
+export TEST_DATABASE_URL=postgres://localhost:5432/graphile_test_c
 yarn
-npm run test
+yarn test
 ```
