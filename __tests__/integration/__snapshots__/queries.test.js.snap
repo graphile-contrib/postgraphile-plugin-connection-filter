@@ -6221,19 +6221,19 @@ Object {
       "nodes": Array [
         Object {
           "id": 1,
-          "text": "test",
+          "text": "TEST",
         },
         Object {
           "id": 2,
-          "text": "tEST",
-        },
-        Object {
-          "id": 3,
           "text": "Test",
         },
         Object {
+          "id": 3,
+          "text": "tEST",
+        },
+        Object {
           "id": 4,
-          "text": "TEST",
+          "text": "test",
         },
       ],
     },
@@ -6257,19 +6257,19 @@ Object {
       "nodes": Array [
         Object {
           "id": 1,
-          "text": "test",
+          "text": "TEST",
         },
         Object {
           "id": 2,
-          "text": "tEST",
-        },
-        Object {
-          "id": 3,
           "text": "Test",
         },
         Object {
+          "id": 3,
+          "text": "tEST",
+        },
+        Object {
           "id": 4,
-          "text": "TEST",
+          "text": "test",
         },
       ],
     },
@@ -6653,19 +6653,19 @@ Object {
       "nodes": Array [
         Object {
           "id": 1,
-          "text": "test",
+          "text": "TEST",
         },
         Object {
           "id": 2,
-          "text": "tEST",
-        },
-        Object {
-          "id": 3,
           "text": "Test",
         },
         Object {
+          "id": 3,
+          "text": "tEST",
+        },
+        Object {
           "id": 4,
-          "text": "TEST",
+          "text": "test",
         },
       ],
     },
@@ -6689,19 +6689,19 @@ Object {
       "nodes": Array [
         Object {
           "id": 1,
-          "text": "test",
+          "text": "TEST",
         },
         Object {
           "id": 2,
-          "text": "tEST",
-        },
-        Object {
-          "id": 3,
           "text": "Test",
         },
         Object {
+          "id": 3,
+          "text": "tEST",
+        },
+        Object {
           "id": 4,
-          "text": "TEST",
+          "text": "test",
         },
       ],
     },
@@ -6725,19 +6725,19 @@ Object {
       "nodes": Array [
         Object {
           "id": 1,
-          "text": "test",
+          "text": "TEST",
         },
         Object {
           "id": 2,
-          "text": "tEST",
-        },
-        Object {
-          "id": 3,
           "text": "Test",
         },
         Object {
+          "id": 3,
+          "text": "tEST",
+        },
+        Object {
           "id": 4,
-          "text": "TEST",
+          "text": "test",
         },
       ],
     },
