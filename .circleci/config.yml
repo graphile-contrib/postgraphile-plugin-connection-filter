@@ -1,0 +1,84 @@
+version: 2
+jobs:
+  node8.10_pg9.6:
+    docker:
+      - image: circleci/node:8.10
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          command: yarn test
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+  node10_pg10:
+    docker:
+      - image: circleci/node:10
+      - image: circleci/postgres:10-alpine
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          command: yarn test
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+  node10_pg11:
+    docker:
+      - image: circleci/node:10
+      - image: circleci/postgres:11-alpine
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          command: yarn test
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+workflows:
+  version: 2
+  test:
+    jobs:
+      - node8.10_pg9.6
+      - node10_pg10
+      - node10_pg11
