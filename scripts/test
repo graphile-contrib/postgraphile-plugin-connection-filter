@@ -16,7 +16,6 @@ fi;
 
 # Import latest schema (throw on error)
 psql -Xqv ON_ERROR_STOP=1 -f __tests__/p-schema.sql "$TEST_DATABASE_URL"
-clear
 echo "Database reset successfully ✅"
 
 # Now run the tests
