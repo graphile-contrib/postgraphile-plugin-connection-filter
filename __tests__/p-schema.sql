@@ -45,7 +45,7 @@ create table p.filterable (
   "json" json, -- not filterable
   "jsonb" jsonb,
   "macaddr" macaddr, -- treated as String in PostGraphile v4
-  "macaddr8" macaddr8, -- treated as String in PostGraphile v4
+  --"macaddr8" macaddr8, -- treated as String in PostGraphile v4; excluded because macaddr8 requires PG10+
   "money" money,
   "name" name,
   "numeric" numeric,
@@ -94,7 +94,7 @@ create table p.array_types (
   "json_array" json[], -- not filterable
   "jsonb_array" jsonb[],
   "macaddr_array" macaddr[],
-  "macaddr8_array" macaddr8[],
+  --"macaddr8_array" macaddr8[], -- excluded because macaddr8 requires PG10+
   "money_array" money[],
   "numeric_array" numeric[],
   "text_array" text[],

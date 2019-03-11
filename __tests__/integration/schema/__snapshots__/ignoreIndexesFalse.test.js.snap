@@ -20,7 +20,6 @@ exports[`prints a schema with the filter plugin and the \`ignoreIndexes: false\`
   intervalArray: [Interval]
   jsonArray: [JSON]
   jsonbArray: [JSON]
-  macaddr8Array: [String]
   macaddrArray: [String]
   moneyArray: [Float]
 
@@ -686,7 +685,6 @@ type Filterable implements Node {
   json: JSON
   jsonb: JSON
   macaddr: String
-  macaddr8: String
   money: Float
   name: String
 
