@@ -1,12 +1,12 @@
-const connectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
-const pgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
-const pgConnectionArgFilterColumnsPlugin = require("./src/PgConnectionArgFilterColumnsPlugin.js");
-const pgConnectionArgFilterComputedColumnsPlugin = require("./src/PgConnectionArgFilterComputedColumnsPlugin.js");
-const pgConnectionArgFilterRecordFunctionsPlugin = require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js");
-const pgConnectionArgFilterBackwardRelationsPlugin = require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js");
-const pgConnectionArgFilterForwardRelationsPlugin = require("./src/PgConnectionArgFilterForwardRelationsPlugin.js");
-const pgConnectionArgFilterLogicalOperatorsPlugin = require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js");
-const pgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilterOperatorsPlugin.js");
+const ConnectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
+const PgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
+const PgConnectionArgFilterColumnsPlugin = require("./src/PgConnectionArgFilterColumnsPlugin.js");
+const PgConnectionArgFilterComputedColumnsPlugin = require("./src/PgConnectionArgFilterComputedColumnsPlugin.js");
+const PgConnectionArgFilterRecordFunctionsPlugin = require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js");
+const PgConnectionArgFilterBackwardRelationsPlugin = require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js");
+const PgConnectionArgFilterForwardRelationsPlugin = require("./src/PgConnectionArgFilterForwardRelationsPlugin.js");
+const PgConnectionArgFilterLogicalOperatorsPlugin = require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js");
+const PgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilterOperatorsPlugin.js");
 
 module.exports = function PostGraphileConnectionFilterPlugin(
   builder,
@@ -33,20 +33,20 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     connectionFilterLogicalOperators,
   } = options;
 
-  connectionArgFilterPlugin(builder, options);
-  pgConnectionArgFilterPlugin(builder, options);
-  pgConnectionArgFilterColumnsPlugin(builder, options);
-  pgConnectionArgFilterComputedColumnsPlugin(builder, options);
-  pgConnectionArgFilterRecordFunctionsPlugin(builder, options);
+  ConnectionArgFilterPlugin(builder, options);
+  PgConnectionArgFilterPlugin(builder, options);
+  PgConnectionArgFilterColumnsPlugin(builder, options);
+  PgConnectionArgFilterComputedColumnsPlugin(builder, options);
+  PgConnectionArgFilterRecordFunctionsPlugin(builder, options);
 
   if (connectionFilterRelations) {
-    pgConnectionArgFilterBackwardRelationsPlugin(builder, options);
-    pgConnectionArgFilterForwardRelationsPlugin(builder, options);
+    PgConnectionArgFilterBackwardRelationsPlugin(builder, options);
+    PgConnectionArgFilterForwardRelationsPlugin(builder, options);
   }
 
   if (connectionFilterLogicalOperators) {
-    pgConnectionArgFilterLogicalOperatorsPlugin(builder, options);
+    PgConnectionArgFilterLogicalOperatorsPlugin(builder, options);
   }
 
-  pgConnectionArgFilterOperatorsPlugin(builder, options);
+  PgConnectionArgFilterOperatorsPlugin(builder, options);
 };
