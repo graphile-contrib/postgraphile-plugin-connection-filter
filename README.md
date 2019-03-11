@@ -1,4 +1,4 @@
-[![Package on npm](https://img.shields.io/npm/v/postgraphile-plugin-connection-filter.svg)](https://www.npmjs.com/package/postgraphile-plugin-connection-filter)
+[![Package on npm](https://img.shields.io/npm/v/postgraphile-plugin-connection-filter.svg)](https://www.npmjs.com/package/postgraphile-plugin-connection-filter) [![CircleCI](https://circleci.com/gh/graphile-contrib/postgraphile-plugin-connection-filter.svg?style=svg)](https://circleci.com/gh/graphile-contrib/postgraphile-plugin-connection-filter)
 
 # postgraphile-plugin-connection-filter
 This plugin adds a `filter` argument for advanced filtering of list types.
