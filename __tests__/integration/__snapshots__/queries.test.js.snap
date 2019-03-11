@@ -427,7 +427,13 @@ Object {
     "anyGreaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -439,18 +445,18 @@ Object {
         Object {
           "id": 2,
         },
-      ],
-    },
-    "anyLessThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
         Object {
           "id": 3,
         },
         Object {
           "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
       ],
     },
@@ -461,12 +467,6 @@ Object {
         },
         Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -526,17 +526,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -550,23 +556,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -623,7 +623,13 @@ Object {
     "anyGreaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -635,18 +641,18 @@ Object {
         Object {
           "id": 2,
         },
-      ],
-    },
-    "anyLessThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
         Object {
           "id": 3,
         },
         Object {
           "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
       ],
     },
@@ -657,12 +663,6 @@ Object {
         },
         Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -722,17 +722,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -746,23 +752,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -2779,7 +2779,13 @@ Object {
     "anyGreaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -2791,18 +2797,18 @@ Object {
         Object {
           "id": 2,
         },
-      ],
-    },
-    "anyLessThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
         Object {
           "id": 3,
         },
         Object {
           "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
       ],
     },
@@ -2813,12 +2819,6 @@ Object {
         },
         Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -2878,17 +2878,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -2902,23 +2908,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -4151,7 +4151,13 @@ Object {
     "anyGreaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -4163,18 +4169,18 @@ Object {
         Object {
           "id": 2,
         },
-      ],
-    },
-    "anyLessThan": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
         Object {
           "id": 3,
         },
         Object {
           "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
       ],
     },
@@ -4185,12 +4191,6 @@ Object {
         },
         Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -4250,17 +4250,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -4274,23 +4280,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -4458,17 +4458,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -4521,23 +4527,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -6983,17 +6983,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7046,23 +7052,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -7279,17 +7279,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7342,23 +7348,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -9384,17 +9384,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -9447,23 +9453,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
@@ -10400,17 +10400,23 @@ Object {
     "greaterThan": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
         Object {
-          "id": 1,
+          "id": 2,
         },
         Object {
-          "id": 2,
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -10463,23 +10469,17 @@ Object {
     "lessThan": Object {
       "nodes": Array [
         Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
+          "id": 1,
+        },
+        Object {
           "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
         },
       ],
     },
