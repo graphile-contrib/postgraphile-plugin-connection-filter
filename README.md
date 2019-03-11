@@ -367,6 +367,24 @@ query {
 }
 ```
 
+A node passes the filter if a related node exists *and* the filter criteria for the related node are satisfied. (If a related node does not exist, the check fails.)
+
+The `*Exists` Boolean field can be used to filter on the existence of a related node:
+
+```graphql
+query {
+  allPosts(filter: {
+    personByAuthorIdExists: true
+  }) {
+    nodes {
+      id
+    }
+  }
+}
+```
+
+The `*Exists` Boolean field is only exposed on nullable relations. For example, if the `post.author_id` column is defined as `not null`, a related `person` always exists, so the `personByAuthorIdExists` field is not exposed.
+
 </details>
 
 <details>
@@ -378,12 +396,30 @@ query {
 ```graphql
 query {
   allPeople(filter: {
-    accountByPersonId: { status: { equalTo: ACTIVE } }
+    accountByAccountId: { status: { equalTo: ACTIVE } }
   }) {
     ...
   }
 }
 ```
+
+A node passes the filter if a related node exists *and* the filter criteria for the related node are satisfied. (If a related node does not exist, the check fails.)
+
+The `*Exists` Boolean field can be used to filter on the existence of a related node:
+
+```graphql
+query {
+  allPeople(filter: {
+    accountByAccountId: true
+  }) {
+    nodes {
+      id
+    }
+  }
+}
+```
+
+The `*Exists` Boolean field is only exposed on nullable relations. For example, if the `person.account_id` column is defined as `not null`, a related `account` always exists, so the `accountByAccountIdExists` field is not exposed.
 
 </details>
 
@@ -406,24 +442,20 @@ query {
   }) {
     nodes {
       id
-      createdAt
     }
   }
 }
 ```
 
-There is also an `exist` Boolean field for evaluating whether any related objects exist.
+The `*Exist` Boolean field can be used to filter on the existence of related records:
 
 ```graphql
 query {
   allPeople(filter: {
-    postsByAuthorId: {
-      exist: true
-    }
+    postsByAuthorIdExist: true
   }) {
     nodes {
       id
-      createdAt
     }
   }
 }
@@ -431,7 +463,7 @@ query {
 
 </details>
 
-For additional examples, see the [tests](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/__tests__/fixtures/queries/filters.graphql).
+For additional examples, see the [tests](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/__tests__/fixtures/queries/).
 
 ## Plugin Options
 

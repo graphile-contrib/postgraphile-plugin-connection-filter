@@ -6175,7 +6175,14 @@ Object {
 exports[`relations.graphql 1`] = `
 Object {
   "data": Object {
-    "allSideAs_junctionsBySideAId_exist_true": Object {
+    "allSideAs_junctionsBySideAIdExist_false": Object {
+      "nodes": Array [
+        Object {
+          "aId": 13,
+        },
+      ],
+    },
+    "allSideAs_junctionsBySideAIdExist_true": Object {
       "nodes": Array [
         Object {
           "aId": 11,
@@ -6185,13 +6192,48 @@ Object {
         },
       ],
     },
-    "allSideBs_junctionsBySideBId_exist_true": Object {
+    "allSideBs_junctionsBySideBIdExist_false": Object {
+      "nodes": Array [
+        Object {
+          "bId": 23,
+        },
+      ],
+    },
+    "allSideBs_junctionsBySideBIdExist_true": Object {
       "nodes": Array [
         Object {
           "bId": 21,
         },
         Object {
           "bId": 22,
+        },
+      ],
+    },
+    "backwardCompoundExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "backwardCompoundExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
         },
       ],
     },
@@ -6203,11 +6245,95 @@ Object {
         },
       ],
     },
+    "backwardExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "backwardExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "backward_name_equalTo_backward2": Object {
       "nodes": Array [
         Object {
           "id": 2,
           "text": "Test",
+        },
+      ],
+    },
+    "childrenExist_false": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 3,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 4,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "childrenExist_true": Object {
+      "nodes": Array [
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 1,
+                "name": "child1",
+              },
+              Object {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        Object {
+          "childrenByFilterableId": Object {
+            "nodes": Array [
+              Object {
+                "id": 3,
+                "name": "child3",
+              },
+              Object {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
         },
       ],
     },
@@ -6285,7 +6411,7 @@ Object {
         },
       ],
     },
-    "children_every_name_startsWith_c_and_exist_false": Object {
+    "children_every_name_startsWith_c_and_childrenExist_false": Object {
       "nodes": Array [
         Object {
           "childrenByFilterableId": Object {
@@ -6307,63 +6433,7 @@ Object {
         },
       ],
     },
-    "children_every_name_startsWith_c_and_exist_true": Object {
-      "nodes": Array [
-        Object {
-          "childrenByFilterableId": Object {
-            "nodes": Array [
-              Object {
-                "id": 1,
-                "name": "child1",
-              },
-              Object {
-                "id": 2,
-                "name": "child2",
-              },
-            ],
-          },
-          "id": 1,
-        },
-        Object {
-          "childrenByFilterableId": Object {
-            "nodes": Array [
-              Object {
-                "id": 3,
-                "name": "child3",
-              },
-              Object {
-                "id": 4,
-                "name": "child4",
-              },
-            ],
-          },
-          "id": 2,
-        },
-      ],
-    },
-    "children_exist_false": Object {
-      "nodes": Array [
-        Object {
-          "childrenByFilterableId": Object {
-            "nodes": Array [],
-          },
-          "id": 3,
-        },
-        Object {
-          "childrenByFilterableId": Object {
-            "nodes": Array [],
-          },
-          "id": 4,
-        },
-        Object {
-          "childrenByFilterableId": Object {
-            "nodes": Array [],
-          },
-          "id": 5,
-        },
-      ],
-    },
-    "children_exist_true": Object {
+    "children_every_name_startsWith_c_and_childrenExist_true": Object {
       "nodes": Array [
         Object {
           "childrenByFilterableId": Object {
@@ -6456,7 +6526,7 @@ Object {
         },
       ],
     },
-    "children_none_name_startsWith_c_and_exist_false": Object {
+    "children_none_name_startsWith_c_and_childrenExist_false": Object {
       "nodes": Array [
         Object {
           "childrenByFilterableId": Object {
@@ -6478,7 +6548,7 @@ Object {
         },
       ],
     },
-    "children_none_name_startsWith_c_and_exist_true": Object {
+    "children_none_name_startsWith_c_and_childrenExist_true": Object {
       "nodes": Array [],
     },
     "children_some_name_equalTo_child2": Object {
@@ -6534,10 +6604,10 @@ Object {
         },
       ],
     },
-    "children_some_name_startsWith_c_and_exist_false": Object {
+    "children_some_name_startsWith_c_and_childrenExist_false": Object {
       "nodes": Array [],
     },
-    "children_some_name_startsWith_c_and_exist_true": Object {
+    "children_some_name_startsWith_c_and_childrenExist_true": Object {
       "nodes": Array [
         Object {
           "childrenByFilterableId": Object {
@@ -6571,6 +6641,34 @@ Object {
         },
       ],
     },
+    "forwardCompoundExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "forwardCompoundExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "forwardCompound_name_equalTo_forwardCompound12": Object {
       "nodes": Array [
         Object {
@@ -6579,11 +6677,67 @@ Object {
         },
       ],
     },
+    "forwardExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "forwardExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
+        },
+      ],
+    },
     "forward_name_equalTo_forward2": Object {
       "nodes": Array [
         Object {
           "id": 2,
           "text": "Test",
+        },
+      ],
+    },
+    "parentExists_false": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "parentExists_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+          "text": "test",
+        },
+        Object {
+          "id": 2,
+          "text": "tEST",
+        },
+        Object {
+          "id": 3,
+          "text": "Test",
+        },
+        Object {
+          "id": 4,
+          "text": "TEST",
         },
       ],
     },
@@ -6604,13 +6758,13 @@ Object {
     "x_backward_name_equalTo_null": null,
     "x_backward_name_null": null,
     "x_backward_null": null,
+    "x_childrenExist_null": null,
     "x_children_empty": null,
     "x_children_every_empty": null,
     "x_children_every_name_empty": null,
     "x_children_every_name_equalTo_null": null,
     "x_children_every_name_null": null,
     "x_children_every_null": null,
-    "x_children_exist_null": null,
     "x_children_null": null,
     "x_forward_empty": null,
     "x_forward_name_empty": null,
