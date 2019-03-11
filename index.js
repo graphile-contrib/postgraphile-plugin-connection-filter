@@ -1,3 +1,13 @@
+const ConnectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
+const PgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
+const PgConnectionArgFilterColumnsPlugin = require("./src/PgConnectionArgFilterColumnsPlugin.js");
+const PgConnectionArgFilterComputedColumnsPlugin = require("./src/PgConnectionArgFilterComputedColumnsPlugin.js");
+const PgConnectionArgFilterRecordFunctionsPlugin = require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js");
+const PgConnectionArgFilterBackwardRelationsPlugin = require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js");
+const PgConnectionArgFilterForwardRelationsPlugin = require("./src/PgConnectionArgFilterForwardRelationsPlugin.js");
+const PgConnectionArgFilterLogicalOperatorsPlugin = require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js");
+const PgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilterOperatorsPlugin.js");
+
 module.exports = function PostGraphileConnectionFilterPlugin(
   builder,
   configOptions
@@ -23,35 +33,20 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     connectionFilterLogicalOperators,
   } = options;
 
-  require("./src/ConnectionArgFilterPlugin.js")(builder, options);
-  require("./src/PgConnectionArgFilterPlugin.js")(builder, options);
-  require("./src/PgConnectionArgFilterColumnsPlugin.js")(builder, options);
-  require("./src/PgConnectionArgFilterComputedColumnsPlugin.js")(
-    builder,
-    options
-  );
-  require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js")(
-    builder,
-    options
-  );
+  ConnectionArgFilterPlugin(builder, options);
+  PgConnectionArgFilterPlugin(builder, options);
+  PgConnectionArgFilterColumnsPlugin(builder, options);
+  PgConnectionArgFilterComputedColumnsPlugin(builder, options);
+  PgConnectionArgFilterRecordFunctionsPlugin(builder, options);
 
   if (connectionFilterRelations) {
-    require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js")(
-      builder,
-      options
-    );
-    require("./src/PgConnectionArgFilterForwardRelationsPlugin.js")(
-      builder,
-      options
-    );
+    PgConnectionArgFilterBackwardRelationsPlugin(builder, options);
+    PgConnectionArgFilterForwardRelationsPlugin(builder, options);
   }
 
   if (connectionFilterLogicalOperators) {
-    require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js")(
-      builder,
-      options
-    );
+    PgConnectionArgFilterLogicalOperatorsPlugin(builder, options);
   }
 
-  require("./src/PgConnectionArgFilterOperatorsPlugin.js")(builder, options);
+  PgConnectionArgFilterOperatorsPlugin(builder, options);
 };
