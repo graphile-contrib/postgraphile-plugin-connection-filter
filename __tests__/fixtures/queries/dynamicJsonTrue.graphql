@@ -1,4 +1,4 @@
-query dynamicJson(
+query dynamicJsonTrue(
   $varInt: Int = 2
   $varJSON: JSON = { key2: 2 }
   $varJSONFilter: JSONFilter = { contains: { key2: 2 } }
