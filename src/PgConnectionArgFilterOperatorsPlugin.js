@@ -18,6 +18,16 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       escapeLikeWildcards,
     } = build;
 
+    const resolveListType = fieldInputType =>
+      new GraphQLList(new GraphQLNonNull(fieldInputType));
+    const resolveListSqlValue = (input, pgType, pgTypeModifier) =>
+      input.length === 0
+        ? sql.query`(select null::${sql.raw(pgType.name)} limit 0)`
+        : sql.query`(${sql.join(
+            input.map(i => gql2pg(i, pgType, pgTypeModifier)),
+            ","
+          )})`;
+
     const standardOperators = {
       isNull: {
         description:
@@ -49,14 +59,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
       in: {
         description: "Included in the specified list.",
-        resolveType: fieldInputType =>
-          new GraphQLList(new GraphQLNonNull(fieldInputType)),
+        resolveType: resolveListType,
+        resolveSqlValue: resolveListSqlValue,
         resolve: (i, v) => sql.query`${i} IN ${v}`,
       },
       notIn: {
         description: "Not included in the specified list.",
-        resolveType: fieldInputType =>
-          new GraphQLList(new GraphQLNonNull(fieldInputType)),
+        resolveType: resolveListType,
+        resolveSqlValue: resolveListSqlValue,
         resolve: (i, v) => sql.query`${i} NOT IN ${v}`,
       },
     };
@@ -372,6 +382,10 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
     };
 
+    const resolveArrayItemType = fieldInputType => getNamedType(fieldInputType);
+    const resolveArrayItemSqlValue = (input, pgType, pgTypeModifier) =>
+      gql2pg(input, pgType.arrayItemType, pgTypeModifier);
+
     const connectionFilterArrayOperators = {
       isNull: standardOperators.isNull,
       equalTo: standardOperators.equalTo,
@@ -393,34 +407,40 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
       anyEqualTo: {
         description: "Any array item is equal to the specified value.",
-        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolveType: resolveArrayItemType,
+        resolveSqlValue: resolveArrayItemSqlValue,
         resolve: (i, v) => sql.query`${v} = ANY (${i})`,
       },
       anyNotEqualTo: {
         description: "Any array item is not equal to the specified value.",
-        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolveType: resolveArrayItemType,
+        resolveSqlValue: resolveArrayItemSqlValue,
         resolve: (i, v) => sql.query`${v} <> ANY (${i})`,
       },
       anyLessThan: {
         description: "Any array item is less than the specified value.",
-        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolveType: resolveArrayItemType,
+        resolveSqlValue: resolveArrayItemSqlValue,
         resolve: (i, v) => sql.query`${v} > ANY (${i})`,
       },
       anyLessThanOrEqualTo: {
         description:
           "Any array item is less than or equal to the specified value.",
-        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolveType: resolveArrayItemType,
+        resolveSqlValue: resolveArrayItemSqlValue,
         resolve: (i, v) => sql.query`${v} >= ANY (${i})`,
       },
       anyGreaterThan: {
         description: "Any array item is greater than the specified value.",
-        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolveType: resolveArrayItemType,
+        resolveSqlValue: resolveArrayItemSqlValue,
         resolve: (i, v) => sql.query`${v} < ANY (${i})`,
       },
       anyGreaterThanOrEqualTo: {
         description:
           "Any array item is greater than or equal to the specified value.",
-        resolveType: fieldInputType => getNamedType(fieldInputType),
+        resolveType: resolveArrayItemType,
+        resolveSqlValue: resolveArrayItemSqlValue,
         resolve: (i, v) => sql.query`${v} <= ANY (${i})`,
       },
     };
@@ -436,7 +456,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
-      pgSql: sql,
       gql2pg,
       connectionFilterOperatorSpecsAdded,
       connectionFilterRegisterResolver,
@@ -583,28 +602,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
 
       const input = fieldValue;
 
-      const sqlValueFromInput = (input, pgType, pgTypeModifier) => {
-        return gql2pg(
-          resolveInput ? resolveInput(input) : input,
-          pgType,
-          pgTypeModifier
-        );
-      };
-
       const sqlValue = resolveSqlValue
         ? resolveSqlValue(input, pgType, pgTypeModifier)
-        : Array.isArray(input)
-        ? pgType.isPgArray
-          ? sqlValueFromInput(input, pgType, pgTypeModifier)
-          : input.length === 0
-          ? sql.query`(select ${sqlIdentifier} limit 0)`
-          : sql.query`(${sql.join(
-              input.map(i => sqlValueFromInput(i, pgType, pgTypeModifier)),
-              ","
-            )})`
-        : pgType.isPgArray
-        ? sqlValueFromInput(input, pgType.arrayItemType, pgTypeModifier)
-        : sqlValueFromInput(input, pgType, pgTypeModifier);
+        : gql2pg(
+            resolveInput ? resolveInput(input) : input,
+            pgType,
+            pgTypeModifier
+          );
 
       return operatorSpec.resolve(
         sqlIdentifier,
