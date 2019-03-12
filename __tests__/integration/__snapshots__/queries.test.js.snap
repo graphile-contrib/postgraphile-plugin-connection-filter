@@ -5012,11 +5012,23 @@ Object {
 exports[`emptyArrayInput.graphql 1`] = `
 Object {
   "data": Object {
+    "hstore_containsAllKeys_empty": Object {
+      "totalCount": 4,
+    },
+    "hstore_containsAnyKeys_empty": Object {
+      "totalCount": 0,
+    },
     "int4_in_empty": Object {
       "totalCount": 0,
     },
     "int4_notIn_empty": Object {
       "totalCount": 5,
+    },
+    "jsonb_containsAllKeys_empty": Object {
+      "totalCount": 4,
+    },
+    "jsonb_containsAnyKeys_empty": Object {
+      "totalCount": 0,
     },
     "logical_and_empty": Object {
       "totalCount": 5,

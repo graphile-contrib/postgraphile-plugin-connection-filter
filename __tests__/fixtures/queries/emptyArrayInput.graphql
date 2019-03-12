@@ -1,9 +1,20 @@
 query {
-  # TODO: add more checks here
   int4_in_empty: allFilterables(filter: { int4: { in: [] } }) {
     totalCount
   }
   int4_notIn_empty: allFilterables(filter: { int4: { notIn: [] } }) {
+    totalCount
+  }
+  hstore_containsAllKeys_empty: allFilterables(filter: { hstore: { containsAllKeys: [] } }) {
+    totalCount
+  }
+  hstore_containsAnyKeys_empty: allFilterables(filter: { hstore: { containsAnyKeys: [] } }) {
+    totalCount
+  }
+  jsonb_containsAllKeys_empty: allFilterables(filter: { jsonb: { containsAllKeys: [] } }) {
+    totalCount
+  }
+  jsonb_containsAnyKeys_empty: allFilterables(filter: { jsonb: { containsAnyKeys: [] } }) {
     totalCount
   }
   # `and: []` is ignored when resolving the SQL query
