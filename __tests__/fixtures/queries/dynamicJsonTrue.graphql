@@ -1,0 +1,39 @@
+query dynamicJsonTrue(
+  $varInt: Int = 2
+  $varJSON: JSON = { key2: 2 }
+  $varJSONFilter: JSONFilter = { contains: { key2: 2 } }
+  $withArrayV2: JSON = [{ key2: 2 }, { key3: 3 }]
+  $withObjectV2: JSON = { key2: 2 }
+) {
+  # The first four (a, b, c, d) should result in the same value
+  a: allJsonbTests(filter: { jsonbWithObject: { contains: { key2: 2 } } }) {
+    ...nodes
+  }
+  b: allJsonbTests(
+    filter: { jsonbWithObject: { contains: { key2: $varInt } } }
+  ) {
+    ...nodes
+  }
+  c: allJsonbTests(filter: { jsonbWithObject: { contains: $varJSON } }) {
+    ...nodes
+  }
+  d: allJsonbTests(filter: { jsonbWithObject: $varJSONFilter }) {
+    ...nodes
+  }
+  withArray: allJsonbTests(
+    filter: { jsonbWithArray: { equalTo: $withArrayV2 } }
+  ) {
+    ...nodes
+  }
+  withObject: allJsonbTests(
+    filter: { jsonbWithObject: { equalTo: $withObjectV2 } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on JsonbTestsConnection {
+  nodes {
+    id
+  }
+}

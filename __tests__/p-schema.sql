@@ -149,6 +149,12 @@ create table p.enum_array_types (
   "enum_array" p.mood[]
 );
 
+create table p.jsonb_test (
+  id serial primary key,
+  jsonb_with_array jsonb,
+  jsonb_with_object jsonb
+);
+
 create table p.backward (
   id serial primary key,
   "name" text not null,

@@ -54,6 +54,13 @@ insert into p.enum_types
   (4,  'happy'),
   (5,  null);
 
+insert into p.jsonb_test (id, jsonb_with_array, jsonb_with_object) values
+  (1, '[{"key1":1},{"key2":2}]', '{"key1":1}'),
+  (2, '[{"key2":2},{"key3":3}]', '{"key2":2}'),
+  (3, '[{"key3":3},{"key4":4}]', '{"key3":3}'),
+  (4, '[{"key4":4},{"key5":5}]', '{"key4":4}'),
+  (5, null, null);
+
 insert into p.backward(id, name, filterable_id) values
   (1, 'backward1', 1),
   (2, 'backward2', 2),

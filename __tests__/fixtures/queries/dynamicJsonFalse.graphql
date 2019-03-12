@@ -1,0 +1,21 @@
+query dynamicJsonFalse(
+  $withArrayV2: JSON = "[{\"key2\":2},{\"key3\":3}]"
+  $withObjectV2: JSON = "{\"key2\":2}"
+) {
+  withArray: allJsonbTests(
+    filter: { jsonbWithArray: { equalTo: $withArrayV2 } }
+  ) {
+    ...nodes
+  }
+  withObject: allJsonbTests(
+    filter: { jsonbWithObject: { equalTo: $withObjectV2 } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on JsonbTestsConnection {
+  nodes {
+    id
+  }
+}

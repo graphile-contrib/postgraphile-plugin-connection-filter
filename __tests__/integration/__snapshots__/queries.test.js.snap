@@ -4939,7 +4939,28 @@ Object {
 }
 `;
 
-exports[`dynamicJson.graphql 1`] = `
+exports[`dynamicJsonFalse.graphql 1`] = `
+Object {
+  "data": Object {
+    "withArray": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "withObject": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`dynamicJsonTrue.graphql 1`] = `
 Object {
   "data": Object {
     "a": Object {
@@ -4964,6 +4985,20 @@ Object {
       ],
     },
     "d": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "withArray": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "withObject": Object {
       "nodes": Array [
         Object {
           "id": 2,
