@@ -4970,6 +4970,41 @@ Object {
         },
       ],
     },
+    "withArray": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "withObject": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`dynamicJsonFalse.arrays.graphql 1`] = `
+Object {
+  "data": Object {
+    "withArray": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "withObject": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
   },
 }
 `;
