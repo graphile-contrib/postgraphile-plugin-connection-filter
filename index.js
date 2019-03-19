@@ -12,6 +12,16 @@ module.exports = function PostGraphileConnectionFilterPlugin(
   builder,
   configOptions
 ) {
+  builder.hook("build", build => {
+    // Register plugin version on build
+    const pkg = require("./package.json");
+    if (!build.versions) {
+      build.versions = {};
+    }
+    build.versions = build.extend(build.versions, { [pkg.name]: pkg.version });
+    return build;
+  });
+
   const defaultOptions = {
     //connectionFilterAllowedOperators,
     //connectionFilterAllowedFieldTypes,
