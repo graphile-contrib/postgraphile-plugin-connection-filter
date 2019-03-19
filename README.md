@@ -1,7 +1,7 @@
 [![Package on npm](https://img.shields.io/npm/v/postgraphile-plugin-connection-filter.svg)](https://www.npmjs.com/package/postgraphile-plugin-connection-filter) [![CircleCI](https://circleci.com/gh/graphile-contrib/postgraphile-plugin-connection-filter.svg?style=svg)](https://circleci.com/gh/graphile-contrib/postgraphile-plugin-connection-filter)
 
 # postgraphile-plugin-connection-filter
-This plugin adds a `filter` argument for advanced filtering of list types.
+This plugin adds a `filter` argument for advanced filtering of Connections.
 
 > **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section below for details.
 

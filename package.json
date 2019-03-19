@@ -1,7 +1,7 @@
 {
   "name": "postgraphile-plugin-connection-filter",
   "version": "1.0.0-rc.1",
-  "description": "Advanced filtering of list types in PostGraphile",
+  "description": "Advanced filtering of Connections in PostGraphile",
   "main": "index.js",
   "scripts": {
     "lint": "eslint **/*.js",
