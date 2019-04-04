@@ -2,7 +2,7 @@ version: 2
 jobs:
   node8.10_pg9.6:
     docker:
-      - image: circleci/node:8.10
+      - image: circleci/node:8.10-stretch
       - image: circleci/postgres:9.6-alpine
         environment:
           POSTGRES_USER: circleci
