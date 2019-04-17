@@ -22,7 +22,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       new GraphQLList(new GraphQLNonNull(fieldInputType));
     const resolveListSqlValue = (input, pgType, pgTypeModifier) =>
       input.length === 0
-        ? sql.query`(select null::${sql.raw(pgType.name)} limit 0)`
+        ? sql.query`(select null::${sql.identifier(
+            pgType.namespaceName
+          )}.${sql.identifier(pgType.name)} limit 0)`
         : sql.query`(${sql.join(
             input.map(i => gql2pg(i, pgType, pgTypeModifier)),
             ","
