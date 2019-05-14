@@ -104,12 +104,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       includesInsensitive: {
         description: "Contains the specified string (case-insensitive).",
         resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notIncludesInsensitive: {
         description:
           "Does not contain the specified string (case-insensitive).",
         resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       startsWith: {
@@ -126,12 +128,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       startsWithInsensitive: {
         description: "Starts with the specified string (case-insensitive).",
         resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notStartsWithInsensitive: {
         description:
           "Does not start with the specified string (case-insensitive).",
         resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       endsWith: {
@@ -147,12 +151,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       endsWithInsensitive: {
         description: "Ends with the specified string (case-insensitive).",
         resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notEndsWithInsensitive: {
         description:
           "Does not end with the specified string (case-insensitive).",
         resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       like: {
@@ -168,11 +174,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       likeInsensitive: {
         description:
           "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notLikeInsensitive: {
         description:
           "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       similarTo: {
@@ -459,6 +467,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     const {
       extend,
       gql2pg,
+      pgIntrospectionResultsByKind: introspectionResultsByKind,
+      pgSql: sql,
       connectionFilterOperatorSpecsAdded,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
@@ -586,6 +596,13 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       {}
     );
 
+    const textPgType = introspectionResultsByKind.type.find(
+      t => t.name === "text"
+    );
+    const textArrayPgType = introspectionResultsByKind.type.find(
+      t => t.name === "_text"
+    );
+
     const resolve = ({
       sourceAlias,
       fieldName,
@@ -597,20 +614,31 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     }) => {
       if (fieldValue == null) return null;
 
-      const sqlIdentifier = sourceAlias;
-
       const operatorSpec = operatorSpecByFieldName[fieldName];
-      const { resolveInput, resolveSqlValue } = operatorSpec;
+      const {
+        resolveInput,
+        resolveSqlIdentifier,
+        resolveSqlValue,
+      } = operatorSpec;
+
+      const sqlIdentifier = resolveSqlIdentifier
+        ? resolveSqlIdentifier(sourceAlias)
+        : pgType.name === "citext"
+        ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
+        : pgType.name === "_citext"
+        ? sql.query`${sourceAlias}::text[]` // cast column to text[] for case-sensitive matching
+        : sourceAlias;
 
       const input = fieldValue;
+      const resolvedInput = resolveInput ? resolveInput(input) : input;
 
       const sqlValue = resolveSqlValue
         ? resolveSqlValue(input, pgType, pgTypeModifier)
-        : gql2pg(
-            resolveInput ? resolveInput(input) : input,
-            pgType,
-            pgTypeModifier
-          );
+        : pgType.name === "citext"
+        ? gql2pg(resolvedInput, textPgType, null) // cast input to text
+        : pgType.name === "_citext"
+        ? gql2pg(resolvedInput, textArrayPgType, null) // cast input to text[]
+        : gql2pg(resolvedInput, pgType, pgTypeModifier);
 
       return operatorSpec.resolve(
         sqlIdentifier,

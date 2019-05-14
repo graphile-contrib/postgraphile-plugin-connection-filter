@@ -263,6 +263,13 @@ module.exports = function PgConnectionArgFilterPlugin(
         "25", //   text
         "1043", // varchar
       ];
+      // Include citext as recognized String type
+      const citextPgType = introspectionResultsByKind.type.find(
+        t => t.name === "citext"
+      );
+      if (citextPgType) {
+        actualStringPgTypeIds.push(citextPgType.id);
+      }
       if (
         namedInputType &&
         namedInputType.name === "String" &&
