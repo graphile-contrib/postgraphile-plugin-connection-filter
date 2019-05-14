@@ -1,4 +1,5 @@
 create extension if not exists hstore;
+create extension if not exists citext;
 
 drop schema if exists p cascade;
 
@@ -33,6 +34,7 @@ create table p.filterable (
   "bytea" bytea, -- treated as String in PostGraphile v4
   "char4" char(4),
   "cidr" cidr, -- treated as String in PostGraphile v4
+  "citext" citext,
   "date" date,
   "float4" float4,
   "float8" float8,
@@ -82,6 +84,7 @@ create table p.array_types (
   "bytea_array" bytea[],
   "char4_array" char(4)[],
   "cidr_array" cidr[],
+  "citext_array" citext[],
   "date_array" date[],
   "float4_array" float4[],
   "float8_array" float8[],

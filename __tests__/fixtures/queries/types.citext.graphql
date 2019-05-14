@@ -1,0 +1,117 @@
+query citext($v2: String = "Test", $v3: String = "tEST") {
+  distinctFrom: allFilterables(filter: { citext: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  endsWith: allFilterables(filter: { citext: { endsWith: "T" } }) {
+    ...nodes
+  }
+  endsWithInsensitive: allFilterables(
+    filter: { citext: { endsWithInsensitive: "T" } }
+  ) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { citext: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { citext: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { citext: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { citext: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  includes: allFilterables(filter: { citext: { includes: "T" } }) {
+    ...nodes
+  }
+  includesInsensitive: allFilterables(
+    filter: { citext: { includesInsensitive: "T" } }
+  ) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { citext: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { citext: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { citext: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  like: allFilterables(filter: { citext: { like: "%ES%" } }) {
+    ...nodes
+  }
+  likeInsensitive: allFilterables(
+    filter: { citext: { likeInsensitive: "%ES%" } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { citext: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEndsWith: allFilterables(filter: { citext: { notEndsWith: "T" } }) {
+    ...nodes
+  }
+  notEndsWithInsensitive: allFilterables(
+    filter: { citext: { notEndsWithInsensitive: "T" } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { citext: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { citext: { notIn: [$v2] } }) {
+    ...nodes
+  }
+  notIncludes: allFilterables(filter: { citext: { notIncludes: "T" } }) {
+    ...nodes
+  }
+  notIncludesInsensitive: allFilterables(
+    filter: { citext: { notIncludesInsensitive: "T" } }
+  ) {
+    ...nodes
+  }
+  notLike: allFilterables(filter: { citext: { notLike: "%ES%" } }) {
+    ...nodes
+  }
+  notLikeInsensitive: allFilterables(
+    filter: { citext: { notLikeInsensitive: "%ES%" } }
+  ) {
+    ...nodes
+  }
+  notSimilarTo: allFilterables(
+    filter: { citext: { notSimilarTo: "%(TE|ST)%" } }
+  ) {
+    ...nodes
+  }
+  notStartsWith: allFilterables(filter: { citext: { notStartsWith: "T" } }) {
+    ...nodes
+  }
+  notStartsWithInsensitive: allFilterables(
+    filter: { citext: { notStartsWithInsensitive: "T" } }
+  ) {
+    ...nodes
+  }
+  similarTo: allFilterables(filter: { citext: { similarTo: "%(TE|ST)%" } }) {
+    ...nodes
+  }
+  startsWith: allFilterables(filter: { citext: { startsWith: "T" } }) {
+    ...nodes
+  }
+  startsWithInsensitive: allFilterables(
+    filter: { citext: { startsWithInsensitive: "T" } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

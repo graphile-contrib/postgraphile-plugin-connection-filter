@@ -8,6 +8,7 @@ exports[`prints a schema with the filter plugin and the connectionFilterAllowedO
   byteaArray: [String]
   char4Array: [String]
   cidrArray: [String]
+  citextArray: [String]
   dateArray: [Date]
   float4Array: [Float]
   float8Array: [Float]
@@ -57,6 +58,9 @@ input ArrayTypeFilter {
 
   \\"\\"\\"Filter by the object’s \`char4Array\` field.\\"\\"\\"
   char4Array: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`citextArray\` field.\\"\\"\\"
+  citextArray: StringListFilter
 
   \\"\\"\\"Filter by the object’s \`dateArray\` field.\\"\\"\\"
   dateArray: DateListFilter
@@ -165,6 +169,8 @@ enum ArrayTypesOrderBy {
   CHAR4_ARRAY_DESC
   CIDR_ARRAY_ASC
   CIDR_ARRAY_DESC
+  CITEXT_ARRAY_ASC
+  CITEXT_ARRAY_DESC
   DATE_ARRAY_ASC
   DATE_ARRAY_DESC
   FLOAT4_ARRAY_ASC
@@ -1100,6 +1106,7 @@ type Filterable implements Node {
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection!
   cidr: String
+  citext: String
   compositeColumn: Composite
   computed: String
   computed2: String
@@ -1250,6 +1257,9 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`char4\` field.\\"\\"\\"
   char4: StringFilter
 
+  \\"\\"\\"Filter by the object’s \`citext\` field.\\"\\"\\"
+  citext: StringFilter
+
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
 
@@ -1388,6 +1398,8 @@ enum FilterablesOrderBy {
   CHAR4_DESC
   CIDR_ASC
   CIDR_DESC
+  CITEXT_ASC
+  CITEXT_DESC
   COMPOSITE_COLUMN_ASC
   COMPOSITE_COLUMN_DESC
   DATE_ASC
