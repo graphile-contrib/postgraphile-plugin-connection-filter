@@ -1,6 +1,10 @@
 module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder,
-  { connectionFilterAllowedOperators, connectionFilterOperatorNames }
+  {
+    connectionFilterAdditionalInsensitiveOperators,
+    connectionFilterAllowedOperators,
+    connectionFilterOperatorNames,
+  }
 ) {
   builder.hook("build", build => {
     const {
@@ -20,13 +24,22 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
 
     const resolveListType = fieldInputType =>
       new GraphQLList(new GraphQLNonNull(fieldInputType));
-    const resolveListSqlValue = (input, pgType, pgTypeModifier) =>
+    const resolveListSqlValue = (
+      input,
+      pgType,
+      pgTypeModifier,
+      resolveListItemSqlValue
+    ) =>
       input.length === 0
         ? sql.query`(select null::${sql.identifier(
             pgType.namespaceName
           )}.${sql.identifier(pgType.name)} limit 0)`
         : sql.query`(${sql.join(
-            input.map(i => gql2pg(i, pgType, pgTypeModifier)),
+            input.map(i =>
+              resolveListItemSqlValue
+                ? resolveListItemSqlValue(i, pgType, pgTypeModifier)
+                : gql2pg(i, pgType, pgTypeModifier)
+            ),
             ","
           )})`;
 
@@ -335,6 +348,47 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       [_UUID]: { ...standardOperators, ...sortOperators },
     };
 
+    if (connectionFilterAdditionalInsensitiveOperators) {
+      for (const [name, spec] of [
+        ...Object.entries(standardOperators),
+        ...Object.entries(sortOperators),
+      ]) {
+        if (name == "isNull") continue;
+
+        const description = `${spec.description.substring(
+          0,
+          spec.description.length - 1
+        )} (case-insensitive).`;
+
+        const resolveSqlIdentifier = (sourceAlias, pgType) =>
+          pgType.name === "citext"
+            ? sourceAlias // already case-insensitive, so no need to call `lower()`
+            : sql.query`lower(${sourceAlias})`;
+
+        const resolveSimpleSqlValue = (input, pgType, pgTypeModifier) =>
+          pgType.name === "citext"
+            ? gql2pg(input, pgType, pgTypeModifier) // already case-insensitive, so no need to call `lower()`
+            : sql.query`lower(${gql2pg(input, pgType, pgTypeModifier)})`;
+
+        const resolveSqlValue = (input, pgType, pgTypeModifier) =>
+          name === "in" || name === "notIn"
+            ? resolveListSqlValue(
+                input,
+                pgType,
+                pgTypeModifier,
+                resolveSimpleSqlValue
+              )
+            : resolveSimpleSqlValue(input, pgType, pgTypeModifier);
+
+        connectionFilterScalarOperators[_String][`${name}Insensitive`] = {
+          ...spec,
+          description,
+          resolveSqlIdentifier,
+          resolveSqlValue,
+        };
+      }
+    }
+
     const connectionFilterEnumOperators = {
       ...standardOperators,
       ...sortOperators,
@@ -622,7 +676,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       } = operatorSpec;
 
       const sqlIdentifier = resolveSqlIdentifier
-        ? resolveSqlIdentifier(sourceAlias)
+        ? resolveSqlIdentifier(sourceAlias, pgType, pgTypeModifier)
         : pgType.name === "citext"
         ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
         : pgType.name === "_citext"
