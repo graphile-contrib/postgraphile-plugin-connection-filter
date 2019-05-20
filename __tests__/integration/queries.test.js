@@ -33,6 +33,7 @@ beforeAll(() => {
       relations,
       simpleCollections,
       nullAndEmptyAllowed,
+      additionalInsensitiveOperators,
     ] = await Promise.all([
       createPostGraphileSchema(pgClient, ["p"], {
         skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
@@ -63,6 +64,13 @@ beforeAll(() => {
           connectionFilterAllowEmptyObjectInput: true,
         },
       }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        appendPlugins: [require("../../index.js")],
+        graphileBuildOptions: {
+          connectionFilterAdditionalInsensitiveOperators: true,
+        },
+      }),
     ]);
     debug(printSchema(normal));
     return {
@@ -71,6 +79,7 @@ beforeAll(() => {
       relations,
       simpleCollections,
       nullAndEmptyAllowed,
+      additionalInsensitiveOperators,
     };
   });
 
@@ -98,6 +107,10 @@ beforeAll(() => {
           // some specific fixtures against a schema configured slightly
           // differently.
           const schemas = {
+            "additionalInsensitiveOperatorsTrue.citext.graphql":
+              gqlSchemas.additionalInsensitiveOperators,
+            "additionalInsensitiveOperatorsTrue.text.graphql":
+              gqlSchemas.additionalInsensitiveOperators,
             "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
             "relations.graphql": gqlSchemas.relations,
             "simpleCollections.graphql": gqlSchemas.simpleCollections,

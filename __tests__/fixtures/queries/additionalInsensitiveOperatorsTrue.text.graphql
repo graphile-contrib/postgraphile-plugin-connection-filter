@@ -1,0 +1,42 @@
+query text($v2: String = "Test", $v3: String = "tEST") {
+  distinctFromInsensitive: allFilterables(filter: { text: { distinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
+  equalToInsensitive: allFilterables(filter: { text: { equalToInsensitive: $v2 } }) {
+    ...nodes
+  }
+  greaterThanInsensitive: allFilterables(filter: { text: { greaterThanInsensitive: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualToInsensitive: allFilterables(
+    filter: { text: { greaterThanOrEqualToInsensitive: $v2 } }
+  ) {
+    ...nodes
+  }
+  inInsensitive: allFilterables(filter: { text: { inInsensitive: [$v2, $v3] } }) {
+    ...nodes
+  }
+  lessThanInsensitive: allFilterables(filter: { text: { lessThanInsensitive: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualToInsensitive: allFilterables(
+    filter: { text: { lessThanOrEqualToInsensitive: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFromInsensitive: allFilterables(filter: { text: { notDistinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
+  notEqualToInsensitive: allFilterables(filter: { text: { notEqualToInsensitive: $v2 } }) {
+    ...nodes
+  }
+  notInInsensitive: allFilterables(filter: { text: { notInInsensitive: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}
