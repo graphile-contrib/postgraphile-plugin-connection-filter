@@ -8,6 +8,7 @@ exports[`prints a schema with the filter plugin and the \`ignoreIndexes: false\`
   byteaArray: [String]
   char4Array: [String]
   cidrArray: [String]
+  citextArray: [String]
   dateArray: [Date]
   float4Array: [Float]
   float8Array: [Float]
@@ -614,6 +615,7 @@ type Filterable implements Node {
   bytea: String
   char4: String
   cidr: String
+  citext: String
   compositeColumn: Composite
   computed: String
   computed2: String
