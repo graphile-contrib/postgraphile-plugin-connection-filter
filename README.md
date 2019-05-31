@@ -471,6 +471,44 @@ When using PostGraphile as a library, the following plugin options can be passed
 
 <details>
 
+<summary>connectionFilterAdditionalInsensitiveOperators</summary>
+
+Expose additional case-insensitive operators for `String` fields:
+
+```js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterAdditionalInsensitiveOperators: true,
+  },
+})
+```
+
+The additional operators are:
+
+- distinctFromInsensitive
+- equalToInsensitive
+- greaterThanInsensitive
+- greaterThanOrEqualToInsensitive
+- inInsensitive
+- lessThanInsensitive
+- lessThanOrEqualToInsensitive
+- notDistinctFromInsensitive
+- notEqualToInsensitive
+- notInInsensitive
+
+The compiled SQL varies based on the GraphQL operator used and the underlying PostgreSQL column type. The following logic applies:
+
+| GraphQL operator   | PostgreSQL column type  | Compiled SQL             | 
+| ------------------ | ----------------------- | ------------------------ |
+| equalTo            | `text`/`varchar`/`char` | <col> = $1               | 
+| equalTo            | `citext`                | <col>::text = $1::text   |
+| equalToInsensitive | `text`/`varchar`/`char` | lower(<col>) = lower($1) |
+| equalToInsensitive | `citext`                | <col> = $1               |
+
+</details>
+
+<details>
+
 <summary>connectionFilterAllowedOperators</summary>
 
 Restrict filtering to specific operators:
@@ -494,8 +532,6 @@ postgraphile(pgConfig, schema, {
   },
 })
 ```
-
-For a full list of the available operators, see the Comparison Operators table above.
 
 </details>
 
