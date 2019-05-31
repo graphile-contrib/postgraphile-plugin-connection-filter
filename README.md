@@ -500,12 +500,12 @@ The compiled SQL depends on the GraphQL operator used and the underlying Postgre
 
 For example, here is how the `equalTo`/`equalToInsensitive` operators compile to SQL:
 
-| GraphQL operator   | PostgreSQL column type  | Compiled SQL             | 
-| ------------------ | ----------------------- | ------------------------ |
-| equalTo            | `text`/`varchar`/`char` | <col> = $1               | 
-| equalTo            | `citext`                | <col>::text = $1::text   |
-| equalToInsensitive | `text`/`varchar`/`char` | lower(<col>) = lower($1) |
-| equalToInsensitive | `citext`                | <col> = $1               |
+| GraphQL operator   | PostgreSQL column type  | Compiled SQL               |
+| ------------------ | ----------------------- | -------------------------- |
+| equalTo            | `text`/`varchar`/`char` | `<col> = $1`               |
+| equalTo            | `citext`                | `<col>::text = $1::text`   |
+| equalToInsensitive | `text`/`varchar`/`char` | `lower(<col>) = lower($1)` |
+| equalToInsensitive | `citext`                | `<col> = $1`               |
 
 </details>
 
