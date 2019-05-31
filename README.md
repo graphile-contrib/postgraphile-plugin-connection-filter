@@ -496,7 +496,9 @@ The additional operators are:
 - notEqualToInsensitive
 - notInInsensitive
 
-The compiled SQL varies based on the GraphQL operator used and the underlying PostgreSQL column type. The following logic applies:
+The compiled SQL depends on the GraphQL operator used and the underlying PostgreSQL column type. Note that using case-insensitive operators with `text`/`varchar`/`char` columns will result in calling `lower()` on the operands, and using case-sensitive operators with `citext` columns will result in casting the operands to `text`.
+
+For example, here is how the `equalTo`/`equalToInsensitive` operators compile to SQL:
 
 | GraphQL operator   | PostgreSQL column type  | Compiled SQL             | 
 | ------------------ | ----------------------- | ------------------------ |
