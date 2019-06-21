@@ -3719,6 +3719,20 @@ type Protected implements Node {
   otherId: Int
 }
 
+\\"\\"\\"
+A filter to be used against \`Protected\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input ProtectedFilter {
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`otherId\` field.\\"\\"\\"
+  otherId: IntFilter
+}
+
 \\"\\"\\"A connection to a list of \`Protected\` values.\\"\\"\\"
 type ProtectedsConnection {
   \\"\\"\\"
@@ -4533,6 +4547,11 @@ type Query implements Node {
 
     \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
     before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: ProtectedFilter
 
     \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
     first: Int
