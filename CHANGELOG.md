@@ -1,3 +1,6 @@
+## 1.1.1 - 2019-06-21
+- Fixed missing `filter` argument for setof functions when source table is commented as `@omit all`
+
 ## 1.1.0 - 2019-05-31
 - Added ability to filter on `citext` columns (#98)
 - Added `connectionFilterAdditionalInsensitiveOperators` option (#98)
