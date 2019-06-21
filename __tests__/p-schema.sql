@@ -280,3 +280,15 @@ create function p.func_tagged_filterable_returns_table_multi_col() returns table
 $$ language sql stable;
 
 comment on function p.func_tagged_filterable_returns_table_multi_col() is E'@filterable';
+
+create table p.protected (
+  id int primary key,
+  other_id int,
+  name text
+);
+
+comment on table p.protected is E'@omit all';
+
+create function p.protecteds_by_other_id (other_id int) returns setof p.protected as $$
+  select * from p.protected where other_id = other_id;
+$$ language sql stable;

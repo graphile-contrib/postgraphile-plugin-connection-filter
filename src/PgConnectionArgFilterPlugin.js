@@ -65,11 +65,15 @@ module.exports = function PgConnectionArgFilterPlugin(
       if (!nodeType) {
         return args;
       }
+      const nodeSource =
+        source.kind === "procedure" && returnType.class
+          ? returnType.class
+          : source;
 
       const FilterType = connectionFilterType(
         newWithHooks,
         filterTypeName,
-        source,
+        nodeSource,
         nodeTypeName
       );
       if (!FilterType) {

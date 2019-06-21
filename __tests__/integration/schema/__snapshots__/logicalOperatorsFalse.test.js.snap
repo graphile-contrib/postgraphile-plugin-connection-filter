@@ -3708,6 +3708,57 @@ enum ParentsOrderBy {
   PRIMARY_KEY_DESC
 }
 
+type Protected implements Node {
+  id: Int!
+  name: String
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+  otherId: Int
+}
+
+\\"\\"\\"
+A filter to be used against \`Protected\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input ProtectedFilter {
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`name\` field.\\"\\"\\"
+  name: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`otherId\` field.\\"\\"\\"
+  otherId: IntFilter
+}
+
+\\"\\"\\"A connection to a list of \`Protected\` values.\\"\\"\\"
+type ProtectedsConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`Protected\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [ProtectedsEdge!]!
+
+  \\"\\"\\"A list of \`Protected\` objects.\\"\\"\\"
+  nodes: [Protected]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"The count of *all* \`Protected\` you could get from the connection.\\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`Protected\` edge in the connection.\\"\\"\\"
+type ProtectedsEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`Protected\` at the end of the edge.\\"\\"\\"
+  node: Protected
+}
+
 \\"\\"\\"The root query type which gives access points into the data universe.\\"\\"\\"
 type Query implements Node {
   \\"\\"\\"Reads and enables pagination through a set of \`ArrayType\`.\\"\\"\\"
@@ -4479,6 +4530,42 @@ type Query implements Node {
     nodeId: ID!
   ): Parent
   parentById(id: Int!): Parent
+
+  \\"\\"\\"Reads a single \`Protected\` using its globally unique \`ID\`.\\"\\"\\"
+  protected(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`Protected\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): Protected
+  protectedById(id: Int!): Protected
+
+  \\"\\"\\"Reads and enables pagination through a set of \`Protected\`.\\"\\"\\"
+  protectedsByOtherId(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: ProtectedFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+    otherId: Int
+  ): ProtectedsConnection!
 
   \\"\\"\\"
   Exposes the root query type nested one level down. This is helpful for Relay 1
