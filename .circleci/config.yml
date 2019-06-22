@@ -3,7 +3,7 @@ jobs:
   node8.10_pg9.6:
     docker:
       - image: circleci/node:8.10-stretch
-      - image: circleci/postgres:9.6-alpine
+      - image: circleci/postgres:9.6
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: circle_test
@@ -28,7 +28,7 @@ jobs:
   node10_pg10:
     docker:
       - image: circleci/node:10
-      - image: circleci/postgres:10-alpine
+      - image: circleci/postgres:10
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: circle_test
@@ -53,7 +53,32 @@ jobs:
   node10_pg11:
     docker:
       - image: circleci/node:10
-      - image: circleci/postgres:11-alpine
+      - image: circleci/postgres:11
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: circle_test
+    steps:
+      - checkout
+      - run: sudo apt update
+      - run: sudo apt install -y postgresql-client
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run: yarn lint
+      - run:
+          command: yarn test
+          environment:
+            TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
+  node12_pg12:
+    docker:
+      - image: circleci/node:12
+      - image: circleci/postgres:12
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: circle_test
@@ -82,3 +107,4 @@ workflows:
       - node8.10_pg9.6
       - node10_pg10
       - node10_pg11
+      - node12_pg12
