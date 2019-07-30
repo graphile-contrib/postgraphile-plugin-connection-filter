@@ -708,6 +708,18 @@ type Filterable implements Node {
   xml: String
 }
 
+type FilterableClosure implements Node {
+  ancestorId: Int!
+  depth: Int!
+  descendantId: Int!
+  id: Int!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
 \\"\\"\\"A connection to a list of \`Int\` values.\\"\\"\\"
 type FilterableComputedSetofIntConnection {
   \\"\\"\\"
@@ -2048,6 +2060,15 @@ type Query implements Node {
   filterableByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): Filterable
   filterableByForwardId(forwardId: Int!): Filterable
   filterableById(id: Int!): Filterable
+
+  \\"\\"\\"Reads a single \`FilterableClosure\` using its globally unique \`ID\`.\\"\\"\\"
+  filterableClosure(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`FilterableClosure\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): FilterableClosure
+  filterableClosureById(id: Int!): FilterableClosure
 
   \\"\\"\\"Reads a single \`Forward\` using its globally unique \`ID\`.\\"\\"\\"
   forward(

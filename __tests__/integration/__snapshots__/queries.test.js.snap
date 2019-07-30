@@ -7096,6 +7096,18 @@ Object {
         },
       ],
     },
+    "filterableClosuresByDescendantId_some_filterableByAncestorId_name_equalTo_Test": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+          "text": "Test",
+        },
+        Object {
+          "id": 3,
+          "text": "tEST",
+        },
+      ],
+    },
     "forwardCompoundExists_false": Object {
       "nodes": Array [
         Object {

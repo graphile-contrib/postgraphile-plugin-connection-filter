@@ -820,6 +820,64 @@ type Filterable implements Node {
   ): FilterableComputedSetofIntConnection!
   computedTaggedFilterable: Int
   date: Date
+
+  \\"\\"\\"Reads and enables pagination through a set of \`FilterableClosure\`.\\"\\"\\"
+  filterableClosuresByAncestorId(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: FilterableClosureFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`FilterableClosure\`.\\"\\"\\"
+    orderBy: [FilterableClosuresOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FilterableClosuresConnection!
+
+  \\"\\"\\"Reads and enables pagination through a set of \`FilterableClosure\`.\\"\\"\\"
+  filterableClosuresByDescendantId(
+    \\"\\"\\"Read all values in the set after (below) this cursor.\\"\\"\\"
+    after: Cursor
+
+    \\"\\"\\"Read all values in the set before (above) this cursor.\\"\\"\\"
+    before: Cursor
+
+    \\"\\"\\"
+    A filter to be used in determining which values should be returned by the collection.
+    \\"\\"\\"
+    filter: FilterableClosureFilter
+
+    \\"\\"\\"Only read the first \`n\` values of the set.\\"\\"\\"
+    first: Int
+
+    \\"\\"\\"Only read the last \`n\` values of the set.\\"\\"\\"
+    last: Int
+
+    \\"\\"\\"
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    \\"\\"\\"
+    offset: Int
+
+    \\"\\"\\"The method to use when ordering \`FilterableClosure\`.\\"\\"\\"
+    orderBy: [FilterableClosuresOrderBy!] = [PRIMARY_KEY_ASC]
+  ): FilterableClosuresConnection!
   float4: Float
   float8: Float
 
@@ -866,6 +924,97 @@ type Filterable implements Node {
   varbit: BitString
   varchar: String
   xml: String
+}
+
+type FilterableClosure implements Node {
+  ancestorId: Int!
+  depth: Int!
+  descendantId: Int!
+
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`FilterableClosure\`.
+  \\"\\"\\"
+  filterableByAncestorId: Filterable
+
+  \\"\\"\\"
+  Reads a single \`Filterable\` that is related to this \`FilterableClosure\`.
+  \\"\\"\\"
+  filterableByDescendantId: Filterable
+  id: Int!
+
+  \\"\\"\\"
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  \\"\\"\\"
+  nodeId: ID!
+}
+
+\\"\\"\\"
+A filter to be used against \`FilterableClosure\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input FilterableClosureFilter {
+  \\"\\"\\"Filter by the object’s \`ancestorId\` field.\\"\\"\\"
+  ancestorId: IntFilter
+
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [FilterableClosureFilter!]
+
+  \\"\\"\\"Filter by the object’s \`depth\` field.\\"\\"\\"
+  depth: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`descendantId\` field.\\"\\"\\"
+  descendantId: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
+  id: IntFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: FilterableClosureFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [FilterableClosureFilter!]
+}
+
+\\"\\"\\"A connection to a list of \`FilterableClosure\` values.\\"\\"\\"
+type FilterableClosuresConnection {
+  \\"\\"\\"
+  A list of edges which contains the \`FilterableClosure\` and cursor to aid in pagination.
+  \\"\\"\\"
+  edges: [FilterableClosuresEdge!]!
+
+  \\"\\"\\"A list of \`FilterableClosure\` objects.\\"\\"\\"
+  nodes: [FilterableClosure]!
+
+  \\"\\"\\"Information to aid in pagination.\\"\\"\\"
+  pageInfo: PageInfo!
+
+  \\"\\"\\"
+  The count of *all* \`FilterableClosure\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int
+}
+
+\\"\\"\\"A \`FilterableClosure\` edge in the connection.\\"\\"\\"
+type FilterableClosuresEdge {
+  \\"\\"\\"A cursor for use in pagination.\\"\\"\\"
+  cursor: Cursor
+
+  \\"\\"\\"The \`FilterableClosure\` at the end of the edge.\\"\\"\\"
+  node: FilterableClosure
+}
+
+\\"\\"\\"Methods to use when ordering \`FilterableClosure\`.\\"\\"\\"
+enum FilterableClosuresOrderBy {
+  ANCESTOR_ID_ASC
+  ANCESTOR_ID_DESC
+  DEPTH_ASC
+  DEPTH_DESC
+  DESCENDANT_ID_ASC
+  DESCENDANT_ID_DESC
+  ID_ASC
+  ID_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
 }
 
 \\"\\"\\"A connection to a list of \`Int\` values.\\"\\"\\"
@@ -2489,6 +2638,15 @@ type Query implements Node {
   filterableByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): Filterable
   filterableByForwardId(forwardId: Int!): Filterable
   filterableById(id: Int!): Filterable
+
+  \\"\\"\\"Reads a single \`FilterableClosure\` using its globally unique \`ID\`.\\"\\"\\"
+  filterableClosure(
+    \\"\\"\\"
+    The globally unique \`ID\` to be used in selecting a single \`FilterableClosure\`.
+    \\"\\"\\"
+    nodeId: ID!
+  ): FilterableClosure
+  filterableClosureById(id: Int!): FilterableClosure
 
   \\"\\"\\"Reads a single \`Forward\` using its globally unique \`ID\`.\\"\\"\\"
   forward(
