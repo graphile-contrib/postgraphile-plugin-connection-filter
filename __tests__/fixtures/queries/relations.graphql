@@ -23,6 +23,7 @@ query {
   children_none_name_startsWith_c_and_childrenExist_false: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
   childrenExist_false: allFilterables(filter: {childrenByFilterableIdExist: false}) { ...childrenConnection }
   childrenExist_true: allFilterables(filter: {childrenByFilterableIdExist: true}) { ...childrenConnection }
+  filterableClosuresByDescendantId_some_filterableByAncestorId_name_equalTo_Test: allFilterables(filter: { filterableClosuresByDescendantId: { some: { filterableByAncestorId: { name: { equalTo: "Test" } } } } }) { ...textConnection }
   forwardCompound_name_equalTo_forwardCompound12: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {equalTo: "forwardCompound12"}}}) { ...textConnection }
   forwardCompoundExists_false: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2Exists: false}) { ...textConnection }
   forwardCompoundExists_true: allFilterables(filter: {forwardCompoundByForwardCompound1AndForwardCompound2Exists: true}) { ...textConnection }

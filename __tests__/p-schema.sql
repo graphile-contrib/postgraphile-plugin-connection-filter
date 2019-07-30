@@ -292,3 +292,11 @@ comment on table p.protected is E'@omit all';
 create function p.protecteds_by_other_id (other_id int) returns setof p.protected as $$
   select * from p.protected where other_id = other_id;
 $$ language sql stable;
+
+create table p.filterable_closure (
+  id serial primary key,
+  ancestor_id integer not null references p.filterable (id),
+  descendant_id integer not null references p.filterable (id),
+  depth integer not null
+);
+comment on table p.filterable_closure is E'@omit all';

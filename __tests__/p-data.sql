@@ -93,4 +93,11 @@ insert into p.junction(side_a_id, side_b_id) values
   (11, 21),
   (11, 22),
   (12, 21);
-  
+
+insert into p.filterable_closure (ancestor_id, descendant_id, depth) values
+  (1, 1, 0),
+  (2, 2, 0),
+  (3, 3, 0),
+  (1, 2, 1),
+  (2, 3, 1),
+  (1, 3, 2);
