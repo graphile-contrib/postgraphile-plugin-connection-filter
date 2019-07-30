@@ -169,7 +169,8 @@ module.exports = function PgConnectionArgFilterPlugin(
       queryBuilder,
       pgType,
       pgTypeModifier,
-      parentFieldName
+      parentFieldName,
+      parentFieldInfo
     ) => {
       if (obj == null) return handleNullInput();
       if (isEmptyObject(obj)) return handleEmptyObjectInput();
@@ -189,6 +190,7 @@ module.exports = function PgConnectionArgFilterPlugin(
               pgType,
               pgTypeModifier,
               parentFieldName,
+              parentFieldInfo,
             });
           }
           throw new Error(`Unable to resolve filter field '${key}'`);
