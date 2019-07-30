@@ -1,3 +1,6 @@
+## 1.1.2 - 2019-07-29
+- Fixed SQL for one-to-many (every/some/none) relation fields (#107)
+
 ## 1.1.1 - 2019-06-21
 - Fixed missing `filter` argument for setof functions when source table is commented as `@omit all`
 
