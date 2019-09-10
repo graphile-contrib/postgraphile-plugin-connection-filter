@@ -2017,6 +2017,7 @@ type Filterable implements Node {
     offset: Int
   ): FilterableComputedSetofIntConnection!
   computedTaggedFilterable: Int
+  computedWithRequiredArg(i: Int!): Int
   date: Date
 
   \\"\\"\\"Reads and enables pagination through a set of \`FilterableClosure\`.\\"\\"\\"
@@ -2271,6 +2272,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`computedTaggedFilterable\` field.\\"\\"\\"
   computedTaggedFilterable: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`computedWithRequiredArg\` field.\\"\\"\\"
+  computedWithRequiredArg: IntFilter
 
   \\"\\"\\"Filter by the object’s \`date\` field.\\"\\"\\"
   date: DateFilter
