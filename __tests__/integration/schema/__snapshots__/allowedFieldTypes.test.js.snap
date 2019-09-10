@@ -1069,9 +1069,6 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`computedTaggedFilterable\` field.\\"\\"\\"
   computedTaggedFilterable: IntFilter
 
-  \\"\\"\\"Filter by the object’s \`computedWithRequiredArg\` field.\\"\\"\\"
-  computedWithRequiredArg: IntFilter
-
   \\"\\"\\"Filter by the object’s \`forwardCompound1\` field.\\"\\"\\"
   forwardCompound1: IntFilter
 

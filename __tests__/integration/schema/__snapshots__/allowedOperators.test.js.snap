@@ -1419,9 +1419,6 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`computedTaggedFilterable\` field.\\"\\"\\"
   computedTaggedFilterable: IntFilter
 
-  \\"\\"\\"Filter by the object’s \`computedWithRequiredArg\` field.\\"\\"\\"
-  computedWithRequiredArg: IntFilter
-
   \\"\\"\\"Filter by the object’s \`date\` field.\\"\\"\\"
   date: DateFilter
 
