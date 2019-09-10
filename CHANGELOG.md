@@ -1,3 +1,6 @@
+## 1.1.3 - 2019-09-10
+- Fixed detection of computed column functions with required arguments, which should not be used for filtering (#111)
+
 ## 1.1.2 - 2019-07-29
 - Fixed SQL for one-to-many (every/some/none) relation fields (#107)
 
