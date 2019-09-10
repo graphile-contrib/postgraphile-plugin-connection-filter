@@ -2044,6 +2044,7 @@ type Filterable implements Node {
     offset: Int
   ): FilterableComputedSetofIntConnection!
   computedTaggedFilterable: Int
+  computedWithRequiredArg(i: Int!): Int
   date: Date
 
   \\"\\"\\"Reads and enables pagination through a set of \`FilterableClosure\`.\\"\\"\\"

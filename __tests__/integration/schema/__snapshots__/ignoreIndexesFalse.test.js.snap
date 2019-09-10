@@ -662,6 +662,7 @@ type Filterable implements Node {
     offset: Int
   ): FilterableComputedSetofIntConnection!
   computedTaggedFilterable: Int
+  computedWithRequiredArg(i: Int!): Int
   date: Date
   float4: Float
   float8: Float

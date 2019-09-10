@@ -247,6 +247,10 @@ create function p.filterable_computed_setof_child(f p.filterable) returns setof 
   where filterable_id = f.id;
 $$ language sql stable;
 
+create function p.filterable_computed_with_required_arg(f p.filterable, i int) returns int as $$
+  select 1;
+$$ language sql stable strict;
+
 create function p.func_returns_table_one_col(i int) returns table (col1 int) as $$
   select i + 42 as col1
   union

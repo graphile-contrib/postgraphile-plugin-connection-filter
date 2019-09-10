@@ -47,8 +47,13 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
         const { pseudoColumnName } = computedColumnDetails;
 
         // Must have only one required argument
-        const nonOptionalArgumentsCount =
-          proc.argDefaultsNum - proc.inputArgsCount;
+        const inputArgsCount = proc.argTypeIds.filter(
+          (_typeId, idx) =>
+            proc.argModes.length === 0 || // all args are `in`
+            proc.argModes[idx] === "i" || // this arg is `in`
+            proc.argModes[idx] === "b" // this arg is `inout`
+        ).length;
+        const nonOptionalArgumentsCount = inputArgsCount - proc.argDefaultsNum;
         if (nonOptionalArgumentsCount > 1) {
           return memo;
         }
