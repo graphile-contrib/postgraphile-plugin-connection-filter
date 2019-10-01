@@ -58,9 +58,7 @@ module.exports = function PgConnectionArgFilterBackwardRelationsPlugin(
           introspectionResultsByKind.classById[foreignConstraint.classId];
         if (!foreignTable) {
           throw new Error(
-            `Could not find the foreign table (constraint: ${
-              foreignConstraint.name
-            })`
+            `Could not find the foreign table (constraint: ${foreignConstraint.name})`
           );
         }
         if (omit(foreignTable, "read")) {

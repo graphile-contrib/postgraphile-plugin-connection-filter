@@ -2113,9 +2113,7 @@ type Filterable implements Node {
   forwardCompound1: Int
   forwardCompound2: Int
 
-  \\"\\"\\"
-  Reads a single \`ForwardCompound\` that is related to this \`Filterable\`.
-  \\"\\"\\"
+  \\"\\"\\"Reads a single \`ForwardCompound\` that is related to this \`Filterable\`.\\"\\"\\"
   forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompound
   forwardId: Int
   hstore: KeyValueHash
@@ -2720,9 +2718,7 @@ type Forward implements Node {
 }
 
 type ForwardCompound implements Node {
-  \\"\\"\\"
-  Reads a single \`Filterable\` that is related to this \`ForwardCompound\`.
-  \\"\\"\\"
+  \\"\\"\\"Reads a single \`Filterable\` that is related to this \`ForwardCompound\`.\\"\\"\\"
   filterableByForwardCompound1AndForwardCompound2: Filterable
   forwardCompound1: Int!
   forwardCompound2: Int!
@@ -4763,9 +4759,7 @@ type Query implements Node {
 
   \\"\\"\\"Reads a single \`ArrayType\` using its globally unique \`ID\`.\\"\\"\\"
   arrayType(
-    \\"\\"\\"
-    The globally unique \`ID\` to be used in selecting a single \`ArrayType\`.
-    \\"\\"\\"
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`ArrayType\`.\\"\\"\\"
     nodeId: ID!
   ): ArrayType
   arrayTypeById(id: Int!): ArrayType
@@ -4967,9 +4961,7 @@ type Query implements Node {
 
   \\"\\"\\"Reads a single \`JsonbTest\` using its globally unique \`ID\`.\\"\\"\\"
   jsonbTest(
-    \\"\\"\\"
-    The globally unique \`ID\` to be used in selecting a single \`JsonbTest\`.
-    \\"\\"\\"
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`JsonbTest\`.\\"\\"\\"
     nodeId: ID!
   ): JsonbTest
   jsonbTestById(id: Int!): JsonbTest
@@ -5001,9 +4993,7 @@ type Query implements Node {
 
   \\"\\"\\"Reads a single \`Protected\` using its globally unique \`ID\`.\\"\\"\\"
   protected(
-    \\"\\"\\"
-    The globally unique \`ID\` to be used in selecting a single \`Protected\`.
-    \\"\\"\\"
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`Protected\`.\\"\\"\\"
     nodeId: ID!
   ): Protected
   protectedById(id: Int!): Protected
@@ -5052,9 +5042,7 @@ type Query implements Node {
 
   \\"\\"\\"Reads a single \`RangeType\` using its globally unique \`ID\`.\\"\\"\\"
   rangeType(
-    \\"\\"\\"
-    The globally unique \`ID\` to be used in selecting a single \`RangeType\`.
-    \\"\\"\\"
+    \\"\\"\\"The globally unique \`ID\` to be used in selecting a single \`RangeType\`.\\"\\"\\"
     nodeId: ID!
   ): RangeType
   rangeTypeById(id: Int!): RangeType
@@ -5128,9 +5116,7 @@ type RangeArrayTypesConnection {
   \\"\\"\\"Information to aid in pagination.\\"\\"\\"
   pageInfo: PageInfo!
 
-  \\"\\"\\"
-  The count of *all* \`RangeArrayType\` you could get from the connection.
-  \\"\\"\\"
+  \\"\\"\\"The count of *all* \`RangeArrayType\` you could get from the connection.\\"\\"\\"
   totalCount: Int
 }
 

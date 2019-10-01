@@ -84,7 +84,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       addArgDataGenerator(function connectionFilter(args) {
         return {
           pgQuery: queryBuilder => {
-            if (args.hasOwnProperty("filter")) {
+            if (Object.prototype.hasOwnProperty.call(args, "filter")) {
               const sqlFragment = connectionFilterResolve(
                 args.filter,
                 queryBuilder.getTableAlias(),
@@ -110,9 +110,7 @@ module.exports = function PgConnectionArgFilterPlugin(
             type: FilterType,
           },
         },
-        `Adding connection filter arg to field '${field.name}' of '${
-          Self.name
-        }'`
+        `Adding connection filter arg to field '${field.name}' of '${Self.name}'`
       );
     }
   );
