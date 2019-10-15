@@ -1,3 +1,7 @@
+## 2.0.0 - WIP
+
+- [x] **BREAKING CHANGE:** Remove `similarTo` and `notSimilarTo` operators.
+
 ## 1.1.3 - 2019-09-10
 - Fixed detection of computed column functions with required arguments, which should not be used for filtering (#111)
 

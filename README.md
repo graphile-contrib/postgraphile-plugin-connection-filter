@@ -134,8 +134,6 @@ The following types have additional operators:
 | NOT LIKE '...' | notLike: `String` | Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. |
 | ILIKE '...' | likeInsensitive: `String` | Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. |
 | NOT ILIKE '...' | notLikeInsensitive: `String` | Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. |
-| SIMILAR TO '...' | similarTo: `String` | Matches the specified pattern using the SQL standard's definition of a regular expression. |
-| NOT SIMILAR TO '...' | notSimilarTo: `String` | Does not match the specified pattern using the SQL standard's definition of a regular expression. |
 
 ### Domains
 

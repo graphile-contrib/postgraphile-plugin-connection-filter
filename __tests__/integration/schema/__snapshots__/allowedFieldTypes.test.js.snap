@@ -3321,21 +3321,11 @@ input StringFilter {
   \\"\\"\\"
   notLikeInsensitive: String
 
-  \\"\\"\\"
-  Does not match the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  notSimilarTo: String
-
   \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
   notStartsWith: String
 
   \\"\\"\\"Does not start with the specified string (case-insensitive).\\"\\"\\"
   notStartsWithInsensitive: String
-
-  \\"\\"\\"
-  Matches the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  similarTo: String
 
   \\"\\"\\"Starts with the specified string (case-sensitive).\\"\\"\\"
   startsWith: String

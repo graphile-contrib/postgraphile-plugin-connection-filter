@@ -84,20 +84,12 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
-  notSimilarTo: allFilterables(
-    filter: { char4: { notSimilarTo: "%(TE|ST)%" } }
-  ) {
-    ...nodes
-  }
   notStartsWith: allFilterables(filter: { char4: { notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
     filter: { char4: { notStartsWithInsensitive: "T" } }
   ) {
-    ...nodes
-  }
-  similarTo: allFilterables(filter: { char4: { similarTo: "%(TE|ST)%" } }) {
     ...nodes
   }
   startsWith: allFilterables(filter: { char4: { startsWith: "T" } }) {

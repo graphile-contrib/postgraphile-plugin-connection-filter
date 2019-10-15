@@ -84,20 +84,12 @@ query citext($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
-  notSimilarTo: allFilterables(
-    filter: { citext: { notSimilarTo: "%(TE|ST)%" } }
-  ) {
-    ...nodes
-  }
   notStartsWith: allFilterables(filter: { citext: { notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
     filter: { citext: { notStartsWithInsensitive: "T" } }
   ) {
-    ...nodes
-  }
-  similarTo: allFilterables(filter: { citext: { similarTo: "%(TE|ST)%" } }) {
     ...nodes
   }
   startsWith: allFilterables(filter: { citext: { startsWith: "T" } }) {

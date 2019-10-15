@@ -84,20 +84,12 @@ query bpchar4($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
-  notSimilarTo: allFilterables(
-    filter: { bpchar4: { notSimilarTo: "%(TE|ST)%" } }
-  ) {
-    ...nodes
-  }
   notStartsWith: allFilterables(filter: { bpchar4: { notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
     filter: { bpchar4: { notStartsWithInsensitive: "T" } }
   ) {
-    ...nodes
-  }
-  similarTo: allFilterables(filter: { bpchar4: { similarTo: "%(TE|ST)%" } }) {
     ...nodes
   }
   startsWith: allFilterables(filter: { bpchar4: { startsWith: "T" } }) {

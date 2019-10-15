@@ -196,17 +196,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
-      similarTo: {
-        description:
-          "Matches the specified pattern using the SQL standard's definition of a regular expression.",
-        resolve: (i, v) => sql.query`${i} SIMILAR TO ${v}`,
-      },
-      notSimilarTo: {
-        description:
-          "Does not match the specified pattern using the SQL standard's definition of a regular expression.",
-        resolve: (i, v) => sql.query`${i} NOT SIMILAR TO ${v}`,
-      },
-      // TODO: add regexp operators
     };
     const hstoreOperators = {
       contains: {

@@ -86,11 +86,6 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   ) {
     ...nodes
   }
-  notSimilarTo: allDomainTypes(
-    filter: { char4Domain: { notSimilarTo: "%(TE|ST)%" } }
-  ) {
-    ...nodes
-  }
   notStartsWith: allDomainTypes(
     filter: { char4Domain: { notStartsWith: "T" } }
   ) {
@@ -98,11 +93,6 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   }
   notStartsWithInsensitive: allDomainTypes(
     filter: { char4Domain: { notStartsWithInsensitive: "T" } }
-  ) {
-    ...nodes
-  }
-  similarTo: allDomainTypes(
-    filter: { char4Domain: { similarTo: "%(TE|ST)%" } }
   ) {
     ...nodes
   }
