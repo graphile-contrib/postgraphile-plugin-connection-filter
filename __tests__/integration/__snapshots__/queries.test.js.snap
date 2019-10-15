@@ -1,5 +1,69 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`addConnectionFilterOperator.graphql 1`] = `
+Object {
+  "data": Object {
+    "familyEqualTo_4": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "familyEqualTo_6": Object {
+      "nodes": Array [],
+    },
+    "familyNotEqualTo_4": Object {
+      "nodes": Array [],
+    },
+    "familyNotEqualTo_6": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isV4_false": Object {
+      "nodes": Array [],
+    },
+    "isV4_true": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`additionalInsensitiveOperatorsTrue.citext.graphql 1`] = `
 Object {
   "data": Object {

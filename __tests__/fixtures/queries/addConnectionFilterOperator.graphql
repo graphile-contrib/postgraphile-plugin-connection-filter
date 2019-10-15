@@ -1,0 +1,26 @@
+query {
+  familyEqualTo_4: allFilterables(filter: { inet: { familyEqualTo: 4 } }) {
+    ...nodes
+  }
+  familyEqualTo_6: allFilterables(filter: { inet: { familyEqualTo: 6 } }) {
+    ...nodes
+  }
+  familyNotEqualTo_4: allFilterables(filter: { inet: { familyNotEqualTo: 4 } }) {
+    ...nodes
+  }
+  familyNotEqualTo_6: allFilterables(filter: { inet: { familyNotEqualTo: 6 } }) {
+    ...nodes
+  }
+  isV4_true: allFilterables(filter: { inet: { isV4: true } }) {
+    ...nodes
+  }
+  isV4_false: allFilterables(filter: { inet: { isV4: false } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

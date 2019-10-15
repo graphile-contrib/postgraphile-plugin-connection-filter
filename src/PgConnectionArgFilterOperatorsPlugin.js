@@ -512,7 +512,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       gql2pg,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
-      connectionFilterOperatorSpecsAdded,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
       connectionFilterArrayOperators,
@@ -542,49 +541,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     }
 
     connectionFilterTypesByTypeName[Self.name] = Self;
-
-    // Include operators added by other plugins
-    for (const operatorSpec of connectionFilterOperatorSpecsAdded) {
-      const {
-        name,
-        description,
-        allowedFieldTypes = [],
-        allowedListTypes = ["NonList"],
-        resolveType,
-        resolve,
-      } = operatorSpec;
-      if (allowedListTypes.includes("List")) {
-        if (connectionFilterArrayOperators[name]) {
-          throw new Error(`Array operator '${name}' already exists.`);
-        }
-        connectionFilterArrayOperators[name] = {
-          description,
-          resolveType,
-          resolve,
-        };
-      }
-      if (
-        allowedListTypes.includes("NonList") &&
-        allowedFieldTypes.includes(fieldType.name)
-      ) {
-        if (
-          connectionFilterScalarOperators[fieldType.name] &&
-          connectionFilterScalarOperators[fieldType.name][name]
-        ) {
-          throw new Error(
-            `${fieldType.name} operator '${name}' already exists.`
-          );
-        }
-        if (!connectionFilterScalarOperators[fieldType.name]) {
-          connectionFilterScalarOperators[fieldType.name] = {};
-        }
-        connectionFilterScalarOperators[fieldType.name][name] = {
-          description,
-          resolveType,
-          resolve,
-        };
-      }
-    }
 
     const operatorSpecsByCategory = {
       Array: connectionFilterArrayOperators,
