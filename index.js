@@ -27,7 +27,7 @@ module.exports = function PostGraphileConnectionFilterPlugin(
     //connectionFilterAllowedOperators,
     //connectionFilterAllowedFieldTypes,
     connectionFilterComputedColumns: true,
-    connectionFilterLists: true,
+    connectionFilterArrays: true,
     //connectionFilterOperatorNames,
     connectionFilterRelations: false,
     connectionFilterSetofFunctions: true,

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prints a schema with the filter plugin and the \`connectionFilterLists: false\` option 1`] = `
+exports[`prints a schema with the filter plugin and the \`connectionFilterArrays: false\` option 1`] = `
 "type ArrayType implements Node {
   bit4Array: [BitString]
   boolArray: [Boolean]

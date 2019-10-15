@@ -17,7 +17,7 @@ To protect your server, you can:
 - Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` options to limit the filterable fields and operators exposed through GraphQL.
 - Set `connectionFilterComputedColumns: false` to prevent filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/).
 - Set `connectionFilterSetofFunctions: false` to prevent filtering on functions that return `setof`.
-- Set `connectionFilterLists: false` to prevent filtering on List fields (Postgres arrays).
+- Set `connectionFilterArrays: false` to prevent filtering on List fields (Postgres arrays).
 
 Also see the [Production Considerations](https://www.graphile.org/postgraphile/production) page of the official PostGraphile docs, which discusses query whitelisting.
 
@@ -555,6 +555,22 @@ The available field types will depend on your database schema.
 
 <details>
 
+<summary>connectionFilterArrays</summary>
+
+Enable/disable filtering on PostgreSQL arrays:
+
+```js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterArrays: false, // default: true
+  },
+})
+```
+
+</details>
+
+<details>
+
 <summary>connectionFilterComputedColumns</summary>
 
 Enable/disable filtering by computed columns:
@@ -574,22 +590,6 @@ create function app_public.foo_computed(foo app_public.foo)
   returns ... as $$ ... $$ language sql stable;
 
 comment on function app_public.foo_computed(foo app_public.foo) is E'@filterable';
-```
-
-</details>
-
-<details>
-
-<summary>connectionFilterLists</summary>
-
-Enable/disable filtering on List fields:
-
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
-    connectionFilterLists: false, // default: true
-  },
-})
 ```
 
 </details>

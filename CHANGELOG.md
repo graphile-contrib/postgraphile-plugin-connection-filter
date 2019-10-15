@@ -1,5 +1,6 @@
 ## 2.0.0 - WIP
 
+- [x] **BREAKING CHANGE:** Rename `connectionFilterLists` option to `connectionFilterArrays`.
 - [x] **BREAKING CHANGE:** Remove `similarTo` and `notSimilarTo` operators.
 
 ## 1.1.3 - 2019-09-10

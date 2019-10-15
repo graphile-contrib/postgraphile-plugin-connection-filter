@@ -2,7 +2,7 @@ module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
     connectionFilterAllowedFieldTypes,
-    connectionFilterLists,
+    connectionFilterArrays,
     connectionFilterSetofFunctions,
     connectionFilterAllowNullInput,
     connectionFilterAllowEmptyObjectInput,
@@ -291,12 +291,6 @@ module.exports = function PgConnectionArgFilterPlugin(
         return null;
       }
 
-      // Respect `connectionFilterLists` config option
-      const isListType = fieldType instanceof GraphQLList;
-      if (isListType && !connectionFilterLists) {
-        return null;
-      }
-
       const pgConnectionFilterOperatorsCategory = pgType.isPgArray
         ? "Array"
         : pgType.rangeSubTypeId
@@ -306,6 +300,14 @@ module.exports = function PgConnectionArgFilterPlugin(
         : pgType.type === "d"
         ? "Domain"
         : "Scalar";
+
+      // Respect `connectionFilterArrays` config option
+      if (
+        pgConnectionFilterOperatorsCategory === "Array" &&
+        !connectionFilterArrays
+      ) {
+        return null;
+      }
 
       const rangeElementInputType = pgType.rangeSubTypeId
         ? pgGetGqlInputTypeByTypeIdAndModifier(
@@ -322,6 +324,7 @@ module.exports = function PgConnectionArgFilterPlugin(
             )
           : null;
 
+      const isListType = fieldType instanceof GraphQLList;
       const operatorsTypeName = isListType
         ? inflection.filterFieldListType(namedType.name)
         : inflection.filterFieldType(namedType.name);
