@@ -2,6 +2,7 @@ const ConnectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
 const PgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
 const PgConnectionArgFilterColumnsPlugin = require("./src/PgConnectionArgFilterColumnsPlugin.js");
 const PgConnectionArgFilterComputedColumnsPlugin = require("./src/PgConnectionArgFilterComputedColumnsPlugin.js");
+const PgConnectionArgFilterCompositeTypeColumnsPlugin = require("./src/PgConnectionArgFilterCompositeTypeColumnsPlugin.js");
 const PgConnectionArgFilterRecordFunctionsPlugin = require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js");
 const PgConnectionArgFilterBackwardRelationsPlugin = require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js");
 const PgConnectionArgFilterForwardRelationsPlugin = require("./src/PgConnectionArgFilterForwardRelationsPlugin.js");
@@ -48,6 +49,7 @@ module.exports = function PostGraphileConnectionFilterPlugin(
   PgConnectionArgFilterPlugin(builder, options);
   PgConnectionArgFilterColumnsPlugin(builder, options);
   PgConnectionArgFilterComputedColumnsPlugin(builder, options);
+  PgConnectionArgFilterCompositeTypeColumnsPlugin(builder, options);
   PgConnectionArgFilterRecordFunctionsPlugin(builder, options);
 
   if (connectionFilterRelations) {
