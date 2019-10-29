@@ -1228,6 +1228,26 @@ type Composite {
   b: String
 }
 
+\\"\\"\\"
+A filter to be used against \`Composite\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input CompositeFilter {
+  \\"\\"\\"Filter by the object’s \`a\` field.\\"\\"\\"
+  a: IntFilter
+
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [CompositeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`b\` field.\\"\\"\\"
+  b: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: CompositeFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [CompositeFilter!]
+}
+
 \\"\\"\\"A location in a connection that can be used for resuming pagination.\\"\\"\\"
 scalar Cursor
 
@@ -2271,6 +2291,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`citext\` field.\\"\\"\\"
   citext: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`compositeColumn\` field.\\"\\"\\"
+  compositeColumn: CompositeFilter
 
   \\"\\"\\"Filter by the object’s \`computedTaggedFilterable\` field.\\"\\"\\"
   computedTaggedFilterable: IntFilter

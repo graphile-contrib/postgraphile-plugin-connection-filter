@@ -1,0 +1,45 @@
+query compositeColumn($v2: Int = 2, $v3: Int = 3) {
+  distinctFrom: allFilterables(filter: { compositeColumn: { a: { distinctFrom: $v2 } } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { compositeColumn: { a: { equalTo: $v2 } } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { compositeColumn: { a: { greaterThan: $v2 } } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { compositeColumn: { a: { greaterThanOrEqualTo: $v2 } } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { compositeColumn: { a: { in: [$v2, $v3] } } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { compositeColumn: { a: { isNull: true } } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { compositeColumn: { a: { lessThan: $v2 } } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { compositeColumn: { a: { lessThanOrEqualTo: $v2 } } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { compositeColumn: { a: { notDistinctFrom: $v2 } } }) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { compositeColumn: { a: { notEqualTo: $v2 } } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { compositeColumn: { a: { notIn: [$v2] } } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}
