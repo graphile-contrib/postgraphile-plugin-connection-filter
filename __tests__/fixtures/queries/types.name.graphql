@@ -2,6 +2,9 @@ query name($v2: String = "Test", $v3: String = "tEST") {
   distinctFrom: allFilterables(filter: { name: { distinctFrom: $v2 } }) {
     ...nodes
   }
+  distinctFromInsensitive: allFilterables(filter: { name: { distinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
   endsWith: allFilterables(filter: { name: { endsWith: "T" } }) {
     ...nodes
   }
@@ -13,7 +16,13 @@ query name($v2: String = "Test", $v3: String = "tEST") {
   equalTo: allFilterables(filter: { name: { equalTo: $v2 } }) {
     ...nodes
   }
+  equalToInsensitive: allFilterables(filter: { name: { equalToInsensitive: $v2 } }) {
+    ...nodes
+  }
   greaterThan: allFilterables(filter: { name: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanInsensitive: allFilterables(filter: { name: { greaterThanInsensitive: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
@@ -21,7 +30,15 @@ query name($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
+  greaterThanOrEqualToInsensitive: allFilterables(
+    filter: { name: { greaterThanOrEqualToInsensitive: $v2 } }
+  ) {
+    ...nodes
+  }
   in: allFilterables(filter: { name: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  inInsensitive: allFilterables(filter: { name: { inInsensitive: [$v2, $v3] } }) {
     ...nodes
   }
   includes: allFilterables(filter: { name: { includes: "T" } }) {
@@ -38,8 +55,16 @@ query name($v2: String = "Test", $v3: String = "tEST") {
   lessThan: allFilterables(filter: { name: { lessThan: $v2 } }) {
     ...nodes
   }
+  lessThanInsensitive: allFilterables(filter: { name: { lessThanInsensitive: $v2 } }) {
+    ...nodes
+  }
   lessThanOrEqualTo: allFilterables(
     filter: { name: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  lessThanOrEqualToInsensitive: allFilterables(
+    filter: { name: { lessThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
@@ -54,6 +79,9 @@ query name($v2: String = "Test", $v3: String = "tEST") {
   notDistinctFrom: allFilterables(filter: { name: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
+  notDistinctFromInsensitive: allFilterables(filter: { name: { notDistinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
   notEndsWith: allFilterables(filter: { name: { notEndsWith: "T" } }) {
     ...nodes
   }
@@ -65,7 +93,13 @@ query name($v2: String = "Test", $v3: String = "tEST") {
   notEqualTo: allFilterables(filter: { name: { notEqualTo: $v2 } }) {
     ...nodes
   }
+  notEqualToInsensitive: allFilterables(filter: { name: { notEqualToInsensitive: $v2 } }) {
+    ...nodes
+  }
   notIn: allFilterables(filter: { name: { notIn: [$v2] } }) {
+    ...nodes
+  }
+  notInInsensitive: allFilterables(filter: { name: { notInInsensitive: [$v2] } }) {
     ...nodes
   }
   notIncludes: allFilterables(filter: { name: { notIncludes: "T" } }) {

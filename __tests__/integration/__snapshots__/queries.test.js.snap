@@ -4894,6 +4894,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -4927,6 +4934,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -4937,8 +4960,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -4957,6 +4999,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -5003,6 +5061,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -5010,6 +5071,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -5046,6 +5123,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -5072,6 +5165,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -5084,6 +5180,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -7612,6 +7711,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -7645,6 +7751,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -7655,8 +7777,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -7675,6 +7816,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7721,6 +7878,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -7728,6 +7888,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7764,6 +7940,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -7790,6 +7982,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -7802,6 +7997,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -7888,6 +8086,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -7921,6 +8126,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -7931,8 +8152,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -7951,6 +8191,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7997,6 +8253,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -8004,6 +8263,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -8040,6 +8315,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -8066,6 +8357,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -8078,6 +8372,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -8164,6 +8461,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -8197,6 +8501,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -8207,8 +8527,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -8227,6 +8566,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -8273,6 +8628,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -8280,6 +8638,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -8316,6 +8690,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -8342,6 +8732,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -8354,6 +8747,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -9833,6 +10229,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -9866,6 +10269,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -9876,8 +10295,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -9896,6 +10334,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -9942,6 +10396,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -9949,6 +10406,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -9985,6 +10458,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -10011,6 +10500,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -10023,6 +10515,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -10229,6 +10724,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -10262,6 +10764,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -10272,8 +10790,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -10292,6 +10829,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -10338,6 +10891,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -10345,6 +10901,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -10381,6 +10953,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -10407,6 +10995,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -10419,6 +11010,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -11225,6 +11819,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -11258,6 +11859,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -11268,8 +11885,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -11288,6 +11924,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -11334,6 +11986,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -11341,6 +11996,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -11377,6 +12048,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -11403,6 +12090,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -11415,6 +12105,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [

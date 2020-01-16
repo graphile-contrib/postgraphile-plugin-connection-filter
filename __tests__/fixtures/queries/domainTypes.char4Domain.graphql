@@ -2,6 +2,9 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   distinctFrom: allDomainTypes(filter: { char4Domain: { distinctFrom: $v2 } }) {
     ...nodes
   }
+  distinctFromInsensitive: allDomainTypes(filter: { char4Domain: { distinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
   endsWith: allDomainTypes(filter: { char4Domain: { endsWith: "T" } }) {
     ...nodes
   }
@@ -13,7 +16,13 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   equalTo: allDomainTypes(filter: { char4Domain: { equalTo: $v2 } }) {
     ...nodes
   }
+  equalToInsensitive: allDomainTypes(filter: { char4Domain: { equalToInsensitive: $v2 } }) {
+    ...nodes
+  }
   greaterThan: allDomainTypes(filter: { char4Domain: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanInsensitive: allDomainTypes(filter: { char4Domain: { greaterThanInsensitive: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allDomainTypes(
@@ -21,7 +30,15 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   ) {
     ...nodes
   }
+  greaterThanOrEqualToInsensitive: allDomainTypes(
+    filter: { char4Domain: { greaterThanOrEqualToInsensitive: $v2 } }
+  ) {
+    ...nodes
+  }
   in: allDomainTypes(filter: { char4Domain: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  inInsensitive: allDomainTypes(filter: { char4Domain: { inInsensitive: [$v2, $v3] } }) {
     ...nodes
   }
   includes: allDomainTypes(filter: { char4Domain: { includes: "T" } }) {
@@ -38,8 +55,16 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   lessThan: allDomainTypes(filter: { char4Domain: { lessThan: $v2 } }) {
     ...nodes
   }
+  lessThanInsensitive: allDomainTypes(filter: { char4Domain: { lessThanInsensitive: $v2 } }) {
+    ...nodes
+  }
   lessThanOrEqualTo: allDomainTypes(
     filter: { char4Domain: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  lessThanOrEqualToInsensitive: allDomainTypes(
+    filter: { char4Domain: { lessThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
@@ -56,6 +81,9 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   ) {
     ...nodes
   }
+  notDistinctFromInsensitive: allDomainTypes(filter: { char4Domain: { notDistinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
   notEndsWith: allDomainTypes(filter: { char4Domain: { notEndsWith: "T" } }) {
     ...nodes
   }
@@ -67,7 +95,13 @@ query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
   notEqualTo: allDomainTypes(filter: { char4Domain: { notEqualTo: $v2 } }) {
     ...nodes
   }
+  notEqualToInsensitive: allDomainTypes(filter: { char4Domain: { notEqualToInsensitive: $v2 } }) {
+    ...nodes
+  }
   notIn: allDomainTypes(filter: { char4Domain: { notIn: [$v2] } }) {
+    ...nodes
+  }
+  notInInsensitive: allDomainTypes(filter: { char4Domain: { notInInsensitive: [$v2] } }) {
     ...nodes
   }
   notIncludes: allDomainTypes(filter: { char4Domain: { notIncludes: "T" } }) {

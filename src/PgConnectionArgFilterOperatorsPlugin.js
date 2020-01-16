@@ -1,10 +1,6 @@
 module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder,
-  {
-    connectionFilterAdditionalInsensitiveOperators,
-    connectionFilterAllowedOperators,
-    connectionFilterOperatorNames,
-  }
+  { connectionFilterAllowedOperators, connectionFilterOperatorNames }
 ) {
   builder.hook("build", build => {
     const {
@@ -337,45 +333,69 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       [_UUID]: { ...standardOperators, ...sortOperators },
     };
 
-    if (connectionFilterAdditionalInsensitiveOperators) {
-      for (const [name, spec] of [
-        ...Object.entries(standardOperators),
-        ...Object.entries(sortOperators),
-      ]) {
-        if (name == "isNull") continue;
+    /**
+     * This block adds the following operators:
+     * - distinctFromInsensitive
+     * - equalToInsensitive
+     * - greaterThanInsensitive
+     * - greaterThanOrEqualToInsensitive
+     * - inInsensitive
+     * - lessThanInsensitive
+     * - lessThanOrEqualToInsensitive
+     * - notDistinctFromInsensitive
+     * - notEqualToInsensitive
+     * - notInInsensitive
+     *
+     * The compiled SQL depends on the underlying PostgreSQL column type.
+     * Using case-insensitive operators with `text`/`varchar`/`char` columns
+     * will result in calling `lower()` on the operands. Using case-sensitive
+     * operators with `citext` columns will result in casting the operands to `text`.
+     *
+     * For example, here is how the `equalTo`/`equalToInsensitive` operators compile to SQL:
+     * | GraphQL operator   | PostgreSQL column type  | Compiled SQL               |
+     * | ------------------ | ----------------------- | -------------------------- |
+     * | equalTo            | `text`/`varchar`/`char` | `<col> = $1`               |
+     * | equalTo            | `citext`                | `<col>::text = $1::text`   |
+     * | equalToInsensitive | `text`/`varchar`/`char` | `lower(<col>) = lower($1)` |
+     * | equalToInsensitive | `citext`                | `<col> = $1`               |
+     */
+    for (const [name, spec] of [
+      ...Object.entries(standardOperators),
+      ...Object.entries(sortOperators),
+    ]) {
+      if (name == "isNull") continue;
 
-        const description = `${spec.description.substring(
-          0,
-          spec.description.length - 1
-        )} (case-insensitive).`;
+      const description = `${spec.description.substring(
+        0,
+        spec.description.length - 1
+      )} (case-insensitive).`;
 
-        const resolveSqlIdentifier = (sourceAlias, pgType) =>
-          pgType.name === "citext"
-            ? sourceAlias // already case-insensitive, so no need to call `lower()`
-            : sql.query`lower(${sourceAlias})`;
+      const resolveSqlIdentifier = (sourceAlias, pgType) =>
+        pgType.name === "citext"
+          ? sourceAlias // already case-insensitive, so no need to call `lower()`
+          : sql.query`lower(${sourceAlias})`;
 
-        const resolveSimpleSqlValue = (input, pgType, pgTypeModifier) =>
-          pgType.name === "citext"
-            ? gql2pg(input, pgType, pgTypeModifier) // already case-insensitive, so no need to call `lower()`
-            : sql.query`lower(${gql2pg(input, pgType, pgTypeModifier)})`;
+      const resolveSimpleSqlValue = (input, pgType, pgTypeModifier) =>
+        pgType.name === "citext"
+          ? gql2pg(input, pgType, pgTypeModifier) // already case-insensitive, so no need to call `lower()`
+          : sql.query`lower(${gql2pg(input, pgType, pgTypeModifier)})`;
 
-        const resolveSqlValue = (input, pgType, pgTypeModifier) =>
-          name === "in" || name === "notIn"
-            ? resolveListSqlValue(
-                input,
-                pgType,
-                pgTypeModifier,
-                resolveSimpleSqlValue
-              )
-            : resolveSimpleSqlValue(input, pgType, pgTypeModifier);
+      const resolveSqlValue = (input, pgType, pgTypeModifier) =>
+        name === "in" || name === "notIn"
+          ? resolveListSqlValue(
+              input,
+              pgType,
+              pgTypeModifier,
+              resolveSimpleSqlValue
+            )
+          : resolveSimpleSqlValue(input, pgType, pgTypeModifier);
 
-        connectionFilterScalarOperators[_String][`${name}Insensitive`] = {
-          ...spec,
-          description,
-          resolveSqlIdentifier,
-          resolveSqlValue,
-        };
-      }
+      connectionFilterScalarOperators[_String][`${name}Insensitive`] = {
+        ...spec,
+        description,
+        resolveSqlIdentifier,
+        resolveSqlValue,
+      };
     }
 
     const connectionFilterEnumOperators = {

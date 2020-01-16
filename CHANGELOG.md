@@ -3,6 +3,7 @@
 - **BREAKING CHANGE:** Simplify `addConnectionFilterOperator` function signature.
 - **BREAKING CHANGE:** Rename `connectionFilterLists` option to `connectionFilterArrays`.
 - **BREAKING CHANGE:** Remove `similarTo` and `notSimilarTo` operators.
+- **BREAKING CHANGE:** Remove `connectionFilterAdditionalInsensitiveOperators` option; the operators are now included by default.
 
 ## 1.1.3 - 2019-09-10
 - Fixed detection of computed column functions with required arguments, which should not be used for filtering (#111)

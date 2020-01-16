@@ -23,7 +23,6 @@ module.exports = function PostGraphileConnectionFilterPlugin(
   });
 
   const defaultOptions = {
-    connectionFilterAdditionalInsensitiveOperators: false,
     //connectionFilterAllowedOperators,
     //connectionFilterAllowedFieldTypes,
     connectionFilterComputedColumns: true,

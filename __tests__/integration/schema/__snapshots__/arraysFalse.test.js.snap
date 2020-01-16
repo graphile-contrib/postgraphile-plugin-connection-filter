@@ -719,6 +719,11 @@ input Char4DomainFilter {
   \\"\\"\\"
   distinctFrom: Char4Domain
 
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  distinctFromInsensitive: Char4Domain
+
   \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
   endsWith: Char4Domain
 
@@ -728,14 +733,26 @@ input Char4DomainFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Char4Domain
 
+  \\"\\"\\"Equal to the specified value (case-insensitive).\\"\\"\\"
+  equalToInsensitive: Char4Domain
+
   \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: Char4Domain
+
+  \\"\\"\\"Greater than the specified value (case-insensitive).\\"\\"\\"
+  greaterThanInsensitive: Char4Domain
 
   \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: Char4Domain
 
+  \\"\\"\\"Greater than or equal to the specified value (case-insensitive).\\"\\"\\"
+  greaterThanOrEqualToInsensitive: Char4Domain
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [Char4Domain!]
+
+  \\"\\"\\"Included in the specified list (case-insensitive).\\"\\"\\"
+  inInsensitive: [Char4Domain!]
 
   \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
   includes: Char4Domain
@@ -751,8 +768,14 @@ input Char4DomainFilter {
   \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: Char4Domain
 
+  \\"\\"\\"Less than the specified value (case-insensitive).\\"\\"\\"
+  lessThanInsensitive: Char4Domain
+
   \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: Char4Domain
+
+  \\"\\"\\"Less than or equal to the specified value (case-insensitive).\\"\\"\\"
+  lessThanOrEqualToInsensitive: Char4Domain
 
   \\"\\"\\"
   Matches the specified pattern (case-sensitive). An underscore (_) matches any
@@ -769,6 +792,11 @@ input Char4DomainFilter {
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: Char4Domain
 
+  \\"\\"\\"
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  notDistinctFromInsensitive: Char4Domain
+
   \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
   notEndsWith: Char4Domain
 
@@ -778,8 +806,14 @@ input Char4DomainFilter {
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: Char4Domain
 
+  \\"\\"\\"Not equal to the specified value (case-insensitive).\\"\\"\\"
+  notEqualToInsensitive: Char4Domain
+
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Char4Domain!]
+
+  \\"\\"\\"Not included in the specified list (case-insensitive).\\"\\"\\"
+  notInInsensitive: [Char4Domain!]
 
   \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
   notIncludes: Char4Domain
@@ -4439,6 +4473,11 @@ input StringFilter {
   \\"\\"\\"
   distinctFrom: String
 
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  distinctFromInsensitive: String
+
   \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
   endsWith: String
 
@@ -4448,14 +4487,26 @@ input StringFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: String
 
+  \\"\\"\\"Equal to the specified value (case-insensitive).\\"\\"\\"
+  equalToInsensitive: String
+
   \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: String
+
+  \\"\\"\\"Greater than the specified value (case-insensitive).\\"\\"\\"
+  greaterThanInsensitive: String
 
   \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: String
 
+  \\"\\"\\"Greater than or equal to the specified value (case-insensitive).\\"\\"\\"
+  greaterThanOrEqualToInsensitive: String
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [String!]
+
+  \\"\\"\\"Included in the specified list (case-insensitive).\\"\\"\\"
+  inInsensitive: [String!]
 
   \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
   includes: String
@@ -4471,8 +4522,14 @@ input StringFilter {
   \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: String
 
+  \\"\\"\\"Less than the specified value (case-insensitive).\\"\\"\\"
+  lessThanInsensitive: String
+
   \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: String
+
+  \\"\\"\\"Less than or equal to the specified value (case-insensitive).\\"\\"\\"
+  lessThanOrEqualToInsensitive: String
 
   \\"\\"\\"
   Matches the specified pattern (case-sensitive). An underscore (_) matches any
@@ -4489,6 +4546,11 @@ input StringFilter {
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: String
 
+  \\"\\"\\"
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  notDistinctFromInsensitive: String
+
   \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
   notEndsWith: String
 
@@ -4498,8 +4560,14 @@ input StringFilter {
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: String
 
+  \\"\\"\\"Not equal to the specified value (case-insensitive).\\"\\"\\"
+  notEqualToInsensitive: String
+
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [String!]
+
+  \\"\\"\\"Not included in the specified list (case-insensitive).\\"\\"\\"
+  notInInsensitive: [String!]
 
   \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
   notIncludes: String

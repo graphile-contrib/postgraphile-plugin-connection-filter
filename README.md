@@ -135,6 +135,32 @@ The following types have additional operators:
 | ILIKE '...' | likeInsensitive: `String` | Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. |
 | NOT ILIKE '...' | notLikeInsensitive: `String` | Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters. |
 
+The following operators are also available, but the mapping to SQL is more complex:
+
+| GraphQL | Description |
+| --- | --- |
+| distinctFromInsensitive | Not equal to the specified value, treating null like an ordinary value (case-insensitive). |
+| equalToInsensitive | Equal to the specified value (case-insensitive). |
+| greaterThanInsensitive | Greater than the specified value (case-insensitive). |
+| greaterThanOrEqualToInsensitive | Greater than or equal to the specified value (case-insensitive). |
+| inInsensitive | Included in the specified list (case-insensitive). |
+| lessThanInsensitive | Less than the specified value (case-insensitive). |
+| lessThanOrEqualToInsensitive | Less than or equal to the specified value (case-insensitive). |
+| notDistinctFromInsensitive | Equal to the specified value, treating null like an ordinary value (case-insensitive). |
+| notEqualToInsensitive | Not equal to the specified value (case-insensitive). |
+| notInInsensitive | Not included in the specified list (case-insensitive). |
+
+The compiled SQL depends on the underlying PostgreSQL column type. Using case-insensitive operators with `text`/`varchar`/`char` columns will result in calling `lower()` on the operands. Using case-sensitive operators with `citext` columns will result in casting the operands to `text`.
+
+For example, here is how the `equalTo`/`equalToInsensitive` operators compile to SQL:
+
+| GraphQL operator   | PostgreSQL column type  | Compiled SQL               |
+| ------------------ | ----------------------- | -------------------------- |
+| equalTo            | `text`/`varchar`/`char` | `<col> = $1`               |
+| equalTo            | `citext`                | `<col>::text = $1::text`   |
+| equalToInsensitive | `text`/`varchar`/`char` | `lower(<col>) = lower($1)` |
+| equalToInsensitive | `citext`                | `<col> = $1`               |
+
 ### Domains
 
 Domain fields have the same operators as the domain's base type. For example, a domain type declared with `create domain ... as text check (...);` would have all of the String operators.
@@ -466,46 +492,6 @@ For additional examples, see the [tests](https://github.com/graphile-contrib/pos
 ## Plugin Options
 
 When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions`:
-
-<details>
-
-<summary>connectionFilterAdditionalInsensitiveOperators</summary>
-
-Expose additional case-insensitive operators for `String` fields:
-
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
-    connectionFilterAdditionalInsensitiveOperators: true,
-  },
-})
-```
-
-The additional operators are:
-
-- distinctFromInsensitive
-- equalToInsensitive
-- greaterThanInsensitive
-- greaterThanOrEqualToInsensitive
-- inInsensitive
-- lessThanInsensitive
-- lessThanOrEqualToInsensitive
-- notDistinctFromInsensitive
-- notEqualToInsensitive
-- notInInsensitive
-
-The compiled SQL depends on the GraphQL operator used and the underlying PostgreSQL column type. Note that using case-insensitive operators with `text`/`varchar`/`char` columns will result in calling `lower()` on the operands, and using case-sensitive operators with `citext` columns will result in casting the operands to `text`.
-
-For example, here is how the `equalTo`/`equalToInsensitive` operators compile to SQL:
-
-| GraphQL operator   | PostgreSQL column type  | Compiled SQL               |
-| ------------------ | ----------------------- | -------------------------- |
-| equalTo            | `text`/`varchar`/`char` | `<col> = $1`               |
-| equalTo            | `citext`                | `<col>::text = $1::text`   |
-| equalToInsensitive | `text`/`varchar`/`char` | `lower(<col>) = lower($1)` |
-| equalToInsensitive | `citext`                | `<col> = $1`               |
-
-</details>
 
 <details>
 
