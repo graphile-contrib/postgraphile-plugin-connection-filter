@@ -1,26 +1,26 @@
 query numericRangeArray(
   $v2: [BigFloatRangeInput] = [
     {
-      start: { value: "2", inclusive: true }
-      end: { value: "3", inclusive: false }
+      start: { value: "0.2", inclusive: true }
+      end: { value: "0.3", inclusive: false }
     },
     {
-      start: { value: "3", inclusive: true }
-      end: { value: "4", inclusive: false }
+      start: { value: "0.3", inclusive: true }
+      end: { value: "0.4", inclusive: false }
     }
   ]
   $v2_1: BigFloatRangeInput = {
-    start: { value: "2", inclusive: true }
-    end: { value: "3", inclusive: false }
+    start: { value: "0.2", inclusive: true }
+    end: { value: "0.3", inclusive: false }
   }
   $v3: [BigFloatRangeInput] = [
     {
-      start: { value: "3", inclusive: true }
-      end: { value: "4", inclusive: false }
+      start: { value: "0.3", inclusive: true }
+      end: { value: "0.4", inclusive: false }
     },
     {
-      start: { value: "4", inclusive: true }
-      end: { value: "5", inclusive: false }
+      start: { value: "0.4", inclusive: true }
+      end: { value: "0.5", inclusive: false }
     }
   ]
 ) {
