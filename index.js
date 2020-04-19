@@ -30,7 +30,7 @@ module.exports = function PostGraphileConnectionFilterPlugin(
               : "not found"
           })`
         );
-    }
+      }
     };
     depends("graphile-build-pg", "^4.5.0");
 
