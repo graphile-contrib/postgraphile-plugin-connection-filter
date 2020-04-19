@@ -71,7 +71,7 @@ type ArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`ArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ArrayType\` edge in the connection.\\"\\"\\"
@@ -220,7 +220,7 @@ type BackwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`BackwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`BackwardCompound\` edge in the connection.\\"\\"\\"
@@ -282,7 +282,7 @@ type BackwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Backward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Backward\` edge in the connection.\\"\\"\\"
@@ -464,7 +464,7 @@ input BigFloatRangeInput {
 }
 
 \\"\\"\\"
-A signed eight-byte integer. The upper big integer values are greater then the
+A signed eight-byte integer. The upper big integer values are greater than the
 max value for a JavaScript number. Therefore all big integers will be output as
 strings and not numbers.
 \\"\\"\\"
@@ -898,7 +898,7 @@ type ChildrenConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Child\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Child\` edge in the connection.\\"\\"\\"
@@ -1338,7 +1338,7 @@ type DomainTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`DomainType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`DomainType\` edge in the connection.\\"\\"\\"
@@ -1406,7 +1406,7 @@ type EnumArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumArrayType\` edge in the connection.\\"\\"\\"
@@ -1473,7 +1473,7 @@ type EnumTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumType\` edge in the connection.\\"\\"\\"
@@ -1768,7 +1768,7 @@ type FilterableClosuresConnection {
   \\"\\"\\"
   The count of *all* \`FilterableClosure\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FilterableClosure\` edge in the connection.\\"\\"\\"
@@ -1804,6 +1804,9 @@ type FilterableComputedSetofIntConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -1948,7 +1951,7 @@ type FilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Filterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Filterable\` edge in the connection.\\"\\"\\"
@@ -2155,7 +2158,7 @@ type ForwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`ForwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ForwardCompound\` edge in the connection.\\"\\"\\"
@@ -2214,7 +2217,7 @@ type ForwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Forward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Forward\` edge in the connection.\\"\\"\\"
@@ -2261,7 +2264,7 @@ type FullyOmittedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`FullyOmitted\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FullyOmitted\` edge in the connection.\\"\\"\\"
@@ -2293,6 +2296,11 @@ type FuncReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FuncReturnsTableMultiColRecord\` edge in the connection.\\"\\"\\"
@@ -2339,6 +2347,9 @@ type FuncReturnsTableOneColConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -2361,6 +2372,11 @@ type FuncTaggedFilterableReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncTaggedFilterableReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncTaggedFilterableReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"
@@ -2809,7 +2825,7 @@ type JsonbTestsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`JsonbTest\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`JsonbTest\` edge in the connection.\\"\\"\\"
@@ -2940,7 +2956,7 @@ type JunctionsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Junction\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Junction\` edge in the connection.\\"\\"\\"
@@ -3156,7 +3172,7 @@ type ParentsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Parent\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Parent\` edge in the connection.\\"\\"\\"
@@ -3227,7 +3243,7 @@ type ProtectedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Protected\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Protected\` edge in the connection.\\"\\"\\"
@@ -4142,7 +4158,7 @@ type RangeArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeArrayType\` edge in the connection.\\"\\"\\"
@@ -4239,7 +4255,7 @@ type RangeTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeType\` edge in the connection.\\"\\"\\"
@@ -4345,7 +4361,7 @@ type SideAsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideA\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideA\` edge in the connection.\\"\\"\\"
@@ -4441,7 +4457,7 @@ type SideBsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideB\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideB\` edge in the connection.\\"\\"\\"
@@ -4673,7 +4689,7 @@ type UnfilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Unfilterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Unfilterable\` edge in the connection.\\"\\"\\"

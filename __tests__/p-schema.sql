@@ -93,7 +93,7 @@ create table p.array_types (
   "int2_array" int2[],
   "int4_array" int4[],
   "int8_array" int8[],
-  "interval_array" interval[], -- FIXME: an InputType isn't being generated for interval[] (PostGraphile bug?), so IntervalListFilter isn't created
+  "interval_array" interval[],
   "json_array" json[], -- not filterable
   "jsonb_array" jsonb[],
   "macaddr_array" macaddr[],

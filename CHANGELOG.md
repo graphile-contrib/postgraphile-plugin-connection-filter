@@ -1,5 +1,6 @@
 ## 2.0.0 - WIP
 
+- **BREAKING CHANGE:** Bump the minimum supported PostGraphile version to 4.5.0.
 - **BREAKING CHANGE:** Simplify `addConnectionFilterOperator` function signature.
 - **BREAKING CHANGE:** Rename `connectionFilterLists` option to `connectionFilterArrays`.
 - **BREAKING CHANGE:** Remove `similarTo` and `notSimilarTo` operators.

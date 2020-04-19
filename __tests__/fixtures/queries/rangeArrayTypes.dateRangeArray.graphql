@@ -1,0 +1,101 @@
+query dateRangeArray(
+  $v2: [DateRangeInput] = [
+    {
+      start: { value: "1999-02-01", inclusive: true }
+      end: { value: "1999-03-01", inclusive: false }
+    },
+    {
+      start: { value: "1999-03-01", inclusive: true }
+      end: { value: "1999-04-01", inclusive: false }
+    }
+  ]
+  $v2_1: DateRangeInput = {
+    start: { value: "1999-02-01", inclusive: true }
+    end: { value: "1999-03-01", inclusive: false }
+  }
+  $v3: [DateRangeInput] = [
+    {
+      start: { value: "1999-03-01", inclusive: true }
+      end: { value: "1999-04-01", inclusive: false }
+    },
+    {
+      start: { value: "1999-04-01", inclusive: true }
+      end: { value: "1999-05-01", inclusive: false }
+    }
+  ]
+) {
+  anyEqualTo: allRangeArrayTypes(filter: { dateRangeArray: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allRangeArrayTypes(
+    filter: { dateRangeArray: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allRangeArrayTypes(
+    filter: { dateRangeArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allRangeArrayTypes(filter: { dateRangeArray: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allRangeArrayTypes(
+    filter: { dateRangeArray: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allRangeArrayTypes(
+    filter: { dateRangeArray: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allRangeArrayTypes(filter: { dateRangeArray: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allRangeArrayTypes(filter: { dateRangeArray: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allRangeArrayTypes(filter: { dateRangeArray: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allRangeArrayTypes(filter: { dateRangeArray: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allRangeArrayTypes(filter: { dateRangeArray: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allRangeArrayTypes(
+    filter: { dateRangeArray: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allRangeArrayTypes(filter: { dateRangeArray: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allRangeArrayTypes(filter: { dateRangeArray: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allRangeArrayTypes(
+    filter: { dateRangeArray: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allRangeArrayTypes(
+    filter: { dateRangeArray: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allRangeArrayTypes(filter: { dateRangeArray: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allRangeArrayTypes(filter: { dateRangeArray: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on RangeArrayTypesConnection {
+  nodes {
+    id
+  }
+}
