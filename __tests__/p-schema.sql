@@ -33,7 +33,7 @@ create table p.filterable (
   "bpchar4" bpchar(4),
   "bytea" bytea, -- treated as String in PostGraphile v4
   "char4" char(4),
-  "cidr" cidr, -- treated as String in PostGraphile v4
+  "cidr" cidr, -- treated as String in PostGraphile v4 unless useCustomNetworkScalars is specified
   "citext" citext,
   "date" date,
   "float4" float4,
@@ -46,8 +46,8 @@ create table p.filterable (
   "interval" interval,
   "json" json, -- not filterable
   "jsonb" jsonb,
-  "macaddr" macaddr, -- treated as String in PostGraphile v4
-  --"macaddr8" macaddr8, -- treated as String in PostGraphile v4; excluded because macaddr8 requires PG10+
+  "macaddr" macaddr, -- treated as String in PostGraphile v4 unless useCustomNetworkScalars is specified
+  --"macaddr8" macaddr8, -- treated as String in PostGraphile v4 unless useCustomNetworkScalars is specified; excluded from tests because it requires PG10+
   "money" money,
   "name" name,
   "numeric" numeric,
@@ -97,7 +97,7 @@ create table p.array_types (
   "json_array" json[], -- not filterable
   "jsonb_array" jsonb[],
   "macaddr_array" macaddr[],
-  --"macaddr8_array" macaddr8[], -- excluded because macaddr8 requires PG10+
+  --"macaddr8_array" macaddr8[], -- excluded from tests because it requires PG10+
   "money_array" money[],
   "numeric_array" numeric[],
   "text_array" text[],

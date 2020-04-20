@@ -280,13 +280,24 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       const pgType = introspectionResultsByKind.type.find(
         t => t.name === pgTypeName
       );
-      return pgType ? pgGetGqlTypeByTypeIdAndModifier(pgType.id, null) : null;
+      if (!pgType) {
+        return null;
+      }
+      const gqlTypeName = pgGetGqlTypeByTypeIdAndModifier(pgType.id, null).name;
+      if (gqlTypeName === "String") {
+        // PostGraphile v4 handles all unknown types as Strings, so we can't trust
+        // that the String operators are appropriate. Just return null so that the
+        // fallback type name defined below is used.
+        return null;
+      }
+      return gqlTypeName;
     };
 
     const _BigFloat = gqlTypeNameFromPgTypeName("numeric") || "BigFloat";
     const _BigInt = gqlTypeNameFromPgTypeName("int8") || "BigInt";
     const _BitString = gqlTypeNameFromPgTypeName("varbit") || "BitString";
     const _Boolean = gqlTypeNameFromPgTypeName("bool") || "Boolean";
+    const _CidrAddress = gqlTypeNameFromPgTypeName("cidr") || "CidrAddress";
     const _Date = gqlTypeNameFromPgTypeName("date") || "Date";
     const _Datetime = gqlTypeNameFromPgTypeName("timestamp") || "Datetime";
     const _Float = gqlTypeNameFromPgTypeName("float4") || "Float";
@@ -296,6 +307,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     const _Interval = gqlTypeNameFromPgTypeName("interval") || "Interval";
     const _JSON = gqlTypeNameFromPgTypeName("jsonb") || "JSON";
     const _KeyValueHash = gqlTypeNameFromPgTypeName("hstore") || "KeyValueHash";
+    const _MacAddress = gqlTypeNameFromPgTypeName("macaddr") || "MacAddress";
+    const _MacAddress8 = gqlTypeNameFromPgTypeName("macaddr8") || "MacAddress8";
     const _String = gqlTypeNameFromPgTypeName("text") || "String";
     const _Time = gqlTypeNameFromPgTypeName("time") || "Time";
     const _UUID = gqlTypeNameFromPgTypeName("uuid") || "UUID";
@@ -305,6 +318,11 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       [_BigInt]: { ...standardOperators, ...sortOperators },
       [_BitString]: { ...standardOperators, ...sortOperators },
       [_Boolean]: { ...standardOperators, ...sortOperators },
+      [_CidrAddress]: {
+        ...standardOperators,
+        ...sortOperators,
+        ...inetOperators,
+      },
       [_Date]: { ...standardOperators, ...sortOperators },
       [_Datetime]: { ...standardOperators, ...sortOperators },
       [_Float]: { ...standardOperators, ...sortOperators },
@@ -323,6 +341,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       [_KeyValueHash]: {
         ...standardOperators,
         ...hstoreOperators,
+      },
+      [_MacAddress]: {
+        ...standardOperators,
+        ...sortOperators,
+      },
+      [_MacAddress8]: {
+        ...standardOperators,
+        ...sortOperators,
       },
       [_String]: {
         ...standardOperators,

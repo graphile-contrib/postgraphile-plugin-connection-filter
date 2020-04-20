@@ -1,0 +1,69 @@
+query cidr(
+  $v2: CidrAddress = "192.168.1.2"
+  $v3: CidrAddress = "192.168.1.3"
+) {
+  containedBy: allFilterables(filter: { cidr: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  containedByOrEqualTo: allFilterables(
+    filter: { cidr: { containedByOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  contains: allFilterables(filter: { cidr: { contains: $v2 } }) {
+    ...nodes
+  }
+  containsOrContainedBy: allFilterables(
+    filter: { cidr: { containsOrContainedBy: $v2 } }
+  ) {
+    ...nodes
+  }
+  containsOrEqualTo: allFilterables(
+    filter: { cidr: { containsOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  distinctFrom: allFilterables(filter: { cidr: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allFilterables(filter: { cidr: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allFilterables(filter: { cidr: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allFilterables(
+    filter: { cidr: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  in: allFilterables(filter: { cidr: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  isNull: allFilterables(filter: { cidr: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allFilterables(filter: { cidr: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allFilterables(
+    filter: { cidr: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allFilterables(filter: { cidr: { notDistinctFrom: $v2 } }) {
+    ...nodes
+  }
+  notEqualTo: allFilterables(filter: { cidr: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  notIn: allFilterables(filter: { cidr: { notIn: [$v2] } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

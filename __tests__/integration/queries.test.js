@@ -32,6 +32,7 @@ beforeAll(() => {
     const [
       normal,
       dynamicJson,
+      networkScalars,
       relations,
       simpleCollections,
       nullAndEmptyAllowed,
@@ -45,6 +46,13 @@ beforeAll(() => {
         skipPlugins: [PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
         dynamicJson: true,
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        skipPlugins: [PgConnectionArgCondition],
+        appendPlugins: [require("../../index.js")],
+        graphileBuildOptions: {
+          pgUseCustomNetworkScalars: true,
+        },
       }),
       createPostGraphileSchema(pgClient, ["p"], {
         skipPlugins: [PgConnectionArgCondition],
@@ -75,6 +83,7 @@ beforeAll(() => {
     return {
       normal,
       dynamicJson,
+      networkScalars,
       relations,
       simpleCollections,
       nullAndEmptyAllowed,
@@ -109,6 +118,10 @@ beforeAll(() => {
             "addConnectionFilterOperator.graphql":
               gqlSchemas.addConnectionFilterOperator,
             "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
+            "types.cidr.graphql": gqlSchemas.networkScalars,
+            "types.macaddr.graphql": gqlSchemas.networkScalars,
+            "arrayTypes.cidrArray.graphql": gqlSchemas.networkScalars,
+            "arrayTypes.macaddrArray.graphql": gqlSchemas.networkScalars,
             "relations.graphql": gqlSchemas.relations,
             "simpleCollections.graphql": gqlSchemas.simpleCollections,
             "nullAndEmptyAllowed.graphql": gqlSchemas.nullAndEmptyAllowed,

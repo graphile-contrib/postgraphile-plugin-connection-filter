@@ -867,6 +867,202 @@ Object {
 }
 `;
 
+exports[`arrayTypes.cidrArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`arrayTypes.citextArray.graphql 1`] = `
 Object {
   "data": Object {
@@ -2632,6 +2828,202 @@ Object {
 `;
 
 exports[`arrayTypes.jsonbArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.macaddrArray.graphql 1`] = `
 Object {
   "data": Object {
     "anyEqualTo": Object {
@@ -9602,6 +9994,163 @@ Object {
 }
 `;
 
+exports[`types.cidr.graphql 1`] = `
+Object {
+  "data": Object {
+    "containedBy": Object {
+      "nodes": Array [],
+    },
+    "containedByOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "containsOrContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.citext.graphql 1`] = `
 Object {
   "data": Object {
@@ -11133,6 +11682,126 @@ Object {
         },
       ],
     },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.macaddr.graphql 1`] = `
+Object {
+  "data": Object {
     "distinctFrom": Object {
       "nodes": Array [
         Object {
