@@ -23,6 +23,7 @@ exports[`prints a schema with the filter plugin and the \`connectionFilterArrays
   jsonbArray: [JSON]
   macaddrArray: [String]
   moneyArray: [Float]
+  nameArray: [String]
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -127,6 +128,8 @@ enum ArrayTypesOrderBy {
   MACADDR_ARRAY_DESC
   MONEY_ARRAY_ASC
   MONEY_ARRAY_DESC
+  NAME_ARRAY_ASC
+  NAME_ARRAY_DESC
   NATURAL
   NUMERIC_ARRAY_ASC
   NUMERIC_ARRAY_DESC

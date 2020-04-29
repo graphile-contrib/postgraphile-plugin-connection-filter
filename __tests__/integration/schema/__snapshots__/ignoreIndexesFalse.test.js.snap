@@ -23,6 +23,7 @@ exports[`prints a schema with the filter plugin and the \`ignoreIndexes: false\`
   jsonbArray: [JSON]
   macaddrArray: [String]
   moneyArray: [Float]
+  nameArray: [String]
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.

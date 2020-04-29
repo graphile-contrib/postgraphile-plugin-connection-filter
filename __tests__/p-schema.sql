@@ -99,6 +99,7 @@ create table p.array_types (
   "macaddr_array" macaddr[],
   --"macaddr8_array" macaddr8[], -- excluded from tests because it requires PG10+
   "money_array" money[],
+  "name_array" name[],
   "numeric_array" numeric[],
   "text_array" text[],
   "time_array" time[],

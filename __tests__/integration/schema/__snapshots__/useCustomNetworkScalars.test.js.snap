@@ -23,6 +23,7 @@ exports[`prints a schema with the filter plugin and the \`pgUseCustomNetworkScal
   jsonbArray: [JSON]
   macaddrArray: [MacAddress]
   moneyArray: [Float]
+  nameArray: [String]
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -103,6 +104,9 @@ input ArrayTypeFilter {
 
   \\"\\"\\"Filter by the object’s \`moneyArray\` field.\\"\\"\\"
   moneyArray: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`nameArray\` field.\\"\\"\\"
+  nameArray: StringListFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: ArrayTypeFilter
@@ -208,6 +212,8 @@ enum ArrayTypesOrderBy {
   MACADDR_ARRAY_DESC
   MONEY_ARRAY_ASC
   MONEY_ARRAY_DESC
+  NAME_ARRAY_ASC
+  NAME_ARRAY_DESC
   NATURAL
   NUMERIC_ARRAY_ASC
   NUMERIC_ARRAY_DESC
