@@ -60,7 +60,7 @@ create table p.filterable (
   "varbit" varbit,
   "varchar" varchar,
   "xml" xml, -- not filterable
-  "composite_column" p."composite", -- not filterable
+  "composite_column" p."composite",
   "forward_column" p.forward, -- not filterable
   "text_omit_filter" text, -- not filterable
   "parent_id" int references p.parent (id),

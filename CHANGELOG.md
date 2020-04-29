@@ -6,6 +6,7 @@
 - **BREAKING CHANGE:** Remove `similarTo` and `notSimilarTo` operators.
 - **BREAKING CHANGE:** Remove `connectionFilterAdditionalInsensitiveOperators` option; the operators are now included by default.
 - Allow filtering on `cidr` (#112) and `macaddr`/`macaddr8` (#108) columns
+- Allow filtering on composite type columns (#114)
 
 ## 1.1.3 - 2019-09-10
 - Fixed detection of computed column functions with required arguments, which should not be used for filtering (#111)
