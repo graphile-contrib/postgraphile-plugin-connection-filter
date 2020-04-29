@@ -13,4 +13,7 @@ module.exports = {
     "plugin:jest/recommended",
     "plugin:prettier/recommended",
   ],
+  rules: {
+    "jest/expect-expect": ["off"],
+  },
 };
