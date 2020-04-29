@@ -2,7 +2,7 @@ module.exports = function PgConnectionArgFilterPlugin(
   builder,
   {
     connectionFilterAllowedFieldTypes,
-    connectionFilterLists,
+    connectionFilterArrays,
     connectionFilterSetofFunctions,
     connectionFilterAllowNullInput,
     connectionFilterAllowEmptyObjectInput,
@@ -291,12 +291,6 @@ module.exports = function PgConnectionArgFilterPlugin(
         return null;
       }
 
-      // Respect `connectionFilterLists` config option
-      const isListType = fieldType instanceof GraphQLList;
-      if (isListType && !connectionFilterLists) {
-        return null;
-      }
-
       const pgConnectionFilterOperatorsCategory = pgType.isPgArray
         ? "Array"
         : pgType.rangeSubTypeId
@@ -306,6 +300,14 @@ module.exports = function PgConnectionArgFilterPlugin(
         : pgType.type === "d"
         ? "Domain"
         : "Scalar";
+
+      // Respect `connectionFilterArrays` config option
+      if (
+        pgConnectionFilterOperatorsCategory === "Array" &&
+        !connectionFilterArrays
+      ) {
+        return null;
+      }
 
       const rangeElementInputType = pgType.rangeSubTypeId
         ? pgGetGqlInputTypeByTypeIdAndModifier(
@@ -322,6 +324,7 @@ module.exports = function PgConnectionArgFilterPlugin(
             )
           : null;
 
+      const isListType = fieldType instanceof GraphQLList;
       const operatorsTypeName = isListType
         ? inflection.filterFieldListType(namedType.name)
         : inflection.filterFieldType(namedType.name);
@@ -406,6 +409,52 @@ module.exports = function PgConnectionArgFilterPlugin(
       }
     };
 
+    const addConnectionFilterOperator = (
+      typeNames,
+      operatorName,
+      description,
+      resolveType,
+      resolve,
+      options = {}
+    ) => {
+      if (!typeNames) {
+        const msg = `Missing first argument 'typeNames' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+        throw new Error(msg);
+      }
+      if (!operatorName) {
+        const msg = `Missing second argument 'operatorName' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+        throw new Error(msg);
+      }
+      if (!resolveType) {
+        const msg = `Missing fourth argument 'resolveType' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+        throw new Error(msg);
+      }
+      if (!resolve) {
+        const msg = `Missing fifth argument 'resolve' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+        throw new Error(msg);
+      }
+
+      const { connectionFilterScalarOperators } = build;
+
+      const gqlTypeNames = Array.isArray(typeNames) ? typeNames : [typeNames];
+      for (const gqlTypeName of gqlTypeNames) {
+        if (!connectionFilterScalarOperators[gqlTypeName]) {
+          connectionFilterScalarOperators[gqlTypeName] = {};
+        }
+        if (connectionFilterScalarOperators[gqlTypeName][operatorName]) {
+          const msg = `Operator '${operatorName}' already exists for type '${gqlTypeName}'.`;
+          throw new Error(msg);
+        }
+        connectionFilterScalarOperators[gqlTypeName][operatorName] = {
+          description,
+          resolveType,
+          resolve,
+          // These functions may exist on `options`: resolveSqlIdentifier, resolveSqlValue, resolveInput
+          ...options,
+        };
+      }
+    };
+
     return extend(build, {
       connectionFilterTypesByTypeName,
       connectionFilterRegisterResolver,
@@ -413,60 +462,7 @@ module.exports = function PgConnectionArgFilterPlugin(
       connectionFilterOperatorsType,
       connectionFilterType,
       escapeLikeWildcards,
-    });
-  });
-
-  builder.hook("build", build => {
-    const connectionFilterOperatorSpecsAdded = [];
-
-    const addConnectionFilterOperator = (
-      name,
-      description,
-      resolveType,
-      resolve,
-      options = {}
-    ) => {
-      if (!name) {
-        throw new Error(
-          `Missing argument 'name' in call to 'addConnectionFilterOperator'`
-        );
-      }
-      if (!resolveType) {
-        throw new Error(
-          `Missing argument 'resolveType' in call to 'addConnectionFilterOperator' for operator '${name}'`
-        );
-      }
-      if (!resolve) {
-        throw new Error(
-          `Missing argument 'resolve' in call to 'addConnectionFilterOperator' for operator '${name}'`
-        );
-      }
-
-      /*
-      const allowedCategories = isNonListOnly
-        ? ["Scalar", "Enum", "Range"]
-        : isListOnly
-        ? ["Array"]
-        : null;
-      */
-
-      const { allowedFieldTypes, allowedListTypes } = options;
-
-      const spec = {
-        name,
-        description,
-        ...(allowedFieldTypes ? { allowedFieldTypes } : null),
-        ...(allowedListTypes ? { allowedListTypes } : ["NonList"]),
-        resolveType,
-        resolve,
-      };
-
-      connectionFilterOperatorSpecsAdded.push(spec);
-    };
-
-    return build.extend(build, {
       addConnectionFilterOperator,
-      connectionFilterOperatorSpecsAdded,
     });
   });
 };

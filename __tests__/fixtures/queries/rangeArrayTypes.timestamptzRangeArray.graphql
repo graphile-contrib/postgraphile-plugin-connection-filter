@@ -1,0 +1,101 @@
+query timestamptzRangeArray(
+  $v2: [DatetimeRangeInput] = [
+    {
+      start: { value: "1999-02-01 00:00", inclusive: true }
+      end: { value: "1999-03-01 00:00", inclusive: false }
+    },
+    {
+      start: { value: "1999-03-01 00:00", inclusive: true }
+      end: { value: "1999-04-01 00:00", inclusive: false }
+    }
+  ]
+  $v2_1: DatetimeRangeInput = {
+    start: { value: "1999-02-01 00:00", inclusive: true }
+    end: { value: "1999-03-01 00:00", inclusive: false }
+  }
+  $v3: [DatetimeRangeInput] = [
+    {
+      start: { value: "1999-03-01 00:00", inclusive: true }
+      end: { value: "1999-04-01 00:00", inclusive: false }
+    },
+    {
+      start: { value: "1999-04-01 00:00", inclusive: true }
+      end: { value: "1999-05-01 00:00", inclusive: false }
+    }
+  ]
+) {
+  anyEqualTo: allRangeArrayTypes(filter: { timestamptzRangeArray: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allRangeArrayTypes(filter: { timestamptzRangeArray: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allRangeArrayTypes(filter: { timestamptzRangeArray: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allRangeArrayTypes(filter: { timestamptzRangeArray: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allRangeArrayTypes(filter: { timestamptzRangeArray: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allRangeArrayTypes(filter: { timestamptzRangeArray: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allRangeArrayTypes(filter: { timestamptzRangeArray: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allRangeArrayTypes(filter: { timestamptzRangeArray: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allRangeArrayTypes(filter: { timestamptzRangeArray: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allRangeArrayTypes(
+    filter: { timestamptzRangeArray: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allRangeArrayTypes(filter: { timestamptzRangeArray: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allRangeArrayTypes(filter: { timestamptzRangeArray: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on RangeArrayTypesConnection {
+  nodes {
+    id
+  }
+}

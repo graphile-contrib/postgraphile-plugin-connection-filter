@@ -2,6 +2,9 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   distinctFrom: allFilterables(filter: { char4: { distinctFrom: $v2 } }) {
     ...nodes
   }
+  distinctFromInsensitive: allFilterables(filter: { char4: { distinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
   endsWith: allFilterables(filter: { char4: { endsWith: "T" } }) {
     ...nodes
   }
@@ -13,7 +16,13 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   equalTo: allFilterables(filter: { char4: { equalTo: $v2 } }) {
     ...nodes
   }
+  equalToInsensitive: allFilterables(filter: { char4: { equalToInsensitive: $v2 } }) {
+    ...nodes
+  }
   greaterThan: allFilterables(filter: { char4: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanInsensitive: allFilterables(filter: { char4: { greaterThanInsensitive: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
@@ -21,7 +30,15 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
+  greaterThanOrEqualToInsensitive: allFilterables(
+    filter: { char4: { greaterThanOrEqualToInsensitive: $v2 } }
+  ) {
+    ...nodes
+  }
   in: allFilterables(filter: { char4: { in: [$v2, $v3] } }) {
+    ...nodes
+  }
+  inInsensitive: allFilterables(filter: { char4: { inInsensitive: [$v2, $v3] } }) {
     ...nodes
   }
   includes: allFilterables(filter: { char4: { includes: "T" } }) {
@@ -38,8 +55,16 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   lessThan: allFilterables(filter: { char4: { lessThan: $v2 } }) {
     ...nodes
   }
+  lessThanInsensitive: allFilterables(filter: { char4: { lessThanInsensitive: $v2 } }) {
+    ...nodes
+  }
   lessThanOrEqualTo: allFilterables(
     filter: { char4: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  lessThanOrEqualToInsensitive: allFilterables(
+    filter: { char4: { lessThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
@@ -54,6 +79,9 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   notDistinctFrom: allFilterables(filter: { char4: { notDistinctFrom: $v2 } }) {
     ...nodes
   }
+  notDistinctFromInsensitive: allFilterables(filter: { char4: { notDistinctFromInsensitive: $v2 } }) {
+    ...nodes
+  }
   notEndsWith: allFilterables(filter: { char4: { notEndsWith: "T" } }) {
     ...nodes
   }
@@ -65,7 +93,13 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   notEqualTo: allFilterables(filter: { char4: { notEqualTo: $v2 } }) {
     ...nodes
   }
+  notEqualToInsensitive: allFilterables(filter: { char4: { notEqualToInsensitive: $v2 } }) {
+    ...nodes
+  }
   notIn: allFilterables(filter: { char4: { notIn: [$v2] } }) {
+    ...nodes
+  }
+  notInInsensitive: allFilterables(filter: { char4: { notInInsensitive: [$v2] } }) {
     ...nodes
   }
   notIncludes: allFilterables(filter: { char4: { notIncludes: "T" } }) {
@@ -84,20 +118,12 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
-  notSimilarTo: allFilterables(
-    filter: { char4: { notSimilarTo: "%(TE|ST)%" } }
-  ) {
-    ...nodes
-  }
   notStartsWith: allFilterables(filter: { char4: { notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
     filter: { char4: { notStartsWithInsensitive: "T" } }
   ) {
-    ...nodes
-  }
-  similarTo: allFilterables(filter: { char4: { similarTo: "%(TE|ST)%" } }) {
     ...nodes
   }
   startsWith: allFilterables(filter: { char4: { startsWith: "T" } }) {

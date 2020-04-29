@@ -5,6 +5,8 @@ const { readdirSync, readFile: rawReadFile } = require("fs");
 const { resolve: resolvePath } = require("path");
 const { printSchema } = require("graphql/utilities");
 const debug = require("debug")("graphile-build:schema");
+const { PgConnectionArgCondition } = require("graphile-build-pg");
+const CustomOperatorsPlugin = require("./../customOperatorsPlugin");
 
 function readFile(filename, encoding) {
   return new Promise((resolve, reject) => {
@@ -30,34 +32,42 @@ beforeAll(() => {
     const [
       normal,
       dynamicJson,
+      networkScalars,
       relations,
       simpleCollections,
       nullAndEmptyAllowed,
-      additionalInsensitiveOperators,
+      addConnectionFilterOperator,
     ] = await Promise.all([
       createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        skipPlugins: [PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        skipPlugins: [PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
         dynamicJson: true,
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        skipPlugins: [PgConnectionArgCondition],
+        appendPlugins: [require("../../index.js")],
+        graphileBuildOptions: {
+          pgUseCustomNetworkScalars: true,
+        },
+      }),
+      createPostGraphileSchema(pgClient, ["p"], {
+        skipPlugins: [PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
         graphileBuildOptions: {
           connectionFilterRelations: true,
         },
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        skipPlugins: [PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
         simpleCollections: "only",
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
+        skipPlugins: [PgConnectionArgCondition],
         appendPlugins: [require("../../index.js")],
         graphileBuildOptions: {
           connectionFilterAllowNullInput: true,
@@ -65,21 +75,19 @@ beforeAll(() => {
         },
       }),
       createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [require("graphile-build-pg").PgConnectionArgCondition],
-        appendPlugins: [require("../../index.js")],
-        graphileBuildOptions: {
-          connectionFilterAdditionalInsensitiveOperators: true,
-        },
+        skipPlugins: [PgConnectionArgCondition],
+        appendPlugins: [require("../../index.js"), CustomOperatorsPlugin],
       }),
     ]);
     debug(printSchema(normal));
     return {
       normal,
       dynamicJson,
+      networkScalars,
       relations,
       simpleCollections,
       nullAndEmptyAllowed,
-      additionalInsensitiveOperators,
+      addConnectionFilterOperator,
     };
   });
 
@@ -107,11 +115,13 @@ beforeAll(() => {
           // some specific fixtures against a schema configured slightly
           // differently.
           const schemas = {
-            "additionalInsensitiveOperatorsTrue.citext.graphql":
-              gqlSchemas.additionalInsensitiveOperators,
-            "additionalInsensitiveOperatorsTrue.text.graphql":
-              gqlSchemas.additionalInsensitiveOperators,
+            "addConnectionFilterOperator.graphql":
+              gqlSchemas.addConnectionFilterOperator,
             "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
+            "types.cidr.graphql": gqlSchemas.networkScalars,
+            "types.macaddr.graphql": gqlSchemas.networkScalars,
+            "arrayTypes.cidrArray.graphql": gqlSchemas.networkScalars,
+            "arrayTypes.macaddrArray.graphql": gqlSchemas.networkScalars,
             "relations.graphql": gqlSchemas.relations,
             "simpleCollections.graphql": gqlSchemas.simpleCollections,
             "nullAndEmptyAllowed.graphql": gqlSchemas.nullAndEmptyAllowed,

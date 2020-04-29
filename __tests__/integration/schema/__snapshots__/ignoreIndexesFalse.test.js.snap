@@ -23,6 +23,7 @@ exports[`prints a schema with the filter plugin and the \`ignoreIndexes: false\`
   jsonbArray: [JSON]
   macaddrArray: [String]
   moneyArray: [Float]
+  nameArray: [String]
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -71,7 +72,7 @@ type ArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`ArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ArrayType\` edge in the connection.\\"\\"\\"
@@ -154,7 +155,7 @@ type BackwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`BackwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`BackwardCompound\` edge in the connection.\\"\\"\\"
@@ -209,7 +210,7 @@ type BackwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Backward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Backward\` edge in the connection.\\"\\"\\"
@@ -258,7 +259,7 @@ type BigFloatRangeBound {
 }
 
 \\"\\"\\"
-A signed eight-byte integer. The upper big integer values are greater then the
+A signed eight-byte integer. The upper big integer values are greater than the
 max value for a JavaScript number. Therefore all big integers will be output as
 strings and not numbers.
 \\"\\"\\"
@@ -331,7 +332,7 @@ type ChildrenConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Child\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Child\` edge in the connection.\\"\\"\\"
@@ -454,7 +455,7 @@ type DomainTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`DomainType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`DomainType\` edge in the connection.\\"\\"\\"
@@ -516,7 +517,7 @@ type EnumArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumArrayType\` edge in the connection.\\"\\"\\"
@@ -578,7 +579,7 @@ type EnumTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumType\` edge in the connection.\\"\\"\\"
@@ -728,6 +729,9 @@ type FilterableComputedSetofIntConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -782,7 +786,7 @@ type FilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Filterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Filterable\` edge in the connection.\\"\\"\\"
@@ -867,7 +871,7 @@ type ForwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`ForwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ForwardCompound\` edge in the connection.\\"\\"\\"
@@ -919,7 +923,7 @@ type ForwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Forward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Forward\` edge in the connection.\\"\\"\\"
@@ -964,7 +968,7 @@ type FullyOmittedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`FullyOmitted\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FullyOmitted\` edge in the connection.\\"\\"\\"
@@ -994,6 +998,11 @@ type FuncReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FuncReturnsTableMultiColRecord\` edge in the connection.\\"\\"\\"
@@ -1020,6 +1029,9 @@ type FuncReturnsTableOneColConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -1042,6 +1054,11 @@ type FuncTaggedFilterableReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncTaggedFilterableReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncTaggedFilterableReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"
@@ -1227,7 +1244,7 @@ type JsonbTestsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`JsonbTest\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`JsonbTest\` edge in the connection.\\"\\"\\"
@@ -1291,7 +1308,7 @@ type JunctionsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Junction\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Junction\` edge in the connection.\\"\\"\\"
@@ -1387,7 +1404,7 @@ type ParentsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Parent\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Parent\` edge in the connection.\\"\\"\\"
@@ -1433,7 +1450,7 @@ type ProtectedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Protected\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Protected\` edge in the connection.\\"\\"\\"
@@ -2333,7 +2350,7 @@ type RangeArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeArrayType\` edge in the connection.\\"\\"\\"
@@ -2400,7 +2417,7 @@ type RangeTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeType\` edge in the connection.\\"\\"\\"
@@ -2491,7 +2508,7 @@ type SideAsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideA\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideA\` edge in the connection.\\"\\"\\"
@@ -2553,7 +2570,7 @@ type SideBsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideB\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideB\` edge in the connection.\\"\\"\\"
@@ -2583,6 +2600,11 @@ input StringFilter {
   \\"\\"\\"
   distinctFrom: String
 
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  distinctFromInsensitive: String
+
   \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
   endsWith: String
 
@@ -2592,14 +2614,26 @@ input StringFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: String
 
+  \\"\\"\\"Equal to the specified value (case-insensitive).\\"\\"\\"
+  equalToInsensitive: String
+
   \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: String
+
+  \\"\\"\\"Greater than the specified value (case-insensitive).\\"\\"\\"
+  greaterThanInsensitive: String
 
   \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: String
 
+  \\"\\"\\"Greater than or equal to the specified value (case-insensitive).\\"\\"\\"
+  greaterThanOrEqualToInsensitive: String
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [String!]
+
+  \\"\\"\\"Included in the specified list (case-insensitive).\\"\\"\\"
+  inInsensitive: [String!]
 
   \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
   includes: String
@@ -2615,8 +2649,14 @@ input StringFilter {
   \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: String
 
+  \\"\\"\\"Less than the specified value (case-insensitive).\\"\\"\\"
+  lessThanInsensitive: String
+
   \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: String
+
+  \\"\\"\\"Less than or equal to the specified value (case-insensitive).\\"\\"\\"
+  lessThanOrEqualToInsensitive: String
 
   \\"\\"\\"
   Matches the specified pattern (case-sensitive). An underscore (_) matches any
@@ -2633,6 +2673,11 @@ input StringFilter {
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: String
 
+  \\"\\"\\"
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  notDistinctFromInsensitive: String
+
   \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
   notEndsWith: String
 
@@ -2642,8 +2687,14 @@ input StringFilter {
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: String
 
+  \\"\\"\\"Not equal to the specified value (case-insensitive).\\"\\"\\"
+  notEqualToInsensitive: String
+
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [String!]
+
+  \\"\\"\\"Not included in the specified list (case-insensitive).\\"\\"\\"
+  notInInsensitive: [String!]
 
   \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
   notIncludes: String
@@ -2665,21 +2716,11 @@ input StringFilter {
   \\"\\"\\"
   notLikeInsensitive: String
 
-  \\"\\"\\"
-  Does not match the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  notSimilarTo: String
-
   \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
   notStartsWith: String
 
   \\"\\"\\"Does not start with the specified string (case-insensitive).\\"\\"\\"
   notStartsWithInsensitive: String
-
-  \\"\\"\\"
-  Matches the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  similarTo: String
 
   \\"\\"\\"Starts with the specified string (case-sensitive).\\"\\"\\"
   startsWith: String
@@ -2717,7 +2758,7 @@ type UnfilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Unfilterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Unfilterable\` edge in the connection.\\"\\"\\"

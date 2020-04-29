@@ -1,16 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`additionalInsensitiveOperatorsTrue.citext.graphql 1`] = `
+exports[`addConnectionFilterOperator.graphql 1`] = `
 Object {
   "data": Object {
-    "distinctFromInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalToInsensitive": Object {
+    "familyEqualTo_4": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -26,45 +19,13 @@ Object {
         },
       ],
     },
-    "greaterThanInsensitive": Object {
+    "familyEqualTo_6": Object {
       "nodes": Array [],
     },
-    "greaterThanOrEqualToInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "inInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "lessThanInsensitive": Object {
+    "familyNotEqualTo_4": Object {
       "nodes": Array [],
     },
-    "lessThanOrEqualToInsensitive": Object {
+    "familyNotEqualTo_6": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -80,43 +41,10 @@ Object {
         },
       ],
     },
-    "notDistinctFromInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notEqualToInsensitive": Object {
+    "isV4_false": Object {
       "nodes": Array [],
     },
-    "notInInsensitive": Object {
-      "nodes": Array [],
-    },
-  },
-}
-`;
-
-exports[`additionalInsensitiveOperatorsTrue.text.graphql 1`] = `
-Object {
-  "data": Object {
-    "distinctFromInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 5,
-        },
-      ],
-    },
-    "equalToInsensitive": Object {
+    "isV4_true": Object {
       "nodes": Array [
         Object {
           "id": 1,
@@ -131,82 +59,6 @@ Object {
           "id": 4,
         },
       ],
-    },
-    "greaterThanInsensitive": Object {
-      "nodes": Array [],
-    },
-    "greaterThanOrEqualToInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "inInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "lessThanInsensitive": Object {
-      "nodes": Array [],
-    },
-    "lessThanOrEqualToInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notDistinctFromInsensitive": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 3,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
-    "notEqualToInsensitive": Object {
-      "nodes": Array [],
-    },
-    "notInInsensitive": Object {
-      "nodes": Array [],
     },
   },
 }
@@ -820,6 +672,202 @@ Object {
 `;
 
 exports[`arrayTypes.char4Array.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.cidrArray.graphql 1`] = `
 Object {
   "data": Object {
     "anyEqualTo": Object {
@@ -2583,6 +2631,202 @@ Object {
 }
 `;
 
+exports[`arrayTypes.intervalArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`arrayTypes.jsonbArray.graphql 1`] = `
 Object {
   "data": Object {
@@ -2779,7 +3023,399 @@ Object {
 }
 `;
 
+exports[`arrayTypes.macaddrArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`arrayTypes.moneyArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`arrayTypes.nameArray.graphql 1`] = `
 Object {
   "data": Object {
     "anyEqualTo": Object {
@@ -4830,6 +5466,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -4863,6 +5506,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -4873,8 +5532,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -4893,6 +5571,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -4939,6 +5633,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -4946,6 +5643,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -4982,6 +5695,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -5008,6 +5737,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -5020,6 +5752,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -5044,16 +5779,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -5066,16 +5791,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [
@@ -5694,6 +6409,1182 @@ Object {
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Empty objects are forbidden in filter argument input.],
   ],
+}
+`;
+
+exports[`rangeArrayTypes.dateRangeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeArrayTypes.int4RangeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeArrayTypes.int8RangeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeArrayTypes.numericRangeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeArrayTypes.timestampRangeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`rangeArrayTypes.timestamptzRangeArray.graphql 1`] = `
+Object {
+  "data": Object {
+    "anyEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyGreaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyGreaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "anyLessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "anyLessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "anyNotEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "containedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "overlaps": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+  },
 }
 `;
 
@@ -7568,6 +9459,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -7601,6 +9499,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -7611,8 +9525,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -7631,6 +9564,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7677,6 +9626,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -7684,6 +9636,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7720,6 +9688,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -7746,6 +9730,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -7758,6 +9745,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -7782,16 +9772,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -7804,16 +9784,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [
@@ -7864,6 +9834,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -7897,6 +9874,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -7907,8 +9900,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -7927,6 +9939,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -7973,6 +10001,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -7980,6 +10011,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -8016,6 +10063,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -8042,6 +10105,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -8054,6 +10120,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -8078,16 +10147,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -8100,16 +10159,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [
@@ -8128,6 +10177,163 @@ Object {
         },
         Object {
           "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`types.cidr.graphql 1`] = `
+Object {
+  "data": Object {
+    "containedBy": Object {
+      "nodes": Array [],
+    },
+    "containedByOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "contains": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "containsOrContainedBy": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "containsOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
         },
         Object {
           "id": 3,
@@ -8160,6 +10366,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -8193,6 +10406,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -8203,8 +10432,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -8223,6 +10471,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -8269,6 +10533,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -8276,6 +10543,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -8312,6 +10595,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -8338,6 +10637,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -8350,6 +10652,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -8374,16 +10679,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -8396,16 +10691,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [
@@ -9710,6 +11995,126 @@ Object {
 }
 `;
 
+exports[`types.macaddr.graphql 1`] = `
+Object {
+  "data": Object {
+    "distinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "equalTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "greaterThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "in": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+      ],
+    },
+    "isNull": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
+    "lessThan": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+      ],
+    },
+    "lessThanOrEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notDistinctFrom": Object {
+      "nodes": Array [
+        Object {
+          "id": 2,
+        },
+      ],
+    },
+    "notEqualTo": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "notIn": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`types.money.graphql 1`] = `
 Object {
   "data": Object {
@@ -9849,6 +12254,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -9882,6 +12294,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -9892,8 +12320,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -9912,6 +12359,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -9958,6 +12421,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -9965,6 +12431,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -10001,6 +12483,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -10027,6 +12525,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -10039,6 +12540,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -10063,16 +12567,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -10085,16 +12579,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [
@@ -10265,6 +12749,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -10298,6 +12789,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -10308,8 +12815,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -10328,6 +12854,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -10374,6 +12916,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -10381,6 +12926,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -10417,6 +12978,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -10443,6 +13020,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -10455,6 +13035,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -10479,16 +13062,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -10501,16 +13074,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [
@@ -11281,6 +13844,13 @@ Object {
         },
       ],
     },
+    "distinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 5,
+        },
+      ],
+    },
     "endsWith": Object {
       "nodes": Array [
         Object {
@@ -11314,6 +13884,22 @@ Object {
         },
       ],
     },
+    "equalToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "greaterThan": Object {
       "nodes": Array [
         Object {
@@ -11324,8 +13910,27 @@ Object {
         },
       ],
     },
+    "greaterThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "greaterThanOrEqualTo": Object {
       "nodes": Array [
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
+    "greaterThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
         Object {
           "id": 2,
         },
@@ -11344,6 +13949,22 @@ Object {
         },
         Object {
           "id": 3,
+        },
+      ],
+    },
+    "inInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -11390,6 +14011,9 @@ Object {
         },
       ],
     },
+    "lessThanInsensitive": Object {
+      "nodes": Array [],
+    },
     "lessThanOrEqualTo": Object {
       "nodes": Array [
         Object {
@@ -11397,6 +14021,22 @@ Object {
         },
         Object {
           "id": 2,
+        },
+      ],
+    },
+    "lessThanOrEqualToInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
         },
       ],
     },
@@ -11433,6 +14073,22 @@ Object {
         },
       ],
     },
+    "notDistinctFromInsensitive": Object {
+      "nodes": Array [
+        Object {
+          "id": 1,
+        },
+        Object {
+          "id": 2,
+        },
+        Object {
+          "id": 3,
+        },
+        Object {
+          "id": 4,
+        },
+      ],
+    },
     "notEndsWith": Object {
       "nodes": Array [
         Object {
@@ -11459,6 +14115,9 @@ Object {
         },
       ],
     },
+    "notEqualToInsensitive": Object {
+      "nodes": Array [],
+    },
     "notIn": Object {
       "nodes": Array [
         Object {
@@ -11471,6 +14130,9 @@ Object {
           "id": 4,
         },
       ],
+    },
+    "notInInsensitive": Object {
+      "nodes": Array [],
     },
     "notIncludes": Object {
       "nodes": Array [
@@ -11495,16 +14157,6 @@ Object {
     "notLikeInsensitive": Object {
       "nodes": Array [],
     },
-    "notSimilarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 2,
-        },
-        Object {
-          "id": 4,
-        },
-      ],
-    },
     "notStartsWith": Object {
       "nodes": Array [
         Object {
@@ -11517,16 +14169,6 @@ Object {
     },
     "notStartsWithInsensitive": Object {
       "nodes": Array [],
-    },
-    "similarTo": Object {
-      "nodes": Array [
-        Object {
-          "id": 1,
-        },
-        Object {
-          "id": 3,
-        },
-      ],
     },
     "startsWith": Object {
       "nodes": Array [

@@ -1,0 +1,101 @@
+query int4RangeArray(
+  $v2: [IntRangeInput] = [
+    {
+      start: { value: 2, inclusive: true }
+      end: { value: 3, inclusive: false }
+    },
+    {
+      start: { value: 3, inclusive: true }
+      end: { value: 4, inclusive: false }
+    }
+  ]
+  $v2_1: IntRangeInput = {
+    start: { value: 2, inclusive: true }
+    end: { value: 3, inclusive: false }
+  }
+  $v3: [IntRangeInput] = [
+    {
+      start: { value: 3, inclusive: true }
+      end: { value: 4, inclusive: false }
+    },
+    {
+      start: { value: 4, inclusive: true }
+      end: { value: 5, inclusive: false }
+    }
+  ]
+) {
+  anyEqualTo: allRangeArrayTypes(filter: { int4RangeArray: { anyEqualTo: $v2_1 } }) {
+    ...nodes
+  }
+  anyGreaterThan: allRangeArrayTypes(
+    filter: { int4RangeArray: { anyGreaterThan: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyGreaterThanOrEqualTo: allRangeArrayTypes(
+    filter: { int4RangeArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyLessThan: allRangeArrayTypes(filter: { int4RangeArray: { anyLessThan: $v2_1 } }) {
+    ...nodes
+  }
+  anyLessThanOrEqualTo: allRangeArrayTypes(
+    filter: { int4RangeArray: { anyLessThanOrEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  anyNotEqualTo: allRangeArrayTypes(
+    filter: { int4RangeArray: { anyNotEqualTo: $v2_1 } }
+  ) {
+    ...nodes
+  }
+  containedBy: allRangeArrayTypes(filter: { int4RangeArray: { containedBy: $v2 } }) {
+    ...nodes
+  }
+  contains: allRangeArrayTypes(filter: { int4RangeArray: { contains: $v3 } }) {
+    ...nodes
+  }
+  distinctFrom: allRangeArrayTypes(filter: { int4RangeArray: { distinctFrom: $v2 } }) {
+    ...nodes
+  }
+  equalTo: allRangeArrayTypes(filter: { int4RangeArray: { equalTo: $v2 } }) {
+    ...nodes
+  }
+  greaterThan: allRangeArrayTypes(filter: { int4RangeArray: { greaterThan: $v2 } }) {
+    ...nodes
+  }
+  greaterThanOrEqualTo: allRangeArrayTypes(
+    filter: { int4RangeArray: { greaterThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  isNull: allRangeArrayTypes(filter: { int4RangeArray: { isNull: true } }) {
+    ...nodes
+  }
+  lessThan: allRangeArrayTypes(filter: { int4RangeArray: { lessThan: $v2 } }) {
+    ...nodes
+  }
+  lessThanOrEqualTo: allRangeArrayTypes(
+    filter: { int4RangeArray: { lessThanOrEqualTo: $v2 } }
+  ) {
+    ...nodes
+  }
+  notDistinctFrom: allRangeArrayTypes(
+    filter: { int4RangeArray: { notDistinctFrom: $v2 } }
+  ) {
+    ...nodes
+  }
+  notEqualTo: allRangeArrayTypes(filter: { int4RangeArray: { notEqualTo: $v2 } }) {
+    ...nodes
+  }
+  overlaps: allRangeArrayTypes(filter: { int4RangeArray: { overlaps: $v2 } }) {
+    ...nodes
+  }
+}
+
+fragment nodes on RangeArrayTypesConnection {
+  nodes {
+    id
+  }
+}

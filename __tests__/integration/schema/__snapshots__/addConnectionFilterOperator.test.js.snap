@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`prints a schema with the filter plugin and the \`connectionFilterLists: false\` option 1`] = `
+exports[`prints a schema with the filter plugin and a custom operators plugin using addConnectionFilterOperator 1`] = `
 "type ArrayType implements Node {
   bit4Array: [BitString]
   boolArray: [Boolean]
@@ -23,6 +23,7 @@ exports[`prints a schema with the filter plugin and the \`connectionFilterLists:
   jsonbArray: [JSON]
   macaddrArray: [String]
   moneyArray: [Float]
+  nameArray: [String]
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -47,14 +48,92 @@ input ArrayTypeFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [ArrayTypeFilter!]
 
+  \\"\\"\\"Filter by the object’s \`bit4Array\` field.\\"\\"\\"
+  bit4Array: BitStringListFilter
+
+  \\"\\"\\"Filter by the object’s \`boolArray\` field.\\"\\"\\"
+  boolArray: BooleanListFilter
+
+  \\"\\"\\"Filter by the object’s \`bpchar4Array\` field.\\"\\"\\"
+  bpchar4Array: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`char4Array\` field.\\"\\"\\"
+  char4Array: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`citextArray\` field.\\"\\"\\"
+  citextArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`dateArray\` field.\\"\\"\\"
+  dateArray: DateListFilter
+
+  \\"\\"\\"Filter by the object’s \`float4Array\` field.\\"\\"\\"
+  float4Array: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`float8Array\` field.\\"\\"\\"
+  float8Array: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`hstoreArray\` field.\\"\\"\\"
+  hstoreArray: KeyValueHashListFilter
+
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`inetArray\` field.\\"\\"\\"
+  inetArray: InternetAddressListFilter
+
+  \\"\\"\\"Filter by the object’s \`int2Array\` field.\\"\\"\\"
+  int2Array: IntListFilter
+
+  \\"\\"\\"Filter by the object’s \`int4Array\` field.\\"\\"\\"
+  int4Array: IntListFilter
+
+  \\"\\"\\"Filter by the object’s \`int8Array\` field.\\"\\"\\"
+  int8Array: BigIntListFilter
+
+  \\"\\"\\"Filter by the object’s \`intervalArray\` field.\\"\\"\\"
+  intervalArray: IntervalListFilter
+
+  \\"\\"\\"Filter by the object’s \`jsonbArray\` field.\\"\\"\\"
+  jsonbArray: JSONListFilter
+
+  \\"\\"\\"Filter by the object’s \`moneyArray\` field.\\"\\"\\"
+  moneyArray: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`nameArray\` field.\\"\\"\\"
+  nameArray: StringListFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: ArrayTypeFilter
 
+  \\"\\"\\"Filter by the object’s \`numericArray\` field.\\"\\"\\"
+  numericArray: BigFloatListFilter
+
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [ArrayTypeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`textArray\` field.\\"\\"\\"
+  textArray: StringListFilter
+
+  \\"\\"\\"Filter by the object’s \`timeArray\` field.\\"\\"\\"
+  timeArray: TimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timestampArray\` field.\\"\\"\\"
+  timestampArray: DatetimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timestamptzArray\` field.\\"\\"\\"
+  timestamptzArray: DatetimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timetzArray\` field.\\"\\"\\"
+  timetzArray: TimeListFilter
+
+  \\"\\"\\"Filter by the object’s \`uuidArray\` field.\\"\\"\\"
+  uuidArray: UUIDListFilter
+
+  \\"\\"\\"Filter by the object’s \`varbitArray\` field.\\"\\"\\"
+  varbitArray: BitStringListFilter
+
+  \\"\\"\\"Filter by the object’s \`varcharArray\` field.\\"\\"\\"
+  varcharArray: StringListFilter
 }
 
 \\"\\"\\"A connection to a list of \`ArrayType\` values.\\"\\"\\"
@@ -71,7 +150,7 @@ type ArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`ArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ArrayType\` edge in the connection.\\"\\"\\"
@@ -127,6 +206,8 @@ enum ArrayTypesOrderBy {
   MACADDR_ARRAY_DESC
   MONEY_ARRAY_ASC
   MONEY_ARRAY_DESC
+  NAME_ARRAY_ASC
+  NAME_ARRAY_DESC
   NATURAL
   NUMERIC_ARRAY_ASC
   NUMERIC_ARRAY_DESC
@@ -220,7 +301,7 @@ type BackwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`BackwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`BackwardCompound\` edge in the connection.\\"\\"\\"
@@ -282,7 +363,7 @@ type BackwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Backward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Backward\` edge in the connection.\\"\\"\\"
@@ -352,6 +433,69 @@ input BigFloatFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [BigFloat!]
+}
+
+\\"\\"\\"
+A filter to be used against BigFloat List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigFloatListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BigFloat
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BigFloat
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BigFloat
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BigFloat
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BigFloat
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BigFloat
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BigFloat]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BigFloat]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BigFloat]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigFloat]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BigFloat]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BigFloat]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BigFloat]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BigFloat]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BigFloat]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigFloat]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BigFloat]
 }
 
 \\"\\"\\"A range of \`BigFloat\`.\\"\\"\\"
@@ -464,7 +608,70 @@ input BigFloatRangeInput {
 }
 
 \\"\\"\\"
-A signed eight-byte integer. The upper big integer values are greater then the
+A filter to be used against BigFloatRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigFloatRangeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BigFloatRangeInput
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BigFloatRangeInput
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BigFloatRangeInput
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BigFloatRangeInput
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BigFloatRangeInput
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BigFloatRangeInput
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BigFloatRangeInput]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BigFloatRangeInput]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BigFloatRangeInput]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigFloatRangeInput]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BigFloatRangeInput]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BigFloatRangeInput]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BigFloatRangeInput]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BigFloatRangeInput]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BigFloatRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigFloatRangeInput]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BigFloatRangeInput]
+}
+
+\\"\\"\\"
+A signed eight-byte integer. The upper big integer values are greater than the
 max value for a JavaScript number. Therefore all big integers will be output as
 strings and not numbers.
 \\"\\"\\"
@@ -510,6 +717,69 @@ input BigIntFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [BigInt!]
+}
+
+\\"\\"\\"
+A filter to be used against BigInt List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigIntListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BigInt
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BigInt
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BigInt
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BigInt
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BigInt
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BigInt
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BigInt]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BigInt]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BigInt]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigInt]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BigInt]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BigInt]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BigInt]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BigInt]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BigInt]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigInt]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BigInt]
 }
 
 \\"\\"\\"A range of \`BigInt\`.\\"\\"\\"
@@ -621,6 +891,69 @@ input BigIntRangeInput {
   start: BigIntRangeBoundInput
 }
 
+\\"\\"\\"
+A filter to be used against BigIntRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigIntRangeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BigIntRangeInput
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BigIntRangeInput
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BigIntRangeInput
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BigIntRangeInput
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BigIntRangeInput
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BigIntRangeInput
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BigIntRangeInput]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BigIntRangeInput]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BigIntRangeInput]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigIntRangeInput]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BigIntRangeInput]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BigIntRangeInput]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BigIntRangeInput]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BigIntRangeInput]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BigIntRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigIntRangeInput]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BigIntRangeInput]
+}
+
 \\"\\"\\"A string representing a series of binary bits\\"\\"\\"
 scalar BitString
 
@@ -667,6 +1000,69 @@ input BitStringFilter {
 }
 
 \\"\\"\\"
+A filter to be used against BitString List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BitStringListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: BitString
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: BitString
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: BitString
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: BitString
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: BitString
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: BitString
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [BitString]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [BitString]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [BitString]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BitString]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [BitString]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [BitString]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [BitString]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [BitString]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [BitString]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BitString]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [BitString]
+}
+
+\\"\\"\\"
 A filter to be used against Boolean fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input BooleanFilter {
@@ -708,6 +1104,69 @@ input BooleanFilter {
   notIn: [Boolean!]
 }
 
+\\"\\"\\"
+A filter to be used against Boolean List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BooleanListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Boolean
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Boolean
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Boolean
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Boolean
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Boolean
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Boolean
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Boolean]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Boolean]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Boolean]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Boolean]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Boolean]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Boolean]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Boolean]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Boolean]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Boolean]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Boolean]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Boolean]
+}
+
 scalar Char4Domain
 
 \\"\\"\\"
@@ -719,6 +1178,11 @@ input Char4DomainFilter {
   \\"\\"\\"
   distinctFrom: Char4Domain
 
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  distinctFromInsensitive: Char4Domain
+
   \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
   endsWith: Char4Domain
 
@@ -728,14 +1192,26 @@ input Char4DomainFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: Char4Domain
 
+  \\"\\"\\"Equal to the specified value (case-insensitive).\\"\\"\\"
+  equalToInsensitive: Char4Domain
+
   \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: Char4Domain
+
+  \\"\\"\\"Greater than the specified value (case-insensitive).\\"\\"\\"
+  greaterThanInsensitive: Char4Domain
 
   \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: Char4Domain
 
+  \\"\\"\\"Greater than or equal to the specified value (case-insensitive).\\"\\"\\"
+  greaterThanOrEqualToInsensitive: Char4Domain
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [Char4Domain!]
+
+  \\"\\"\\"Included in the specified list (case-insensitive).\\"\\"\\"
+  inInsensitive: [Char4Domain!]
 
   \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
   includes: Char4Domain
@@ -751,8 +1227,14 @@ input Char4DomainFilter {
   \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: Char4Domain
 
+  \\"\\"\\"Less than the specified value (case-insensitive).\\"\\"\\"
+  lessThanInsensitive: Char4Domain
+
   \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: Char4Domain
+
+  \\"\\"\\"Less than or equal to the specified value (case-insensitive).\\"\\"\\"
+  lessThanOrEqualToInsensitive: Char4Domain
 
   \\"\\"\\"
   Matches the specified pattern (case-sensitive). An underscore (_) matches any
@@ -769,6 +1251,11 @@ input Char4DomainFilter {
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: Char4Domain
 
+  \\"\\"\\"
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  notDistinctFromInsensitive: Char4Domain
+
   \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
   notEndsWith: Char4Domain
 
@@ -778,8 +1265,14 @@ input Char4DomainFilter {
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: Char4Domain
 
+  \\"\\"\\"Not equal to the specified value (case-insensitive).\\"\\"\\"
+  notEqualToInsensitive: Char4Domain
+
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Char4Domain!]
+
+  \\"\\"\\"Not included in the specified list (case-insensitive).\\"\\"\\"
+  notInInsensitive: [Char4Domain!]
 
   \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
   notIncludes: Char4Domain
@@ -801,21 +1294,11 @@ input Char4DomainFilter {
   \\"\\"\\"
   notLikeInsensitive: Char4Domain
 
-  \\"\\"\\"
-  Does not match the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  notSimilarTo: Char4Domain
-
   \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
   notStartsWith: Char4Domain
 
   \\"\\"\\"Does not start with the specified string (case-insensitive).\\"\\"\\"
   notStartsWithInsensitive: Char4Domain
-
-  \\"\\"\\"
-  Matches the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  similarTo: Char4Domain
 
   \\"\\"\\"Starts with the specified string (case-sensitive).\\"\\"\\"
   startsWith: Char4Domain
@@ -874,7 +1357,7 @@ type ChildrenConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Child\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Child\` edge in the connection.\\"\\"\\"
@@ -902,6 +1385,26 @@ enum ChildrenOrderBy {
 type Composite {
   a: Int
   b: String
+}
+
+\\"\\"\\"
+A filter to be used against \`Composite\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input CompositeFilter {
+  \\"\\"\\"Filter by the object’s \`a\` field.\\"\\"\\"
+  a: IntFilter
+
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [CompositeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`b\` field.\\"\\"\\"
+  b: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: CompositeFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [CompositeFilter!]
 }
 
 \\"\\"\\"A location in a connection that can be used for resuming pagination.\\"\\"\\"
@@ -994,6 +1497,69 @@ input DateFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Date!]
+}
+
+\\"\\"\\"
+A filter to be used against Date List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Date
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Date
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Date
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Date
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Date
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Date
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Date]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Date]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Date]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Date]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Date]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Date]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Date]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Date]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Date]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Date]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Date]
 }
 
 \\"\\"\\"A range of \`Date\`.\\"\\"\\"
@@ -1106,6 +1672,69 @@ input DateRangeInput {
 }
 
 \\"\\"\\"
+A filter to be used against DateRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateRangeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: DateRangeInput
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: DateRangeInput
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: DateRangeInput
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: DateRangeInput
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: DateRangeInput
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: DateRangeInput
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [DateRangeInput]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [DateRangeInput]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [DateRangeInput]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [DateRangeInput]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [DateRangeInput]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [DateRangeInput]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [DateRangeInput]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [DateRangeInput]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [DateRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [DateRangeInput]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [DateRangeInput]
+}
+
+\\"\\"\\"
 A point in time as described by the [ISO
 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
 \\"\\"\\"
@@ -1151,6 +1780,69 @@ input DatetimeFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Datetime!]
+}
+
+\\"\\"\\"
+A filter to be used against Datetime List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DatetimeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Datetime
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Datetime
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Datetime
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Datetime
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Datetime
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Datetime
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Datetime]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Datetime]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Datetime]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Datetime]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Datetime]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Datetime]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Datetime]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Datetime]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Datetime]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Datetime]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Datetime]
 }
 
 \\"\\"\\"A range of \`Datetime\`.\\"\\"\\"
@@ -1262,6 +1954,69 @@ input DatetimeRangeInput {
   start: DatetimeRangeBoundInput
 }
 
+\\"\\"\\"
+A filter to be used against DatetimeRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DatetimeRangeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: DatetimeRangeInput
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: DatetimeRangeInput
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: DatetimeRangeInput
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: DatetimeRangeInput
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: DatetimeRangeInput
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: DatetimeRangeInput
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [DatetimeRangeInput]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [DatetimeRangeInput]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [DatetimeRangeInput]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [DatetimeRangeInput]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [DatetimeRangeInput]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [DatetimeRangeInput]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [DatetimeRangeInput]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [DatetimeRangeInput]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [DatetimeRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [DatetimeRangeInput]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [DatetimeRangeInput]
+}
+
 type DomainType implements Node {
   char4Domain: Char4Domain
   dateDomain: DateDomain
@@ -1314,7 +2069,7 @@ type DomainTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`DomainType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`DomainType\` edge in the connection.\\"\\"\\"
@@ -1358,6 +2113,9 @@ input EnumArrayTypeFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [EnumArrayTypeFilter!]
 
+  \\"\\"\\"Filter by the object’s \`enumArray\` field.\\"\\"\\"
+  enumArray: MoodListFilter
+
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
 
@@ -1382,7 +2140,7 @@ type EnumArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumArrayType\` edge in the connection.\\"\\"\\"
@@ -1449,7 +2207,7 @@ type EnumTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumType\` edge in the connection.\\"\\"\\"
@@ -1744,7 +2502,7 @@ type FilterableClosuresConnection {
   \\"\\"\\"
   The count of *all* \`FilterableClosure\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FilterableClosure\` edge in the connection.\\"\\"\\"
@@ -1780,6 +2538,9 @@ type FilterableComputedSetofIntConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -1819,8 +2580,14 @@ input FilterableFilter {
   \\"\\"\\"Filter by the object’s \`citext\` field.\\"\\"\\"
   citext: StringFilter
 
+  \\"\\"\\"Filter by the object’s \`compositeColumn\` field.\\"\\"\\"
+  compositeColumn: CompositeFilter
+
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`computedIntArray\` field.\\"\\"\\"
+  computedIntArray: IntListFilter
 
   \\"\\"\\"Filter by the object’s \`computedTaggedFilterable\` field.\\"\\"\\"
   computedTaggedFilterable: IntFilter
@@ -1924,7 +2691,7 @@ type FilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Filterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Filterable\` edge in the connection.\\"\\"\\"
@@ -2067,6 +2834,69 @@ input FloatFilter {
   notIn: [Float!]
 }
 
+\\"\\"\\"
+A filter to be used against Float List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input FloatListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Float
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Float
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Float
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Float
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Float
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Float
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Float]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Float]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Float]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Float]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Float]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Float]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Float]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Float]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Float]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Float]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Float]
+}
+
 type Forward implements Node {
   \\"\\"\\"Reads a single \`Filterable\` that is related to this \`Forward\`.\\"\\"\\"
   filterableByForwardId: Filterable
@@ -2131,7 +2961,7 @@ type ForwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`ForwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ForwardCompound\` edge in the connection.\\"\\"\\"
@@ -2190,7 +3020,7 @@ type ForwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Forward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Forward\` edge in the connection.\\"\\"\\"
@@ -2237,7 +3067,7 @@ type FullyOmittedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`FullyOmitted\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FullyOmitted\` edge in the connection.\\"\\"\\"
@@ -2269,6 +3099,11 @@ type FuncReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FuncReturnsTableMultiColRecord\` edge in the connection.\\"\\"\\"
@@ -2315,6 +3150,9 @@ type FuncReturnsTableOneColConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -2337,6 +3175,11 @@ type FuncTaggedFilterableReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncTaggedFilterableReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncTaggedFilterableReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"
@@ -2455,6 +3298,12 @@ input InternetAddressFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: InternetAddress
 
+  \\"\\"\\"Address family equal to specified value.\\"\\"\\"
+  familyEqualTo: Int
+
+  \\"\\"\\"Address family equal to specified value.\\"\\"\\"
+  familyNotEqualTo: Int
+
   \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: InternetAddress
 
@@ -2468,6 +3317,9 @@ input InternetAddressFilter {
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
   isNull: Boolean
+
+  \\"\\"\\"Address family equal to specified value.\\"\\"\\"
+  isV4: Boolean
 
   \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: InternetAddress
@@ -2483,6 +3335,69 @@ input InternetAddressFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [InternetAddress!]
+}
+
+\\"\\"\\"
+A filter to be used against InternetAddress List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input InternetAddressListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: InternetAddress
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: InternetAddress
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: InternetAddress
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: InternetAddress
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: InternetAddress
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: InternetAddress
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [InternetAddress]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [InternetAddress]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [InternetAddress]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [InternetAddress]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [InternetAddress]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [InternetAddress]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [InternetAddress]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [InternetAddress]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [InternetAddress]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [InternetAddress]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [InternetAddress]
 }
 
 \\"\\"\\"
@@ -2582,6 +3497,69 @@ input IntervalInput {
 }
 
 \\"\\"\\"
+A filter to be used against Interval List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntervalListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: IntervalInput
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: IntervalInput
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: IntervalInput
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: IntervalInput
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: IntervalInput
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: IntervalInput
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [IntervalInput]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [IntervalInput]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [IntervalInput]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [IntervalInput]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [IntervalInput]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [IntervalInput]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [IntervalInput]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [IntervalInput]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [IntervalInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [IntervalInput]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [IntervalInput]
+}
+
+\\"\\"\\"
 A filter to be used against Int fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntFilter {
@@ -2621,6 +3599,69 @@ input IntFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Int!]
+}
+
+\\"\\"\\"
+A filter to be used against Int List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Int
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Int
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Int
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Int
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Int
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Int
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Int]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Int]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Int]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Int]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Int]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Int]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Int]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Int]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Int]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Int]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Int]
 }
 
 \\"\\"\\"A range of \`Int\`.\\"\\"\\"
@@ -2733,6 +3774,69 @@ input IntRangeInput {
 }
 
 \\"\\"\\"
+A filter to be used against IntRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntRangeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: IntRangeInput
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: IntRangeInput
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: IntRangeInput
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: IntRangeInput
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: IntRangeInput
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: IntRangeInput
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [IntRangeInput]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [IntRangeInput]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [IntRangeInput]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [IntRangeInput]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [IntRangeInput]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [IntRangeInput]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [IntRangeInput]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [IntRangeInput]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [IntRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [IntRangeInput]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [IntRangeInput]
+}
+
+\\"\\"\\"
 A JavaScript object encoded in the JSON format as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
 scalar JSON
@@ -2785,7 +3889,7 @@ type JsonbTestsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`JsonbTest\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`JsonbTest\` edge in the connection.\\"\\"\\"
@@ -2867,6 +3971,69 @@ input JSONFilter {
   notIn: [JSON!]
 }
 
+\\"\\"\\"
+A filter to be used against JSON List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input JSONListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: JSON
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: JSON
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: JSON
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: JSON
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: JSON
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: JSON
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [JSON]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [JSON]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [JSON]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [JSON]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [JSON]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [JSON]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [JSON]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [JSON]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [JSON]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [JSON]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [JSON]
+}
+
 type Junction implements Node {
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -2916,7 +4083,7 @@ type JunctionsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Junction\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Junction\` edge in the connection.\\"\\"\\"
@@ -2989,6 +4156,69 @@ input KeyValueHashFilter {
   notIn: [KeyValueHash!]
 }
 
+\\"\\"\\"
+A filter to be used against KeyValueHash List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input KeyValueHashListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: KeyValueHash
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: KeyValueHash
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: KeyValueHash
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: KeyValueHash
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: KeyValueHash
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: KeyValueHash
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [KeyValueHash]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [KeyValueHash]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [KeyValueHash]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [KeyValueHash]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [KeyValueHash]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [KeyValueHash]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [KeyValueHash]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [KeyValueHash]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [KeyValueHash]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [KeyValueHash]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [KeyValueHash]
+}
+
 enum Mood {
   HAPPY
   OK
@@ -3035,6 +4265,69 @@ input MoodFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [Mood!]
+}
+
+\\"\\"\\"
+A filter to be used against Mood List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input MoodListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Mood
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Mood
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Mood
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Mood
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Mood
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Mood
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Mood]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Mood]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Mood]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Mood]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Mood]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Mood]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Mood]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Mood]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Mood]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Mood]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Mood]
 }
 
 \\"\\"\\"An object with a globally unique \`ID\`.\\"\\"\\"
@@ -3132,7 +4425,7 @@ type ParentsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Parent\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Parent\` edge in the connection.\\"\\"\\"
@@ -3203,7 +4496,7 @@ type ProtectedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Protected\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Protected\` edge in the connection.\\"\\"\\"
@@ -4094,14 +5387,32 @@ input RangeArrayTypeFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [RangeArrayTypeFilter!]
 
+  \\"\\"\\"Filter by the object’s \`dateRangeArray\` field.\\"\\"\\"
+  dateRangeArray: DateRangeListFilter
+
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`int4RangeArray\` field.\\"\\"\\"
+  int4RangeArray: IntRangeListFilter
+
+  \\"\\"\\"Filter by the object’s \`int8RangeArray\` field.\\"\\"\\"
+  int8RangeArray: BigIntRangeListFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: RangeArrayTypeFilter
 
+  \\"\\"\\"Filter by the object’s \`numericRangeArray\` field.\\"\\"\\"
+  numericRangeArray: BigFloatRangeListFilter
+
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [RangeArrayTypeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`timestampRangeArray\` field.\\"\\"\\"
+  timestampRangeArray: DatetimeRangeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timestamptzRangeArray\` field.\\"\\"\\"
+  timestamptzRangeArray: DatetimeRangeListFilter
 }
 
 \\"\\"\\"A connection to a list of \`RangeArrayType\` values.\\"\\"\\"
@@ -4118,7 +5429,7 @@ type RangeArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeArrayType\` edge in the connection.\\"\\"\\"
@@ -4215,7 +5526,7 @@ type RangeTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeType\` edge in the connection.\\"\\"\\"
@@ -4321,7 +5632,7 @@ type SideAsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideA\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideA\` edge in the connection.\\"\\"\\"
@@ -4417,7 +5728,7 @@ type SideBsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideB\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideB\` edge in the connection.\\"\\"\\"
@@ -4449,6 +5760,11 @@ input StringFilter {
   \\"\\"\\"
   distinctFrom: String
 
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  distinctFromInsensitive: String
+
   \\"\\"\\"Ends with the specified string (case-sensitive).\\"\\"\\"
   endsWith: String
 
@@ -4458,14 +5774,26 @@ input StringFilter {
   \\"\\"\\"Equal to the specified value.\\"\\"\\"
   equalTo: String
 
+  \\"\\"\\"Equal to the specified value (case-insensitive).\\"\\"\\"
+  equalToInsensitive: String
+
   \\"\\"\\"Greater than the specified value.\\"\\"\\"
   greaterThan: String
+
+  \\"\\"\\"Greater than the specified value (case-insensitive).\\"\\"\\"
+  greaterThanInsensitive: String
 
   \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
   greaterThanOrEqualTo: String
 
+  \\"\\"\\"Greater than or equal to the specified value (case-insensitive).\\"\\"\\"
+  greaterThanOrEqualToInsensitive: String
+
   \\"\\"\\"Included in the specified list.\\"\\"\\"
   in: [String!]
+
+  \\"\\"\\"Included in the specified list (case-insensitive).\\"\\"\\"
+  inInsensitive: [String!]
 
   \\"\\"\\"Contains the specified string (case-sensitive).\\"\\"\\"
   includes: String
@@ -4481,8 +5809,14 @@ input StringFilter {
   \\"\\"\\"Less than the specified value.\\"\\"\\"
   lessThan: String
 
+  \\"\\"\\"Less than the specified value (case-insensitive).\\"\\"\\"
+  lessThanInsensitive: String
+
   \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
   lessThanOrEqualTo: String
+
+  \\"\\"\\"Less than or equal to the specified value (case-insensitive).\\"\\"\\"
+  lessThanOrEqualToInsensitive: String
 
   \\"\\"\\"
   Matches the specified pattern (case-sensitive). An underscore (_) matches any
@@ -4499,6 +5833,11 @@ input StringFilter {
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: String
 
+  \\"\\"\\"
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  \\"\\"\\"
+  notDistinctFromInsensitive: String
+
   \\"\\"\\"Does not end with the specified string (case-sensitive).\\"\\"\\"
   notEndsWith: String
 
@@ -4508,8 +5847,14 @@ input StringFilter {
   \\"\\"\\"Not equal to the specified value.\\"\\"\\"
   notEqualTo: String
 
+  \\"\\"\\"Not equal to the specified value (case-insensitive).\\"\\"\\"
+  notEqualToInsensitive: String
+
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [String!]
+
+  \\"\\"\\"Not included in the specified list (case-insensitive).\\"\\"\\"
+  notInInsensitive: [String!]
 
   \\"\\"\\"Does not contain the specified string (case-sensitive).\\"\\"\\"
   notIncludes: String
@@ -4531,27 +5876,80 @@ input StringFilter {
   \\"\\"\\"
   notLikeInsensitive: String
 
-  \\"\\"\\"
-  Does not match the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  notSimilarTo: String
-
   \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
   notStartsWith: String
 
   \\"\\"\\"Does not start with the specified string (case-insensitive).\\"\\"\\"
   notStartsWithInsensitive: String
 
-  \\"\\"\\"
-  Matches the specified pattern using the SQL standard's definition of a regular expression.
-  \\"\\"\\"
-  similarTo: String
-
   \\"\\"\\"Starts with the specified string (case-sensitive).\\"\\"\\"
   startsWith: String
 
   \\"\\"\\"Starts with the specified string (case-insensitive).\\"\\"\\"
   startsWithInsensitive: String
+}
+
+\\"\\"\\"
+A filter to be used against String List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input StringListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: String
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: String
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: String
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: String
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: String
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: String
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [String]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [String]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [String]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [String]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [String]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [String]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [String]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [String]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [String]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [String]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [String]
 }
 
 \\"\\"\\"
@@ -4601,6 +5999,69 @@ input TimeFilter {
   notIn: [Time!]
 }
 
+\\"\\"\\"
+A filter to be used against Time List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input TimeListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: Time
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: Time
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: Time
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: Time
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: Time
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: Time
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [Time]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [Time]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [Time]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [Time]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [Time]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [Time]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [Time]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [Time]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [Time]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [Time]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [Time]
+}
+
 type Unfilterable implements Node {
   id: Int!
 
@@ -4625,7 +6086,7 @@ type UnfilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Unfilterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Unfilterable\` edge in the connection.\\"\\"\\"
@@ -4693,6 +6154,69 @@ input UUIDFilter {
 
   \\"\\"\\"Not included in the specified list.\\"\\"\\"
   notIn: [UUID!]
+}
+
+\\"\\"\\"
+A filter to be used against UUID List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input UUIDListFilter {
+  \\"\\"\\"Any array item is equal to the specified value.\\"\\"\\"
+  anyEqualTo: UUID
+
+  \\"\\"\\"Any array item is greater than the specified value.\\"\\"\\"
+  anyGreaterThan: UUID
+
+  \\"\\"\\"Any array item is greater than or equal to the specified value.\\"\\"\\"
+  anyGreaterThanOrEqualTo: UUID
+
+  \\"\\"\\"Any array item is less than the specified value.\\"\\"\\"
+  anyLessThan: UUID
+
+  \\"\\"\\"Any array item is less than or equal to the specified value.\\"\\"\\"
+  anyLessThanOrEqualTo: UUID
+
+  \\"\\"\\"Any array item is not equal to the specified value.\\"\\"\\"
+  anyNotEqualTo: UUID
+
+  \\"\\"\\"Contained by the specified list of values.\\"\\"\\"
+  containedBy: [UUID]
+
+  \\"\\"\\"Contains the specified list of values.\\"\\"\\"
+  contains: [UUID]
+
+  \\"\\"\\"
+  Not equal to the specified value, treating null like an ordinary value.
+  \\"\\"\\"
+  distinctFrom: [UUID]
+
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [UUID]
+
+  \\"\\"\\"Greater than the specified value.\\"\\"\\"
+  greaterThan: [UUID]
+
+  \\"\\"\\"Greater than or equal to the specified value.\\"\\"\\"
+  greaterThanOrEqualTo: [UUID]
+
+  \\"\\"\\"
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  \\"\\"\\"
+  isNull: Boolean
+
+  \\"\\"\\"Less than the specified value.\\"\\"\\"
+  lessThan: [UUID]
+
+  \\"\\"\\"Less than or equal to the specified value.\\"\\"\\"
+  lessThanOrEqualTo: [UUID]
+
+  \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
+  notDistinctFrom: [UUID]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [UUID]
+
+  \\"\\"\\"Overlaps the specified list of values.\\"\\"\\"
+  overlaps: [UUID]
 }
 "
 `;

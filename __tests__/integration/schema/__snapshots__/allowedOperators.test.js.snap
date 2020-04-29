@@ -23,6 +23,7 @@ exports[`prints a schema with the filter plugin and the connectionFilterAllowedO
   jsonbArray: [JSON]
   macaddrArray: [String]
   moneyArray: [Float]
+  nameArray: [String]
 
   \\"\\"\\"
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
@@ -89,11 +90,17 @@ input ArrayTypeFilter {
   \\"\\"\\"Filter by the object’s \`int8Array\` field.\\"\\"\\"
   int8Array: BigIntListFilter
 
+  \\"\\"\\"Filter by the object’s \`intervalArray\` field.\\"\\"\\"
+  intervalArray: IntervalListFilter
+
   \\"\\"\\"Filter by the object’s \`jsonbArray\` field.\\"\\"\\"
   jsonbArray: JSONListFilter
 
   \\"\\"\\"Filter by the object’s \`moneyArray\` field.\\"\\"\\"
   moneyArray: FloatListFilter
+
+  \\"\\"\\"Filter by the object’s \`nameArray\` field.\\"\\"\\"
+  nameArray: StringListFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: ArrayTypeFilter
@@ -143,7 +150,7 @@ type ArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`ArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ArrayType\` edge in the connection.\\"\\"\\"
@@ -199,6 +206,8 @@ enum ArrayTypesOrderBy {
   MACADDR_ARRAY_DESC
   MONEY_ARRAY_ASC
   MONEY_ARRAY_DESC
+  NAME_ARRAY_ASC
+  NAME_ARRAY_DESC
   NATURAL
   NUMERIC_ARRAY_ASC
   NUMERIC_ARRAY_DESC
@@ -292,7 +301,7 @@ type BackwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`BackwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`BackwardCompound\` edge in the connection.\\"\\"\\"
@@ -354,7 +363,7 @@ type BackwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Backward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Backward\` edge in the connection.\\"\\"\\"
@@ -458,7 +467,18 @@ input BigFloatRangeInput {
 }
 
 \\"\\"\\"
-A signed eight-byte integer. The upper big integer values are greater then the
+A filter to be used against BigFloatRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigFloatRangeListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigFloatRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigFloatRangeInput]
+}
+
+\\"\\"\\"
+A signed eight-byte integer. The upper big integer values are greater than the
 max value for a JavaScript number. Therefore all big integers will be output as
 strings and not numbers.
 \\"\\"\\"
@@ -535,6 +555,17 @@ input BigIntRangeInput {
 
   \\"\\"\\"The starting bound of our range.\\"\\"\\"
   start: BigIntRangeBoundInput
+}
+
+\\"\\"\\"
+A filter to be used against BigIntRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input BigIntRangeListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [BigIntRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [BigIntRangeInput]
 }
 
 \\"\\"\\"A string representing a series of binary bits\\"\\"\\"
@@ -647,7 +678,7 @@ type ChildrenConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Child\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Child\` edge in the connection.\\"\\"\\"
@@ -675,6 +706,26 @@ enum ChildrenOrderBy {
 type Composite {
   a: Int
   b: String
+}
+
+\\"\\"\\"
+A filter to be used against \`Composite\` object types. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input CompositeFilter {
+  \\"\\"\\"Filter by the object’s \`a\` field.\\"\\"\\"
+  a: IntFilter
+
+  \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
+  and: [CompositeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`b\` field.\\"\\"\\"
+  b: StringFilter
+
+  \\"\\"\\"Negates the expression.\\"\\"\\"
+  not: CompositeFilter
+
+  \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
+  or: [CompositeFilter!]
 }
 
 \\"\\"\\"A location in a connection that can be used for resuming pagination.\\"\\"\\"
@@ -770,6 +821,17 @@ input DateRangeInput {
 }
 
 \\"\\"\\"
+A filter to be used against DateRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DateRangeListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [DateRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [DateRangeInput]
+}
+
+\\"\\"\\"
 A point in time as described by the [ISO
 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
 \\"\\"\\"
@@ -848,6 +910,17 @@ input DatetimeRangeInput {
   start: DatetimeRangeBoundInput
 }
 
+\\"\\"\\"
+A filter to be used against DatetimeRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input DatetimeRangeListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [DatetimeRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [DatetimeRangeInput]
+}
+
 type DomainType implements Node {
   char4Domain: Char4Domain
   dateDomain: DateDomain
@@ -900,7 +973,7 @@ type DomainTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`DomainType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`DomainType\` edge in the connection.\\"\\"\\"
@@ -971,7 +1044,7 @@ type EnumArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumArrayType\` edge in the connection.\\"\\"\\"
@@ -1038,7 +1111,7 @@ type EnumTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`EnumType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`EnumType\` edge in the connection.\\"\\"\\"
@@ -1333,7 +1406,7 @@ type FilterableClosuresConnection {
   \\"\\"\\"
   The count of *all* \`FilterableClosure\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FilterableClosure\` edge in the connection.\\"\\"\\"
@@ -1369,6 +1442,9 @@ type FilterableComputedSetofIntConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -1407,6 +1483,9 @@ input FilterableFilter {
 
   \\"\\"\\"Filter by the object’s \`citext\` field.\\"\\"\\"
   citext: StringFilter
+
+  \\"\\"\\"Filter by the object’s \`compositeColumn\` field.\\"\\"\\"
+  compositeColumn: CompositeFilter
 
   \\"\\"\\"Filter by the object’s \`computed\` field.\\"\\"\\"
   computed: StringFilter
@@ -1516,7 +1595,7 @@ type FilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Filterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Filterable\` edge in the connection.\\"\\"\\"
@@ -1703,7 +1782,7 @@ type ForwardCompoundsConnection {
   \\"\\"\\"
   The count of *all* \`ForwardCompound\` you could get from the connection.
   \\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`ForwardCompound\` edge in the connection.\\"\\"\\"
@@ -1762,7 +1841,7 @@ type ForwardsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Forward\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Forward\` edge in the connection.\\"\\"\\"
@@ -1809,7 +1888,7 @@ type FullyOmittedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`FullyOmitted\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FullyOmitted\` edge in the connection.\\"\\"\\"
@@ -1841,6 +1920,11 @@ type FuncReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`FuncReturnsTableMultiColRecord\` edge in the connection.\\"\\"\\"
@@ -1887,6 +1971,9 @@ type FuncReturnsTableOneColConnection {
 
   \\"\\"\\"A list of \`Int\` objects.\\"\\"\\"
   nodes: [Int]!
+
+  \\"\\"\\"The count of *all* \`Int\` you could get from the connection.\\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Int\` edge in the connection.\\"\\"\\"
@@ -1909,6 +1996,11 @@ type FuncTaggedFilterableReturnsTableMultiColConnection {
 
   \\"\\"\\"A list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` objects.\\"\\"\\"
   nodes: [FuncTaggedFilterableReturnsTableMultiColRecord]!
+
+  \\"\\"\\"
+  The count of *all* \`FuncTaggedFilterableReturnsTableMultiColRecord\` you could get from the connection.
+  \\"\\"\\"
+  totalCount: Int!
 }
 
 \\"\\"\\"
@@ -2057,6 +2149,17 @@ input IntervalInput {
 }
 
 \\"\\"\\"
+A filter to be used against Interval List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntervalListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [IntervalInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [IntervalInput]
+}
+
+\\"\\"\\"
 A filter to be used against Int fields. All fields are combined with a logical ‘and.’
 \\"\\"\\"
 input IntFilter {
@@ -2130,6 +2233,17 @@ input IntRangeInput {
 }
 
 \\"\\"\\"
+A filter to be used against IntRange List fields. All fields are combined with a logical ‘and.’
+\\"\\"\\"
+input IntRangeListFilter {
+  \\"\\"\\"Equal to the specified value.\\"\\"\\"
+  equalTo: [IntRangeInput]
+
+  \\"\\"\\"Not equal to the specified value.\\"\\"\\"
+  notEqualTo: [IntRangeInput]
+}
+
+\\"\\"\\"
 A JavaScript object encoded in the JSON format as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 \\"\\"\\"
 scalar JSON
@@ -2182,7 +2296,7 @@ type JsonbTestsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`JsonbTest\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`JsonbTest\` edge in the connection.\\"\\"\\"
@@ -2278,7 +2392,7 @@ type JunctionsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Junction\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Junction\` edge in the connection.\\"\\"\\"
@@ -2451,7 +2565,7 @@ type ParentsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Parent\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Parent\` edge in the connection.\\"\\"\\"
@@ -2522,7 +2636,7 @@ type ProtectedsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Protected\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Protected\` edge in the connection.\\"\\"\\"
@@ -3413,14 +3527,32 @@ input RangeArrayTypeFilter {
   \\"\\"\\"Checks for all expressions in this list.\\"\\"\\"
   and: [RangeArrayTypeFilter!]
 
+  \\"\\"\\"Filter by the object’s \`dateRangeArray\` field.\\"\\"\\"
+  dateRangeArray: DateRangeListFilter
+
   \\"\\"\\"Filter by the object’s \`id\` field.\\"\\"\\"
   id: IntFilter
+
+  \\"\\"\\"Filter by the object’s \`int4RangeArray\` field.\\"\\"\\"
+  int4RangeArray: IntRangeListFilter
+
+  \\"\\"\\"Filter by the object’s \`int8RangeArray\` field.\\"\\"\\"
+  int8RangeArray: BigIntRangeListFilter
 
   \\"\\"\\"Negates the expression.\\"\\"\\"
   not: RangeArrayTypeFilter
 
+  \\"\\"\\"Filter by the object’s \`numericRangeArray\` field.\\"\\"\\"
+  numericRangeArray: BigFloatRangeListFilter
+
   \\"\\"\\"Checks for any expressions in this list.\\"\\"\\"
   or: [RangeArrayTypeFilter!]
+
+  \\"\\"\\"Filter by the object’s \`timestampRangeArray\` field.\\"\\"\\"
+  timestampRangeArray: DatetimeRangeListFilter
+
+  \\"\\"\\"Filter by the object’s \`timestamptzRangeArray\` field.\\"\\"\\"
+  timestamptzRangeArray: DatetimeRangeListFilter
 }
 
 \\"\\"\\"A connection to a list of \`RangeArrayType\` values.\\"\\"\\"
@@ -3437,7 +3569,7 @@ type RangeArrayTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeArrayType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeArrayType\` edge in the connection.\\"\\"\\"
@@ -3534,7 +3666,7 @@ type RangeTypesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`RangeType\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`RangeType\` edge in the connection.\\"\\"\\"
@@ -3640,7 +3772,7 @@ type SideAsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideA\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideA\` edge in the connection.\\"\\"\\"
@@ -3736,7 +3868,7 @@ type SideBsConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`SideB\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`SideB\` edge in the connection.\\"\\"\\"
@@ -3832,7 +3964,7 @@ type UnfilterablesConnection {
   pageInfo: PageInfo!
 
   \\"\\"\\"The count of *all* \`Unfilterable\` you could get from the connection.\\"\\"\\"
-  totalCount: Int
+  totalCount: Int!
 }
 
 \\"\\"\\"A \`Unfilterable\` edge in the connection.\\"\\"\\"

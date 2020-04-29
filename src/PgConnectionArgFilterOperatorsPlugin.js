@@ -1,10 +1,6 @@
 module.exports = function PgConnectionArgFilterOperatorsPlugin(
   builder,
-  {
-    connectionFilterAdditionalInsensitiveOperators,
-    connectionFilterAllowedOperators,
-    connectionFilterOperatorNames,
-  }
+  { connectionFilterAllowedOperators, connectionFilterOperatorNames }
 ) {
   builder.hook("build", build => {
     const {
@@ -196,17 +192,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolveSqlIdentifier: i => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
-      similarTo: {
-        description:
-          "Matches the specified pattern using the SQL standard's definition of a regular expression.",
-        resolve: (i, v) => sql.query`${i} SIMILAR TO ${v}`,
-      },
-      notSimilarTo: {
-        description:
-          "Does not match the specified pattern using the SQL standard's definition of a regular expression.",
-        resolve: (i, v) => sql.query`${i} NOT SIMILAR TO ${v}`,
-      },
-      // TODO: add regexp operators
     };
     const hstoreOperators = {
       contains: {
@@ -295,13 +280,24 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       const pgType = introspectionResultsByKind.type.find(
         t => t.name === pgTypeName
       );
-      return pgType ? pgGetGqlTypeByTypeIdAndModifier(pgType.id, null) : null;
+      if (!pgType) {
+        return null;
+      }
+      const gqlTypeName = pgGetGqlTypeByTypeIdAndModifier(pgType.id, null).name;
+      if (gqlTypeName === "String") {
+        // PostGraphile v4 handles all unknown types as Strings, so we can't trust
+        // that the String operators are appropriate. Just return null so that the
+        // fallback type name defined below is used.
+        return null;
+      }
+      return gqlTypeName;
     };
 
     const _BigFloat = gqlTypeNameFromPgTypeName("numeric") || "BigFloat";
     const _BigInt = gqlTypeNameFromPgTypeName("int8") || "BigInt";
     const _BitString = gqlTypeNameFromPgTypeName("varbit") || "BitString";
     const _Boolean = gqlTypeNameFromPgTypeName("bool") || "Boolean";
+    const _CidrAddress = gqlTypeNameFromPgTypeName("cidr") || "CidrAddress";
     const _Date = gqlTypeNameFromPgTypeName("date") || "Date";
     const _Datetime = gqlTypeNameFromPgTypeName("timestamp") || "Datetime";
     const _Float = gqlTypeNameFromPgTypeName("float4") || "Float";
@@ -311,6 +307,8 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     const _Interval = gqlTypeNameFromPgTypeName("interval") || "Interval";
     const _JSON = gqlTypeNameFromPgTypeName("jsonb") || "JSON";
     const _KeyValueHash = gqlTypeNameFromPgTypeName("hstore") || "KeyValueHash";
+    const _MacAddress = gqlTypeNameFromPgTypeName("macaddr") || "MacAddress";
+    const _MacAddress8 = gqlTypeNameFromPgTypeName("macaddr8") || "MacAddress8";
     const _String = gqlTypeNameFromPgTypeName("text") || "String";
     const _Time = gqlTypeNameFromPgTypeName("time") || "Time";
     const _UUID = gqlTypeNameFromPgTypeName("uuid") || "UUID";
@@ -320,6 +318,11 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       [_BigInt]: { ...standardOperators, ...sortOperators },
       [_BitString]: { ...standardOperators, ...sortOperators },
       [_Boolean]: { ...standardOperators, ...sortOperators },
+      [_CidrAddress]: {
+        ...standardOperators,
+        ...sortOperators,
+        ...inetOperators,
+      },
       [_Date]: { ...standardOperators, ...sortOperators },
       [_Datetime]: { ...standardOperators, ...sortOperators },
       [_Float]: { ...standardOperators, ...sortOperators },
@@ -339,6 +342,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         ...standardOperators,
         ...hstoreOperators,
       },
+      [_MacAddress]: {
+        ...standardOperators,
+        ...sortOperators,
+      },
+      [_MacAddress8]: {
+        ...standardOperators,
+        ...sortOperators,
+      },
       [_String]: {
         ...standardOperators,
         ...sortOperators,
@@ -348,45 +359,69 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       [_UUID]: { ...standardOperators, ...sortOperators },
     };
 
-    if (connectionFilterAdditionalInsensitiveOperators) {
-      for (const [name, spec] of [
-        ...Object.entries(standardOperators),
-        ...Object.entries(sortOperators),
-      ]) {
-        if (name == "isNull") continue;
+    /**
+     * This block adds the following operators:
+     * - distinctFromInsensitive
+     * - equalToInsensitive
+     * - greaterThanInsensitive
+     * - greaterThanOrEqualToInsensitive
+     * - inInsensitive
+     * - lessThanInsensitive
+     * - lessThanOrEqualToInsensitive
+     * - notDistinctFromInsensitive
+     * - notEqualToInsensitive
+     * - notInInsensitive
+     *
+     * The compiled SQL depends on the underlying PostgreSQL column type.
+     * Using case-insensitive operators with `text`/`varchar`/`char` columns
+     * will result in calling `lower()` on the operands. Using case-sensitive
+     * operators with `citext` columns will result in casting the operands to `text`.
+     *
+     * For example, here is how the `equalTo`/`equalToInsensitive` operators compile to SQL:
+     * | GraphQL operator   | PostgreSQL column type  | Compiled SQL               |
+     * | ------------------ | ----------------------- | -------------------------- |
+     * | equalTo            | `text`/`varchar`/`char` | `<col> = $1`               |
+     * | equalTo            | `citext`                | `<col>::text = $1::text`   |
+     * | equalToInsensitive | `text`/`varchar`/`char` | `lower(<col>) = lower($1)` |
+     * | equalToInsensitive | `citext`                | `<col> = $1`               |
+     */
+    for (const [name, spec] of [
+      ...Object.entries(standardOperators),
+      ...Object.entries(sortOperators),
+    ]) {
+      if (name == "isNull") continue;
 
-        const description = `${spec.description.substring(
-          0,
-          spec.description.length - 1
-        )} (case-insensitive).`;
+      const description = `${spec.description.substring(
+        0,
+        spec.description.length - 1
+      )} (case-insensitive).`;
 
-        const resolveSqlIdentifier = (sourceAlias, pgType) =>
-          pgType.name === "citext"
-            ? sourceAlias // already case-insensitive, so no need to call `lower()`
-            : sql.query`lower(${sourceAlias})`;
+      const resolveSqlIdentifier = (sourceAlias, pgType) =>
+        pgType.name === "citext"
+          ? sourceAlias // already case-insensitive, so no need to call `lower()`
+          : sql.query`lower(${sourceAlias})`;
 
-        const resolveSimpleSqlValue = (input, pgType, pgTypeModifier) =>
-          pgType.name === "citext"
-            ? gql2pg(input, pgType, pgTypeModifier) // already case-insensitive, so no need to call `lower()`
-            : sql.query`lower(${gql2pg(input, pgType, pgTypeModifier)})`;
+      const resolveSimpleSqlValue = (input, pgType, pgTypeModifier) =>
+        pgType.name === "citext"
+          ? gql2pg(input, pgType, pgTypeModifier) // already case-insensitive, so no need to call `lower()`
+          : sql.query`lower(${gql2pg(input, pgType, pgTypeModifier)})`;
 
-        const resolveSqlValue = (input, pgType, pgTypeModifier) =>
-          name === "in" || name === "notIn"
-            ? resolveListSqlValue(
-                input,
-                pgType,
-                pgTypeModifier,
-                resolveSimpleSqlValue
-              )
-            : resolveSimpleSqlValue(input, pgType, pgTypeModifier);
+      const resolveSqlValue = (input, pgType, pgTypeModifier) =>
+        name === "in" || name === "notIn"
+          ? resolveListSqlValue(
+              input,
+              pgType,
+              pgTypeModifier,
+              resolveSimpleSqlValue
+            )
+          : resolveSimpleSqlValue(input, pgType, pgTypeModifier);
 
-        connectionFilterScalarOperators[_String][`${name}Insensitive`] = {
-          ...spec,
-          description,
-          resolveSqlIdentifier,
-          resolveSqlValue,
-        };
-      }
+      connectionFilterScalarOperators[_String][`${name}Insensitive`] = {
+        ...spec,
+        description,
+        resolveSqlIdentifier,
+        resolveSqlValue,
+      };
     }
 
     const connectionFilterEnumOperators = {
@@ -523,7 +558,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       gql2pg,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgSql: sql,
-      connectionFilterOperatorSpecsAdded,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
       connectionFilterArrayOperators,
@@ -553,49 +587,6 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     }
 
     connectionFilterTypesByTypeName[Self.name] = Self;
-
-    // Include operators added by other plugins
-    for (const operatorSpec of connectionFilterOperatorSpecsAdded) {
-      const {
-        name,
-        description,
-        allowedFieldTypes = [],
-        allowedListTypes = ["NonList"],
-        resolveType,
-        resolve,
-      } = operatorSpec;
-      if (allowedListTypes.includes("List")) {
-        if (connectionFilterArrayOperators[name]) {
-          throw new Error(`Array operator '${name}' already exists.`);
-        }
-        connectionFilterArrayOperators[name] = {
-          description,
-          resolveType,
-          resolve,
-        };
-      }
-      if (
-        allowedListTypes.includes("NonList") &&
-        allowedFieldTypes.includes(fieldType.name)
-      ) {
-        if (
-          connectionFilterScalarOperators[fieldType.name] &&
-          connectionFilterScalarOperators[fieldType.name][name]
-        ) {
-          throw new Error(
-            `${fieldType.name} operator '${name}' already exists.`
-          );
-        }
-        if (!connectionFilterScalarOperators[fieldType.name]) {
-          connectionFilterScalarOperators[fieldType.name] = {};
-        }
-        connectionFilterScalarOperators[fieldType.name][name] = {
-          description,
-          resolveType,
-          resolve,
-        };
-      }
-    }
 
     const operatorSpecsByCategory = {
       Array: connectionFilterArrayOperators,

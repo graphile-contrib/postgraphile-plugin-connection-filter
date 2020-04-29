@@ -33,7 +33,7 @@ create table p.filterable (
   "bpchar4" bpchar(4),
   "bytea" bytea, -- treated as String in PostGraphile v4
   "char4" char(4),
-  "cidr" cidr, -- treated as String in PostGraphile v4
+  "cidr" cidr, -- treated as String in PostGraphile v4 unless useCustomNetworkScalars is specified
   "citext" citext,
   "date" date,
   "float4" float4,
@@ -46,8 +46,8 @@ create table p.filterable (
   "interval" interval,
   "json" json, -- not filterable
   "jsonb" jsonb,
-  "macaddr" macaddr, -- treated as String in PostGraphile v4
-  --"macaddr8" macaddr8, -- treated as String in PostGraphile v4; excluded because macaddr8 requires PG10+
+  "macaddr" macaddr, -- treated as String in PostGraphile v4 unless useCustomNetworkScalars is specified
+  --"macaddr8" macaddr8, -- treated as String in PostGraphile v4 unless useCustomNetworkScalars is specified; excluded from tests because it requires PG10+
   "money" money,
   "name" name,
   "numeric" numeric,
@@ -60,7 +60,7 @@ create table p.filterable (
   "varbit" varbit,
   "varchar" varchar,
   "xml" xml, -- not filterable
-  "composite_column" p."composite", -- not filterable
+  "composite_column" p."composite",
   "forward_column" p.forward, -- not filterable
   "text_omit_filter" text, -- not filterable
   "parent_id" int references p.parent (id),
@@ -93,12 +93,13 @@ create table p.array_types (
   "int2_array" int2[],
   "int4_array" int4[],
   "int8_array" int8[],
-  "interval_array" interval[], -- FIXME: an InputType isn't being generated for interval[] (PostGraphile bug?), so IntervalListFilter isn't created
+  "interval_array" interval[],
   "json_array" json[], -- not filterable
   "jsonb_array" jsonb[],
   "macaddr_array" macaddr[],
-  --"macaddr8_array" macaddr8[], -- excluded because macaddr8 requires PG10+
+  --"macaddr8_array" macaddr8[], -- excluded from tests because it requires PG10+
   "money_array" money[],
+  "name_array" name[],
   "numeric_array" numeric[],
   "text_array" text[],
   "time_array" time[],
