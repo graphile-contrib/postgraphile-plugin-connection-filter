@@ -1,4 +1,4 @@
-## 2.0.0 - WIP
+## 2.0.0 - 2020-04-28
 
 - **BREAKING CHANGE:** Bump the minimum supported PostGraphile version to 4.5.0.
 - **BREAKING CHANGE:** Simplify `addConnectionFilterOperator` function signature.
