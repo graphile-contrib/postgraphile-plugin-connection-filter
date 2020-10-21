@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-plugin-connection-filter",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Advanced filtering of Connections in PostGraphile",
   "main": "index.js",
   "scripts": {
