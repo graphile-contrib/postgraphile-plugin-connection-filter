@@ -31,7 +31,8 @@
     "testRegex": "__tests__/.*\\.test\\.js$"
   },
   "files": [
-    "src"
+    "src",
+    "index.d.ts"
   ],
   "engines": {
     "node": ">=10"
