@@ -1,4 +1,8 @@
-module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
+import type { Plugin } from "graphile-build";
+import type { QueryBuilder, SQL } from "graphile-build-pg";
+import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+
+const PgConnectionArgFilterLogicalOperatorsPlugin: Plugin = (builder) => {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -23,28 +27,28 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
       return fields;
     }
 
-    const logicResolversByFieldName = {
-      and: (arr, sourceAlias, queryBuilder) => {
+    const logicResolversByFieldName: { [fieldName: string]: any } = {
+      and: (arr: unknown[], sourceAlias: SQL, queryBuilder: QueryBuilder) => {
         const sqlFragments = arr
-          .map(o =>
+          .map((o) =>
             connectionFilterResolve(o, sourceAlias, Self.name, queryBuilder)
           )
-          .filter(x => x != null);
+          .filter((x) => x != null);
         return sqlFragments.length === 0
           ? null
           : sql.query`(${sql.join(sqlFragments, ") and (")})`;
       },
-      or: (arr, sourceAlias, queryBuilder) => {
+      or: (arr: unknown[], sourceAlias: SQL, queryBuilder: QueryBuilder) => {
         const sqlFragments = arr
-          .map(o =>
+          .map((o) =>
             connectionFilterResolve(o, sourceAlias, Self.name, queryBuilder)
           )
-          .filter(x => x != null);
+          .filter((x) => x != null);
         return sqlFragments.length === 0
           ? null
           : sql.query`(${sql.join(sqlFragments, ") or (")})`;
       },
-      not: (obj, sourceAlias, queryBuilder) => {
+      not: (obj: unknown, sourceAlias: SQL, queryBuilder: QueryBuilder) => {
         const sqlFragment = connectionFilterResolve(
           obj,
           sourceAlias,
@@ -88,7 +92,12 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
       ),
     };
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
+    const resolve: ConnectionFilterResolver = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      queryBuilder,
+    }) => {
       if (fieldValue == null) return null;
 
       return logicResolversByFieldName[fieldName](
@@ -105,3 +114,5 @@ module.exports = function PgConnectionArgFilterLogicalOperatorsPlugin(builder) {
     return extend(fields, logicalOperatorFields);
   });
 };
+
+export default PgConnectionArgFilterLogicalOperatorsPlugin;

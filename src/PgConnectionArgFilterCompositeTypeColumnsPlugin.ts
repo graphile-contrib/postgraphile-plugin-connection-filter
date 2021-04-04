@@ -1,7 +1,11 @@
-module.exports = function PgConnectionArgFilterCompositeTypeColumnsPlugin(
+import type { Plugin } from "graphile-build";
+import type { PgAttribute } from "graphile-build-pg";
+import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+
+const PgConnectionArgFilterCompositeTypeColumnsPlugin: Plugin = (
   builder,
   { connectionFilterAllowedFieldTypes }
-) {
+) => {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -27,24 +31,24 @@ module.exports = function PgConnectionArgFilterCompositeTypeColumnsPlugin(
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const attrByFieldName = introspectionResultsByKind.attribute
-      .filter(attr => attr.classId === table.id)
-      .filter(attr => pgColumnFilter(attr, build, context))
-      .filter(attr => !omit(attr, "filter"))
+    const attrByFieldName = (introspectionResultsByKind.attribute as PgAttribute[])
+      .filter((attr) => attr.classId === table.id)
+      .filter((attr) => pgColumnFilter(attr, build, context))
+      .filter((attr) => !omit(attr, "filter"))
       .filter(
-        attr =>
+        (attr) =>
           attr.type &&
           attr.type.type === "c" &&
           attr.type.class &&
           !attr.type.class.isSelectable
       ) // keep only the composite type columns
-      .reduce((memo, attr) => {
-        const fieldName = inflection.column(attr);
+      .reduce((memo: { [fieldName: string]: PgAttribute }, attr) => {
+        const fieldName: string = inflection.column(attr);
         memo[fieldName] = attr;
         return memo;
       }, {});
 
-    const filterTypeNameByFieldName = {};
+    const filterTypeNameByFieldName: { [fieldName: string]: string } = {};
 
     const attrFields = Object.entries(attrByFieldName).reduce(
       (memo, [fieldName, attr]) => {
@@ -90,7 +94,12 @@ module.exports = function PgConnectionArgFilterCompositeTypeColumnsPlugin(
       {}
     );
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
+    const resolve: ConnectionFilterResolver = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      queryBuilder,
+    }) => {
       if (fieldValue == null) return null;
 
       const attr = attrByFieldName[fieldName];
@@ -119,3 +128,5 @@ module.exports = function PgConnectionArgFilterCompositeTypeColumnsPlugin(
     return extend(fields, attrFields);
   });
 };
+
+export default PgConnectionArgFilterCompositeTypeColumnsPlugin;

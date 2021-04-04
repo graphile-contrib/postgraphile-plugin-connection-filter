@@ -1,10 +1,16 @@
-module.exports = function CustomOperatorsPlugin(builder) {
+import type { Plugin } from "graphile-build";
+import { Build } from "postgraphile-core";
+import { AddConnectionFilterOperator } from "../src/PgConnectionArgFilterPlugin";
+
+const CustomOperatorsPlugin: Plugin = (builder) => {
   builder.hook("build", (_, build) => {
     const {
       pgSql: sql,
       graphql: { GraphQLInt, GraphQLBoolean },
       addConnectionFilterOperator,
-    } = build;
+    } = build as Build & {
+      addConnectionFilterOperator: AddConnectionFilterOperator;
+    };
 
     // simple
     addConnectionFilterOperator(
@@ -23,7 +29,7 @@ module.exports = function CustomOperatorsPlugin(builder) {
       () => GraphQLInt,
       (i, v) => sql.fragment`${i} <> ${v}`,
       {
-        resolveSqlIdentifier: i => sql.fragment`family(${i})`,
+        resolveSqlIdentifier: (i) => sql.fragment`family(${i})`,
       }
     );
 
@@ -35,10 +41,12 @@ module.exports = function CustomOperatorsPlugin(builder) {
       () => GraphQLBoolean,
       (i, v) => sql.fragment`family(${i}) = ${v}`,
       {
-        resolveInput: input => (input === true ? 4 : 6),
+        resolveInput: (input) => (input === true ? 4 : 6),
       }
     );
 
     return _;
   });
 };
+
+export default CustomOperatorsPlugin;

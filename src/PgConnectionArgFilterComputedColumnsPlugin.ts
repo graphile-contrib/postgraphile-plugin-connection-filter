@@ -1,7 +1,11 @@
-module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
+import type { Plugin } from "graphile-build";
+import type { PgClass, PgProc, PgType } from "graphile-build-pg";
+import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+
+const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
   builder,
   { connectionFilterComputedColumns }
-) {
+) => {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -27,8 +31,8 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const procByFieldName = introspectionResultsByKind.procedure.reduce(
-      (memo, proc) => {
+    const procByFieldName = (introspectionResultsByKind.procedure as PgProc[]).reduce(
+      (memo: { [fieldName: string]: PgProc }, proc) => {
         // Must be marked @filterable OR enabled via plugin option
         if (!(proc.tags.filterable || connectionFilterComputedColumns))
           return memo;
@@ -82,7 +86,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
       {}
     );
 
-    const operatorsTypeNameByFieldName = {};
+    const operatorsTypeNameByFieldName: { [fieldName: string]: string } = {};
 
     const procFields = Object.entries(procByFieldName).reduce(
       (memo, [fieldName, proc]) => {
@@ -111,7 +115,12 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
       {}
     );
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
+    const resolve: ConnectionFilterResolver = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      queryBuilder,
+    }) => {
       if (fieldValue == null) return null;
 
       const proc = procByFieldName[fieldName];
@@ -140,14 +149,14 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
     return extend(fields, procFields);
   });
 
-  function getComputedColumnDetails(build, table, proc) {
+  function getComputedColumnDetails(build: any, table: PgClass, proc: PgProc) {
     if (!proc.isStable) return null;
     if (proc.namespaceId !== table.namespaceId) return null;
     if (!proc.name.startsWith(`${table.name}_`)) return null;
     if (proc.argTypeIds.length < 1) return null;
     if (proc.argTypeIds[0] !== table.type.id) return null;
 
-    const argTypes = proc.argTypeIds.reduce((prev, typeId, idx) => {
+    const argTypes = proc.argTypeIds.reduce((prev: PgType[], typeId, idx) => {
       if (
         proc.argModes.length === 0 || // all args are `in`
         proc.argModes[idx] === "i" || // this arg is `in`
@@ -161,7 +170,7 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
       argTypes
         .slice(1)
         .some(
-          type => type.type === "c" && type.class && type.class.isSelectable
+          (type) => type.type === "c" && type.class && type.class.isSelectable
         )
     ) {
       // Accepts two input tables? Skip.
@@ -172,3 +181,5 @@ module.exports = function PgConnectionArgFilterComputedColumnsPlugin(
     return { argTypes, pseudoColumnName };
   }
 };
+
+export default PgConnectionArgFilterComputedColumnsPlugin;
