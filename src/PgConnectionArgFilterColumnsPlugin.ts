@@ -1,4 +1,8 @@
-module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
+import type { Plugin } from "graphile-build";
+import type { PgAttribute } from "graphile-build-pg";
+import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+
+const PgConnectionArgFilterColumnsPlugin: Plugin = (builder) => {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -23,17 +27,17 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const attrByFieldName = introspectionResultsByKind.attribute
-      .filter(attr => attr.classId === table.id)
-      .filter(attr => pgColumnFilter(attr, build, context))
-      .filter(attr => !omit(attr, "filter"))
-      .reduce((memo, attr) => {
-        const fieldName = inflection.column(attr);
+    const attrByFieldName = (introspectionResultsByKind.attribute as PgAttribute[])
+      .filter((attr) => attr.classId === table.id)
+      .filter((attr) => pgColumnFilter(attr, build, context))
+      .filter((attr) => !omit(attr, "filter"))
+      .reduce((memo: { [fieldName: string]: PgAttribute }, attr) => {
+        const fieldName: string = inflection.column(attr);
         memo[fieldName] = attr;
         return memo;
       }, {});
 
-    const operatorsTypeNameByFieldName = {};
+    const operatorsTypeNameByFieldName: { [fieldName: string]: string } = {};
 
     const attrFields = Object.entries(attrByFieldName).reduce(
       (memo, [fieldName, attr]) => {
@@ -62,7 +66,12 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
       {}
     );
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
+    const resolve: ConnectionFilterResolver = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      queryBuilder,
+    }) => {
       if (fieldValue == null) return null;
 
       const attr = attrByFieldName[fieldName];
@@ -91,3 +100,5 @@ module.exports = function PgConnectionArgFilterColumnsPlugin(builder) {
     return extend(fields, attrFields);
   });
 };
+
+export default PgConnectionArgFilterColumnsPlugin;

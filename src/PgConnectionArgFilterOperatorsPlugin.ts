@@ -1,8 +1,17 @@
-module.exports = function PgConnectionArgFilterOperatorsPlugin(
+import type { Context, Plugin } from "graphile-build";
+import type { PgType, QueryBuilder, SQL } from "graphile-build-pg";
+import type {
+  GraphQLInputFieldConfigMap,
+  GraphQLInputType,
+  GraphQLType,
+} from "graphql";
+import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+
+const PgConnectionArgFilterOperatorsPlugin: Plugin = (
   builder,
   { connectionFilterAllowedOperators, connectionFilterOperatorNames }
-) {
-  builder.hook("build", build => {
+) => {
+  builder.hook("build", (build) => {
     const {
       graphql: {
         getNamedType,
@@ -18,20 +27,20 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       escapeLikeWildcards,
     } = build;
 
-    const resolveListType = fieldInputType =>
+    const resolveListType = (fieldInputType: GraphQLInputType) =>
       new GraphQLList(new GraphQLNonNull(fieldInputType));
     const resolveListSqlValue = (
-      input,
-      pgType,
-      pgTypeModifier,
-      resolveListItemSqlValue
+      input: unknown,
+      pgType: PgType,
+      pgTypeModifier: number | null,
+      resolveListItemSqlValue: any
     ) =>
-      input.length === 0
+      (input as unknown[]).length === 0
         ? sql.query`(select null::${sql.identifier(
             pgType.namespaceName
           )}.${sql.identifier(pgType.name)} limit 0)`
         : sql.query`(${sql.join(
-            input.map(i =>
+            (input as unknown[]).map((i) =>
               resolveListItemSqlValue
                 ? resolveListItemSqlValue(i, pgType, pgTypeModifier)
                 : gql2pg(i, pgType, pgTypeModifier)
@@ -39,7 +48,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
             ","
           )})`;
 
-    const standardOperators = {
+    const standardOperators: { [fieldName: string]: OperatorSpec } = {
       isNull: {
         description:
           "Is null (if `true` is specified) or is not null (if `false` is specified).",
@@ -81,7 +90,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve: (i, v) => sql.query`${i} NOT IN ${v}`,
       },
     };
-    const sortOperators = {
+    const sortOperators: { [fieldName: string]: OperatorSpec } = {
       lessThan: {
         description: "Less than the specified value.",
         resolve: (i, v) => sql.query`${i} < ${v}`,
@@ -99,75 +108,75 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve: (i, v) => sql.query`${i} >= ${v}`,
       },
     };
-    const patternMatchingOperators = {
+    const patternMatchingOperators: { [fieldName: string]: OperatorSpec } = {
       includes: {
         description: "Contains the specified string (case-sensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
       notIncludes: {
         description: "Does not contain the specified string (case-sensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
       includesInsensitive: {
         description: "Contains the specified string (case-insensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notIncludesInsensitive: {
         description:
           "Does not contain the specified string (case-insensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}%`,
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       startsWith: {
         description: "Starts with the specified string (case-sensitive).",
-        resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
       notStartsWith: {
         description:
           "Does not start with the specified string (case-sensitive).",
-        resolveInput: input => `${escapeLikeWildcards(input)}%`,
+        resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
       startsWithInsensitive: {
         description: "Starts with the specified string (case-insensitive).",
-        resolveInput: input => `${escapeLikeWildcards(input)}%`,
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notStartsWithInsensitive: {
         description:
           "Does not start with the specified string (case-insensitive).",
-        resolveInput: input => `${escapeLikeWildcards(input)}%`,
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       endsWith: {
         description: "Ends with the specified string (case-sensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
         resolve: (i, v) => sql.query`${i} LIKE ${v}`,
       },
       notEndsWith: {
         description: "Does not end with the specified string (case-sensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}`,
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
         resolve: (i, v) => sql.query`${i} NOT LIKE ${v}`,
       },
       endsWithInsensitive: {
         description: "Ends with the specified string (case-insensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}`,
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notEndsWithInsensitive: {
         description:
           "Does not end with the specified string (case-insensitive).",
-        resolveInput: input => `%${escapeLikeWildcards(input)}`,
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
       like: {
@@ -183,17 +192,17 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       likeInsensitive: {
         description:
           "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} ILIKE ${v}`,
       },
       notLikeInsensitive: {
         description:
           "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-        resolveSqlIdentifier: i => i, // avoid casting citext to text
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
     };
-    const hstoreOperators = {
+    const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
       contains: {
         description: "Contains the specified KeyValueHash.",
         resolve: (i, v) => sql.query`${i} @> ${v}`,
@@ -201,21 +210,21 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       containsKey: {
         description: "Contains the specified key.",
         resolveType: () => GraphQLString,
-        resolveSqlValue: input => sql.query`${sql.value(input)}::text`,
+        resolveSqlValue: (input) => sql.query`${sql.value(input)}::text`,
         resolve: (i, v) => sql.query`${i} ? ${v}`,
       },
       containsAllKeys: {
         name: "containsAllKeys",
         description: "Contains all of the specified keys.",
         resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
-        resolveSqlValue: input => sql.value(input),
+        resolveSqlValue: (input) => sql.value(input),
         resolve: (i, v) => sql.query`${i} ?& ${v}`,
       },
       containsAnyKeys: {
         name: "containsAnyKeys",
         description: "Contains any of the specified keys.",
         resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
-        resolveSqlValue: input => sql.value(input),
+        resolveSqlValue: (input) => sql.value(input),
         resolve: (i, v) => sql.query`${i} ?| ${v}`,
       },
       containedBy: {
@@ -223,7 +232,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve: (i, v) => sql.query`${i} <@ ${v}`,
       },
     };
-    const jsonbOperators = {
+    const jsonbOperators: { [fieldName: string]: OperatorSpec } = {
       contains: {
         description: "Contains the specified JSON.",
         resolve: (i, v) => sql.query`${i} @> ${v}`,
@@ -231,21 +240,21 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       containsKey: {
         description: "Contains the specified key.",
         resolveType: () => GraphQLString,
-        resolveSqlValue: input => sql.query`${sql.value(input)}::text`,
+        resolveSqlValue: (input) => sql.query`${sql.value(input)}::text`,
         resolve: (i, v) => sql.query`${i} ? ${v}`,
       },
       containsAllKeys: {
         name: "containsAllKeys",
         description: "Contains all of the specified keys.",
         resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
-        resolveSqlValue: input => sql.value(input),
+        resolveSqlValue: (input) => sql.value(input),
         resolve: (i, v) => sql.query`${i} ?& ${v}`,
       },
       containsAnyKeys: {
         name: "containsAnyKeys",
         description: "Contains any of the specified keys.",
         resolveType: () => new GraphQLList(new GraphQLNonNull(GraphQLString)),
-        resolveSqlValue: input => sql.value(input),
+        resolveSqlValue: (input) => sql.value(input),
         resolve: (i, v) => sql.query`${i} ?| ${v}`,
       },
       containedBy: {
@@ -253,7 +262,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         resolve: (i, v) => sql.query`${i} <@ ${v}`,
       },
     };
-    const inetOperators = {
+    const inetOperators: { [fieldName: string]: OperatorSpec } = {
       contains: {
         description: "Contains the specified internet address.",
         resolve: (i, v) => sql.query`${i} >> ${v}`,
@@ -276,9 +285,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
     };
 
-    const gqlTypeNameFromPgTypeName = pgTypeName => {
-      const pgType = introspectionResultsByKind.type.find(
-        t => t.name === pgTypeName
+    const gqlTypeNameFromPgTypeName = (pgTypeName: string) => {
+      const pgType = (introspectionResultsByKind.type as PgType[]).find(
+        (t) => t.name === pgTypeName
       );
       if (!pgType) {
         return null;
@@ -396,17 +405,25 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
         spec.description.length - 1
       )} (case-insensitive).`;
 
-      const resolveSqlIdentifier = (sourceAlias, pgType) =>
+      const resolveSqlIdentifier = (sourceAlias: SQL, pgType: PgType) =>
         pgType.name === "citext"
           ? sourceAlias // already case-insensitive, so no need to call `lower()`
           : sql.query`lower(${sourceAlias})`;
 
-      const resolveSimpleSqlValue = (input, pgType, pgTypeModifier) =>
+      const resolveSimpleSqlValue = (
+        input: unknown,
+        pgType: PgType,
+        pgTypeModifier: number | null
+      ) =>
         pgType.name === "citext"
           ? gql2pg(input, pgType, pgTypeModifier) // already case-insensitive, so no need to call `lower()`
           : sql.query`lower(${gql2pg(input, pgType, pgTypeModifier)})`;
 
-      const resolveSqlValue = (input, pgType, pgTypeModifier) =>
+      const resolveSqlValue = (
+        input: unknown,
+        pgType: PgType,
+        pgTypeModifier: number | null
+      ) =>
         name === "in" || name === "notIn"
           ? resolveListSqlValue(
               input,
@@ -429,7 +446,9 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       ...sortOperators,
     };
 
-    const connectionFilterRangeOperators = {
+    const connectionFilterRangeOperators: {
+      [fieldName: string]: OperatorSpec;
+    } = {
       ...standardOperators,
       ...sortOperators,
       contains: {
@@ -438,14 +457,16 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
       containsElement: {
         description: "Contains the specified value.",
-        resolveType: (_fieldInputType, rangeElementInputType) =>
-          rangeElementInputType,
+        resolveType: (
+          _fieldInputType: GraphQLInputType,
+          rangeElementInputType: GraphQLInputType
+        ) => rangeElementInputType,
         resolveSqlValue: (input, pgType, pgTypeModifier) => {
           const rangeSubType =
-            introspectionResultsByKind.typeById[pgType.rangeSubTypeId];
+            introspectionResultsByKind.typeById[(pgType as any).rangeSubTypeId];
           return sql.query`${gql2pg(
             input,
-            pgType.rangeSubTypeId,
+            (pgType as any).rangeSubTypeId,
             pgTypeModifier
           )}::${sql.identifier(rangeSubType.namespaceName, rangeSubType.name)}`;
         },
@@ -481,11 +502,17 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
     };
 
-    const resolveArrayItemType = fieldInputType => getNamedType(fieldInputType);
-    const resolveArrayItemSqlValue = (input, pgType, pgTypeModifier) =>
-      gql2pg(input, pgType.arrayItemType, pgTypeModifier);
+    const resolveArrayItemType = (fieldInputType: GraphQLInputType) =>
+      getNamedType(fieldInputType);
+    const resolveArrayItemSqlValue = (
+      input: unknown,
+      pgType: PgType,
+      pgTypeModifier: number | null
+    ) => gql2pg(input, pgType.arrayItemType, pgTypeModifier);
 
-    const connectionFilterArrayOperators = {
+    const connectionFilterArrayOperators: {
+      [fieldName: string]: OperatorSpec;
+    } = {
       isNull: standardOperators.isNull,
       equalTo: standardOperators.equalTo,
       notEqualTo: standardOperators.notEqualTo,
@@ -576,7 +603,17 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       },
       fieldWithHooks,
       Self,
-    } = context;
+    } = context as Context<GraphQLInputFieldConfigMap> & {
+      scope: {
+        isPgConnectionFilterOperators?: boolean;
+        pgConnectionFilterOperatorsCategory?:
+          | "Array"
+          | "Range"
+          | "Enum"
+          | "Domain"
+          | "Scalar";
+      };
+    };
     if (
       !isPgConnectionFilterOperators ||
       !pgConnectionFilterOperatorsCategory ||
@@ -588,7 +625,7 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const operatorSpecsByCategory = {
+    const operatorSpecsByCategory: { [category: string]: OperatorSpec[] } = {
       Array: connectionFilterArrayOperators,
       Range: connectionFilterRangeOperators,
       Enum: connectionFilterEnumOperators,
@@ -603,10 +640,10 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       return fields;
     }
 
-    const operatorSpecByFieldName = {};
+    const operatorSpecByFieldName: { [fieldName: string]: OperatorSpec } = {};
 
     const operatorFields = Object.entries(operatorSpecs).reduce(
-      (memo, [name, spec]) => {
+      (memo: { [fieldName: string]: any }, [name, spec]) => {
         const { description, resolveType } = spec;
 
         if (
@@ -641,14 +678,14 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
       {}
     );
 
-    const textPgType = introspectionResultsByKind.type.find(
-      t => t.name === "text"
+    const textPgType = (introspectionResultsByKind.type as PgType[]).find(
+      (t) => t.name === "text"
     );
-    const textArrayPgType = introspectionResultsByKind.type.find(
-      t => t.name === "_text"
+    const textArrayPgType = (introspectionResultsByKind.type as PgType[]).find(
+      (t) => t.name === "_text"
     );
 
-    const resolve = ({
+    const resolve: ConnectionFilterResolver = ({
       sourceAlias,
       fieldName,
       fieldValue,
@@ -701,3 +738,34 @@ module.exports = function PgConnectionArgFilterOperatorsPlugin(
     return extend(fields, operatorFields);
   });
 };
+
+export interface OperatorSpec {
+  name?: string;
+  description: string;
+  resolveInput?: (input: unknown) => unknown;
+  resolveSql?: any;
+  resolveSqlIdentifier?: (
+    sqlIdentifier: SQL,
+    pgType: PgType,
+    pgTypeModifier: number | null
+  ) => SQL;
+  resolveSqlValue?: (
+    input: unknown,
+    pgType: PgType,
+    pgTypeModifier: number | null,
+    resolveListItemSqlValue?: any
+  ) => SQL | null;
+  resolveType?: (
+    fieldInputType: GraphQLInputType,
+    rangeElementInputType: GraphQLInputType
+  ) => GraphQLType;
+  resolve: (
+    sqlIdentifier: SQL,
+    sqlValue: SQL,
+    input: unknown,
+    parentFieldName: string,
+    queryBuilder: QueryBuilder
+  ) => SQL | null;
+}
+
+export default PgConnectionArgFilterOperatorsPlugin;
