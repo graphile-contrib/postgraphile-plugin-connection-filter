@@ -1,7 +1,12 @@
-module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(
+import type { Context, Plugin } from "graphile-build";
+import type { PgClass, PgProc, PgType } from "graphile-build-pg";
+import type { GraphQLInputFieldConfigMap } from "graphql";
+import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+
+const PgConnectionArgFilterRecordFunctionsPlugin: Plugin = (
   builder,
   { connectionFilterSetofFunctions }
-) {
+) => {
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
     const {
       extend,
@@ -20,7 +25,12 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(
       fieldWithHooks,
       scope: { pgIntrospection: proc, isPgConnectionFilter },
       Self,
-    } = context;
+    } = context as Context<GraphQLInputFieldConfigMap> & {
+      scope: {
+        pgIntrospection: PgClass | PgProc;
+        isPgConnectionFilter?: boolean;
+      };
+    };
 
     if (!isPgConnectionFilter || proc.kind !== "procedure") return fields;
 
@@ -39,21 +49,28 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(
       "b", // INOUT
       "t", // TABLE
     ];
-    const outputArgNames = proc.argTypeIds.reduce((prev, _, idx) => {
+    const outputArgNames = proc.argTypeIds.reduce((prev: string[], _, idx) => {
       if (argModesWithOutput.includes(proc.argModes[idx])) {
         prev.push(proc.argNames[idx] || "");
       }
       return prev;
     }, []);
-    const outputArgTypes = proc.argTypeIds.reduce((prev, typeId, idx) => {
-      if (argModesWithOutput.includes(proc.argModes[idx])) {
-        prev.push(introspectionResultsByKind.typeById[typeId]);
-      }
-      return prev;
-    }, []);
+    const outputArgTypes = proc.argTypeIds.reduce(
+      (prev: PgType[], typeId, idx) => {
+        if (argModesWithOutput.includes(proc.argModes[idx])) {
+          prev.push(introspectionResultsByKind.typeById[typeId]);
+        }
+        return prev;
+      },
+      []
+    );
 
     const outputArgByFieldName = outputArgNames.reduce(
-      (memo, outputArgName, idx) => {
+      (
+        memo: { [fieldName: string]: { name: string; type: PgType } },
+        outputArgName,
+        idx
+      ) => {
         const fieldName = inflection.functionOutputFieldName(
           proc,
           outputArgName,
@@ -101,7 +118,12 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(
       {}
     );
 
-    const resolve = ({ sourceAlias, fieldName, fieldValue, queryBuilder }) => {
+    const resolve: ConnectionFilterResolver = ({
+      sourceAlias,
+      fieldName,
+      fieldValue,
+      queryBuilder,
+    }) => {
       if (fieldValue == null) return null;
 
       const outputArg = outputArgByFieldName[fieldName];
@@ -132,3 +154,4 @@ module.exports = function PgConnectionArgFilterRecordFunctionsPlugin(
     return extend(fields, outputArgFields);
   });
 };
+export default PgConnectionArgFilterRecordFunctionsPlugin;

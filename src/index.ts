@@ -1,28 +1,26 @@
-const ConnectionArgFilterPlugin = require("./src/ConnectionArgFilterPlugin.js");
-const PgConnectionArgFilterPlugin = require("./src/PgConnectionArgFilterPlugin.js");
-const PgConnectionArgFilterColumnsPlugin = require("./src/PgConnectionArgFilterColumnsPlugin.js");
-const PgConnectionArgFilterComputedColumnsPlugin = require("./src/PgConnectionArgFilterComputedColumnsPlugin.js");
-const PgConnectionArgFilterCompositeTypeColumnsPlugin = require("./src/PgConnectionArgFilterCompositeTypeColumnsPlugin.js");
-const PgConnectionArgFilterRecordFunctionsPlugin = require("./src/PgConnectionArgFilterRecordFunctionsPlugin.js");
-const PgConnectionArgFilterBackwardRelationsPlugin = require("./src/PgConnectionArgFilterBackwardRelationsPlugin.js");
-const PgConnectionArgFilterForwardRelationsPlugin = require("./src/PgConnectionArgFilterForwardRelationsPlugin.js");
-const PgConnectionArgFilterLogicalOperatorsPlugin = require("./src/PgConnectionArgFilterLogicalOperatorsPlugin.js");
-const PgConnectionArgFilterOperatorsPlugin = require("./src/PgConnectionArgFilterOperatorsPlugin.js");
+import type { Plugin } from "graphile-build";
+import ConnectionArgFilterPlugin from "./ConnectionArgFilterPlugin";
+import PgConnectionArgFilterPlugin from "./PgConnectionArgFilterPlugin";
+import PgConnectionArgFilterColumnsPlugin from "./PgConnectionArgFilterColumnsPlugin";
+import PgConnectionArgFilterComputedColumnsPlugin from "./PgConnectionArgFilterComputedColumnsPlugin";
+import PgConnectionArgFilterCompositeTypeColumnsPlugin from "./PgConnectionArgFilterCompositeTypeColumnsPlugin";
+import PgConnectionArgFilterRecordFunctionsPlugin from "./PgConnectionArgFilterRecordFunctionsPlugin";
+import PgConnectionArgFilterBackwardRelationsPlugin from "./PgConnectionArgFilterBackwardRelationsPlugin";
+import PgConnectionArgFilterForwardRelationsPlugin from "./PgConnectionArgFilterForwardRelationsPlugin";
+import PgConnectionArgFilterLogicalOperatorsPlugin from "./PgConnectionArgFilterLogicalOperatorsPlugin";
+import PgConnectionArgFilterOperatorsPlugin from "./PgConnectionArgFilterOperatorsPlugin";
 
-module.exports = function PostGraphileConnectionFilterPlugin(
-  builder,
-  configOptions
-) {
-  builder.hook("build", build => {
-    const pkg = require("./package.json");
-
+const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const pkg = require("../package.json");
+  builder.hook("build", (build) => {
     // Check dependencies
     if (!build.versions) {
       throw new Error(
         `Plugin ${pkg.name}@${pkg.version} requires graphile-build@^4.1.0 in order to check dependencies (current version: ${build.graphileBuildVersion})`
       );
     }
-    const depends = (name, range) => {
+    const depends = (name: string, range: string) => {
       if (!build.hasVersion(name, range)) {
         throw new Error(
           `Plugin ${pkg.name}@${pkg.version} requires ${name}@${range} (${
@@ -80,3 +78,5 @@ module.exports = function PostGraphileConnectionFilterPlugin(
 
   PgConnectionArgFilterOperatorsPlugin(builder, options);
 };
+
+export default PostGraphileConnectionFilterPlugin;
