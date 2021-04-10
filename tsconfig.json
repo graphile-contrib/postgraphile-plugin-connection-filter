@@ -19,6 +19,7 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "preserveWatchOutput": true,
+    "esModuleInterop": true,
     "lib": ["es2018", "esnext.asynciterable"]
   },
   "include": ["src/**/*"]
