@@ -2,9 +2,9 @@
 
 # postgraphile-plugin-connection-filter
 
-This plugin adds a `filter` argument for advanced filtering of Connections.
+Adds a powerful suite of filtering capabilities to a PostGraphile schema.
 
-> **Warning:** Use of this plugin (particularly with the default options) may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section below for details.
+> **Warning:** Use of this plugin with the default options may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section below for details.
 
 ## Performance and Security
 
