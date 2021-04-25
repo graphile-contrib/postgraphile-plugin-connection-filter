@@ -4,25 +4,7 @@
 
 Adds a powerful suite of filtering capabilities to a PostGraphile schema.
 
-> **Warning:** Use of this plugin with the default options may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the Performance and Security section below for details.
-
-## Performance and Security
-
-By default, this plugin:
-
-- Exposes a large number of filter operators, including some that can perform expensive pattern matching.
-- Allows filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/), which can result in expensive operations.
-- Allows filtering on functions that return `setof`, which can result in expensive operations.
-- Allows filtering on List fields (Postgres arrays), which can result in expensive operations.
-
-To protect your server, you can:
-
-- Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` options to limit the filterable fields and operators exposed through GraphQL.
-- Set `connectionFilterComputedColumns: false` to prevent filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/).
-- Set `connectionFilterSetofFunctions: false` to prevent filtering on functions that return `setof`.
-- Set `connectionFilterArrays: false` to prevent filtering on List fields (Postgres arrays).
-
-Also see the [Production Considerations](https://www.graphile.org/postgraphile/production) page of the official PostGraphile docs, which discusses query whitelisting.
+> **Warning:** Use of this plugin with the default options may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the [Performance and Security](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#performance-and-security) section below for details.
 
 ## Usage
 
@@ -50,6 +32,24 @@ const middleware = postgraphile(DATABASE_URL, SCHEMAS, {
   appendPlugins: [ConnectionFilterPlugin],
 });
 ```
+
+## Performance and Security
+
+By default, this plugin:
+
+- Exposes a large number of filter operators, including some that can perform expensive pattern matching.
+- Allows filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/), which can result in expensive operations.
+- Allows filtering on functions that return `setof`, which can result in expensive operations.
+- Allows filtering on List fields (Postgres arrays), which can result in expensive operations.
+
+To protect your server, you can:
+
+- Use the `connectionFilterAllowedFieldTypes` and `connectionFilterAllowedOperators` options to limit the filterable fields and operators exposed through GraphQL.
+- Set `connectionFilterComputedColumns: false` to prevent filtering on [computed columns](https://www.graphile.org/postgraphile/computed-columns/).
+- Set `connectionFilterSetofFunctions: false` to prevent filtering on functions that return `setof`.
+- Set `connectionFilterArrays: false` to prevent filtering on List fields (Postgres arrays).
+
+Also see the [Production Considerations](https://www.graphile.org/postgraphile/production) page of the official PostGraphile docs, which discusses query whitelisting.
 
 ## Handling `null` and empty objects
 
