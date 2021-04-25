@@ -59,27 +59,13 @@ To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and
 
 ## Operators
 
-See [docs/operators.md](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/docs/operators.md) for a details on all of the filtering operators implemented by this plugin.
+This plugin supports filtering on almost all PostgreSQL types, including complex types such as domains, ranges, arrays, and composite types. For details on the specific operators supported for each type, see [docs/operators.md](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/docs/operators.md).
 
 See also:
 
 - [@graphile/pg-aggregates](https://github.com/graphile/pg-aggregates) - integrates with this plugin to enable powerful aggregate filtering
 - [postgraphile-plugin-connection-filter-postgis](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter-postgis) - adds PostGIS functions and operators for filtering on `geography`/`geometry` columns
 - [postgraphile-plugin-fulltext-filter](https://github.com/mlipscombe/postgraphile-plugin-fulltext-filter) - adds a full text search operator for filtering on `tsvector` columns
-
-## Examples
-
-```graphql
-query {
-  allPosts(filter: {
-    createdAt: { greaterThan: "2021-01-01" }
-  }) {
-    ...
-  }
-}
-```
-
-See [docs/examples.md](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/docs/examples.md) for an extensive set of examples.
 
 ## Plugin Options
 
@@ -245,6 +231,20 @@ postgraphile(pgConfig, schema, {
 
 When `false`, passing `{}` as a field value will throw an error.
 When `true`, passing `{}` as a field value is equivalent to omitting the field.
+
+## Examples
+
+```graphql
+query {
+  allPosts(filter: {
+    createdAt: { greaterThan: "2021-01-01" }
+  }) {
+    ...
+  }
+}
+```
+
+For an extensive set of examples, see [docs/examples.md](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/docs/examples.md).
 
 ## Development
 
