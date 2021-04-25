@@ -1,7 +1,7 @@
 {
   "name": "postgraphile-plugin-connection-filter",
-  "version": "2.1.1",
-  "description": "Advanced filtering of Connections in PostGraphile",
+  "version": "2.2.1",
+  "description": "Filtering on PostGraphile connections",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",

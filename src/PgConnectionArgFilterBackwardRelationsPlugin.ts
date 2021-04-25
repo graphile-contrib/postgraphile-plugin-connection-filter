@@ -55,7 +55,10 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       .filter((con) => con.type === "f")
       .filter((con) => con.foreignClassId === table.id)
       .reduce((memo: BackwardRelationSpec[], foreignConstraint) => {
-        if (omit(foreignConstraint, "read")) {
+        if (
+          omit(foreignConstraint, "read") ||
+          omit(foreignConstraint, "filter")
+        ) {
           return memo;
         }
         const foreignTable =
@@ -65,7 +68,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
             `Could not find the foreign table (constraint: ${foreignConstraint.name})`
           );
         }
-        if (omit(foreignTable, "read")) {
+        if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
           return memo;
         }
         const attributes = (introspectionResultsByKind.attribute as PgAttribute[])

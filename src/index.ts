@@ -79,4 +79,6 @@ const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
   PgConnectionArgFilterOperatorsPlugin(builder, options);
 };
 
-export default PostGraphileConnectionFilterPlugin;
+// TODO: In the next major version, change `export =` to `export default`.
+// This will be a breaking change for CommonJS users.
+export = PostGraphileConnectionFilterPlugin;

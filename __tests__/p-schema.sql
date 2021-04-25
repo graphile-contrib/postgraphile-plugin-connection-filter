@@ -210,6 +210,15 @@ create table p.fully_omitted (
 comment on column p.fully_omitted.id is '@omit filter';
 comment on column p.fully_omitted."text" is '@omit filter';
 
+create table p.child_no_related_filter (
+  id serial primary key,
+  "name" text not null,
+  unfilterable_id int references p.unfilterable (id),
+  filterable_id int,
+  constraint child_no_related_filter_filterable_id_fkey foreign key (filterable_id) references p.filterable(id)
+);
+comment on constraint child_no_related_filter_filterable_id_fkey on p.child_no_related_filter is '@omit filter';
+
 create function p.filterable_computed(filterable p.filterable) returns text as $$
   select filterable."text" || ' computed'
 $$ language sql stable;
