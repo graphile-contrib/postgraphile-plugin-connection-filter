@@ -51,13 +51,7 @@ To protect your server, you can:
 
 Also see the [Production Considerations](https://www.graphile.org/postgraphile/production) page of the official PostGraphile docs, which discusses query whitelisting.
 
-## Handling `null` and empty objects
-
-By default, this plugin will throw an error when `null` literals or empty objects (`{}`) are included in `filter` input objects. This prevents queries with ambiguous semantics such as `filter: { field: null }` and `filter: { field: { equalTo: null } }` from returning unexpected results. For background on this decision, see https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues/58.
-
-To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and `connectionFilterAllowEmptyObjectInput` options documented under [Plugin Options](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#plugin-options). Please note that even with `connectionFilterAllowNullInput` enabled, `null` is never interpreted as a SQL `NULL`; fields with `null` values are simply ignored when resolving the query.
-
-## Operators
+## Features
 
 This plugin supports filtering on almost all PostgreSQL types, including complex types such as domains, ranges, arrays, and composite types. For details on the specific operators supported for each type, see [docs/operators.md](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/blob/master/docs/operators.md).
 
@@ -66,6 +60,12 @@ See also:
 - [@graphile/pg-aggregates](https://github.com/graphile/pg-aggregates) - integrates with this plugin to enable powerful aggregate filtering
 - [postgraphile-plugin-connection-filter-postgis](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter-postgis) - adds PostGIS functions and operators for filtering on `geography`/`geometry` columns
 - [postgraphile-plugin-fulltext-filter](https://github.com/mlipscombe/postgraphile-plugin-fulltext-filter) - adds a full text search operator for filtering on `tsvector` columns
+
+## Handling `null` and empty objects
+
+By default, this plugin will throw an error when `null` literals or empty objects (`{}`) are included in `filter` input objects. This prevents queries with ambiguous semantics such as `filter: { field: null }` and `filter: { field: { equalTo: null } }` from returning unexpected results. For background on this decision, see https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues/58.
+
+To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and `connectionFilterAllowEmptyObjectInput` options documented under [Plugin Options](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#plugin-options). Please note that even with `connectionFilterAllowNullInput` enabled, `null` is never interpreted as a SQL `NULL`; fields with `null` values are simply ignored when resolving the query.
 
 ## Plugin Options
 
