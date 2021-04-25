@@ -39,7 +39,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       .filter((con) => con.type === "f")
       .filter((con) => con.classId === table.id)
       .reduce((memo: ForwardRelationSpec[], constraint) => {
-        if (omit(constraint, "read")) {
+        if (omit(constraint, "read") || omit(constraint, "filter")) {
           return memo;
         }
         const foreignTable = constraint.foreignClassId
@@ -50,7 +50,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
             `Could not find the foreign table (constraint: ${constraint.name})`
           );
         }
-        if (omit(foreignTable, "read")) {
+        if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
           return memo;
         }
         const attributes = (introspectionResultsByKind.attribute as PgAttribute[])
