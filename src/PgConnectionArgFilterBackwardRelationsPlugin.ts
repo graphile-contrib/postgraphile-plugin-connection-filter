@@ -55,7 +55,10 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       .filter((con) => con.type === "f")
       .filter((con) => con.foreignClassId === table.id)
       .reduce((memo: BackwardRelationSpec[], foreignConstraint) => {
-        if (omit(foreignConstraint, "read")) {
+        if (
+          omit(foreignConstraint, "read") ||
+          omit(foreignConstraint, "filter")
+        ) {
           return memo;
         }
         const foreignTable =
