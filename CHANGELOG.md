@@ -1,3 +1,15 @@
+## 2.2.1 - 2021-04-25
+
+- Fixed handling of `@omit filter` on constraints and foreign tables (#155)
+
+## 2.2.0 - 2021-04-10
+
+- Converted to TypeScript (#149)
+
+## 2.1.1 - 2020-11-19
+
+- Added index.d.ts to published package
+
 ## 2.1.0 - 2020-10-21
 
 - Added minimal TypeScript declaration file
