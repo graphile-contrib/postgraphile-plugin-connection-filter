@@ -1,8 +1,8 @@
 version: 2
 jobs:
-  node10_pg10:
+  node12_pg10:
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
       - image: circleci/postgres:10
         environment:
           POSTGRES_HOST_AUTH_METHOD: trust
@@ -81,9 +81,9 @@ jobs:
           command: yarn test
           environment:
             TEST_DATABASE_URL: postgres://circleci@localhost:5432/circle_test
-  node14_pg13:
+  node16_pg13:
     docker:
-      - image: circleci/node:14
+      - image: circleci/node:16
       - image: circleci/postgres:13
         environment:
           POSTGRES_HOST_AUTH_METHOD: trust
@@ -112,7 +112,7 @@ workflows:
   version: 2
   test:
     jobs:
-      - node10_pg10
+      - node12_pg10
       - node12_pg11
       - node14_pg12
-      - node14_pg13
+      - node16_pg13
