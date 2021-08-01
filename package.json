@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
   "devDependencies": {
     "@types/jest": "26.0.22",
     "@typescript-eslint/eslint-plugin": "4.20.0",
