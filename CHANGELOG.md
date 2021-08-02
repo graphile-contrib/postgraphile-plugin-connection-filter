@@ -1,3 +1,7 @@
+## 2.2.2 - 2021-08-01
+
+- Added `tslib` dependency to support installing globally (#156)
+
 ## 2.2.1 - 2021-04-25
 
 - Fixed handling of `@omit filter` on constraints and foreign tables (#155)
