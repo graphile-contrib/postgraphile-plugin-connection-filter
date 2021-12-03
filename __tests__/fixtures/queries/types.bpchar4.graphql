@@ -134,6 +134,26 @@ query bpchar4($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
+  includesUnaccentInsensitive: allFilterables(
+    filter: { bpchar4: { includesUnaccentInsensitive: "É" } }
+  ) {
+    ...nodes
+  }
+  likeUnaccentInsensitive: allFilterables(
+    filter: { bpchar4: { likeUnaccentInsensitive: "%ÊS%" } }
+  ) {
+    ...nodes
+  }
+  notIncludesUnaccentInsensitive: allFilterables(
+    filter: { bpchar4: { notIncludesUnaccentInsensitive: "É" } }
+  ) {
+    ...nodes
+  }
+  notLikeUnaccentInsensitive: allFilterables(
+    filter: { bpchar4: { notLikeUnaccentInsensitive: "%ÊS%" } }
+  ) {
+    ...nodes
+  }
 }
 
 fragment nodes on FilterablesConnection {

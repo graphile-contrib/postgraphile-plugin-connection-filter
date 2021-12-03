@@ -134,6 +134,26 @@ query varchar($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
+  includesUnaccentInsensitive: allFilterables(
+    filter: { varchar: { includesUnaccentInsensitive: "É" } }
+  ) {
+    ...nodes
+  }
+  likeUnaccentInsensitive: allFilterables(
+    filter: { varchar: { likeUnaccentInsensitive: "%ÊS%" } }
+  ) {
+    ...nodes
+  }
+  notIncludesUnaccentInsensitive: allFilterables(
+    filter: { varchar: { notIncludesUnaccentInsensitive: "É" } }
+  ) {
+    ...nodes
+  }
+  notLikeUnaccentInsensitive: allFilterables(
+    filter: { varchar: { notLikeUnaccentInsensitive: "%ÊS%" } }
+  ) {
+    ...nodes
+  }
 }
 
 fragment nodes on FilterablesConnection {

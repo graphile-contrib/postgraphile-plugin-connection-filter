@@ -1,5 +1,6 @@
 create extension if not exists hstore;
 create extension if not exists citext;
+create extension if not exists unaccent;
 
 drop schema if exists p cascade;
 

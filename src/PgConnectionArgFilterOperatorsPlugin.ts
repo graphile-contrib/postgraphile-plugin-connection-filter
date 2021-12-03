@@ -201,6 +201,31 @@ const PgConnectionArgFilterOperatorsPlugin: Plugin = (
         resolveSqlIdentifier: (i) => i, // avoid casting citext to text
         resolve: (i, v) => sql.query`${i} NOT ILIKE ${v}`,
       },
+      includesUnaccentInsensitive: {
+        description: "Contains the specified string (unaccented case-insensitive).",
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
+        resolve: (i, v) => sql.query`UNACCENT(${i}) ILIKE UNACCENT(${v})`,
+      },
+      notIncludesUnaccentInsensitive: {
+        description:
+          "Does not contain the specified string (unaccented case-insensitive).",
+        resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
+        resolve: (i, v) => sql.query`UNACCENT(${i}) NOT ILIKE UNACCENT(${v})`,
+      },
+      likeUnaccentInsensitive: {
+        description:
+          "Matches the specified pattern (unaccented case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
+        resolve: (i, v) => sql.query`UNACCENT(${i}) ILIKE UNACCENT(${v})`,
+      },
+      notLikeUnaccentInsensitive: {
+        description:
+          "Does not match the specified pattern (unaccented case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
+        resolveSqlIdentifier: (i) => i, // avoid casting citext to text
+        resolve: (i, v) => sql.query`UNACCENT(${i}) NOT ILIKE UNACCENT(${v})`,
+      },
     };
     const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
       contains: {

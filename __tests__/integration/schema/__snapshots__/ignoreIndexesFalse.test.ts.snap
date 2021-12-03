@@ -2745,6 +2745,9 @@ input StringFilter {
   \\"\\"\\"Contains the specified string (case-insensitive).\\"\\"\\"
   includesInsensitive: String
 
+  \\"\\"\\"Contains the specified string (unaccented case-insensitive).\\"\\"\\"
+  includesUnaccentInsensitive: String
+
   \\"\\"\\"
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
   \\"\\"\\"
@@ -2773,6 +2776,13 @@ input StringFilter {
   any single character; a percent sign (%) matches any sequence of zero or more characters.
   \\"\\"\\"
   likeInsensitive: String
+
+  \\"\\"\\"
+  Matches the specified pattern (unaccented case-insensitive). An underscore (_)
+  matches any single character; a percent sign (%) matches any sequence of zero
+  or more characters.
+  \\"\\"\\"
+  likeUnaccentInsensitive: String
 
   \\"\\"\\"Equal to the specified value, treating null like an ordinary value.\\"\\"\\"
   notDistinctFrom: String
@@ -2806,6 +2816,9 @@ input StringFilter {
   \\"\\"\\"Does not contain the specified string (case-insensitive).\\"\\"\\"
   notIncludesInsensitive: String
 
+  \\"\\"\\"Does not contain the specified string (unaccented case-insensitive).\\"\\"\\"
+  notIncludesUnaccentInsensitive: String
+
   \\"\\"\\"
   Does not match the specified pattern (case-sensitive). An underscore (_)
   matches any single character; a percent sign (%) matches any sequence of zero
@@ -2819,6 +2832,13 @@ input StringFilter {
   or more characters.
   \\"\\"\\"
   notLikeInsensitive: String
+
+  \\"\\"\\"
+  Does not match the specified pattern (unaccented case-insensitive). An
+  underscore (_) matches any single character; a percent sign (%) matches any
+  sequence of zero or more characters.
+  \\"\\"\\"
+  notLikeUnaccentInsensitive: String
 
   \\"\\"\\"Does not start with the specified string (case-sensitive).\\"\\"\\"
   notStartsWith: String

@@ -134,6 +134,26 @@ query char4($v2: String = "Test", $v3: String = "tEST") {
   ) {
     ...nodes
   }
+  includesUnaccentInsensitive: allFilterables(
+    filter: { char4: { includesUnaccentInsensitive: "É" } }
+  ) {
+    ...nodes
+  }
+  likeUnaccentInsensitive: allFilterables(
+    filter: { char4: { likeUnaccentInsensitive: "%ÊS%" } }
+  ) {
+    ...nodes
+  }
+  notIncludesUnaccentInsensitive: allFilterables(
+    filter: { char4: { notIncludesUnaccentInsensitive: "É" } }
+  ) {
+    ...nodes
+  }
+  notLikeUnaccentInsensitive: allFilterables(
+    filter: { char4: { notLikeUnaccentInsensitive: "%ÊS%" } }
+  ) {
+    ...nodes
+  }
 }
 
 fragment nodes on FilterablesConnection {
