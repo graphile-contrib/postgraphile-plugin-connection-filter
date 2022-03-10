@@ -4,9 +4,20 @@ import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
 
 const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
   builder,
-  { pgSimpleCollections }
+  { pgSimpleCollections, pgOmitListSuffix, pgFilterUseListInflectors }
 ) => {
   const hasConnections = pgSimpleCollections !== "only";
+  const simpleInflectorsAreShorter = pgOmitListSuffix === true;
+  if (simpleInflectorsAreShorter && pgFilterUseListInflectors === undefined) {
+    // TODO: in V3 consider doing this for the user automatically (doing it in V2 would be a breaking change)
+    console.warn(
+      `We recommend you set the 'pgFilterUseListInflectors' option to 'true' since you've set the 'pgOmitListSuffix' option`
+    );
+  }
+  const useConnectionInflectors =
+    pgFilterUseListInflectors === undefined
+      ? hasConnections
+      : !pgFilterUseListInflectors;
 
   builder.hook("inflection", (inflection) => {
     return Object.assign(inflection, {
@@ -22,6 +33,12 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       },
       filterBackwardManyRelationExistsFieldName(relationFieldName: string) {
         return `${relationFieldName}Exist`;
+      },
+      filterSingleRelationByKeysBackwardsFieldName(fieldName: string) {
+        return fieldName;
+      },
+      filterManyRelationByKeysFieldName(fieldName: string) {
+        return fieldName;
       },
     });
   });
@@ -299,7 +316,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
           }
           const FilterManyType =
             connectionFilterTypesByTypeName[filterManyTypeName];
-          const fieldName = hasConnections
+          const fieldName = useConnectionInflectors
             ? inflection.manyRelationByKeys(
                 foreignKeyAttributes,
                 foreignTable,
@@ -312,8 +329,11 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
                 table,
                 foreignConstraint
               );
+          const filterFieldName = inflection.filterManyRelationByKeysFieldName(
+            fieldName
+          );
           addField(
-            fieldName,
+            filterFieldName,
             `Filter by the object’s \`${fieldName}\` relation.`,
             FilterManyType,
             makeResolveMany(spec),
@@ -344,8 +364,11 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
           table,
           foreignConstraint
         );
+        const filterFieldName = inflection.filterSingleRelationByKeysBackwardsFieldName(
+          fieldName
+        );
         addField(
-          fieldName,
+          filterFieldName,
           `Filter by the object’s \`${fieldName}\` relation.`,
           ForeignTableFilterType,
           resolveSingle,
