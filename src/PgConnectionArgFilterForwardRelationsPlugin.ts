@@ -8,6 +8,9 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
     filterForwardRelationExistsFieldName(relationFieldName: string) {
       return `${relationFieldName}Exists`;
     },
+    filterSingleRelationFieldName(fieldName: string) {
+      return fieldName;
+    },
   }));
 
   builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
@@ -218,6 +221,9 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
         table,
         constraint
       );
+      const filterFieldName = inflection.filterSingleRelationFieldName(
+        fieldName
+      );
       const foreignTableTypeName = inflection.tableType(foreignTable);
       const foreignTableFilterTypeName = inflection.filterType(
         foreignTableTypeName
@@ -231,7 +237,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       if (!ForeignTableFilterType) continue;
 
       addField(
-        fieldName,
+        filterFieldName,
         `Filter by the object’s \`${fieldName}\` relation.`,
         ForeignTableFilterType,
         resolve,

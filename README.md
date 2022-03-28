@@ -232,6 +232,24 @@ postgraphile(pgConfig, schema, {
 When `false`, passing `{}` as a field value will throw an error.
 When `true`, passing `{}` as a field value is equivalent to omitting the field.
 
+#### connectionFilterUseListInflectors
+
+When building the "many" relationship filters, if this option is set `true`
+then we will use the "list" field names rather than the "connection" field
+names when naming the fields in the filter input. This would be desired if you
+have `simpleCollection` set to `"only"` or `"both"` and you've simplified your
+inflection to omit the `-list` suffix, e.g. using
+`@graphile-contrib/pg-simplify-inflector`'s `pgOmitListSuffix` option. Use this
+if you see `Connection` added to your filter field names.
+
+```js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterUseListInflectors: true, // default: false
+  },
+});
+```
+
 ## Examples
 
 ```graphql
