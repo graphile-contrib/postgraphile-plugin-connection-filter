@@ -60,6 +60,7 @@ See also:
 - [@graphile/pg-aggregates](https://github.com/graphile/pg-aggregates) - integrates with this plugin to enable powerful aggregate filtering
 - [postgraphile-plugin-connection-filter-postgis](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter-postgis) - adds PostGIS functions and operators for filtering on `geography`/`geometry` columns
 - [postgraphile-plugin-fulltext-filter](https://github.com/mlipscombe/postgraphile-plugin-fulltext-filter) - adds a full text search operator for filtering on `tsvector` columns
+- [postgraphile-plugin-unaccented-text-search-filter](https://github.com/spacefill/postgraphile-plugin-unaccented-text-search-filter) - adds unaccent text search operators
 
 ## Handling `null` and empty objects
 
