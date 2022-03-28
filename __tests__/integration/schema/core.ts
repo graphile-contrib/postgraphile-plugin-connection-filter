@@ -1,6 +1,7 @@
 import * as pg from "pg";
+import { lexicographicSortSchema } from "graphql";
 import { createPostGraphileSchema } from "postgraphile-core";
-import { printSchemaOrdered, withPgClient } from "../../helpers";
+import { withPgClient } from "../../helpers";
 
 export const test = (
   schemas: string[],
@@ -16,5 +17,5 @@ export const test = (
       }
     }
     const schema = await createPostGraphileSchema(client, schemas, options);
-    expect(printSchemaOrdered(schema)).toMatchSnapshot();
+    expect(lexicographicSortSchema(schema)).toMatchSnapshot();
   });
