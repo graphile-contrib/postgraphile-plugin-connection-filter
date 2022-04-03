@@ -38,7 +38,9 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const forwardRelationSpecs = (introspectionResultsByKind.constraint as PgConstraint[])
+    const forwardRelationSpecs = (
+      introspectionResultsByKind.constraint as PgConstraint[]
+    )
       .filter((con) => con.type === "f")
       .filter((con) => con.classId === table.id)
       .reduce((memo: ForwardRelationSpec[], constraint) => {
@@ -56,10 +58,14 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
         if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
           return memo;
         }
-        const attributes = (introspectionResultsByKind.attribute as PgAttribute[])
+        const attributes = (
+          introspectionResultsByKind.attribute as PgAttribute[]
+        )
           .filter((attr) => attr.classId === table.id)
           .sort((a, b) => a.num - b.num);
-        const foreignAttributes = (introspectionResultsByKind.attribute as PgAttribute[])
+        const foreignAttributes = (
+          introspectionResultsByKind.attribute as PgAttribute[]
+        )
           .filter((attr) => attr.classId === foreignTable.id)
           .sort((a, b) => a.num - b.num);
         const keyAttributes = constraint.keyAttributeNums.map(
@@ -129,11 +135,8 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
     }) => {
       if (fieldValue == null) return null;
 
-      const {
-        foreignTable,
-        foreignKeyAttributes,
-        keyAttributes,
-      } = forwardRelationSpecByFieldName[fieldName];
+      const { foreignTable, foreignKeyAttributes, keyAttributes } =
+        forwardRelationSpecByFieldName[fieldName];
 
       const foreignTableAlias = sql.identifier(Symbol());
 
@@ -154,9 +157,8 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       )})`;
 
       const foreignTableTypeName = inflection.tableType(foreignTable);
-      const foreignTableFilterTypeName = inflection.filterType(
-        foreignTableTypeName
-      );
+      const foreignTableFilterTypeName =
+        inflection.filterType(foreignTableTypeName);
 
       const sqlFragment = connectionFilterResolve(
         fieldValue,
@@ -182,11 +184,8 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
     }) => {
       if (fieldValue == null) return null;
 
-      const {
-        foreignTable,
-        foreignKeyAttributes,
-        keyAttributes,
-      } = forwardRelationSpecByFieldName[fieldName];
+      const { foreignTable, foreignKeyAttributes, keyAttributes } =
+        forwardRelationSpecByFieldName[fieldName];
 
       const foreignTableAlias = sql.identifier(Symbol());
 
@@ -221,13 +220,11 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
         table,
         constraint
       );
-      const filterFieldName = inflection.filterSingleRelationFieldName(
-        fieldName
-      );
+      const filterFieldName =
+        inflection.filterSingleRelationFieldName(fieldName);
       const foreignTableTypeName = inflection.tableType(foreignTable);
-      const foreignTableFilterTypeName = inflection.filterType(
-        foreignTableTypeName
-      );
+      const foreignTableFilterTypeName =
+        inflection.filterType(foreignTableTypeName);
       const ForeignTableFilterType = connectionFilterType(
         newWithHooks,
         foreignTableFilterTypeName,
@@ -249,9 +246,8 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
 
       const keyIsNullable = !keyAttributes.every((attr) => attr.isNotNull);
       if (keyIsNullable) {
-        const existsFieldName = inflection.filterForwardRelationExistsFieldName(
-          fieldName
-        );
+        const existsFieldName =
+          inflection.filterForwardRelationExistsFieldName(fieldName);
         addField(
           existsFieldName,
           `A related \`${fieldName}\` exists.`,

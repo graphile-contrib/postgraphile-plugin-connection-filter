@@ -274,16 +274,11 @@ const PgConnectionArgFilterPlugin: Plugin = (
       }
 
       // Establish field type and field input type
-      const fieldType:
-        | GraphQLType
-        | undefined = pgGetGqlTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
+      const fieldType: GraphQLType | undefined =
+        pgGetGqlTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
       if (!fieldType) return null;
-      const fieldInputType:
-        | GraphQLType
-        | undefined = pgGetGqlInputTypeByTypeIdAndModifier(
-        pgTypeId,
-        pgTypeModifier
-      );
+      const fieldInputType: GraphQLType | undefined =
+        pgGetGqlInputTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
       if (!fieldInputType) return null;
 
       // Avoid exposing filter operators on unrecognized types that PostGraphile handles as Strings

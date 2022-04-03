@@ -697,11 +697,8 @@ const PgConnectionArgFilterOperatorsPlugin: Plugin = (
       if (fieldValue == null) return null;
 
       const operatorSpec = operatorSpecByFieldName[fieldName];
-      const {
-        resolveInput,
-        resolveSqlIdentifier,
-        resolveSqlValue,
-      } = operatorSpec;
+      const { resolveInput, resolveSqlIdentifier, resolveSqlValue } =
+        operatorSpec;
 
       const sqlIdentifier = resolveSqlIdentifier
         ? resolveSqlIdentifier(sourceAlias, pgType, pgTypeModifier)

@@ -132,8 +132,10 @@ const PgConnectionArgFilterRecordFunctionsPlugin: Plugin = (
         outputArg.name
       )}`;
 
-      const typeName = pgGetGqlTypeByTypeIdAndModifier(outputArg.type.id, null)
-        .name;
+      const typeName = pgGetGqlTypeByTypeIdAndModifier(
+        outputArg.type.id,
+        null
+      ).name;
       const filterTypeName = inflection.filterType(typeName);
 
       return connectionFilterResolve(
