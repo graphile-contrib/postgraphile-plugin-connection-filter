@@ -55,10 +55,8 @@ const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
     ...defaultOptions,
     ...configOptions,
   };
-  const {
-    connectionFilterRelations,
-    connectionFilterLogicalOperators,
-  } = options;
+  const { connectionFilterRelations, connectionFilterLogicalOperators } =
+    options;
 
   ConnectionArgFilterPlugin(builder, options);
   PgConnectionArgFilterPlugin(builder, options);

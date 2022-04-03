@@ -71,7 +71,9 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const backwardRelationSpecs = (introspectionResultsByKind.constraint as PgConstraint[])
+    const backwardRelationSpecs = (
+      introspectionResultsByKind.constraint as PgConstraint[]
+    )
       .filter((con) => con.type === "f")
       .filter((con) => con.foreignClassId === table.id)
       .reduce((memo: BackwardRelationSpec[], foreignConstraint) => {
@@ -91,10 +93,14 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
         if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
           return memo;
         }
-        const attributes = (introspectionResultsByKind.attribute as PgAttribute[])
+        const attributes = (
+          introspectionResultsByKind.attribute as PgAttribute[]
+        )
           .filter((attr) => attr.classId === table.id)
           .sort((a, b) => a.num - b.num);
-        const foreignAttributes = (introspectionResultsByKind.attribute as PgAttribute[])
+        const foreignAttributes = (
+          introspectionResultsByKind.attribute as PgAttribute[]
+        )
           .filter((attr) => attr.classId === foreignTable.id)
           .sort((a, b) => a.num - b.num);
         const keyAttributes = foreignConstraint.foreignKeyAttributeNums.map(
@@ -109,7 +115,9 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
         if (foreignKeyAttributes.some((attr) => omit(attr, "read"))) {
           return memo;
         }
-        const isForeignKeyUnique = !!(introspectionResultsByKind.constraint as PgConstraint[]).find(
+        const isForeignKeyUnique = !!(
+          introspectionResultsByKind.constraint as PgConstraint[]
+        ).find(
           (c) =>
             c.classId === foreignTable.id &&
             (c.type === "p" || c.type === "u") &&
@@ -177,18 +185,14 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
     }) => {
       if (fieldValue == null) return null;
 
-      const {
-        foreignTable,
-        foreignKeyAttributes,
-        keyAttributes,
-      } = backwardRelationSpecByFieldName[fieldName];
+      const { foreignTable, foreignKeyAttributes, keyAttributes } =
+        backwardRelationSpecByFieldName[fieldName];
 
       const foreignTableTypeName = inflection.tableType(foreignTable);
 
       const foreignTableAlias = sql.identifier(Symbol());
-      const foreignTableFilterTypeName = inflection.filterType(
-        foreignTableTypeName
-      );
+      const foreignTableFilterTypeName =
+        inflection.filterType(foreignTableTypeName);
       const sqlIdentifier = sql.identifier(
         foreignTable.namespace.name,
         foreignTable.name
@@ -220,11 +224,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
     }) => {
       if (fieldValue == null) return null;
 
-      const {
-        foreignTable,
-        foreignKeyAttributes,
-        keyAttributes,
-      } = backwardRelationSpecByFieldName[fieldName];
+      const { foreignTable, foreignKeyAttributes, keyAttributes } =
+        backwardRelationSpecByFieldName[fieldName];
 
       const foreignTableAlias = sql.identifier(Symbol());
 
@@ -287,9 +288,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
         isOneToMany,
       } = spec;
       const foreignTableTypeName = inflection.tableType(foreignTable);
-      const foreignTableFilterTypeName = inflection.filterType(
-        foreignTableTypeName
-      );
+      const foreignTableFilterTypeName =
+        inflection.filterType(foreignTableTypeName);
       const ForeignTableFilterType = connectionFilterType(
         newWithHooks,
         foreignTableFilterTypeName,
@@ -332,9 +332,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
                 table,
                 foreignConstraint
               );
-          const filterFieldName = inflection.filterManyRelationByKeysFieldName(
-            fieldName
-          );
+          const filterFieldName =
+            inflection.filterManyRelationByKeysFieldName(fieldName);
           addField(
             filterFieldName,
             `Filter by the object’s \`${fieldName}\` relation.`,
@@ -346,9 +345,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
             )} to ${describePgEntity(foreignTable)}`
           );
 
-          const existsFieldName = inflection.filterBackwardManyRelationExistsFieldName(
-            fieldName
-          );
+          const existsFieldName =
+            inflection.filterBackwardManyRelationExistsFieldName(fieldName);
           addField(
             existsFieldName,
             `Some related \`${fieldName}\` exist.`,
@@ -367,9 +365,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
           table,
           foreignConstraint
         );
-        const filterFieldName = inflection.filterSingleRelationByKeysBackwardsFieldName(
-          fieldName
-        );
+        const filterFieldName =
+          inflection.filterSingleRelationByKeysBackwardsFieldName(fieldName);
         addField(
           filterFieldName,
           `Filter by the object’s \`${fieldName}\` relation.`,
@@ -381,9 +378,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
           )} to ${describePgEntity(foreignTable)}`
         );
 
-        const existsFieldName = inflection.filterBackwardSingleRelationExistsFieldName(
-          fieldName
-        );
+        const existsFieldName =
+          inflection.filterBackwardSingleRelationExistsFieldName(fieldName);
         addField(
           existsFieldName,
           `A related \`${fieldName}\` exists.`,
@@ -422,9 +418,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
     connectionFilterTypesByTypeName[Self.name] = Self;
 
     const foreignTableTypeName = inflection.tableType(foreignTable);
-    const foreignTableFilterTypeName = inflection.filterType(
-      foreignTableTypeName
-    );
+    const foreignTableFilterTypeName =
+      inflection.filterType(foreignTableTypeName);
     const FilterType = connectionFilterType(
       newWithHooks,
       foreignTableFilterTypeName,
@@ -476,10 +471,8 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
 
       if (!parentFieldInfo || !parentFieldInfo.backwardRelationSpec)
         throw new Error("Did not receive backward relation spec");
-      const {
-        keyAttributes,
-        foreignKeyAttributes,
-      }: BackwardRelationSpec = parentFieldInfo.backwardRelationSpec;
+      const { keyAttributes, foreignKeyAttributes }: BackwardRelationSpec =
+        parentFieldInfo.backwardRelationSpec;
 
       const foreignTableAlias = sql.identifier(Symbol());
       const sqlIdentifier = sql.identifier(

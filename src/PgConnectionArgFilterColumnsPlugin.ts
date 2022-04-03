@@ -27,7 +27,9 @@ const PgConnectionArgFilterColumnsPlugin: Plugin = (builder) => {
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const attrByFieldName = (introspectionResultsByKind.attribute as PgAttribute[])
+    const attrByFieldName = (
+      introspectionResultsByKind.attribute as PgAttribute[]
+    )
       .filter((attr) => attr.classId === table.id)
       .filter((attr) => pgColumnFilter(attr, build, context))
       .filter((attr) => !omit(attr, "filter"))

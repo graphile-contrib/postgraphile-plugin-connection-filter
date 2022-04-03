@@ -31,60 +31,58 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
-    const procByFieldName = (introspectionResultsByKind.procedure as PgProc[]).reduce(
-      (memo: { [fieldName: string]: PgProc }, proc) => {
-        // Must be marked @filterable OR enabled via plugin option
-        if (!(proc.tags.filterable || connectionFilterComputedColumns))
-          return memo;
-
-        // Must not be omitted
-        if (omit(proc, "execute")) return memo;
-        if (omit(proc, "filter")) return memo;
-
-        // Must be a computed column
-        const computedColumnDetails = getComputedColumnDetails(
-          build,
-          table,
-          proc
-        );
-        if (!computedColumnDetails) return memo;
-        const { pseudoColumnName } = computedColumnDetails;
-
-        // Must have only one required argument
-        const inputArgsCount = proc.argTypeIds.filter(
-          (_typeId, idx) =>
-            proc.argModes.length === 0 || // all args are `in`
-            proc.argModes[idx] === "i" || // this arg is `in`
-            proc.argModes[idx] === "b" // this arg is `inout`
-        ).length;
-        const nonOptionalArgumentsCount = inputArgsCount - proc.argDefaultsNum;
-        if (nonOptionalArgumentsCount > 1) {
-          return memo;
-        }
-
-        // Must return a scalar or an array
-        if (proc.returnsSet) return memo;
-        const returnType =
-          introspectionResultsByKind.typeById[proc.returnTypeId];
-        const returnTypeTable =
-          introspectionResultsByKind.classById[returnType.classId];
-        if (returnTypeTable) return memo;
-        const isRecordLike = returnType.id === "2249";
-        if (isRecordLike) return memo;
-        const isVoid = String(returnType.id) === "2278";
-        if (isVoid) return memo;
-
-        // Looks good
-        const fieldName = inflection.computedColumn(
-          pseudoColumnName,
-          proc,
-          table
-        );
-        memo = build.extend(memo, { [fieldName]: proc });
+    const procByFieldName = (
+      introspectionResultsByKind.procedure as PgProc[]
+    ).reduce((memo: { [fieldName: string]: PgProc }, proc) => {
+      // Must be marked @filterable OR enabled via plugin option
+      if (!(proc.tags.filterable || connectionFilterComputedColumns))
         return memo;
-      },
-      {}
-    );
+
+      // Must not be omitted
+      if (omit(proc, "execute")) return memo;
+      if (omit(proc, "filter")) return memo;
+
+      // Must be a computed column
+      const computedColumnDetails = getComputedColumnDetails(
+        build,
+        table,
+        proc
+      );
+      if (!computedColumnDetails) return memo;
+      const { pseudoColumnName } = computedColumnDetails;
+
+      // Must have only one required argument
+      const inputArgsCount = proc.argTypeIds.filter(
+        (_typeId, idx) =>
+          proc.argModes.length === 0 || // all args are `in`
+          proc.argModes[idx] === "i" || // this arg is `in`
+          proc.argModes[idx] === "b" // this arg is `inout`
+      ).length;
+      const nonOptionalArgumentsCount = inputArgsCount - proc.argDefaultsNum;
+      if (nonOptionalArgumentsCount > 1) {
+        return memo;
+      }
+
+      // Must return a scalar or an array
+      if (proc.returnsSet) return memo;
+      const returnType = introspectionResultsByKind.typeById[proc.returnTypeId];
+      const returnTypeTable =
+        introspectionResultsByKind.classById[returnType.classId];
+      if (returnTypeTable) return memo;
+      const isRecordLike = returnType.id === "2249";
+      if (isRecordLike) return memo;
+      const isVoid = String(returnType.id) === "2278";
+      if (isVoid) return memo;
+
+      // Looks good
+      const fieldName = inflection.computedColumn(
+        pseudoColumnName,
+        proc,
+        table
+      );
+      memo = build.extend(memo, { [fieldName]: proc });
+      return memo;
+    }, {});
 
     const operatorsTypeNameByFieldName: { [fieldName: string]: string } = {};
 
