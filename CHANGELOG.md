@@ -1,3 +1,7 @@
+## 2.3.0 - 2022-04-03
+
+- Added `connectionFilterUseListInflectors` option to use list inflectors (#177)
+
 ## 2.2.2 - 2021-08-01
 
 - Added `tslib` dependency to support installing globally (#156)
