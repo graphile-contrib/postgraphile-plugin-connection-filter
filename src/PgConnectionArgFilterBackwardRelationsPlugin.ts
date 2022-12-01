@@ -1,4 +1,5 @@
-import { PgSourceRelation } from "@dataplan/pg";
+import { PgSourceBuilder, PgSourceRelation } from "@dataplan/pg";
+import { filter } from "grafast";
 
 const { version } = require("../package.json");
 
@@ -52,6 +53,45 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
 
     schema: {
       hooks: {
+        init(_, build) {
+          const { inflection } = build;
+          for (const source of build.input.pgSources) {
+            if (source.parameters || !source.codec.columns || source.isUnique) {
+              continue;
+            }
+            for (const [relationName, relation] of Object.entries(
+              source.getRelations() as {
+                [relationName: string]: PgSourceRelation<any, any>;
+              }
+            )) {
+              const foreignTable =
+                relation.source instanceof PgSourceBuilder
+                  ? relation.source.get()
+                  : relation.source;
+              const filterManyTypeName = inflection.filterManyType(
+                source.codec,
+                foreignTable
+              );
+              const foreignTableTypeName = inflection.tableType(
+                foreignTable.codec
+              );
+              build.registerInputObjectType(
+                filterManyTypeName,
+                {
+                  foreignTable,
+                  isPgConnectionFilterMany: true,
+                },
+                () => ({
+                  name: filterManyTypeName,
+                  description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+                }),
+                ""
+              );
+            }
+          }
+          return _;
+        },
+
         GraphQLInputObjectType_fields(inFields, build, context) {
           let fields = inFields;
           const {
@@ -93,84 +133,25 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
               return relation.isReferencee;
             });
 
-            const backwardRelationSpecs = (
-              introspectionResultsByKind.constraint as PgConstraint[]
-            )
-              .filter((con) => con.type === "f")
-              .filter((con) => con.foreignClassId === table.id)
-              .reduce((memo: BackwardRelationSpec[], foreignConstraint) => {
-                if (
-                  omit(foreignConstraint, "read") ||
-                  omit(foreignConstraint, "filter")
-                ) {
-                  return memo;
-                }
-                const foreignTable =
-                  introspectionResultsByKind.classById[
-                    foreignConstraint.classId
-                  ];
-                if (!foreignTable) {
-                  throw new Error(
-                    `Could not find the foreign table (constraint: ${foreignConstraint.name})`
-                  );
-                }
-                if (
-                  omit(foreignTable, "read") ||
-                  omit(foreignTable, "filter")
-                ) {
-                  return memo;
-                }
-                const attributes = (
-                  introspectionResultsByKind.attribute as PgAttribute[]
-                )
-                  .filter((attr) => attr.classId === table.id)
-                  .sort((a, b) => a.num - b.num);
-                const foreignAttributes = (
-                  introspectionResultsByKind.attribute as PgAttribute[]
-                )
-                  .filter((attr) => attr.classId === foreignTable.id)
-                  .sort((a, b) => a.num - b.num);
-                const keyAttributes =
-                  foreignConstraint.foreignKeyAttributeNums.map(
-                    (num) => attributes.filter((attr) => attr.num === num)[0]
-                  );
-                const foreignKeyAttributes =
-                  foreignConstraint.keyAttributeNums.map(
-                    (num) =>
-                      foreignAttributes.filter((attr) => attr.num === num)[0]
-                  );
-                if (keyAttributes.some((attr) => omit(attr, "read"))) {
-                  return memo;
-                }
-                if (foreignKeyAttributes.some((attr) => omit(attr, "read"))) {
-                  return memo;
-                }
-                const isForeignKeyUnique = !!(
-                  introspectionResultsByKind.constraint as PgConstraint[]
-                ).find(
-                  (c) =>
-                    c.classId === foreignTable.id &&
-                    (c.type === "p" || c.type === "u") &&
-                    c.keyAttributeNums.length === foreignKeyAttributes.length &&
-                    c.keyAttributeNums.every(
-                      (n, i) => foreignKeyAttributes[i].num === n
-                    )
-                );
-                memo.push({
-                  table,
-                  keyAttributes,
-                  foreignTable,
-                  foreignKeyAttributes,
-                  foreignConstraint,
-                  isOneToMany: !isForeignKeyUnique,
-                });
-                return memo;
-              }, []);
+            for (const [relationName, relation] of backwardsRelations) {
+              const behavior = build.pgGetBehavior([
+                relation.source.extensions,
+                relation.extensions,
+              ]);
+              const foreignTable =
+                relation.source instanceof PgSourceBuilder
+                  ? relation.source.get()
+                  : relation.source; // Deliberate shadowing
 
-            let backwardRelationSpecByFieldName: {
-              [fieldName: string]: BackwardRelationSpec;
-            } = {};
+              // Used to use 'read' behavior too
+              if (!build.behavior.matches(behavior, "filter", "filter")) {
+                continue;
+              }
 
+              const isForeignKeyUnique = relation.isUnique;
+              const isOneToMany = !relation.isUnique;
+
+              /*
             const addField = (
               fieldName: string,
               description: string,
@@ -318,78 +299,73 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 foreignConstraint,
                 isOneToMany,
               } = spec;
-              const foreignTableTypeName = inflection.tableType(foreignTable);
+              */
+              const foreignTableTypeName = inflection.tableType(
+                foreignTable.codec
+              );
               const foreignTableFilterTypeName =
                 inflection.filterType(foreignTableTypeName);
-              const ForeignTableFilterType = connectionFilterType(
-                newWithHooks,
-                foreignTableFilterTypeName,
-                foreignTable,
-                foreignTableTypeName
+              const ForeignTableFilterType = build.getTypeByName(
+                foreignTableFilterTypeName
               );
               if (!ForeignTableFilterType) continue;
 
               if (isOneToMany) {
-                if (!omit(foreignTable, "many")) {
+                if (
+                  build.behavior.matches(behavior, "list", "") ||
+                  build.behavior.matches(behavior, "connection", "connection")
+                ) {
                   const filterManyTypeName = inflection.filterManyType(
-                    table,
+                    source.codec,
                     foreignTable
                   );
-                  if (!connectionFilterTypesByTypeName[filterManyTypeName]) {
-                    connectionFilterTypesByTypeName[filterManyTypeName] =
-                      newWithHooks(
-                        GraphQLInputObjectType,
-                        {
-                          name: filterManyTypeName,
-                          description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-                        },
-                        {
-                          foreignTable,
-                          isPgConnectionFilterMany: true,
-                        }
-                      );
-                  }
                   const FilterManyType =
-                    connectionFilterTypesByTypeName[filterManyTypeName];
-                  const fieldName = useConnectionInflectors
-                    ? inflection.manyRelationByKeys(
-                        foreignKeyAttributes,
-                        foreignTable,
-                        table,
-                        foreignConstraint
-                      )
-                    : inflection.manyRelationByKeysSimple(
-                        foreignKeyAttributes,
-                        foreignTable,
-                        table,
-                        foreignConstraint
-                      );
+                    build.getTypeByName(filterManyTypeName);
+                  // TODO: revisit using `_` prefixed inflector
+                  const fieldName = inflection._manyRelation({
+                    source,
+                    relationName,
+                  });
                   const filterFieldName =
                     inflection.filterManyRelationByKeysFieldName(fieldName);
-                  addField(
-                    filterFieldName,
-                    `Filter by the object’s \`${fieldName}\` relation.`,
-                    FilterManyType,
-                    makeResolveMany(spec),
-                    spec,
-                    `Adding connection filter backward relation field from ${describePgEntity(
-                      table
-                    )} to ${describePgEntity(foreignTable)}`
+
+                  fields = extend(
+                    fields,
+                    {
+                      [filterFieldName]: fieldWithHooks(
+                        {
+                          fieldName: filterFieldName,
+                          isPgConnectionFilterField: true,
+                        },
+                        () => ({
+                          description: `Filter by the object’s \`${filterFieldName}\` relation.`,
+                          type: FilterManyType,
+                        })
+                      ),
+                    },
+                    `Adding connection filter backward relation field from ${source.name} to ${foreignTable.name}`
                   );
 
                   const existsFieldName =
                     inflection.filterBackwardManyRelationExistsFieldName(
                       fieldName
                     );
-                  addField(
-                    existsFieldName,
-                    `Some related \`${fieldName}\` exist.`,
-                    GraphQLBoolean,
-                    resolveExists,
-                    spec,
-                    `Adding connection filter backward relation exists field from ${describePgEntity(
-                      table
-                    )} to ${describePgEntity(foreignTable)}`
+
+                  fields = extend(
+                    fields,
+                    {
+                      [existsFieldName]: fieldWithHooks(
+                        {
+                          fieldName: existsFieldName,
+                          isPgConnectionFilterField: true,
+                        },
+                        () => ({
+                          description: `Some related \`${existsFieldName}\` exist.`,
+                          type: GraphQLBoolean,
+                        })
+                      ),
+                    },
+                    `Adding connection filter backward relation exists field from ${source.name} to ${foreignTable.name}`
                   );
                 }
               } else {

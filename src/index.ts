@@ -62,6 +62,8 @@ declare global {
       fieldInputType?: GraphQLInputType;
       rangeElementInputType?: GraphQLInputType;
       domainBaseType?: GraphQLOutputType;
+      foreignTable?: PgSource<any, any, any, any>;
+      isPgConnectionFilterMany?: boolean;
     }
     interface Build {
       connectionFilterOperatorsType(
