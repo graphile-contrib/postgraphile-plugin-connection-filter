@@ -23,7 +23,7 @@ jobs:
         run: yarn --immutable --ignore-engines
 
       - name: Check Code Format
-        run: yarn prettier:check
+        run: yarn format:check
 
       - name: Lint Code
         run: yarn lint

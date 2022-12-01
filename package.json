@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write src/**/*.ts",
+    "format": "prettier --ignore-path ./.eslintignore",
+    "format:all": "yarn format '**/*.{json,md,html,js,jsx,ts,tsx}'",
+    "format:fix": "yarn format:all --write",
+    "format:check": "yarn format:all --list-different",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepack": "rm -Rf dist && npm run build",
     "test": "jest -i",
