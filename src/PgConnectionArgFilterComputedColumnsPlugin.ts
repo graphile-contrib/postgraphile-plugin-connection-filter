@@ -1,183 +1,118 @@
-import type { Plugin } from "graphile-build";
-import type { PgClass, PgProc, PgType } from "graphile-build-pg";
-import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+import { TYPES } from "@dataplan/pg";
+import { getComputedColumnSources } from "./utils";
 
-const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
-  builder,
-  { connectionFilterComputedColumns }
-) => {
-  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
-    const {
-      extend,
-      newWithHooks,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgOmit: omit,
-      pgSql: sql,
-      inflection,
-      connectionFilterOperatorsType,
-      connectionFilterRegisterResolver,
-      connectionFilterResolve,
-      connectionFilterTypesByTypeName,
-    } = build;
-    const {
-      scope: { isPgConnectionFilter, pgIntrospection: table },
-      fieldWithHooks,
-      Self,
-    } = context;
+const { version } = require("../package.json");
 
-    if (!isPgConnectionFilter || !table || table.kind !== "class") {
-      return fields;
-    }
+export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
+  {
+    name: "PgConnectionArgFilterComputedColumnsPlugin",
+    version,
 
-    connectionFilterTypesByTypeName[Self.name] = Self;
+    schema: {
+      hooks: {
+        GraphQLInputObjectType_fields(inFields, build, context) {
+          let fields = inFields;
+          const {
+            extend,
+            sql,
+            inflection,
+            connectionFilterOperatorsType,
+            options: { connectionFilterComputedColumns },
+          } = build;
+          const {
+            fieldWithHooks,
+            scope: { pgCodec: codec, isPgConnectionFilter },
+            Self,
+          } = context;
 
-    const procByFieldName = (
-      introspectionResultsByKind.procedure as PgProc[]
-    ).reduce((memo: { [fieldName: string]: PgProc }, proc) => {
-      // Must be marked @filterable OR enabled via plugin option
-      if (!(proc.tags.filterable || connectionFilterComputedColumns))
-        return memo;
+          if (
+            !isPgConnectionFilter ||
+            !codec ||
+            !codec.columns ||
+            codec.isAnonymous
+          ) {
+            return fields;
+          }
 
-      // Must not be omitted
-      if (omit(proc, "execute")) return memo;
-      if (omit(proc, "filter")) return memo;
+          // TODO: This may need to change once V5 fixes the need for it
+          const source = build.input.pgSources.find(
+            (s) => s.codec === codec && !s.parameters && !s.isUnique
+          );
+          if (!source) {
+            return fields;
+          }
 
-      // Must be a computed column
-      const computedColumnDetails = getComputedColumnDetails(
-        build,
-        table,
-        proc
-      );
-      if (!computedColumnDetails) return memo;
-      const { pseudoColumnName } = computedColumnDetails;
+          const computedColumnSources = getComputedColumnSources(build, source);
 
-      // Must have only one required argument
-      const inputArgsCount = proc.argTypeIds.filter(
-        (_typeId, idx) =>
-          proc.argModes.length === 0 || // all args are `in`
-          proc.argModes[idx] === "i" || // this arg is `in`
-          proc.argModes[idx] === "b" // this arg is `inout`
-      ).length;
-      const nonOptionalArgumentsCount = inputArgsCount - proc.argDefaultsNum;
-      if (nonOptionalArgumentsCount > 1) {
-        return memo;
-      }
-
-      // Must return a scalar or an array
-      if (proc.returnsSet) return memo;
-      const returnType = introspectionResultsByKind.typeById[proc.returnTypeId];
-      const returnTypeTable =
-        introspectionResultsByKind.classById[returnType.classId];
-      if (returnTypeTable) return memo;
-      const isRecordLike = returnType.id === "2249";
-      if (isRecordLike) return memo;
-      const isVoid = String(returnType.id) === "2278";
-      if (isVoid) return memo;
-
-      // Looks good
-      const fieldName = inflection.computedColumn(
-        pseudoColumnName,
-        proc,
-        table
-      );
-      memo = build.extend(memo, { [fieldName]: proc });
-      return memo;
-    }, {});
-
-    const operatorsTypeNameByFieldName: { [fieldName: string]: string } = {};
-
-    const procFields = Object.entries(procByFieldName).reduce(
-      (memo, [fieldName, proc]) => {
-        const OperatorsType = connectionFilterOperatorsType(
-          newWithHooks,
-          proc.returnTypeId,
-          null
-        );
-        if (!OperatorsType) {
-          return memo;
-        }
-        operatorsTypeNameByFieldName[fieldName] = OperatorsType.name;
-        return extend(memo, {
-          [fieldName]: fieldWithHooks(
-            fieldName,
-            {
-              description: `Filter by the object’s \`${fieldName}\` field.`,
-              type: OperatorsType,
-            },
-            {
-              isPgConnectionFilterField: true,
+          for (const computedColumnSource of computedColumnSources) {
+            // Must return a scalar or an array
+            if (!computedColumnSource.isUnique) {
+              continue;
             }
-          ),
-        });
+            if (computedColumnSource.codec.columns) {
+              continue;
+            }
+            if (computedColumnSource.codec === TYPES.void) {
+              continue;
+            }
+
+            const OperatorsType = connectionFilterOperatorsType(
+              computedColumnSource.codec
+            );
+            if (!OperatorsType) {
+              continue;
+            }
+
+            const behavior = build.pgGetBehavior([
+              computedColumnSource.extensions,
+            ]);
+
+            const defaultBehavior = connectionFilterComputedColumns
+              ? "filterBy"
+              : "";
+            if (
+              !build.behavior.matches(behavior, "filterBy", defaultBehavior)
+            ) {
+              continue;
+            }
+
+            const { argDetails, makeFieldArgs, makeArgs, makeExpression } =
+              build.pgGetArgDetailsFromParameters(
+                computedColumnSource,
+                computedColumnSource.parameters.slice(1)
+              );
+
+            // Must have only one required argument
+            if (argDetails.some((a) => a.required)) {
+              continue;
+            }
+
+            // Looks good
+
+            const fieldName = inflection.computedColumnField({
+              source: computedColumnSource,
+            });
+
+            fields = build.extend(
+              fields,
+              {
+                [fieldName]: fieldWithHooks(
+                  {
+                    fieldName,
+                    isPgConnectionFilterField: true,
+                  },
+                  {
+                    description: `Filter by the object’s \`${fieldName}\` field.`,
+                    type: OperatorsType,
+                    // TODO: applyPlan
+                  }
+                ),
+              },
+              ""
+            );
+          }
+          return fields;
+        },
       },
-      {}
-    );
-
-    const resolve: ConnectionFilterResolver = ({
-      sourceAlias,
-      fieldName,
-      fieldValue,
-      queryBuilder,
-    }) => {
-      if (fieldValue == null) return null;
-
-      const proc = procByFieldName[fieldName];
-      const sqlIdentifier = sql.query`${sql.identifier(
-        proc.namespace.name
-      )}.${sql.identifier(proc.name)}(${sourceAlias})`;
-      const pgType = introspectionResultsByKind.typeById[proc.returnTypeId];
-      const pgTypeModifier = null;
-      const filterTypeName = operatorsTypeNameByFieldName[fieldName];
-
-      return connectionFilterResolve(
-        fieldValue,
-        sqlIdentifier,
-        filterTypeName,
-        queryBuilder,
-        pgType,
-        pgTypeModifier,
-        fieldName
-      );
-    };
-
-    for (const fieldName of Object.keys(procFields)) {
-      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
-    }
-
-    return extend(fields, procFields);
-  });
-
-  function getComputedColumnDetails(build: any, table: PgClass, proc: PgProc) {
-    if (!proc.isStable) return null;
-    if (proc.namespaceId !== table.namespaceId) return null;
-    if (!proc.name.startsWith(`${table.name}_`)) return null;
-    if (proc.argTypeIds.length < 1) return null;
-    if (proc.argTypeIds[0] !== table.type.id) return null;
-
-    const argTypes = proc.argTypeIds.reduce((prev: PgType[], typeId, idx) => {
-      if (
-        proc.argModes.length === 0 || // all args are `in`
-        proc.argModes[idx] === "i" || // this arg is `in`
-        proc.argModes[idx] === "b" // this arg is `inout`
-      ) {
-        prev.push(build.pgIntrospectionResultsByKind.typeById[typeId]);
-      }
-      return prev;
-    }, []);
-    if (
-      argTypes
-        .slice(1)
-        .some(
-          (type) => type.type === "c" && type.class && type.class.isSelectable
-        )
-    ) {
-      // Accepts two input tables? Skip.
-      return null;
-    }
-
-    const pseudoColumnName = proc.name.substr(table.name.length + 1);
-    return { argTypes, pseudoColumnName };
-  }
-};
-
-export default PgConnectionArgFilterComputedColumnsPlugin;
+    },
+  };

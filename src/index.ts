@@ -1,45 +1,73 @@
-import type { Plugin } from "graphile-build";
-import ConnectionArgFilterPlugin from "./ConnectionArgFilterPlugin";
-import PgConnectionArgFilterPlugin from "./PgConnectionArgFilterPlugin";
-import PgConnectionArgFilterColumnsPlugin from "./PgConnectionArgFilterColumnsPlugin";
-import PgConnectionArgFilterComputedColumnsPlugin from "./PgConnectionArgFilterComputedColumnsPlugin";
-import PgConnectionArgFilterCompositeTypeColumnsPlugin from "./PgConnectionArgFilterCompositeTypeColumnsPlugin";
-import PgConnectionArgFilterRecordFunctionsPlugin from "./PgConnectionArgFilterRecordFunctionsPlugin";
-import PgConnectionArgFilterBackwardRelationsPlugin from "./PgConnectionArgFilterBackwardRelationsPlugin";
-import PgConnectionArgFilterForwardRelationsPlugin from "./PgConnectionArgFilterForwardRelationsPlugin";
-import PgConnectionArgFilterLogicalOperatorsPlugin from "./PgConnectionArgFilterLogicalOperatorsPlugin";
-import PgConnectionArgFilterOperatorsPlugin from "./PgConnectionArgFilterOperatorsPlugin";
+import type {} from "graphile-build-pg";
+import { ConnectionArgFilterPlugin } from "./ConnectionArgFilterPlugin";
+import { PgConnectionArgFilterPlugin } from "./PgConnectionArgFilterPlugin";
+import { PgConnectionArgFilterColumnsPlugin } from "./PgConnectionArgFilterColumnsPlugin";
+import { PgConnectionArgFilterComputedColumnsPlugin } from "./PgConnectionArgFilterComputedColumnsPlugin";
+import { PgConnectionArgFilterCompositeTypeColumnsPlugin } from "./PgConnectionArgFilterCompositeTypeColumnsPlugin";
+import { PgConnectionArgFilterRecordFunctionsPlugin } from "./PgConnectionArgFilterRecordFunctionsPlugin";
+import { PgConnectionArgFilterBackwardRelationsPlugin } from "./PgConnectionArgFilterBackwardRelationsPlugin";
+import { PgConnectionArgFilterForwardRelationsPlugin } from "./PgConnectionArgFilterForwardRelationsPlugin";
+import { PgConnectionArgFilterLogicalOperatorsPlugin } from "./PgConnectionArgFilterLogicalOperatorsPlugin";
+import { PgConnectionArgFilterOperatorsPlugin } from "./PgConnectionArgFilterOperatorsPlugin";
+import { OperatorsCategory } from "./interfaces";
+import { GraphQLInputType, GraphQLOutputType } from "graphql";
+import {PgTypeCodec} from "@dataplan/pg";
 
-const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const pkg = require("../package.json");
-  builder.hook("build", (build) => {
-    // Check dependencies
-    if (!build.versions) {
-      throw new Error(
-        `Plugin ${pkg.name}@${pkg.version} requires graphile-build@^4.1.0 in order to check dependencies (current version: ${build.graphileBuildVersion})`
-      );
+declare global {
+  namespace GraphileBuild {
+    interface GraphileBuildSchemaOptions {
+      connectionFilterAllowedOperators?: string[];
+      connectionFilterAllowedFieldTypes?: string[];
+      connectionFilterArrays?: boolean;
+      connectionFilterComputedColumns?: boolean;
+      connectionFilterOperatorNames?: boolean;
+      connectionFilterRelations?: boolean;
+      connectionFilterSetofFunctions?: boolean;
+      connectionFilterLogicalOperators?: boolean;
+      connectionFilterAllowNullInput?: boolean;
+      connectionFilterAllowEmptyObjectInput?: boolean;
     }
-    const depends = (name: string, range: string) => {
-      if (!build.hasVersion(name, range)) {
-        throw new Error(
-          `Plugin ${pkg.name}@${pkg.version} requires ${name}@${range} (${
-            build.versions[name]
-              ? `current version: ${build.versions[name]}`
-              : "not found"
-          })`
-        );
-      }
-    };
-    depends("graphile-build-pg", "^4.5.0");
+    interface Inflection {
+      filterType(typeName: string): string;
+      filterFieldType(typeName: string): string;
+      filterFieldListType(typeName: string): string;
+    }
+    interface ScopeInputObject {
+      isPgConnectionFilter?: boolean;
+      isPgConnectionFilterOperators?: boolean;
+      pgConnectionFilterOperatorsCategory?: OperatorsCategory;
+      // TODO: rename these so they are scoped to this plugin!
+      fieldType?: GraphQLOutputType;
+      fieldInputType?: GraphQLInputType;
+      rangeElementInputType?: GraphQLInputType;
+      domainBaseType?: GraphQLOutputType;
+    }
+    interface Build {
+      connectionFilterOperatorsType(codec: PgTypeCodec<any, any, any, any>): ;
+    }
+    interface ScopeInputObjectFieldsField {
+      isPgConnectionFilterField?: boolean;
+    }
+  }
+}
 
-    // Register this plugin
-    build.versions = build.extend(build.versions, { [pkg.name]: pkg.version });
-
-    return build;
-  });
-
-  const defaultOptions = {
+export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
+  plugins: [
+    ConnectionArgFilterPlugin,
+    PgConnectionArgFilterPlugin,
+    PgConnectionArgFilterColumnsPlugin,
+    PgConnectionArgFilterComputedColumnsPlugin,
+    PgConnectionArgFilterCompositeTypeColumnsPlugin,
+    PgConnectionArgFilterRecordFunctionsPlugin,
+    //if (connectionFilterRelations)
+    PgConnectionArgFilterBackwardRelationsPlugin,
+    //if (connectionFilterRelations)
+    PgConnectionArgFilterForwardRelationsPlugin,
+    //if (connectionFilterLogicalOperators)
+    PgConnectionArgFilterLogicalOperatorsPlugin,
+    PgConnectionArgFilterOperatorsPlugin,
+  ],
+  schema: {
     //connectionFilterAllowedOperators,
     //connectionFilterAllowedFieldTypes,
     connectionFilterArrays: true,
@@ -50,33 +78,5 @@ const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
     connectionFilterLogicalOperators: true,
     connectionFilterAllowNullInput: false,
     connectionFilterAllowEmptyObjectInput: false,
-  };
-  const options = {
-    ...defaultOptions,
-    ...configOptions,
-  };
-  const { connectionFilterRelations, connectionFilterLogicalOperators } =
-    options;
-
-  ConnectionArgFilterPlugin(builder, options);
-  PgConnectionArgFilterPlugin(builder, options);
-  PgConnectionArgFilterColumnsPlugin(builder, options);
-  PgConnectionArgFilterComputedColumnsPlugin(builder, options);
-  PgConnectionArgFilterCompositeTypeColumnsPlugin(builder, options);
-  PgConnectionArgFilterRecordFunctionsPlugin(builder, options);
-
-  if (connectionFilterRelations) {
-    PgConnectionArgFilterBackwardRelationsPlugin(builder, options);
-    PgConnectionArgFilterForwardRelationsPlugin(builder, options);
-  }
-
-  if (connectionFilterLogicalOperators) {
-    PgConnectionArgFilterLogicalOperatorsPlugin(builder, options);
-  }
-
-  PgConnectionArgFilterOperatorsPlugin(builder, options);
+  },
 };
-
-// TODO: In the next major version, change `export =` to `export default`.
-// This will be a breaking change for CommonJS users.
-export = PostGraphileConnectionFilterPlugin;

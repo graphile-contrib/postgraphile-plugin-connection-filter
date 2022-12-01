@@ -1,19 +1,22 @@
-import type { Plugin } from "graphile-build";
+import type {} from "graphile-build";
 
-const ConnectionArgFilterPlugin: Plugin = (builder) => {
-  builder.hook("inflection", (inflection) => {
-    return Object.assign(inflection, {
-      filterType(typeName: string) {
+const { version } = require("../package.json");
+
+export const ConnectionArgFilterPlugin: GraphileConfig.Plugin = {
+  name: "PostGraphileConnectionFilter_ConnectionArgFilterPlugin",
+  version,
+
+  inflection: {
+    add: {
+      filterType(preset, typeName) {
         return `${typeName}Filter`;
       },
-      filterFieldType(typeName: string) {
+      filterFieldType(preset, typeName) {
         return `${typeName}Filter`;
       },
-      filterFieldListType(typeName: string) {
+      filterFieldListType(preset, typeName) {
         return `${typeName}ListFilter`;
       },
-    });
-  });
+    },
+  },
 };
-
-export default ConnectionArgFilterPlugin;

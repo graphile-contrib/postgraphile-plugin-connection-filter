@@ -1,505 +1,451 @@
-import type { Context, Plugin } from "graphile-build";
-import type {
-  PgClass,
-  PgProc,
-  PgType,
-  QueryBuilder,
-  SQL,
-} from "graphile-build-pg";
+import { isEnumCodec, PgSelectStep, PgTypeCodec, TYPES } from "@dataplan/pg";
+import { ConnectionStep, ExecutableStep } from "grafast";
 import type {
   GraphQLInputFieldConfigMap,
   GraphQLInputType,
+  GraphQLOutputType,
   GraphQLType,
 } from "graphql";
+import { GraphQLNamedType } from "graphql";
+import { PgType } from "pg-introspection";
+import { SQL } from "pg-sql2";
+import { OperatorsCategory } from "./interfaces";
 import { BackwardRelationSpec } from "./PgConnectionArgFilterBackwardRelationsPlugin";
 
-const PgConnectionArgFilterPlugin: Plugin = (
-  builder,
-  {
-    connectionFilterAllowedFieldTypes,
-    connectionFilterArrays,
-    connectionFilterSetofFunctions,
-    connectionFilterAllowNullInput,
-    connectionFilterAllowEmptyObjectInput,
-  }
-) => {
-  // Add `filter` input argument to connection and simple collection types
-  builder.hook(
-    "GraphQLObjectType:fields:field:args",
-    (args, build, context) => {
-      const {
-        extend,
-        newWithHooks,
-        getTypeByName,
-        inflection,
-        pgGetGqlTypeByTypeIdAndModifier,
-        pgOmit: omit,
-        connectionFilterResolve,
-        connectionFilterType,
-      } = build;
-      const {
-        scope: {
-          isPgFieldConnection,
-          isPgFieldSimpleCollection,
-          pgFieldIntrospection: source,
-        },
-        addArgDataGenerator,
-        field,
-        Self,
-      } = context as Context<GraphQLInputFieldConfigMap> & {
-        scope: {
-          pgFieldIntrospection: PgClass | PgProc;
-          isPgConnectionFilter?: boolean;
+const { version } = require("../package.json");
+
+type AnyCodec = PgTypeCodec<any, any, any, any>;
+
+export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
+  name: "PgConnectionArgFilterPlugin",
+  version,
+
+  schema: {
+    hooks: {
+      build(build) {
+        const {
+          inflection,
+          graphql: { isListType, getNamedType },
+        } = build;
+        build.connectionFilterOperatorsType = (codec) => {
+          const fieldType = build.getGraphQLTypeByPgCodec!(codec, "output") as
+            | GraphQLOutputType
+            | undefined;
+          const fieldInputType = build.getGraphQLTypeByPgCodec!(
+            codec,
+            "input"
+          ) as GraphQLInputType | undefined;
+          if (!fieldType || !fieldInputType) {
+            return undefined;
+          }
+          const namedType = getNamedType(fieldType);
+          const namedInputType = getNamedType(fieldInputType);
+          const listType = isListType(fieldType);
+          const operatorsTypeName = listType
+            ? inflection.filterFieldListType(namedType.name)
+            : inflection.filterFieldType(namedType.name);
+          return build.getTypeByName(operatorsTypeName);
         };
-      };
 
-      const shouldAddFilter = isPgFieldConnection || isPgFieldSimpleCollection;
-      if (!shouldAddFilter) return args;
+        return build;
+      },
 
-      if (!source) return args;
-      if (omit(source, "filter")) return args;
+      init(_, build) {
+        const {
+          inflection,
+          graphql: { getNamedType, GraphQLString, isListType },
+          options: {
+            connectionFilterAllowedFieldTypes,
+            connectionFilterArrays,
+          },
+        } = build;
 
-      if (source.kind === "procedure") {
-        if (!(source.tags.filterable || connectionFilterSetofFunctions)) {
+        const codecs = new Set<AnyCodec>();
+
+        // Create filter type for all column-having codecs
+        for (const pgCodec of build.allPgCodecs) {
+          if (!pgCodec.columns || pgCodec.isAnonymous) {
+            continue;
+          }
+          const nodeTypeName = build.getGraphQLTypeNameByPgCodec(
+            pgCodec,
+            "output"
+          );
+          if (!nodeTypeName) continue;
+
+          const filterTypeName = inflection.filterType(nodeTypeName);
+          build.registerInputObjectType(
+            filterTypeName,
+            {
+              pgCodec,
+              isPgConnectionFilter: true,
+            },
+            () => ({
+              description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+            }),
+            "PgConnectionArgFilterPlugin"
+          );
+        }
+
+        const isSuitableForFiltering = (codec: AnyCodec): boolean =>
+          !codec.columns &&
+          !codec.isAnonymous &&
+          !codec.arrayOfCodec &&
+          !codec.polymorphism &&
+          (!codec.domainOfCodec || isSuitableForFiltering(codec.domainOfCodec));
+
+        const getInnerCodec = (codec: AnyCodec): AnyCodec => {
+          if (codec.domainOfCodec) {
+            return getInnerCodec(codec.domainOfCodec);
+          }
+          if (codec.arrayOfCodec) {
+            return getInnerCodec(codec.arrayOfCodec);
+          }
+          if (codec.rangeOfCodec) {
+            return getInnerCodec(codec.rangeOfCodec);
+          }
+          return codec;
+        };
+
+        // Get or create types like IntFilter, StringFilter, etc.
+        for (const codec of build.allPgCodecs) {
+          if (!isSuitableForFiltering(codec)) {
+            // Not a base, domain, enum, or range type? Skip.
+            continue;
+          }
+
+          // Perform some checks on the simple type (after removing array/range/domain wrappers)
+          const pgSimpleCodec = getInnerCodec(codec);
+          if (!pgSimpleCodec) continue;
+          if (
+            pgSimpleCodec.polymorphism ||
+            pgSimpleCodec.columns ||
+            pgSimpleCodec.isAnonymous
+          ) {
+            // Haven't found an enum type or a non-array base type? Skip.
+            continue;
+          }
+          if (pgSimpleCodec === TYPES.json) {
+            // The PG `json` type has no valid operators.
+            // Skip filter type creation to allow the proper
+            // operators to be exposed for PG `jsonb` types.
+            continue;
+          }
+
+          // TODO:v5: I'm unsure if this will work as before, e.g. it might not wrap with GraphQLList/GraphQLNonNull/etc
+          // Establish field type and field input type
+          const fieldType = build.getGraphQLTypeByPgCodec(codec, "output") as
+            | GraphQLOutputType
+            | undefined;
+          if (!fieldType) continue;
+          const fieldInputType = build.getGraphQLTypeByPgCodec(
+            codec,
+            "input"
+          ) as GraphQLInputType | undefined;
+          if (!fieldInputType) continue;
+
+          // Avoid exposing filter operators on unrecognized types that PostGraphile handles as Strings
+          const namedType = getNamedType(fieldType);
+          const namedInputType = getNamedType(fieldInputType);
+          const actualStringCodecs = [
+            TYPES.bpchar,
+            TYPES.char,
+            TYPES.name,
+            TYPES.text,
+            TYPES.varchar,
+            TYPES.citext,
+          ];
+          if (
+            namedInputType === GraphQLString &&
+            !actualStringCodecs.includes(pgSimpleCodec)
+          ) {
+            // Not a real string type? Skip.
+            continue;
+          }
+
+          // Respect `connectionFilterAllowedFieldTypes` config option
+          if (
+            connectionFilterAllowedFieldTypes &&
+            !connectionFilterAllowedFieldTypes.includes(namedType.name)
+          ) {
+            continue;
+          }
+
+          const pgConnectionFilterOperatorsCategory: OperatorsCategory =
+            codec.arrayOfCodec
+              ? "Array"
+              : codec.rangeOfCodec
+              ? "Range"
+              : isEnumCodec(codec)
+              ? "Enum"
+              : codec.domainOfCodec
+              ? "Domain"
+              : "Scalar";
+
+          // Respect `connectionFilterArrays` config option
+          if (
+            pgConnectionFilterOperatorsCategory === "Array" &&
+            !connectionFilterArrays
+          ) {
+            continue;
+          }
+
+          const rangeElementInputType = codec.rangeOfCodec
+            ? (build.getGraphQLTypeByPgCodec(codec.rangeOfCodec, "input") as
+                | GraphQLInputType
+                | undefined)
+            : undefined;
+
+          const domainBaseType = codec.domainOfCodec
+            ? (build.getGraphQLTypeByPgCodec(codec.domainOfCodec, "output") as
+                | GraphQLOutputType
+                | undefined)
+            : undefined;
+
+          const listType = isListType(fieldType);
+
+          // TODO: see if we can share code with build.connectionFilterOperatorsType
+          const operatorsTypeName = listType
+            ? inflection.filterFieldListType(namedType.name)
+            : inflection.filterFieldType(namedType.name);
+
+          build.registerInputObjectType(
+            operatorsTypeName,
+            {
+              isPgConnectionFilterOperators: true,
+              pgConnectionFilterOperatorsCategory,
+              fieldType,
+              fieldInputType,
+              rangeElementInputType,
+              domainBaseType,
+            },
+            () => ({
+              name: operatorsTypeName,
+              description: `A filter to be used against ${namedType.name}${
+                listType ? " List" : ""
+              } fields. All fields are combined with a logical ‘and.’`,
+            }),
+            "PgConnectionArgFilterPlugin"
+          );
+        }
+
+        return _;
+      },
+
+      // Add `filter` input argument to connection and simple collection types
+      GraphQLObjectType_fields_field_args(args, build, context) {
+        const {
+          extend,
+          getTypeByName,
+          inflection,
+          options: {
+            connectionFilterAllowedFieldTypes,
+            connectionFilterArrays,
+            connectionFilterSetofFunctions,
+            connectionFilterAllowNullInput,
+            connectionFilterAllowEmptyObjectInput,
+          },
+        } = build;
+        const {
+          scope: {
+            isPgFieldConnection,
+            isPgFieldSimpleCollection,
+            pgSource: source,
+            fieldName,
+          },
+          Self,
+        } = context;
+
+        const shouldAddFilter =
+          isPgFieldConnection || isPgFieldSimpleCollection;
+        if (!shouldAddFilter) return args;
+
+        if (!source) return args;
+        const behavior = build.pgGetBehavior([
+          source.codec.extensions,
+          source.extensions,
+        ]);
+
+        // procedure sources aren't filterable by default (unless
+        // connectionFilterSetofFunctions is set), but can be made filterable
+        // by adding the `+filter` behavior.
+        const defaultBehavior =
+          source.parameters && !connectionFilterSetofFunctions
+            ? "-filter"
+            : "filter";
+
+        if (!build.behavior.matches(behavior, "filter", defaultBehavior)) {
           return args;
         }
-      }
 
-      const returnTypeId =
-        source.kind === "class" ? source.type.id : source.returnTypeId;
-      const returnType =
-        source.kind === "class"
-          ? source.type
-          : (build.pgIntrospectionResultsByKind.type as PgType[]).find(
-              (t) => t.id === returnTypeId
+        const returnCodec = source.codec;
+        const nodeType = build.getGraphQLTypeByPgCodec(
+          returnCodec,
+          "output"
+        ) as GraphQLOutputType & GraphQLNamedType;
+        if (!nodeType) {
+          return args;
+        }
+        const nodeTypeName = nodeType.name;
+        const filterTypeName = inflection.filterType(nodeTypeName);
+        const nodeCodec = source.codec;
+
+        const FilterType = build.getTypeByName(filterTypeName) as
+          | GraphQLInputType
+          | undefined;
+        if (!FilterType) {
+          return args;
+        }
+
+        return extend(
+          args,
+          {
+            filter: {
+              description:
+                "A filter to be used in determining which values should be returned by the collection.",
+              type: FilterType,
+              ...(isPgFieldConnection
+                ? {
+                    plan(
+                      _: any,
+                      $connection: ConnectionStep<
+                        any,
+                        any,
+                        any,
+                        PgSelectStep<any, any, any, any>
+                      >
+                    ) {
+                      const $pgSelect = $connection.getSubplan();
+                      return $pgSelect.wherePlan();
+                    },
+                  }
+                : {
+                    plan(_: any, $pgSelect: PgSelectStep<any, any, any, any>) {
+                      return $pgSelect.wherePlan();
+                    },
+                  }),
+            },
+          },
+          `Adding connection filter arg to field '${fieldName}' of '${Self.name}'`
+        );
+      },
+
+      /*
+      build(build) {
+        const {
+          extend,
+          graphql: { getNamedType, GraphQLInputObjectType, GraphQLList },
+          inflection,
+          sql,
+          options: {
+            connectionFilterAllowedFieldTypes,
+            connectionFilterArrays,
+            connectionFilterSetofFunctions,
+            connectionFilterAllowNullInput,
+            connectionFilterAllowEmptyObjectInput,
+          },
+        } = build;
+
+        /*
+        const handleNullInput = () => {
+          if (!connectionFilterAllowNullInput) {
+            throw new Error(
+              "Null literals are forbidden in filter argument input."
             );
-      if (!returnType) {
-        return args;
-      }
-      const isRecordLike = returnTypeId === "2249";
-      const nodeTypeName = isRecordLike
-        ? inflection.recordFunctionReturnType(source)
-        : pgGetGqlTypeByTypeIdAndModifier(returnTypeId, null).name;
-      const filterTypeName = inflection.filterType(nodeTypeName);
-      const nodeType = getTypeByName(nodeTypeName);
-      if (!nodeType) {
-        return args;
-      }
-      const nodeSource =
-        source.kind === "procedure" && returnType.class
-          ? returnType.class
-          : source;
-
-      const FilterType = connectionFilterType(
-        newWithHooks,
-        filterTypeName,
-        nodeSource,
-        nodeTypeName
-      );
-      if (!FilterType) {
-        return args;
-      }
-
-      // Generate SQL where clause from filter argument
-      addArgDataGenerator(function connectionFilter(args: any) {
-        return {
-          pgQuery: (queryBuilder: QueryBuilder) => {
-            if (Object.prototype.hasOwnProperty.call(args, "filter")) {
-              const sqlFragment = connectionFilterResolve(
-                args.filter,
-                queryBuilder.getTableAlias(),
-                filterTypeName,
-                queryBuilder,
-                returnType,
-                null
-              );
-              if (sqlFragment != null) {
-                queryBuilder.where(sqlFragment);
-              }
-            }
-          },
-        };
-      });
-
-      return extend(
-        args,
-        {
-          filter: {
-            description:
-              "A filter to be used in determining which values should be returned by the collection.",
-            type: FilterType,
-          },
-        },
-        `Adding connection filter arg to field '${field.name}' of '${Self.name}'`
-      );
-    }
-  );
-
-  builder.hook("build", (build) => {
-    const {
-      extend,
-      graphql: { getNamedType, GraphQLInputObjectType, GraphQLList },
-      inflection,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlInputTypeByTypeIdAndModifier,
-      pgGetGqlTypeByTypeIdAndModifier,
-      pgSql: sql,
-    } = build;
-
-    const connectionFilterResolvers: { [typeName: string]: any } = {};
-    const connectionFilterTypesByTypeName: {
-      [typeName: string]: any;
-    } = {};
-
-    const handleNullInput = () => {
-      if (!connectionFilterAllowNullInput) {
-        throw new Error(
-          "Null literals are forbidden in filter argument input."
-        );
-      }
-      return null;
-    };
-
-    const handleEmptyObjectInput = () => {
-      if (!connectionFilterAllowEmptyObjectInput) {
-        throw new Error(
-          "Empty objects are forbidden in filter argument input."
-        );
-      }
-      return null;
-    };
-
-    const isEmptyObject = (obj: any) =>
-      typeof obj === "object" &&
-      obj !== null &&
-      !Array.isArray(obj) &&
-      Object.keys(obj).length === 0;
-
-    const connectionFilterRegisterResolver = (
-      typeName: string,
-      fieldName: string,
-      resolve: any
-    ) => {
-      connectionFilterResolvers[typeName] = extend(
-        connectionFilterResolvers[typeName] || {},
-        { [fieldName]: resolve }
-      );
-    };
-
-    const connectionFilterResolve = (
-      obj: any,
-      sourceAlias: SQL,
-      typeName: string,
-      queryBuilder: QueryBuilder,
-      pgType: PgType,
-      pgTypeModifier: number,
-      parentFieldName: string,
-      parentFieldInfo: { backwardRelationSpec: BackwardRelationSpec }
-    ) => {
-      if (obj == null) return handleNullInput();
-      if (isEmptyObject(obj)) return handleEmptyObjectInput();
-
-      const sqlFragments = Object.entries(obj)
-        .map(([key, value]) => {
-          if (value == null) return handleNullInput();
-          if (isEmptyObject(value)) return handleEmptyObjectInput();
-
-          const resolversByFieldName = connectionFilterResolvers[typeName];
-          if (resolversByFieldName && resolversByFieldName[key]) {
-            return resolversByFieldName[key]({
-              sourceAlias,
-              fieldName: key,
-              fieldValue: value,
-              queryBuilder,
-              pgType,
-              pgTypeModifier,
-              parentFieldName,
-              parentFieldInfo,
-            });
           }
-          throw new Error(`Unable to resolve filter field '${key}'`);
-        })
-        .filter((x) => x != null);
-
-      return sqlFragments.length === 0
-        ? null
-        : sql.query`(${sql.join(sqlFragments, ") and (")})`;
-    };
-
-    // Get or create types like IntFilter, StringFilter, etc.
-    const connectionFilterOperatorsType = (
-      newWithHooks: any,
-      pgTypeId: number,
-      pgTypeModifier: number
-    ) => {
-      const pgType = introspectionResultsByKind.typeById[pgTypeId];
-
-      const allowedPgTypeTypes = ["b", "d", "e", "r"];
-      if (!allowedPgTypeTypes.includes(pgType.type)) {
-        // Not a base, domain, enum, or range type? Skip.
-        return null;
-      }
-
-      // Perform some checks on the simple type (after removing array/range/domain wrappers)
-      const pgGetNonArrayType = (pgType: PgType) =>
-        pgType.isPgArray && pgType.arrayItemType
-          ? pgType.arrayItemType
-          : pgType;
-      const pgGetNonRangeType = (pgType: PgType) =>
-        (pgType as any).rangeSubTypeId
-          ? introspectionResultsByKind.typeById[(pgType as any).rangeSubTypeId]
-          : pgType;
-      const pgGetNonDomainType = (pgType: PgType) =>
-        pgType.type === "d" && pgType.domainBaseTypeId
-          ? introspectionResultsByKind.typeById[pgType.domainBaseTypeId]
-          : pgType;
-      const pgGetSimpleType = (pgType: PgType) =>
-        pgGetNonDomainType(pgGetNonRangeType(pgGetNonArrayType(pgType)));
-      const pgSimpleType = pgGetSimpleType(pgType);
-      if (!pgSimpleType) return null;
-      if (
-        !(
-          pgSimpleType.type === "e" ||
-          (pgSimpleType.type === "b" && !pgSimpleType.isPgArray)
-        )
-      ) {
-        // Haven't found an enum type or a non-array base type? Skip.
-        return null;
-      }
-      if (pgSimpleType.name === "json") {
-        // The PG `json` type has no valid operators.
-        // Skip filter type creation to allow the proper
-        // operators to be exposed for PG `jsonb` types.
-        return null;
-      }
-
-      // Establish field type and field input type
-      const fieldType: GraphQLType | undefined =
-        pgGetGqlTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
-      if (!fieldType) return null;
-      const fieldInputType: GraphQLType | undefined =
-        pgGetGqlInputTypeByTypeIdAndModifier(pgTypeId, pgTypeModifier);
-      if (!fieldInputType) return null;
-
-      // Avoid exposing filter operators on unrecognized types that PostGraphile handles as Strings
-      const namedType = getNamedType(fieldType);
-      const namedInputType = getNamedType(fieldInputType);
-      const actualStringPgTypeIds = [
-        "1042", // bpchar
-        "18", //   char
-        "19", //   name
-        "25", //   text
-        "1043", // varchar
-      ];
-      // Include citext as recognized String type
-      const citextPgType = (introspectionResultsByKind.type as PgType[]).find(
-        (t) => t.name === "citext"
-      );
-      if (citextPgType) {
-        actualStringPgTypeIds.push(citextPgType.id);
-      }
-      if (
-        namedInputType &&
-        namedInputType.name === "String" &&
-        !actualStringPgTypeIds.includes(pgSimpleType.id)
-      ) {
-        // Not a real string type? Skip.
-        return null;
-      }
-
-      // Respect `connectionFilterAllowedFieldTypes` config option
-      if (
-        connectionFilterAllowedFieldTypes &&
-        !connectionFilterAllowedFieldTypes.includes(namedType.name)
-      ) {
-        return null;
-      }
-
-      const pgConnectionFilterOperatorsCategory = pgType.isPgArray
-        ? "Array"
-        : pgType.rangeSubTypeId
-        ? "Range"
-        : pgType.type === "e"
-        ? "Enum"
-        : pgType.type === "d"
-        ? "Domain"
-        : "Scalar";
-
-      // Respect `connectionFilterArrays` config option
-      if (
-        pgConnectionFilterOperatorsCategory === "Array" &&
-        !connectionFilterArrays
-      ) {
-        return null;
-      }
-
-      const rangeElementInputType = pgType.rangeSubTypeId
-        ? pgGetGqlInputTypeByTypeIdAndModifier(
-            pgType.rangeSubTypeId,
-            pgTypeModifier
-          )
-        : null;
-
-      const domainBaseType =
-        pgType.type === "d"
-          ? pgGetGqlTypeByTypeIdAndModifier(
-              pgType.domainBaseTypeId,
-              pgType.domainTypeModifier
-            )
-          : null;
-
-      const isListType = fieldType instanceof GraphQLList;
-      const operatorsTypeName = isListType
-        ? inflection.filterFieldListType(namedType.name)
-        : inflection.filterFieldType(namedType.name);
-
-      const existingType = connectionFilterTypesByTypeName[operatorsTypeName];
-      if (existingType) {
-        if (
-          typeof existingType._fields === "object" &&
-          Object.keys(existingType._fields).length === 0
-        ) {
-          // Existing type is fully defined and
-          // there are no fields, so don't return a type
           return null;
-        }
-        // Existing type isn't fully defined or is
-        // fully defined with fields, so return it
-        return existingType;
-      }
-      return newWithHooks(
-        GraphQLInputObjectType,
-        {
-          name: operatorsTypeName,
-          description: `A filter to be used against ${namedType.name}${
-            isListType ? " List" : ""
-          } fields. All fields are combined with a logical ‘and.’`,
-        },
-        {
-          isPgConnectionFilterOperators: true,
-          pgConnectionFilterOperatorsCategory,
-          fieldType,
-          fieldInputType,
-          rangeElementInputType,
-          domainBaseType,
-        },
-        true
-      );
-    };
+        };
 
-    const connectionFilterType = (
-      newWithHooks: any,
-      filterTypeName: string,
-      source: PgClass | PgProc,
-      nodeTypeName: string
-    ) => {
-      const existingType = connectionFilterTypesByTypeName[filterTypeName];
-      if (existingType) {
-        if (
-          typeof existingType._fields === "object" &&
-          Object.keys(existingType._fields).length === 0
-        ) {
-          // Existing type is fully defined and
-          // there are no fields, so don't return a type
+        const handleEmptyObjectInput = () => {
+          if (!connectionFilterAllowEmptyObjectInput) {
+            throw new Error(
+              "Empty objects are forbidden in filter argument input."
+            );
+          }
           return null;
-        }
-        // Existing type isn't fully defined or is
-        // fully defined with fields, so return it
-        return existingType;
-      }
-      return newWithHooks(
-        GraphQLInputObjectType,
-        {
-          description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-          name: filterTypeName,
-        },
-        {
-          pgIntrospection: source,
-          isPgConnectionFilter: true,
-        },
-        true
-      );
-    };
+        };
 
-    const escapeLikeWildcards = (input: string) => {
-      if ("string" !== typeof input) {
-        throw new Error("Non-string input was provided to escapeLikeWildcards");
-      } else {
-        return input.split("%").join("\\%").split("_").join("\\_");
-      }
-    };
+        const isEmptyObject = (obj: any) =>
+          typeof obj === "object" &&
+          obj !== null &&
+          !Array.isArray(obj) &&
+          Object.keys(obj).length === 0;
+        * /
 
-    const addConnectionFilterOperator: AddConnectionFilterOperator = (
-      typeNames,
-      operatorName,
-      description,
-      resolveType,
-      resolve,
-      options = {}
-    ) => {
-      if (!typeNames) {
-        const msg = `Missing first argument 'typeNames' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-        throw new Error(msg);
-      }
-      if (!operatorName) {
-        const msg = `Missing second argument 'operatorName' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-        throw new Error(msg);
-      }
-      if (!resolveType) {
-        const msg = `Missing fourth argument 'resolveType' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-        throw new Error(msg);
-      }
-      if (!resolve) {
-        const msg = `Missing fifth argument 'resolve' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-        throw new Error(msg);
-      }
+        const escapeLikeWildcards = (input: string) => {
+          if ("string" !== typeof input) {
+            throw new Error(
+              "Non-string input was provided to escapeLikeWildcards"
+            );
+          } else {
+            return input.split("%").join("\\%").split("_").join("\\_");
+          }
+        };
 
-      const { connectionFilterScalarOperators } = build;
-
-      const gqlTypeNames = Array.isArray(typeNames) ? typeNames : [typeNames];
-      for (const gqlTypeName of gqlTypeNames) {
-        if (!connectionFilterScalarOperators[gqlTypeName]) {
-          connectionFilterScalarOperators[gqlTypeName] = {};
-        }
-        if (connectionFilterScalarOperators[gqlTypeName][operatorName]) {
-          const msg = `Operator '${operatorName}' already exists for type '${gqlTypeName}'.`;
-          throw new Error(msg);
-        }
-        connectionFilterScalarOperators[gqlTypeName][operatorName] = {
+        const addConnectionFilterOperator: AddConnectionFilterOperator = (
+          typeNames,
+          operatorName,
           description,
           resolveType,
           resolve,
-          // These functions may exist on `options`: resolveSqlIdentifier, resolveSqlValue, resolveInput
-          ...options,
-        };
-      }
-    };
+          options = {}
+        ) => {
+          if (!typeNames) {
+            const msg = `Missing first argument 'typeNames' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+            throw new Error(msg);
+          }
+          if (!operatorName) {
+            const msg = `Missing second argument 'operatorName' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+            throw new Error(msg);
+          }
+          if (!resolveType) {
+            const msg = `Missing fourth argument 'resolveType' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+            throw new Error(msg);
+          }
+          if (!resolve) {
+            const msg = `Missing fifth argument 'resolve' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
+            throw new Error(msg);
+          }
 
-    return extend(build, {
-      connectionFilterTypesByTypeName,
-      connectionFilterRegisterResolver,
-      connectionFilterResolve,
-      connectionFilterOperatorsType,
-      connectionFilterType,
-      escapeLikeWildcards,
-      addConnectionFilterOperator,
-    });
-  });
+          const { connectionFilterScalarOperators } = build;
+
+          const gqlTypeNames = Array.isArray(typeNames)
+            ? typeNames
+            : [typeNames];
+          for (const gqlTypeName of gqlTypeNames) {
+            if (!connectionFilterScalarOperators[gqlTypeName]) {
+              connectionFilterScalarOperators[gqlTypeName] = {};
+            }
+            if (connectionFilterScalarOperators[gqlTypeName][operatorName]) {
+              const msg = `Operator '${operatorName}' already exists for type '${gqlTypeName}'.`;
+              throw new Error(msg);
+            }
+            connectionFilterScalarOperators[gqlTypeName][operatorName] = {
+              description,
+              resolveType,
+              resolve,
+              // These functions may exist on `options`: resolveSqlIdentifier, resolveSqlValue, resolveInput
+              ...options,
+            };
+          }
+        };
+
+        return extend(build, {
+          connectionFilterTypesByTypeName,
+          connectionFilterRegisterResolver,
+          connectionFilterResolve,
+          connectionFilterOperatorsType,
+          connectionFilterType,
+          escapeLikeWildcards,
+          addConnectionFilterOperator,
+        });
+      },
+      */
+    },
+  },
 };
 
-export interface ConnectionFilterResolver {
-  (input: {
-    sourceAlias: SQL;
-    fieldName: string;
-    fieldValue?: unknown;
-    queryBuilder: QueryBuilder;
-    pgType: PgType;
-    pgTypeModifier: number | null;
-    parentFieldName: string;
-    parentFieldInfo?: { backwardRelationSpec?: BackwardRelationSpec };
-  }): SQL | null;
-}
-
+/*
 export interface AddConnectionFilterOperator {
   (
     typeNames: string | string[],
@@ -534,3 +480,4 @@ export interface AddConnectionFilterOperator {
 }
 
 export default PgConnectionArgFilterPlugin;
+*/

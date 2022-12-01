@@ -1,134 +1,100 @@
-import type { Plugin } from "graphile-build";
-import type { PgAttribute } from "graphile-build-pg";
-import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+import { PgTypeColumns } from "@dataplan/pg";
 
-const PgConnectionArgFilterCompositeTypeColumnsPlugin: Plugin = (
-  builder,
-  { connectionFilterAllowedFieldTypes }
-) => {
-  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
-    const {
-      extend,
-      newWithHooks,
-      pgSql: sql,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      pgGetGqlTypeByTypeIdAndModifier,
-      pgColumnFilter,
-      pgOmit: omit,
-      inflection,
-      connectionFilterRegisterResolver,
-      connectionFilterResolve,
-      connectionFilterType,
-      connectionFilterTypesByTypeName,
-    } = build;
-    const {
-      fieldWithHooks,
-      scope: { pgIntrospection: table, isPgConnectionFilter },
-      Self,
-    } = context;
+const { version } = require("../package.json");
 
-    if (!isPgConnectionFilter || table.kind !== "class") return fields;
+export const PgConnectionArgFilterCompositeTypeColumnsPlugin: GraphileConfig.Plugin =
+  {
+    name: "PgConnectionArgFilterCompositeTypeColumnsPlugin",
+    version,
 
-    connectionFilterTypesByTypeName[Self.name] = Self;
+    schema: {
+      hooks: {
+        GraphQLInputObjectType_fields(inFields, build, context) {
+          let fields = inFields;
+          const {
+            extend,
+            sql,
+            inflection,
+            connectionFilterOperatorsType,
+            graphql: { isNamedType },
+            options: { connectionFilterAllowedFieldTypes },
+          } = build;
+          const {
+            fieldWithHooks,
+            scope: { pgCodec: codec, isPgConnectionFilter },
+            Self,
+          } = context;
 
-    const attrByFieldName = (
-      introspectionResultsByKind.attribute as PgAttribute[]
-    )
-      .filter((attr) => attr.classId === table.id)
-      .filter((attr) => pgColumnFilter(attr, build, context))
-      .filter((attr) => !omit(attr, "filter"))
-      .filter(
-        (attr) =>
-          attr.type &&
-          attr.type.type === "c" &&
-          attr.type.class &&
-          !attr.type.class.isSelectable
-      ) // keep only the composite type columns
-      .reduce((memo: { [fieldName: string]: PgAttribute }, attr) => {
-        const fieldName: string = inflection.column(attr);
-        memo[fieldName] = attr;
-        return memo;
-      }, {});
+          if (
+            !isPgConnectionFilter ||
+            !codec ||
+            !codec.columns ||
+            codec.isAnonymous
+          ) {
+            return fields;
+          }
 
-    const filterTypeNameByFieldName: { [fieldName: string]: string } = {};
-
-    const attrFields = Object.entries(attrByFieldName).reduce(
-      (memo, [fieldName, attr]) => {
-        const NodeType = pgGetGqlTypeByTypeIdAndModifier(
-          attr.typeId,
-          attr.typeModifier
-        );
-        if (!NodeType) {
-          return memo;
-        }
-        const nodeTypeName = NodeType.name;
-        // Respect `connectionFilterAllowedFieldTypes` config option
-        if (
-          connectionFilterAllowedFieldTypes &&
-          !connectionFilterAllowedFieldTypes.includes(nodeTypeName)
-        ) {
-          return memo;
-        }
-        const filterTypeName = inflection.filterType(nodeTypeName);
-        const CompositeFilterType = connectionFilterType(
-          newWithHooks,
-          filterTypeName,
-          attr.type.class,
-          nodeTypeName
-        );
-        if (!CompositeFilterType) {
-          return memo;
-        }
-        filterTypeNameByFieldName[fieldName] = filterTypeName;
-        return extend(memo, {
-          [fieldName]: fieldWithHooks(
-            fieldName,
-            {
-              description: `Filter by the object’s \`${fieldName}\` field.`,
-              type: CompositeFilterType,
-            },
-            {
-              isPgConnectionFilterField: true,
+          for (const [columnName, column] of Object.entries(
+            codec.columns as PgTypeColumns
+          )) {
+            const behavior = build.pgGetBehavior([
+              column.codec.extensions,
+              column.extensions,
+            ]);
+            if (!build.behavior.matches(behavior, "filter", "filter")) {
+              continue;
             }
-          ),
-        });
+
+            // keep only the composite type columns
+            if (!column.codec.columns) {
+              continue;
+            }
+
+            const fieldName: string = inflection.column({ codec, columnName });
+
+            const NodeType = build.getGraphQLTypeByPgCodec(
+              column.codec,
+              "output"
+            );
+            if (!NodeType || !isNamedType(NodeType)) {
+              continue;
+            }
+            const nodeTypeName = NodeType.name;
+
+            // Respect `connectionFilterAllowedFieldTypes` config option
+            if (
+              connectionFilterAllowedFieldTypes &&
+              !connectionFilterAllowedFieldTypes.includes(nodeTypeName)
+            ) {
+              continue;
+            }
+
+            const filterTypeName = inflection.filterType(nodeTypeName);
+            const CompositeFilterType = build.getTypeByName(filterTypeName);
+            if (!CompositeFilterType) {
+              continue;
+            }
+            fields = extend(
+              fields,
+              {
+                [fieldName]: fieldWithHooks(
+                  {
+                    fieldName,
+                    isPgConnectionFilterField: true,
+                  },
+                  () => ({
+                    description: `Filter by the object’s \`${fieldName}\` field.`,
+                    type: CompositeFilterType,
+                    // TODO: applyPlan
+                  })
+                ),
+              },
+              ""
+            );
+          }
+
+          return fields;
+        },
       },
-      {}
-    );
-
-    const resolve: ConnectionFilterResolver = ({
-      sourceAlias,
-      fieldName,
-      fieldValue,
-      queryBuilder,
-    }) => {
-      if (fieldValue == null) return null;
-
-      const attr = attrByFieldName[fieldName];
-      const sqlIdentifier = sql.query`(${sourceAlias}.${sql.identifier(
-        attr.name
-      )})`; // parentheses are required to avoid confusing the parser
-      const pgType = attr.type;
-      const pgTypeModifier = attr.typeModifier;
-      const filterTypeName = filterTypeNameByFieldName[fieldName];
-
-      return connectionFilterResolve(
-        fieldValue,
-        sqlIdentifier,
-        filterTypeName,
-        queryBuilder,
-        pgType,
-        pgTypeModifier,
-        fieldName
-      );
-    };
-
-    for (const fieldName of Object.keys(attrFields)) {
-      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
-    }
-
-    return extend(fields, attrFields);
-  });
-};
-
-export default PgConnectionArgFilterCompositeTypeColumnsPlugin;
+    },
+  };
