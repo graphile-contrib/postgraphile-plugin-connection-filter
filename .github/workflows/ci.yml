@@ -23,7 +23,7 @@ jobs:
         run: yarn --immutable --ignore-engines
 
       - name: Check Code Format
-        run: yarn prettier:check
+        run: yarn format:check
 
       - name: Lint Code
         run: yarn lint
@@ -49,6 +49,7 @@ jobs:
           - 12
           - 13
           - 14
+          - 15
         node-version:
           - 14.x
           - 16.x
