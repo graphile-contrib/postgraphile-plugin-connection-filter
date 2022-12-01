@@ -10,8 +10,8 @@ import { PgConnectionArgFilterForwardRelationsPlugin } from "./PgConnectionArgFi
 import { PgConnectionArgFilterLogicalOperatorsPlugin } from "./PgConnectionArgFilterLogicalOperatorsPlugin";
 import { PgConnectionArgFilterOperatorsPlugin } from "./PgConnectionArgFilterOperatorsPlugin";
 import { OperatorsCategory } from "./interfaces";
-import { GraphQLInputType, GraphQLOutputType } from "graphql";
-import {PgTypeCodec} from "@dataplan/pg";
+import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
+import { PgSource, PgTypeCodec } from "@dataplan/pg";
 
 declare global {
   namespace GraphileBuild {
@@ -28,9 +28,30 @@ declare global {
       connectionFilterAllowEmptyObjectInput?: boolean;
     }
     interface Inflection {
-      filterType(typeName: string): string;
-      filterFieldType(typeName: string): string;
-      filterFieldListType(typeName: string): string;
+      filterType(this: Inflection, typeName: string): string;
+      filterFieldType(this: Inflection, typeName: string): string;
+      filterFieldListType(this: Inflection, typeName: string): string;
+      filterManyType(
+        this: Inflection,
+        table: PgTypeCodec<any, any, any, any>,
+        foreignTable: PgSource<any, any, any, any>
+      ): string;
+      filterBackwardSingleRelationExistsFieldName(
+        this: Inflection,
+        relationFieldName: string
+      ): string;
+      filterBackwardManyRelationExistsFieldName(
+        this: Inflection,
+        relationFieldName: string
+      ): string;
+      filterSingleRelationByKeysBackwardsFieldName(
+        this: Inflection,
+        fieldName: string
+      ): string;
+      filterManyRelationByKeysFieldName(
+        this: Inflection,
+        fieldName: string
+      ): string;
     }
     interface ScopeInputObject {
       isPgConnectionFilter?: boolean;
@@ -43,7 +64,9 @@ declare global {
       domainBaseType?: GraphQLOutputType;
     }
     interface Build {
-      connectionFilterOperatorsType(codec: PgTypeCodec<any, any, any, any>): ;
+      connectionFilterOperatorsType(
+        codec: PgTypeCodec<any, any, any, any>
+      ): GraphQLInputType & GraphQLNamedType;
     }
     interface ScopeInputObjectFieldsField {
       isPgConnectionFilterField?: boolean;
