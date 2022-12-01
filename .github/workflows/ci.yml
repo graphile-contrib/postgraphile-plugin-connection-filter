@@ -20,7 +20,7 @@ jobs:
           node-version: 18
 
       - name: Install
-      - run: yarn --immutable --ignore-engines
+        run: yarn --immutable --ignore-engines
 
       - name: Check Code Format
         run: yarn prettier:check
@@ -82,7 +82,7 @@ jobs:
           cat .github/workflows/ci/docker-entrypoint-initdb.d/010-setup.sh | docker exec -i postgres bash
 
       - name: Install
-      - run: yarn --immutable --ignore-engines
+        run: yarn --immutable --ignore-engines
 
       - name: Test
         run: yarn test
