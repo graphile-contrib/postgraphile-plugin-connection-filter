@@ -682,7 +682,9 @@ input BigFloatRangeListFilter {
 }
 
 """
-A signed eight-byte integer. The upper big integer values are greater than the max value for a JavaScript number. Therefore all big integers will be output as strings and not numbers.
+A signed eight-byte integer. The upper big integer values are greater than the
+max value for a JavaScript number. Therefore all big integers will be output as
+strings and not numbers.
 """
 scalar BigInt
 
@@ -1834,7 +1836,8 @@ input DateRangeListFilter {
 }
 
 """
-A point in time as described by the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
+A point in time as described by the [ISO
+8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
 """
 scalar Datetime
 
@@ -2364,7 +2367,8 @@ type Filterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -2392,7 +2396,8 @@ type Filterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -2427,7 +2432,8 @@ type Filterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
   ): ChildrenConnection!
@@ -2450,7 +2456,8 @@ type Filterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
   ): FilterableComputedSetofIntConnection!
@@ -2478,7 +2485,8 @@ type Filterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -2506,7 +2514,8 @@ type Filterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -2548,8 +2557,6 @@ type Filterable implements Node {
   parentByParentId: Parent
   parentId: Int
   text: String
-
-  """"""
   textOmitFilter: String
   time: Time
   timestamp: Datetime
@@ -3283,15 +3290,12 @@ enum ForwardsOrderBy {
 }
 
 type FullyOmitted implements Node {
-  """"""
   id: Int!
 
   """
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   """
   nodeId: ID!
-
-  """"""
   text: String
 }
 
@@ -3926,7 +3930,9 @@ type Interval {
   months: Int
 
   """
-  A quantity of seconds. This is the only non-integer field, as all the other fields will dump their overflow into a smaller unit of time. Intervals don’t have a smaller unit than seconds.
+  A quantity of seconds. This is the only non-integer field, as all the other
+  fields will dump their overflow into a smaller unit of time. Intervals don’t
+  have a smaller unit than seconds.
   """
   seconds: Float
 
@@ -3993,7 +3999,9 @@ input IntervalInput {
   months: Int
 
   """
-  A quantity of seconds. This is the only non-integer field, as all the other fields will dump their overflow into a smaller unit of time. Intervals don’t have a smaller unit than seconds.
+  A quantity of seconds. This is the only non-integer field, as all the other
+  fields will dump their overflow into a smaller unit of time. Intervals don’t
+  have a smaller unit than seconds.
   """
   seconds: Float
 
@@ -4608,7 +4616,8 @@ type Parent implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4789,7 +4798,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4817,7 +4827,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4845,7 +4856,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4873,7 +4885,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4901,7 +4914,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4929,7 +4943,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4957,7 +4972,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -4985,7 +5001,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5013,7 +5030,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5041,7 +5059,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5069,7 +5088,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5092,7 +5112,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5120,7 +5141,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5148,7 +5170,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5176,7 +5199,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5204,7 +5228,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5232,7 +5257,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5260,7 +5286,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5288,7 +5315,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5311,7 +5339,8 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5449,10 +5478,11 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
-  ): FuncReturnsTableMultiColConnection!
+  ): FuncReturnsTableMultiColConnection
   funcReturnsTableOneCol(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
@@ -5473,10 +5503,11 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
-  ): FuncReturnsTableOneColConnection!
+  ): FuncReturnsTableOneColConnection
 
   """Reads and enables pagination through a set of \`Filterable\`."""
   funcTaggedFilterableReturnsSetofFilterable(
@@ -5498,10 +5529,11 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
-  ): FilterablesConnection!
+  ): FilterablesConnection
   funcTaggedFilterableReturnsTableMultiCol(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
@@ -5521,10 +5553,11 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
-  ): FuncTaggedFilterableReturnsTableMultiColConnection!
+  ): FuncTaggedFilterableReturnsTableMultiColConnection
 
   """Reads a single \`JsonbTest\` using its globally unique \`ID\`."""
   jsonbTest(
@@ -5585,14 +5618,16 @@ type Query implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
     otherId: Int
-  ): ProtectedsConnection!
+  ): ProtectedsConnection
 
   """
-  Exposes the root query type nested one level down. This is helpful for Relay 1 which can only query top level fields if they are in a particular form.
+  Exposes the root query type nested one level down. This is helpful for Relay 1
+  which can only query top level fields if they are in a particular form.
   """
   query: Query!
 
@@ -5853,7 +5888,8 @@ type SideA implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -5974,7 +6010,8 @@ type SideB implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
@@ -6508,7 +6545,8 @@ type Unfilterable implements Node {
     last: Int
 
     """
-    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor based pagination. May not be used with \`last\`.
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
     """
     offset: Int
 
