@@ -75,18 +75,20 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
               const foreignTableTypeName = inflection.tableType(
                 foreignTable.codec
               );
-              build.registerInputObjectType(
-                filterManyTypeName,
-                {
-                  foreignTable,
-                  isPgConnectionFilterMany: true,
-                },
-                () => ({
-                  name: filterManyTypeName,
-                  description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-                }),
-                ""
-              );
+              build.recoverable(null, () => {
+                build.registerInputObjectType(
+                  filterManyTypeName,
+                  {
+                    foreignTable,
+                    isPgConnectionFilterMany: true,
+                  },
+                  () => ({
+                    name: filterManyTypeName,
+                    description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+                  }),
+                  ""
+                );
+              });
             }
           }
           return _;
@@ -393,21 +395,23 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   inflection.filterBackwardSingleRelationExistsFieldName(
                     fieldName
                   );
-                fields = extend(
-                  fields,
-                  {
-                    [filterFieldName]: fieldWithHooks(
-                      {
-                        fieldName: filterFieldName,
-                        isPgConnectionFilterField: true,
-                      },
-                      () => ({
-                        description: `A related \`${fieldName}\` exists.`,
-                        type: GraphQLBoolean,
-                      })
-                    ),
-                  },
-                  `Adding connection filter backward relation exists field from ${source.name} to ${foreignTable.name}`
+                fields = build.recoverable(fields, () =>
+                  extend(
+                    fields,
+                    {
+                      [filterFieldName]: fieldWithHooks(
+                        {
+                          fieldName: filterFieldName,
+                          isPgConnectionFilterField: true,
+                        },
+                        () => ({
+                          description: `A related \`${fieldName}\` exists.`,
+                          type: GraphQLBoolean,
+                        })
+                      ),
+                    },
+                    `Adding connection filter backward relation exists field from ${source.name} to ${foreignTable.name}`
+                  )
                 );
               }
             }
