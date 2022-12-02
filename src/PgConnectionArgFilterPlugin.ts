@@ -44,7 +44,19 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           const operatorsTypeName = listType
             ? inflection.filterFieldListType(namedType.name)
             : inflection.filterFieldType(namedType.name);
-          return build.getTypeByName(operatorsTypeName);
+          return build.getTypeByName(operatorsTypeName) as
+            | (GraphQLInputType & GraphQLNamedType)
+            | undefined;
+        };
+
+        build.escapeLikeWildcards = (input) => {
+          if ("string" !== typeof input) {
+            throw new Error(
+              "Non-string input was provided to escapeLikeWildcards"
+            );
+          } else {
+            return input.split("%").join("\\%").split("_").join("\\_");
+          }
         };
 
         return build;
@@ -329,118 +341,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           `Adding connection filter arg to field '${fieldName}' of '${Self.name}'`
         );
       },
-
-      /*
-      build(build) {
-        const {
-          extend,
-          graphql: { getNamedType, GraphQLInputObjectType, GraphQLList },
-          inflection,
-          sql,
-          options: {
-            connectionFilterAllowedFieldTypes,
-            connectionFilterArrays,
-            connectionFilterSetofFunctions,
-            connectionFilterAllowNullInput,
-            connectionFilterAllowEmptyObjectInput,
-          },
-        } = build;
-
-        /*
-        const handleNullInput = () => {
-          if (!connectionFilterAllowNullInput) {
-            throw new Error(
-              "Null literals are forbidden in filter argument input."
-            );
-          }
-          return null;
-        };
-
-        const handleEmptyObjectInput = () => {
-          if (!connectionFilterAllowEmptyObjectInput) {
-            throw new Error(
-              "Empty objects are forbidden in filter argument input."
-            );
-          }
-          return null;
-        };
-
-        const isEmptyObject = (obj: any) =>
-          typeof obj === "object" &&
-          obj !== null &&
-          !Array.isArray(obj) &&
-          Object.keys(obj).length === 0;
-        * /
-
-        const escapeLikeWildcards = (input: string) => {
-          if ("string" !== typeof input) {
-            throw new Error(
-              "Non-string input was provided to escapeLikeWildcards"
-            );
-          } else {
-            return input.split("%").join("\\%").split("_").join("\\_");
-          }
-        };
-
-        const addConnectionFilterOperator: AddConnectionFilterOperator = (
-          typeNames,
-          operatorName,
-          description,
-          resolveType,
-          resolve,
-          options = {}
-        ) => {
-          if (!typeNames) {
-            const msg = `Missing first argument 'typeNames' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-            throw new Error(msg);
-          }
-          if (!operatorName) {
-            const msg = `Missing second argument 'operatorName' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-            throw new Error(msg);
-          }
-          if (!resolveType) {
-            const msg = `Missing fourth argument 'resolveType' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-            throw new Error(msg);
-          }
-          if (!resolve) {
-            const msg = `Missing fifth argument 'resolve' in call to 'addConnectionFilterOperator' for operator '${operatorName}'`;
-            throw new Error(msg);
-          }
-
-          const { connectionFilterScalarOperators } = build;
-
-          const gqlTypeNames = Array.isArray(typeNames)
-            ? typeNames
-            : [typeNames];
-          for (const gqlTypeName of gqlTypeNames) {
-            if (!connectionFilterScalarOperators[gqlTypeName]) {
-              connectionFilterScalarOperators[gqlTypeName] = {};
-            }
-            if (connectionFilterScalarOperators[gqlTypeName][operatorName]) {
-              const msg = `Operator '${operatorName}' already exists for type '${gqlTypeName}'.`;
-              throw new Error(msg);
-            }
-            connectionFilterScalarOperators[gqlTypeName][operatorName] = {
-              description,
-              resolveType,
-              resolve,
-              // These functions may exist on `options`: resolveSqlIdentifier, resolveSqlValue, resolveInput
-              ...options,
-            };
-          }
-        };
-
-        return extend(build, {
-          connectionFilterTypesByTypeName,
-          connectionFilterRegisterResolver,
-          connectionFilterResolve,
-          connectionFilterOperatorsType,
-          connectionFilterType,
-          escapeLikeWildcards,
-          addConnectionFilterOperator,
-        });
-      },
-      */
     },
   },
 };

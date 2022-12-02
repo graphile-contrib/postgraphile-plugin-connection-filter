@@ -8,7 +8,10 @@ import { PgConnectionArgFilterRecordFunctionsPlugin } from "./PgConnectionArgFil
 import { PgConnectionArgFilterBackwardRelationsPlugin } from "./PgConnectionArgFilterBackwardRelationsPlugin";
 import { PgConnectionArgFilterForwardRelationsPlugin } from "./PgConnectionArgFilterForwardRelationsPlugin";
 import { PgConnectionArgFilterLogicalOperatorsPlugin } from "./PgConnectionArgFilterLogicalOperatorsPlugin";
-import { PgConnectionArgFilterOperatorsPlugin } from "./PgConnectionArgFilterOperatorsPlugin";
+import {
+  OperatorSpec,
+  PgConnectionArgFilterOperatorsPlugin,
+} from "./PgConnectionArgFilterOperatorsPlugin";
 import { OperatorsCategory } from "./interfaces";
 import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
 import { PgSource, PgTypeCodec } from "@dataplan/pg";
@@ -70,12 +73,28 @@ declare global {
     interface Build {
       connectionFilterOperatorsType(
         codec: PgTypeCodec<any, any, any, any>
-      ): GraphQLInputType & GraphQLNamedType;
+      ): (GraphQLInputType & GraphQLNamedType) | undefined;
+      escapeLikeWildcards(input: unknown): string;
+      connectionFilterArrayOperators: {
+        [fieldName: string]: OperatorSpec;
+      };
+      connectionFilterEnumOperators: {
+        [fieldName: string]: OperatorSpec;
+      };
+      connectionFilterRangeOperators: {
+        [fieldName: string]: OperatorSpec;
+      };
+      connectionFilterScalarOperators: {
+        [typeName: string]: {
+          [fieldName: string]: OperatorSpec;
+        };
+      };
     }
     interface ScopeInputObjectFieldsField {
       isPgConnectionFilterField?: boolean;
       isPgConnectionFilterManyField?: boolean;
       isPgConnectionFilterOperatorLogical?: boolean;
+      isPgConnectionFilterOperator?: boolean;
     }
   }
 }
