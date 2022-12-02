@@ -75,6 +75,7 @@ declare global {
     interface ScopeInputObjectFieldsField {
       isPgConnectionFilterField?: boolean;
       isPgConnectionFilterManyField?: boolean;
+      isPgConnectionFilterOperatorLogical?: boolean;
     }
   }
 }
