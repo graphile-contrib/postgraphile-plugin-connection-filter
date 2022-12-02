@@ -10,7 +10,6 @@ import { GraphQLNamedType } from "graphql";
 import { PgType } from "pg-introspection";
 import { SQL } from "pg-sql2";
 import { OperatorsCategory } from "./interfaces";
-import { BackwardRelationSpec } from "./PgConnectionArgFilterBackwardRelationsPlugin";
 
 const { version } = require("../package.json");
 

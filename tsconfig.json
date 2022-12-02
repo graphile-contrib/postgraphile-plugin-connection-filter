@@ -20,6 +20,7 @@
     "noUnusedLocals": false,
     "preserveWatchOutput": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "lib": ["es2018", "esnext.asynciterable"]
   },
   "include": ["src/**/*"]
