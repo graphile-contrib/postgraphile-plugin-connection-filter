@@ -18,12 +18,7 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
           Self,
         } = context;
 
-        if (
-          !isPgConnectionFilter ||
-          !codec ||
-          !codec.columns ||
-          codec.isAnonymous
-        ) {
+        if (!isPgConnectionFilter || !codec || !codec.columns) {
           return fields;
         }
 
@@ -34,7 +29,7 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
             column.codec.extensions,
             column.extensions,
           ]);
-          if (build.behavior.matches(behavior, "filter", "filter")) {
+          if (!build.behavior.matches(behavior, "filter", "filter")) {
             continue;
           }
           const fieldName = inflection.column({ codec, columnName });
