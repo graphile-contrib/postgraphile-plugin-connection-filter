@@ -75,20 +75,6 @@ declare global {
         codec: PgTypeCodec<any, any, any, any>
       ): (GraphQLInputType & GraphQLNamedType) | undefined;
       escapeLikeWildcards(input: unknown): string;
-      connectionFilterArrayOperators: {
-        [fieldName: string]: OperatorSpec;
-      };
-      connectionFilterEnumOperators: {
-        [fieldName: string]: OperatorSpec;
-      };
-      connectionFilterRangeOperators: {
-        [fieldName: string]: OperatorSpec;
-      };
-      connectionFilterScalarOperators: {
-        [typeName: string]: {
-          [fieldName: string]: OperatorSpec;
-        };
-      };
     }
     interface ScopeInputObjectFieldsField {
       isPgConnectionFilterField?: boolean;

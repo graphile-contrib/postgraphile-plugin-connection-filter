@@ -14,31 +14,47 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
   schema: {
     hooks: {
-      build(build) {
+      GraphQLInputObjectType_fields(fields, build, context) {
         const {
+          extend,
           graphql: {
             getNamedType,
             GraphQLBoolean,
             GraphQLString,
             GraphQLNonNull,
             GraphQLList,
+            isNamedType,
           },
-          sql: rawSQL,
-          escapeLikeWildcards: rawEscapeLikeWildcards,
+          sql,
+          escapeLikeWildcards,
           options: {
             connectionFilterAllowedOperators,
             connectionFilterOperatorNames,
           },
         } = build;
 
-        if (!rawSQL) {
-          throw new Error("build.sql is required");
+        const {
+          scope: {
+            isPgConnectionFilterOperators,
+            pgConnectionFilterOperatorsCategory,
+            fieldType,
+            fieldInputType,
+            rangeElementInputType,
+            domainBaseType,
+          },
+          fieldWithHooks,
+          Self,
+        } = context;
+
+        if (
+          !isPgConnectionFilterOperators ||
+          !pgConnectionFilterOperatorsCategory ||
+          !fieldType ||
+          !isNamedType(fieldType) ||
+          !fieldInputType
+        ) {
+          return fields;
         }
-        const sql = rawSQL!;
-        if (!rawEscapeLikeWildcards) {
-          throw new Error("build.escapeLikeWildcards is required");
-        }
-        const escapeLikeWildcards = rawEscapeLikeWildcards!;
 
         const resolveListType = (fieldInputType: GraphQLInputType) =>
           new GraphQLList(new GraphQLNonNull(fieldInputType));
@@ -579,54 +595,6 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolve: (i, v) => sql`${v} <= ANY (${i})`,
           },
         };
-
-        return build.extend(
-          build,
-          {
-            connectionFilterArrayOperators,
-            connectionFilterEnumOperators,
-            connectionFilterRangeOperators,
-            connectionFilterScalarOperators,
-          },
-          ""
-        );
-      },
-
-      GraphQLInputObjectType_fields(fields, build, context) {
-        const {
-          extend,
-          sql,
-          connectionFilterArrayOperators,
-          connectionFilterEnumOperators,
-          connectionFilterRangeOperators,
-          connectionFilterScalarOperators,
-          graphql: { isNamedType },
-          options: {
-            connectionFilterAllowedOperators,
-            connectionFilterOperatorNames,
-          },
-        } = build;
-        const {
-          scope: {
-            isPgConnectionFilterOperators,
-            pgConnectionFilterOperatorsCategory,
-            fieldType,
-            fieldInputType,
-            rangeElementInputType,
-            domainBaseType,
-          },
-          fieldWithHooks,
-          Self,
-        } = context;
-        if (
-          !isPgConnectionFilterOperators ||
-          !pgConnectionFilterOperatorsCategory ||
-          !fieldType ||
-          !isNamedType(fieldType) ||
-          !fieldInputType
-        ) {
-          return fields;
-        }
 
         const operatorSpecsByCategory: {
           [category in OperatorsCategory]: {
