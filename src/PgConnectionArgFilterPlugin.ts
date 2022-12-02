@@ -22,6 +22,7 @@ const { version } = require("../package.json");
 type AnyCodec = PgTypeCodec<any, any, any, any>;
 
 const isSuitableForFiltering = (codec: AnyCodec): boolean =>
+  codec !== TYPES.void &&
   !codec.columns &&
   !codec.isAnonymous &&
   !codec.arrayOfCodec &&
@@ -31,6 +32,8 @@ const isSuitableForFiltering = (codec: AnyCodec): boolean =>
 export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterPlugin",
   version,
+
+  // after: ["PgTypesPlugin", "PgCodecsPlugin", "PgCodecs"],
 
   schema: {
     hooks: {
@@ -75,9 +78,13 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             itemCodec,
             "output"
           );
-          if (!fieldTypeName) return null;
+          if (!fieldTypeName) {
+            return null;
+          }
           const fieldTypeMeta = build.getTypeMetaByName(fieldTypeName);
-          if (!fieldTypeMeta) return null;
+          if (!fieldTypeMeta) {
+            return null;
+          }
           const fieldInputTypeName = build.getGraphQLTypeNameByPgCodec!(
             itemCodec,
             "input"
@@ -172,147 +179,144 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         return build;
       },
 
-      init(_, build) {
-        const {
-          inflection,
-          graphql: { getNamedType, GraphQLString, isListType },
-          options: {
-            connectionFilterAllowedFieldTypes,
-            connectionFilterArrays,
-          },
-        } = build;
-
-        const codecs = new Set<AnyCodec>();
-
-        // Create filter type for all column-having codecs
-        for (const pgCodec of build.allPgCodecs) {
-          if (!pgCodec.columns || pgCodec.isAnonymous) {
-            continue;
-          }
-          const nodeTypeName = build.getGraphQLTypeNameByPgCodec(
-            pgCodec,
-            "output"
-          );
-          if (!nodeTypeName) continue;
-
-          const filterTypeName = inflection.filterType(nodeTypeName);
-          build.registerInputObjectType(
-            filterTypeName,
-            {
-              pgCodec,
-              isPgConnectionFilter: true,
-            },
-            () => ({
-              description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-            }),
-            "PgConnectionArgFilterPlugin"
-          );
-        }
-
-        const getInnerCodec = (codec: AnyCodec): AnyCodec => {
-          if (codec.domainOfCodec) {
-            return getInnerCodec(codec.domainOfCodec);
-          }
-          if (codec.arrayOfCodec) {
-            return getInnerCodec(codec.arrayOfCodec);
-          }
-          if (codec.rangeOfCodec) {
-            return getInnerCodec(codec.rangeOfCodec);
-          }
-          return codec;
-        };
-
-        // Get or create types like IntFilter, StringFilter, etc.
-        const codecsByFilterTypeName: {
-          [typeName: string]: {
-            isList: boolean;
-            relatedTypeName: string;
-            pgCodecs: PgTypeCodec<any, any, any, any>[];
-            inputTypeName: string;
-            rangeElementInputTypeName: string | null;
-            domainBaseTypeName: string | null;
-          };
-        } = {};
-        for (const codec of build.allPgCodecs) {
-          const digest = build.connectionFilterOperatorsDigest(codec);
-          if (!digest) {
-            continue;
-          }
+      init: {
+        after: ["PgCodecs"],
+        callback(_, build) {
           const {
-            isList,
-            operatorsTypeName,
-            relatedTypeName,
-            inputTypeName,
-            rangeElementInputTypeName,
-            domainBaseTypeName,
-          } = digest;
+            inflection,
+            graphql: { getNamedType, GraphQLString, isListType },
+            options: {
+              connectionFilterAllowedFieldTypes,
+              connectionFilterArrays,
+            },
+          } = build;
 
-          if (!codecsByFilterTypeName[operatorsTypeName]) {
-            codecsByFilterTypeName[operatorsTypeName] = {
+          const codecs = new Set<AnyCodec>();
+
+          // Create filter type for all column-having codecs
+          for (const pgCodec of build.allPgCodecs) {
+            if (!pgCodec.columns || pgCodec.isAnonymous) {
+              continue;
+            }
+            const nodeTypeName = build.getGraphQLTypeNameByPgCodec(
+              pgCodec,
+              "output"
+            );
+            if (!nodeTypeName) continue;
+
+            const filterTypeName = inflection.filterType(nodeTypeName);
+            build.registerInputObjectType(
+              filterTypeName,
+              {
+                pgCodec,
+                isPgConnectionFilter: true,
+              },
+              () => ({
+                description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+              }),
+              "PgConnectionArgFilterPlugin"
+            );
+          }
+
+          // Get or create types like IntFilter, StringFilter, etc.
+          const codecsByFilterTypeName: {
+            [typeName: string]: {
+              isList: boolean;
+              relatedTypeName: string;
+              pgCodecs: PgTypeCodec<any, any, any, any>[];
+              inputTypeName: string;
+              rangeElementInputTypeName: string | null;
+              domainBaseTypeName: string | null;
+            };
+          } = {};
+          for (const codec of build.allPgCodecs) {
+            const digest = build.connectionFilterOperatorsDigest(codec);
+            if (!digest) {
+              continue;
+            }
+            const {
               isList,
+              operatorsTypeName,
               relatedTypeName,
-              pgCodecs: [codec],
               inputTypeName,
               rangeElementInputTypeName,
               domainBaseTypeName,
-            };
-          } else {
-            for (const key of [
-              "isList",
-              "operatorsTypeName",
-              "relatedTypeName",
-              "inputTypeName",
-              "rangeElementInputTypeName",
-            ]) {
-              if (
-                digest[key] !== codecsByFilterTypeName[operatorsTypeName][key]
-              ) {
-                throw new Error(`${key} mismatch`);
-              }
-            }
-            codecsByFilterTypeName[operatorsTypeName].pgCodecs.push(codec);
-          }
-        }
+            } = digest;
 
-        for (const [
-          operatorsTypeName,
-          {
-            isList,
-            relatedTypeName,
-            pgCodecs,
-            inputTypeName,
-            rangeElementInputTypeName,
-            domainBaseTypeName,
-          },
-        ] of Object.entries(codecsByFilterTypeName)) {
-          build.registerInputObjectType(
-            operatorsTypeName,
-            {
-              pgConnectionFilterOperators: {
-                pgCodecs,
+            if (!codecsByFilterTypeName[operatorsTypeName]) {
+              codecsByFilterTypeName[operatorsTypeName] = {
+                isList,
+                relatedTypeName,
+                pgCodecs: [codec],
                 inputTypeName,
                 rangeElementInputTypeName,
                 domainBaseTypeName,
-              },
-              /*
+              };
+            } else {
+              for (const key of [
+                "isList",
+                "relatedTypeName",
+                "inputTypeName",
+                "rangeElementInputTypeName",
+              ]) {
+                if (
+                  digest[key] !== codecsByFilterTypeName[operatorsTypeName][key]
+                ) {
+                  throw new Error(
+                    `${key} mismatch: existing codecs (${codecsByFilterTypeName[
+                      operatorsTypeName
+                    ].pgCodecs
+                      .map((c) => c.name)
+                      .join(", ")}) had ${key} = ${
+                      codecsByFilterTypeName[operatorsTypeName][key]
+                    }, but ${codec.name} instead has ${key} = ${digest[key]}`
+                  );
+                }
+              }
+              codecsByFilterTypeName[operatorsTypeName].pgCodecs.push(codec);
+            }
+          }
+
+          for (const [
+            operatorsTypeName,
+            {
+              isList,
+              relatedTypeName,
+              pgCodecs,
+              inputTypeName,
+              rangeElementInputTypeName,
+              domainBaseTypeName,
+            },
+          ] of Object.entries(codecsByFilterTypeName)) {
+            build.registerInputObjectType(
+              operatorsTypeName,
+              {
+                pgConnectionFilterOperators: {
+                  pgCodecs,
+                  inputTypeName,
+                  rangeElementInputTypeName,
+                  domainBaseTypeName,
+                },
+                /*
               pgConnectionFilterOperatorsCategory,
               fieldType,
               fieldInputType,
               rangeElementInputType,
               domainBaseType,
               */
-            },
-            () => ({
-              name: operatorsTypeName,
-              description: `A filter to be used against ${relatedTypeName}${
-                isList ? " List" : ""
-              } fields. All fields are combined with a logical ‘and.’`,
-            }),
-            "PgConnectionArgFilterPlugin"
-          );
-        }
+              },
+              () => ({
+                name: operatorsTypeName,
+                description: `A filter to be used against ${relatedTypeName}${
+                  isList ? " List" : ""
+                } fields. All fields are combined with a logical ‘and.’`,
+              }),
+              "PgConnectionArgFilterPlugin"
+            );
+          }
 
-        return _;
+          return _;
+        },
       },
 
       // Add `filter` input argument to connection and simple collection types

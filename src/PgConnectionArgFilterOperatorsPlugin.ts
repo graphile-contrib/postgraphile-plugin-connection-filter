@@ -428,8 +428,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsElement: {
             description: "Contains the specified value.",
-            resolveType: (_fieldInputType, rangeElementInputType) =>
-              rangeElementInputType,
+            resolveType: (_fieldInputType, rangeElementInputType) => {
+              if (!rangeElementInputType) {
+                throw new Error(
+                  `Couldn't determine the range element type to use`
+                );
+              }
+              return rangeElementInputType;
+            },
             resolveSqlValue: ($placeholderable, $input, codec) => {
               const innerCodec = codec.rangeOfCodec;
               return $placeholderable.placeholder($input, innerCodec!);
@@ -667,7 +673,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ) {
               return memo;
             }
-            if (!rangeElementInputType || !fieldInputType) {
+            if (!fieldInputType) {
               return memo;
             }
             const type = resolveType
@@ -713,7 +719,7 @@ export interface OperatorSpec {
   description: string;
   resolveType?: (
     fieldInputType: GraphQLInputType,
-    rangeElementInputType: GraphQLInputType
+    rangeElementInputType: GraphQLInputType | null | undefined
   ) => GraphQLType;
   resolveSqlIdentifier?: (
     sqlIdentifier: SQL,
