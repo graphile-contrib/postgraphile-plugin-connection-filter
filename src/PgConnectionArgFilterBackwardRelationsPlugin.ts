@@ -114,17 +114,12 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             Self,
           } = context;
 
-          fields = (() => {
-            if (!isPgConnectionFilter || !pgCodec || !pgCodec.columns) {
-              return fields;
-            }
-            const source = build.input.pgSources.find(
+          const source =
+            pgCodec &&
+            build.input.pgSources.find(
               (s) => s.codec === pgCodec && !s.parameters
             );
-            if (!source) {
-              return fields;
-            }
-
+          if (isPgConnectionFilter && pgCodec && pgCodec.columns && source) {
             const backwardsRelations = Object.entries(
               source.getRelations() as {
                 [relationName: string]: PgSourceRelation<any, any>;
@@ -338,7 +333,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                           isPgConnectionFilterField: true,
                         },
                         () => ({
-                          description: `Filter by the object’s \`${filterFieldName}\` relation.`,
+                          description: `Filter by the object’s \`${fieldName}\` relation.`,
                           type: FilterManyType,
                         })
                       ),
@@ -360,7 +355,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                           isPgConnectionFilterField: true,
                         },
                         () => ({
-                          description: `Some related \`${existsFieldName}\` exist.`,
+                          description: `Some related \`${fieldName}\` exist.`,
                           type: GraphQLBoolean,
                         })
                       ),
@@ -369,163 +364,100 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   );
                 }
               } else {
-                const fieldName = inflection.singleRelationByKeysBackwards(
-                  foreignKeyAttributes,
-                  foreignTable,
-                  table,
-                  foreignConstraint
-                );
+                const fieldName = inflection.singleRelationBackwards({
+                  source,
+                  relationName,
+                });
                 const filterFieldName =
                   inflection.filterSingleRelationByKeysBackwardsFieldName(
                     fieldName
                   );
-                addField(
-                  filterFieldName,
-                  `Filter by the object’s \`${fieldName}\` relation.`,
-                  ForeignTableFilterType,
-                  resolveSingle,
-                  spec,
-                  `Adding connection filter backward relation field from ${describePgEntity(
-                    table
-                  )} to ${describePgEntity(foreignTable)}`
+                fields = extend(
+                  fields,
+                  {
+                    [filterFieldName]: fieldWithHooks(
+                      {
+                        fieldName: filterFieldName,
+                        isPgConnectionFilterField: true,
+                      },
+                      () => ({
+                        description: `Filter by the object’s \`${fieldName}\` relation.`,
+                        type: ForeignTableFilterType,
+                      })
+                    ),
+                  },
+                  `Adding connection filter backward relation field from ${source.name} to ${foreignTable.name}`
                 );
 
                 const existsFieldName =
                   inflection.filterBackwardSingleRelationExistsFieldName(
                     fieldName
                   );
-                addField(
-                  existsFieldName,
-                  `A related \`${fieldName}\` exists.`,
-                  GraphQLBoolean,
-                  resolveExists,
-                  spec,
-                  `Adding connection filter backward relation exists field from ${describePgEntity(
-                    table
-                  )} to ${describePgEntity(foreignTable)}`
+                fields = extend(
+                  fields,
+                  {
+                    [filterFieldName]: fieldWithHooks(
+                      {
+                        fieldName: filterFieldName,
+                        isPgConnectionFilterField: true,
+                      },
+                      () => ({
+                        description: `A related \`${fieldName}\` exists.`,
+                        type: GraphQLBoolean,
+                      })
+                    ),
+                  },
+                  `Adding connection filter backward relation exists field from ${source.name} to ${foreignTable.name}`
                 );
               }
             }
+          }
 
-            return fields;
-          })();
-
-          fields = (() => {
-            if (!isPgConnectionFilterMany || !foreignTable) return fields;
-
-            connectionFilterTypesByTypeName[Self.name] = Self;
-
-            const foreignTableTypeName = inflection.tableType(foreignTable);
+          if (isPgConnectionFilterMany && foreignTable) {
+            const foreignTableTypeName = inflection.tableType(
+              foreignTable.codec
+            );
             const foreignTableFilterTypeName =
               inflection.filterType(foreignTableTypeName);
-            const FilterType = connectionFilterType(
-              newWithHooks,
-              foreignTableFilterTypeName,
-              foreignTable,
-              foreignTableTypeName
-            );
+            const FilterType = build.getTypeByName(foreignTableFilterTypeName);
 
             const manyFields = {
               every: fieldWithHooks(
-                "every",
                 {
+                  fieldName: "every",
+                  isPgConnectionFilterManyField: true,
+                },
+                () => ({
                   description: `Every related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
-                },
-                {
-                  isPgConnectionFilterManyField: true,
-                }
+                })
               ),
               some: fieldWithHooks(
-                "some",
                 {
+                  fieldName: "some",
+                  isPgConnectionFilterManyField: true,
+                },
+                () => ({
                   description: `Some related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
-                },
-                {
-                  isPgConnectionFilterManyField: true,
-                }
+                })
               ),
               none: fieldWithHooks(
-                "none",
                 {
+                  fieldName: "none",
+                  isPgConnectionFilterManyField: true,
+                },
+                () => ({
                   description: `No related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
-                },
-                {
-                  isPgConnectionFilterManyField: true,
-                }
+                })
               ),
             };
 
-            const resolve: ConnectionFilterResolver = ({
-              sourceAlias,
-              fieldName,
-              fieldValue,
-              queryBuilder,
-              parentFieldInfo,
-            }) => {
-              if (fieldValue == null) return null;
-
-              if (!parentFieldInfo || !parentFieldInfo.backwardRelationSpec)
-                throw new Error("Did not receive backward relation spec");
-              const {
-                keyAttributes,
-                foreignKeyAttributes,
-              }: BackwardRelationSpec = parentFieldInfo.backwardRelationSpec;
-
-              const foreignTableAlias = sql.identifier(Symbol());
-              const sqlIdentifier = sql.identifier(
-                foreignTable.namespace.name,
-                foreignTable.name
-              );
-              const sqlKeysMatch = sql.query`(${sql.join(
-                foreignKeyAttributes.map((attr, i) => {
-                  return sql.fragment`${foreignTableAlias}.${sql.identifier(
-                    attr.name
-                  )} = ${sourceAlias}.${sql.identifier(keyAttributes[i].name)}`;
-                }),
-                ") and ("
-              )})`;
-              const sqlSelectWhereKeysMatch = sql.query`select 1 from ${sqlIdentifier} as ${foreignTableAlias} where ${sqlKeysMatch}`;
-
-              const sqlFragment = connectionFilterResolve(
-                fieldValue,
-                foreignTableAlias,
-                foreignTableFilterTypeName,
-                queryBuilder
-              );
-              if (sqlFragment == null) {
-                return null;
-              } else if (fieldName === "every") {
-                return sql.query`not exists(${sqlSelectWhereKeysMatch} and not (${sqlFragment}))`;
-              } else if (fieldName === "some") {
-                return sql.query`exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`;
-              } else if (fieldName === "none") {
-                return sql.query`not exists(${sqlSelectWhereKeysMatch} and (${sqlFragment}))`;
-              }
-              throw new Error(`Unknown field name: ${fieldName}`);
-            };
-
-            for (const fieldName of Object.keys(manyFields)) {
-              connectionFilterRegisterResolver(Self.name, fieldName, resolve);
-            }
-
-            return extend(fields, manyFields);
-          })();
+            fields = extend(fields, manyFields, "");
+          }
           return fields;
         },
       },
     },
   };
-
-export interface BackwardRelationSpec {
-  table: PgClass;
-  keyAttributes: PgAttribute[];
-  foreignTable: PgClass;
-  foreignKeyAttributes: PgAttribute[];
-  foreignConstraint: PgConstraint;
-  isOneToMany: boolean;
-}
-
-export default PgConnectionArgFilterBackwardRelationsPlugin;
