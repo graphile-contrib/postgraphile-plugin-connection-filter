@@ -15,7 +15,6 @@ export const PgConnectionArgFilterCompositeTypeColumnsPlugin: GraphileConfig.Plu
             extend,
             sql,
             inflection,
-            connectionFilterOperatorsType,
             graphql: { isNamedType },
             options: { connectionFilterAllowedFieldTypes },
           } = build;

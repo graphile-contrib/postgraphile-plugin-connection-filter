@@ -16,7 +16,7 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
             extend,
             sql,
             inflection,
-            connectionFilterOperatorsType,
+            connectionFilterOperatorsDigest,
             options: { connectionFilterComputedColumns },
           } = build;
           const {
@@ -56,9 +56,13 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
               continue;
             }
 
-            const OperatorsType = connectionFilterOperatorsType(
+            const digest = connectionFilterOperatorsDigest(
               computedColumnSource.codec
             );
+            if (!digest) {
+              continue;
+            }
+            const OperatorsType = build.getTypeByName(digest.operatorsTypeName);
             if (!OperatorsType) {
               continue;
             }

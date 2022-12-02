@@ -60,7 +60,12 @@ declare global {
     }
     interface ScopeInputObject {
       isPgConnectionFilter?: boolean;
-      isPgConnectionFilterOperators?: boolean;
+      pgConnectionFilterOperators?: {
+        pgCodecs: ReadonlyArray<PgTypeCodec<any, any, any, any>>;
+        inputTypeName: string;
+        rangeElementInputTypeName: string | null;
+        domainBaseTypeName: string | null;
+      };
       pgConnectionFilterOperatorsCategory?: OperatorsCategory;
       // TODO: rename these so they are scoped to this plugin!
       fieldType?: GraphQLOutputType;
@@ -71,9 +76,14 @@ declare global {
       isPgConnectionFilterMany?: boolean;
     }
     interface Build {
-      connectionFilterOperatorsType(
-        codec: PgTypeCodec<any, any, any, any>
-      ): (GraphQLInputType & GraphQLNamedType) | undefined;
+      connectionFilterOperatorsDigest(codec: PgTypeCodec<any, any, any, any>): {
+        operatorsTypeName: string;
+        relatedTypeName: string;
+        isList: boolean;
+        inputTypeName: string;
+        rangeElementInputTypeName: string | null;
+        domainBaseTypeName: string | null;
+      } | null;
       escapeLikeWildcards(input: unknown): string;
     }
     interface ScopeInputObjectFieldsField {

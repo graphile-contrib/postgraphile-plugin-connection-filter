@@ -1,4 +1,10 @@
-import { isEnumCodec, PgSelectStep, PgTypeCodec, TYPES } from "@dataplan/pg";
+import {
+  getInnerCodec,
+  isEnumCodec,
+  PgSelectStep,
+  PgTypeCodec,
+  TYPES,
+} from "@dataplan/pg";
 import { ConnectionStep, ExecutableStep } from "grafast";
 import type {
   GraphQLInputFieldConfigMap,
@@ -15,6 +21,13 @@ const { version } = require("../package.json");
 
 type AnyCodec = PgTypeCodec<any, any, any, any>;
 
+const isSuitableForFiltering = (codec: AnyCodec): boolean =>
+  !codec.columns &&
+  !codec.isAnonymous &&
+  !codec.arrayOfCodec &&
+  !codec.polymorphism &&
+  (!codec.domainOfCodec || isSuitableForFiltering(codec.domainOfCodec));
+
 export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterPlugin",
   version,
@@ -25,27 +38,125 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         const {
           inflection,
           graphql: { isListType, getNamedType },
+          options: {
+            connectionFilterAllowedFieldTypes,
+            connectionFilterArrays,
+          },
         } = build;
-        build.connectionFilterOperatorsType = (codec) => {
-          const fieldType = build.getGraphQLTypeByPgCodec!(codec, "output") as
-            | GraphQLOutputType
-            | undefined;
-          const fieldInputType = build.getGraphQLTypeByPgCodec!(
-            codec,
-            "input"
-          ) as GraphQLInputType | undefined;
-          if (!fieldType || !fieldInputType) {
-            return undefined;
+
+        build.connectionFilterOperatorsDigest = (codec) => {
+          if (!isSuitableForFiltering(codec)) {
+            // Not a base, domain, enum, or range type? Skip.
+            return null;
           }
-          const namedType = getNamedType(fieldType);
-          const namedInputType = getNamedType(fieldInputType);
-          const listType = isListType(fieldType);
+
+          // Perform some checks on the simple type (after removing array/range/domain wrappers)
+          const pgSimpleCodec = getInnerCodec(codec);
+          if (!pgSimpleCodec) return null;
+          if (
+            pgSimpleCodec.polymorphism ||
+            pgSimpleCodec.columns ||
+            pgSimpleCodec.isAnonymous
+          ) {
+            // Haven't found an enum type or a non-array base type? Skip.
+            return null;
+          }
+          if (pgSimpleCodec === TYPES.json) {
+            // The PG `json` type has no valid operators.
+            // Skip filter type creation to allow the proper
+            // operators to be exposed for PG `jsonb` types.
+            return null;
+          }
+
+          // TODO:v5: I'm unsure if this will work as before, e.g. it might not wrap with GraphQLList/GraphQLNonNull/etc
+          // Establish field type and field input type
+          const itemCodec = codec.arrayOfCodec ?? codec;
+          const fieldTypeName = build.getGraphQLTypeNameByPgCodec!(
+            itemCodec,
+            "output"
+          );
+          if (!fieldTypeName) return null;
+          const fieldTypeMeta = build.getTypeMetaByName(fieldTypeName);
+          if (!fieldTypeMeta) return null;
+          const fieldInputTypeName = build.getGraphQLTypeNameByPgCodec!(
+            itemCodec,
+            "input"
+          );
+          if (!fieldInputTypeName) return null;
+          const fieldInputTypeMeta =
+            build.getTypeMetaByName(fieldInputTypeName);
+          if (!fieldInputTypeMeta) return null;
+
+          // Avoid exposing filter operators on unrecognized types that PostGraphile handles as Strings
+          const namedTypeName = fieldTypeName;
+          const namedInputTypeName = fieldInputTypeName;
+          const actualStringCodecs = [
+            TYPES.bpchar,
+            TYPES.char,
+            TYPES.name,
+            TYPES.text,
+            TYPES.varchar,
+            TYPES.citext,
+          ];
+          if (
+            namedInputTypeName === "String" &&
+            !actualStringCodecs.includes(pgSimpleCodec)
+          ) {
+            // Not a real string type? Skip.
+            return null;
+          }
+
+          // Respect `connectionFilterAllowedFieldTypes` config option
+          if (
+            connectionFilterAllowedFieldTypes &&
+            !connectionFilterAllowedFieldTypes.includes(namedTypeName)
+          ) {
+            return null;
+          }
+
+          const pgConnectionFilterOperatorsCategory: OperatorsCategory =
+            codec.arrayOfCodec
+              ? "Array"
+              : codec.rangeOfCodec
+              ? "Range"
+              : isEnumCodec(codec)
+              ? "Enum"
+              : codec.domainOfCodec
+              ? "Domain"
+              : "Scalar";
+
+          // Respect `connectionFilterArrays` config option
+          if (
+            pgConnectionFilterOperatorsCategory === "Array" &&
+            !connectionFilterArrays
+          ) {
+            return null;
+          }
+
+          const rangeElementInputTypeName = codec.rangeOfCodec
+            ? build.getGraphQLTypeNameByPgCodec!(codec.rangeOfCodec, "input")
+            : null;
+
+          const domainBaseTypeName = codec.domainOfCodec
+            ? build.getGraphQLTypeNameByPgCodec!(codec.domainOfCodec, "output")
+            : null;
+
+          const listType = !!(
+            codec.arrayOfCodec || codec.rangeOfCodec?.arrayOfCodec
+          );
+
           const operatorsTypeName = listType
-            ? inflection.filterFieldListType(namedType.name)
-            : inflection.filterFieldType(namedType.name);
-          return build.getTypeByName(operatorsTypeName) as
-            | (GraphQLInputType & GraphQLNamedType)
-            | undefined;
+            ? inflection.filterFieldListType(namedTypeName)
+            : inflection.filterFieldType(namedTypeName);
+
+          return {
+            isList: listType,
+            operatorsTypeName,
+            relatedTypeName: namedTypeName,
+            inputTypeName: fieldInputTypeName,
+            rangeElementInputTypeName,
+            domainBaseTypeName,
+          };
         };
 
         build.escapeLikeWildcards = (input) => {
@@ -98,13 +209,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           );
         }
 
-        const isSuitableForFiltering = (codec: AnyCodec): boolean =>
-          !codec.columns &&
-          !codec.isAnonymous &&
-          !codec.arrayOfCodec &&
-          !codec.polymorphism &&
-          (!codec.domainOfCodec || isSuitableForFiltering(codec.domainOfCodec));
-
         const getInnerCodec = (codec: AnyCodec): AnyCodec => {
           if (codec.domainOfCodec) {
             return getInnerCodec(codec.domainOfCodec);
@@ -119,121 +223,89 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         };
 
         // Get or create types like IntFilter, StringFilter, etc.
+        const codecsByFilterTypeName: {
+          [typeName: string]: {
+            isList: boolean;
+            relatedTypeName: string;
+            pgCodecs: PgTypeCodec<any, any, any, any>[];
+            inputTypeName: string;
+            rangeElementInputTypeName: string | null;
+            domainBaseTypeName: string | null;
+          };
+        } = {};
         for (const codec of build.allPgCodecs) {
-          if (!isSuitableForFiltering(codec)) {
-            // Not a base, domain, enum, or range type? Skip.
+          const digest = build.connectionFilterOperatorsDigest(codec);
+          if (!digest) {
             continue;
           }
+          const {
+            isList,
+            operatorsTypeName,
+            relatedTypeName,
+            inputTypeName,
+            rangeElementInputTypeName,
+            domainBaseTypeName,
+          } = digest;
 
-          // Perform some checks on the simple type (after removing array/range/domain wrappers)
-          const pgSimpleCodec = getInnerCodec(codec);
-          if (!pgSimpleCodec) continue;
-          if (
-            pgSimpleCodec.polymorphism ||
-            pgSimpleCodec.columns ||
-            pgSimpleCodec.isAnonymous
-          ) {
-            // Haven't found an enum type or a non-array base type? Skip.
-            continue;
+          if (!codecsByFilterTypeName[operatorsTypeName]) {
+            codecsByFilterTypeName[operatorsTypeName] = {
+              isList,
+              relatedTypeName,
+              pgCodecs: [codec],
+              inputTypeName,
+              rangeElementInputTypeName,
+              domainBaseTypeName,
+            };
+          } else {
+            for (const key of [
+              "isList",
+              "operatorsTypeName",
+              "relatedTypeName",
+              "inputTypeName",
+              "rangeElementInputTypeName",
+            ]) {
+              if (
+                digest[key] !== codecsByFilterTypeName[operatorsTypeName][key]
+              ) {
+                throw new Error(`${key} mismatch`);
+              }
+            }
+            codecsByFilterTypeName[operatorsTypeName].pgCodecs.push(codec);
           }
-          if (pgSimpleCodec === TYPES.json) {
-            // The PG `json` type has no valid operators.
-            // Skip filter type creation to allow the proper
-            // operators to be exposed for PG `jsonb` types.
-            continue;
-          }
+        }
 
-          // TODO:v5: I'm unsure if this will work as before, e.g. it might not wrap with GraphQLList/GraphQLNonNull/etc
-          // Establish field type and field input type
-          const fieldType = build.getGraphQLTypeByPgCodec(codec, "output") as
-            | GraphQLOutputType
-            | undefined;
-          if (!fieldType) continue;
-          const fieldInputType = build.getGraphQLTypeByPgCodec(
-            codec,
-            "input"
-          ) as GraphQLInputType | undefined;
-          if (!fieldInputType) continue;
-
-          // Avoid exposing filter operators on unrecognized types that PostGraphile handles as Strings
-          const namedType = getNamedType(fieldType);
-          const namedInputType = getNamedType(fieldInputType);
-          const actualStringCodecs = [
-            TYPES.bpchar,
-            TYPES.char,
-            TYPES.name,
-            TYPES.text,
-            TYPES.varchar,
-            TYPES.citext,
-          ];
-          if (
-            namedInputType === GraphQLString &&
-            !actualStringCodecs.includes(pgSimpleCodec)
-          ) {
-            // Not a real string type? Skip.
-            continue;
-          }
-
-          // Respect `connectionFilterAllowedFieldTypes` config option
-          if (
-            connectionFilterAllowedFieldTypes &&
-            !connectionFilterAllowedFieldTypes.includes(namedType.name)
-          ) {
-            continue;
-          }
-
-          const pgConnectionFilterOperatorsCategory: OperatorsCategory =
-            codec.arrayOfCodec
-              ? "Array"
-              : codec.rangeOfCodec
-              ? "Range"
-              : isEnumCodec(codec)
-              ? "Enum"
-              : codec.domainOfCodec
-              ? "Domain"
-              : "Scalar";
-
-          // Respect `connectionFilterArrays` config option
-          if (
-            pgConnectionFilterOperatorsCategory === "Array" &&
-            !connectionFilterArrays
-          ) {
-            continue;
-          }
-
-          const rangeElementInputType = codec.rangeOfCodec
-            ? (build.getGraphQLTypeByPgCodec(codec.rangeOfCodec, "input") as
-                | GraphQLInputType
-                | undefined)
-            : undefined;
-
-          const domainBaseType = codec.domainOfCodec
-            ? (build.getGraphQLTypeByPgCodec(codec.domainOfCodec, "output") as
-                | GraphQLOutputType
-                | undefined)
-            : undefined;
-
-          const listType = isListType(fieldType);
-
-          // TODO: see if we can share code with build.connectionFilterOperatorsType
-          const operatorsTypeName = listType
-            ? inflection.filterFieldListType(namedType.name)
-            : inflection.filterFieldType(namedType.name);
-
+        for (const [
+          operatorsTypeName,
+          {
+            isList,
+            relatedTypeName,
+            pgCodecs,
+            inputTypeName,
+            rangeElementInputTypeName,
+            domainBaseTypeName,
+          },
+        ] of Object.entries(codecsByFilterTypeName)) {
           build.registerInputObjectType(
             operatorsTypeName,
             {
-              isPgConnectionFilterOperators: true,
+              pgConnectionFilterOperators: {
+                pgCodecs,
+                inputTypeName,
+                rangeElementInputTypeName,
+                domainBaseTypeName,
+              },
+              /*
               pgConnectionFilterOperatorsCategory,
               fieldType,
               fieldInputType,
               rangeElementInputType,
               domainBaseType,
+              */
             },
             () => ({
               name: operatorsTypeName,
-              description: `A filter to be used against ${namedType.name}${
-                listType ? " List" : ""
+              description: `A filter to be used against ${relatedTypeName}${
+                isList ? " List" : ""
               } fields. All fields are combined with a logical ‘and.’`,
             }),
             "PgConnectionArgFilterPlugin"

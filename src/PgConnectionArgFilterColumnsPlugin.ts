@@ -10,7 +10,7 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
     hooks: {
       GraphQLInputObjectType_fields(inFields, build, context) {
         let fields = inFields;
-        const { extend, sql, inflection, connectionFilterOperatorsType } =
+        const { extend, sql, inflection, connectionFilterOperatorsDigest } =
           build;
         const {
           fieldWithHooks,
@@ -33,7 +33,11 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
             continue;
           }
           const fieldName = inflection.column({ codec, columnName });
-          const OperatorsType = connectionFilterOperatorsType(column.codec);
+          const digest = connectionFilterOperatorsDigest(column.codec);
+          if (!digest) {
+            continue;
+          }
+          const OperatorsType = build.getTypeByName(digest.operatorsTypeName);
           if (!OperatorsType) {
             continue;
           }
