@@ -1,276 +1,136 @@
-import type { Plugin } from "graphile-build";
-import type { PgAttribute, PgClass, PgConstraint } from "graphile-build-pg";
-import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+import { PgSourceBuilder, PgSourceRelation, PgTypeColumn } from "@dataplan/pg";
 
-const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
-  builder.hook("inflection", (inflection) => ({
-    ...inflection,
-    filterForwardRelationExistsFieldName(relationFieldName: string) {
-      return `${relationFieldName}Exists`;
-    },
-    filterSingleRelationFieldName(fieldName: string) {
-      return fieldName;
-    },
-  }));
+const { version } = require("../package.json");
 
-  builder.hook("GraphQLInputObjectType:fields", (fields, build, context) => {
-    const {
-      describePgEntity,
-      extend,
-      newWithHooks,
-      inflection,
-      graphql: { GraphQLBoolean },
-      pgOmit: omit,
-      pgSql: sql,
-      pgIntrospectionResultsByKind: introspectionResultsByKind,
-      connectionFilterResolve,
-      connectionFilterRegisterResolver,
-      connectionFilterTypesByTypeName,
-      connectionFilterType,
-    } = build;
-    const {
-      fieldWithHooks,
-      scope: { pgIntrospection: table, isPgConnectionFilter },
-      Self,
-    } = context;
+export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin =
+  {
+    name: "PgConnectionArgFilterForwardRelationsPlugin",
+    version,
 
-    if (!isPgConnectionFilter || table.kind !== "class") return fields;
-
-    connectionFilterTypesByTypeName[Self.name] = Self;
-
-    const forwardRelationSpecs = (
-      introspectionResultsByKind.constraint as PgConstraint[]
-    )
-      .filter((con) => con.type === "f")
-      .filter((con) => con.classId === table.id)
-      .reduce((memo: ForwardRelationSpec[], constraint) => {
-        if (omit(constraint, "read") || omit(constraint, "filter")) {
-          return memo;
-        }
-        const foreignTable = constraint.foreignClassId
-          ? introspectionResultsByKind.classById[constraint.foreignClassId]
-          : null;
-        if (!foreignTable) {
-          throw new Error(
-            `Could not find the foreign table (constraint: ${constraint.name})`
-          );
-        }
-        if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
-          return memo;
-        }
-        const attributes = (
-          introspectionResultsByKind.attribute as PgAttribute[]
-        )
-          .filter((attr) => attr.classId === table.id)
-          .sort((a, b) => a.num - b.num);
-        const foreignAttributes = (
-          introspectionResultsByKind.attribute as PgAttribute[]
-        )
-          .filter((attr) => attr.classId === foreignTable.id)
-          .sort((a, b) => a.num - b.num);
-        const keyAttributes = constraint.keyAttributeNums.map(
-          (num) => attributes.filter((attr) => attr.num === num)[0]
-        );
-        const foreignKeyAttributes = constraint.foreignKeyAttributeNums.map(
-          (num) => foreignAttributes.filter((attr) => attr.num === num)[0]
-        );
-        if (keyAttributes.some((attr) => omit(attr, "read"))) {
-          return memo;
-        }
-        if (foreignKeyAttributes.some((attr) => omit(attr, "read"))) {
-          return memo;
-        }
-        memo.push({
-          table,
-          keyAttributes,
-          foreignTable,
-          foreignKeyAttributes,
-          constraint,
-        });
-        return memo;
-      }, []);
-
-    let forwardRelationSpecByFieldName: {
-      [fieldName: string]: ForwardRelationSpec;
-    } = {};
-
-    const addField = (
-      fieldName: string,
-      description: string,
-      type: any,
-      resolve: any,
-      spec: ForwardRelationSpec,
-      hint: string
-    ) => {
-      // Field
-      fields = extend(
-        fields,
-        {
-          [fieldName]: fieldWithHooks(
-            fieldName,
-            {
-              description,
-              type,
-            },
-            {
-              isPgConnectionFilterField: true,
-            }
-          ),
+    inflection: {
+      add: {
+        filterForwardRelationExistsFieldName(preset, relationFieldName) {
+          return `${relationFieldName}Exists`;
         },
-        hint
-      );
-      // Spec for use in resolver
-      forwardRelationSpecByFieldName = extend(forwardRelationSpecByFieldName, {
-        [fieldName]: spec,
-      });
-      // Resolver
-      connectionFilterRegisterResolver(Self.name, fieldName, resolve);
-    };
+        filterSingleRelationFieldName(preset, fieldName) {
+          return fieldName;
+        },
+      },
+    },
 
-    const resolve: ConnectionFilterResolver = ({
-      sourceAlias,
-      fieldName,
-      fieldValue,
-      queryBuilder,
-    }) => {
-      if (fieldValue == null) return null;
+    schema: {
+      hooks: {
+        GraphQLInputObjectType_fields(fields, build, context) {
+          const {
+            extend,
+            inflection,
+            graphql: { GraphQLBoolean },
+            sql,
+          } = build;
+          const {
+            fieldWithHooks,
+            scope: { pgCodec, isPgConnectionFilter },
+            Self,
+          } = context;
 
-      const { foreignTable, foreignKeyAttributes, keyAttributes } =
-        forwardRelationSpecByFieldName[fieldName];
+          const source =
+            pgCodec &&
+            build.input.pgSources.find(
+              (s) => s.codec === pgCodec && !s.parameters
+            );
 
-      const foreignTableAlias = sql.identifier(Symbol());
+          if (
+            !isPgConnectionFilter ||
+            !pgCodec ||
+            !pgCodec.columns ||
+            !source
+          ) {
+            return fields;
+          }
 
-      const sqlIdentifier = sql.identifier(
-        foreignTable.namespace.name,
-        foreignTable.name
-      );
+          const forwardRelations = Object.entries(
+            source.getRelations() as {
+              [relationName: string]: PgSourceRelation<any, any>;
+            }
+          ).filter(([relationName, relation]) => {
+            return !relation.isReferencee;
+          });
 
-      const sqlKeysMatch = sql.query`(${sql.join(
-        keyAttributes.map((key, i) => {
-          return sql.fragment`${sourceAlias}.${sql.identifier(
-            key.name
-          )} = ${foreignTableAlias}.${sql.identifier(
-            foreignKeyAttributes[i].name
-          )}`;
-        }),
-        ") and ("
-      )})`;
+          for (const [relationName, relation] of forwardRelations) {
+            const behavior = build.pgGetBehavior([
+              relation.source.extensions,
+              relation.extensions,
+            ]);
+            const foreignTable =
+              relation.source instanceof PgSourceBuilder
+                ? relation.source.get()
+                : relation.source; // Deliberate shadowing
 
-      const foreignTableTypeName = inflection.tableType(foreignTable);
-      const foreignTableFilterTypeName =
-        inflection.filterType(foreignTableTypeName);
+            // Used to use 'read' behavior too
+            if (!build.behavior.matches(behavior, "filter", "filter")) {
+              continue;
+            }
 
-      const sqlFragment = connectionFilterResolve(
-        fieldValue,
-        foreignTableAlias,
-        foreignTableFilterTypeName,
-        queryBuilder
-      );
+            const fieldName = inflection.singleRelation({
+              source,
+              relationName,
+            });
+            const filterFieldName =
+              inflection.filterSingleRelationFieldName(fieldName);
+            const foreignTableTypeName = inflection.tableType(
+              foreignTable.codec
+            );
+            const foreignTableFilterTypeName =
+              inflection.filterType(foreignTableTypeName);
+            const ForeignTableFilterType = build.getTypeByName(
+              foreignTableFilterTypeName
+            );
+            if (!ForeignTableFilterType) continue;
 
-      return sqlFragment == null
-        ? null
-        : sql.query`\
-      exists(
-        select 1 from ${sqlIdentifier} as ${foreignTableAlias}
-        where ${sqlKeysMatch} and
-          (${sqlFragment})
-      )`;
-    };
+            fields = extend(
+              fields,
+              {
+                [filterFieldName]: fieldWithHooks(
+                  {
+                    fieldName: filterFieldName,
+                    isPgConnectionFilterField: true,
+                  },
+                  () => ({
+                    description: `Filter by the object’s \`${fieldName}\` relation.`,
+                    type: ForeignTableFilterType,
+                  })
+                ),
+              },
+              `Adding connection filter forward relation field from ${source.name} to ${foreignTable.name}`
+            );
 
-    const resolveExists: ConnectionFilterResolver = ({
-      sourceAlias,
-      fieldName,
-      fieldValue,
-    }) => {
-      if (fieldValue == null) return null;
+            const keyIsNullable = relation.localColumns.some(
+              (col) => !(source.codec.columns[col] as PgTypeColumn).notNull
+            );
+            if (keyIsNullable) {
+              const existsFieldName =
+                inflection.filterForwardRelationExistsFieldName(fieldName);
+              fields = extend(
+                fields,
+                {
+                  [existsFieldName]: fieldWithHooks(
+                    {
+                      fieldName: existsFieldName,
+                      isPgConnectionFilterField: true,
+                    },
+                    () => ({
+                      description: `A related \`${fieldName}\` exists.`,
+                      type: GraphQLBoolean,
+                    })
+                  ),
+                },
+                `Adding connection filter forward relation exists field from ${source.name} to ${foreignTable.name}`
+              );
+            }
+          }
 
-      const { foreignTable, foreignKeyAttributes, keyAttributes } =
-        forwardRelationSpecByFieldName[fieldName];
-
-      const foreignTableAlias = sql.identifier(Symbol());
-
-      const sqlIdentifier = sql.identifier(
-        foreignTable.namespace.name,
-        foreignTable.name
-      );
-
-      const sqlKeysMatch = sql.query`(${sql.join(
-        keyAttributes.map((key, i) => {
-          return sql.fragment`${sourceAlias}.${sql.identifier(
-            key.name
-          )} = ${foreignTableAlias}.${sql.identifier(
-            foreignKeyAttributes[i].name
-          )}`;
-        }),
-        ") and ("
-      )})`;
-
-      const sqlSelectWhereKeysMatch = sql.query`select 1 from ${sqlIdentifier} as ${foreignTableAlias} where ${sqlKeysMatch}`;
-
-      return fieldValue === true
-        ? sql.query`exists(${sqlSelectWhereKeysMatch})`
-        : sql.query`not exists(${sqlSelectWhereKeysMatch})`;
-    };
-
-    for (const spec of forwardRelationSpecs) {
-      const { constraint, foreignTable, keyAttributes } = spec;
-      const fieldName = inflection.singleRelationByKeys(
-        keyAttributes,
-        foreignTable,
-        table,
-        constraint
-      );
-      const filterFieldName =
-        inflection.filterSingleRelationFieldName(fieldName);
-      const foreignTableTypeName = inflection.tableType(foreignTable);
-      const foreignTableFilterTypeName =
-        inflection.filterType(foreignTableTypeName);
-      const ForeignTableFilterType = connectionFilterType(
-        newWithHooks,
-        foreignTableFilterTypeName,
-        foreignTable,
-        foreignTableTypeName
-      );
-      if (!ForeignTableFilterType) continue;
-
-      addField(
-        filterFieldName,
-        `Filter by the object’s \`${fieldName}\` relation.`,
-        ForeignTableFilterType,
-        resolve,
-        spec,
-        `Adding connection filter forward relation field from ${describePgEntity(
-          table
-        )} to ${describePgEntity(foreignTable)}`
-      );
-
-      const keyIsNullable = !keyAttributes.every((attr) => attr.isNotNull);
-      if (keyIsNullable) {
-        const existsFieldName =
-          inflection.filterForwardRelationExistsFieldName(fieldName);
-        addField(
-          existsFieldName,
-          `A related \`${fieldName}\` exists.`,
-          GraphQLBoolean,
-          resolveExists,
-          spec,
-          `Adding connection filter forward relation exists field from ${describePgEntity(
-            table
-          )} to ${describePgEntity(foreignTable)}`
-        );
-      }
-    }
-
-    return fields;
-  });
-};
-
-export interface ForwardRelationSpec {
-  table: PgClass;
-  keyAttributes: PgAttribute[];
-  foreignTable: PgClass;
-  foreignKeyAttributes: PgAttribute[];
-  constraint: PgConstraint;
-}
-
-export default PgConnectionArgFilterForwardRelationsPlugin;
+          return fields;
+        },
+      },
+    },
+  };

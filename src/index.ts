@@ -52,6 +52,8 @@ declare global {
         this: Inflection,
         fieldName: string
       ): string;
+      filterForwardRelationExistsFieldName(relationFieldName: string): string;
+      filterSingleRelationFieldName(fieldName: string): string;
     }
     interface ScopeInputObject {
       isPgConnectionFilter?: boolean;
