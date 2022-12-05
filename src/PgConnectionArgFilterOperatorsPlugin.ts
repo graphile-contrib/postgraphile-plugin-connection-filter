@@ -924,6 +924,10 @@ export function makeApplyPlanFromOperatorSpec(
     return expressionCodec;
   };
 
+  const {
+    options: { connectionFilterAllowNullInput },
+  } = build;
+
   return ($where, fieldArgs) => {
     if (!$where.extensions?.pgFilterColumn) {
       throw new Error(`Planning error`);
@@ -946,6 +950,10 @@ export function makeApplyPlanFromOperatorSpec(
         [sourceAlias, sourceCodec];
 
     const $input = fieldArgs.getRaw();
+    if (connectionFilterAllowNullInput && $input.evalIs(null)) {
+      // Don't add a filter
+      return;
+    }
     const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
     const inputCodec = resolveInputCodec(identifierCodec);
     if (!inputCodec) {
