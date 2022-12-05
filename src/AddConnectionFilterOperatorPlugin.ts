@@ -13,7 +13,11 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
       build(build) {
         const { inflection } = build;
         build[$$filters] = new Map();
-        build.addConnectionFilterOperator = (typeName, filterName, spec) => {
+        build.addConnectionFilterOperator = (
+          typeNameOrNames,
+          filterName,
+          spec
+        ) => {
           if (
             !build.status.isBuildPhaseComplete ||
             build.status.isInitPhaseComplete
@@ -22,18 +26,25 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
               `addConnectionFilterOperator may only be called during the 'init' phase`
             );
           }
-          const filterTypeName = inflection.filterType(typeName);
-          let operatorSpecByFilterName = build[$$filters]!.get(filterTypeName);
-          if (!operatorSpecByFilterName) {
-            operatorSpecByFilterName = new Map();
-            build[$$filters]!.set(filterTypeName, operatorSpecByFilterName);
+
+          const typeNames = Array.isArray(typeNameOrNames)
+            ? typeNameOrNames
+            : [typeNameOrNames];
+          for (const typeName of typeNames) {
+            const filterTypeName = inflection.filterType(typeName);
+            let operatorSpecByFilterName =
+              build[$$filters]!.get(filterTypeName);
+            if (!operatorSpecByFilterName) {
+              operatorSpecByFilterName = new Map();
+              build[$$filters]!.set(filterTypeName, operatorSpecByFilterName);
+            }
+            if (operatorSpecByFilterName.has(filterName)) {
+              throw new Error(
+                `Filter '${filterName}' already registered on '${filterTypeName}'`
+              );
+            }
+            operatorSpecByFilterName.set(filterName, spec);
           }
-          if (operatorSpecByFilterName.has(filterName)) {
-            throw new Error(
-              `Filter '${filterName}' already registered on '${filterTypeName}'`
-            );
-          }
-          operatorSpecByFilterName.set(filterName, spec);
         };
         return build;
       },
@@ -81,7 +92,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
                 {
                   description,
                   type,
-                  applyPlan: makeApplyPlanFromOperatorSpec(build, spec),
+                  applyPlan: makeApplyPlanFromOperatorSpec(build, spec, type),
                 }
               ),
             },

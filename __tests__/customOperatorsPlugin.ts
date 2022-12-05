@@ -1,3 +1,5 @@
+import { TYPES } from "@dataplan/pg";
+
 const CustomOperatorsPlugin: GraphileConfig.Plugin = {
   name: "CustomOperatorsPlugin",
   version: "0.0.0",
@@ -16,6 +18,7 @@ const CustomOperatorsPlugin: GraphileConfig.Plugin = {
           description: "Address family equal to specified value.",
           resolveType: () => GraphQLInt,
           resolve: (i, v) => sql.fragment`family(${i}) = ${v}`,
+          resolveInputCodec: () => TYPES.int,
         });
 
         // using resolveSqlIdentifier
@@ -23,7 +26,7 @@ const CustomOperatorsPlugin: GraphileConfig.Plugin = {
           description: "Address family equal to specified value.",
           resolveType: () => GraphQLInt,
           resolve: (i, v) => sql.fragment`${i} <> ${v}`,
-          resolveSqlIdentifier: (i) => sql.fragment`family(${i})`,
+          resolveSqlIdentifier: (i) => [sql.fragment`family(${i})`, TYPES.int],
         });
 
         // using resolveInput // typeNames: string | string[]
@@ -32,6 +35,7 @@ const CustomOperatorsPlugin: GraphileConfig.Plugin = {
           resolveType: () => GraphQLBoolean,
           resolve: (i, v) => sql.fragment`family(${i}) = ${v}`,
           resolveInput: (input) => (input === true ? 4 : 6),
+          resolveInputCodec: () => TYPES.int,
         });
 
         return _;

@@ -9,7 +9,13 @@ import {
   lambda,
   list,
 } from "grafast";
-import { GraphQLFieldConfigMap, GraphQLInputType, GraphQLType } from "graphql";
+import {
+  GraphQLFieldConfigMap,
+  GraphQLInputType,
+  GraphQLNamedType,
+  GraphQLString,
+  GraphQLType,
+} from "graphql";
 import { PgType } from "pg-introspection";
 import { SQL } from "pg-sql2";
 import { OperatorsCategory } from "./interfaces";
@@ -137,101 +143,114 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolve: (i, v) => sql`${i} >= ${v}`,
           },
         };
+
+        /** Make CITEXT case sensitive */
+        const resolveSqlIdentifierCaseSensitive = (
+          i: SQL,
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (c === TYPES.citext) {
+            return [i, TYPES.text] as const;
+          } else {
+            return [i, c] as const;
+          }
+        };
+
         const patternMatchingOperators: { [fieldName: string]: OperatorSpec } =
           {
             includes: {
               description: "Contains the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
               resolve: (i, v) => sql`${i} LIKE ${v}`,
             },
             notIncludes: {
               description:
                 "Does not contain the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
             },
             includesInsensitive: {
               description: "Contains the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
             },
             notIncludesInsensitive: {
               description:
                 "Does not contain the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
             },
             startsWith: {
               description: "Starts with the specified string (case-sensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
               resolve: (i, v) => sql`${i} LIKE ${v}`,
             },
             notStartsWith: {
               description:
                 "Does not start with the specified string (case-sensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
             },
             startsWithInsensitive: {
               description:
                 "Starts with the specified string (case-insensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
             },
             notStartsWithInsensitive: {
               description:
                 "Does not start with the specified string (case-insensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
             },
             endsWith: {
               description: "Ends with the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
               resolve: (i, v) => sql`${i} LIKE ${v}`,
             },
             notEndsWith: {
               description:
                 "Does not end with the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
             },
             endsWithInsensitive: {
               description: "Ends with the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
             },
             notEndsWithInsensitive: {
               description:
                 "Does not end with the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
             },
             like: {
               description:
                 "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
               resolve: (i, v) => sql`${i} LIKE ${v}`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
             },
             notLike: {
               description:
                 "Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
+              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
             },
             likeInsensitive: {
               description:
                 "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
             },
             notLikeInsensitive: {
               description:
                 "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-              resolveSqlIdentifier: (i) => i, // avoid casting citext to text
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
             },
           };
@@ -374,8 +393,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             codec: PgTypeCodec<any, any, any, any>
           ) =>
             codec === TYPES.citext
-              ? sourceAlias // already case-insensitive, so no need to call `lower()`
-              : sql`lower(${sourceAlias})`;
+              ? ([sourceAlias, codec] as const) // already case-insensitive, so no need to call `lower()`
+              : ([sql`lower(${sourceAlias})`, codec] as const);
 
           const resolveSqlValue = (
             $placeholderable: PlaceholderableStep,
@@ -766,7 +785,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               {
                 description,
                 type,
-                applyPlan: makeApplyPlanFromOperatorSpec(build, spec),
+                applyPlan: makeApplyPlanFromOperatorSpec(build, spec, type),
               }
             );
             return memo;
@@ -793,12 +812,15 @@ export interface OperatorSpec {
   resolveType?: (
     fieldInputType: GraphQLInputType,
     rangeElementInputType: GraphQLInputType | null | undefined
-  ) => GraphQLType;
+  ) => GraphQLInputType;
   resolveSqlIdentifier?: (
     sqlIdentifier: SQL,
     codec: PgTypeCodec<any, any, any, any>
-  ) => SQL;
+  ) => readonly [SQL, PgTypeCodec<any, any, any, any>];
   resolveInput?: (input: unknown) => unknown;
+  resolveInputCodec?: (
+    expressionCodec: PgTypeCodec<any, any, any, any>
+  ) => PgTypeCodec<any, any, any, any>;
   resolveSql?: any;
   resolveSqlValue?: (
     $placeholderable: PlaceholderableStep,
@@ -816,9 +838,13 @@ export interface OperatorSpec {
 
 export function makeApplyPlanFromOperatorSpec(
   build: GraphileBuild.Build,
-  spec: OperatorSpec
+  spec: OperatorSpec,
+  type: GraphQLInputType
 ): InputObjectFieldApplyPlanResolver<PgConditionStep<any>> {
-  const { sql } = build;
+  const {
+    sql,
+    graphql: { isNamedType, isListType },
+  } = build;
   const {
     description,
     resolveType,
@@ -828,6 +854,44 @@ export function makeApplyPlanFromOperatorSpec(
     resolveSqlIdentifier,
     resolveSqlValue,
   } = spec;
+
+  // Figure out the input codec
+  const guessCodecFromNamedType = (
+    type: GraphQLNamedType & GraphQLInputType
+  ) => {
+    const scope = build.scopeByType.get(type) as
+      | GraphileBuild.ScopeInputObject
+      | GraphileBuild.ScopeScalar
+      | GraphileBuild.ScopeEnum
+      | undefined;
+    if (scope?.pgCodec) {
+      return scope.pgCodec;
+    }
+    if (type === GraphQLString) {
+      return TYPES.text;
+    }
+  };
+  const resolveInputCodec = (
+    expressionCodec: PgTypeCodec<any, any, any, any>
+  ) => {
+    if (spec.resolveInputCodec) {
+      return spec.resolveInputCodec(expressionCodec);
+    }
+    if (isNamedType(type)) {
+      return guessCodecFromNamedType(type) ?? expressionCodec;
+    } else if (isListType(type)) {
+      const innerType = type.ofType;
+      if (isNamedType(innerType)) {
+        const innerCodec =
+          guessCodecFromNamedType(innerType) ?? expressionCodec;
+        if (innerCodec && !innerCodec.arrayOfCodec) {
+          return listOfType(innerCodec);
+        }
+      }
+    }
+    return expressionCodec;
+  };
+
   return ($where, fieldArgs) => {
     if (!$where.extensions?.pgFilterColumn) {
       throw new Error(`Planning error`);
@@ -837,24 +901,37 @@ export function makeApplyPlanFromOperatorSpec(
     const sourceAlias = column.expression
       ? column.expression($where.alias)
       : sql`${$where.alias}.${sql.identifier(columnName)}`;
-    const sqlIdentifier = resolveSqlIdentifier
-      ? resolveSqlIdentifier(sourceAlias, column.codec)
+    const sourceCodec = column.codec;
+
+    const [sqlIdentifier, identifierCodec] = resolveSqlIdentifier
+      ? resolveSqlIdentifier(sourceAlias, sourceCodec)
+      : /*
       : column.codec === TYPES.citext
       ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
       : column.codec.arrayOfCodec === TYPES.citext
       ? sql.query`${sourceAlias}::text[]` // cast column to text[] for case-sensitive matching
-      : sourceAlias;
+      */
+        [sourceAlias, sourceCodec];
 
     const $input = fieldArgs.getRaw();
     const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
+    const inputCodec = resolveInputCodec(identifierCodec);
+    if (!inputCodec) {
+      throw new Error(
+        // TODO: improve this error message with more details about where this originated
+        `We don't know what type the input is, please provide 'resolveInputCodec' to the filter spec`
+      );
+    }
 
     const sqlValue = resolveSqlValue
-      ? resolveSqlValue($where, $input, column.codec)
+      ? resolveSqlValue($where, $input, inputCodec)
+      : /*
       : column.codec === TYPES.citext
       ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
       : column.codec.arrayOfCodec === TYPES.citext
       ? $where.placeholder($resolvedInput, listOfType(TYPES.citext as any)) // cast input to text[]
-      : $where.placeholder($resolvedInput, column.codec);
+      */
+        $where.placeholder($resolvedInput, inputCodec);
 
     const fragment = resolve(sqlIdentifier, sqlValue, $input, $where);
     $where.where(fragment);

@@ -114,7 +114,7 @@ declare global {
       escapeLikeWildcards(input: unknown): string;
       [$$filters]: Map<string, Map<string, OperatorSpec>>;
       addConnectionFilterOperator(
-        typeName: string,
+        typeName: string | string[],
         filterName: string,
         spec: OperatorSpec
       ): void;
