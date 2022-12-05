@@ -16,9 +16,26 @@ import { OperatorsCategory } from "./interfaces";
 import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
 import { PgSource, PgTypeCodec, PgTypeColumn } from "@dataplan/pg";
 
+import type {} from "postgraphile/presets/v4";
+
 declare module "@dataplan/pg" {
   interface PgConditionStepExtensions {
     pgFilterColumn?: { columnName: string; column: PgTypeColumn };
+  }
+}
+
+declare module "postgraphile/presets/v4" {
+  interface V4GraphileBuildOptions {
+    connectionFilterAllowedOperators?: string[];
+    connectionFilterAllowedFieldTypes?: string[];
+    connectionFilterArrays?: boolean;
+    connectionFilterComputedColumns?: boolean;
+    connectionFilterOperatorNames?: boolean;
+    connectionFilterRelations?: boolean;
+    connectionFilterSetofFunctions?: boolean;
+    connectionFilterLogicalOperators?: boolean;
+    connectionFilterAllowNullInput?: boolean;
+    connectionFilterAllowEmptyObjectInput?: boolean;
   }
 }
 

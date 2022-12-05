@@ -795,7 +795,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                     : column.codec.arrayOfCodec === TYPES.citext
                     ? $where.placeholder(
                         $resolvedInput,
-                        listOfType(TYPES.citext)
+                        listOfType(TYPES.citext as any)
                       ) // cast input to text[]
                     : $where.placeholder($resolvedInput, column.codec);
 
