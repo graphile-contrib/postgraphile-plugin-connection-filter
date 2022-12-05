@@ -122,7 +122,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             description: "Not included in the specified list.",
             resolveType: resolveListType,
             resolveSqlValue: resolveListSqlValue,
-            resolve: (i, v) => sql`${i} <> EVERY(${v})`,
+            resolve: (i, v) => sql`${i} <> ALL(${v})`,
           },
         };
         const sortOperators: { [fieldName: string]: OperatorSpec } = {
