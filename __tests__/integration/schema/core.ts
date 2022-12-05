@@ -3,6 +3,7 @@ import { printSchemaOrdered, withPgClient } from "../../helpers";
 import { postgraphilePresetAmber } from "postgraphile/presets/amber";
 import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
 import { makeSchema } from "postgraphile";
+import { PostGraphileConnectionFilterPreset } from "../../../src/index";
 
 const createPostGraphileSchema = async (
   pgClient: pg.PoolClient,
@@ -14,6 +15,7 @@ const createPostGraphileSchema = async (
     extends: [
       postgraphilePresetAmber,
       makeV4Preset(v4Options),
+      PostGraphileConnectionFilterPreset,
       ...(anotherPreset ? [anotherPreset] : []),
     ],
     pgSources: [

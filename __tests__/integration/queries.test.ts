@@ -8,7 +8,7 @@ import { PgConditionArgumentPlugin } from "graphile-build-pg";
 import { postgraphilePresetAmber } from "postgraphile/presets/amber";
 import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
 import { makeSchema } from "postgraphile";
-import { PostGraphileConnectionFilterPreset } from "../../src/index.js";
+import { PostGraphileConnectionFilterPreset } from "../../src/index";
 import CustomOperatorsPlugin from "./../customOperatorsPlugin";
 import { execute, hookArgs } from "grafast";
 import { ServerParams } from "grafserv";
@@ -25,6 +25,7 @@ const createPostGraphileSchema = async (
     extends: [
       postgraphilePresetAmber,
       makeV4Preset(v4Options),
+      PostGraphileConnectionFilterPreset,
       ...(anotherPreset ? [anotherPreset] : []),
     ],
     pgSources: [
