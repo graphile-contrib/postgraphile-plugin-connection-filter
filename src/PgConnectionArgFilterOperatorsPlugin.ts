@@ -646,7 +646,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           inputTypeName,
           rangeElementInputTypeName,
           //domainBaseTypeName,
-          //pgCodecs
+          pgCodecs,
         } = pgConnectionFilterOperators;
 
         const rangeElementInputType = rangeElementInputTypeName
@@ -658,11 +658,154 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           | GraphQLInputType
           | undefined;
 
+        let textLike = true;
+        let sortable = true;
+        let inetLike = true;
+        let jsonLike = true;
+        let hstoreLike = true;
+        for (const codec of pgCodecs) {
+          let underlyingType = codec.domainOfCodec ?? codec;
+          switch (underlyingType) {
+            case TYPES.numeric:
+            case TYPES.float:
+            case TYPES.float4:
+            case TYPES.bigint:
+            case TYPES.int:
+            case TYPES.int2:
+
+            case TYPES.boolean:
+
+            case TYPES.date:
+            case TYPES.timestamp:
+            case TYPES.timestamptz:
+            case TYPES.time:
+            case TYPES.timetz:
+            case TYPES.interval:
+
+            case TYPES.json:
+            case TYPES.jsonb:
+
+            case TYPES.cidr:
+            case TYPES.inet:
+            case TYPES.macaddr:
+            case TYPES.macaddr8:
+
+            case TYPES.text:
+            case TYPES.varchar:
+            case TYPES.char:
+            case TYPES.bpchar:
+
+            case TYPES.uuid: {
+              // Sort is fine
+              break;
+            }
+            default: {
+              // NOT SORTABLE!
+              sortable = false;
+            }
+          }
+
+          switch (underlyingType) {
+            case TYPES.cidr:
+            case TYPES.inet:
+            case TYPES.macaddr:
+            case TYPES.macaddr8: {
+              // Inet is fine
+              break;
+            }
+            default: {
+              // NOT INET!
+              inetLike = false;
+            }
+          }
+
+          switch (underlyingType) {
+            case TYPES.text:
+            case TYPES.varchar:
+            case TYPES.char:
+            case TYPES.bpchar: {
+              // Text
+              break;
+            }
+            default: {
+              // NOT TEXT!
+              textLike = false;
+            }
+          }
+
+          switch (underlyingType) {
+            case TYPES.json:
+            case TYPES.jsonb: {
+              // JSON
+              break;
+            }
+            default: {
+              // NOT JSON!
+              jsonLike = false;
+            }
+          }
+
+          switch (underlyingType) {
+            case TYPES.hstore: {
+              // HSTORE
+              break;
+            }
+            default: {
+              // NOT HSTORE!
+              hstoreLike = false;
+            }
+          }
+
+          /*
+          switch (underlyingType) {
+            case TYPES.numeric:
+            case TYPES.float:
+            case TYPES.float4:
+            case TYPES.bigint:
+            case TYPES.int:
+            case TYPES.int2:
+
+            case TYPES.boolean:
+
+            case TYPES.varbit:
+            case TYPES.bit:
+
+            case TYPES.date:
+            case TYPES.timestamp:
+            case TYPES.timestamptz:
+            case TYPES.time:
+            case TYPES.timetz:
+            case TYPES.interval:
+
+            case TYPES.json:
+            case TYPES.jsonb:
+
+            case TYPES.hstore:
+
+            case TYPES.cidr:
+            case TYPES.inet:
+            case TYPES.macaddr:
+            case TYPES.macaddr8:
+
+            case TYPES.text:
+            case TYPES.varchar:
+            case TYPES.char:
+            case TYPES.bpchar:
+
+            case TYPES.uuid:
+          }*/
+        }
+
         const operatorSpecs: {
           [fieldName: string]: OperatorSpec;
         } = {
-          // TODO: Bring in the RIGHT OPERATORS here
           ...standardOperators,
+          ...(sortable ? sortOperators : null),
+          ...(inetLike ? inetOperators : null),
+          ...(jsonLike ? jsonbOperators : null),
+          ...(hstoreLike ? hstoreOperators : null),
+          ...(textLike ? patternMatchingOperators : null),
+          ...(textLike ? insensitiveOperators : null),
         };
 
         const operatorFields = Object.entries(operatorSpecs).reduce(
