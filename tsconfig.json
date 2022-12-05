@@ -1,15 +1,12 @@
+// This file is used for the entire project, including tests - see tsconfig.build.js for just the output
 {
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src",
-    "declarationDir": "./dist",
-    "outDir": "./dist",
-    "declaration": true,
+    "noEmit": true,
     "allowJs": false,
-    "target": "es2017",
+    "target": "ESNext",
     "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "pretty": true,
+    "moduleResolution": "NodeNext",
     "importHelpers": true,
     "experimentalDecorators": true,
     "noImplicitAny": true,
@@ -19,9 +16,6 @@
     "noUnusedParameters": false,
     "noUnusedLocals": false,
     "preserveWatchOutput": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "lib": ["es2018", "esnext.asynciterable"]
-  },
-  "include": ["src/**/*"]
+  }
 }

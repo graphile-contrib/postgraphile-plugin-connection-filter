@@ -4,7 +4,8 @@
   "description": "Filtering on PostGraphile connections",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
+    "watch": "yarn build --watch",
     "format": "prettier --ignore-path ./.eslintignore",
     "format:all": "yarn format '**/*.{json,md,html,js,jsx,ts,tsx}'",
     "format:fix": "yarn format:all --write",
