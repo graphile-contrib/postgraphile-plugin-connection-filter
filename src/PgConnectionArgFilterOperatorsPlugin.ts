@@ -1,4 +1,4 @@
-import { listOfType, PgConditionStep } from "@dataplan/pg";
+import { isEnumCodec, listOfType, PgConditionStep } from "@dataplan/pg";
 import { PgConditionLikeStep } from "@dataplan/pg";
 import { PgTypeCodec, TYPES } from "@dataplan/pg";
 import {
@@ -543,105 +543,6 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
 
-        /*
-        const gqlTypeNameFromPgCodec = (
-          codec: PgTypeCodec<any, any, any, any>
-        ) => build.getGraphQLTypeNameByPgCodec!(codec, "input");
-
-        const _BigFloat = gqlTypeNameFromPgCodec(TYPES.numeric) || "BigFloat";
-        const _BigInt = gqlTypeNameFromPgCodec(TYPES.bigint) || "BigInt";
-        const _BitString = gqlTypeNameFromPgCodec(TYPES.varbit) || "BitString";
-        const _Boolean = gqlTypeNameFromPgCodec(TYPES.boolean) || "Boolean";
-        const _CidrAddress =
-          gqlTypeNameFromPgCodec(TYPES.cidr) || "CidrAddress";
-        const _Date = gqlTypeNameFromPgCodec(TYPES.date) || "Date";
-        const _Datetime = gqlTypeNameFromPgCodec(TYPES.timestamp) || "Datetime";
-        const _Float = gqlTypeNameFromPgCodec(TYPES.float4) || "Float";
-        const _Int = gqlTypeNameFromPgCodec(TYPES.int2) || "Int";
-        const _InternetAddress =
-          gqlTypeNameFromPgCodec(TYPES.inet) || "InternetAddress";
-        const _Interval = gqlTypeNameFromPgCodec(TYPES.interval) || "Interval";
-        const _JSON = gqlTypeNameFromPgCodec(TYPES.jsonb) || "JSON";
-        const _KeyValueHash =
-          gqlTypeNameFromPgCodec(TYPES.hstore) || "KeyValueHash";
-        const _MacAddress =
-          gqlTypeNameFromPgCodec(TYPES.macaddr) || "MacAddress";
-        const _MacAddress8 =
-          gqlTypeNameFromPgCodec(TYPES.macaddr8) || "MacAddress8";
-        const _String = gqlTypeNameFromPgCodec(TYPES.text) || "String";
-        const _Time = gqlTypeNameFromPgCodec(TYPES.time) || "Time";
-        const _UUID = gqlTypeNameFromPgCodec(TYPES.uuid) || "UUID";
-
-        const connectionFilterScalarOperators = {
-          [_BigFloat]: { ...standardOperators, ...sortOperators },
-          [_BigInt]: { ...standardOperators, ...sortOperators },
-          [_BitString]: { ...standardOperators, ...sortOperators },
-          [_Boolean]: { ...standardOperators, ...sortOperators },
-          [_CidrAddress]: {
-            ...standardOperators,
-            ...sortOperators,
-            ...inetOperators,
-          },
-          [_Date]: { ...standardOperators, ...sortOperators },
-          [_Datetime]: { ...standardOperators, ...sortOperators },
-          [_Float]: { ...standardOperators, ...sortOperators },
-          [_Int]: { ...standardOperators, ...sortOperators },
-          [_InternetAddress]: {
-            ...standardOperators,
-            ...sortOperators,
-            ...inetOperators,
-          },
-          [_Interval]: { ...standardOperators, ...sortOperators },
-          [_JSON]: {
-            ...standardOperators,
-            ...sortOperators,
-            ...jsonbOperators,
-          },
-          [_KeyValueHash]: {
-            ...standardOperators,
-            ...hstoreOperators,
-          },
-          [_MacAddress]: {
-            ...standardOperators,
-            ...sortOperators,
-          },
-          [_MacAddress8]: {
-            ...standardOperators,
-            ...sortOperators,
-          },
-          [_String]: {
-            ...standardOperators,
-            ...sortOperators,
-            ...patternMatchingOperators,
-            ...insensitiveOperators,
-          },
-          [_Time]: { ...standardOperators, ...sortOperators },
-          [_UUID]: { ...standardOperators, ...sortOperators },
-        };
-
-        const operatorSpecsByCategory: {
-          [category in OperatorsCategory]: {
-            [fieldName: string]: OperatorSpec;
-          };
-        } = {
-          Array: connectionFilterArrayOperators,
-          Range: connectionFilterRangeOperators,
-          Enum: connectionFilterEnumOperators,
-          Domain: {},
-            //domainBaseType && isNamedType(domainBaseType)
-              //? connectionFilterScalarOperators[domainBaseType.name]
-              //: {},
-          Scalar: connectionFilterScalarOperators[fieldType.name],
-        };
-        const operatorSpecs =
-          operatorSpecsByCategory[pgConnectionFilterOperatorsCategory];
-        if (!operatorSpecs) {
-          return fields;
-        }
-
-        const operatorSpecByFieldName: { [fieldName: string]: OperatorSpec } =
-          {};
-        */
         const {
           inputTypeName,
           rangeElementInputTypeName,
@@ -663,8 +564,20 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         let inetLike = true;
         let jsonLike = true;
         let hstoreLike = true;
+        let arrayLike = true;
+        let rangeLike = true;
+        let enumLike = true;
         for (const codec of pgCodecs) {
           let underlyingType = codec.domainOfCodec ?? codec;
+          if (!underlyingType.arrayOfCodec) {
+            arrayLike = false;
+          }
+          if (!underlyingType.rangeOfCodec) {
+            rangeLike = false;
+          }
+          if (!isEnumCodec(underlyingType)) {
+            enumLike = false;
+          }
           switch (underlyingType) {
             case TYPES.numeric:
             case TYPES.float:
@@ -798,15 +711,21 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
         const operatorSpecs: {
           [fieldName: string]: OperatorSpec;
-        } = {
-          ...standardOperators,
-          ...(sortable ? sortOperators : null),
-          ...(inetLike ? inetOperators : null),
-          ...(jsonLike ? jsonbOperators : null),
-          ...(hstoreLike ? hstoreOperators : null),
-          ...(textLike ? patternMatchingOperators : null),
-          ...(textLike ? insensitiveOperators : null),
-        };
+        } = arrayLike
+          ? connectionFilterArrayOperators
+          : rangeLike
+          ? connectionFilterRangeOperators
+          : enumLike
+          ? connectionFilterEnumOperators
+          : {
+              ...standardOperators,
+              ...(sortable ? sortOperators : null),
+              ...(inetLike ? inetOperators : null),
+              ...(jsonLike ? jsonbOperators : null),
+              ...(hstoreLike ? hstoreOperators : null),
+              ...(textLike ? patternMatchingOperators : null),
+              ...(textLike ? insensitiveOperators : null),
+            };
 
         const operatorFields = Object.entries(operatorSpecs).reduce(
           (memo: { [fieldName: string]: any }, [name, spec]) => {
