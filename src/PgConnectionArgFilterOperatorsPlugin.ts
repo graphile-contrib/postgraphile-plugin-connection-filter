@@ -500,7 +500,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           $placeholderable: PlaceholderableStep,
           $input: InputStep,
           codec: PgTypeCodec<any, any, any, any>
-        ) => $placeholderable.placeholder($input, codec.arrayOfCodec);
+        ) => $placeholderable.placeholder($input, codec);
 
         const connectionFilterArrayOperators: {
           [fieldName: string]: OperatorSpec;
