@@ -1,5 +1,6 @@
 import {
   PgConditionLikeStep,
+  PgConditionStep,
   PgSelectStep,
   PgTypeColumn,
   PgTypeColumns,
@@ -63,15 +64,7 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                 () => ({
                   description: `Filter by the object’s \`${fieldName}\` field.`,
                   type: OperatorsType,
-                  applyPlan(
-                    $connection: ConnectionStep<
-                      any,
-                      any,
-                      PgSelectStep<any, any, any, any>,
-                      any
-                    >,
-                    fieldArgs
-                  ) {
+                  applyPlan($where: PgConditionStep<any>, fieldArgs) {
                     const $raw = fieldArgs.getRaw();
                     if (
                       !connectionFilterAllowEmptyObjectInput &&
@@ -87,10 +80,6 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                         }
                       );
                     }
-                    console.log("Check...");
-                    if (!connectionFilterAllowNullInput) {
-                      console.log("CHECK");
-                    }
                     if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
                       throw Object.assign(
                         new Error(
@@ -101,8 +90,6 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                         }
                       );
                     }
-                    const $select = $connection.getSubplan();
-                    const $where = $select.wherePlan();
                     $where.extensions.pgFilterColumn = colSpec;
                     fieldArgs.apply($where);
                   },
