@@ -643,6 +643,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             }
             default: {
               // NOT SORTABLE!
+              if (Self.name === "FloatFilter" /* TODO: || ... */) {
+                // TODO: solve this!
+                console.log(
+                  `The postgraphile-plugin-connection-filter unsupported codec ${underlyingType.name} is preventing ${Self.name} being detected as sortable!`
+                );
+              }
               sortable = false;
             }
           }
@@ -657,6 +663,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             }
             default: {
               // NOT INET!
+              if (Self.name === "InternetAddressFilter") {
+                // TODO: solve this!
+                console.log(
+                  `The postgraphile-plugin-connection-filter unsupported codec ${underlyingType.name} is preventing ${Self.name} being detected as inet-like!`
+                );
+              }
               inetLike = false;
             }
           }
@@ -673,6 +685,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             }
             default: {
               // NOT TEXT!
+              if (Self.name === "StringFilter") {
+                // TODO: solve this!
+                console.log(
+                  `The postgraphile-plugin-connection-filter unsupported codec ${underlyingType.name} is preventing ${Self.name} being detected as text-like!`
+                );
+              }
               textLike = false;
             }
           }
