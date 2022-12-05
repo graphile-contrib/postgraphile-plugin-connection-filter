@@ -14,8 +14,8 @@ const createPostGraphileSchema = async (
   const preset: GraphileConfig.Preset = {
     extends: [
       postgraphilePresetAmber,
-      makeV4Preset(v4Options),
       PostGraphileConnectionFilterPreset,
+      makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
     pgSources: [
