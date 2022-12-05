@@ -606,6 +606,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           }
           switch (underlyingType) {
             case TYPES.numeric:
+            case TYPES.money:
             case TYPES.float:
             case TYPES.float4:
             case TYPES.bigint:
@@ -698,6 +699,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           /*
           switch (underlyingType) {
             case TYPES.numeric:
+            case TYPES.money:
             case TYPES.float:
             case TYPES.float4:
             case TYPES.bigint:
