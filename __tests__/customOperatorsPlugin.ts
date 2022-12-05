@@ -4,7 +4,7 @@ const CustomOperatorsPlugin: GraphileConfig.Plugin = {
 
   schema: {
     hooks: {
-      init(_) {
+      init(_, build) {
         const {
           sql,
           graphql: { GraphQLInt, GraphQLBoolean },

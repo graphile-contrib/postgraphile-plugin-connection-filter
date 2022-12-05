@@ -11,6 +11,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
   schema: {
     hooks: {
       build(build) {
+        const { inflection } = build;
         build[$$filters] = new Map();
         build.addConnectionFilterOperator = (typeName, filterName, spec) => {
           if (
@@ -21,14 +22,15 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
               `addConnectionFilterOperator may only be called during the 'init' phase`
             );
           }
-          let operatorSpecByFilterName = build[$$filters]!.get(typeName);
+          const filterTypeName = inflection.filterType(typeName);
+          let operatorSpecByFilterName = build[$$filters]!.get(filterTypeName);
           if (!operatorSpecByFilterName) {
             operatorSpecByFilterName = new Map();
-            build[$$filters]!.set(typeName, operatorSpecByFilterName);
+            build[$$filters]!.set(filterTypeName, operatorSpecByFilterName);
           }
           if (operatorSpecByFilterName.has(filterName)) {
             throw new Error(
-              `Filter '${filterName}' already registered on '${typeName}'`
+              `Filter '${filterName}' already registered on '${filterTypeName}'`
             );
           }
           operatorSpecByFilterName.set(filterName, spec);
