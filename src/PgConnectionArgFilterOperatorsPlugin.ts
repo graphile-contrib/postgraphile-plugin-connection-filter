@@ -4,6 +4,7 @@ import { PgTypeCodec, TYPES } from "@dataplan/pg";
 import {
   ExecutableStep,
   GraphileInputFieldConfigMap,
+  InputObjectFieldApplyPlanResolver,
   InputStep,
   lambda,
   list,
@@ -765,49 +766,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               {
                 description,
                 type,
-                applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                  if (!$where.extensions?.pgFilterColumn) {
-                    throw new Error(`Planning error`);
-                  }
-                  const { columnName, column } =
-                    $where.extensions.pgFilterColumn;
-
-                  const sourceAlias = column.expression
-                    ? column.expression($where.alias)
-                    : sql`${$where.alias}.${sql.identifier(columnName)}`;
-                  const sqlIdentifier = resolveSqlIdentifier
-                    ? resolveSqlIdentifier(sourceAlias, column.codec)
-                    : column.codec === TYPES.citext
-                    ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
-                    : column.codec.arrayOfCodec === TYPES.citext
-                    ? sql.query`${sourceAlias}::text[]` // cast column to text[] for case-sensitive matching
-                    : sourceAlias;
-
-                  const $input = fieldArgs.getRaw();
-                  const $resolvedInput = resolveInput
-                    ? lambda($input, resolveInput)
-                    : $input;
-
-                  const sqlValue = resolveSqlValue
-                    ? resolveSqlValue($where, $input, column.codec)
-                    : column.codec === TYPES.citext
-                    ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
-                    : column.codec.arrayOfCodec === TYPES.citext
-                    ? $where.placeholder(
-                        $resolvedInput,
-                        listOfType(TYPES.citext as any)
-                      ) // cast input to text[]
-                    : $where.placeholder($resolvedInput, column.codec);
-
-                  const fragment = resolve(
-                    sqlIdentifier,
-                    sqlValue,
-                    $input,
-                    $where
-                  );
-                  $where.where(fragment);
-                },
-                // TODO: applyPlan
+                applyPlan: makeApplyPlanFromOperatorSpec(build, spec),
               }
             );
             return memo;
@@ -853,4 +812,51 @@ export interface OperatorSpec {
     $input: InputStep,
     $placeholderable: PlaceholderableStep
   ) => SQL;
+}
+
+export function makeApplyPlanFromOperatorSpec(
+  build: GraphileBuild.Build,
+  spec: OperatorSpec
+): InputObjectFieldApplyPlanResolver<PgConditionStep<any>> {
+  const { sql } = build;
+  const {
+    description,
+    resolveType,
+    resolve,
+    resolveInput,
+    resolveSql,
+    resolveSqlIdentifier,
+    resolveSqlValue,
+  } = spec;
+  return ($where, fieldArgs) => {
+    if (!$where.extensions?.pgFilterColumn) {
+      throw new Error(`Planning error`);
+    }
+    const { columnName, column } = $where.extensions.pgFilterColumn;
+
+    const sourceAlias = column.expression
+      ? column.expression($where.alias)
+      : sql`${$where.alias}.${sql.identifier(columnName)}`;
+    const sqlIdentifier = resolveSqlIdentifier
+      ? resolveSqlIdentifier(sourceAlias, column.codec)
+      : column.codec === TYPES.citext
+      ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
+      : column.codec.arrayOfCodec === TYPES.citext
+      ? sql.query`${sourceAlias}::text[]` // cast column to text[] for case-sensitive matching
+      : sourceAlias;
+
+    const $input = fieldArgs.getRaw();
+    const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
+
+    const sqlValue = resolveSqlValue
+      ? resolveSqlValue($where, $input, column.codec)
+      : column.codec === TYPES.citext
+      ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
+      : column.codec.arrayOfCodec === TYPES.citext
+      ? $where.placeholder($resolvedInput, listOfType(TYPES.citext as any)) // cast input to text[]
+      : $where.placeholder($resolvedInput, column.codec);
+
+    const fragment = resolve(sqlIdentifier, sqlValue, $input, $where);
+    $where.where(fragment);
+  };
 }

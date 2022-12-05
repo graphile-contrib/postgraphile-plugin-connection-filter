@@ -11,12 +11,16 @@ import { PgConnectionArgFilterLogicalOperatorsPlugin } from "./PgConnectionArgFi
 import {
   OperatorSpec,
   PgConnectionArgFilterOperatorsPlugin,
+  makeApplyPlanFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
-import { OperatorsCategory } from "./interfaces";
+import { $$filters, OperatorsCategory } from "./interfaces";
 import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
 import { PgSource, PgTypeCodec, PgTypeColumn } from "@dataplan/pg";
 
 import type {} from "postgraphile/presets/v4";
+import { AddConnectionFilterOperatorPlugin } from "./AddConnectionFilterOperatorPlugin";
+
+export { makeApplyPlanFromOperatorSpec };
 
 declare module "@dataplan/pg" {
   interface PgConditionStepExtensions {
@@ -108,6 +112,12 @@ declare global {
         domainBaseTypeName: string | null;
       } | null;
       escapeLikeWildcards(input: unknown): string;
+      [$$filters]: Map<string, Map<string, OperatorSpec>>;
+      addConnectionFilterOperator(
+        typeName: string,
+        filterName: string,
+        spec: OperatorSpec
+      ): void;
     }
     interface ScopeInputObjectFieldsField {
       isPgConnectionFilterField?: boolean;
@@ -133,6 +143,7 @@ export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
     //if (connectionFilterLogicalOperators)
     PgConnectionArgFilterLogicalOperatorsPlugin,
     PgConnectionArgFilterOperatorsPlugin,
+    AddConnectionFilterOperatorPlugin,
   ],
   schema: {
     //connectionFilterAllowedOperators,

@@ -4,3 +4,5 @@ export type OperatorsCategory =
   | "Enum"
   | "Domain"
   | "Scalar";
+
+export const $$filters = Symbol("filters");
