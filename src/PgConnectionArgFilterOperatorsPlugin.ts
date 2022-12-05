@@ -631,6 +631,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             case TYPES.macaddr8:
 
             case TYPES.text:
+            case TYPES.citext:
             case TYPES.varchar:
             case TYPES.char:
             case TYPES.bpchar:
@@ -661,6 +662,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
           switch (underlyingType) {
             case TYPES.text:
+            case TYPES.citext:
             case TYPES.varchar:
             case TYPES.char:
             case TYPES.bpchar: {
@@ -729,6 +731,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             case TYPES.macaddr8:
 
             case TYPES.text:
+            case TYPES.citext:
             case TYPES.varchar:
             case TYPES.char:
             case TYPES.bpchar:
