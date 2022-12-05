@@ -1,12 +1,10 @@
 import * as core from "./core";
-import { PgConnectionArgCondition } from "graphile-build-pg";
-import ConnectionFilterPlugin from "../../../src/index";
+import { PgConditionArgumentPlugin } from "graphile-build-pg";
 
 test(
   "prints a schema with the filter plugin and the `connectionFilterArrays: false` option",
   core.test(["p"], {
-    skipPlugins: [PgConnectionArgCondition],
-    appendPlugins: [ConnectionFilterPlugin],
+    skipPlugins: [PgConditionArgumentPlugin],
     disableDefaultMutations: true,
     legacyRelations: "omit",
     graphileBuildOptions: {

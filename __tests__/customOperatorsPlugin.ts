@@ -1,8 +1,12 @@
-import type { Plugin } from "graphile-build";
-import { Build } from "postgraphile-core";
-import { AddConnectionFilterOperator } from "../src/PgConnectionArgFilterPlugin";
+// import { AddConnectionFilterOperator } from "../src/PgConnectionArgFilterPlugin";
 
-const CustomOperatorsPlugin: Plugin = (builder) => {
+const CustomOperatorsPlugin: GraphileConfig.Plugin = {
+  name: "CustomOperatorsPlugin",
+  version: "0.0.0",
+};
+
+/* TODO:
+  (builder) => {
   builder.hook("build", (_, build) => {
     const {
       pgSql: sql,
@@ -49,4 +53,5 @@ const CustomOperatorsPlugin: Plugin = (builder) => {
   });
 };
 
+*/
 export default CustomOperatorsPlugin;
