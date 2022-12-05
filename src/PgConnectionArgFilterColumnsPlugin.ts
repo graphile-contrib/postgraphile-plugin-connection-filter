@@ -48,6 +48,10 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
           if (!OperatorsType) {
             continue;
           }
+          const {
+            connectionFilterAllowEmptyObjectInput,
+            connectionFilterAllowNullInput,
+          } = build.options;
           fields = build.extend(
             fields,
             {
@@ -65,12 +69,42 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                       any,
                       PgSelectStep<any, any, any, any>,
                       any
-                    >
+                    >,
+                    fieldArgs
                   ) {
+                    const $raw = fieldArgs.getRaw();
+                    if (
+                      !connectionFilterAllowEmptyObjectInput &&
+                      "evalIsEmpty" in $raw &&
+                      $raw.evalIsEmpty()
+                    ) {
+                      throw Object.assign(
+                        new Error(
+                          "Empty objects are forbidden in filter argument input."
+                        ),
+                        {
+                          //TODO: mark this error as safe
+                        }
+                      );
+                    }
+                    console.log("Check...");
+                    if (!connectionFilterAllowNullInput) {
+                      console.log("CHECK");
+                    }
+                    if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
+                      throw Object.assign(
+                        new Error(
+                          "Null literals are forbidden in filter argument input."
+                        ),
+                        {
+                          //TODO: mark this error as safe
+                        }
+                      );
+                    }
                     const $select = $connection.getSubplan();
                     const $where = $select.wherePlan();
                     $where.extensions.pgFilterColumn = colSpec;
-                    return $where;
+                    fieldArgs.apply($where);
                   },
                 })
               ),

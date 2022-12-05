@@ -5,7 +5,7 @@ import {
   PgTypeCodec,
   TYPES,
 } from "@dataplan/pg";
-import { ConnectionStep, ExecutableStep } from "grafast";
+import { ConnectionStep, ExecutableStep, FieldArgs } from "grafast";
 import type {
   GraphQLInputFieldConfigMap,
   GraphQLInputType,
@@ -385,6 +385,34 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
+        const assertAllowed = (fieldArgs: FieldArgs) => {
+          const $raw = fieldArgs.getRaw();
+          if (
+            !connectionFilterAllowEmptyObjectInput &&
+            "evalIsEmpty" in $raw &&
+            $raw.evalIsEmpty()
+          ) {
+            throw Object.assign(
+              new Error(
+                "Empty objects are forbidden in filter argument input."
+              ),
+              {
+                //TODO: mark this error as safe
+              }
+            );
+          }
+          if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
+            throw Object.assign(
+              new Error(
+                "Null literals are forbidden in filter argument input."
+              ),
+              {
+                //TODO: mark this error as safe
+              }
+            );
+          }
+        };
+
         return extend(
           args,
           {
@@ -394,22 +422,31 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               type: FilterType,
               ...(isPgFieldConnection
                 ? {
-                    plan(
-                      _: any,
+                    applyPlan(
+                      _,
                       $connection: ConnectionStep<
                         any,
                         any,
                         any,
                         PgSelectStep<any, any, any, any>
-                      >
+                      >,
+                      fieldArgs
                     ) {
+                      assertAllowed(fieldArgs);
                       const $pgSelect = $connection.getSubplan();
-                      return $pgSelect.wherePlan();
+                      const $where = $pgSelect.wherePlan();
+                      fieldArgs.apply($where);
                     },
                   }
                 : {
-                    plan(_: any, $pgSelect: PgSelectStep<any, any, any, any>) {
-                      return $pgSelect.wherePlan();
+                    applyPlan(
+                      _,
+                      $pgSelect: PgSelectStep<any, any, any, any>,
+                      fieldArgs
+                    ) {
+                      assertAllowed(fieldArgs);
+                      const $where = $pgSelect.wherePlan();
+                      fieldArgs.apply($where);
                     },
                   }),
             },

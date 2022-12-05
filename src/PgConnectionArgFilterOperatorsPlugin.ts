@@ -954,6 +954,15 @@ export function makeApplyPlanFromOperatorSpec(
       // Don't add a filter
       return;
     }
+    if (!connectionFilterAllowNullInput && $input.evalIs(null)) {
+      // Forbidden
+      throw Object.assign(
+        new Error("Null literals are forbidden in filter argument input."),
+        {
+          //TODO: mark this error as safe
+        }
+      );
+    }
     const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
     const inputCodec = resolveInputCodec(identifierCodec);
     if (!inputCodec) {
