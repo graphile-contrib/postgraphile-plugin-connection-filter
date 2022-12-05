@@ -564,20 +564,26 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         };
 
         const {
-          inputTypeName,
-          rangeElementInputTypeName,
+          //inputTypeName,
+          //rangeElementInputTypeName,
           //domainBaseTypeName,
           pgCodecs,
         } = pgConnectionFilterOperators;
 
-        const rangeElementInputType = rangeElementInputTypeName
-          ? (build.getTypeByName(rangeElementInputTypeName) as
-              | GraphQLInputType
-              | undefined)
+        // We know all these pgCodecs will produce the same GraphQL input type,
+        // so we only need to grab the type of one of them
+        const someCodec = pgCodecs[0];
+        const fieldInputType = build.getGraphQLTypeByPgCodec(
+          someCodec,
+          "input"
+        ) as GraphQLInputType;
+
+        const rangeElementInputType = someCodec.rangeOfCodec
+          ? (build.getGraphQLTypeByPgCodec(
+              someCodec.rangeOfCodec,
+              "input"
+            ) as GraphQLInputType)
           : null;
-        const fieldInputType = build.getTypeByName(inputTypeName) as
-          | GraphQLInputType
-          | undefined;
 
         let textLike = true;
         let sortable = true;

@@ -25,8 +25,8 @@ const isSuitableForFiltering = (codec: AnyCodec): boolean =>
   codec !== TYPES.void &&
   !codec.columns &&
   !codec.isAnonymous &&
-  !codec.arrayOfCodec &&
   !codec.polymorphism &&
+  (!codec.arrayOfCodec || isSuitableForFiltering(codec.arrayOfCodec)) &&
   (!codec.domainOfCodec || isSuitableForFiltering(codec.domainOfCodec));
 
 export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
@@ -292,6 +292,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               operatorsTypeName,
               {
                 pgConnectionFilterOperators: {
+                  isList,
                   pgCodecs,
                   inputTypeName,
                   rangeElementInputTypeName,

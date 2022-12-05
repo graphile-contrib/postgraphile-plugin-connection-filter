@@ -88,6 +88,7 @@ declare global {
     interface ScopeInputObject {
       isPgConnectionFilter?: boolean;
       pgConnectionFilterOperators?: {
+        isList: boolean;
         pgCodecs: ReadonlyArray<PgTypeCodec<any, any, any, any>>;
         inputTypeName: string;
         rangeElementInputTypeName: string | null;
