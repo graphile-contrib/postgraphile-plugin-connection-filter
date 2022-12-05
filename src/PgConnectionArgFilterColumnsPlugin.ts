@@ -1,4 +1,10 @@
-import { PgTypeColumn, PgTypeColumns } from "@dataplan/pg";
+import {
+  PgConditionLikeStep,
+  PgSelectStep,
+  PgTypeColumn,
+  PgTypeColumns,
+} from "@dataplan/pg";
+import { ConnectionStep } from "grafast";
 
 const { version } = require("../package.json");
 
@@ -32,6 +38,7 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
           if (!build.behavior.matches(behavior, "filter", "filter")) {
             continue;
           }
+          const colSpec = { columnName, column };
           const fieldName = inflection.column({ codec, columnName });
           const digest = connectionFilterOperatorsDigest(column.codec);
           if (!digest) {
@@ -52,7 +59,19 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                 () => ({
                   description: `Filter by the object’s \`${fieldName}\` field.`,
                   type: OperatorsType,
-                  // TODO: applyPlan
+                  applyPlan(
+                    $connection: ConnectionStep<
+                      any,
+                      any,
+                      PgSelectStep<any, any, any, any>,
+                      any
+                    >
+                  ) {
+                    const $select = $connection.getSubplan();
+                    const $where = $select.wherePlan();
+                    $where.extensions.pgFilterColumn = colSpec;
+                    return $where;
+                  },
                 })
               ),
             },

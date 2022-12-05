@@ -14,7 +14,13 @@ import {
 } from "./PgConnectionArgFilterOperatorsPlugin";
 import { OperatorsCategory } from "./interfaces";
 import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
-import { PgSource, PgTypeCodec } from "@dataplan/pg";
+import { PgSource, PgTypeCodec, PgTypeColumn } from "@dataplan/pg";
+
+declare module "@dataplan/pg" {
+  interface PgConditionStepExtensions {
+    pgFilterColumn?: { columnName: string; column: PgTypeColumn };
+  }
+}
 
 declare global {
   namespace GraphileBuild {

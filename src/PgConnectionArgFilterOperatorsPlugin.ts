@@ -1,9 +1,11 @@
-import { listOfType } from "@dataplan/pg";
+import { listOfType, PgConditionStep } from "@dataplan/pg";
+import { PgConditionLikeStep } from "@dataplan/pg";
 import { PgTypeCodec, TYPES } from "@dataplan/pg";
 import {
   ExecutableStep,
   GraphileInputFieldConfigMap,
   InputStep,
+  lambda,
   list,
 } from "grafast";
 import { GraphQLFieldConfigMap, GraphQLInputType, GraphQLType } from "graphql";
@@ -81,7 +83,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             description:
               "Is null (if `true` is specified) or is not null (if `false` is specified).",
             resolveType: () => GraphQLBoolean,
-            resolveSqlValue: () => null, // do not parse
+            resolveSqlValue: () => sql.null, // do not parse
             resolve: (i, _v, $input) =>
               sql`${i} ${$input.eval() ? sql`IS NULL` : sql`IS NOT NULL`}`,
           },
@@ -665,7 +667,15 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
         const operatorFields = Object.entries(operatorSpecs).reduce(
           (memo: { [fieldName: string]: any }, [name, spec]) => {
-            const { description, resolveType } = spec;
+            const {
+              description,
+              resolveType,
+              resolve,
+              resolveInput,
+              resolveSql,
+              resolveSqlIdentifier,
+              resolveSqlValue,
+            } = spec;
 
             if (
               connectionFilterAllowedOperators &&
@@ -693,6 +703,48 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               {
                 description,
                 type,
+                applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                  if (!$where.extensions?.pgFilterColumn) {
+                    throw new Error(`Planning error`);
+                  }
+                  const { columnName, column } =
+                    $where.extensions.pgFilterColumn;
+
+                  const sourceAlias = column.expression
+                    ? column.expression($where.alias)
+                    : sql`${$where.alias}.${sql.identifier(columnName)}`;
+                  const sqlIdentifier = resolveSqlIdentifier
+                    ? resolveSqlIdentifier(sourceAlias, column.codec)
+                    : column.codec === TYPES.citext
+                    ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
+                    : column.codec.arrayOfCodec === TYPES.citext
+                    ? sql.query`${sourceAlias}::text[]` // cast column to text[] for case-sensitive matching
+                    : sourceAlias;
+
+                  const $input = fieldArgs.getRaw();
+                  const $resolvedInput = resolveInput
+                    ? lambda($input, resolveInput)
+                    : $input;
+
+                  const sqlValue = resolveSqlValue
+                    ? resolveSqlValue($where, $input, column.codec)
+                    : column.codec === TYPES.citext
+                    ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
+                    : column.codec.arrayOfCodec === TYPES.citext
+                    ? $where.placeholder(
+                        $resolvedInput,
+                        listOfType(TYPES.citext)
+                      ) // cast input to text[]
+                    : $where.placeholder($resolvedInput, column.codec);
+
+                  const fragment = resolve(
+                    sqlIdentifier,
+                    sqlValue,
+                    $input,
+                    $where
+                  );
+                  $where.where(fragment);
+                },
                 // TODO: applyPlan
               }
             );
@@ -732,12 +784,11 @@ export interface OperatorSpec {
     $input: InputStep,
     codec: PgTypeCodec<any, any, any, any>
     // UNUSED? resolveListItemSqlValue?: any
-  ) => SQL | null;
+  ) => SQL;
   resolve: (
     sqlIdentifier: SQL,
     sqlValue: SQL,
     $input: InputStep,
-    parentFieldName: string,
     $placeholderable: PlaceholderableStep
-  ) => SQL | null;
+  ) => SQL;
 }
