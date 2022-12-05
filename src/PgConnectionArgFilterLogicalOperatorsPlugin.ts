@@ -1,3 +1,6 @@
+import { PgConditionStep } from "@dataplan/pg";
+import { FieldArgs } from "grafast";
+
 const { version } = require("../package.json");
 
 export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin =
@@ -12,6 +15,10 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
             sql,
+            options: {
+              connectionFilterAllowNullInput,
+              connectionFilterAllowEmptyObjectInput,
+            },
           } = build;
           const {
             fieldWithHooks,
@@ -26,6 +33,35 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             return fields;
           }
 
+          const assertAllowed = (fieldArgs: FieldArgs, checkObjToo = false) => {
+            const $raw = fieldArgs.getRaw();
+            if (
+              checkObjToo &&
+              !connectionFilterAllowEmptyObjectInput &&
+              "evalIsEmpty" in $raw &&
+              $raw.evalIsEmpty()
+            ) {
+              throw Object.assign(
+                new Error(
+                  "Empty objects are forbidden in filter argument input."
+                ),
+                {
+                  //TODO: mark this error as safe
+                }
+              );
+            }
+            if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
+              throw Object.assign(
+                new Error(
+                  "Null literals are forbidden in filter argument input."
+                ),
+                {
+                  //TODO: mark this error as safe
+                }
+              );
+            }
+          };
+
           const logicalOperatorFields = {
             and: fieldWithHooks(
               {
@@ -35,7 +71,11 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for all expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                // TODO: applyPlan
+                applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                  assertAllowed(fieldArgs);
+                  const $and = $where.andPlan();
+                  fieldArgs.apply($and);
+                },
               }
             ),
             or: fieldWithHooks(
@@ -46,7 +86,11 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for any expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                // TODO: applyPlan
+                applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                  assertAllowed(fieldArgs);
+                  const $or = $where.orPlan();
+                  fieldArgs.apply($or);
+                },
               }
             ),
             not: fieldWithHooks(
@@ -57,7 +101,11 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Negates the expression.`,
                 type: Self,
-                // TODO: applyPlan
+                applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                  assertAllowed(fieldArgs, true);
+                  const $not = $where.notPlan();
+                  fieldArgs.apply($not);
+                },
               }
             ),
           };
