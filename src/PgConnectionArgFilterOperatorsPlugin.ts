@@ -77,10 +77,17 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           return fields;
         }
 
+        const forceTextTypes = [TYPES.citext, TYPES.char, TYPES.bpchar];
+        const resolveDomains = (
+          c: PgTypeCodec<any, any, any, any>
+        ): PgTypeCodec<any, any, any, any> => {
+          return c.domainOfCodec ? resolveDomains(c.domainOfCodec) : c;
+        };
+
         const resolveArrayInputCodecSensitive = (
           c: PgTypeCodec<any, any, any, any>
         ) => {
-          if (c === TYPES.citext) {
+          if (forceTextTypes.includes(resolveDomains(c))) {
             return listOfType(TYPES.text, { listItemNonNull: true });
           } else {
             return listOfType(c, { listItemNonNull: true });
@@ -91,7 +98,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           c: PgTypeCodec<any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
-            if (c.arrayOfCodec === TYPES.citext) {
+            if (forceTextTypes.includes(resolveDomains(c.arrayOfCodec))) {
               return TYPES.text;
             }
             return c.arrayOfCodec;
@@ -103,12 +110,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           c: PgTypeCodec<any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
-            if (c.arrayOfCodec === TYPES.citext) {
+            if (forceTextTypes.includes(resolveDomains(c.arrayOfCodec))) {
               return listOfType(TYPES.text, { listItemNonNull: true });
             }
             return c;
           } else {
-            if (c === TYPES.citext) {
+            if (forceTextTypes.includes(resolveDomains(c))) {
               return TYPES.text;
             }
             return c;
@@ -118,12 +125,15 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           identifier: SQL,
           c: PgTypeCodec<any, any, any, any>
         ) => {
-          if (c.arrayOfCodec === TYPES.citext) {
+          if (
+            c.arrayOfCodec &&
+            forceTextTypes.includes(resolveDomains(c.arrayOfCodec))
+          ) {
             return [
               sql`(${identifier})::text[]`,
               listOfType(TYPES.text, { listItemNonNull: true }),
             ] as const;
-          } else if (c === TYPES.citext) {
+          } else if (forceTextTypes.includes(resolveDomains(c))) {
             return [sql`(${identifier})::text`, TYPES.text] as const;
           } else {
             return [identifier, c] as const;
