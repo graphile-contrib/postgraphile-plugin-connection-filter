@@ -66,6 +66,9 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                   type: OperatorsType,
                   applyPlan($where: PgConditionStep<any>, fieldArgs) {
                     const $raw = fieldArgs.getRaw();
+                    if ($raw.evalIs(undefined)) {
+                      return;
+                    }
                     if (
                       !connectionFilterAllowEmptyObjectInput &&
                       "evalIsEmpty" in $raw &&

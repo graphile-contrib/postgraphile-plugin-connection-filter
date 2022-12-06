@@ -77,14 +77,16 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
         }
 
         for (const [filterName, spec] of operatorSpecByFilterName.entries()) {
-          const { description, resolveInputCodec } = spec;
+          const { description, resolveInputCodec, resolveType } = spec;
           const firstCodec = pgConnectionFilterOperators.pgCodecs[0];
           const inputCodec = resolveInputCodec
             ? resolveInputCodec(firstCodec)
             : firstCodec;
-          const type = build.getGraphQLTypeByPgCodec(inputCodec, "input") as
-            | GraphQLInputType
-            | undefined;
+          const type = (
+            resolveType
+              ? resolveType()
+              : build.getGraphQLTypeByPgCodec(inputCodec, "input")
+          ) as GraphQLInputType | undefined;
           if (!type) {
             continue;
           }
@@ -99,7 +101,13 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
                 {
                   description,
                   type,
-                  applyPlan: makeApplyPlanFromOperatorSpec(build, spec, type),
+                  applyPlan: makeApplyPlanFromOperatorSpec(
+                    build,
+                    Self.name,
+                    filterName,
+                    spec,
+                    type
+                  ),
                 }
               ),
             },

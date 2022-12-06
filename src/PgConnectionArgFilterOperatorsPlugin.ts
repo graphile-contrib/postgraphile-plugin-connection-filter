@@ -901,7 +901,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
         const operatorFields = Object.entries(operatorSpecs).reduce(
           (memo: { [fieldName: string]: any }, [name, spec]) => {
-            const { description, resolveInputCodec } = spec;
+            const { description, resolveInputCodec, resolveType } = spec;
 
             if (
               connectionFilterAllowedOperators &&
@@ -916,9 +916,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             const inputCodec = resolveInputCodec
               ? resolveInputCodec(firstCodec)
               : firstCodec;
-            const type = build.getGraphQLTypeByPgCodec(inputCodec, "input") as
-              | GraphQLInputType
-              | undefined;
+            const type = (
+              resolveType
+                ? resolveType()
+                : build.getGraphQLTypeByPgCodec(inputCodec, "input")
+            ) as GraphQLInputType | undefined;
             if (!type) {
               return memo;
             }
@@ -936,7 +938,13 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               {
                 description,
                 type,
-                applyPlan: makeApplyPlanFromOperatorSpec(build, spec, type),
+                applyPlan: makeApplyPlanFromOperatorSpec(
+                  build,
+                  Self.name,
+                  operatorName,
+                  spec,
+                  type
+                ),
               }
             );
             return memo;
@@ -982,10 +990,13 @@ export interface OperatorSpec {
     $input: InputStep,
     $placeholderable: PlaceholderableStep
   ) => SQL;
+  resolveType?: () => GraphQLType;
 }
 
 export function makeApplyPlanFromOperatorSpec(
   build: GraphileBuild.Build,
+  typeName: string,
+  fieldName: string,
   spec: OperatorSpec,
   type: GraphQLInputType
 ): InputObjectFieldApplyPlanResolver<PgConditionStep<any>> {
@@ -1028,6 +1039,10 @@ export function makeApplyPlanFromOperatorSpec(
     if (!$where.extensions?.pgFilterColumn) {
       throw new Error(`Planning error`);
     }
+    const $input = fieldArgs.getRaw();
+    if ($input.evalIs(undefined)) {
+      return;
+    }
     const { columnName, column } = $where.extensions.pgFilterColumn;
 
     const sourceAlias = column.expression
@@ -1045,7 +1060,6 @@ export function makeApplyPlanFromOperatorSpec(
       */
         [sourceAlias, sourceCodec];
 
-    const $input = fieldArgs.getRaw();
     if (connectionFilterAllowNullInput && $input.evalIs(null)) {
       // Don't add a filter
       return;
