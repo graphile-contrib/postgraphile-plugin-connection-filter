@@ -77,7 +77,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           return fields;
         }
 
-        const forceTextTypes = [TYPES.citext, TYPES.char, TYPES.bpchar];
+        const forceTextTypesSensitive = [
+          TYPES.citext,
+          TYPES.char,
+          TYPES.bpchar,
+        ];
+        const forceTextTypesInsensitive = [TYPES.char, TYPES.bpchar];
         const resolveDomains = (
           c: PgTypeCodec<any, any, any, any>
         ): PgTypeCodec<any, any, any, any> => {
@@ -87,7 +92,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         const resolveArrayInputCodecSensitive = (
           c: PgTypeCodec<any, any, any, any>
         ) => {
-          if (forceTextTypes.includes(resolveDomains(c))) {
+          if (forceTextTypesSensitive.includes(resolveDomains(c))) {
             return listOfType(TYPES.text, { listItemNonNull: true });
           } else {
             return listOfType(c, { listItemNonNull: true });
@@ -98,7 +103,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           c: PgTypeCodec<any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
-            if (forceTextTypes.includes(resolveDomains(c.arrayOfCodec))) {
+            if (
+              forceTextTypesSensitive.includes(resolveDomains(c.arrayOfCodec))
+            ) {
               return TYPES.text;
             }
             return c.arrayOfCodec;
@@ -110,12 +117,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           c: PgTypeCodec<any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
-            if (forceTextTypes.includes(resolveDomains(c.arrayOfCodec))) {
+            if (
+              forceTextTypesSensitive.includes(resolveDomains(c.arrayOfCodec))
+            ) {
               return listOfType(TYPES.text, { listItemNonNull: true });
             }
             return c;
           } else {
-            if (forceTextTypes.includes(resolveDomains(c))) {
+            if (forceTextTypesSensitive.includes(resolveDomains(c))) {
               return TYPES.text;
             }
             return c;
@@ -127,13 +136,48 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         ) => {
           if (
             c.arrayOfCodec &&
-            forceTextTypes.includes(resolveDomains(c.arrayOfCodec))
+            forceTextTypesSensitive.includes(resolveDomains(c.arrayOfCodec))
           ) {
             return [
               sql`(${identifier})::text[]`,
               listOfType(TYPES.text, { listItemNonNull: true }),
             ] as const;
-          } else if (forceTextTypes.includes(resolveDomains(c))) {
+          } else if (forceTextTypesSensitive.includes(resolveDomains(c))) {
+            return [sql`(${identifier})::text`, TYPES.text] as const;
+          } else {
+            return [identifier, c] as const;
+          }
+        };
+        const resolveInputCodecInsensitive = (
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (c.arrayOfCodec) {
+            if (
+              forceTextTypesInsensitive.includes(resolveDomains(c.arrayOfCodec))
+            ) {
+              return listOfType(TYPES.text, { listItemNonNull: true });
+            }
+            return c;
+          } else {
+            if (forceTextTypesInsensitive.includes(resolveDomains(c))) {
+              return TYPES.text;
+            }
+            return c;
+          }
+        };
+        const resolveSqlIdentifierInsensitive = (
+          identifier: SQL,
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (
+            c.arrayOfCodec &&
+            forceTextTypesInsensitive.includes(resolveDomains(c.arrayOfCodec))
+          ) {
+            return [
+              sql`(${identifier})::text[]`,
+              listOfType(TYPES.text, { listItemNonNull: true }),
+            ] as const;
+          } else if (forceTextTypesInsensitive.includes(resolveDomains(c))) {
             return [sql`(${identifier})::text`, TYPES.text] as const;
           } else {
             return [identifier, c] as const;
@@ -236,12 +280,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description: "Contains the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             notIncludesInsensitive: {
               description:
                 "Does not contain the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             startsWith: {
               description: "Starts with the specified string (case-sensitive).",
@@ -263,12 +311,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                 "Starts with the specified string (case-insensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             notStartsWithInsensitive: {
               description:
                 "Does not start with the specified string (case-insensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             endsWith: {
               description: "Ends with the specified string (case-sensitive).",
@@ -289,12 +341,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description: "Ends with the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             notEndsWithInsensitive: {
               description:
                 "Does not end with the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             like: {
               description:
@@ -314,11 +370,15 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description:
                 "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
               resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             notLikeInsensitive: {
               description:
                 "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolveInputCodec: resolveInputCodecInsensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
           };
         const resolveTextArrayInputCodec = () =>
@@ -445,10 +505,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             sourceAlias: SQL,
             codec: PgTypeCodec<any, any, any, any>
           ) =>
-            codec === TYPES.citext
+            resolveDomains(codec) === TYPES.citext
               ? ([sourceAlias, codec] as const) // already case-insensitive, so no need to call `lower()`
-              : ([sql`lower(${sourceAlias})`, codec] as const);
-
+              : ([sql`lower(${sourceAlias}::text)`, TYPES.text] as const);
           const resolveSqlValue = (
             $placeholderable: PlaceholderableStep,
             $input: InputStep,
@@ -473,9 +532,28 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             }
           };
 
+          const resolveInputCodec = (
+            inputCodec: PgTypeCodec<any, any, any, any>
+          ) => {
+            if (name === "in" || name === "notIn") {
+              const t =
+                resolveDomains(inputCodec) === TYPES.citext
+                  ? inputCodec
+                  : TYPES.text;
+              return listOfType(t, { listItemNonNull: true });
+            } else {
+              const t =
+                resolveDomains(inputCodec) === TYPES.citext
+                  ? inputCodec
+                  : TYPES.text;
+              return t;
+            }
+          };
+
           insensitiveOperators[`${name}Insensitive`] = {
             ...spec,
             description,
+            resolveInputCodec,
             resolveSqlIdentifier,
             resolveSqlValue,
           };
