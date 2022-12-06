@@ -519,7 +519,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                 // already case-insensitive, so no need to call `lower()`
                 return sqlList;
               } else {
-                return sql`(select array_agg(lower(t)) from unnest(${sqlList}) t)`;
+                // This is being used in an `= ANY(subquery)` syntax, so no
+                // need to array_agg it. See
+                // https://www.postgresql.org/docs/current/functions-subquery.html#FUNCTIONS-SUBQUERY-ANY-SOME
+                return sql`(select lower(t) from unnest(${sqlList}) t)`;
               }
             } else {
               const sqlValue = $placeholderable.placeholder($input, inputCodec);
