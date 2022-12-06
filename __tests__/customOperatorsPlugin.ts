@@ -16,15 +16,14 @@ const CustomOperatorsPlugin: GraphileConfig.Plugin = {
         // simple
         addConnectionFilterOperator("InternetAddress", "familyEqualTo", {
           description: "Address family equal to specified value.",
-          resolveType: () => GraphQLInt,
-          resolve: (i, v) => sql.fragment`family(${i}) = ${v}`,
           resolveInputCodec: () => TYPES.int,
+          resolve: (i, v) => sql.fragment`family(${i}) = ${v}`,
         });
 
         // using resolveSqlIdentifier
         addConnectionFilterOperator("InternetAddress", "familyNotEqualTo", {
           description: "Address family equal to specified value.",
-          resolveType: () => GraphQLInt,
+          resolveInputCodec: () => TYPES.int,
           resolve: (i, v) => sql.fragment`${i} <> ${v}`,
           resolveSqlIdentifier: (i) => [sql.fragment`family(${i})`, TYPES.int],
         });
@@ -32,10 +31,10 @@ const CustomOperatorsPlugin: GraphileConfig.Plugin = {
         // using resolveInput // typeNames: string | string[]
         addConnectionFilterOperator(["InternetAddress"], "isV4", {
           description: "Address family equal to specified value.",
-          resolveType: () => GraphQLBoolean,
           resolve: (i, v) => sql.fragment`family(${i}) = ${v}`,
           resolveInput: (input) => (input === true ? 4 : 6),
           resolveInputCodec: () => TYPES.int,
+          resolveType: () => GraphQLBoolean,
         });
 
         return _;
