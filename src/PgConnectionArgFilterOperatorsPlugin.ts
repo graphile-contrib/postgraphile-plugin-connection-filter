@@ -615,6 +615,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
             case TYPES.boolean:
 
+            case TYPES.varbit:
+            case TYPES.bit:
+
             case TYPES.date:
             case TYPES.timestamp:
             case TYPES.timestamptz:
