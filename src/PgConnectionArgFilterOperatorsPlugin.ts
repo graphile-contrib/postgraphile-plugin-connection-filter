@@ -77,19 +77,64 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           return fields;
         }
 
-        const resolveListType = (fieldInputType: GraphQLInputType) =>
-          new GraphQLList(new GraphQLNonNull(fieldInputType));
-        const resolveListSqlValue = (
-          $placeholderable: PlaceholderableStep,
-          $input: InputStep,
-          codec: PgTypeCodec<any, any, any, any>
-        ) => $placeholderable.placeholder($input, listOfType(codec));
+        const resolveArrayInputCodecSensitive = (
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (c === TYPES.citext) {
+            return listOfType(TYPES.text, { listItemNonNull: true });
+          } else {
+            return listOfType(c, { listItemNonNull: true });
+          }
+        };
+
+        const resolveArrayItemInputCodecSensitive = (
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (c.arrayOfCodec) {
+            if (c.arrayOfCodec === TYPES.citext) {
+              return TYPES.text;
+            }
+            return c.arrayOfCodec;
+          } else {
+            throw new Error(`Expected array codec`);
+          }
+        };
+        const resolveInputCodecSensitive = (
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (c.arrayOfCodec) {
+            if (c.arrayOfCodec === TYPES.citext) {
+              return listOfType(TYPES.text, { listItemNonNull: true });
+            }
+            return c;
+          } else {
+            if (c === TYPES.citext) {
+              return TYPES.text;
+            }
+            return c;
+          }
+        };
+        const resolveSqlIdentifierSensitive = (
+          identifier: SQL,
+          c: PgTypeCodec<any, any, any, any>
+        ) => {
+          if (c.arrayOfCodec === TYPES.citext) {
+            return [
+              sql`(${identifier})::text[]`,
+              listOfType(TYPES.text, { listItemNonNull: true }),
+            ] as const;
+          } else if (c === TYPES.citext) {
+            return [sql`(${identifier})::text`, TYPES.text] as const;
+          } else {
+            return [identifier, c] as const;
+          }
+        };
 
         const standardOperators: { [fieldName: string]: OperatorSpec } = {
           isNull: {
             description:
               "Is null (if `true` is specified) or is not null (if `false` is specified).",
-            resolveType: () => GraphQLBoolean,
+            resolveInputCodec: () => TYPES.boolean,
             resolveSqlValue: () => sql.null, // do not parse
             resolve: (i, _v, $input) =>
               sql`${i} ${$input.eval() ? sql`IS NULL` : sql`IS NOT NULL`}`,
@@ -97,63 +142,67 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           equalTo: {
             description: "Equal to the specified value.",
             resolve: (i, v) => sql`${i} = ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           notEqualTo: {
             description: "Not equal to the specified value.",
             resolve: (i, v) => sql`${i} <> ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           distinctFrom: {
             description:
               "Not equal to the specified value, treating null like an ordinary value.",
             resolve: (i, v) => sql`${i} IS DISTINCT FROM ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           notDistinctFrom: {
             description:
               "Equal to the specified value, treating null like an ordinary value.",
             resolve: (i, v) => sql`${i} IS NOT DISTINCT FROM ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           in: {
             description: "Included in the specified list.",
-            resolveType: resolveListType,
-            resolveSqlValue: resolveListSqlValue,
             resolve: (i, v) => sql`${i} = ANY(${v})`,
+            resolveInputCodec: resolveArrayInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           notIn: {
             description: "Not included in the specified list.",
-            resolveType: resolveListType,
-            resolveSqlValue: resolveListSqlValue,
             resolve: (i, v) => sql`${i} <> ALL(${v})`,
+            resolveInputCodec: resolveArrayInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
         };
         const sortOperators: { [fieldName: string]: OperatorSpec } = {
           lessThan: {
             description: "Less than the specified value.",
             resolve: (i, v) => sql`${i} < ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           lessThanOrEqualTo: {
             description: "Less than or equal to the specified value.",
             resolve: (i, v) => sql`${i} <= ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           greaterThan: {
             description: "Greater than the specified value.",
             resolve: (i, v) => sql`${i} > ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           greaterThanOrEqualTo: {
             description: "Greater than or equal to the specified value.",
             resolve: (i, v) => sql`${i} >= ${v}`,
+            resolveInputCodec: resolveInputCodecSensitive,
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-        };
-
-        /** Make CITEXT case sensitive */
-        const resolveSqlIdentifierCaseSensitive = (
-          i: SQL,
-          c: PgTypeCodec<any, any, any, any>
-        ) => {
-          if (c === TYPES.citext) {
-            return [i, TYPES.text] as const;
-          } else {
-            return [i, c] as const;
-          }
         };
 
         const patternMatchingOperators: { [fieldName: string]: OperatorSpec } =
@@ -161,14 +210,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             includes: {
               description: "Contains the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: (i, v) => sql`${i} LIKE ${v}`,
             },
             notIncludes: {
               description:
                 "Does not contain the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
             },
             includesInsensitive: {
@@ -185,14 +236,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             startsWith: {
               description: "Starts with the specified string (case-sensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: (i, v) => sql`${i} LIKE ${v}`,
             },
             notStartsWith: {
               description:
                 "Does not start with the specified string (case-sensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
             },
             startsWithInsensitive: {
@@ -210,14 +263,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             endsWith: {
               description: "Ends with the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: (i, v) => sql`${i} LIKE ${v}`,
             },
             notEndsWith: {
               description:
                 "Does not end with the specified string (case-sensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
             },
             endsWithInsensitive: {
@@ -235,13 +290,15 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description:
                 "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
               resolve: (i, v) => sql`${i} LIKE ${v}`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             },
             notLike: {
               description:
                 "Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
               resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
-              resolveSqlIdentifier: resolveSqlIdentifierCaseSensitive,
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             },
             likeInsensitive: {
               description:
@@ -254,6 +311,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
             },
           };
+        const resolveTextArrayInputCodec = () =>
+          listOfType(TYPES.text, { listItemNonNull: true });
         const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified KeyValueHash.",
@@ -261,27 +320,19 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsKey: {
             description: "Contains the specified key.",
-            resolveType: () => GraphQLString,
-            resolveSqlValue: ($placeholderable, $input, codec) =>
-              sql`(${$placeholderable.placeholder($input, codec)})::text`,
+            resolveInputCodec: () => TYPES.text,
             resolve: (i, v) => sql`${i} ? ${v}`,
           },
           containsAllKeys: {
             name: "containsAllKeys",
             description: "Contains all of the specified keys.",
-            resolveType: () =>
-              new GraphQLList(new GraphQLNonNull(GraphQLString)),
-            resolveSqlValue: ($placeholderable, $input, codec) =>
-              $placeholderable.placeholder($input, textArrayCodec),
+            resolveInputCodec: resolveTextArrayInputCodec,
             resolve: (i, v) => sql`${i} ?& ${v}`,
           },
           containsAnyKeys: {
             name: "containsAnyKeys",
             description: "Contains any of the specified keys.",
-            resolveType: () =>
-              new GraphQLList(new GraphQLNonNull(GraphQLString)),
-            resolveSqlValue: ($placeholderable, $input, codec) =>
-              $placeholderable.placeholder($input, textArrayCodec),
+            resolveInputCodec: resolveTextArrayInputCodec,
             resolve: (i, v) => sql`${i} ?| ${v}`,
           },
           containedBy: {
@@ -296,27 +347,19 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsKey: {
             description: "Contains the specified key.",
-            resolveType: () => GraphQLString,
-            resolveSqlValue: ($placeholderable, $input, codec) =>
-              sql`(${$placeholderable.placeholder($input, codec)})::text`,
+            resolveInputCodec: () => TYPES.text,
             resolve: (i, v) => sql`${i} ? ${v}`,
           },
           containsAllKeys: {
             name: "containsAllKeys",
             description: "Contains all of the specified keys.",
-            resolveType: () =>
-              new GraphQLList(new GraphQLNonNull(GraphQLString)),
-            resolveSqlValue: ($placeholderable, $input, codec) =>
-              $placeholderable.placeholder($input, textArrayCodec),
+            resolveInputCodec: resolveTextArrayInputCodec,
             resolve: (i, v) => sql`${i} ?& ${v}`,
           },
           containsAnyKeys: {
             name: "containsAnyKeys",
             description: "Contains any of the specified keys.",
-            resolveType: () =>
-              new GraphQLList(new GraphQLNonNull(GraphQLString)),
-            resolveSqlValue: ($placeholderable, $input, codec) =>
-              $placeholderable.placeholder($input, textArrayCodec),
+            resolveInputCodec: resolveTextArrayInputCodec,
             resolve: (i, v) => sql`${i} ?| ${v}`,
           },
           containedBy: {
@@ -399,29 +442,23 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           const resolveSqlValue = (
             $placeholderable: PlaceholderableStep,
             $input: InputStep,
-            codec: PgTypeCodec<any, any, any, any>
+            inputCodec: PgTypeCodec<any, any, any, any>
           ) => {
             if (name === "in" || name === "notIn") {
-              const sqlList = resolveListSqlValue(
-                $placeholderable,
-                $input,
-                codec
-              );
-              if (codec === TYPES.citext) {
+              const sqlList = $placeholderable.placeholder($input, inputCodec);
+              if (inputCodec.arrayOfCodec === TYPES.citext) {
                 // already case-insensitive, so no need to call `lower()`
                 return sqlList;
               } else {
                 return sql`(select array_agg(lower(t)) from unnest(${sqlList}) t)`;
               }
             } else {
-              if (codec === TYPES.citext) {
+              const sqlValue = $placeholderable.placeholder($input, inputCodec);
+              if (inputCodec === TYPES.citext) {
                 // already case-insensitive, so no need to call `lower()`
-                return $placeholderable.placeholder($input, codec);
+                return sqlValue;
               } else {
-                return sql`lower(${$placeholderable.placeholder(
-                  $input,
-                  codec
-                )})`;
+                return sql`lower(${sqlValue})`;
               }
             }
           };
@@ -450,17 +487,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsElement: {
             description: "Contains the specified value.",
-            resolveType: (_fieldInputType, rangeElementInputType) => {
-              if (!rangeElementInputType) {
+            resolveInputCodec(c) {
+              if (c.rangeOfCodec) {
+                return c.rangeOfCodec;
+              } else {
                 throw new Error(
                   `Couldn't determine the range element type to use`
                 );
               }
-              return rangeElementInputType;
-            },
-            resolveSqlValue: ($placeholderable, $input, codec) => {
-              const innerCodec = codec.rangeOfCodec;
-              return $placeholderable.placeholder($input, innerCodec!);
             },
             resolve: (i, v) => sql`${i} @> ${v}`,
           },
@@ -494,14 +528,6 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
 
-        const resolveArrayItemType = (fieldInputType: GraphQLInputType) =>
-          getNamedType(fieldInputType);
-        const resolveArrayItemSqlValue = (
-          $placeholderable: PlaceholderableStep,
-          $input: InputStep,
-          codec: PgTypeCodec<any, any, any, any>
-        ) => $placeholderable.placeholder($input, codec);
-
         const connectionFilterArrayOperators: {
           [fieldName: string]: OperatorSpec;
         } = {
@@ -513,52 +539,52 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ...sortOperators,
           contains: {
             description: "Contains the specified list of values.",
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
+            resolveInputCodec: resolveInputCodecSensitive,
             resolve: (i, v) => sql`${i} @> ${v}`,
           },
           containedBy: {
             description: "Contained by the specified list of values.",
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
+            resolveInputCodec: resolveInputCodecSensitive,
             resolve: (i, v) => sql`${i} <@ ${v}`,
           },
           overlaps: {
             description: "Overlaps the specified list of values.",
+            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
+            resolveInputCodec: resolveInputCodecSensitive,
             resolve: (i, v) => sql`${i} && ${v}`,
           },
           anyEqualTo: {
             description: "Any array item is equal to the specified value.",
-            resolveType: resolveArrayItemType,
-            resolveSqlValue: resolveArrayItemSqlValue,
+            resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: (i, v) => sql`${v} = ANY (${i})`,
           },
           anyNotEqualTo: {
             description: "Any array item is not equal to the specified value.",
-            resolveType: resolveArrayItemType,
-            resolveSqlValue: resolveArrayItemSqlValue,
+            resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: (i, v) => sql`${v} <> ANY (${i})`,
           },
           anyLessThan: {
             description: "Any array item is less than the specified value.",
-            resolveType: resolveArrayItemType,
-            resolveSqlValue: resolveArrayItemSqlValue,
+            resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: (i, v) => sql`${v} > ANY (${i})`,
           },
           anyLessThanOrEqualTo: {
             description:
               "Any array item is less than or equal to the specified value.",
-            resolveType: resolveArrayItemType,
-            resolveSqlValue: resolveArrayItemSqlValue,
+            resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: (i, v) => sql`${v} >= ANY (${i})`,
           },
           anyGreaterThan: {
             description: "Any array item is greater than the specified value.",
-            resolveType: resolveArrayItemType,
-            resolveSqlValue: resolveArrayItemSqlValue,
+            resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: (i, v) => sql`${v} < ANY (${i})`,
           },
           anyGreaterThanOrEqualTo: {
             description:
               "Any array item is greater than or equal to the specified value.",
-            resolveType: resolveArrayItemType,
-            resolveSqlValue: resolveArrayItemSqlValue,
+            resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: (i, v) => sql`${v} <= ANY (${i})`,
           },
         };
@@ -784,15 +810,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
         const operatorFields = Object.entries(operatorSpecs).reduce(
           (memo: { [fieldName: string]: any }, [name, spec]) => {
-            const {
-              description,
-              resolveType,
-              resolve,
-              resolveInput,
-              resolveSql,
-              resolveSqlIdentifier,
-              resolveSqlValue,
-            } = spec;
+            const { description, resolveInputCodec } = spec;
 
             if (
               connectionFilterAllowedOperators &&
@@ -803,9 +821,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             if (!fieldInputType) {
               return memo;
             }
-            const type = resolveType
-              ? resolveType(fieldInputType, rangeElementInputType)
-              : fieldInputType;
+            const firstCodec = pgCodecs[0];
+            const inputCodec = resolveInputCodec
+              ? resolveInputCodec(firstCodec)
+              : firstCodec;
+            const type = build.getGraphQLTypeByPgCodec(inputCodec, "input") as
+              | GraphQLInputType
+              | undefined;
+            if (!type) {
+              return memo;
+            }
 
             const operatorName =
               (connectionFilterOperatorNames &&
@@ -844,10 +869,7 @@ type PlaceholderableStep = {
 export interface OperatorSpec {
   name?: string;
   description: string;
-  resolveType?: (
-    fieldInputType: GraphQLInputType,
-    rangeElementInputType: GraphQLInputType | null | undefined
-  ) => GraphQLInputType;
+  // TODO: replace with codecs?
   resolveSqlIdentifier?: (
     sqlIdentifier: SQL,
     codec: PgTypeCodec<any, any, any, any>
@@ -882,7 +904,7 @@ export function makeApplyPlanFromOperatorSpec(
   } = build;
   const {
     description,
-    resolveType,
+    resolveInputCodec,
     resolve,
     resolveInput,
     resolveSql,
@@ -905,26 +927,6 @@ export function makeApplyPlanFromOperatorSpec(
     if (type === GraphQLString) {
       return TYPES.text;
     }
-  };
-  const resolveInputCodec = (
-    expressionCodec: PgTypeCodec<any, any, any, any>
-  ) => {
-    if (spec.resolveInputCodec) {
-      return spec.resolveInputCodec(expressionCodec);
-    }
-    if (isNamedType(type)) {
-      return guessCodecFromNamedType(type) ?? expressionCodec;
-    } else if (isListType(type)) {
-      const innerType = type.ofType;
-      if (isNamedType(innerType)) {
-        const innerCodec =
-          guessCodecFromNamedType(innerType) ?? expressionCodec;
-        if (innerCodec && !innerCodec.arrayOfCodec) {
-          return listOfType(innerCodec);
-        }
-      }
-    }
-    return expressionCodec;
   };
 
   const {
@@ -967,13 +969,9 @@ export function makeApplyPlanFromOperatorSpec(
       );
     }
     const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
-    const inputCodec = resolveInputCodec(identifierCodec);
-    if (!inputCodec) {
-      throw new Error(
-        // TODO: improve this error message with more details about where this originated
-        `We don't know what type the input is, please provide 'resolveInputCodec' to the filter spec`
-      );
-    }
+    const inputCodec = resolveInputCodec
+      ? resolveInputCodec(column.codec)
+      : column.codec;
 
     const sqlValue = resolveSqlValue
       ? resolveSqlValue($where, $input, inputCodec)
