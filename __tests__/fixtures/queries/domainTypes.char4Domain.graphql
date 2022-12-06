@@ -1,4 +1,4 @@
-query char4Domain($v2: Char4Domain = "Test", $v3: Char4Domain = "tEST") {
+query char4Domain($v2: String = "Test", $v3: String = "tEST") {
   distinctFrom: allDomainTypes(filter: { char4Domain: { distinctFrom: $v2 } }) {
     ...nodes
   }
