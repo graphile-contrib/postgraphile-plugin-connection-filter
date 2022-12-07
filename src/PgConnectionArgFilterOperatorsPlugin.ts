@@ -1037,18 +1037,20 @@ export function makeApplyPlanFromOperatorSpec(
 
   return ($where, fieldArgs) => {
     if (!$where.extensions?.pgFilterColumn) {
-      throw new Error(`Planning error`);
+      throw new Error(`Planning error: expected 'pgFilterColumn'`);
     }
     const $input = fieldArgs.getRaw();
     if ($input.evalIs(undefined)) {
       return;
     }
-    const { columnName, column } = $where.extensions.pgFilterColumn;
+    const { columnName, column, codec } = $where.extensions.pgFilterColumn;
 
-    const sourceAlias = column.expression
-      ? column.expression($where.alias)
-      : sql`${$where.alias}.${sql.identifier(columnName)}`;
-    const sourceCodec = column.codec;
+    const sourceAlias = column
+      ? column.expression
+        ? column.expression($where.alias)
+        : sql`${$where.alias}.${sql.identifier(columnName)}`
+      : $where.alias;
+    const sourceCodec = codec ?? column.codec;
 
     const [sqlIdentifier, identifierCodec] = resolveSqlIdentifier
       ? resolveSqlIdentifier(sourceAlias, sourceCodec)
@@ -1075,8 +1077,8 @@ export function makeApplyPlanFromOperatorSpec(
     }
     const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
     const inputCodec = resolveInputCodec
-      ? resolveInputCodec(column.codec)
-      : column.codec;
+      ? resolveInputCodec(codec ?? column.codec)
+      : codec ?? column.codec;
 
     const sqlValue = resolveSqlValue
       ? resolveSqlValue($where, $input, inputCodec)

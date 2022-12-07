@@ -25,7 +25,13 @@ export { makeApplyPlanFromOperatorSpec };
 
 declare module "@dataplan/pg" {
   interface PgConditionStepExtensions {
-    pgFilterColumn?: { columnName: string; column: PgTypeColumn };
+    pgFilterColumn?: /** Filtering a column */
+    | { columnName: string; column: PgTypeColumn; codec?: never }
+      | /** The incoming alias _is_ the column */ {
+          columnName?: never;
+          column?: never;
+          codec: PgTypeCodec<any, any, any, any>;
+        };
     pgFilterRelation?: {
       tableExpression: SQL;
       alias?: string;

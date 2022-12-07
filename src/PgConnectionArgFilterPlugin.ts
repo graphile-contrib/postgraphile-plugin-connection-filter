@@ -6,6 +6,7 @@ import {
   TYPES,
 } from "@dataplan/pg";
 import { ConnectionStep, ExecutableStep, FieldArgs } from "grafast";
+import { PgSmartTagsDict } from "graphile-build-pg";
 import type {
   GraphQLInputFieldConfigMap,
   GraphQLInputType,
@@ -34,6 +35,42 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   version,
 
   // after: ["PgTypesPlugin", "PgCodecsPlugin", "PgCodecs"],
+  /*
+  gather: {
+    hooks: {
+      pgProcedures_functionSource_options(info, event) {
+        if (info.resolvedPreset.schema) {
+          const {
+            connectionFilterComputedColumns,
+            connectionFilterSetofFunctions,
+          } = info.resolvedPreset.schema;
+          if (
+            event.pgProc.provolatile === "i" ||
+            event.pgProc.provolatile === "s"
+          ) {
+            const args = event.pgProc.getArguments();
+            if (args[0]?.type.getClass()) {
+              if (connectionFilterComputedColumns) {
+                if (!event.options.extensions) {
+                  event.options.extensions = { tags: Object.create(null) };
+                }
+                // TODO: only do this if they've not added `-advanced:filter`?
+                addBehaviorToTags(
+                  event.options.extensions.tags,
+                  "advanced:filter"
+                );
+              }
+            } else {
+              if (connectionFilterSetofFunctions) {
+                ...
+              }
+            }
+          }
+        }
+      },
+    },
+  },
+  */
 
   schema: {
     hooks: {
@@ -195,14 +232,17 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
 
           // Create filter type for all column-having codecs
           for (const pgCodec of build.allPgCodecs) {
-            if (!pgCodec.columns || pgCodec.isAnonymous) {
+            if (!pgCodec.columns) {
               continue;
             }
             const nodeTypeName = build.getGraphQLTypeNameByPgCodec(
               pgCodec,
               "output"
             );
-            if (!nodeTypeName) continue;
+            if (!nodeTypeName) {
+              console.log(`No node type name ${pgCodec.name}`);
+              continue;
+            }
 
             const filterTypeName = inflection.filterType(nodeTypeName);
             build.registerInputObjectType(
@@ -354,15 +394,28 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           source.extensions,
         ]);
 
+        // Procedures get their own special behavior
+        const desiredBehavior = source.parameters ? "filterProc" : "filter";
+
+        // TODO: should factor in connectionFilterComputedColumns different.
+        // 'queryField:list' and 'queryField:connection' behaviours are for setof functions.
+        // 'typeField:list' and 'typeField:connection' behaviours are for computed columns functions.
+
         // procedure sources aren't filterable by default (unless
         // connectionFilterSetofFunctions is set), but can be made filterable
-        // by adding the `+filter` behavior.
+        // by adding the `+filterProc` behavior.
         const defaultBehavior =
           source.parameters && !connectionFilterSetofFunctions
-            ? "-filter"
-            : "filter";
+            ? `-${desiredBehavior}`
+            : desiredBehavior;
 
-        if (!build.behavior.matches(behavior, "filter", defaultBehavior)) {
+        if (
+          !build.behavior.matches(behavior, desiredBehavior, defaultBehavior)
+        ) {
+          console.log(`NO FILTER: ${source.name}`, {
+            behavior,
+            defaultBehavior,
+          });
           return args;
         }
 
@@ -413,6 +466,9 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           }
         };
 
+        const columnCodec =
+          source.parameters && !source.codec.columns ? source.codec : null;
+
         return extend(
           args,
           {
@@ -435,6 +491,11 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                       assertAllowed(fieldArgs);
                       const $pgSelect = $connection.getSubplan();
                       const $where = $pgSelect.wherePlan();
+                      if (columnCodec) {
+                        $where.extensions.pgFilterColumn = {
+                          codec: columnCodec,
+                        };
+                      }
                       fieldArgs.apply($where);
                     },
                   }
@@ -446,6 +507,11 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                     ) {
                       assertAllowed(fieldArgs);
                       const $where = $pgSelect.wherePlan();
+                      if (columnCodec) {
+                        $where.extensions.pgFilterColumn = {
+                          codec: columnCodec,
+                        };
+                      }
                       fieldArgs.apply($where);
                     },
                   }),
