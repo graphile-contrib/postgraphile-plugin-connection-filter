@@ -3,7 +3,7 @@ import * as path from "path";
 import * as pg from "pg";
 import { promisify } from "util";
 import { GraphQLSchema, ExecutionArgs, parse, validate } from "graphql";
-import { withPgClient } from "../helpers";
+import { withPgClient, withPgPool } from "../helpers";
 import { PgConditionArgumentPlugin } from "graphile-build-pg";
 import { postgraphilePresetAmber } from "postgraphile/presets/amber";
 import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
@@ -15,8 +15,11 @@ import { ServerParams } from "grafserv";
 import { PgSubscriber } from "@dataplan/pg";
 import { makeWithPgClientViaNodePostgresClientAlreadyInTransaction } from "@dataplan/pg/adaptors/node-postgres";
 
+// TODO: remove this once Grafast gets it's planning under control :D
+jest.setTimeout(30000);
+
 const createPostGraphileSchema = async (
-  pgClient: pg.PoolClient,
+  pool: pg.Pool,
   schemas: string[],
   v4Options: V4Options,
   anotherPreset: GraphileConfig.Preset = {}
@@ -36,7 +39,7 @@ const createPostGraphileSchema = async (
         pgSettingsKey: "pgSettings",
         schemas: schemas,
         adaptorSettings: {
-          poolClient: pgClient,
+          pool,
         },
       } as any, //GraphileConfig.PgDatabaseConfiguration<"@dataplan/pg/adaptors/node-postgres">,
     ],
@@ -76,7 +79,7 @@ beforeAll(async () => {
     await pgClient.query(await readFile(`${__dirname}/../p-data.sql`, "utf8"));
   });
   // Get GraphQL schema instances that we can query.
-  gqlSchemas = await withPgClient(async (pgClient) => {
+  gqlSchemas = await withPgPool(async (pool) => {
     // Different fixtures need different schemas with different configurations.
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
@@ -89,30 +92,30 @@ beforeAll(async () => {
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
     ] = await Promise.all([
-      createPostGraphileSchema(pgClient, ["p"], {
+      createPostGraphileSchema(pool, ["p"], {
         skipPlugins: [PgConditionArgumentPlugin],
       }),
-      createPostGraphileSchema(pgClient, ["p"], {
+      createPostGraphileSchema(pool, ["p"], {
         skipPlugins: [PgConditionArgumentPlugin],
         dynamicJson: true,
       }),
-      createPostGraphileSchema(pgClient, ["p"], {
+      createPostGraphileSchema(pool, ["p"], {
         skipPlugins: [PgConditionArgumentPlugin],
         graphileBuildOptions: {
           pgUseCustomNetworkScalars: true,
         },
       }),
-      createPostGraphileSchema(pgClient, ["p"], {
+      createPostGraphileSchema(pool, ["p"], {
         skipPlugins: [PgConditionArgumentPlugin],
         graphileBuildOptions: {
           connectionFilterRelations: true,
         },
       }),
-      createPostGraphileSchema(pgClient, ["p"], {
+      createPostGraphileSchema(pool, ["p"], {
         skipPlugins: [PgConditionArgumentPlugin],
         simpleCollections: "only",
       }),
-      createPostGraphileSchema(pgClient, ["p"], {
+      createPostGraphileSchema(pool, ["p"], {
         skipPlugins: [PgConditionArgumentPlugin],
         graphileBuildOptions: {
           connectionFilterAllowNullInput: true,
@@ -120,7 +123,7 @@ beforeAll(async () => {
         },
       }),
       createPostGraphileSchema(
-        pgClient,
+        pool,
         ["p"],
         {
           skipPlugins: [PgConditionArgumentPlugin],
@@ -185,7 +188,7 @@ for (const queryFileName of queryFileNames) {
     };
     await hookArgs(args, {}, resolvedPreset);
     //const pgSubscriber = new PgSubscriber(pool);
-    const result = (await withPgClient((pgClient) => {
+    const result = (await withPgClient(async (pgClient) => {
       // We must override the context because we didn't use a pool above and so
       // we need to add our own client
 
@@ -196,13 +199,17 @@ for (const queryFileName of queryFileNames) {
           pgClient,
           false
         );
-      args.contextValue = {
-        pgSettings: (args.contextValue as any).pgSettings,
-        withPgClient: contextWithPgClient,
-        //pgSubscriber,
-      };
+      try {
+        args.contextValue = {
+          pgSettings: (args.contextValue as any).pgSettings,
+          withPgClient: contextWithPgClient,
+          //pgSubscriber,
+        };
 
-      return execute(args) as any;
+        return (await execute(args)) as any;
+      } finally {
+        contextWithPgClient.release?.();
+      }
     })) as any;
     expect(result).toMatchSnapshot();
   });
