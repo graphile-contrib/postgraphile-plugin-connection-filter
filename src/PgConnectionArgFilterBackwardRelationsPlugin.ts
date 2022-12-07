@@ -1,4 +1,8 @@
-import { PgSourceBuilder, PgSourceRelation } from "@dataplan/pg";
+import {
+  PgConditionStep,
+  PgSourceBuilder,
+  PgSourceRelation,
+} from "@dataplan/pg";
 import { filter } from "grafast";
 
 const { version } = require("../package.json");
@@ -306,6 +310,14 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 foreignTableFilterTypeName
               );
               if (!ForeignTableFilterType) continue;
+              if (typeof foreignTable.source === "function") {
+                continue;
+              }
+
+              const foreignTableExpression = foreignTable.source;
+
+              const localColumns = relation.localColumns as string[];
+              const remoteColumns = relation.remoteColumns as string[];
 
               if (isOneToMany) {
                 if (
@@ -337,6 +349,17 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         () => ({
                           description: `Filter by the object’s \`${fieldName}\` relation.`,
                           type: FilterManyType,
+                          applyPlan($where: PgConditionStep<any>) {
+                            // $where.alias represents source; we need a condition that references the relational target
+                            const $rel = $where.andPlan();
+                            $rel.extensions.pgFilterRelation = {
+                              tableExpression: foreignTableExpression,
+                              alias: foreignTable.name,
+                              localColumns,
+                              remoteColumns,
+                            };
+                            return $rel;
+                          },
                         })
                       ),
                     },
@@ -359,6 +382,23 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         () => ({
                           description: `Some related \`${fieldName}\` exist.`,
                           type: GraphQLBoolean,
+                          applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                            const $subQuery = $where.existsPlan({
+                              tableExpression: foreignTableExpression,
+                              alias: foreignTable.name,
+                              $equals: fieldArgs.get(),
+                            });
+                            localColumns.forEach((localColumn, i) => {
+                              const remoteColumn = remoteColumns[i];
+                              $subQuery.where(
+                                sql`${$where.alias}.${sql.identifier(
+                                  localColumn as string
+                                )} = ${$subQuery.alias}.${sql.identifier(
+                                  remoteColumn as string
+                                )}`
+                              );
+                            });
+                          },
                         })
                       ),
                     },
@@ -385,6 +425,23 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       () => ({
                         description: `Filter by the object’s \`${fieldName}\` relation.`,
                         type: ForeignTableFilterType,
+                        applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                          const $subQuery = $where.existsPlan({
+                            tableExpression: foreignTableExpression,
+                            alias: foreignTable.name,
+                          });
+                          localColumns.forEach((localColumn, i) => {
+                            const remoteColumn = remoteColumns[i];
+                            $subQuery.where(
+                              sql`${$where.alias}.${sql.identifier(
+                                localColumn as string
+                              )} = ${$subQuery.alias}.${sql.identifier(
+                                remoteColumn as string
+                              )}`
+                            );
+                          });
+                          fieldArgs.apply($subQuery);
+                        },
                       })
                     ),
                   },
@@ -407,6 +464,23 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         () => ({
                           description: `A related \`${fieldName}\` exists.`,
                           type: GraphQLBoolean,
+                          applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                            const $subQuery = $where.existsPlan({
+                              tableExpression: foreignTableExpression,
+                              alias: foreignTable.name,
+                              $equals: fieldArgs.get(),
+                            });
+                            localColumns.forEach((localColumn, i) => {
+                              const remoteColumn = remoteColumns[i];
+                              $subQuery.where(
+                                sql`${$where.alias}.${sql.identifier(
+                                  localColumn as string
+                                )} = ${$subQuery.alias}.${sql.identifier(
+                                  remoteColumn as string
+                                )}`
+                              );
+                            });
+                          },
                         })
                       ),
                     },
@@ -434,6 +508,34 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 () => ({
                   description: `Every related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
+                  applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                    if (!$where.extensions.pgFilterRelation) {
+                      throw new Error(
+                        `Invalid use of filter, 'pgFilterRelation' expected`
+                      );
+                    }
+                    const {
+                      localColumns,
+                      remoteColumns,
+                      tableExpression,
+                      alias,
+                    } = $where.extensions.pgFilterRelation;
+                    const $subQuery = $where.notPlan().existsPlan({
+                      tableExpression,
+                      alias,
+                    });
+                    localColumns.forEach((localColumn, i) => {
+                      const remoteColumn = remoteColumns[i];
+                      $subQuery.where(
+                        sql`${$where.alias}.${sql.identifier(
+                          localColumn as string
+                        )} = ${$subQuery.alias}.${sql.identifier(
+                          remoteColumn as string
+                        )}`
+                      );
+                    });
+                    fieldArgs.apply($subQuery.notPlan().andPlan());
+                  },
                 })
               ),
               some: fieldWithHooks(
@@ -444,6 +546,34 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 () => ({
                   description: `Some related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
+                  applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                    if (!$where.extensions.pgFilterRelation) {
+                      throw new Error(
+                        `Invalid use of filter, 'pgFilterRelation' expected`
+                      );
+                    }
+                    const {
+                      localColumns,
+                      remoteColumns,
+                      tableExpression,
+                      alias,
+                    } = $where.extensions.pgFilterRelation;
+                    const $subQuery = $where.existsPlan({
+                      tableExpression,
+                      alias,
+                    });
+                    localColumns.forEach((localColumn, i) => {
+                      const remoteColumn = remoteColumns[i];
+                      $subQuery.where(
+                        sql`${$where.alias}.${sql.identifier(
+                          localColumn as string
+                        )} = ${$subQuery.alias}.${sql.identifier(
+                          remoteColumn as string
+                        )}`
+                      );
+                    });
+                    fieldArgs.apply($subQuery);
+                  },
                 })
               ),
               none: fieldWithHooks(
@@ -454,6 +584,34 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 () => ({
                   description: `No related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
+                  applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                    if (!$where.extensions.pgFilterRelation) {
+                      throw new Error(
+                        `Invalid use of filter, 'pgFilterRelation' expected`
+                      );
+                    }
+                    const {
+                      localColumns,
+                      remoteColumns,
+                      tableExpression,
+                      alias,
+                    } = $where.extensions.pgFilterRelation;
+                    const $subQuery = $where.notPlan().existsPlan({
+                      tableExpression,
+                      alias,
+                    });
+                    localColumns.forEach((localColumn, i) => {
+                      const remoteColumn = remoteColumns[i];
+                      $subQuery.where(
+                        sql`${$where.alias}.${sql.identifier(
+                          localColumn as string
+                        )} = ${$subQuery.alias}.${sql.identifier(
+                          remoteColumn as string
+                        )}`
+                      );
+                    });
+                    fieldArgs.apply($subQuery);
+                  },
                 })
               ),
             };

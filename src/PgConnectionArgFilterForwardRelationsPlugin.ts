@@ -1,4 +1,9 @@
-import { PgSourceBuilder, PgSourceRelation, PgTypeColumn } from "@dataplan/pg";
+import {
+  PgConditionStep,
+  PgSourceBuilder,
+  PgSourceRelation,
+  PgTypeColumn,
+} from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
@@ -87,6 +92,13 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             );
             if (!ForeignTableFilterType) continue;
 
+            if (typeof foreignTable.source === "function") {
+              continue;
+            }
+            const foreignTableExpression = foreignTable.source;
+            const localColumns = relation.localColumns as string[];
+            const remoteColumns = relation.remoteColumns as string[];
+
             fields = extend(
               fields,
               {
@@ -98,6 +110,23 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                   () => ({
                     description: `Filter by the object’s \`${fieldName}\` relation.`,
                     type: ForeignTableFilterType,
+                    applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                      const $subQuery = $where.existsPlan({
+                        tableExpression: foreignTableExpression,
+                        alias: foreignTable.name,
+                      });
+                      localColumns.forEach((localColumn, i) => {
+                        const remoteColumn = remoteColumns[i];
+                        $subQuery.where(
+                          sql`${$where.alias}.${sql.identifier(
+                            localColumn as string
+                          )} = ${$subQuery.alias}.${sql.identifier(
+                            remoteColumn as string
+                          )}`
+                        );
+                      });
+                      fieldArgs.apply($subQuery);
+                    },
                   })
                 ),
               },
@@ -121,6 +150,23 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                     () => ({
                       description: `A related \`${fieldName}\` exists.`,
                       type: GraphQLBoolean,
+                      applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                        const $subQuery = $where.existsPlan({
+                          tableExpression: foreignTableExpression,
+                          alias: foreignTable.name,
+                          $equals: fieldArgs.get(),
+                        });
+                        localColumns.forEach((localColumn, i) => {
+                          const remoteColumn = remoteColumns[i];
+                          $subQuery.where(
+                            sql`${$where.alias}.${sql.identifier(
+                              localColumn as string
+                            )} = ${$subQuery.alias}.${sql.identifier(
+                              remoteColumn as string
+                            )}`
+                          );
+                        });
+                      },
                     })
                   ),
                 },

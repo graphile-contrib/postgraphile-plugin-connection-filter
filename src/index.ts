@@ -19,12 +19,19 @@ import { PgSource, PgTypeCodec, PgTypeColumn } from "@dataplan/pg";
 
 import type {} from "postgraphile/presets/v4";
 import { AddConnectionFilterOperatorPlugin } from "./AddConnectionFilterOperatorPlugin";
+import { SQL } from "pg-sql2";
 
 export { makeApplyPlanFromOperatorSpec };
 
 declare module "@dataplan/pg" {
   interface PgConditionStepExtensions {
     pgFilterColumn?: { columnName: string; column: PgTypeColumn };
+    pgFilterRelation?: {
+      tableExpression: SQL;
+      alias?: string;
+      localColumns: string[];
+      remoteColumns: string[];
+    };
   }
 }
 
