@@ -399,9 +399,9 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   extend(
                     fields,
                     {
-                      [filterFieldName]: fieldWithHooks(
+                      [existsFieldName]: fieldWithHooks(
                         {
-                          fieldName: filterFieldName,
+                          fieldName: existsFieldName,
                           isPgConnectionFilterField: true,
                         },
                         () => ({
