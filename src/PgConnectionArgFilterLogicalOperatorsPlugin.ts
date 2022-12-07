@@ -1,6 +1,6 @@
 import { PgConditionStep } from "@dataplan/pg";
 import { FieldArgs } from "grafast";
-import { makeAssertAllowed } from "../dist/utils";
+import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");
 
