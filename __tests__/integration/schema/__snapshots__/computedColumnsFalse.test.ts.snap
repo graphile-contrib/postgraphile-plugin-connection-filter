@@ -5,7 +5,6 @@ exports[`prints a schema with the filter plugin and the \`connectionFilterComput
   bit4Array: [BitString]
   boolArray: [Boolean]
   bpchar4Array: [String]
-  byteaArray: [String]
   char4Array: [String]
   cidrArray: [String]
   citextArray: [String]
@@ -38,7 +37,7 @@ exports[`prints a schema with the filter plugin and the \`connectionFilterComput
   uuidArray: [UUID]
   varbitArray: [BitString]
   varcharArray: [String]
-  xmlArray: [String]
+  xmlArray: [XML]
 }
 
 """
@@ -134,6 +133,9 @@ input ArrayTypeFilter {
 
   """Filter by the object’s \`varcharArray\` field."""
   varcharArray: StringListFilter
+
+  """Filter by the object’s \`xmlArray\` field."""
+  xmlArray: XMLListFilter
 }
 
 """A connection to a list of \`ArrayType\` values."""
@@ -141,7 +143,7 @@ type ArrayTypesConnection {
   """
   A list of edges which contains the \`ArrayType\` and cursor to aid in pagination.
   """
-  edges: [ArrayTypesEdge!]!
+  edges: [ArrayTypesEdge]!
 
   """A list of \`ArrayType\` objects."""
   nodes: [ArrayType]!
@@ -164,73 +166,11 @@ type ArrayTypesEdge {
 
 """Methods to use when ordering \`ArrayType\`."""
 enum ArrayTypesOrderBy {
-  BIT4_ARRAY_ASC
-  BIT4_ARRAY_DESC
-  BOOL_ARRAY_ASC
-  BOOL_ARRAY_DESC
-  BPCHAR4_ARRAY_ASC
-  BPCHAR4_ARRAY_DESC
-  BYTEA_ARRAY_ASC
-  BYTEA_ARRAY_DESC
-  CHAR4_ARRAY_ASC
-  CHAR4_ARRAY_DESC
-  CIDR_ARRAY_ASC
-  CIDR_ARRAY_DESC
-  CITEXT_ARRAY_ASC
-  CITEXT_ARRAY_DESC
-  DATE_ARRAY_ASC
-  DATE_ARRAY_DESC
-  FLOAT4_ARRAY_ASC
-  FLOAT4_ARRAY_DESC
-  FLOAT8_ARRAY_ASC
-  FLOAT8_ARRAY_DESC
-  HSTORE_ARRAY_ASC
-  HSTORE_ARRAY_DESC
   ID_ASC
   ID_DESC
-  INET_ARRAY_ASC
-  INET_ARRAY_DESC
-  INT2_ARRAY_ASC
-  INT2_ARRAY_DESC
-  INT4_ARRAY_ASC
-  INT4_ARRAY_DESC
-  INT8_ARRAY_ASC
-  INT8_ARRAY_DESC
-  INTERVAL_ARRAY_ASC
-  INTERVAL_ARRAY_DESC
-  JSONB_ARRAY_ASC
-  JSONB_ARRAY_DESC
-  JSON_ARRAY_ASC
-  JSON_ARRAY_DESC
-  MACADDR_ARRAY_ASC
-  MACADDR_ARRAY_DESC
-  MONEY_ARRAY_ASC
-  MONEY_ARRAY_DESC
-  NAME_ARRAY_ASC
-  NAME_ARRAY_DESC
   NATURAL
-  NUMERIC_ARRAY_ASC
-  NUMERIC_ARRAY_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  TEXT_ARRAY_ASC
-  TEXT_ARRAY_DESC
-  TIMESTAMPTZ_ARRAY_ASC
-  TIMESTAMPTZ_ARRAY_DESC
-  TIMESTAMP_ARRAY_ASC
-  TIMESTAMP_ARRAY_DESC
-  TIMETZ_ARRAY_ASC
-  TIMETZ_ARRAY_DESC
-  TIME_ARRAY_ASC
-  TIME_ARRAY_DESC
-  UUID_ARRAY_ASC
-  UUID_ARRAY_DESC
-  VARBIT_ARRAY_ASC
-  VARBIT_ARRAY_DESC
-  VARCHAR_ARRAY_ASC
-  VARCHAR_ARRAY_DESC
-  XML_ARRAY_ASC
-  XML_ARRAY_DESC
 }
 
 type Backward implements Node {
@@ -275,6 +215,11 @@ input BackwardCompoundFilter {
   """Filter by the object’s \`backwardCompound2\` field."""
   backwardCompound2: IntFilter
 
+  """
+  Filter by the object’s \`filterableByBackwardCompound1AndBackwardCompound2\` relation.
+  """
+  filterableByBackwardCompound1AndBackwardCompound2: FilterableFilter
+
   """Filter by the object’s \`name\` field."""
   name: StringFilter
 
@@ -290,7 +235,7 @@ type BackwardCompoundsConnection {
   """
   A list of edges which contains the \`BackwardCompound\` and cursor to aid in pagination.
   """
-  edges: [BackwardCompoundsEdge!]!
+  edges: [BackwardCompoundsEdge]!
 
   """A list of \`BackwardCompound\` objects."""
   nodes: [BackwardCompound]!
@@ -333,6 +278,12 @@ input BackwardFilter {
   """Checks for all expressions in this list."""
   and: [BackwardFilter!]
 
+  """Filter by the object’s \`filterableByFilterableId\` relation."""
+  filterableByFilterableId: FilterableFilter
+
+  """A related \`filterableByFilterableId\` exists."""
+  filterableByFilterableIdExists: Boolean
+
   """Filter by the object’s \`filterableId\` field."""
   filterableId: IntFilter
 
@@ -354,7 +305,7 @@ type BackwardsConnection {
   """
   A list of edges which contains the \`Backward\` and cursor to aid in pagination.
   """
-  edges: [BackwardsEdge!]!
+  edges: [BackwardsEdge]!
 
   """A list of \`Backward\` objects."""
   nodes: [Backward]!
@@ -1176,48 +1127,48 @@ input Char4DomainFilter {
   """
   Not equal to the specified value, treating null like an ordinary value.
   """
-  distinctFrom: Char4Domain
+  distinctFrom: String
 
   """
   Not equal to the specified value, treating null like an ordinary value (case-insensitive).
   """
-  distinctFromInsensitive: Char4Domain
+  distinctFromInsensitive: String
 
   """Ends with the specified string (case-sensitive)."""
-  endsWith: Char4Domain
+  endsWith: String
 
   """Ends with the specified string (case-insensitive)."""
-  endsWithInsensitive: Char4Domain
+  endsWithInsensitive: String
 
   """Equal to the specified value."""
-  equalTo: Char4Domain
+  equalTo: String
 
   """Equal to the specified value (case-insensitive)."""
-  equalToInsensitive: Char4Domain
+  equalToInsensitive: String
 
   """Greater than the specified value."""
-  greaterThan: Char4Domain
+  greaterThan: String
 
   """Greater than the specified value (case-insensitive)."""
-  greaterThanInsensitive: Char4Domain
+  greaterThanInsensitive: String
 
   """Greater than or equal to the specified value."""
-  greaterThanOrEqualTo: Char4Domain
+  greaterThanOrEqualTo: String
 
   """Greater than or equal to the specified value (case-insensitive)."""
-  greaterThanOrEqualToInsensitive: Char4Domain
+  greaterThanOrEqualToInsensitive: String
 
   """Included in the specified list."""
-  in: [Char4Domain!]
+  in: [String!]
 
   """Included in the specified list (case-insensitive)."""
-  inInsensitive: [Char4Domain!]
+  inInsensitive: [String!]
 
   """Contains the specified string (case-sensitive)."""
-  includes: Char4Domain
+  includes: String
 
   """Contains the specified string (case-insensitive)."""
-  includesInsensitive: Char4Domain
+  includesInsensitive: String
 
   """
   Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
@@ -1225,80 +1176,80 @@ input Char4DomainFilter {
   isNull: Boolean
 
   """Less than the specified value."""
-  lessThan: Char4Domain
+  lessThan: String
 
   """Less than the specified value (case-insensitive)."""
-  lessThanInsensitive: Char4Domain
+  lessThanInsensitive: String
 
   """Less than or equal to the specified value."""
-  lessThanOrEqualTo: Char4Domain
+  lessThanOrEqualTo: String
 
   """Less than or equal to the specified value (case-insensitive)."""
-  lessThanOrEqualToInsensitive: Char4Domain
+  lessThanOrEqualToInsensitive: String
 
   """
   Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
   """
-  like: Char4Domain
+  like: String
 
   """
   Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
   """
-  likeInsensitive: Char4Domain
+  likeInsensitive: String
 
   """Equal to the specified value, treating null like an ordinary value."""
-  notDistinctFrom: Char4Domain
+  notDistinctFrom: String
 
   """
   Equal to the specified value, treating null like an ordinary value (case-insensitive).
   """
-  notDistinctFromInsensitive: Char4Domain
+  notDistinctFromInsensitive: String
 
   """Does not end with the specified string (case-sensitive)."""
-  notEndsWith: Char4Domain
+  notEndsWith: String
 
   """Does not end with the specified string (case-insensitive)."""
-  notEndsWithInsensitive: Char4Domain
+  notEndsWithInsensitive: String
 
   """Not equal to the specified value."""
-  notEqualTo: Char4Domain
+  notEqualTo: String
 
   """Not equal to the specified value (case-insensitive)."""
-  notEqualToInsensitive: Char4Domain
+  notEqualToInsensitive: String
 
   """Not included in the specified list."""
-  notIn: [Char4Domain!]
+  notIn: [String!]
 
   """Not included in the specified list (case-insensitive)."""
-  notInInsensitive: [Char4Domain!]
+  notInInsensitive: [String!]
 
   """Does not contain the specified string (case-sensitive)."""
-  notIncludes: Char4Domain
+  notIncludes: String
 
   """Does not contain the specified string (case-insensitive)."""
-  notIncludesInsensitive: Char4Domain
+  notIncludesInsensitive: String
 
   """
   Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
   """
-  notLike: Char4Domain
+  notLike: String
 
   """
   Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
   """
-  notLikeInsensitive: Char4Domain
+  notLikeInsensitive: String
 
   """Does not start with the specified string (case-sensitive)."""
-  notStartsWith: Char4Domain
+  notStartsWith: String
 
   """Does not start with the specified string (case-insensitive)."""
-  notStartsWithInsensitive: Char4Domain
+  notStartsWithInsensitive: String
 
   """Starts with the specified string (case-sensitive)."""
-  startsWith: Char4Domain
+  startsWith: String
 
   """Starts with the specified string (case-insensitive)."""
-  startsWithInsensitive: Char4Domain
+  startsWithInsensitive: String
 }
 
 type Child implements Node {
@@ -1320,6 +1271,12 @@ A filter to be used against \`Child\` object types. All fields are combined with
 input ChildFilter {
   """Checks for all expressions in this list."""
   and: [ChildFilter!]
+
+  """Filter by the object’s \`filterableByFilterableId\` relation."""
+  filterableByFilterableId: FilterableFilter
+
+  """A related \`filterableByFilterableId\` exists."""
+  filterableByFilterableIdExists: Boolean
 
   """Filter by the object’s \`filterableId\` field."""
   filterableId: IntFilter
@@ -1389,7 +1346,7 @@ type ChildNoRelatedFiltersConnection {
   """
   A list of edges which contains the \`ChildNoRelatedFilter\` and cursor to aid in pagination.
   """
-  edges: [ChildNoRelatedFiltersEdge!]!
+  edges: [ChildNoRelatedFiltersEdge]!
 
   """A list of \`ChildNoRelatedFilter\` objects."""
   nodes: [ChildNoRelatedFilter]!
@@ -1432,7 +1389,7 @@ type ChildrenConnection {
   """
   A list of edges which contains the \`Child\` and cursor to aid in pagination.
   """
-  edges: [ChildrenEdge!]!
+  edges: [ChildrenEdge]!
 
   """A list of \`Child\` objects."""
   nodes: [Child]!
@@ -1494,7 +1451,7 @@ input CompositeFilter {
 """A location in a connection that can be used for resuming pagination."""
 scalar Cursor
 
-"""The day, does not include a time."""
+"""A calendar date in YYYY-MM-DD format."""
 scalar Date
 
 scalar DateDomain
@@ -2144,7 +2101,7 @@ type DomainTypesConnection {
   """
   A list of edges which contains the \`DomainType\` and cursor to aid in pagination.
   """
-  edges: [DomainTypesEdge!]!
+  edges: [DomainTypesEdge]!
 
   """A list of \`DomainType\` objects."""
   nodes: [DomainType]!
@@ -2215,7 +2172,7 @@ type EnumArrayTypesConnection {
   """
   A list of edges which contains the \`EnumArrayType\` and cursor to aid in pagination.
   """
-  edges: [EnumArrayTypesEdge!]!
+  edges: [EnumArrayTypesEdge]!
 
   """A list of \`EnumArrayType\` objects."""
   nodes: [EnumArrayType]!
@@ -2238,8 +2195,6 @@ type EnumArrayTypesEdge {
 
 """Methods to use when ordering \`EnumArrayType\`."""
 enum EnumArrayTypesOrderBy {
-  ENUM_ARRAY_ASC
-  ENUM_ARRAY_DESC
   ID_ASC
   ID_DESC
   NATURAL
@@ -2282,7 +2237,7 @@ type EnumTypesConnection {
   """
   A list of edges which contains the \`EnumType\` and cursor to aid in pagination.
   """
-  edges: [EnumTypesEdge!]!
+  edges: [EnumTypesEdge]!
 
   """A list of \`EnumType\` objects."""
   nodes: [EnumType]!
@@ -2327,7 +2282,6 @@ type Filterable implements Node {
   bit4: BitString
   bool: Boolean
   bpchar4: String
-  bytea: String
   char4: String
 
   """Reads and enables pagination through a set of \`ChildNoRelatedFilter\`."""
@@ -2420,6 +2374,8 @@ type Filterable implements Node {
     """
     offset: Int
   ): ChildrenConnection!
+
+  """Reads and enables pagination through a set of \`Int4\`."""
   computedSetofInt(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
@@ -2548,7 +2504,7 @@ type Filterable implements Node {
   uuid: UUID
   varbit: BitString
   varchar: String
-  xml: String
+  xml: XML
 }
 
 type FilterableClosure implements Node {
@@ -2589,6 +2545,12 @@ input FilterableClosureFilter {
   """Filter by the object’s \`descendantId\` field."""
   descendantId: IntFilter
 
+  """Filter by the object’s \`filterableByAncestorId\` relation."""
+  filterableByAncestorId: FilterableFilter
+
+  """Filter by the object’s \`filterableByDescendantId\` relation."""
+  filterableByDescendantId: FilterableFilter
+
   """Filter by the object’s \`id\` field."""
   id: IntFilter
 
@@ -2604,7 +2566,7 @@ type FilterableClosuresConnection {
   """
   A list of edges which contains the \`FilterableClosure\` and cursor to aid in pagination.
   """
-  edges: [FilterableClosuresEdge!]!
+  edges: [FilterableClosuresEdge]!
 
   """A list of \`FilterableClosure\` objects."""
   nodes: [FilterableClosure]!
@@ -2647,10 +2609,13 @@ type FilterableComputedSetofIntConnection {
   """
   A list of edges which contains the \`Int\` and cursor to aid in pagination.
   """
-  edges: [FilterableComputedSetofIntEdge!]!
+  edges: [FilterableComputedSetofIntEdge]!
 
   """A list of \`Int\` objects."""
   nodes: [Int]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
   """The count of *all* \`Int\` you could get from the connection."""
   totalCount: Int!
@@ -2672,11 +2637,27 @@ input FilterableFilter {
   """Checks for all expressions in this list."""
   and: [FilterableFilter!]
 
+  """Filter by the object’s \`backwardByFilterableId\` relation."""
+  backwardByFilterableId: BackwardFilter
+
+  """A related \`backwardByFilterableId\` exists."""
+  backwardByFilterableIdExists: Boolean
+
   """Filter by the object’s \`backwardCompound1\` field."""
   backwardCompound1: IntFilter
 
   """Filter by the object’s \`backwardCompound2\` field."""
   backwardCompound2: IntFilter
+
+  """
+  Filter by the object’s \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` relation.
+  """
+  backwardCompoundByBackwardCompound1AndBackwardCompound2: BackwardCompoundFilter
+
+  """
+  A related \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` exists.
+  """
+  backwardCompoundByBackwardCompound1AndBackwardCompound2Exists: Boolean
 
   """Filter by the object’s \`bit4\` field."""
   bit4: BitStringFilter
@@ -2690,6 +2671,12 @@ input FilterableFilter {
   """Filter by the object’s \`char4\` field."""
   char4: StringFilter
 
+  """Filter by the object’s \`childrenByFilterableId\` relation."""
+  childrenByFilterableId: FilterableToManyChildFilter
+
+  """Some related \`childrenByFilterableId\` exist."""
+  childrenByFilterableIdExist: Boolean
+
   """Filter by the object’s \`citext\` field."""
   citext: StringFilter
 
@@ -2702,17 +2689,48 @@ input FilterableFilter {
   """Filter by the object’s \`date\` field."""
   date: DateFilter
 
+  """Filter by the object’s \`filterableClosuresByAncestorId\` relation."""
+  filterableClosuresByAncestorId: FilterableToManyFilterableClosureFilter
+
+  """Some related \`filterableClosuresByAncestorId\` exist."""
+  filterableClosuresByAncestorIdExist: Boolean
+
+  """Filter by the object’s \`filterableClosuresByDescendantId\` relation."""
+  filterableClosuresByDescendantId: FilterableToManyFilterableClosureFilter
+
+  """Some related \`filterableClosuresByDescendantId\` exist."""
+  filterableClosuresByDescendantIdExist: Boolean
+
   """Filter by the object’s \`float4\` field."""
   float4: FloatFilter
 
   """Filter by the object’s \`float8\` field."""
   float8: FloatFilter
 
+  """Filter by the object’s \`forwardByForwardId\` relation."""
+  forwardByForwardId: ForwardFilter
+
+  """A related \`forwardByForwardId\` exists."""
+  forwardByForwardIdExists: Boolean
+
+  """Filter by the object’s \`forwardColumn\` field."""
+  forwardColumn: ForwardFilter
+
   """Filter by the object’s \`forwardCompound1\` field."""
   forwardCompound1: IntFilter
 
   """Filter by the object’s \`forwardCompound2\` field."""
   forwardCompound2: IntFilter
+
+  """
+  Filter by the object’s \`forwardCompoundByForwardCompound1AndForwardCompound2\` relation.
+  """
+  forwardCompoundByForwardCompound1AndForwardCompound2: ForwardCompoundFilter
+
+  """
+  A related \`forwardCompoundByForwardCompound1AndForwardCompound2\` exists.
+  """
+  forwardCompoundByForwardCompound1AndForwardCompound2Exists: Boolean
 
   """Filter by the object’s \`forwardId\` field."""
   forwardId: IntFilter
@@ -2756,6 +2774,12 @@ input FilterableFilter {
   """Checks for any expressions in this list."""
   or: [FilterableFilter!]
 
+  """Filter by the object’s \`parentByParentId\` relation."""
+  parentByParentId: ParentFilter
+
+  """A related \`parentByParentId\` exists."""
+  parentByParentIdExists: Boolean
+
   """Filter by the object’s \`parentId\` field."""
   parentId: IntFilter
 
@@ -2782,6 +2806,49 @@ input FilterableFilter {
 
   """Filter by the object’s \`varchar\` field."""
   varchar: StringFilter
+
+  """Filter by the object’s \`xml\` field."""
+  xml: XMLFilter
+}
+
+"""
+A filter to be used against many \`Child\` object types. All fields are combined with a logical ‘and.’
+"""
+input FilterableToManyChildFilter {
+  """
+  Every related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: ChildFilter
+
+  """
+  No related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: ChildFilter
+
+  """
+  Some related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: ChildFilter
+}
+
+"""
+A filter to be used against many \`FilterableClosure\` object types. All fields are combined with a logical ‘and.’
+"""
+input FilterableToManyFilterableClosureFilter {
+  """
+  Every related \`FilterableClosure\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: FilterableClosureFilter
+
+  """
+  No related \`FilterableClosure\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: FilterableClosureFilter
+
+  """
+  Some related \`FilterableClosure\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: FilterableClosureFilter
 }
 
 """A connection to a list of \`Filterable\` values."""
@@ -2789,7 +2856,7 @@ type FilterablesConnection {
   """
   A list of edges which contains the \`Filterable\` and cursor to aid in pagination.
   """
-  edges: [FilterablesEdge!]!
+  edges: [FilterablesEdge]!
 
   """A list of \`Filterable\` objects."""
   nodes: [Filterable]!
@@ -2822,8 +2889,6 @@ enum FilterablesOrderBy {
   BOOL_DESC
   BPCHAR4_ASC
   BPCHAR4_DESC
-  BYTEA_ASC
-  BYTEA_DESC
   CHAR4_ASC
   CHAR4_DESC
   CIDR_ASC
@@ -3036,6 +3101,14 @@ input ForwardCompoundFilter {
   """Checks for all expressions in this list."""
   and: [ForwardCompoundFilter!]
 
+  """
+  Filter by the object’s \`filterableByForwardCompound1AndForwardCompound2\` relation.
+  """
+  filterableByForwardCompound1AndForwardCompound2: FilterableFilter
+
+  """A related \`filterableByForwardCompound1AndForwardCompound2\` exists."""
+  filterableByForwardCompound1AndForwardCompound2Exists: Boolean
+
   """Filter by the object’s \`forwardCompound1\` field."""
   forwardCompound1: IntFilter
 
@@ -3057,7 +3130,7 @@ type ForwardCompoundsConnection {
   """
   A list of edges which contains the \`ForwardCompound\` and cursor to aid in pagination.
   """
-  edges: [ForwardCompoundsEdge!]!
+  edges: [ForwardCompoundsEdge]!
 
   """A list of \`ForwardCompound\` objects."""
   nodes: [ForwardCompound]!
@@ -3100,6 +3173,12 @@ input ForwardFilter {
   """Checks for all expressions in this list."""
   and: [ForwardFilter!]
 
+  """Filter by the object’s \`filterableByForwardId\` relation."""
+  filterableByForwardId: FilterableFilter
+
+  """A related \`filterableByForwardId\` exists."""
+  filterableByForwardIdExists: Boolean
+
   """Filter by the object’s \`id\` field."""
   id: IntFilter
 
@@ -3118,7 +3197,7 @@ type ForwardsConnection {
   """
   A list of edges which contains the \`Forward\` and cursor to aid in pagination.
   """
-  edges: [ForwardsEdge!]!
+  edges: [ForwardsEdge]!
 
   """A list of \`Forward\` objects."""
   nodes: [Forward]!
@@ -3165,7 +3244,7 @@ type FullyOmittedsConnection {
   """
   A list of edges which contains the \`FullyOmitted\` and cursor to aid in pagination.
   """
-  edges: [FullyOmittedsEdge!]!
+  edges: [FullyOmittedsEdge]!
 
   """A list of \`FullyOmitted\` objects."""
   nodes: [FullyOmitted]!
@@ -3202,10 +3281,13 @@ type FuncReturnsTableMultiColConnection {
   """
   A list of edges which contains the \`FuncReturnsTableMultiColRecord\` and cursor to aid in pagination.
   """
-  edges: [FuncReturnsTableMultiColEdge!]!
+  edges: [FuncReturnsTableMultiColEdge]!
 
   """A list of \`FuncReturnsTableMultiColRecord\` objects."""
   nodes: [FuncReturnsTableMultiColRecord]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
   """
   The count of *all* \`FuncReturnsTableMultiColRecord\` you could get from the connection.
@@ -3222,7 +3304,6 @@ type FuncReturnsTableMultiColEdge {
   node: FuncReturnsTableMultiColRecord
 }
 
-"""The return type of our \`funcReturnsTableMultiCol\` query."""
 type FuncReturnsTableMultiColRecord {
   col1: Int
   col2: String
@@ -3253,10 +3334,13 @@ type FuncReturnsTableOneColConnection {
   """
   A list of edges which contains the \`Int\` and cursor to aid in pagination.
   """
-  edges: [FuncReturnsTableOneColEdge!]!
+  edges: [FuncReturnsTableOneColEdge]!
 
   """A list of \`Int\` objects."""
   nodes: [Int]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
   """The count of *all* \`Int\` you could get from the connection."""
   totalCount: Int!
@@ -3278,10 +3362,13 @@ type FuncTaggedFilterableReturnsTableMultiColConnection {
   """
   A list of edges which contains the \`FuncTaggedFilterableReturnsTableMultiColRecord\` and cursor to aid in pagination.
   """
-  edges: [FuncTaggedFilterableReturnsTableMultiColEdge!]!
+  edges: [FuncTaggedFilterableReturnsTableMultiColEdge]!
 
   """A list of \`FuncTaggedFilterableReturnsTableMultiColRecord\` objects."""
   nodes: [FuncTaggedFilterableReturnsTableMultiColRecord]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
 
   """
   The count of *all* \`FuncTaggedFilterableReturnsTableMultiColRecord\` you could get from the connection.
@@ -3302,9 +3389,6 @@ type FuncTaggedFilterableReturnsTableMultiColEdge {
   node: FuncTaggedFilterableReturnsTableMultiColRecord
 }
 
-"""
-The return type of our \`funcTaggedFilterableReturnsTableMultiCol\` query.
-"""
 type FuncTaggedFilterableReturnsTableMultiColRecord {
   col1: Int
   col2: String
@@ -3949,10 +4033,10 @@ input JSONFilter {
   contains: JSON
 
   """Contains all of the specified keys."""
-  containsAllKeys: [String!]
+  containsAllKeys: [String]
 
   """Contains any of the specified keys."""
-  containsAnyKeys: [String!]
+  containsAnyKeys: [String]
 
   """Contains the specified key."""
   containsKey: String
@@ -4097,7 +4181,7 @@ type JsonbTestsConnection {
   """
   A list of edges which contains the \`JsonbTest\` and cursor to aid in pagination.
   """
-  edges: [JsonbTestsEdge!]!
+  edges: [JsonbTestsEdge]!
 
   """A list of \`JsonbTest\` objects."""
   nodes: [JsonbTest]!
@@ -4159,8 +4243,14 @@ input JunctionFilter {
   """Checks for any expressions in this list."""
   or: [JunctionFilter!]
 
+  """Filter by the object’s \`sideABySideAId\` relation."""
+  sideABySideAId: SideAFilter
+
   """Filter by the object’s \`sideAId\` field."""
   sideAId: IntFilter
+
+  """Filter by the object’s \`sideBBySideBId\` relation."""
+  sideBBySideBId: SideBFilter
 
   """Filter by the object’s \`sideBId\` field."""
   sideBId: IntFilter
@@ -4171,7 +4261,7 @@ type JunctionsConnection {
   """
   A list of edges which contains the \`Junction\` and cursor to aid in pagination.
   """
-  edges: [JunctionsEdge!]!
+  edges: [JunctionsEdge]!
 
   """A list of \`Junction\` objects."""
   nodes: [Junction]!
@@ -4495,6 +4585,12 @@ input ParentFilter {
   """Checks for all expressions in this list."""
   and: [ParentFilter!]
 
+  """Filter by the object’s \`filterablesByParentId\` relation."""
+  filterablesByParentId: ParentToManyFilterableFilter
+
+  """Some related \`filterablesByParentId\` exist."""
+  filterablesByParentIdExist: Boolean
+
   """Filter by the object’s \`id\` field."""
   id: IntFilter
 
@@ -4508,12 +4604,32 @@ input ParentFilter {
   or: [ParentFilter!]
 }
 
+"""
+A filter to be used against many \`Filterable\` object types. All fields are combined with a logical ‘and.’
+"""
+input ParentToManyFilterableFilter {
+  """
+  Every related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: FilterableFilter
+
+  """
+  No related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: FilterableFilter
+
+  """
+  Some related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: FilterableFilter
+}
+
 """A connection to a list of \`Parent\` values."""
 type ParentsConnection {
   """
   A list of edges which contains the \`Parent\` and cursor to aid in pagination.
   """
-  edges: [ParentsEdge!]!
+  edges: [ParentsEdge]!
 
   """A list of \`Parent\` objects."""
   nodes: [Parent]!
@@ -4584,7 +4700,7 @@ type ProtectedsConnection {
   """
   A list of edges which contains the \`Protected\` and cursor to aid in pagination.
   """
-  edges: [ProtectedsEdge!]!
+  edges: [ProtectedsEdge]!
 
   """A list of \`Protected\` objects."""
   nodes: [Protected]!
@@ -5122,7 +5238,7 @@ type Query implements Node {
 
     """The method to use when ordering \`SideA\`."""
     orderBy: [SideAsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): SideAsConnection
+  ): SideASConnection
 
   """Reads and enables pagination through a set of \`SideB\`."""
   allSideBs(
@@ -5151,7 +5267,7 @@ type Query implements Node {
 
     """The method to use when ordering \`SideB\`."""
     orderBy: [SideBsOrderBy!] = [PRIMARY_KEY_ASC]
-  ): SideBsConnection
+  ): SideBSConnection
 
   """Reads and enables pagination through a set of \`Unfilterable\`."""
   allUnfilterables(
@@ -5182,6 +5298,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`ArrayType\`."""
     nodeId: ID!
   ): ArrayType
+
+  """Get a single \`ArrayType\`."""
   arrayTypeById(id: Int!): ArrayType
 
   """Reads a single \`Backward\` using its globally unique \`ID\`."""
@@ -5189,7 +5307,11 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`Backward\`."""
     nodeId: ID!
   ): Backward
+
+  """Get a single \`Backward\`."""
   backwardByFilterableId(filterableId: Int!): Backward
+
+  """Get a single \`Backward\`."""
   backwardById(id: Int!): Backward
 
   """Reads a single \`BackwardCompound\` using its globally unique \`ID\`."""
@@ -5199,6 +5321,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): BackwardCompound
+
+  """Get a single \`BackwardCompound\`."""
   backwardCompoundByBackwardCompound1AndBackwardCompound2(backwardCompound1: Int!, backwardCompound2: Int!): BackwardCompound
 
   """Reads a single \`Child\` using its globally unique \`ID\`."""
@@ -5206,6 +5330,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`Child\`."""
     nodeId: ID!
   ): Child
+
+  """Get a single \`Child\`."""
   childById(id: Int!): Child
 
   """Reads a single \`ChildNoRelatedFilter\` using its globally unique \`ID\`."""
@@ -5215,6 +5341,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): ChildNoRelatedFilter
+
+  """Get a single \`ChildNoRelatedFilter\`."""
   childNoRelatedFilterById(id: Int!): ChildNoRelatedFilter
 
   """Reads a single \`DomainType\` using its globally unique \`ID\`."""
@@ -5224,6 +5352,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): DomainType
+
+  """Get a single \`DomainType\`."""
   domainTypeById(id: Int!): DomainType
 
   """Reads a single \`EnumArrayType\` using its globally unique \`ID\`."""
@@ -5233,6 +5363,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): EnumArrayType
+
+  """Get a single \`EnumArrayType\`."""
   enumArrayTypeById(id: Int!): EnumArrayType
 
   """Reads a single \`EnumType\` using its globally unique \`ID\`."""
@@ -5240,6 +5372,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`EnumType\`."""
     nodeId: ID!
   ): EnumType
+
+  """Get a single \`EnumType\`."""
   enumTypeById(id: Int!): EnumType
 
   """Reads a single \`Filterable\` using its globally unique \`ID\`."""
@@ -5249,9 +5383,17 @@ type Query implements Node {
     """
     nodeId: ID!
   ): Filterable
+
+  """Get a single \`Filterable\`."""
   filterableByBackwardCompound1AndBackwardCompound2(backwardCompound1: Int!, backwardCompound2: Int!): Filterable
+
+  """Get a single \`Filterable\`."""
   filterableByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): Filterable
+
+  """Get a single \`Filterable\`."""
   filterableByForwardId(forwardId: Int!): Filterable
+
+  """Get a single \`Filterable\`."""
   filterableById(id: Int!): Filterable
 
   """Reads a single \`FilterableClosure\` using its globally unique \`ID\`."""
@@ -5261,6 +5403,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): FilterableClosure
+
+  """Get a single \`FilterableClosure\`."""
   filterableClosureById(id: Int!): FilterableClosure
 
   """Reads a single \`Forward\` using its globally unique \`ID\`."""
@@ -5268,6 +5412,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`Forward\`."""
     nodeId: ID!
   ): Forward
+
+  """Get a single \`Forward\`."""
   forwardById(id: Int!): Forward
 
   """Reads a single \`ForwardCompound\` using its globally unique \`ID\`."""
@@ -5277,6 +5423,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): ForwardCompound
+
+  """Get a single \`ForwardCompound\`."""
   forwardCompoundByForwardCompound1AndForwardCompound2(forwardCompound1: Int!, forwardCompound2: Int!): ForwardCompound
 
   """Reads a single \`FullyOmitted\` using its globally unique \`ID\`."""
@@ -5286,7 +5434,13 @@ type Query implements Node {
     """
     nodeId: ID!
   ): FullyOmitted
+
+  """Get a single \`FullyOmitted\`."""
   fullyOmittedById(id: Int!): FullyOmitted
+
+  """
+  Reads and enables pagination through a set of \`FuncReturnsTableMultiColRecord\`.
+  """
   funcReturnsTableMultiCol(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
@@ -5312,6 +5466,8 @@ type Query implements Node {
     """
     offset: Int
   ): FuncReturnsTableMultiColConnection
+
+  """Reads and enables pagination through a set of \`Int4\`."""
   funcReturnsTableOneCol(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
@@ -5363,6 +5519,10 @@ type Query implements Node {
     """
     offset: Int
   ): FilterablesConnection
+
+  """
+  Reads and enables pagination through a set of \`FuncTaggedFilterableReturnsTableMultiColRecord\`.
+  """
   funcTaggedFilterableReturnsTableMultiCol(
     """Read all values in the set after (below) this cursor."""
     after: Cursor
@@ -5393,6 +5553,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`JsonbTest\`."""
     nodeId: ID!
   ): JsonbTest
+
+  """Get a single \`JsonbTest\`."""
   jsonbTestById(id: Int!): JsonbTest
 
   """Reads a single \`Junction\` using its globally unique \`ID\`."""
@@ -5400,6 +5562,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`Junction\`."""
     nodeId: ID!
   ): Junction
+
+  """Get a single \`Junction\`."""
   junctionBySideAIdAndSideBId(sideAId: Int!, sideBId: Int!): Junction
 
   """Fetches an object given its globally unique \`ID\`."""
@@ -5418,6 +5582,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`Parent\`."""
     nodeId: ID!
   ): Parent
+
+  """Get a single \`Parent\`."""
   parentById(id: Int!): Parent
 
   """Reads a single \`Protected\` using its globally unique \`ID\`."""
@@ -5425,6 +5591,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`Protected\`."""
     nodeId: ID!
   ): Protected
+
+  """Get a single \`Protected\`."""
   protectedById(id: Int!): Protected
 
   """Reads and enables pagination through a set of \`Protected\`."""
@@ -5467,6 +5635,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): RangeArrayType
+
+  """Get a single \`RangeArrayType\`."""
   rangeArrayTypeById(id: Int!): RangeArrayType
 
   """Reads a single \`RangeType\` using its globally unique \`ID\`."""
@@ -5474,6 +5644,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`RangeType\`."""
     nodeId: ID!
   ): RangeType
+
+  """Get a single \`RangeType\`."""
   rangeTypeById(id: Int!): RangeType
 
   """Reads a single \`SideA\` using its globally unique \`ID\`."""
@@ -5481,6 +5653,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`SideA\`."""
     nodeId: ID!
   ): SideA
+
+  """Get a single \`SideA\`."""
   sideAByAId(aId: Int!): SideA
 
   """Reads a single \`SideB\` using its globally unique \`ID\`."""
@@ -5488,6 +5662,8 @@ type Query implements Node {
     """The globally unique \`ID\` to be used in selecting a single \`SideB\`."""
     nodeId: ID!
   ): SideB
+
+  """Get a single \`SideB\`."""
   sideBByBId(bId: Int!): SideB
 
   """Reads a single \`Unfilterable\` using its globally unique \`ID\`."""
@@ -5497,6 +5673,8 @@ type Query implements Node {
     """
     nodeId: ID!
   ): Unfilterable
+
+  """Get a single \`Unfilterable\`."""
   unfilterableById(id: Int!): Unfilterable
 }
 
@@ -5555,7 +5733,7 @@ type RangeArrayTypesConnection {
   """
   A list of edges which contains the \`RangeArrayType\` and cursor to aid in pagination.
   """
-  edges: [RangeArrayTypesEdge!]!
+  edges: [RangeArrayTypesEdge]!
 
   """A list of \`RangeArrayType\` objects."""
   nodes: [RangeArrayType]!
@@ -5578,23 +5756,11 @@ type RangeArrayTypesEdge {
 
 """Methods to use when ordering \`RangeArrayType\`."""
 enum RangeArrayTypesOrderBy {
-  DATE_RANGE_ARRAY_ASC
-  DATE_RANGE_ARRAY_DESC
   ID_ASC
   ID_DESC
-  INT4_RANGE_ARRAY_ASC
-  INT4_RANGE_ARRAY_DESC
-  INT8_RANGE_ARRAY_ASC
-  INT8_RANGE_ARRAY_DESC
   NATURAL
-  NUMERIC_RANGE_ARRAY_ASC
-  NUMERIC_RANGE_ARRAY_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  TIMESTAMPTZ_RANGE_ARRAY_ASC
-  TIMESTAMPTZ_RANGE_ARRAY_DESC
-  TIMESTAMP_RANGE_ARRAY_ASC
-  TIMESTAMP_RANGE_ARRAY_DESC
 }
 
 type RangeType implements Node {
@@ -5652,7 +5818,7 @@ type RangeTypesConnection {
   """
   A list of edges which contains the \`RangeType\` and cursor to aid in pagination.
   """
-  edges: [RangeTypesEdge!]!
+  edges: [RangeTypesEdge]!
 
   """A list of \`RangeType\` objects."""
   nodes: [RangeType]!
@@ -5675,23 +5841,11 @@ type RangeTypesEdge {
 
 """Methods to use when ordering \`RangeType\`."""
 enum RangeTypesOrderBy {
-  DATE_RANGE_ASC
-  DATE_RANGE_DESC
   ID_ASC
   ID_DESC
-  INT4_RANGE_ASC
-  INT4_RANGE_DESC
-  INT8_RANGE_ASC
-  INT8_RANGE_DESC
   NATURAL
-  NUMERIC_RANGE_ASC
-  NUMERIC_RANGE_DESC
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
-  TIMESTAMPTZ_RANGE_ASC
-  TIMESTAMPTZ_RANGE_DESC
-  TIMESTAMP_RANGE_ASC
-  TIMESTAMP_RANGE_DESC
 }
 
 type SideA implements Node {
@@ -5743,6 +5897,12 @@ input SideAFilter {
   """Checks for all expressions in this list."""
   and: [SideAFilter!]
 
+  """Filter by the object’s \`junctionsBySideAId\` relation."""
+  junctionsBySideAId: SideAToManyJunctionFilter
+
+  """Some related \`junctionsBySideAId\` exist."""
+  junctionsBySideAIdExist: Boolean
+
   """Filter by the object’s \`name\` field."""
   name: StringFilter
 
@@ -5754,11 +5914,11 @@ input SideAFilter {
 }
 
 """A connection to a list of \`SideA\` values."""
-type SideAsConnection {
+type SideASConnection {
   """
   A list of edges which contains the \`SideA\` and cursor to aid in pagination.
   """
-  edges: [SideAsEdge!]!
+  edges: [SideASEdge]!
 
   """A list of \`SideA\` objects."""
   nodes: [SideA]!
@@ -5771,12 +5931,32 @@ type SideAsConnection {
 }
 
 """A \`SideA\` edge in the connection."""
-type SideAsEdge {
+type SideASEdge {
   """A cursor for use in pagination."""
   cursor: Cursor
 
   """The \`SideA\` at the end of the edge."""
   node: SideA
+}
+
+"""
+A filter to be used against many \`Junction\` object types. All fields are combined with a logical ‘and.’
+"""
+input SideAToManyJunctionFilter {
+  """
+  Every related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: JunctionFilter
+
+  """
+  No related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: JunctionFilter
+
+  """
+  Some related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: JunctionFilter
 }
 
 """Methods to use when ordering \`SideA\`."""
@@ -5839,6 +6019,12 @@ input SideBFilter {
   """Filter by the object’s \`bId\` field."""
   bId: IntFilter
 
+  """Filter by the object’s \`junctionsBySideBId\` relation."""
+  junctionsBySideBId: SideBToManyJunctionFilter
+
+  """Some related \`junctionsBySideBId\` exist."""
+  junctionsBySideBIdExist: Boolean
+
   """Filter by the object’s \`name\` field."""
   name: StringFilter
 
@@ -5850,11 +6036,11 @@ input SideBFilter {
 }
 
 """A connection to a list of \`SideB\` values."""
-type SideBsConnection {
+type SideBSConnection {
   """
   A list of edges which contains the \`SideB\` and cursor to aid in pagination.
   """
-  edges: [SideBsEdge!]!
+  edges: [SideBSEdge]!
 
   """A list of \`SideB\` objects."""
   nodes: [SideB]!
@@ -5867,12 +6053,32 @@ type SideBsConnection {
 }
 
 """A \`SideB\` edge in the connection."""
-type SideBsEdge {
+type SideBSEdge {
   """A cursor for use in pagination."""
   cursor: Cursor
 
   """The \`SideB\` at the end of the edge."""
   node: SideB
+}
+
+"""
+A filter to be used against many \`Junction\` object types. All fields are combined with a logical ‘and.’
+"""
+input SideBToManyJunctionFilter {
+  """
+  Every related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: JunctionFilter
+
+  """
+  No related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: JunctionFilter
+
+  """
+  Some related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: JunctionFilter
 }
 
 """Methods to use when ordering \`SideB\`."""
@@ -6344,7 +6550,7 @@ type UnfilterablesConnection {
   """
   A list of edges which contains the \`Unfilterable\` and cursor to aid in pagination.
   """
-  edges: [UnfilterablesEdge!]!
+  edges: [UnfilterablesEdge]!
 
   """A list of \`Unfilterable\` objects."""
   nodes: [Unfilterable]!
@@ -6375,5 +6581,100 @@ enum UnfilterablesOrderBy {
   TEXT_ASC
   TEXT_DESC
 }
-"
+
+"""An XML document"""
+scalar XML
+
+"""
+A filter to be used against XML fields. All fields are combined with a logical ‘and.’
+"""
+input XMLFilter {
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: XML
+
+  """Equal to the specified value."""
+  equalTo: XML
+
+  """Included in the specified list."""
+  in: [XML!]
+
+  """
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: XML
+
+  """Not equal to the specified value."""
+  notEqualTo: XML
+
+  """Not included in the specified list."""
+  notIn: [XML!]
+}
+
+"""
+A filter to be used against XML List fields. All fields are combined with a logical ‘and.’
+"""
+input XMLListFilter {
+  """Any array item is equal to the specified value."""
+  anyEqualTo: XML
+
+  """Any array item is greater than the specified value."""
+  anyGreaterThan: XML
+
+  """Any array item is greater than or equal to the specified value."""
+  anyGreaterThanOrEqualTo: XML
+
+  """Any array item is less than the specified value."""
+  anyLessThan: XML
+
+  """Any array item is less than or equal to the specified value."""
+  anyLessThanOrEqualTo: XML
+
+  """Any array item is not equal to the specified value."""
+  anyNotEqualTo: XML
+
+  """Contained by the specified list of values."""
+  containedBy: [XML]
+
+  """Contains the specified list of values."""
+  contains: [XML]
+
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: [XML]
+
+  """Equal to the specified value."""
+  equalTo: [XML]
+
+  """Greater than the specified value."""
+  greaterThan: [XML]
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: [XML]
+
+  """
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  """
+  isNull: Boolean
+
+  """Less than the specified value."""
+  lessThan: [XML]
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: [XML]
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: [XML]
+
+  """Not equal to the specified value."""
+  notEqualTo: [XML]
+
+  """Overlaps the specified list of values."""
+  overlaps: [XML]
+}"
 `;
