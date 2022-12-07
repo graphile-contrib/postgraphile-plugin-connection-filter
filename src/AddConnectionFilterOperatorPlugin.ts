@@ -82,14 +82,16 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
           const inputCodec = resolveInputCodec
             ? resolveInputCodec(firstCodec)
             : firstCodec;
-          const type = (
-            resolveType
-              ? resolveType()
-              : build.getGraphQLTypeByPgCodec(inputCodec, "input")
+          const codecGraphQLType = build.getGraphQLTypeByPgCodec(
+            inputCodec,
+            "input"
           ) as GraphQLInputType | undefined;
-          if (!type) {
+          if (!codecGraphQLType) {
             continue;
           }
+          const type = resolveType
+            ? resolveType(codecGraphQLType)
+            : codecGraphQLType;
           fields = build.extend(
             fields,
             {

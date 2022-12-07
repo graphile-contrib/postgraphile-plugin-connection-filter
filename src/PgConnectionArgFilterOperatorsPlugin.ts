@@ -9,13 +9,7 @@ import {
   lambda,
   list,
 } from "grafast";
-import {
-  GraphQLFieldConfigMap,
-  GraphQLInputType,
-  GraphQLNamedType,
-  GraphQLString,
-  GraphQLType,
-} from "graphql";
+import type { GraphQLInputType, GraphQLNamedType, GraphQLType } from "graphql";
 import { PgType } from "pg-introspection";
 import { SQL } from "pg-sql2";
 import { OperatorsCategory } from "./interfaces";
@@ -40,6 +34,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             GraphQLNonNull,
             GraphQLList,
             isNamedType,
+            isListType,
+            isNonNullType,
           },
           sql,
           escapeLikeWildcards,
@@ -76,6 +72,15 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         ) {
           return fields;
         }
+
+        /** Turn `[Foo]` into `[Foo!]` */
+        const resolveTypeToListOfNonNullable = (type: GraphQLInputType) => {
+          if (isListType(type) && !isNonNullType(type.ofType)) {
+            return new GraphQLList(new GraphQLNonNull(type.ofType));
+          } else {
+            return type;
+          }
+        };
 
         const forceTextTypesSensitive = [
           TYPES.citext,
@@ -224,12 +229,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolve: (i, v) => sql`${i} = ANY(${v})`,
             resolveInputCodec: resolveArrayInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
+            resolveType: resolveTypeToListOfNonNullable,
           },
           notIn: {
             description: "Not included in the specified list.",
             resolve: (i, v) => sql`${i} <> ALL(${v})`,
             resolveInputCodec: resolveArrayInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
+            resolveType: resolveTypeToListOfNonNullable,
           },
         };
         const sortOperators: { [fieldName: string]: OperatorSpec } = {
@@ -398,12 +405,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             description: "Contains all of the specified keys.",
             resolveInputCodec: resolveTextArrayInputCodec,
             resolve: (i, v) => sql`${i} ?& ${v}`,
+            resolveType: resolveTypeToListOfNonNullable,
           },
           containsAnyKeys: {
             name: "containsAnyKeys",
             description: "Contains any of the specified keys.",
             resolveInputCodec: resolveTextArrayInputCodec,
             resolve: (i, v) => sql`${i} ?| ${v}`,
+            resolveType: resolveTypeToListOfNonNullable,
           },
           containedBy: {
             description: "Contained by the specified KeyValueHash.",
@@ -916,14 +925,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             const inputCodec = resolveInputCodec
               ? resolveInputCodec(firstCodec)
               : firstCodec;
-            const type = (
-              resolveType
-                ? resolveType()
-                : build.getGraphQLTypeByPgCodec(inputCodec, "input")
+            const codecGraphQLType = build.getGraphQLTypeByPgCodec(
+              inputCodec,
+              "input"
             ) as GraphQLInputType | undefined;
-            if (!type) {
+            if (!codecGraphQLType) {
               return memo;
             }
+            let type = resolveType
+              ? resolveType(codecGraphQLType)
+              : codecGraphQLType;
 
             const operatorName =
               (connectionFilterOperatorNames &&
@@ -990,7 +1001,7 @@ export interface OperatorSpec {
     $input: InputStep,
     $placeholderable: PlaceholderableStep
   ) => SQL;
-  resolveType?: () => GraphQLType;
+  resolveType?: (type: GraphQLInputType) => GraphQLInputType;
 }
 
 export function makeApplyPlanFromOperatorSpec(
@@ -1026,7 +1037,7 @@ export function makeApplyPlanFromOperatorSpec(
     if (scope?.pgCodec) {
       return scope.pgCodec;
     }
-    if (type === GraphQLString) {
+    if (type === build.graphql.GraphQLString) {
       return TYPES.text;
     }
   };
