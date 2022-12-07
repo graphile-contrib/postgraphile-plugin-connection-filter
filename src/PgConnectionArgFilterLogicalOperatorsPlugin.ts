@@ -1,5 +1,6 @@
 import { PgConditionStep } from "@dataplan/pg";
 import { FieldArgs } from "grafast";
+import { makeAssertAllowed } from "../dist/utils";
 
 const { version } = require("../package.json");
 
@@ -33,59 +34,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             return fields;
           }
 
-          const assertAllowed = (
-            fieldArgs: FieldArgs,
-            mode: "list" | "object"
-          ) => {
-            const $raw = fieldArgs.getRaw();
-            if (
-              mode === "object" &&
-              !connectionFilterAllowEmptyObjectInput &&
-              "evalIsEmpty" in $raw &&
-              $raw.evalIsEmpty()
-            ) {
-              throw Object.assign(
-                new Error(
-                  "Empty objects are forbidden in filter argument input."
-                ),
-                {
-                  //TODO: mark this error as safe
-                }
-              );
-            }
-            if (
-              mode === "list" &&
-              !connectionFilterAllowEmptyObjectInput &&
-              "evalLength" in $raw
-            ) {
-              const l = $raw.evalLength();
-              if (l != null) {
-                for (let i = 0; i < l; i++) {
-                  const $entry = $raw.at(i);
-                  if ("evalIsEmpty" in $entry && $entry.evalIsEmpty()) {
-                    throw Object.assign(
-                      new Error(
-                        "Empty objects are forbidden in filter argument input."
-                      ),
-                      {
-                        //TODO: mark this error as safe
-                      }
-                    );
-                  }
-                }
-              }
-            }
-            if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
-              throw Object.assign(
-                new Error(
-                  "Null literals are forbidden in filter argument input."
-                ),
-                {
-                  //TODO: mark this error as safe
-                }
-              );
-            }
-          };
+          const assertAllowed = makeAssertAllowed(build.options);
 
           const logicalOperatorFields = {
             and: fieldWithHooks(

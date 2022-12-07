@@ -3,7 +3,8 @@ import {
   PgSourceBuilder,
   PgSourceRelation,
 } from "@dataplan/pg";
-import { filter } from "grafast";
+import { FieldArgs, filter } from "grafast";
+import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");
 
@@ -119,6 +120,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             },
             Self,
           } = context;
+
+          const assertAllowed = makeAssertAllowed(build.options);
 
           const source =
             pgCodec &&
@@ -310,12 +313,11 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 foreignTableFilterTypeName
               );
               if (!ForeignTableFilterType) continue;
+
               if (typeof foreignTable.source === "function") {
                 continue;
               }
-
               const foreignTableExpression = foreignTable.source;
-
               const localColumns = relation.localColumns as string[];
               const remoteColumns = relation.remoteColumns as string[];
 
@@ -349,7 +351,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         () => ({
                           description: `Filter by the object’s \`${fieldName}\` relation.`,
                           type: FilterManyType,
-                          applyPlan($where: PgConditionStep<any>) {
+                          applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                            assertAllowed(fieldArgs, "object");
                             // $where.alias represents source; we need a condition that references the relational target
                             const $rel = $where.andPlan();
                             $rel.extensions.pgFilterRelation = {
@@ -358,7 +361,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                               localColumns,
                               remoteColumns,
                             };
-                            return $rel;
+                            fieldArgs.apply($rel);
                           },
                         })
                       ),
@@ -382,7 +385,12 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         () => ({
                           description: `Some related \`${fieldName}\` exist.`,
                           type: GraphQLBoolean,
+                          // TODO: many of the applyPlan functions in this file
+                          // and in PgConnectionArgFilterForwardRelationsPlugin
+                          // are very very similar. We should extract them to a
+                          // helper function.
                           applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                            assertAllowed(fieldArgs, "scalar");
                             const $subQuery = $where.existsPlan({
                               tableExpression: foreignTableExpression,
                               alias: foreignTable.name,
@@ -426,6 +434,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         description: `Filter by the object’s \`${fieldName}\` relation.`,
                         type: ForeignTableFilterType,
                         applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                          assertAllowed(fieldArgs, "object");
                           const $subQuery = $where.existsPlan({
                             tableExpression: foreignTableExpression,
                             alias: foreignTable.name,
@@ -465,6 +474,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                           description: `A related \`${fieldName}\` exists.`,
                           type: GraphQLBoolean,
                           applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                            assertAllowed(fieldArgs, "scalar");
                             const $subQuery = $where.existsPlan({
                               tableExpression: foreignTableExpression,
                               alias: foreignTable.name,
@@ -509,6 +519,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   description: `Every related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
                   applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                    assertAllowed(fieldArgs, "object");
                     if (!$where.extensions.pgFilterRelation) {
                       throw new Error(
                         `Invalid use of filter, 'pgFilterRelation' expected`
@@ -547,6 +558,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   description: `Some related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
                   applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                    assertAllowed(fieldArgs, "object");
                     if (!$where.extensions.pgFilterRelation) {
                       throw new Error(
                         `Invalid use of filter, 'pgFilterRelation' expected`
@@ -585,6 +597,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   description: `No related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
                   type: FilterType,
                   applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                    assertAllowed(fieldArgs, "object");
                     if (!$where.extensions.pgFilterRelation) {
                       throw new Error(
                         `Invalid use of filter, 'pgFilterRelation' expected`

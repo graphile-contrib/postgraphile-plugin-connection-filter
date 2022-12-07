@@ -4,6 +4,7 @@ import {
   PgSourceRelation,
   PgTypeColumn,
 } from "@dataplan/pg";
+import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");
 
@@ -37,6 +38,8 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             scope: { pgCodec, isPgConnectionFilter },
             Self,
           } = context;
+
+          const assertAllowed = makeAssertAllowed(build.options);
 
           const source =
             pgCodec &&
@@ -111,6 +114,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                     description: `Filter by the object’s \`${fieldName}\` relation.`,
                     type: ForeignTableFilterType,
                     applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                      assertAllowed(fieldArgs, "object");
                       const $subQuery = $where.existsPlan({
                         tableExpression: foreignTableExpression,
                         alias: foreignTable.name,
@@ -151,6 +155,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                       description: `A related \`${fieldName}\` exists.`,
                       type: GraphQLBoolean,
                       applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                        assertAllowed(fieldArgs, "scalar");
                         const $subQuery = $where.existsPlan({
                           tableExpression: foreignTableExpression,
                           alias: foreignTable.name,
