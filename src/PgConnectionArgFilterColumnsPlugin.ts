@@ -93,8 +93,9 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                         }
                       );
                     }
-                    $where.extensions.pgFilterColumn = colSpec;
-                    fieldArgs.apply($where);
+                    const $col = new PgConditionStep($where);
+                    $col.extensions.pgFilterColumn = colSpec;
+                    fieldArgs.apply($col);
                   },
                 })
               ),

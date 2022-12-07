@@ -1,4 +1,4 @@
-import { TYPES } from "@dataplan/pg";
+import { PgConditionStep, TYPES } from "@dataplan/pg";
 import { getComputedColumnSources } from "./utils";
 
 const { version } = require("../package.json");
@@ -97,6 +97,8 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
               source: computedColumnSource,
             });
 
+            const functionResultCodec = computedColumnSource.codec;
+
             fields = build.extend(
               fields,
               {
@@ -108,7 +110,20 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
                   {
                     description: `Filter by the object’s \`${fieldName}\` field.`,
                     type: OperatorsType,
-                    // TODO: applyPlan
+                    applyPlan($where: PgConditionStep<any>, fieldArgs) {
+                      if (typeof computedColumnSource.source !== "function") {
+                        throw new Error(`Unexpected...`);
+                      }
+                      const expression = computedColumnSource.source({
+                        placeholder: $where.alias,
+                      });
+                      const $col = new PgConditionStep($where);
+                      $col.extensions.pgFilterColumn = {
+                        codec: functionResultCodec,
+                        expression,
+                      };
+                      fieldArgs.apply($col);
+                    },
                   }
                 ),
               },

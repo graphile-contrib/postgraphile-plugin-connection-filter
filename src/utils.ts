@@ -17,9 +17,6 @@ export function getComputedColumnSources(
     if (!s.isUnique) {
       return false;
     }
-    if (s.codec.arrayOfCodec) {
-      return false;
-    }
     const firstParameter = s.parameters[0] as PgSourceParameter;
     if (firstParameter.codec !== source.codec) {
       return false;

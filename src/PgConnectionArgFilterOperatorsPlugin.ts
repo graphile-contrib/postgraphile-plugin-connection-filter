@@ -1043,12 +1043,15 @@ export function makeApplyPlanFromOperatorSpec(
     if ($input.evalIs(undefined)) {
       return;
     }
-    const { columnName, column, codec } = $where.extensions.pgFilterColumn;
+    const { columnName, column, codec, expression } =
+      $where.extensions.pgFilterColumn;
 
     const sourceAlias = column
       ? column.expression
         ? column.expression($where.alias)
         : sql`${$where.alias}.${sql.identifier(columnName)}`
+      : expression
+      ? expression
       : $where.alias;
     const sourceCodec = codec ?? column.codec;
 
