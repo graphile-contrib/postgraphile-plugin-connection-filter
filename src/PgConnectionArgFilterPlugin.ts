@@ -177,16 +177,23 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             return null;
           }
 
-          const rangeElementInputTypeName = codec.rangeOfCodec
-            ? build.getGraphQLTypeNameByPgCodec!(codec.rangeOfCodec, "input")
-            : null;
+          const rangeElementInputTypeName =
+            codec.rangeOfCodec && !codec.rangeOfCodec.arrayOfCodec
+              ? build.getGraphQLTypeNameByPgCodec!(codec.rangeOfCodec, "input")
+              : null;
 
-          const domainBaseTypeName = codec.domainOfCodec
-            ? build.getGraphQLTypeNameByPgCodec!(codec.domainOfCodec, "output")
-            : null;
+          const domainBaseTypeName =
+            codec.domainOfCodec && !codec.domainOfCodec.arrayOfCodec
+              ? build.getGraphQLTypeNameByPgCodec!(
+                  codec.domainOfCodec,
+                  "output"
+                )
+              : null;
 
           const listType = !!(
-            codec.arrayOfCodec || codec.rangeOfCodec?.arrayOfCodec
+            codec.arrayOfCodec ||
+            codec.domainOfCodec?.arrayOfCodec ||
+            codec.rangeOfCodec?.arrayOfCodec
           );
 
           const operatorsTypeName = listType
