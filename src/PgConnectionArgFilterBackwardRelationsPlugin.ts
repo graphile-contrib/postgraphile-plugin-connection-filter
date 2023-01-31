@@ -80,20 +80,22 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
               const foreignTableTypeName = inflection.tableType(
                 foreignTable.codec
               );
-              build.recoverable(null, () => {
-                build.registerInputObjectType(
-                  filterManyTypeName,
-                  {
-                    foreignTable,
-                    isPgConnectionFilterMany: true,
-                  },
-                  () => ({
-                    name: filterManyTypeName,
-                    description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
-                  }),
-                  `PgConnectionArgFilterBackwardRelationsPlugin: Adding '${filterManyTypeName}' type for ${foreignTable.name}`
-                );
-              });
+              if (!build.getTypeMetaByName(filterManyTypeName)) {
+                build.recoverable(null, () => {
+                  build.registerInputObjectType(
+                    filterManyTypeName,
+                    {
+                      foreignTable,
+                      isPgConnectionFilterMany: true,
+                    },
+                    () => ({
+                      name: filterManyTypeName,
+                      description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+                    }),
+                    `PgConnectionArgFilterBackwardRelationsPlugin: Adding '${filterManyTypeName}' type for ${foreignTable.name}`
+                  );
+                });
+              }
             }
           }
           return _;
