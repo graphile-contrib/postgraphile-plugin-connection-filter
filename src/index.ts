@@ -64,7 +64,7 @@ declare module "postgraphile/presets/v4" {
 
 declare global {
   namespace GraphileBuild {
-    interface GraphileBuildSchemaOptions {
+    interface SchemaOptions {
       connectionFilterAllowedOperators?: string[];
       connectionFilterAllowedFieldTypes?: string[];
       connectionFilterArrays?: boolean;

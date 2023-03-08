@@ -27,9 +27,7 @@ export function getComputedColumnSources(
 }
 
 // TODO: rename. (Checks that the arguments aren't null/empty.)
-export function makeAssertAllowed(
-  options: GraphileBuild.GraphileBuildSchemaOptions
-) {
+export function makeAssertAllowed(options: GraphileBuild.SchemaOptions) {
   const {
     connectionFilterAllowNullInput,
     connectionFilterAllowEmptyObjectInput,
