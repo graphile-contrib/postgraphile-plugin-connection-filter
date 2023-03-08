@@ -18,9 +18,9 @@ const createPostGraphileSchema = async (
       makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
-    pgSources: [
+    pgConfigs: [
       {
-        adaptor: "@dataplan/pg/adaptors/node-postgres",
+        adaptor: "@dataplan/pg/adaptors/pg",
         name: "main",
         withPgClientKey: "withPgClient",
         pgSettingsKey: "pgSettings",
@@ -28,7 +28,7 @@ const createPostGraphileSchema = async (
         adaptorSettings: {
           poolClient: pgClient,
         },
-      } as any, //GraphileConfig.PgDatabaseConfiguration<"@dataplan/pg/adaptors/node-postgres">,
+      } as any, //GraphileConfig.PgDatabaseConfiguration<"@dataplan/pg/adaptors/pg">,
     ],
   };
   const { schema } = await makeSchema(preset);

@@ -2,7 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as pg from "pg";
 import { promisify } from "util";
-import { GraphQLSchema, ExecutionArgs, parse, validate } from "graphql";
+import { ExecutionArgs, parse, validate } from "graphql";
 import { withPgClient, withPgPool } from "../helpers";
 import { PgConditionArgumentPlugin } from "graphile-build-pg";
 import { postgraphilePresetAmber } from "postgraphile/presets/amber";
@@ -11,9 +11,8 @@ import { makeSchema } from "postgraphile";
 import { PostGraphileConnectionFilterPreset } from "../../src/index";
 import CustomOperatorsPlugin from "./../customOperatorsPlugin";
 import { execute, hookArgs } from "grafast";
-import { ServerParams } from "grafserv";
-import { PgSubscriber } from "@dataplan/pg";
-import { makeWithPgClientViaNodePostgresClientAlreadyInTransaction } from "@dataplan/pg/adaptors/node-postgres";
+import { SchemaResult } from "graphile-build";
+import { makeWithPgClientViaPgClientAlreadyInTransaction } from "@dataplan/pg/adaptors/pg";
 
 // TODO: remove this once Grafast gets it's planning under control :D
 jest.setTimeout(30000);
@@ -31,9 +30,9 @@ const createPostGraphileSchema = async (
       makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
-    pgSources: [
+    pgConfigs: [
       {
-        adaptor: "@dataplan/pg/adaptors/node-postgres",
+        adaptor: "@dataplan/pg/adaptors/pg",
         name: "main",
         withPgClientKey: "withPgClient",
         pgSettingsKey: "pgSettings",
@@ -41,7 +40,7 @@ const createPostGraphileSchema = async (
         adaptorSettings: {
           pool,
         },
-      } as any, //GraphileConfig.PgDatabaseConfiguration<"@dataplan/pg/adaptors/node-postgres">,
+      } as any, //GraphileConfig.PgDatabaseConfiguration<"@dataplan/pg/adaptors/pg">,
     ],
   };
   const params = await makeSchema(preset);
@@ -54,13 +53,13 @@ const queriesDir = `${__dirname}/../fixtures/queries`;
 const queryFileNames = fs.readdirSync(queriesDir);
 
 let gqlSchemas: {
-  normal: ServerParams;
-  dynamicJson: ServerParams;
-  networkScalars: ServerParams;
-  relations: ServerParams;
-  simpleCollections: ServerParams;
-  nullAndEmptyAllowed: ServerParams;
-  addConnectionFilterOperator: ServerParams;
+  normal: SchemaResult;
+  dynamicJson: SchemaResult;
+  networkScalars: SchemaResult;
+  relations: SchemaResult;
+  simpleCollections: SchemaResult;
+  nullAndEmptyAllowed: SchemaResult;
+  addConnectionFilterOperator: SchemaResult;
 };
 
 beforeAll(async () => {
@@ -157,7 +156,7 @@ for (const queryFileName of queryFileNames) {
     // some specific fixtures against a schema configured slightly
     // differently.
     const gqlSchemaByQueryFileName: {
-      [queryFileName: string]: ServerParams;
+      [queryFileName: string]: SchemaResult;
     } = {
       "addConnectionFilterOperator.graphql":
         gqlSchemas.addConnectionFilterOperator,
@@ -195,10 +194,7 @@ for (const queryFileName of queryFileNames) {
       // NOTE: the withPgClient needed on context is **VERY DIFFERENT** to our
       // withPgClient test helper. We should rename our test helper ;)
       const contextWithPgClient =
-        makeWithPgClientViaNodePostgresClientAlreadyInTransaction(
-          pgClient,
-          false
-        );
+        makeWithPgClientViaPgClientAlreadyInTransaction(pgClient, false);
       try {
         args.contextValue = {
           pgSettings: (args.contextValue as any).pgSettings,
