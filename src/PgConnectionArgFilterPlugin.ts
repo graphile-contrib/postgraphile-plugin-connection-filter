@@ -419,10 +419,12 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         if (
           !build.behavior.matches(behavior, desiredBehavior, defaultBehavior)
         ) {
+          /*
           console.log(`NO FILTER: ${source.name}`, {
             behavior,
             defaultBehavior,
           });
+          */
           return args;
         }
 
