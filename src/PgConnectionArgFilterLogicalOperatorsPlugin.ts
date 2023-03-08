@@ -1,5 +1,4 @@
 import { PgConditionStep } from "@dataplan/pg";
-import { FieldArgs } from "grafast";
 import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");
@@ -15,11 +14,6 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
           const {
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
-            sql,
-            options: {
-              connectionFilterAllowNullInput,
-              connectionFilterAllowEmptyObjectInput,
-            },
           } = build;
           const {
             fieldWithHooks,
@@ -48,6 +42,8 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 applyPlan($where: PgConditionStep<any>, fieldArgs) {
                   assertAllowed(fieldArgs, "list");
                   const $and = $where.andPlan();
+                  // No need for this more correct form, easier to read if it's flatter.
+                  // fieldArgs.apply(() => $and.andPlan());
                   fieldArgs.apply($and);
                 },
               }
@@ -63,7 +59,8 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 applyPlan($where: PgConditionStep<any>, fieldArgs) {
                   assertAllowed(fieldArgs, "list");
                   const $or = $where.orPlan();
-                  fieldArgs.apply($or);
+                  // Every entry is added to the `$or`, but the entries themselves should use an `and`.
+                  fieldArgs.apply(() => $or.andPlan());
                 },
               }
             ),
@@ -78,7 +75,8 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 applyPlan($where: PgConditionStep<any>, fieldArgs) {
                   assertAllowed(fieldArgs, "object");
                   const $not = $where.notPlan();
-                  fieldArgs.apply($not);
+                  const $and = $not.andPlan();
+                  fieldArgs.apply($and);
                 },
               }
             ),
