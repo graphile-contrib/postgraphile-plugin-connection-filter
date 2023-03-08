@@ -6252,6 +6252,16 @@ exports[`enumTypes.enum.graphql 1`] = `
 exports[`logicalOperators.graphql 1`] = `
 {
   "data": {
+    "int4_equalTo_2_and_int2_equalTo_4_or_text_endsWith_T": {
+      "nodes": [
+        {
+          "id": 1,
+        },
+        {
+          "id": 3,
+        },
+      ],
+    },
     "int4_equalTo_2_and_text_endsWith_t": {
       "nodes": [
         {
