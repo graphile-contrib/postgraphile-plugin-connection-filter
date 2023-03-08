@@ -2312,6 +2312,8 @@ type Filterable implements Node {
     """The method to use when ordering \`ChildNoRelatedFilter\`."""
     orderBy: [ChildNoRelatedFiltersOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildNoRelatedFiltersConnection!
+
+  """Reads and enables pagination through a set of \`ChildNoRelatedFilter\`."""
   childNoRelatedFiltersByFilterableIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -2356,6 +2358,8 @@ type Filterable implements Node {
     """The method to use when ordering \`Child\`."""
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection!
+
+  """Reads and enables pagination through a set of \`Child\`."""
   childrenByFilterableIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -2486,6 +2490,8 @@ type Filterable implements Node {
     """The method to use when ordering \`FilterableClosure\`."""
     orderBy: [FilterableClosuresOrderBy!] = [PRIMARY_KEY_ASC]
   ): FilterableClosuresConnection!
+
+  """Reads and enables pagination through a set of \`FilterableClosure\`."""
   filterableClosuresByAncestorIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -2530,6 +2536,8 @@ type Filterable implements Node {
     """The method to use when ordering \`FilterableClosure\`."""
     orderBy: [FilterableClosuresOrderBy!] = [PRIMARY_KEY_ASC]
   ): FilterableClosuresConnection!
+
+  """Reads and enables pagination through a set of \`FilterableClosure\`."""
   filterableClosuresByDescendantIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -4659,6 +4667,8 @@ type Parent implements Node {
     """The method to use when ordering \`Filterable\`."""
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): FilterablesConnection!
+
+  """Reads and enables pagination through a set of \`Filterable\`."""
   filterablesByParentIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -4856,6 +4866,8 @@ type Query implements Node {
     """The method to use when ordering \`ArrayType\`."""
     orderBy: [ArrayTypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): ArrayTypesConnection
+
+  """Reads a set of \`ArrayType\`."""
   allArrayTypesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -4900,6 +4912,8 @@ type Query implements Node {
     """The method to use when ordering \`BackwardCompound\`."""
     orderBy: [BackwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
   ): BackwardCompoundsConnection
+
+  """Reads a set of \`BackwardCompound\`."""
   allBackwardCompoundsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -4944,6 +4958,8 @@ type Query implements Node {
     """The method to use when ordering \`Backward\`."""
     orderBy: [BackwardsOrderBy!] = [PRIMARY_KEY_ASC]
   ): BackwardsConnection
+
+  """Reads a set of \`Backward\`."""
   allBackwardsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -4988,6 +5004,8 @@ type Query implements Node {
     """The method to use when ordering \`ChildNoRelatedFilter\`."""
     orderBy: [ChildNoRelatedFiltersOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildNoRelatedFiltersConnection
+
+  """Reads a set of \`ChildNoRelatedFilter\`."""
   allChildNoRelatedFiltersList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5032,6 +5050,8 @@ type Query implements Node {
     """The method to use when ordering \`Child\`."""
     orderBy: [ChildrenOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildrenConnection
+
+  """Reads a set of \`Child\`."""
   allChildrenList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5076,6 +5096,8 @@ type Query implements Node {
     """The method to use when ordering \`DomainType\`."""
     orderBy: [DomainTypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): DomainTypesConnection
+
+  """Reads a set of \`DomainType\`."""
   allDomainTypesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5120,6 +5142,8 @@ type Query implements Node {
     """The method to use when ordering \`EnumArrayType\`."""
     orderBy: [EnumArrayTypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): EnumArrayTypesConnection
+
+  """Reads a set of \`EnumArrayType\`."""
   allEnumArrayTypesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5164,6 +5188,8 @@ type Query implements Node {
     """The method to use when ordering \`EnumType\`."""
     orderBy: [EnumTypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): EnumTypesConnection
+
+  """Reads a set of \`EnumType\`."""
   allEnumTypesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5208,6 +5234,8 @@ type Query implements Node {
     """The method to use when ordering \`Filterable\`."""
     orderBy: [FilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): FilterablesConnection
+
+  """Reads a set of \`Filterable\`."""
   allFilterablesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5252,6 +5280,8 @@ type Query implements Node {
     """The method to use when ordering \`ForwardCompound\`."""
     orderBy: [ForwardCompoundsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ForwardCompoundsConnection
+
+  """Reads a set of \`ForwardCompound\`."""
   allForwardCompoundsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5296,6 +5326,8 @@ type Query implements Node {
     """The method to use when ordering \`Forward\`."""
     orderBy: [ForwardsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ForwardsConnection
+
+  """Reads a set of \`Forward\`."""
   allForwardsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5335,6 +5367,8 @@ type Query implements Node {
     """The method to use when ordering \`FullyOmitted\`."""
     orderBy: [FullyOmittedsOrderBy!] = [PRIMARY_KEY_ASC]
   ): FullyOmittedsConnection
+
+  """Reads a set of \`FullyOmitted\`."""
   allFullyOmittedsList(
     """Only read the first \`n\` values of the set."""
     first: Int
@@ -5374,6 +5408,8 @@ type Query implements Node {
     """The method to use when ordering \`JsonbTest\`."""
     orderBy: [JsonbTestsOrderBy!] = [PRIMARY_KEY_ASC]
   ): JsonbTestsConnection
+
+  """Reads a set of \`JsonbTest\`."""
   allJsonbTestsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5418,6 +5454,8 @@ type Query implements Node {
     """The method to use when ordering \`Junction\`."""
     orderBy: [JunctionsOrderBy!] = [PRIMARY_KEY_ASC]
   ): JunctionsConnection
+
+  """Reads a set of \`Junction\`."""
   allJunctionsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5462,6 +5500,8 @@ type Query implements Node {
     """The method to use when ordering \`Parent\`."""
     orderBy: [ParentsOrderBy!] = [PRIMARY_KEY_ASC]
   ): ParentsConnection
+
+  """Reads a set of \`Parent\`."""
   allParentsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5506,6 +5546,8 @@ type Query implements Node {
     """The method to use when ordering \`RangeArrayType\`."""
     orderBy: [RangeArrayTypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): RangeArrayTypesConnection
+
+  """Reads a set of \`RangeArrayType\`."""
   allRangeArrayTypesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5550,6 +5592,8 @@ type Query implements Node {
     """The method to use when ordering \`RangeType\`."""
     orderBy: [RangeTypesOrderBy!] = [PRIMARY_KEY_ASC]
   ): RangeTypesConnection
+
+  """Reads a set of \`RangeType\`."""
   allRangeTypesList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5594,6 +5638,8 @@ type Query implements Node {
     """The method to use when ordering \`SideA\`."""
     orderBy: [SideAsOrderBy!] = [PRIMARY_KEY_ASC]
   ): SideASConnection
+
+  """Reads a set of \`SideA\`."""
   allSideAsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5638,6 +5684,8 @@ type Query implements Node {
     """The method to use when ordering \`SideB\`."""
     orderBy: [SideBsOrderBy!] = [PRIMARY_KEY_ASC]
   ): SideBSConnection
+
+  """Reads a set of \`SideB\`."""
   allSideBsList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -5677,6 +5725,8 @@ type Query implements Node {
     """The method to use when ordering \`Unfilterable\`."""
     orderBy: [UnfilterablesOrderBy!] = [PRIMARY_KEY_ASC]
   ): UnfilterablesConnection
+
+  """Reads a set of \`Unfilterable\`."""
   allUnfilterablesList(
     """Only read the first \`n\` values of the set."""
     first: Int
@@ -6337,6 +6387,8 @@ type SideA implements Node {
     """The method to use when ordering \`Junction\`."""
     orderBy: [JunctionsOrderBy!] = [PRIMARY_KEY_ASC]
   ): JunctionsConnection!
+
+  """Reads and enables pagination through a set of \`Junction\`."""
   junctionsBySideAIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -6474,6 +6526,8 @@ type SideB implements Node {
     """The method to use when ordering \`Junction\`."""
     orderBy: [JunctionsOrderBy!] = [PRIMARY_KEY_ASC]
   ): JunctionsConnection!
+
+  """Reads and enables pagination through a set of \`Junction\`."""
   junctionsBySideBIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
@@ -7024,6 +7078,8 @@ type Unfilterable implements Node {
     """The method to use when ordering \`ChildNoRelatedFilter\`."""
     orderBy: [ChildNoRelatedFiltersOrderBy!] = [PRIMARY_KEY_ASC]
   ): ChildNoRelatedFiltersConnection!
+
+  """Reads and enables pagination through a set of \`ChildNoRelatedFilter\`."""
   childNoRelatedFiltersByUnfilterableIdList(
     """
     A filter to be used in determining which values should be returned by the collection.
