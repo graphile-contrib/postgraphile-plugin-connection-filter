@@ -247,7 +247,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               "output"
             );
             if (!nodeTypeName) {
-              console.log(`No node type name ${pgCodec.name}`);
+              //console.log(`No node type name ${pgCodec.name}`);
               continue;
             }
 
