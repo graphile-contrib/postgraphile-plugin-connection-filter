@@ -245,7 +245,8 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       );
 
       const keyIsNullable = !keyAttributes.every((attr) => attr.isNotNull);
-      if (keyIsNullable) {
+      const isFake = (constraint as unknown as { isFake?: boolean }).isFake;
+      if (keyIsNullable || isFake) {
         const existsFieldName =
           inflection.filterForwardRelationExistsFieldName(fieldName);
         addField(
