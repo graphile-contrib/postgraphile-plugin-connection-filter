@@ -1,8 +1,9 @@
 import {
   PgConditionStep,
-  PgSourceBuilder,
-  PgSourceRelation,
-  PgTypeColumn,
+  PgCodecRelation,
+  PgCodecAttribute,
+  PgCodecWithColumns,
+  PgResource,
 } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 
@@ -43,9 +44,9 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
           const source =
             pgCodec &&
-            build.input.pgSources.find(
+            (Object.values(build.input.pgRegistry.pgResources).find(
               (s) => s.codec === pgCodec && !s.parameters
-            );
+            ) as PgResource<any, PgCodecWithColumns, any, any, any>);
 
           if (
             !isPgConnectionFilter ||
@@ -58,7 +59,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
           const forwardRelations = Object.entries(
             source.getRelations() as {
-              [relationName: string]: PgSourceRelation<any, any>;
+              [relationName: string]: PgCodecRelation;
             }
           ).filter(([relationName, relation]) => {
             return !relation.isReferencee;
@@ -66,13 +67,10 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
           for (const [relationName, relation] of forwardRelations) {
             const behavior = build.pgGetBehavior([
-              relation.source.extensions,
+              relation.remoteResource.extensions,
               relation.extensions,
             ]);
-            const foreignTable =
-              relation.source instanceof PgSourceBuilder
-                ? relation.source.get()
-                : relation.source; // Deliberate shadowing
+            const foreignTable = relation.remoteResource; // Deliberate shadowing
 
             // Used to use 'read' behavior too
             if (!build.behavior.matches(behavior, "filter", "filter")) {
@@ -80,7 +78,8 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             }
 
             const fieldName = inflection.singleRelation({
-              source,
+              registry: source.registry,
+              codec: source.codec,
               relationName,
             });
             const filterFieldName =
@@ -138,7 +137,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             );
 
             const keyIsNullable = relation.localColumns.some(
-              (col) => !(source.codec.columns[col] as PgTypeColumn).notNull
+              (col) => !(source.codec.columns[col] as PgCodecAttribute).notNull
             );
             if (keyIsNullable) {
               const existsFieldName =

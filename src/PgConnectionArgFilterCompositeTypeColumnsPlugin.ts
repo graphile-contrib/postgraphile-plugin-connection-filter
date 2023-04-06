@@ -1,4 +1,4 @@
-import { PgTypeColumns } from "@dataplan/pg";
+import { PgCodecAttributes, PgCodecWithColumns } from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
@@ -20,21 +20,22 @@ export const PgConnectionArgFilterCompositeTypeColumnsPlugin: GraphileConfig.Plu
           } = build;
           const {
             fieldWithHooks,
-            scope: { pgCodec: codec, isPgConnectionFilter },
+            scope: { pgCodec: rawCodec, isPgConnectionFilter },
             Self,
           } = context;
 
           if (
             !isPgConnectionFilter ||
-            !codec ||
-            !codec.columns ||
-            codec.isAnonymous
+            !rawCodec ||
+            !rawCodec.columns ||
+            rawCodec.isAnonymous
           ) {
             return fields;
           }
+          const codec = rawCodec as PgCodecWithColumns;
 
           for (const [columnName, column] of Object.entries(
-            codec.columns as PgTypeColumns
+            codec.columns as PgCodecAttributes
           )) {
             const behavior = build.pgGetBehavior([
               column.codec.extensions,

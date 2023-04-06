@@ -1,9 +1,10 @@
 import {
   PgConditionStep,
-  PgSourceBuilder,
-  PgSourceRelation,
+  PgCodecRelation,
+  PgCodecWithColumns,
+  PgRegistry,
+  PgResource,
 } from "@dataplan/pg";
-import { FieldArgs, filter } from "grafast";
 import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");
@@ -60,19 +61,18 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
       hooks: {
         init(_, build) {
           const { inflection } = build;
-          for (const source of build.input.pgSources) {
+          for (const source of Object.values(
+            build.input.pgRegistry.pgResources
+          )) {
             if (source.parameters || !source.codec.columns || source.isUnique) {
               continue;
             }
             for (const [relationName, relation] of Object.entries(
               source.getRelations() as {
-                [relationName: string]: PgSourceRelation<any, any>;
+                [relationName: string]: PgCodecRelation<any, any>;
               }
             )) {
-              const foreignTable =
-                relation.source instanceof PgSourceBuilder
-                  ? relation.source.get()
-                  : relation.source;
+              const foreignTable = relation.remoteResource;
               const filterManyTypeName = inflection.filterManyType(
                 source.codec,
                 foreignTable
@@ -127,13 +127,15 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
 
           const source =
             pgCodec &&
-            build.input.pgSources.find(
+            (Object.values(build.input.pgRegistry.pgResources).find(
               (s) => s.codec === pgCodec && !s.parameters
-            );
+            ) as
+              | PgResource<any, PgCodecWithColumns, any, any, PgRegistry>
+              | undefined);
           if (isPgConnectionFilter && pgCodec && pgCodec.columns && source) {
             const backwardsRelations = Object.entries(
               source.getRelations() as {
-                [relationName: string]: PgSourceRelation<any, any>;
+                [relationName: string]: PgCodecRelation;
               }
             ).filter(([relationName, relation]) => {
               return relation.isReferencee;
@@ -141,13 +143,10 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
 
             for (const [relationName, relation] of backwardsRelations) {
               const behavior = build.pgGetBehavior([
-                relation.source.extensions,
+                relation.remoteResource.extensions,
                 relation.extensions,
               ]);
-              const foreignTable =
-                relation.source instanceof PgSourceBuilder
-                  ? relation.source.get()
-                  : relation.source; // Deliberate shadowing
+              const foreignTable = relation.remoteResource; // Deliberate shadowing
 
               // Used to use 'read' behavior too
               if (!build.behavior.matches(behavior, "filter", "filter")) {
@@ -336,7 +335,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                     build.getTypeByName(filterManyTypeName);
                   // TODO: revisit using `_` prefixed inflector
                   const fieldName = inflection._manyRelation({
-                    source,
+                    registry: source.registry,
+                    codec: source.codec,
                     relationName,
                   });
                   const filterFieldName =
@@ -417,7 +417,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 }
               } else {
                 const fieldName = inflection.singleRelationBackwards({
-                  source,
+                  registry: source.registry,
+                  codec: source.codec,
                   relationName,
                 });
                 const filterFieldName =

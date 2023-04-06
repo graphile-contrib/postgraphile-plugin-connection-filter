@@ -1,22 +1,18 @@
-import { isEnumCodec, listOfType, PgConditionStep } from "@dataplan/pg";
-import { PgConditionLikeStep } from "@dataplan/pg";
-import { PgTypeCodec, TYPES } from "@dataplan/pg";
+import { isEnumCodec, listOfCodec, PgConditionStep } from "@dataplan/pg";
+import { PgCodec, TYPES } from "@dataplan/pg";
 import {
   ExecutableStep,
-  GraphileInputFieldConfigMap,
+  GrafastInputFieldConfigMap,
   InputObjectFieldApplyPlanResolver,
   InputStep,
   lambda,
-  list,
 } from "grafast";
-import type { GraphQLInputType, GraphQLNamedType, GraphQLType } from "graphql";
-import { PgType } from "pg-introspection";
+import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import { SQL } from "pg-sql2";
-import { OperatorsCategory } from "./interfaces";
 
 const { version } = require("../package.json");
 
-const textArrayCodec = listOfType(TYPES.text);
+// const textArrayCodec = listOfCodec(TYPES.text);
 
 export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterOperatorsPlugin",
@@ -27,16 +23,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
       GraphQLInputObjectType_fields(fields, build, context) {
         const {
           extend,
-          graphql: {
-            getNamedType,
-            GraphQLBoolean,
-            GraphQLString,
-            GraphQLNonNull,
-            GraphQLList,
-            isNamedType,
-            isListType,
-            isNonNullType,
-          },
+          graphql: { GraphQLNonNull, GraphQLList, isListType, isNonNullType },
           sql,
           escapeLikeWildcards,
           options: {
@@ -89,23 +76,23 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         ];
         const forceTextTypesInsensitive = [TYPES.char, TYPES.bpchar];
         const resolveDomains = (
-          c: PgTypeCodec<any, any, any, any>
-        ): PgTypeCodec<any, any, any, any> => {
+          c: PgCodec<any, any, any, any, any, any, any>
+        ): PgCodec<any, any, any, any, any, any, any> => {
           return c.domainOfCodec ? resolveDomains(c.domainOfCodec) : c;
         };
 
         const resolveArrayInputCodecSensitive = (
-          c: PgTypeCodec<any, any, any, any>
+          c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (forceTextTypesSensitive.includes(resolveDomains(c))) {
-            return listOfType(TYPES.text, { listItemNonNull: true });
+            return listOfCodec(TYPES.text, { listItemNonNull: true });
           } else {
-            return listOfType(c, { listItemNonNull: true });
+            return listOfCodec(c, { listItemNonNull: true });
           }
         };
 
         const resolveArrayItemInputCodecSensitive = (
-          c: PgTypeCodec<any, any, any, any>
+          c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
             if (
@@ -119,13 +106,13 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           }
         };
         const resolveInputCodecSensitive = (
-          c: PgTypeCodec<any, any, any, any>
+          c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
             if (
               forceTextTypesSensitive.includes(resolveDomains(c.arrayOfCodec))
             ) {
-              return listOfType(TYPES.text, { listItemNonNull: true });
+              return listOfCodec(TYPES.text, { listItemNonNull: true });
             }
             return c;
           } else {
@@ -137,7 +124,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         };
         const resolveSqlIdentifierSensitive = (
           identifier: SQL,
-          c: PgTypeCodec<any, any, any, any>
+          c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (
             c.arrayOfCodec &&
@@ -145,7 +132,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ) {
             return [
               sql`(${identifier})::text[]`,
-              listOfType(TYPES.text, { listItemNonNull: true }),
+              listOfCodec(TYPES.text, { listItemNonNull: true }),
             ] as const;
           } else if (forceTextTypesSensitive.includes(resolveDomains(c))) {
             return [sql`(${identifier})::text`, TYPES.text] as const;
@@ -154,13 +141,13 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           }
         };
         const resolveInputCodecInsensitive = (
-          c: PgTypeCodec<any, any, any, any>
+          c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (c.arrayOfCodec) {
             if (
               forceTextTypesInsensitive.includes(resolveDomains(c.arrayOfCodec))
             ) {
-              return listOfType(TYPES.text, { listItemNonNull: true });
+              return listOfCodec(TYPES.text, { listItemNonNull: true });
             }
             return c;
           } else {
@@ -172,7 +159,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         };
         const resolveSqlIdentifierInsensitive = (
           identifier: SQL,
-          c: PgTypeCodec<any, any, any, any>
+          c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (
             c.arrayOfCodec &&
@@ -180,7 +167,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ) {
             return [
               sql`(${identifier})::text[]`,
-              listOfType(TYPES.text, { listItemNonNull: true }),
+              listOfCodec(TYPES.text, { listItemNonNull: true }),
             ] as const;
           } else if (forceTextTypesInsensitive.includes(resolveDomains(c))) {
             return [sql`(${identifier})::text`, TYPES.text] as const;
@@ -389,7 +376,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             },
           };
         const resolveTextArrayInputCodec = () =>
-          listOfType(TYPES.text, { listItemNonNull: true });
+          listOfCodec(TYPES.text, { listItemNonNull: true });
         const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified KeyValueHash.",
@@ -512,7 +499,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
           const resolveSqlIdentifier = (
             sourceAlias: SQL,
-            codec: PgTypeCodec<any, any, any, any>
+            codec: PgCodec<any, any, any, any, any, any, any>
           ) =>
             resolveDomains(codec) === TYPES.citext
               ? ([sourceAlias, codec] as const) // already case-insensitive, so no need to call `lower()`
@@ -520,7 +507,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           const resolveSqlValue = (
             $placeholderable: PlaceholderableStep,
             $input: InputStep,
-            inputCodec: PgTypeCodec<any, any, any, any>
+            inputCodec: PgCodec<any, any, any, any, any, any, any>
           ) => {
             if (name === "in" || name === "notIn") {
               const sqlList = $placeholderable.placeholder($input, inputCodec);
@@ -545,14 +532,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           };
 
           const resolveInputCodec = (
-            inputCodec: PgTypeCodec<any, any, any, any>
+            inputCodec: PgCodec<any, any, any, any, any, any, any>
           ) => {
             if (name === "in" || name === "notIn") {
               const t =
                 resolveDomains(inputCodec) === TYPES.citext
                   ? inputCodec
                   : TYPES.text;
-              return listOfType(t, { listItemNonNull: true });
+              return listOfCodec(t, { listItemNonNull: true });
             } else {
               const t =
                 resolveDomains(inputCodec) === TYPES.citext
@@ -960,7 +947,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             );
             return memo;
           },
-          Object.create(null) as GraphileInputFieldConfigMap<any, any>
+          Object.create(null) as GrafastInputFieldConfigMap<any, any>
         );
 
         return extend(fields, operatorFields, "");
@@ -972,7 +959,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 type PlaceholderableStep = {
   placeholder(
     step: ExecutableStep,
-    codec: PgTypeCodec<any, any, any, any>
+    codec: PgCodec<any, any, any, any, any, any, any>
   ): SQL;
 };
 
@@ -982,17 +969,17 @@ export interface OperatorSpec {
   // TODO: replace with codecs?
   resolveSqlIdentifier?: (
     sqlIdentifier: SQL,
-    codec: PgTypeCodec<any, any, any, any>
-  ) => readonly [SQL, PgTypeCodec<any, any, any, any>];
+    codec: PgCodec<any, any, any, any, any, any, any>
+  ) => readonly [SQL, PgCodec<any, any, any, any, any, any, any>];
   resolveInput?: (input: unknown) => unknown;
   resolveInputCodec?: (
-    expressionCodec: PgTypeCodec<any, any, any, any>
-  ) => PgTypeCodec<any, any, any, any>;
+    expressionCodec: PgCodec<any, any, any, any, any, any, any>
+  ) => PgCodec<any, any, any, any, any, any, any>;
   resolveSql?: any;
   resolveSqlValue?: (
     $placeholderable: PlaceholderableStep,
     $input: InputStep,
-    codec: PgTypeCodec<any, any, any, any>
+    codec: PgCodec<any, any, any, any, any, any, any>
     // UNUSED? resolveListItemSqlValue?: any
   ) => SQL;
   resolve: (
@@ -1102,7 +1089,7 @@ export function makeApplyPlanFromOperatorSpec(
       : column.codec === TYPES.citext
       ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
       : column.codec.arrayOfCodec === TYPES.citext
-      ? $where.placeholder($resolvedInput, listOfType(TYPES.citext as any)) // cast input to text[]
+      ? $where.placeholder($resolvedInput, listOfCodec(TYPES.citext as any)) // cast input to text[]
       */
         $where.placeholder($resolvedInput, inputCodec);
 

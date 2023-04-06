@@ -2,25 +2,17 @@ import {
   getInnerCodec,
   isEnumCodec,
   PgSelectStep,
-  PgTypeCodec,
+  PgCodec,
   TYPES,
 } from "@dataplan/pg";
-import { ConnectionStep, ExecutableStep, FieldArgs } from "grafast";
-import { PgSmartTagsDict } from "graphile-build-pg";
-import type {
-  GraphQLInputFieldConfigMap,
-  GraphQLInputType,
-  GraphQLOutputType,
-  GraphQLType,
-} from "graphql";
+import { ConnectionStep, FieldArgs } from "grafast";
+import type { GraphQLInputType, GraphQLOutputType } from "graphql";
 import { GraphQLNamedType } from "graphql";
-import { PgType } from "pg-introspection";
-import { SQL } from "pg-sql2";
 import { OperatorsCategory } from "./interfaces";
 
 const { version } = require("../package.json");
 
-type AnyCodec = PgTypeCodec<any, any, any, any>;
+type AnyCodec = PgCodec<any, any, any, any>;
 
 const isSuitableForFiltering = (codec: AnyCodec): boolean =>
   codec !== TYPES.void &&
@@ -270,7 +262,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             [typeName: string]: {
               isList: boolean;
               relatedTypeName: string;
-              pgCodecs: PgTypeCodec<any, any, any, any>[];
+              pgCodecs: PgCodec[];
               inputTypeName: string;
               rangeElementInputTypeName: string | null;
               domainBaseTypeName: string | null;
@@ -305,7 +297,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 "relatedTypeName",
                 "inputTypeName",
                 "rangeElementInputTypeName",
-              ]) {
+              ] as const) {
                 if (
                   digest[key] !== codecsByFilterTypeName[operatorsTypeName][key]
                 ) {
@@ -385,7 +377,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           scope: {
             isPgFieldConnection,
             isPgFieldSimpleCollection,
-            pgSource: source,
+            pgResource: source,
             fieldName,
           },
           Self,
@@ -489,12 +481,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 ? {
                     applyPlan(
                       _,
-                      $connection: ConnectionStep<
-                        any,
-                        any,
-                        any,
-                        PgSelectStep<any, any, any, any>
-                      >,
+                      $connection: ConnectionStep<any, any, any, PgSelectStep>,
                       fieldArgs
                     ) {
                       assertAllowed(fieldArgs);
@@ -509,11 +496,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                     },
                   }
                 : {
-                    applyPlan(
-                      _,
-                      $pgSelect: PgSelectStep<any, any, any, any>,
-                      fieldArgs
-                    ) {
+                    applyPlan(_, $pgSelect: PgSelectStep, fieldArgs) {
                       assertAllowed(fieldArgs);
                       const $where = $pgSelect.wherePlan();
                       if (columnCodec) {

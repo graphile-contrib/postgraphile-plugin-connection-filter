@@ -1,11 +1,8 @@
 import {
-  PgConditionLikeStep,
   PgConditionStep,
-  PgSelectStep,
-  PgTypeColumn,
-  PgTypeColumns,
+  PgCodecAttributes,
+  PgCodecWithColumns,
 } from "@dataplan/pg";
-import { ConnectionStep } from "grafast";
 
 const { version } = require("../package.json");
 
@@ -21,17 +18,16 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
           build;
         const {
           fieldWithHooks,
-          scope: { pgCodec: codec, isPgConnectionFilter },
+          scope: { pgCodec: rawCodec, isPgConnectionFilter },
           Self,
         } = context;
 
-        if (!isPgConnectionFilter || !codec || !codec.columns) {
+        if (!isPgConnectionFilter || !rawCodec || !rawCodec.columns) {
           return fields;
         }
+        const codec = rawCodec as PgCodecWithColumns;
 
-        for (const [columnName, column] of Object.entries(
-          codec.columns as PgTypeColumns
-        )) {
+        for (const [columnName, column] of Object.entries(codec.columns)) {
           const behavior = build.pgGetBehavior([
             column.codec.extensions,
             column.extensions,

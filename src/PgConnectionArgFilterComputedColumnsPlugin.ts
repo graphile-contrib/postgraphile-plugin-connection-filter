@@ -1,5 +1,5 @@
 import { PgConditionStep, TYPES } from "@dataplan/pg";
-import { getComputedColumnSources } from "./utils";
+import { getComputedColumnResources } from "./utils";
 
 const { version } = require("../package.json");
 
@@ -35,29 +35,32 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
           }
 
           // TODO: This may need to change once V5 fixes the need for it
-          const source = build.input.pgSources.find(
+          const source = Object.values(build.input.pgRegistry.pgResources).find(
             (s) => s.codec === codec && !s.parameters && !s.isUnique
           );
           if (!source) {
             return fields;
           }
 
-          const computedColumnSources = getComputedColumnSources(build, source);
+          const computedColumnResources = getComputedColumnResources(
+            build,
+            source
+          );
 
-          for (const computedColumnSource of computedColumnSources) {
+          for (const computedColumnResource of computedColumnResources) {
             // Must return a scalar or an array
-            if (!computedColumnSource.isUnique) {
+            if (!computedColumnResource.isUnique) {
               continue;
             }
-            if (computedColumnSource.codec.columns) {
+            if (computedColumnResource.codec.columns) {
               continue;
             }
-            if (computedColumnSource.codec === TYPES.void) {
+            if (computedColumnResource.codec === TYPES.void) {
               continue;
             }
 
             const digest = connectionFilterOperatorsDigest(
-              computedColumnSource.codec
+              computedColumnResource.codec
             );
             if (!digest) {
               continue;
@@ -68,7 +71,7 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
             }
 
             const behavior = build.pgGetBehavior([
-              computedColumnSource.extensions,
+              computedColumnResource.extensions,
             ]);
 
             const defaultBehavior = connectionFilterComputedColumns
@@ -82,8 +85,8 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
 
             const { argDetails, makeFieldArgs, makeArgs, makeExpression } =
               build.pgGetArgDetailsFromParameters(
-                computedColumnSource,
-                computedColumnSource.parameters.slice(1)
+                computedColumnResource,
+                computedColumnResource.parameters!.slice(1)
               );
 
             // Must have only one required argument
@@ -94,10 +97,10 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
             // Looks good
 
             const fieldName = inflection.computedColumnField({
-              source: computedColumnSource,
+              resource: computedColumnResource,
             });
 
-            const functionResultCodec = computedColumnSource.codec;
+            const functionResultCodec = computedColumnResource.codec;
 
             fields = build.extend(
               fields,
@@ -111,10 +114,10 @@ export const PgConnectionArgFilterComputedColumnsPlugin: GraphileConfig.Plugin =
                     description: `Filter by the object’s \`${fieldName}\` field.`,
                     type: OperatorsType,
                     applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                      if (typeof computedColumnSource.source !== "function") {
+                      if (typeof computedColumnResource.source !== "function") {
                         throw new Error(`Unexpected...`);
                       }
-                      const expression = computedColumnSource.source({
+                      const expression = computedColumnResource.source({
                         placeholder: $where.alias,
                       });
                       const $col = new PgConditionStep($where);
