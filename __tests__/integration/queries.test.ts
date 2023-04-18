@@ -30,7 +30,7 @@ const createPostGraphileSchema = async (
       makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
-    pgConfigs: [
+    pgServices: [
       {
         adaptor: "@dataplan/pg/adaptors/pg",
         name: "main",
@@ -185,7 +185,7 @@ for (const queryFileName of queryFileNames) {
       schema,
       document,
     };
-    await hookArgs(args, {}, resolvedPreset);
+    await hookArgs(args, resolvedPreset, {});
     //const pgSubscriber = new PgSubscriber(pool);
     const result = (await withPgClient(async (pgClient) => {
       // We must override the context because we didn't use a pool above and so
