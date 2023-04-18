@@ -8,11 +8,11 @@ import { FieldArgs } from "grafast";
 import { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
 
-export function getComputedColumnResources(
+export function getComputedAttributeResources(
   build: GraphileBuild.Build,
   source: PgResource
 ) {
-  const computedColumnSources = Object.values(
+  const computedAttributeSources = Object.values(
     build.input.pgRegistry.pgResources
   ).filter(
     (
@@ -27,7 +27,7 @@ export function getComputedColumnResources(
       if (!s.parameters || s.parameters.length < 1) {
         return false;
       }
-      if (s.codec.columns) {
+      if (s.codec.attributes) {
         return false;
       }
       if (!s.isUnique) {
@@ -40,7 +40,7 @@ export function getComputedColumnResources(
       return true;
     }
   );
-  return computedColumnSources;
+  return computedAttributeSources;
 }
 
 // TODO: rename. (Checks that the arguments aren't null/empty.)

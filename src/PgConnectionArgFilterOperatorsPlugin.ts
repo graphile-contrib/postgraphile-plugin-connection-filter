@@ -85,9 +85,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           c: PgCodec<any, any, any, any, any, any, any>
         ) => {
           if (forceTextTypesSensitive.includes(resolveDomains(c))) {
-            return listOfCodec(TYPES.text, { listItemNonNull: true });
+            return listOfCodec(TYPES.text, {
+              extensions: { listItemNonNull: true },
+            });
           } else {
-            return listOfCodec(c, { listItemNonNull: true });
+            return listOfCodec(c, { extensions: { listItemNonNull: true } });
           }
         };
 
@@ -112,7 +114,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             if (
               forceTextTypesSensitive.includes(resolveDomains(c.arrayOfCodec))
             ) {
-              return listOfCodec(TYPES.text, { listItemNonNull: true });
+              return listOfCodec(TYPES.text, {
+                extensions: { listItemNonNull: true },
+              });
             }
             return c;
           } else {
@@ -132,7 +136,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ) {
             return [
               sql`(${identifier})::text[]`,
-              listOfCodec(TYPES.text, { listItemNonNull: true }),
+              listOfCodec(TYPES.text, {
+                extensions: { listItemNonNull: true },
+              }),
             ] as const;
           } else if (forceTextTypesSensitive.includes(resolveDomains(c))) {
             return [sql`(${identifier})::text`, TYPES.text] as const;
@@ -147,7 +153,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             if (
               forceTextTypesInsensitive.includes(resolveDomains(c.arrayOfCodec))
             ) {
-              return listOfCodec(TYPES.text, { listItemNonNull: true });
+              return listOfCodec(TYPES.text, {
+                extensions: { listItemNonNull: true },
+              });
             }
             return c;
           } else {
@@ -167,7 +175,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ) {
             return [
               sql`(${identifier})::text[]`,
-              listOfCodec(TYPES.text, { listItemNonNull: true }),
+              listOfCodec(TYPES.text, {
+                extensions: { listItemNonNull: true },
+              }),
             ] as const;
           } else if (forceTextTypesInsensitive.includes(resolveDomains(c))) {
             return [sql`(${identifier})::text`, TYPES.text] as const;
@@ -376,7 +386,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             },
           };
         const resolveTextArrayInputCodec = () =>
-          listOfCodec(TYPES.text, { listItemNonNull: true });
+          listOfCodec(TYPES.text, { extensions: { listItemNonNull: true } });
         const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified KeyValueHash.",
@@ -539,7 +549,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                 resolveDomains(inputCodec) === TYPES.citext
                   ? inputCodec
                   : TYPES.text;
-              return listOfCodec(t, { listItemNonNull: true });
+              return listOfCodec(t, { extensions: { listItemNonNull: true } });
             } else {
               const t =
                 resolveDomains(inputCodec) === TYPES.citext
@@ -1034,34 +1044,34 @@ export function makeApplyPlanFromOperatorSpec(
   } = build;
 
   return ($where, fieldArgs) => {
-    if (!$where.extensions?.pgFilterColumn) {
+    if (!$where.extensions?.pgFilterAttribute) {
       throw new Error(
-        `Planning error: expected 'pgFilterColumn' to be present on the \$where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
+        `Planning error: expected 'pgFilterAttribute' to be present on the \$where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
       );
     }
     const $input = fieldArgs.getRaw();
     if ($input.evalIs(undefined)) {
       return;
     }
-    const { columnName, column, codec, expression } =
-      $where.extensions.pgFilterColumn;
+    const { attributeName, attribute, codec, expression } =
+      $where.extensions.pgFilterAttribute;
 
-    const sourceAlias = column
-      ? column.expression
-        ? column.expression($where.alias)
-        : sql`${$where.alias}.${sql.identifier(columnName)}`
+    const sourceAlias = attribute
+      ? attribute.expression
+        ? attribute.expression($where.alias)
+        : sql`${$where.alias}.${sql.identifier(attributeName)}`
       : expression
       ? expression
       : $where.alias;
-    const sourceCodec = codec ?? column.codec;
+    const sourceCodec = codec ?? attribute.codec;
 
     const [sqlIdentifier, identifierCodec] = resolveSqlIdentifier
       ? resolveSqlIdentifier(sourceAlias, sourceCodec)
       : /*
-      : column.codec === TYPES.citext
-      ? sql.query`${sourceAlias}::text` // cast column to text for case-sensitive matching
-      : column.codec.arrayOfCodec === TYPES.citext
-      ? sql.query`${sourceAlias}::text[]` // cast column to text[] for case-sensitive matching
+      : attribute.codec === TYPES.citext
+      ? sql.query`${sourceAlias}::text` // cast attribute to text for case-sensitive matching
+      : attribute.codec.arrayOfCodec === TYPES.citext
+      ? sql.query`${sourceAlias}::text[]` // cast attribute to text[] for case-sensitive matching
       */
         [sourceAlias, sourceCodec];
 
@@ -1080,15 +1090,15 @@ export function makeApplyPlanFromOperatorSpec(
     }
     const $resolvedInput = resolveInput ? lambda($input, resolveInput) : $input;
     const inputCodec = resolveInputCodec
-      ? resolveInputCodec(codec ?? column.codec)
-      : codec ?? column.codec;
+      ? resolveInputCodec(codec ?? attribute.codec)
+      : codec ?? attribute.codec;
 
     const sqlValue = resolveSqlValue
       ? resolveSqlValue($where, $input, inputCodec)
       : /*
-      : column.codec === TYPES.citext
+      : attribute.codec === TYPES.citext
       ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
-      : column.codec.arrayOfCodec === TYPES.citext
+      : attribute.codec.arrayOfCodec === TYPES.citext
       ? $where.placeholder($resolvedInput, listOfCodec(TYPES.citext as any)) // cast input to text[]
       */
         $where.placeholder($resolvedInput, inputCodec);

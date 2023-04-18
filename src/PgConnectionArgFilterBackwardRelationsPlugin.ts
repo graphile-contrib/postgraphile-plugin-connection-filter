@@ -1,7 +1,7 @@
 import {
   PgConditionStep,
   PgCodecRelation,
-  PgCodecWithColumns,
+  PgCodecWithAttributes,
   PgRegistry,
   PgResource,
 } from "@dataplan/pg";
@@ -64,7 +64,11 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
           for (const source of Object.values(
             build.input.pgRegistry.pgResources
           )) {
-            if (source.parameters || !source.codec.columns || source.isUnique) {
+            if (
+              source.parameters ||
+              !source.codec.attributes ||
+              source.isUnique
+            ) {
               continue;
             }
             for (const [relationName, relation] of Object.entries(
@@ -130,9 +134,9 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             (Object.values(build.input.pgRegistry.pgResources).find(
               (s) => s.codec === pgCodec && !s.parameters
             ) as
-              | PgResource<any, PgCodecWithColumns, any, any, PgRegistry>
+              | PgResource<any, PgCodecWithAttributes, any, any, PgRegistry>
               | undefined);
-          if (isPgConnectionFilter && pgCodec && pgCodec.columns && source) {
+          if (isPgConnectionFilter && pgCodec && pgCodec.attributes && source) {
             const backwardsRelations = Object.entries(
               source.getRelations() as {
                 [relationName: string]: PgCodecRelation;
@@ -315,12 +319,12 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
               );
               if (!ForeignTableFilterType) continue;
 
-              if (typeof foreignTable.source === "function") {
+              if (typeof foreignTable.from === "function") {
                 continue;
               }
-              const foreignTableExpression = foreignTable.source;
-              const localColumns = relation.localColumns as string[];
-              const remoteColumns = relation.remoteColumns as string[];
+              const foreignTableExpression = foreignTable.from;
+              const localAttributes = relation.localAttributes as string[];
+              const remoteAttributes = relation.remoteAttributes as string[];
 
               if (isOneToMany) {
                 if (
@@ -360,8 +364,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             $rel.extensions.pgFilterRelation = {
                               tableExpression: foreignTableExpression,
                               alias: foreignTable.name,
-                              localColumns,
-                              remoteColumns,
+                              localAttributes,
+                              remoteAttributes,
                             };
                             fieldArgs.apply($rel);
                           },
@@ -398,13 +402,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                               alias: foreignTable.name,
                               $equals: fieldArgs.get(),
                             });
-                            localColumns.forEach((localColumn, i) => {
-                              const remoteColumn = remoteColumns[i];
+                            localAttributes.forEach((localAttribute, i) => {
+                              const remoteAttribute = remoteAttributes[i];
                               $subQuery.where(
                                 sql`${$where.alias}.${sql.identifier(
-                                  localColumn as string
+                                  localAttribute as string
                                 )} = ${$subQuery.alias}.${sql.identifier(
-                                  remoteColumn as string
+                                  remoteAttribute as string
                                 )}`
                               );
                             });
@@ -442,13 +446,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             tableExpression: foreignTableExpression,
                             alias: foreignTable.name,
                           });
-                          localColumns.forEach((localColumn, i) => {
-                            const remoteColumn = remoteColumns[i];
+                          localAttributes.forEach((localAttribute, i) => {
+                            const remoteAttribute = remoteAttributes[i];
                             $subQuery.where(
                               sql`${$where.alias}.${sql.identifier(
-                                localColumn as string
+                                localAttribute as string
                               )} = ${$subQuery.alias}.${sql.identifier(
-                                remoteColumn as string
+                                remoteAttribute as string
                               )}`
                             );
                           });
@@ -483,13 +487,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                               alias: foreignTable.name,
                               $equals: fieldArgs.get(),
                             });
-                            localColumns.forEach((localColumn, i) => {
-                              const remoteColumn = remoteColumns[i];
+                            localAttributes.forEach((localAttribute, i) => {
+                              const remoteAttribute = remoteAttributes[i];
                               $subQuery.where(
                                 sql`${$where.alias}.${sql.identifier(
-                                  localColumn as string
+                                  localAttribute as string
                                 )} = ${$subQuery.alias}.${sql.identifier(
-                                  remoteColumn as string
+                                  remoteAttribute as string
                                 )}`
                               );
                             });
@@ -529,8 +533,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       );
                     }
                     const {
-                      localColumns,
-                      remoteColumns,
+                      localAttributes,
+                      remoteAttributes,
                       tableExpression,
                       alias,
                     } = $where.extensions.pgFilterRelation;
@@ -538,13 +542,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       tableExpression,
                       alias,
                     });
-                    localColumns.forEach((localColumn, i) => {
-                      const remoteColumn = remoteColumns[i];
+                    localAttributes.forEach((localAttribute, i) => {
+                      const remoteAttribute = remoteAttributes[i];
                       $subQuery.where(
                         sql`${$where.alias}.${sql.identifier(
-                          localColumn as string
+                          localAttribute as string
                         )} = ${$subQuery.alias}.${sql.identifier(
-                          remoteColumn as string
+                          remoteAttribute as string
                         )}`
                       );
                     });
@@ -568,8 +572,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       );
                     }
                     const {
-                      localColumns,
-                      remoteColumns,
+                      localAttributes,
+                      remoteAttributes,
                       tableExpression,
                       alias,
                     } = $where.extensions.pgFilterRelation;
@@ -577,13 +581,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       tableExpression,
                       alias,
                     });
-                    localColumns.forEach((localColumn, i) => {
-                      const remoteColumn = remoteColumns[i];
+                    localAttributes.forEach((localAttribute, i) => {
+                      const remoteAttribute = remoteAttributes[i];
                       $subQuery.where(
                         sql`${$where.alias}.${sql.identifier(
-                          localColumn as string
+                          localAttribute as string
                         )} = ${$subQuery.alias}.${sql.identifier(
-                          remoteColumn as string
+                          remoteAttribute as string
                         )}`
                       );
                     });
@@ -607,8 +611,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       );
                     }
                     const {
-                      localColumns,
-                      remoteColumns,
+                      localAttributes,
+                      remoteAttributes,
                       tableExpression,
                       alias,
                     } = $where.extensions.pgFilterRelation;
@@ -616,13 +620,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       tableExpression,
                       alias,
                     });
-                    localColumns.forEach((localColumn, i) => {
-                      const remoteColumn = remoteColumns[i];
+                    localAttributes.forEach((localAttribute, i) => {
+                      const remoteAttribute = remoteAttributes[i];
                       $subQuery.where(
                         sql`${$where.alias}.${sql.identifier(
-                          localColumn as string
+                          localAttribute as string
                         )} = ${$subQuery.alias}.${sql.identifier(
-                          remoteColumn as string
+                          remoteAttribute as string
                         )}`
                       );
                     });

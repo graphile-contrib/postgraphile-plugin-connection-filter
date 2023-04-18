@@ -1,9 +1,9 @@
 import type {} from "graphile-build-pg";
 import { ConnectionArgFilterPlugin } from "./ConnectionArgFilterPlugin";
 import { PgConnectionArgFilterPlugin } from "./PgConnectionArgFilterPlugin";
-import { PgConnectionArgFilterColumnsPlugin } from "./PgConnectionArgFilterColumnsPlugin";
-import { PgConnectionArgFilterComputedColumnsPlugin } from "./PgConnectionArgFilterComputedColumnsPlugin";
-import { PgConnectionArgFilterCompositeTypeColumnsPlugin } from "./PgConnectionArgFilterCompositeTypeColumnsPlugin";
+import { PgConnectionArgFilterAttributesPlugin } from "./PgConnectionArgFilterAttributesPlugin";
+import { PgConnectionArgFilterComputedAttributesPlugin } from "./PgConnectionArgFilterComputedAttributesPlugin";
+import { PgConnectionArgFilterCompositeTypeAttributesPlugin } from "./PgConnectionArgFilterCompositeTypeAttributesPlugin";
 import { PgConnectionArgFilterRecordFunctionsPlugin } from "./PgConnectionArgFilterRecordFunctionsPlugin";
 import { PgConnectionArgFilterBackwardRelationsPlugin } from "./PgConnectionArgFilterBackwardRelationsPlugin";
 import { PgConnectionArgFilterForwardRelationsPlugin } from "./PgConnectionArgFilterForwardRelationsPlugin";
@@ -14,7 +14,7 @@ import {
   makeApplyPlanFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
-import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
+import { GraphQLInputType, GraphQLOutputType } from "graphql";
 import { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
 
 import type {} from "postgraphile/presets/v4";
@@ -25,24 +25,24 @@ export { makeApplyPlanFromOperatorSpec };
 
 declare module "@dataplan/pg" {
   interface PgConditionStepExtensions {
-    pgFilterColumn?: /** Filtering a column */
+    pgFilterAttribute?: /** Filtering a column */
     | {
-          columnName: string;
-          column: PgCodecAttribute;
+          attributeName: string;
+          attribute: PgCodecAttribute;
           codec?: never;
           expression?: never;
         }
       | /** The incoming alias _is_ the column */ {
-          columnName?: never;
-          column?: never;
+          attributeName?: never;
+          attribute?: never;
           codec: PgCodec<any, any, any, any, any, any, any>;
           expression?: SQL;
         };
     pgFilterRelation?: {
       tableExpression: SQL;
       alias?: string;
-      localColumns: string[];
-      remoteColumns: string[];
+      localAttributes: string[];
+      remoteAttributes: string[];
     };
   }
 }
@@ -154,9 +154,9 @@ export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
   plugins: [
     ConnectionArgFilterPlugin,
     PgConnectionArgFilterPlugin,
-    PgConnectionArgFilterColumnsPlugin,
-    PgConnectionArgFilterComputedColumnsPlugin,
-    PgConnectionArgFilterCompositeTypeColumnsPlugin,
+    PgConnectionArgFilterAttributesPlugin,
+    PgConnectionArgFilterComputedAttributesPlugin,
+    PgConnectionArgFilterCompositeTypeAttributesPlugin,
     PgConnectionArgFilterRecordFunctionsPlugin,
     //if (connectionFilterRelations)
     PgConnectionArgFilterBackwardRelationsPlugin,

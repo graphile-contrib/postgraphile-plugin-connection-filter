@@ -1,10 +1,10 @@
-import { PgCodecAttributes, PgCodecWithColumns } from "@dataplan/pg";
+import { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
-export const PgConnectionArgFilterCompositeTypeColumnsPlugin: GraphileConfig.Plugin =
+export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.Plugin =
   {
-    name: "PgConnectionArgFilterCompositeTypeColumnsPlugin",
+    name: "PgConnectionArgFilterCompositeTypeAttributesPlugin",
     version,
 
     schema: {
@@ -27,33 +27,36 @@ export const PgConnectionArgFilterCompositeTypeColumnsPlugin: GraphileConfig.Plu
           if (
             !isPgConnectionFilter ||
             !rawCodec ||
-            !rawCodec.columns ||
+            !rawCodec.attributes ||
             rawCodec.isAnonymous
           ) {
             return fields;
           }
-          const codec = rawCodec as PgCodecWithColumns;
+          const codec = rawCodec as PgCodecWithAttributes;
 
-          for (const [columnName, column] of Object.entries(
-            codec.columns as PgCodecAttributes
+          for (const [attributeName, attribute] of Object.entries(
+            codec.attributes as PgCodecAttributes
           )) {
             const behavior = build.pgGetBehavior([
-              column.codec.extensions,
-              column.extensions,
+              attribute.codec.extensions,
+              attribute.extensions,
             ]);
             if (!build.behavior.matches(behavior, "filter", "filter")) {
               continue;
             }
 
-            // keep only the composite type columns
-            if (!column.codec.columns) {
+            // keep only the composite type attributes
+            if (!attribute.codec.attributes) {
               continue;
             }
 
-            const fieldName: string = inflection.column({ codec, columnName });
+            const fieldName: string = inflection.attribute({
+              codec,
+              attributeName,
+            });
 
             const NodeType = build.getGraphQLTypeByPgCodec(
-              column.codec,
+              attribute.codec,
               "output"
             );
             if (!NodeType || !isNamedType(NodeType)) {

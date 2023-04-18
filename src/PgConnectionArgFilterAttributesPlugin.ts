@@ -1,13 +1,9 @@
-import {
-  PgConditionStep,
-  PgCodecAttributes,
-  PgCodecWithColumns,
-} from "@dataplan/pg";
+import { PgConditionStep, PgCodecWithAttributes } from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
-export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
-  name: "PgConnectionArgFilterColumnsPlugin",
+export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
+  name: "PgConnectionArgFilterAttributesPlugin",
   version,
 
   schema: {
@@ -22,22 +18,24 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
           Self,
         } = context;
 
-        if (!isPgConnectionFilter || !rawCodec || !rawCodec.columns) {
+        if (!isPgConnectionFilter || !rawCodec || !rawCodec.attributes) {
           return fields;
         }
-        const codec = rawCodec as PgCodecWithColumns;
+        const codec = rawCodec as PgCodecWithAttributes;
 
-        for (const [columnName, column] of Object.entries(codec.columns)) {
+        for (const [attributeName, attribute] of Object.entries(
+          codec.attributes
+        )) {
           const behavior = build.pgGetBehavior([
-            column.codec.extensions,
-            column.extensions,
+            attribute.codec.extensions,
+            attribute.extensions,
           ]);
           if (!build.behavior.matches(behavior, "filter", "filter")) {
             continue;
           }
-          const colSpec = { columnName, column };
-          const fieldName = inflection.column({ codec, columnName });
-          const digest = connectionFilterOperatorsDigest(column.codec);
+          const colSpec = { attributeName, attribute };
+          const fieldName = inflection.attribute({ codec, attributeName });
+          const digest = connectionFilterOperatorsDigest(attribute.codec);
           if (!digest) {
             continue;
           }
@@ -90,13 +88,13 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                       );
                     }
                     const $col = new PgConditionStep($where);
-                    $col.extensions.pgFilterColumn = colSpec;
+                    $col.extensions.pgFilterAttribute = colSpec;
                     fieldArgs.apply($col);
                   },
                 })
               ),
             },
-            "Adding column-based filtering"
+            "Adding attribute-based filtering"
           );
         }
 
