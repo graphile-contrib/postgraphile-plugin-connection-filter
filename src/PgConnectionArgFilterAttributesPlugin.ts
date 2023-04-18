@@ -1,16 +1,9 @@
-import {
-  PgConditionLikeStep,
-  PgConditionStep,
-  PgSelectStep,
-  PgTypeColumn,
-  PgTypeColumns,
-} from "@dataplan/pg";
-import { ConnectionStep } from "grafast";
+import { PgConditionStep, PgCodecWithAttributes } from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
-export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
-  name: "PgConnectionArgFilterColumnsPlugin",
+export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
+  name: "PgConnectionArgFilterAttributesPlugin",
   version,
 
   schema: {
@@ -21,27 +14,28 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
           build;
         const {
           fieldWithHooks,
-          scope: { pgCodec: codec, isPgConnectionFilter },
+          scope: { pgCodec: rawCodec, isPgConnectionFilter },
           Self,
         } = context;
 
-        if (!isPgConnectionFilter || !codec || !codec.columns) {
+        if (!isPgConnectionFilter || !rawCodec || !rawCodec.attributes) {
           return fields;
         }
+        const codec = rawCodec as PgCodecWithAttributes;
 
-        for (const [columnName, column] of Object.entries(
-          codec.columns as PgTypeColumns
+        for (const [attributeName, attribute] of Object.entries(
+          codec.attributes
         )) {
           const behavior = build.pgGetBehavior([
-            column.codec.extensions,
-            column.extensions,
+            attribute.codec.extensions,
+            attribute.extensions,
           ]);
           if (!build.behavior.matches(behavior, "filter", "filter")) {
             continue;
           }
-          const colSpec = { columnName, column };
-          const fieldName = inflection.column({ codec, columnName });
-          const digest = connectionFilterOperatorsDigest(column.codec);
+          const colSpec = { attributeName, attribute };
+          const fieldName = inflection.attribute({ codec, attributeName });
+          const digest = connectionFilterOperatorsDigest(attribute.codec);
           if (!digest) {
             continue;
           }
@@ -94,13 +88,13 @@ export const PgConnectionArgFilterColumnsPlugin: GraphileConfig.Plugin = {
                       );
                     }
                     const $col = new PgConditionStep($where);
-                    $col.extensions.pgFilterColumn = colSpec;
+                    $col.extensions.pgFilterAttribute = colSpec;
                     fieldArgs.apply($col);
                   },
                 })
               ),
             },
-            "Adding column-based filtering"
+            "Adding attribute-based filtering"
           );
         }
 

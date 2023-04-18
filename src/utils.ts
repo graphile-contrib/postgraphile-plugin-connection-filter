@@ -1,29 +1,46 @@
-import { PgSource, PgSourceParameter } from "@dataplan/pg";
+import {
+  PgCodec,
+  PgRegistry,
+  PgResource,
+  PgResourceParameter,
+} from "@dataplan/pg";
 import { FieldArgs } from "grafast";
 import { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
 
-export function getComputedColumnSources(
+export function getComputedAttributeResources(
   build: GraphileBuild.Build,
-  source: PgSource<any, any, any, any>
+  source: PgResource
 ) {
-  const computedColumnSources = build.input.pgSources.filter((s) => {
-    if (!s.parameters || s.parameters.length < 1) {
-      return false;
+  const computedAttributeSources = Object.values(
+    build.input.pgRegistry.pgResources
+  ).filter(
+    (
+      s
+    ): s is PgResource<
+      string,
+      PgCodec,
+      never[],
+      PgResourceParameter[],
+      PgRegistry
+    > => {
+      if (!s.parameters || s.parameters.length < 1) {
+        return false;
+      }
+      if (s.codec.attributes) {
+        return false;
+      }
+      if (!s.isUnique) {
+        return false;
+      }
+      const firstParameter = s.parameters[0] as PgResourceParameter;
+      if (firstParameter.codec !== source.codec) {
+        return false;
+      }
+      return true;
     }
-    if (s.codec.columns) {
-      return false;
-    }
-    if (!s.isUnique) {
-      return false;
-    }
-    const firstParameter = s.parameters[0] as PgSourceParameter;
-    if (firstParameter.codec !== source.codec) {
-      return false;
-    }
-    return true;
-  });
-  return computedColumnSources;
+  );
+  return computedAttributeSources;
 }
 
 // TODO: rename. (Checks that the arguments aren't null/empty.)

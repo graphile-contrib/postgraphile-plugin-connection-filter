@@ -18,7 +18,7 @@ const createPostGraphileSchema = async (
       makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
-    pgConfigs: [
+    pgServices: [
       {
         adaptor: "@dataplan/pg/adaptors/pg",
         name: "main",

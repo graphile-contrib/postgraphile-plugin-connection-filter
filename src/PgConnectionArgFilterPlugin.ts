@@ -2,29 +2,24 @@ import {
   getInnerCodec,
   isEnumCodec,
   PgSelectStep,
-  PgTypeCodec,
+  PgCodec,
   TYPES,
 } from "@dataplan/pg";
-import { ConnectionStep, ExecutableStep, FieldArgs } from "grafast";
-import { PgSmartTagsDict } from "graphile-build-pg";
+import { ConnectionStep, FieldArgs } from "grafast";
 import type {
-  GraphQLInputFieldConfigMap,
   GraphQLInputType,
   GraphQLOutputType,
-  GraphQLType,
+  GraphQLNamedType,
 } from "graphql";
-import { GraphQLNamedType } from "graphql";
-import { PgType } from "pg-introspection";
-import { SQL } from "pg-sql2";
 import { OperatorsCategory } from "./interfaces";
 
 const { version } = require("../package.json");
 
-type AnyCodec = PgTypeCodec<any, any, any, any>;
+type AnyCodec = PgCodec<any, any, any, any, any, any, any>;
 
 const isSuitableForFiltering = (codec: AnyCodec): boolean =>
   codec !== TYPES.void &&
-  !codec.columns &&
+  !codec.attributes &&
   !codec.isAnonymous &&
   !codec.polymorphism &&
   (!codec.arrayOfCodec || isSuitableForFiltering(codec.arrayOfCodec)) &&
@@ -77,7 +72,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
       build(build) {
         const {
           inflection,
-          graphql: { isListType, getNamedType },
           options: {
             connectionFilterAllowedFieldTypes,
             connectionFilterArrays,
@@ -95,7 +89,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           if (!pgSimpleCodec) return null;
           if (
             pgSimpleCodec.polymorphism ||
-            pgSimpleCodec.columns ||
+            pgSimpleCodec.attributes ||
             pgSimpleCodec.isAnonymous
           ) {
             // Haven't found an enum type or a non-array base type? Skip.
@@ -239,7 +233,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
 
           // Create filter type for all column-having codecs
           for (const pgCodec of build.allPgCodecs) {
-            if (!pgCodec.columns) {
+            if (!pgCodec.attributes) {
               continue;
             }
             const nodeTypeName = build.getGraphQLTypeNameByPgCodec(
@@ -270,7 +264,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             [typeName: string]: {
               isList: boolean;
               relatedTypeName: string;
-              pgCodecs: PgTypeCodec<any, any, any, any>[];
+              pgCodecs: PgCodec[];
               inputTypeName: string;
               rangeElementInputTypeName: string | null;
               domainBaseTypeName: string | null;
@@ -305,7 +299,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 "relatedTypeName",
                 "inputTypeName",
                 "rangeElementInputTypeName",
-              ]) {
+              ] as const) {
                 if (
                   digest[key] !== codecsByFilterTypeName[operatorsTypeName][key]
                 ) {
@@ -371,11 +365,8 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
       GraphQLObjectType_fields_field_args(args, build, context) {
         const {
           extend,
-          getTypeByName,
           inflection,
           options: {
-            connectionFilterAllowedFieldTypes,
-            connectionFilterArrays,
             connectionFilterSetofFunctions,
             connectionFilterAllowNullInput,
             connectionFilterAllowEmptyObjectInput,
@@ -385,7 +376,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           scope: {
             isPgFieldConnection,
             isPgFieldSimpleCollection,
-            pgSource: source,
+            pgFieldResource: resource,
             fieldName,
           },
           Self,
@@ -395,24 +386,24 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           isPgFieldConnection || isPgFieldSimpleCollection;
         if (!shouldAddFilter) return args;
 
-        if (!source) return args;
+        if (!resource) return args;
         const behavior = build.pgGetBehavior([
-          source.codec.extensions,
-          source.extensions,
+          resource.codec.extensions,
+          resource.extensions,
         ]);
 
         // Procedures get their own special behavior
-        const desiredBehavior = source.parameters ? "filterProc" : "filter";
+        const desiredBehavior = resource.parameters ? "filterProc" : "filter";
 
         // TODO: should factor in connectionFilterComputedColumns different.
         // 'queryField:list' and 'queryField:connection' behaviours are for setof functions.
-        // 'typeField:list' and 'typeField:connection' behaviours are for computed columns functions.
+        // 'typeField:list' and 'typeField:connection' behaviours are for computed attributes functions.
 
         // procedure sources aren't filterable by default (unless
         // connectionFilterSetofFunctions is set), but can be made filterable
         // by adding the `+filterProc` behavior.
         const defaultBehavior =
-          source.parameters && !connectionFilterSetofFunctions
+          resource.parameters && !connectionFilterSetofFunctions
             ? `-${desiredBehavior}`
             : desiredBehavior;
 
@@ -428,7 +419,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
-        const returnCodec = source.codec;
+        const returnCodec = resource.codec;
         const nodeType = build.getGraphQLTypeByPgCodec(
           returnCodec,
           "output"
@@ -438,7 +429,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         }
         const nodeTypeName = nodeType.name;
         const filterTypeName = inflection.filterType(nodeTypeName);
-        const nodeCodec = source.codec;
+        const nodeCodec = resource.codec;
 
         const FilterType = build.getTypeByName(filterTypeName) as
           | GraphQLInputType
@@ -475,8 +466,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           }
         };
 
-        const columnCodec =
-          source.parameters && !source.codec.columns ? source.codec : null;
+        const attributeCodec =
+          resource.parameters && !resource.codec.attributes
+            ? resource.codec
+            : null;
 
         return extend(
           args,
@@ -489,36 +482,27 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 ? {
                     applyPlan(
                       _,
-                      $connection: ConnectionStep<
-                        any,
-                        any,
-                        any,
-                        PgSelectStep<any, any, any, any>
-                      >,
+                      $connection: ConnectionStep<any, any, any, PgSelectStep>,
                       fieldArgs
                     ) {
                       assertAllowed(fieldArgs);
                       const $pgSelect = $connection.getSubplan();
                       const $where = $pgSelect.wherePlan();
-                      if (columnCodec) {
-                        $where.extensions.pgFilterColumn = {
-                          codec: columnCodec,
+                      if (attributeCodec) {
+                        $where.extensions.pgFilterAttribute = {
+                          codec: attributeCodec,
                         };
                       }
                       fieldArgs.apply($where);
                     },
                   }
                 : {
-                    applyPlan(
-                      _,
-                      $pgSelect: PgSelectStep<any, any, any, any>,
-                      fieldArgs
-                    ) {
+                    applyPlan(_, $pgSelect: PgSelectStep, fieldArgs) {
                       assertAllowed(fieldArgs);
                       const $where = $pgSelect.wherePlan();
-                      if (columnCodec) {
-                        $where.extensions.pgFilterColumn = {
-                          codec: columnCodec,
+                      if (attributeCodec) {
+                        $where.extensions.pgFilterAttribute = {
+                          codec: attributeCodec,
                         };
                       }
                       fieldArgs.apply($where);

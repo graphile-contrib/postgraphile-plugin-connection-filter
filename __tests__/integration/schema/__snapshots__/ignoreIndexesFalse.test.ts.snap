@@ -1247,6 +1247,8 @@ input Char4DomainFilter {
 }
 
 type Child implements Node {
+  """Reads a single \`Filterable\` that is related to this \`Child\`."""
+  filterableByFilterableId: Filterable
   filterableId: Int
   id: Int!
   name: String!
@@ -1287,6 +1289,10 @@ input ChildFilter {
 }
 
 type ChildNoRelatedFilter implements Node {
+  """
+  Reads a single \`Filterable\` that is related to this \`ChildNoRelatedFilter\`.
+  """
+  filterableByFilterableId: Filterable
   filterableId: Int
   id: Int!
   name: String!
@@ -1295,6 +1301,11 @@ type ChildNoRelatedFilter implements Node {
   A globally unique identifier. Can be used in various places throughout the system to identify this single value.
   """
   nodeId: ID!
+
+  """
+  Reads a single \`Unfilterable\` that is related to this \`ChildNoRelatedFilter\`.
+  """
+  unfilterableByUnfilterableId: Unfilterable
   unfilterableId: Int
 }
 
@@ -2330,6 +2341,9 @@ type Filterable implements Node {
   """
   nodeId: ID!
   numeric: BigFloat
+
+  """Reads a single \`Parent\` that is related to this \`Filterable\`."""
+  parentByParentId: Parent
   parentId: Int
   text: String
   textOmitFilter: String
@@ -2347,6 +2361,16 @@ type FilterableClosure implements Node {
   ancestorId: Int!
   depth: Int!
   descendantId: Int!
+
+  """
+  Reads a single \`Filterable\` that is related to this \`FilterableClosure\`.
+  """
+  filterableByAncestorId: Filterable
+
+  """
+  Reads a single \`Filterable\` that is related to this \`FilterableClosure\`.
+  """
+  filterableByDescendantId: Filterable
   id: Int!
 
   """
@@ -3793,6 +3817,9 @@ type Junction implements Node {
   """Reads a single \`SideA\` that is related to this \`Junction\`."""
   sideABySideAId: SideA
   sideAId: Int!
+
+  """Reads a single \`SideB\` that is related to this \`Junction\`."""
+  sideBBySideBId: SideB
   sideBId: Int!
 }
 

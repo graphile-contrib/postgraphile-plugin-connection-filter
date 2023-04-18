@@ -1,9 +1,9 @@
 import type {} from "graphile-build-pg";
 import { ConnectionArgFilterPlugin } from "./ConnectionArgFilterPlugin";
 import { PgConnectionArgFilterPlugin } from "./PgConnectionArgFilterPlugin";
-import { PgConnectionArgFilterColumnsPlugin } from "./PgConnectionArgFilterColumnsPlugin";
-import { PgConnectionArgFilterComputedColumnsPlugin } from "./PgConnectionArgFilterComputedColumnsPlugin";
-import { PgConnectionArgFilterCompositeTypeColumnsPlugin } from "./PgConnectionArgFilterCompositeTypeColumnsPlugin";
+import { PgConnectionArgFilterAttributesPlugin } from "./PgConnectionArgFilterAttributesPlugin";
+import { PgConnectionArgFilterComputedAttributesPlugin } from "./PgConnectionArgFilterComputedAttributesPlugin";
+import { PgConnectionArgFilterCompositeTypeAttributesPlugin } from "./PgConnectionArgFilterCompositeTypeAttributesPlugin";
 import { PgConnectionArgFilterRecordFunctionsPlugin } from "./PgConnectionArgFilterRecordFunctionsPlugin";
 import { PgConnectionArgFilterBackwardRelationsPlugin } from "./PgConnectionArgFilterBackwardRelationsPlugin";
 import { PgConnectionArgFilterForwardRelationsPlugin } from "./PgConnectionArgFilterForwardRelationsPlugin";
@@ -14,8 +14,8 @@ import {
   makeApplyPlanFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
-import { GraphQLInputType, GraphQLNamedType, GraphQLOutputType } from "graphql";
-import { PgSource, PgTypeCodec, PgTypeColumn } from "@dataplan/pg";
+import { GraphQLInputType, GraphQLOutputType } from "graphql";
+import { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
 
 import type {} from "postgraphile/presets/v4";
 import { AddConnectionFilterOperatorPlugin } from "./AddConnectionFilterOperatorPlugin";
@@ -25,24 +25,24 @@ export { makeApplyPlanFromOperatorSpec };
 
 declare module "@dataplan/pg" {
   interface PgConditionStepExtensions {
-    pgFilterColumn?: /** Filtering a column */
+    pgFilterAttribute?: /** Filtering a column */
     | {
-          columnName: string;
-          column: PgTypeColumn;
+          attributeName: string;
+          attribute: PgCodecAttribute;
           codec?: never;
           expression?: never;
         }
       | /** The incoming alias _is_ the column */ {
-          columnName?: never;
-          column?: never;
-          codec: PgTypeCodec<any, any, any, any>;
+          attributeName?: never;
+          attribute?: never;
+          codec: PgCodec<any, any, any, any, any, any, any>;
           expression?: SQL;
         };
     pgFilterRelation?: {
       tableExpression: SQL;
       alias?: string;
-      localColumns: string[];
-      remoteColumns: string[];
+      localAttributes: string[];
+      remoteAttributes: string[];
     };
   }
 }
@@ -53,7 +53,7 @@ declare module "postgraphile/presets/v4" {
     connectionFilterAllowedFieldTypes?: string[];
     connectionFilterArrays?: boolean;
     connectionFilterComputedColumns?: boolean;
-    connectionFilterOperatorNames?: boolean;
+    connectionFilterOperatorNames?: Record<string, string>;
     connectionFilterRelations?: boolean;
     connectionFilterSetofFunctions?: boolean;
     connectionFilterLogicalOperators?: boolean;
@@ -69,7 +69,7 @@ declare global {
       connectionFilterAllowedFieldTypes?: string[];
       connectionFilterArrays?: boolean;
       connectionFilterComputedColumns?: boolean;
-      connectionFilterOperatorNames?: boolean;
+      connectionFilterOperatorNames?: Record<string, string>;
       connectionFilterRelations?: boolean;
       connectionFilterSetofFunctions?: boolean;
       connectionFilterLogicalOperators?: boolean;
@@ -82,8 +82,8 @@ declare global {
       filterFieldListType(this: Inflection, typeName: string): string;
       filterManyType(
         this: Inflection,
-        table: PgTypeCodec<any, any, any, any>,
-        foreignTable: PgSource<any, any, any, any>
+        table: PgCodec<any, any, any, any, any, any, any>,
+        foreignTable: PgResource<any, any, any, any>
       ): string;
       filterBackwardSingleRelationExistsFieldName(
         this: Inflection,
@@ -108,7 +108,7 @@ declare global {
       isPgConnectionFilter?: boolean;
       pgConnectionFilterOperators?: {
         isList: boolean;
-        pgCodecs: ReadonlyArray<PgTypeCodec<any, any, any, any>>;
+        pgCodecs: ReadonlyArray<PgCodec<any, any, any, any, any, any, any>>;
         inputTypeName: string;
         rangeElementInputTypeName: string | null;
         domainBaseTypeName: string | null;
@@ -119,11 +119,13 @@ declare global {
       fieldInputType?: GraphQLInputType;
       rangeElementInputType?: GraphQLInputType;
       domainBaseType?: GraphQLOutputType;
-      foreignTable?: PgSource<any, any, any, any>;
+      foreignTable?: PgResource<any, any, any, any>;
       isPgConnectionFilterMany?: boolean;
     }
     interface Build {
-      connectionFilterOperatorsDigest(codec: PgTypeCodec<any, any, any, any>): {
+      connectionFilterOperatorsDigest(
+        codec: PgCodec<any, any, any, any, any, any, any>
+      ): {
         operatorsTypeName: string;
         relatedTypeName: string;
         isList: boolean;
@@ -152,9 +154,9 @@ export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
   plugins: [
     ConnectionArgFilterPlugin,
     PgConnectionArgFilterPlugin,
-    PgConnectionArgFilterColumnsPlugin,
-    PgConnectionArgFilterComputedColumnsPlugin,
-    PgConnectionArgFilterCompositeTypeColumnsPlugin,
+    PgConnectionArgFilterAttributesPlugin,
+    PgConnectionArgFilterComputedAttributesPlugin,
+    PgConnectionArgFilterCompositeTypeAttributesPlugin,
     PgConnectionArgFilterRecordFunctionsPlugin,
     //if (connectionFilterRelations)
     PgConnectionArgFilterBackwardRelationsPlugin,

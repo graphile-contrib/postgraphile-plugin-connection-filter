@@ -1,8 +1,9 @@
 import {
   PgConditionStep,
-  PgSourceBuilder,
-  PgSourceRelation,
-  PgTypeColumn,
+  PgCodecRelation,
+  PgCodecAttribute,
+  PgCodecWithAttributes,
+  PgResource,
 } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 
@@ -43,14 +44,14 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
           const source =
             pgCodec &&
-            build.input.pgSources.find(
+            (Object.values(build.input.pgRegistry.pgResources).find(
               (s) => s.codec === pgCodec && !s.parameters
-            );
+            ) as PgResource<any, PgCodecWithAttributes, any, any, any>);
 
           if (
             !isPgConnectionFilter ||
             !pgCodec ||
-            !pgCodec.columns ||
+            !pgCodec.attributes ||
             !source
           ) {
             return fields;
@@ -58,7 +59,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
           const forwardRelations = Object.entries(
             source.getRelations() as {
-              [relationName: string]: PgSourceRelation<any, any>;
+              [relationName: string]: PgCodecRelation;
             }
           ).filter(([relationName, relation]) => {
             return !relation.isReferencee;
@@ -66,13 +67,10 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
           for (const [relationName, relation] of forwardRelations) {
             const behavior = build.pgGetBehavior([
-              relation.source.extensions,
+              relation.remoteResource.extensions,
               relation.extensions,
             ]);
-            const foreignTable =
-              relation.source instanceof PgSourceBuilder
-                ? relation.source.get()
-                : relation.source; // Deliberate shadowing
+            const foreignTable = relation.remoteResource; // Deliberate shadowing
 
             // Used to use 'read' behavior too
             if (!build.behavior.matches(behavior, "filter", "filter")) {
@@ -80,7 +78,8 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             }
 
             const fieldName = inflection.singleRelation({
-              source,
+              registry: source.registry,
+              codec: source.codec,
               relationName,
             });
             const filterFieldName =
@@ -95,12 +94,12 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             );
             if (!ForeignTableFilterType) continue;
 
-            if (typeof foreignTable.source === "function") {
+            if (typeof foreignTable.from === "function") {
               continue;
             }
-            const foreignTableExpression = foreignTable.source;
-            const localColumns = relation.localColumns as string[];
-            const remoteColumns = relation.remoteColumns as string[];
+            const foreignTableExpression = foreignTable.from;
+            const localAttributes = relation.localAttributes as string[];
+            const remoteAttributes = relation.remoteAttributes as string[];
 
             fields = extend(
               fields,
@@ -119,13 +118,13 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                         tableExpression: foreignTableExpression,
                         alias: foreignTable.name,
                       });
-                      localColumns.forEach((localColumn, i) => {
-                        const remoteColumn = remoteColumns[i];
+                      localAttributes.forEach((localAttribute, i) => {
+                        const remoteAttribute = remoteAttributes[i];
                         $subQuery.where(
                           sql`${$where.alias}.${sql.identifier(
-                            localColumn as string
+                            localAttribute as string
                           )} = ${$subQuery.alias}.${sql.identifier(
-                            remoteColumn as string
+                            remoteAttribute as string
                           )}`
                         );
                       });
@@ -137,8 +136,9 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
               `Adding connection filter forward relation field from ${source.name} to ${foreignTable.name}`
             );
 
-            const keyIsNullable = relation.localColumns.some(
-              (col) => !(source.codec.columns[col] as PgTypeColumn).notNull
+            const keyIsNullable = relation.localAttributes.some(
+              (col) =>
+                !(source.codec.attributes[col] as PgCodecAttribute).notNull
             );
             if (keyIsNullable) {
               const existsFieldName =
@@ -161,13 +161,13 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                           alias: foreignTable.name,
                           $equals: fieldArgs.get(),
                         });
-                        localColumns.forEach((localColumn, i) => {
-                          const remoteColumn = remoteColumns[i];
+                        localAttributes.forEach((localAttribute, i) => {
+                          const remoteAttribute = remoteAttributes[i];
                           $subQuery.where(
                             sql`${$where.alias}.${sql.identifier(
-                              localColumn as string
+                              localAttribute as string
                             )} = ${$subQuery.alias}.${sql.identifier(
-                              remoteColumn as string
+                              remoteAttribute as string
                             )}`
                           );
                         });
