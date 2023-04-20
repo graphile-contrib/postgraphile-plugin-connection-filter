@@ -33,6 +33,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             inflection,
             graphql: { GraphQLBoolean },
             sql,
+            options: { pgIgnoreReferentialIntegrity },
           } = build;
           const {
             fieldWithHooks,
@@ -139,7 +140,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
               (col) =>
                 !(source.codec.attributes[col] as PgCodecAttribute).notNull
             );
-            if (keyIsNullable) {
+            if (keyIsNullable || pgIgnoreReferentialIntegrity) {
               const existsFieldName =
                 inflection.filterForwardRelationExistsFieldName(fieldName);
               fields = extend(

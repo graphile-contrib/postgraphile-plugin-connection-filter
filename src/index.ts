@@ -59,6 +59,7 @@ declare module "postgraphile/presets/v4" {
     connectionFilterLogicalOperators?: boolean;
     connectionFilterAllowNullInput?: boolean;
     connectionFilterAllowEmptyObjectInput?: boolean;
+    pgIgnoreReferentialIntegrity?: boolean;
   }
 }
 
@@ -75,6 +76,7 @@ declare global {
       connectionFilterLogicalOperators?: boolean;
       connectionFilterAllowNullInput?: boolean;
       connectionFilterAllowEmptyObjectInput?: boolean;
+      pgIgnoreReferentialIntegrity?: boolean;
     }
     interface Inflection {
       filterType(this: Inflection, typeName: string): string;
