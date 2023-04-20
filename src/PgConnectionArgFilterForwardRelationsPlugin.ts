@@ -16,10 +16,10 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
 
     inflection: {
       add: {
-        filterForwardRelationExistsFieldName(preset, relationFieldName) {
+        filterForwardRelationExistsFieldName(_preset, relationFieldName) {
           return `${relationFieldName}Exists`;
         },
-        filterSingleRelationFieldName(preset, fieldName) {
+        filterSingleRelationFieldName(_preset, fieldName) {
           return fieldName;
         },
       },
@@ -37,7 +37,6 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
           const {
             fieldWithHooks,
             scope: { pgCodec, isPgConnectionFilter },
-            Self,
           } = context;
 
           const assertAllowed = makeAssertAllowed(build.options);
@@ -61,7 +60,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             source.getRelations() as {
               [relationName: string]: PgCodecRelation;
             }
-          ).filter(([relationName, relation]) => {
+          ).filter(([_relationName, relation]) => {
             return !relation.isReferencee;
           });
 
