@@ -377,6 +377,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             isPgFieldConnection,
             isPgFieldSimpleCollection,
             pgFieldResource: resource,
+            pgFieldCodec,
             fieldName,
           },
           Self,
@@ -386,14 +387,17 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           isPgFieldConnection || isPgFieldSimpleCollection;
         if (!shouldAddFilter) return args;
 
-        if (!resource) return args;
-        const behavior = build.pgGetBehavior([
-          resource.codec.extensions,
-          resource.extensions,
-        ]);
+        const codec = (pgFieldCodec ?? resource?.codec) as PgCodec;
+        if (!codec) return args;
+        const behavior = resource
+          ? build.pgGetBehavior([
+              resource.codec.extensions,
+              resource.extensions,
+            ])
+          : build.pgGetBehavior([codec.extensions]);
 
         // Procedures get their own special behavior
-        const desiredBehavior = resource.parameters ? "filterProc" : "filter";
+        const desiredBehavior = resource?.parameters ? "filterProc" : "filter";
 
         // TODO: should factor in connectionFilterComputedColumns different.
         // 'queryField:list' and 'queryField:connection' behaviours are for setof functions.
@@ -403,7 +407,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         // connectionFilterSetofFunctions is set), but can be made filterable
         // by adding the `+filterProc` behavior.
         const defaultBehavior =
-          resource.parameters && !connectionFilterSetofFunctions
+          resource?.parameters && !connectionFilterSetofFunctions
             ? `-${desiredBehavior}`
             : desiredBehavior;
 
@@ -419,7 +423,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
-        const returnCodec = resource.codec;
+        const returnCodec = codec;
         const nodeType = build.getGraphQLTypeByPgCodec(
           returnCodec,
           "output"
@@ -429,7 +433,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         }
         const nodeTypeName = nodeType.name;
         const filterTypeName = inflection.filterType(nodeTypeName);
-        const nodeCodec = resource.codec;
 
         const FilterType = build.getTypeByName(filterTypeName) as
           | GraphQLInputType
@@ -467,7 +470,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         };
 
         const attributeCodec =
-          resource.parameters && !resource.codec.attributes
+          resource?.parameters && !resource?.codec.attributes
             ? resource.codec
             : null;
 
