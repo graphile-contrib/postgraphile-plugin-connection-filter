@@ -13,7 +13,6 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
           let fields = inFields;
           const {
             extend,
-            sql,
             inflection,
             graphql: { isNamedType },
             options: { connectionFilterAllowedFieldTypes },
@@ -21,7 +20,6 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
           const {
             fieldWithHooks,
             scope: { pgCodec: rawCodec, isPgConnectionFilter },
-            Self,
           } = context;
 
           if (
@@ -37,11 +35,12 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
           for (const [attributeName, attribute] of Object.entries(
             codec.attributes as PgCodecAttributes
           )) {
-            const behavior = build.pgGetBehavior([
-              attribute.codec.extensions,
-              attribute.extensions,
-            ]);
-            if (!build.behavior.matches(behavior, "filter", "filter")) {
+            if (
+              !build.behavior.pgCodecAttributeMatches(
+                [codec, attribute],
+                "filter"
+              )
+            ) {
               continue;
             }
 

@@ -68,6 +68,30 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   */
 
   schema: {
+    entityBehavior: {
+      pgCodec: "filter",
+      pgResource: {
+        provides: ["inferred"],
+        before: ["override"],
+        after: ["default"],
+        callback(behavior, entity, resolvedPreset) {
+          if (entity.parameters) {
+            return [
+              behavior,
+              // procedure sources aren't filterable by default (unless
+              // connectionFilterSetofFunctions is set), but can be made filterable
+              // by adding the `+filterProc` behavior.
+              resolvedPreset.schema?.connectionFilterSetofFunctions
+                ? "filterProc"
+                : "-filterProc",
+            ];
+          } else {
+            return ["filter", behavior];
+          }
+        },
+      },
+    },
+
     hooks: {
       build(build) {
         const {
@@ -220,16 +244,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
       init: {
         after: ["PgCodecs"],
         callback(_, build) {
-          const {
-            inflection,
-            graphql: { getNamedType, GraphQLString, isListType },
-            options: {
-              connectionFilterAllowedFieldTypes,
-              connectionFilterArrays,
-            },
-          } = build;
-
-          const codecs = new Set<AnyCodec>();
+          const { inflection } = build;
 
           // Create filter type for all column-having codecs
           for (const pgCodec of build.allPgCodecs) {
@@ -367,7 +382,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           extend,
           inflection,
           options: {
-            connectionFilterSetofFunctions,
             connectionFilterAllowNullInput,
             connectionFilterAllowEmptyObjectInput,
           },
@@ -389,12 +403,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
 
         const codec = (pgFieldCodec ?? resource?.codec) as PgCodec;
         if (!codec) return args;
-        const behavior = resource
-          ? build.pgGetBehavior([
-              resource.codec.extensions,
-              resource.extensions,
-            ])
-          : build.pgGetBehavior([codec.extensions]);
 
         // Procedures get their own special behavior
         const desiredBehavior = resource?.parameters ? "filterProc" : "filter";
@@ -403,16 +411,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         // 'queryField:list' and 'queryField:connection' behaviours are for setof functions.
         // 'typeField:list' and 'typeField:connection' behaviours are for computed attributes functions.
 
-        // procedure sources aren't filterable by default (unless
-        // connectionFilterSetofFunctions is set), but can be made filterable
-        // by adding the `+filterProc` behavior.
-        const defaultBehavior =
-          resource?.parameters && !connectionFilterSetofFunctions
-            ? `-${desiredBehavior}`
-            : desiredBehavior;
-
         if (
-          !build.behavior.matches(behavior, desiredBehavior, defaultBehavior)
+          resource
+            ? !build.behavior.pgResourceMatches(resource, desiredBehavior)
+            : !build.behavior.pgCodecMatches(codec, desiredBehavior)
         ) {
           /*
           console.log(`NO FILTER: ${source.name}`, {

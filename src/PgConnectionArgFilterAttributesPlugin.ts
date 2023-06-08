@@ -7,15 +7,17 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
   version,
 
   schema: {
+    entityBehavior: {
+      pgCodecAttribute: "filter",
+    },
+
     hooks: {
       GraphQLInputObjectType_fields(inFields, build, context) {
         let fields = inFields;
-        const { extend, sql, inflection, connectionFilterOperatorsDigest } =
-          build;
+        const { inflection, connectionFilterOperatorsDigest } = build;
         const {
           fieldWithHooks,
           scope: { pgCodec: rawCodec, isPgConnectionFilter },
-          Self,
         } = context;
 
         if (!isPgConnectionFilter || !rawCodec || !rawCodec.attributes) {
@@ -26,11 +28,12 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
         for (const [attributeName, attribute] of Object.entries(
           codec.attributes
         )) {
-          const behavior = build.pgGetBehavior([
-            attribute.codec.extensions,
-            attribute.extensions,
-          ]);
-          if (!build.behavior.matches(behavior, "filter", "filter")) {
+          if (
+            !build.behavior.pgCodecAttributeMatches(
+              [codec, attribute],
+              "filter"
+            )
+          ) {
             continue;
           }
           const colSpec = { attributeName, attribute };

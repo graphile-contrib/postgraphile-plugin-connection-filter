@@ -58,6 +58,10 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
     },
 
     schema: {
+      entityBehavior: {
+        pgCodecRelation: "filter",
+      },
+
       hooks: {
         init(_, build) {
           const { inflection } = build;
@@ -146,14 +150,10 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             });
 
             for (const [relationName, relation] of backwardsRelations) {
-              const behavior = build.pgGetBehavior([
-                relation.remoteResource.extensions,
-                relation.extensions,
-              ]);
               const foreignTable = relation.remoteResource; // Deliberate shadowing
 
               // Used to use 'read' behavior too
-              if (!build.behavior.matches(behavior, "filter", "filter")) {
+              if (!build.behavior.pgCodecRelationMatches(relation, "filter")) {
                 continue;
               }
 
@@ -328,8 +328,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
 
               if (isOneToMany) {
                 if (
-                  build.behavior.matches(behavior, "list", "") ||
-                  build.behavior.matches(behavior, "connection", "connection")
+                  build.behavior.pgCodecRelationMatches(relation, "list") ||
+                  build.behavior.pgCodecRelationMatches(relation, "connection")
                 ) {
                   const filterManyTypeName = inflection.filterManyType(
                     source.codec,

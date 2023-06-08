@@ -1,5 +1,8 @@
 import { PgConditionStep, TYPES } from "@dataplan/pg";
-import { getComputedAttributeResources } from "./utils";
+import {
+  getComputedAttributeResources,
+  isComputedScalarAttributeResource,
+} from "./utils";
 
 const { version } = require("../package.json");
 
@@ -9,20 +12,31 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
     version,
 
     schema: {
+      entityBehavior: {
+        pgResource: {
+          provides: ["inferred"],
+          before: ["override"],
+          after: ["default"],
+          callback(behavior, entity, resolvedPreset) {
+            if (
+              resolvedPreset.schema?.connectionFilterComputedColumns &&
+              isComputedScalarAttributeResource(entity)
+            ) {
+              return [behavior, "filterBy"];
+            } else {
+              return behavior;
+            }
+          },
+        },
+      },
+
       hooks: {
         GraphQLInputObjectType_fields(inFields, build, context) {
           let fields = inFields;
-          const {
-            extend,
-            sql,
-            inflection,
-            connectionFilterOperatorsDigest,
-            options: { connectionFilterComputedColumns },
-          } = build;
+          const { inflection, connectionFilterOperatorsDigest } = build;
           const {
             fieldWithHooks,
             scope: { pgCodec: codec, isPgConnectionFilter },
-            Self,
           } = context;
 
           if (
@@ -70,24 +84,19 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
               continue;
             }
 
-            const behavior = build.pgGetBehavior([
-              computedAttributeResource.extensions,
-            ]);
-
-            const defaultBehavior = connectionFilterComputedColumns
-              ? "filterBy"
-              : "";
             if (
-              !build.behavior.matches(behavior, "filterBy", defaultBehavior)
+              !build.behavior.pgResourceMatches(
+                computedAttributeResource,
+                "filterBy"
+              )
             ) {
               continue;
             }
 
-            const { argDetails, makeFieldArgs, makeArgs, makeExpression } =
-              build.pgGetArgDetailsFromParameters(
-                computedAttributeResource,
-                computedAttributeResource.parameters!.slice(1)
-              );
+            const { argDetails } = build.pgGetArgDetailsFromParameters(
+              computedAttributeResource,
+              computedAttributeResource.parameters!.slice(1)
+            );
 
             // Must have only one required argument
             if (argDetails.some((a) => a.required)) {

@@ -26,6 +26,10 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
     },
 
     schema: {
+      entityBehavior: {
+        pgCodecRelation: "filter",
+      },
+
       hooks: {
         GraphQLInputObjectType_fields(fields, build, context) {
           const {
@@ -66,14 +70,10 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
           });
 
           for (const [relationName, relation] of forwardRelations) {
-            const behavior = build.pgGetBehavior([
-              relation.remoteResource.extensions,
-              relation.extensions,
-            ]);
             const foreignTable = relation.remoteResource; // Deliberate shadowing
 
             // Used to use 'read' behavior too
-            if (!build.behavior.matches(behavior, "filter", "filter")) {
+            if (!build.behavior.pgCodecRelationMatches(relation, "filter")) {
               continue;
             }
 

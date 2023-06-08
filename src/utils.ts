@@ -8,6 +8,31 @@ import { FieldArgs } from "grafast";
 import { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
 
+export function isComputedScalarAttributeResource(
+  s: PgResource<any, any, any, any, any>
+): s is PgResource<
+  string,
+  PgCodec,
+  never[],
+  PgResourceParameter[],
+  PgRegistry
+> {
+  if (!s.parameters || s.parameters.length < 1) {
+    return false;
+  }
+  if (s.codec.attributes) {
+    return false;
+  }
+  if (!s.isUnique) {
+    return false;
+  }
+  const firstParameter = s.parameters[0] as PgResourceParameter;
+  if (!firstParameter?.codec.attributes) {
+    return false;
+  }
+  return true;
+}
+
 export function getComputedAttributeResources(
   build: GraphileBuild.Build,
   source: PgResource
@@ -23,22 +48,9 @@ export function getComputedAttributeResources(
       never[],
       PgResourceParameter[],
       PgRegistry
-    > => {
-      if (!s.parameters || s.parameters.length < 1) {
-        return false;
-      }
-      if (s.codec.attributes) {
-        return false;
-      }
-      if (!s.isUnique) {
-        return false;
-      }
-      const firstParameter = s.parameters[0] as PgResourceParameter;
-      if (firstParameter.codec !== source.codec) {
-        return false;
-      }
-      return true;
-    }
+    > =>
+      isComputedScalarAttributeResource(s) &&
+      s.parameters[0].codec === source.codec
   );
   return computedAttributeSources;
 }
