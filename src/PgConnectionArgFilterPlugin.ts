@@ -483,6 +483,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               description:
                 "A filter to be used in determining which values should be returned by the collection.",
               type: FilterType,
+              autoApplyAfterParentPlan: true,
               ...(isPgFieldConnection
                 ? {
                     applyPlan(
