@@ -74,14 +74,14 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         provides: ["inferred"],
         before: ["override"],
         after: ["default"],
-        callback(behavior, entity, resolvedPreset) {
+        callback(behavior, entity, build) {
           if (entity.parameters) {
             return [
               behavior,
               // procedure sources aren't filterable by default (unless
               // connectionFilterSetofFunctions is set), but can be made filterable
               // by adding the `+filterProc` behavior.
-              resolvedPreset.schema?.connectionFilterSetofFunctions
+              build.options.connectionFilterSetofFunctions
                 ? "filterProc"
                 : "-filterProc",
             ];

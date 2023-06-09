@@ -17,9 +17,9 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
           provides: ["inferred"],
           before: ["override"],
           after: ["default"],
-          callback(behavior, entity, resolvedPreset) {
+          callback(behavior, entity, build) {
             if (
-              resolvedPreset.schema?.connectionFilterComputedColumns &&
+              build.options.connectionFilterComputedColumns &&
               isComputedScalarAttributeResource(entity)
             ) {
               return [behavior, "filterBy"];
