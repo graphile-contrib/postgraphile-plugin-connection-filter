@@ -1,4 +1,4 @@
-import {
+import type {
   PgConditionStep,
   PgCodecRelation,
   PgCodecWithAttributes,
@@ -115,7 +115,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             extend,
             inflection,
             sql,
-            graphql: { GraphQLInputObjectType, GraphQLBoolean },
+            graphql: { GraphQLBoolean },
           } = build;
           const {
             fieldWithHooks,

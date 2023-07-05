@@ -14,12 +14,12 @@ import {
   makeApplyPlanFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
-import { GraphQLInputType, GraphQLOutputType } from "graphql";
-import { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
+import type { GraphQLInputType, GraphQLOutputType } from "graphql";
+import type { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
 
 import type {} from "postgraphile/presets/v4";
 import { AddConnectionFilterOperatorPlugin } from "./AddConnectionFilterOperatorPlugin";
-import { SQL } from "pg-sql2";
+import type { SQL } from "pg-sql2";
 
 export { makeApplyPlanFromOperatorSpec };
 
@@ -44,22 +44,6 @@ declare module "@dataplan/pg" {
       localAttributes: string[];
       remoteAttributes: string[];
     };
-  }
-}
-
-declare module "postgraphile/presets/v4" {
-  interface V4GraphileBuildOptions {
-    connectionFilterAllowedOperators?: string[];
-    connectionFilterAllowedFieldTypes?: string[];
-    connectionFilterArrays?: boolean;
-    connectionFilterComputedColumns?: boolean;
-    connectionFilterOperatorNames?: Record<string, string>;
-    connectionFilterRelations?: boolean;
-    connectionFilterSetofFunctions?: boolean;
-    connectionFilterLogicalOperators?: boolean;
-    connectionFilterAllowNullInput?: boolean;
-    connectionFilterAllowEmptyObjectInput?: boolean;
-    pgIgnoreReferentialIntegrity?: boolean;
   }
 }
 

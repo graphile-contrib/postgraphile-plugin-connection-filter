@@ -1,4 +1,4 @@
-import { PgConditionStep } from "@dataplan/pg";
+import type { PgConditionStep } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");

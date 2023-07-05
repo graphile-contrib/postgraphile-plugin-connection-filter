@@ -1,4 +1,4 @@
-import { PgConditionStep, PgCodecWithAttributes } from "@dataplan/pg";
+import type { PgConditionStep, PgCodecWithAttributes } from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
@@ -14,7 +14,11 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
     hooks: {
       GraphQLInputObjectType_fields(inFields, build, context) {
         let fields = inFields;
-        const { inflection, connectionFilterOperatorsDigest } = build;
+        const {
+          inflection,
+          connectionFilterOperatorsDigest,
+          dataplanPg: { PgConditionStep },
+        } = build;
         const {
           fieldWithHooks,
           scope: { pgCodec: rawCodec, isPgConnectionFilter },

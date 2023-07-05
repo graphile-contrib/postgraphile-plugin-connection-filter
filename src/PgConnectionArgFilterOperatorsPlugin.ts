@@ -1,11 +1,9 @@
-import { isEnumCodec, listOfCodec, PgConditionStep } from "@dataplan/pg";
-import { PgCodec, TYPES } from "@dataplan/pg";
-import {
+import type { PgConditionStep, PgCodec } from "@dataplan/pg";
+import type {
   ExecutableStep,
   GrafastInputFieldConfigMap,
   InputObjectFieldApplyPlanResolver,
   InputStep,
-  lambda,
 } from "grafast";
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import { SQL } from "pg-sql2";
@@ -24,6 +22,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         const {
           extend,
           graphql: { GraphQLNonNull, GraphQLList, isListType, isNonNullType },
+          dataplanPg: { isEnumCodec, listOfCodec, TYPES },
           sql,
           escapeLikeWildcards,
           options: {
@@ -1010,7 +1009,8 @@ export function makeApplyPlanFromOperatorSpec(
 ): InputObjectFieldApplyPlanResolver<PgConditionStep<any>> {
   const {
     sql,
-    graphql: { isNamedType, isListType },
+    grafast: { lambda },
+    dataplanPg: { TYPES },
   } = build;
   const {
     description,

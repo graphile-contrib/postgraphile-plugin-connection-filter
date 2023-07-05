@@ -1,4 +1,4 @@
-import { GraphQLInputType } from "graphql";
+import type { GraphQLInputType } from "graphql";
 import { $$filters } from "./interfaces";
 import { makeApplyPlanFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
 

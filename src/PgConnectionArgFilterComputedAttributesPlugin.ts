@@ -1,4 +1,4 @@
-import { PgConditionStep, TYPES } from "@dataplan/pg";
+import type { PgConditionStep } from "@dataplan/pg";
 import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
@@ -33,7 +33,11 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
       hooks: {
         GraphQLInputObjectType_fields(inFields, build, context) {
           let fields = inFields;
-          const { inflection, connectionFilterOperatorsDigest } = build;
+          const {
+            inflection,
+            connectionFilterOperatorsDigest,
+            dataplanPg: { TYPES, PgConditionStep },
+          } = build;
           const {
             fieldWithHooks,
             scope: { pgCodec: codec, isPgConnectionFilter },

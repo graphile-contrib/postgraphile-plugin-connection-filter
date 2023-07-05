@@ -1,11 +1,5 @@
-import {
-  getInnerCodec,
-  isEnumCodec,
-  PgSelectStep,
-  PgCodec,
-  TYPES,
-} from "@dataplan/pg";
-import { ConnectionStep, FieldArgs } from "grafast";
+import type { PgSelectStep, PgCodec } from "@dataplan/pg";
+import type { ConnectionStep, FieldArgs } from "grafast";
 import type {
   GraphQLInputType,
   GraphQLOutputType,
@@ -17,13 +11,16 @@ const { version } = require("../package.json");
 
 type AnyCodec = PgCodec<any, any, any, any, any, any, any>;
 
-const isSuitableForFiltering = (codec: AnyCodec): boolean =>
-  codec !== TYPES.void &&
+const isSuitableForFiltering = (
+  build: GraphileBuild.Build,
+  codec: AnyCodec
+): boolean =>
+  codec !== build.dataplanPg.TYPES.void &&
   !codec.attributes &&
   !codec.isAnonymous &&
   !codec.polymorphism &&
-  (!codec.arrayOfCodec || isSuitableForFiltering(codec.arrayOfCodec)) &&
-  (!codec.domainOfCodec || isSuitableForFiltering(codec.domainOfCodec));
+  (!codec.arrayOfCodec || isSuitableForFiltering(build, codec.arrayOfCodec)) &&
+  (!codec.domainOfCodec || isSuitableForFiltering(build, codec.domainOfCodec));
 
 export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterPlugin",
@@ -103,7 +100,11 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         } = build;
 
         build.connectionFilterOperatorsDigest = (codec) => {
-          if (!isSuitableForFiltering(codec)) {
+          const finalBuild = build as GraphileBuild.Build;
+          const {
+            dataplanPg: { getInnerCodec, TYPES, isEnumCodec },
+          } = finalBuild;
+          if (!isSuitableForFiltering(finalBuild, codec)) {
             // Not a base, domain, enum, or range type? Skip.
             return null;
           }

@@ -1,11 +1,11 @@
-import {
+import type {
   PgCodec,
   PgRegistry,
   PgResource,
   PgResourceParameter,
 } from "@dataplan/pg";
-import { FieldArgs } from "grafast";
-import { GraphileBuild } from "graphile-build";
+import type { FieldArgs } from "grafast";
+import type { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
 
 export function isComputedScalarAttributeResource(

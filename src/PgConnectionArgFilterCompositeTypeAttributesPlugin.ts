@@ -1,4 +1,4 @@
-import { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
+import type { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
 
 const { version } = require("../package.json");
 
