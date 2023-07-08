@@ -47,6 +47,21 @@ declare module "@dataplan/pg" {
   }
 }
 
+declare module "postgraphile/presets/v4" {
+  interface V4GraphileBuildOptions {
+    connectionFilterAllowedOperators?: string[];
+    connectionFilterAllowedFieldTypes?: string[];
+    connectionFilterArrays?: boolean;
+    connectionFilterComputedColumns?: boolean;
+    connectionFilterOperatorNames?: Record<string, string>;
+    connectionFilterRelations?: boolean;
+    connectionFilterSetofFunctions?: boolean;
+    connectionFilterLogicalOperators?: boolean;
+    connectionFilterAllowNullInput?: boolean;
+    connectionFilterAllowEmptyObjectInput?: boolean;
+    pgIgnoreReferentialIntegrity?: boolean;
+  }
+}
 declare global {
   namespace GraphileBuild {
     interface SchemaOptions {
