@@ -1,6 +1,6 @@
 {
   "name": "postgraphile-plugin-connection-filter",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.3",
   "description": "Filtering on PostGraphile connections",
   "main": "dist/index.js",
   "scripts": {
