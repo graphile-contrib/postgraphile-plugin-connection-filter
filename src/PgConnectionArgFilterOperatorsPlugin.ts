@@ -6,7 +6,7 @@ import type {
   InputStep,
 } from "grafast";
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
-import { SQL } from "pg-sql2";
+import type { SQL } from "pg-sql2";
 
 const { version } = require("../package.json");
 
