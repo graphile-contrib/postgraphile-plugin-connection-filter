@@ -23,27 +23,29 @@ import type { SQL } from "pg-sql2";
 
 export { makeApplyPlanFromOperatorSpec };
 
-declare module "@dataplan/pg" {
-  interface PgConditionStepExtensions {
-    pgFilterAttribute?: /** Filtering a column */
-    | {
-          attributeName: string;
-          attribute: PgCodecAttribute;
-          codec?: never;
-          expression?: never;
-        }
-      | /** The incoming alias _is_ the column */ {
-          attributeName?: never;
-          attribute?: never;
-          codec: PgCodec<any, any, any, any, any, any, any>;
-          expression?: SQL;
-        };
-    pgFilterRelation?: {
-      tableExpression: SQL;
-      alias?: string;
-      localAttributes: string[];
-      remoteAttributes: string[];
-    };
+declare global {
+  namespace DataplanPg {
+    interface PgConditionStepExtensions {
+      pgFilterAttribute?: /** Filtering a column */
+      | {
+            attributeName: string;
+            attribute: PgCodecAttribute;
+            codec?: never;
+            expression?: never;
+          }
+        | /** The incoming alias _is_ the column */ {
+            attributeName?: never;
+            attribute?: never;
+            codec: PgCodec<any, any, any, any, any, any, any>;
+            expression?: SQL;
+          };
+      pgFilterRelation?: {
+        tableExpression: SQL;
+        alias?: string;
+        localAttributes: string[];
+        remoteAttributes: string[];
+      };
+    }
   }
 }
 
