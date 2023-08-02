@@ -37,8 +37,8 @@ export function getComputedAttributeResources(
   build: GraphileBuild.Build,
   source: PgResource
 ) {
-  const computedAttributeSources = Object.values(
-    build.input.pgRegistry.pgResources
+  const computedAttributeSources = (
+    Object.values(build.input.pgRegistry.pgResources) as PgResource[]
   ).filter(
     (
       s
