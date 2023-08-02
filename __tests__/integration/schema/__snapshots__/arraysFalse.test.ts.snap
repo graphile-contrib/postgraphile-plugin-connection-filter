@@ -5,6 +5,7 @@ exports[`prints a schema with the filter plugin and the \`connectionFilterArrays
   bit4Array: [BitString]
   boolArray: [Boolean]
   bpchar4Array: [String]
+  byteaArray: [Base64EncodedBinary]
   char4Array: [String]
   cidrArray: [String]
   citextArray: [String]
@@ -256,6 +257,39 @@ enum BackwardsOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+}
+
+"""Binary data encoded using Base64"""
+scalar Base64EncodedBinary
+
+"""
+A filter to be used against Base64EncodedBinary fields. All fields are combined with a logical ‘and.’
+"""
+input Base64EncodedBinaryFilter {
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: Base64EncodedBinary
+
+  """Equal to the specified value."""
+  equalTo: Base64EncodedBinary
+
+  """Included in the specified list."""
+  in: [Base64EncodedBinary!]
+
+  """
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  """
+  isNull: Boolean
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: Base64EncodedBinary
+
+  """Not equal to the specified value."""
+  notEqualTo: Base64EncodedBinary
+
+  """Not included in the specified list."""
+  notIn: [Base64EncodedBinary!]
 }
 
 """
@@ -1571,6 +1605,7 @@ type Filterable implements Node {
   bit4: BitString
   bool: Boolean
   bpchar4: String
+  bytea: Base64EncodedBinary
   char4: String
 
   """Reads and enables pagination through a set of \`ChildNoRelatedFilter\`."""
@@ -1956,6 +1991,9 @@ input FilterableFilter {
 
   """Filter by the object’s \`bpchar4\` field."""
   bpchar4: StringFilter
+
+  """Filter by the object’s \`bytea\` field."""
+  bytea: Base64EncodedBinaryFilter
 
   """Filter by the object’s \`char4\` field."""
   char4: StringFilter
@@ -3010,10 +3048,10 @@ input JSONFilter {
   contains: JSON
 
   """Contains all of the specified keys."""
-  containsAllKeys: [String]
+  containsAllKeys: [String!]
 
   """Contains any of the specified keys."""
-  containsAnyKeys: [String]
+  containsAnyKeys: [String!]
 
   """Contains the specified key."""
   containsKey: String

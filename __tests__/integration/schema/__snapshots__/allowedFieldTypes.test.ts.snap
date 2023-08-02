@@ -5,6 +5,7 @@ exports[`prints a schema with the filter plugin and the connectionFilterAllowedF
   bit4Array: [BitString]
   boolArray: [Boolean]
   bpchar4Array: [String]
+  byteaArray: [Base64EncodedBinary]
   char4Array: [String]
   cidrArray: [String]
   citextArray: [String]
@@ -281,6 +282,9 @@ enum BackwardsOrderBy {
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
+
+"""Binary data encoded using Base64"""
+scalar Base64EncodedBinary
 
 """
 A floating point number that requires more precision than IEEE 754 binary 64
@@ -781,6 +785,7 @@ type Filterable implements Node {
   bit4: BitString
   bool: Boolean
   bpchar4: String
+  bytea: Base64EncodedBinary
   char4: String
 
   """Reads and enables pagination through a set of \`ChildNoRelatedFilter\`."""
