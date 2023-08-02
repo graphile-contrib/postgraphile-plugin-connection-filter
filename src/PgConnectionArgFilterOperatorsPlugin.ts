@@ -114,7 +114,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               forceTextTypesSensitive.includes(resolveDomains(c.arrayOfCodec))
             ) {
               return listOfCodec(TYPES.text, {
-                extensions: { listItemNonNull: true },
+                extensions: { listItemNonNull: c.extensions?.listItemNonNull },
               });
             }
             return c;
@@ -136,7 +136,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             return [
               sql`(${identifier})::text[]`,
               listOfCodec(TYPES.text, {
-                extensions: { listItemNonNull: true },
+                extensions: { listItemNonNull: c.extensions?.listItemNonNull },
               }),
             ] as const;
           } else if (forceTextTypesSensitive.includes(resolveDomains(c))) {
@@ -153,7 +153,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               forceTextTypesInsensitive.includes(resolveDomains(c.arrayOfCodec))
             ) {
               return listOfCodec(TYPES.text, {
-                extensions: { listItemNonNull: true },
+                extensions: { listItemNonNull: c.extensions?.listItemNonNull },
               });
             }
             return c;
@@ -175,7 +175,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             return [
               sql`(${identifier})::text[]`,
               listOfCodec(TYPES.text, {
-                extensions: { listItemNonNull: true },
+                extensions: { listItemNonNull: c.extensions?.listItemNonNull },
               }),
             ] as const;
           } else if (forceTextTypesInsensitive.includes(resolveDomains(c))) {
