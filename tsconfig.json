@@ -16,5 +16,8 @@
     "noUnusedLocals": false,
     "preserveWatchOutput": true,
     "lib": ["es2018", "esnext.asynciterable"]
-  }
+  },
+  "exclude": [
+    "contrib"
+  ]
 }
