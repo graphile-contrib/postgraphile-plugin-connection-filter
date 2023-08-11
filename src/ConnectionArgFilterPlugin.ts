@@ -17,7 +17,7 @@ const ConnectionArgFilterPlugin: Plugin = (builder) => {
         return `${typeName}List${camcelCasedFilterName}`;
       },
     });
-  }
+  });
 };
 
 export default ConnectionArgFilterPlugin;
