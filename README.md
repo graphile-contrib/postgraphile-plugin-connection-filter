@@ -72,6 +72,18 @@ To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and
 
 When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions`:
 
+#### connectionFilterName
+
+Specify the name of the filter:
+
+```js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterName: "filter" // default value
+  },
+});
+```
+
 #### connectionFilterAllowedOperators
 
 Restrict filtering to specific operators:
