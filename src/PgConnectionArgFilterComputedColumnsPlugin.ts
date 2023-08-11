@@ -14,6 +14,7 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
       pgOmit: omit,
       pgSql: sql,
       inflection,
+      connectionFilterName = "filter",
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
       connectionFilterResolve,
@@ -40,7 +41,7 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
 
       // Must not be omitted
       if (omit(proc, "execute")) return memo;
-      if (omit(proc, "filter")) return memo;
+      if (omit(proc, connectionFilterName)) return memo;
 
       // Must be a computed column
       const computedColumnDetails = getComputedColumnDetails(

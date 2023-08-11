@@ -16,6 +16,7 @@ const PgConnectionArgFilterCompositeTypeColumnsPlugin: Plugin = (
       pgColumnFilter,
       pgOmit: omit,
       inflection,
+      connectionFilterName = "filter",
       connectionFilterRegisterResolver,
       connectionFilterResolve,
       connectionFilterType,
@@ -36,7 +37,7 @@ const PgConnectionArgFilterCompositeTypeColumnsPlugin: Plugin = (
     )
       .filter((attr) => attr.classId === table.id)
       .filter((attr) => pgColumnFilter(attr, build, context))
-      .filter((attr) => !omit(attr, "filter"))
+      .filter((attr) => !omit(attr, connectionFilterName))
       .filter(
         (attr) =>
           attr.type &&

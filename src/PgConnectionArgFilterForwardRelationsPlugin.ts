@@ -23,6 +23,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       pgOmit: omit,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
+      connectionFilterName = "filter",
       connectionFilterResolve,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,
@@ -44,7 +45,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       .filter((con) => con.type === "f")
       .filter((con) => con.classId === table.id)
       .reduce((memo: ForwardRelationSpec[], constraint) => {
-        if (omit(constraint, "read") || omit(constraint, "filter")) {
+        if (omit(constraint, "read") || omit(constraint, connectionFilterName)) {
           return memo;
         }
         const foreignTable = constraint.foreignClassId
@@ -55,7 +56,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
             `Could not find the foreign table (constraint: ${constraint.name})`
           );
         }
-        if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
+        if (omit(foreignTable, "read") || omit(foreignTable, connectionFilterName)) {
           return memo;
         }
         const attributes = (
@@ -239,7 +240,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
         ForeignTableFilterType,
         resolve,
         spec,
-        `Adding connection filter forward relation field from ${describePgEntity(
+        `Adding connection ${connectionFilterName} forward relation field from ${describePgEntity(
           table
         )} to ${describePgEntity(foreignTable)}`
       );
@@ -254,7 +255,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
           GraphQLBoolean,
           resolveExists,
           spec,
-          `Adding connection filter forward relation exists field from ${describePgEntity(
+          `Adding connection ${connectionFilterName} forward relation exists field from ${describePgEntity(
             table
           )} to ${describePgEntity(foreignTable)}`
         );
