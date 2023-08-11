@@ -6,18 +6,16 @@ const ConnectionArgFilterPlugin: Plugin = (builder) => {
       connectionFilterName = "filter"
     } = inflection;
     const camcelCasedFilterName = inflection.upperCamelCase(connectionFilterName);
-    return {
-      return Object.assign(inflection, {
-        filterType(typeName: string) {
-          return `${typeName}${camcelCasedFilterName}`;
-        },
-        filterFieldType(typeName: string) {
-          return `${typeName}${camcelCasedFilterName}`;
-        },
-        filterFieldListType(typeName: string) {
-          return `${typeName}List${camcelCasedFilterName}`;
-        },
-      });
+    return Object.assign(inflection, {
+      filterType(typeName: string) {
+        return `${typeName}${camcelCasedFilterName}`;
+      },
+      filterFieldType(typeName: string) {
+        return `${typeName}${camcelCasedFilterName}`;
+      },
+      filterFieldListType(typeName: string) {
+        return `${typeName}List${camcelCasedFilterName}`;
+      },
     });
   }
 };
