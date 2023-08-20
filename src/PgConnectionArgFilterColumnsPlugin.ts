@@ -12,7 +12,7 @@ const PgConnectionArgFilterColumnsPlugin: Plugin = (builder) => {
       pgColumnFilter,
       pgOmit: omit,
       inflection,
-      connectionFilterName = "filter",
+      connectionFilterName = "where",
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
       connectionFilterResolve,

@@ -3,7 +3,7 @@ import type { Plugin } from "graphile-build";
 const ConnectionArgFilterPlugin: Plugin = (builder) => {
   builder.hook("inflection", (inflection) => {
     const {
-      connectionFilterName = "filter"
+      connectionFilterName = "where"
     } = inflection;
     const camcelCasedFilterName = inflection.upperCamelCase(connectionFilterName);
     return Object.assign(inflection, {

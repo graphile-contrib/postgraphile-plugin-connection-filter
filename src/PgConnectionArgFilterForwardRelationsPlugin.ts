@@ -23,7 +23,7 @@ const PgConnectionArgFilterForwardRelationsPlugin: Plugin = (builder) => {
       pgOmit: omit,
       pgSql: sql,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
-      connectionFilterName = "filter",
+      connectionFilterName = "where",
       connectionFilterResolve,
       connectionFilterRegisterResolver,
       connectionFilterTypesByTypeName,

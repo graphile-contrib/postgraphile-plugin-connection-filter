@@ -16,7 +16,7 @@ import { BackwardRelationSpec } from "./PgConnectionArgFilterBackwardRelationsPl
 const PgConnectionArgFilterPlugin: Plugin = (
   builder,
   {
-    connectionFilterName = "filter",
+    connectionFilterName = "where",
     connectionFilterAllowedFieldTypes,
     connectionFilterArrays,
     connectionFilterSetofFunctions,

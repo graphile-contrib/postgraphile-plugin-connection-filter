@@ -16,7 +16,7 @@ const PgConnectionArgFilterCompositeTypeColumnsPlugin: Plugin = (
       pgColumnFilter,
       pgOmit: omit,
       inflection,
-      connectionFilterName = "filter",
+      connectionFilterName = "where",
       connectionFilterRegisterResolver,
       connectionFilterResolve,
       connectionFilterType,
