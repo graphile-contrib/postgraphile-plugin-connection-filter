@@ -4,7 +4,7 @@ import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
 
 const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
   builder,
-  { pgSimpleCollections, pgOmitListSuffix, connectionFilterUseListInflectors, connectionFilterName = "where" }
+  { pgSimpleCollections, pgOmitListSuffix, connectionFilterUseListInflectors, connectionFilterName = "filter" }
 ) => {
   const hasConnections = pgSimpleCollections !== "only";
   const simpleInflectorsAreShorter = pgOmitListSuffix === true;
