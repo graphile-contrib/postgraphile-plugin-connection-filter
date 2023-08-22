@@ -12,6 +12,7 @@ const PgConnectionArgFilterColumnsPlugin: Plugin = (builder) => {
       pgColumnFilter,
       pgOmit: omit,
       inflection,
+      connectionFilterName = "where",
       connectionFilterOperatorsType,
       connectionFilterRegisterResolver,
       connectionFilterResolve,
@@ -32,7 +33,7 @@ const PgConnectionArgFilterColumnsPlugin: Plugin = (builder) => {
     )
       .filter((attr) => attr.classId === table.id)
       .filter((attr) => pgColumnFilter(attr, build, context))
-      .filter((attr) => !omit(attr, "filter"))
+      .filter((attr) => !omit(attr, connectionFilterName))
       .reduce((memo: { [fieldName: string]: PgAttribute }, attr) => {
         const fieldName: string = inflection.column(attr);
         memo[fieldName] = attr;

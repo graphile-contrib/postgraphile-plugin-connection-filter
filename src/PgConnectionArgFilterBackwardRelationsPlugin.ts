@@ -4,7 +4,7 @@ import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
 
 const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
   builder,
-  { pgSimpleCollections, pgOmitListSuffix, connectionFilterUseListInflectors }
+  { pgSimpleCollections, pgOmitListSuffix, connectionFilterUseListInflectors, connectionFilterName = "filter" }
 ) => {
   const hasConnections = pgSimpleCollections !== "only";
   const simpleInflectorsAreShorter = pgOmitListSuffix === true;
@@ -28,7 +28,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
         return (this as any).upperCamelCase(
           `${(this as any).tableType(table)}-to-many-${(this as any).tableType(
             foreignTable
-          )}-filter`
+          )}-${connectionFilterName}`
         );
       },
       filterBackwardSingleRelationExistsFieldName(relationFieldName: string) {
@@ -79,7 +79,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       .reduce((memo: BackwardRelationSpec[], foreignConstraint) => {
         if (
           omit(foreignConstraint, "read") ||
-          omit(foreignConstraint, "filter")
+          omit(foreignConstraint, connectionFilterName)
         ) {
           return memo;
         }
@@ -90,7 +90,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
             `Could not find the foreign table (constraint: ${foreignConstraint.name})`
           );
         }
-        if (omit(foreignTable, "read") || omit(foreignTable, "filter")) {
+        if (omit(foreignTable, "read") || omit(foreignTable, connectionFilterName)) {
           return memo;
         }
         const attributes = (
@@ -309,7 +309,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
               GraphQLInputObjectType,
               {
                 name: filterManyTypeName,
-                description: `A filter to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+                description: `A ${connectionFilterName} to be used against many \`${foreignTableTypeName}\` object types. All fields are combined with a logical ‘and.’`,
               },
               {
                 foreignTable,
@@ -340,7 +340,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
             FilterManyType,
             makeResolveMany(spec),
             spec,
-            `Adding connection filter backward relation field from ${describePgEntity(
+            `Adding connection ${connectionFilterName} backward relation field from ${describePgEntity(
               table
             )} to ${describePgEntity(foreignTable)}`
           );
@@ -353,7 +353,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
             GraphQLBoolean,
             resolveExists,
             spec,
-            `Adding connection filter backward relation exists field from ${describePgEntity(
+            `Adding connection ${connectionFilterName} backward relation exists field from ${describePgEntity(
               table
             )} to ${describePgEntity(foreignTable)}`
           );
@@ -373,7 +373,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
           ForeignTableFilterType,
           resolveSingle,
           spec,
-          `Adding connection filter backward relation field from ${describePgEntity(
+          `Adding connection ${connectionFilterName} backward relation field from ${describePgEntity(
             table
           )} to ${describePgEntity(foreignTable)}`
         );
@@ -386,7 +386,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
           GraphQLBoolean,
           resolveExists,
           spec,
-          `Adding connection filter backward relation exists field from ${describePgEntity(
+          `Adding connection ${connectionFilterName} backward relation exists field from ${describePgEntity(
             table
           )} to ${describePgEntity(foreignTable)}`
         );
@@ -431,7 +431,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       every: fieldWithHooks(
         "every",
         {
-          description: `Every related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
+          description: `Every related \`${foreignTableTypeName}\` matches the ${connectionFilterName} criteria. All fields are combined with a logical ‘and.’`,
           type: FilterType,
         },
         {
@@ -441,7 +441,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       some: fieldWithHooks(
         "some",
         {
-          description: `Some related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
+          description: `Some related \`${foreignTableTypeName}\` matches the ${connectionFilterName} criteria. All fields are combined with a logical ‘and.’`,
           type: FilterType,
         },
         {
@@ -451,7 +451,7 @@ const PgConnectionArgFilterBackwardRelationsPlugin: Plugin = (
       none: fieldWithHooks(
         "none",
         {
-          description: `No related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
+          description: `No related \`${foreignTableTypeName}\` matches the ${connectionFilterName} criteria. All fields are combined with a logical ‘and.’`,
           type: FilterType,
         },
         {

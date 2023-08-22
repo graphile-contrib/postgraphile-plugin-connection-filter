@@ -16,6 +16,7 @@ import { BackwardRelationSpec } from "./PgConnectionArgFilterBackwardRelationsPl
 const PgConnectionArgFilterPlugin: Plugin = (
   builder,
   {
+    connectionFilterName = "where",
     connectionFilterAllowedFieldTypes,
     connectionFilterArrays,
     connectionFilterSetofFunctions,
@@ -57,7 +58,7 @@ const PgConnectionArgFilterPlugin: Plugin = (
       if (!shouldAddFilter) return args;
 
       if (!source) return args;
-      if (omit(source, "filter")) return args;
+      if (omit(source, connectionFilterName)) return args;
 
       if (source.kind === "procedure") {
         if (!(source.tags.filterable || connectionFilterSetofFunctions)) {
@@ -104,9 +105,9 @@ const PgConnectionArgFilterPlugin: Plugin = (
       addArgDataGenerator(function connectionFilter(args: any) {
         return {
           pgQuery: (queryBuilder: QueryBuilder) => {
-            if (Object.prototype.hasOwnProperty.call(args, "filter")) {
+            if (Object.prototype.hasOwnProperty.call(args, connectionFilterName)) {
               const sqlFragment = connectionFilterResolve(
-                args.filter,
+                args[connectionFilterName],
                 queryBuilder.getTableAlias(),
                 filterTypeName,
                 queryBuilder,
@@ -124,13 +125,13 @@ const PgConnectionArgFilterPlugin: Plugin = (
       return extend(
         args,
         {
-          filter: {
+          [connectionFilterName as string]: {
             description:
               "A filter to be used in determining which values should be returned by the collection.",
             type: FilterType,
           },
         },
-        `Adding connection filter arg to field '${field.name}' of '${Self.name}'`
+        `Adding connection ${connectionFilterName} arg to field '${field.name}' of '${Self.name}'`
       );
     }
   );
@@ -154,7 +155,7 @@ const PgConnectionArgFilterPlugin: Plugin = (
     const handleNullInput = () => {
       if (!connectionFilterAllowNullInput) {
         throw new Error(
-          "Null literals are forbidden in filter argument input."
+          `Null literals are forbidden in ${connectionFilterName} argument input.`
         );
       }
       return null;
@@ -163,7 +164,7 @@ const PgConnectionArgFilterPlugin: Plugin = (
     const handleEmptyObjectInput = () => {
       if (!connectionFilterAllowEmptyObjectInput) {
         throw new Error(
-          "Empty objects are forbidden in filter argument input."
+          `Empty objects are forbidden in ${connectionFilterName} argument input.`
         );
       }
       return null;
@@ -217,7 +218,7 @@ const PgConnectionArgFilterPlugin: Plugin = (
               parentFieldInfo,
             });
           }
-          throw new Error(`Unable to resolve filter field '${key}'`);
+          throw new Error(`Unable to resolve ${connectionFilterName} field '${key}'`);
         })
         .filter((x) => x != null);
 
@@ -371,7 +372,7 @@ const PgConnectionArgFilterPlugin: Plugin = (
         GraphQLInputObjectType,
         {
           name: operatorsTypeName,
-          description: `A filter to be used against ${namedType.name}${
+          description: `A ${connectionFilterName} to be used against ${namedType.name}${
             isListType ? " List" : ""
           } fields. All fields are combined with a logical ‘and.’`,
         },
@@ -410,7 +411,7 @@ const PgConnectionArgFilterPlugin: Plugin = (
       return newWithHooks(
         GraphQLInputObjectType,
         {
-          description: `A filter to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
+          description: `A ${connectionFilterName} to be used against \`${nodeTypeName}\` object types. All fields are combined with a logical ‘and.’`,
           name: filterTypeName,
         },
         {

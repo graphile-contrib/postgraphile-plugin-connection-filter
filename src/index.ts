@@ -42,6 +42,7 @@ const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
   const defaultOptions = {
     //connectionFilterAllowedOperators,
     //connectionFilterAllowedFieldTypes,
+    connectionFilterName: "filter",
     connectionFilterArrays: true,
     connectionFilterComputedColumns: true,
     //connectionFilterOperatorNames,
