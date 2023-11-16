@@ -1046,7 +1046,7 @@ export function makeApplyPlanFromOperatorSpec(
   return ($where, fieldArgs) => {
     if (!$where.extensions?.pgFilterAttribute) {
       throw new Error(
-        `Planning error: expected 'pgFilterAttribute' to be present on the \$where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
+        `Planning error: expected 'pgFilterAttribute' to be present on the $where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
       );
     }
     const $input = fieldArgs.getRaw();
