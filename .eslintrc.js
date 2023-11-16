@@ -32,4 +32,11 @@ module.exports = {
     "jest/expect-expect": ["off"],
     "@typescript-eslint/no-var-requires": ["off"],
   },
+  overrides: [
+    // Rules for TypeScript only
+    {
+      files: ["*.ts", "*.tsx"],
+      parser: "@typescript-eslint/parser",
+    },
+  ],
 };
