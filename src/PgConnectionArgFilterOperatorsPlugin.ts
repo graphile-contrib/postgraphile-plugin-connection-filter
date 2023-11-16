@@ -29,6 +29,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             connectionFilterAllowedOperators,
             connectionFilterOperatorNames,
           },
+          EXPORTABLE,
         } = build;
 
         const {
