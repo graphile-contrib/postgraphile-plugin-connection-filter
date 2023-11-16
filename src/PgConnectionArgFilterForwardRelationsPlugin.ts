@@ -112,24 +112,28 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                   () => ({
                     description: `Filter by the object’s \`${fieldName}\` relation.`,
                     type: ForeignTableFilterType,
-                    applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                      assertAllowed(fieldArgs, "object");
-                      const $subQuery = $where.existsPlan({
-                        tableExpression: foreignTableExpression,
-                        alias: foreignTable.name,
-                      });
-                      localAttributes.forEach((localAttribute, i) => {
-                        const remoteAttribute = remoteAttributes[i];
-                        $subQuery.where(
-                          sql`${$where.alias}.${sql.identifier(
-                            localAttribute as string
-                          )} = ${$subQuery.alias}.${sql.identifier(
-                            remoteAttribute as string
-                          )}`
-                        );
-                      });
-                      fieldArgs.apply($subQuery);
-                    },
+                    applyPlan: build.EXPORTABLE(
+                      () =>
+                        function ($where: PgConditionStep<any>, fieldArgs) {
+                          //assertAllowed(fieldArgs, "object");
+                          const $subQuery = $where.existsPlan({
+                            tableExpression: foreignTableExpression,
+                            alias: foreignTable.name,
+                          });
+                          localAttributes.forEach((localAttribute, i) => {
+                            const remoteAttribute = remoteAttributes[i];
+                            $subQuery.where(
+                              sql`${$where.alias}.${sql.identifier(
+                                localAttribute as string
+                              )} = ${$subQuery.alias}.${sql.identifier(
+                                remoteAttribute as string
+                              )}`
+                            );
+                          });
+                          fieldArgs.apply($subQuery);
+                        },
+                      []
+                    ),
                   })
                 ),
               },
@@ -154,24 +158,28 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                     () => ({
                       description: `A related \`${fieldName}\` exists.`,
                       type: GraphQLBoolean,
-                      applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                        assertAllowed(fieldArgs, "scalar");
-                        const $subQuery = $where.existsPlan({
-                          tableExpression: foreignTableExpression,
-                          alias: foreignTable.name,
-                          $equals: fieldArgs.get(),
-                        });
-                        localAttributes.forEach((localAttribute, i) => {
-                          const remoteAttribute = remoteAttributes[i];
-                          $subQuery.where(
-                            sql`${$where.alias}.${sql.identifier(
-                              localAttribute as string
-                            )} = ${$subQuery.alias}.${sql.identifier(
-                              remoteAttribute as string
-                            )}`
-                          );
-                        });
-                      },
+                      applyPlan: build.EXPORTABLE(
+                        () =>
+                          function ($where: PgConditionStep<any>, fieldArgs) {
+                            //assertAllowed(fieldArgs, "scalar");
+                            const $subQuery = $where.existsPlan({
+                              tableExpression: foreignTableExpression,
+                              alias: foreignTable.name,
+                              $equals: fieldArgs.get(),
+                            });
+                            localAttributes.forEach((localAttribute, i) => {
+                              const remoteAttribute = remoteAttributes[i];
+                              $subQuery.where(
+                                sql`${$where.alias}.${sql.identifier(
+                                  localAttribute as string
+                                )} = ${$subQuery.alias}.${sql.identifier(
+                                  remoteAttribute as string
+                                )}`
+                              );
+                            });
+                          },
+                        []
+                      ),
                     })
                   ),
                 },

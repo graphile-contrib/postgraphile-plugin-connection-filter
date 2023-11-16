@@ -6,10 +6,11 @@ module.exports = {
     es6: true,
     "jest/globals": true,
   },
-  plugins: ["@typescript-eslint", "jest"],
+  plugins: ["@typescript-eslint", "jest", "graphile-export"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:graphile-export/recommended",
     "plugin:jest/recommended",
     "prettier",
   ],

@@ -7,7 +7,7 @@ import type {
 } from "graphql";
 import { OperatorsCategory } from "./interfaces";
 
-const { version } = require("../package.json");
+const { version } = require("../package.json"); // eslint-disable-line
 
 type AnyCodec = PgCodec<any, any, any, any, any, any, any>;
 
@@ -444,33 +444,37 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
-        const assertAllowed = (fieldArgs: FieldArgs) => {
-          const $raw = fieldArgs.getRaw();
-          if (
-            !connectionFilterAllowEmptyObjectInput &&
-            "evalIsEmpty" in $raw &&
-            $raw.evalIsEmpty()
-          ) {
-            throw Object.assign(
-              new Error(
-                "Empty objects are forbidden in filter argument input."
-              ),
-              {
-                //TODO: mark this error as safe
+        const assertAllowed = build.EXPORTABLE(
+          () =>
+            function (fieldArgs: FieldArgs) {
+              const $raw = fieldArgs.getRaw();
+              if (
+                !connectionFilterAllowEmptyObjectInput &&
+                "evalIsEmpty" in $raw &&
+                $raw.evalIsEmpty()
+              ) {
+                throw Object.assign(
+                  new Error(
+                    "Empty objects are forbidden in filter argument input."
+                  ),
+                  {
+                    //TODO: mark this error as safe
+                  }
+                );
               }
-            );
-          }
-          if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
-            throw Object.assign(
-              new Error(
-                "Null literals are forbidden in filter argument input."
-              ),
-              {
-                //TODO: mark this error as safe
+              if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
+                throw Object.assign(
+                  new Error(
+                    "Null literals are forbidden in filter argument input."
+                  ),
+                  {
+                    //TODO: mark this error as safe
+                  }
+                );
               }
-            );
-          }
-        };
+            },
+          []
+        );
 
         const attributeCodec =
           resource?.parameters && !resource?.codec.attributes

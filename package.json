@@ -25,6 +25,8 @@
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
   "dependencies": {
+    "eslint-plugin-graphile-export": "^0.0.2-beta.3",
+    "graphile-export": "^0.0.2-beta.4",
     "tslib": "^2.5.0"
   },
   "devDependencies": {
