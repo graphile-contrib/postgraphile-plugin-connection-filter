@@ -386,6 +386,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             connectionFilterAllowNullInput,
             connectionFilterAllowEmptyObjectInput,
           },
+          EXPORTABLE,
         } = build;
         const {
           scope: {
@@ -444,9 +445,8 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
-        const assertAllowed = build.EXPORTABLE(
-          () =>
-            function (fieldArgs: FieldArgs) {
+        const assertAllowed = EXPORTABLE(
+          (connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput) => function (fieldArgs: FieldArgs) {
               const $raw = fieldArgs.getRaw();
               if (
                 !connectionFilterAllowEmptyObjectInput &&
@@ -473,7 +473,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 );
               }
             },
-          []
+          [connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput]
         );
 
         const attributeCodec =

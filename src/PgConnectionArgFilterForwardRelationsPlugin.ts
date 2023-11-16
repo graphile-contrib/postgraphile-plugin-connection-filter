@@ -38,6 +38,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             graphql: { GraphQLBoolean },
             sql,
             options: { pgIgnoreReferentialIntegrity },
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
@@ -112,10 +113,9 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                   () => ({
                     description: `Filter by the object’s \`${fieldName}\` relation.`,
                     type: ForeignTableFilterType,
-                    applyPlan: build.EXPORTABLE(
-                      () =>
-                        function ($where: PgConditionStep<any>, fieldArgs) {
-                          //assertAllowed(fieldArgs, "object");
+                    applyPlan: EXPORTABLE(
+                      (assertAllowed, foreignTable, foreignTableExpression, localAttributes, remoteAttributes, sql) => function ($where: PgConditionStep<any>, fieldArgs) {
+                          assertAllowed(fieldArgs, "object");
                           const $subQuery = $where.existsPlan({
                             tableExpression: foreignTableExpression,
                             alias: foreignTable.name,
@@ -132,7 +132,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                           });
                           fieldArgs.apply($subQuery);
                         },
-                      []
+                      [assertAllowed, foreignTable, foreignTableExpression, localAttributes, remoteAttributes, sql]
                     ),
                   })
                 ),
@@ -158,10 +158,9 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                     () => ({
                       description: `A related \`${fieldName}\` exists.`,
                       type: GraphQLBoolean,
-                      applyPlan: build.EXPORTABLE(
-                        () =>
-                          function ($where: PgConditionStep<any>, fieldArgs) {
-                            //assertAllowed(fieldArgs, "scalar");
+                      applyPlan: EXPORTABLE(
+                        (assertAllowed, foreignTable, foreignTableExpression, localAttributes, remoteAttributes, sql) => function ($where: PgConditionStep<any>, fieldArgs) {
+                            assertAllowed(fieldArgs, "scalar");
                             const $subQuery = $where.existsPlan({
                               tableExpression: foreignTableExpression,
                               alias: foreignTable.name,
@@ -178,7 +177,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                               );
                             });
                           },
-                        []
+                        [assertAllowed, foreignTable, foreignTableExpression, localAttributes, remoteAttributes, sql]
                       ),
                     })
                   ),

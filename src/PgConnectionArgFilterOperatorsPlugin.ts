@@ -29,6 +29,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             connectionFilterAllowedOperators,
             connectionFilterOperatorNames,
           },
+          EXPORTABLE,
         } = build;
 
         const {
@@ -389,7 +390,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified KeyValueHash.",
-            resolve: (i, v) => sql`${i} @> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
           },
           containsKey: {
             description: "Contains the specified key.",
@@ -412,13 +413,13 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containedBy: {
             description: "Contained by the specified KeyValueHash.",
-            resolve: (i, v) => sql`${i} <@ ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
           },
         };
         const jsonbOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified JSON.",
-            resolve: (i, v) => sql`${i} @> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
           },
           containsKey: {
             description: "Contains the specified key.",
@@ -439,31 +440,31 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containedBy: {
             description: "Contained by the specified JSON.",
-            resolve: (i, v) => sql`${i} <@ ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
           },
         };
         const inetOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified internet address.",
-            resolve: (i, v) => sql`${i} >> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >> ${v}`, [sql]),
           },
           containsOrEqualTo: {
             description: "Contains or equal to the specified internet address.",
-            resolve: (i, v) => sql`${i} >>= ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >>= ${v}`, [sql]),
           },
           containedBy: {
             description: "Contained by the specified internet address.",
-            resolve: (i, v) => sql`${i} << ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} << ${v}`, [sql]),
           },
           containedByOrEqualTo: {
             description:
               "Contained by or equal to the specified internet address.",
-            resolve: (i, v) => sql`${i} <<= ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <<= ${v}`, [sql]),
           },
           containsOrContainedBy: {
             description:
               "Contains or contained by the specified internet address.",
-            resolve: (i, v) => sql`${i} && ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} && ${v}`, [sql]),
           },
         };
 
@@ -579,7 +580,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ...sortOperators,
           contains: {
             description: "Contains the specified range.",
-            resolve: (i, v) => sql`${i} @> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
           },
           containsElement: {
             description: "Contains the specified value.",
@@ -596,31 +597,31 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containedBy: {
             description: "Contained by the specified range.",
-            resolve: (i, v) => sql`${i} <@ ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
           },
           overlaps: {
             description: "Overlaps the specified range.",
-            resolve: (i, v) => sql`${i} && ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} && ${v}`, [sql]),
           },
           strictlyLeftOf: {
             description: "Strictly left of the specified range.",
-            resolve: (i, v) => sql`${i} << ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} << ${v}`, [sql]),
           },
           strictlyRightOf: {
             description: "Strictly right of the specified range.",
-            resolve: (i, v) => sql`${i} >> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >> ${v}`, [sql]),
           },
           notExtendsRightOf: {
             description: "Does not extend right of the specified range.",
-            resolve: (i, v) => sql`${i} &< ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} &< ${v}`, [sql]),
           },
           notExtendsLeftOf: {
             description: "Does not extend left of the specified range.",
-            resolve: (i, v) => sql`${i} &> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} &> ${v}`, [sql]),
           },
           adjacentTo: {
             description: "Adjacent to the specified range.",
-            resolve: (i, v) => sql`${i} -|- ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} -|- ${v}`, [sql]),
           },
         };
 
@@ -716,7 +717,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         let rangeLike = true;
         let enumLike = true;
         for (const codec of pgCodecs) {
-          let underlyingType = codec.domainOfCodec ?? codec;
+          const underlyingType = codec.domainOfCodec ?? codec;
           if (!underlyingType.arrayOfCodec) {
             arrayLike = false;
           }
@@ -928,7 +929,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             if (!codecGraphQLType) {
               return memo;
             }
-            let type = resolveType
+            const type = resolveType
               ? resolveType(codecGraphQLType)
               : codecGraphQLType;
 
@@ -1046,7 +1047,7 @@ export function makeApplyPlanFromOperatorSpec(
   return ($where, fieldArgs) => {
     if (!$where.extensions?.pgFilterAttribute) {
       throw new Error(
-        `Planning error: expected 'pgFilterAttribute' to be present on the \$where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
+        `Planning error: expected 'pgFilterAttribute' to be present on the $where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
       );
     }
     const $input = fieldArgs.getRaw();
