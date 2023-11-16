@@ -30,7 +30,18 @@ module.exports = {
   ],
   rules: {
     "jest/expect-expect": ["off"],
+    "no-fallthrough": ["error", { allowEmptyCase: true }],
     "@typescript-eslint/no-var-requires": ["off"],
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        args: "after-used",
+        ignoreRestSiblings: true,
+      },
+    ],
   },
   overrides: [
     // Rules for TypeScript only
