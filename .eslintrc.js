@@ -33,8 +33,10 @@ module.exports = {
     "no-fallthrough": ["error", { allowEmptyCase: true }],
     "@typescript-eslint/no-var-requires": ["off"],
     "@typescript-eslint/no-explicit-any": ["off"],
+    // We need this for our `GraphileBuild`/`GraphileConfig`/etc namespaces
+    "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      "warn",
       {
         argsIgnorePattern: "^_",
         varsIgnorePattern: "^_",
