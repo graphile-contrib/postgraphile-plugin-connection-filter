@@ -14,6 +14,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
           const {
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
@@ -39,7 +40,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for all expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                applyPlan: build.EXPORTABLE(
+                applyPlan: EXPORTABLE(
                   () =>
                     function ($where: PgConditionStep<any>, fieldArgs) {
                       assertAllowed(fieldArgs, "list");
@@ -60,7 +61,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for any expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                applyPlan: build.EXPORTABLE(
+                applyPlan: EXPORTABLE(
                   () =>
                     function ($where: PgConditionStep<any>, fieldArgs) {
                       assertAllowed(fieldArgs, "list");
@@ -80,7 +81,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Negates the expression.`,
                 type: Self,
-                applyPlan: build.EXPORTABLE(
+                applyPlan: EXPORTABLE(
                   () =>
                     function ($where: PgConditionStep<any>, fieldArgs) {
                       assertAllowed(fieldArgs, "object");
