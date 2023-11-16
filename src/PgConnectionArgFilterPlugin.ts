@@ -446,8 +446,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         }
 
         const assertAllowed = EXPORTABLE(
-          () =>
-            function (fieldArgs: FieldArgs) {
+          (connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput) => function (fieldArgs: FieldArgs) {
               const $raw = fieldArgs.getRaw();
               if (
                 !connectionFilterAllowEmptyObjectInput &&
@@ -474,7 +473,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 );
               }
             },
-          []
+          [connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput]
         );
 
         const attributeCodec =
