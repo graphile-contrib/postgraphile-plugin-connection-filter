@@ -1,5 +1,5 @@
 import type { PgSelectStep, PgCodec } from "@dataplan/pg";
-import type { ConnectionStep, FieldArgs } from "grafast";
+import type { ConnectionStep } from "grafast";
 import type {
   GraphQLInputType,
   GraphQLOutputType,

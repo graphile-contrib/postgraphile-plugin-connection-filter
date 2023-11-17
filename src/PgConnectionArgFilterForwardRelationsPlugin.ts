@@ -44,7 +44,6 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             fieldWithHooks,
             scope: { pgCodec, isPgConnectionFilter },
           } = context;
-
           const assertAllowed = makeAssertAllowed(build.options);
 
           const source =

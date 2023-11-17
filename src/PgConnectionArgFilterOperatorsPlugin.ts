@@ -61,13 +61,17 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         }
 
         /** Turn `[Foo]` into `[Foo!]` */
-        const resolveTypeToListOfNonNullable = (type: GraphQLInputType) => {
-          if (isListType(type) && !isNonNullType(type.ofType)) {
-            return new GraphQLList(new GraphQLNonNull(type.ofType));
-          } else {
-            return type;
-          }
-        };
+        const resolveTypeToListOfNonNullable = EXPORTABLE(
+          (GraphQLList, GraphQLNonNull, isListType, isNonNullType) =>
+            function (type: GraphQLInputType) {
+              if (isListType(type) && !isNonNullType(type.ofType)) {
+                return new GraphQLList(new GraphQLNonNull(type.ofType));
+              } else {
+                return type;
+              }
+            },
+          [GraphQLList, GraphQLNonNull, isListType, isNonNullType]
+        );
 
         const forceTextTypesSensitive = [
           TYPES.citext,
@@ -1199,7 +1203,9 @@ export function makeApplyPlanFromOperatorSpec(
         if (!connectionFilterAllowNullInput && $input.evalIs(null)) {
           // Forbidden
           throw Object.assign(
-            new Error("Null literals are forbidden in filter argument input."),
+            new Error(
+              `Null literals are forbidden in filter argument input. - AllowNullInput: ${connectionFilterAllowNullInput}`
+            ),
             {
               //TODO: mark this error as safe
             }

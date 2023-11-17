@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as pg from "pg";
-//import * as vm from "node:vm";
 
 import { promisify } from "util";
 import { ExecutionArgs, GraphQLSchema, parse, validate } from "graphql";
@@ -16,47 +15,16 @@ import { execute, hookArgs } from "grafast";
 import { SchemaResult } from "graphile-build";
 import { makeWithPgClientViaPgClientAlreadyInTransaction } from "@dataplan/pg/adaptors/pg";
 import { exportSchemaAsString } from "graphile-export";
-import _module = require("module");
-import { dirname } from "path";
-const { Module, builtinModules } = _module;
-import { transformSync } from "@babel/core";
+import { importFromStringSync } from "module-from-string";
 
 // TODO: remove this once Grafast gets it's planning under control :D
-jest.setTimeout(3000000);
-/*
+jest.setTimeout(300000);
+
 const vmEval = (code: string) => {
-  const context = {} as GraphQLSchema;
-  // Load the module with the dyanamic script.
-  vm.runInNewContext(code, vm.createContext(context));
-  console.log("Returning context: ", JSON.stringify(context, null, 2));
-  return context;
-};
-*/
-let cachedSchema = {} as GraphQLSchema;
-let haveCache = false;
-const vmEval = (code: string) => {
-  if (!haveCache) {
-    const filename = "exported-v5-schema.mjs";
-    // Load the module with the dyanamic script.
-    const replacementModule = new Module(filename, this);
-    replacementModule.filename = filename;
-    // @ts-ignore
-    replacementModule.paths = Module._nodeModulePaths(dirname(filename));
-    const commonJScode = transformSync(code, {
-      filename,
-      compact: true,
-      plugins: ["@babel/plugin-transform-runtime"],
-    });
-    // @ts-ignore
-    replacementModule._compile(commonJScode.code, filename);
-    replacementModule.loaded = true;
-    cachedSchema = replacementModule.exports.schema as GraphQLSchema;
-    haveCache = true;
-    console.log("Schema import done - no cache");
-  } else {
-    console.log("Schema import done - from cache");
-  }
-  return cachedSchema;
+  const { schema } = importFromStringSync(code, {
+    transformOptions: { loader: "js" },
+  });
+  return schema as GraphQLSchema;
 };
 
 const createPostGraphileSchema = async (
