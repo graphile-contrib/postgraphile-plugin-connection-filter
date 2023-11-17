@@ -251,6 +251,21 @@ postgraphile(pgConfig, schema, {
 });
 ```
 
+#### connectionFilterTypePrefix
+
+If conflicts arise between your existing types and the types produced by this tool,
+you can resolve them by using this option to prepend a prefix to the generated types.
+For instance, setting this option to `"Foo"` will result in the generated types being
+named `FooConnectionFilter`.
+
+```js
+postgraphile(pgConfig, schema, {
+  graphileBuildOptions: {
+    connectionFilterTypePrefix: "Foo", // default: ""
+  },
+});
+```
+
 ## Examples
 
 ```graphql

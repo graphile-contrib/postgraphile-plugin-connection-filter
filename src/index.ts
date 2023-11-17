@@ -50,6 +50,7 @@ const PostGraphileConnectionFilterPlugin: Plugin = (builder, configOptions) => {
     connectionFilterLogicalOperators: true,
     connectionFilterAllowNullInput: false,
     connectionFilterAllowEmptyObjectInput: false,
+    connectionFilterTypePrefix: "",
   };
   const options = {
     ...defaultOptions,
