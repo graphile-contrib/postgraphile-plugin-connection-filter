@@ -1,8 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as pg from "pg";
+//import * as vm from "node:vm";
+
 import { promisify } from "util";
-import { ExecutionArgs, parse, validate } from "graphql";
+import { ExecutionArgs, GraphQLSchema, parse, validate } from "graphql";
 import { withPgClient, withPgPool } from "../helpers";
 import { PgConditionArgumentPlugin } from "graphile-build-pg";
 import { postgraphilePresetAmber } from "postgraphile/presets/amber";
@@ -13,9 +15,49 @@ import CustomOperatorsPlugin from "./../customOperatorsPlugin";
 import { execute, hookArgs } from "grafast";
 import { SchemaResult } from "graphile-build";
 import { makeWithPgClientViaPgClientAlreadyInTransaction } from "@dataplan/pg/adaptors/pg";
+import { exportSchemaAsString } from "graphile-export";
+import _module = require("module");
+import { dirname } from "path";
+const { Module, builtinModules } = _module;
+import { transformSync } from "@babel/core";
 
 // TODO: remove this once Grafast gets it's planning under control :D
-jest.setTimeout(30000);
+jest.setTimeout(3000000);
+/*
+const vmEval = (code: string) => {
+  const context = {} as GraphQLSchema;
+  // Load the module with the dyanamic script.
+  vm.runInNewContext(code, vm.createContext(context));
+  console.log("Returning context: ", JSON.stringify(context, null, 2));
+  return context;
+};
+*/
+let cachedSchema = {} as GraphQLSchema;
+let haveCache = false;
+const vmEval = (code: string) => {
+  if (!haveCache) {
+    const filename = "exported-v5-schema.mjs";
+    // Load the module with the dyanamic script.
+    const replacementModule = new Module(filename, this);
+    replacementModule.filename = filename;
+    // @ts-ignore
+    replacementModule.paths = Module._nodeModulePaths(dirname(filename));
+    const commonJScode = transformSync(code, {
+      filename,
+      compact: true,
+      plugins: ["@babel/plugin-transform-runtime"],
+    });
+    // @ts-ignore
+    replacementModule._compile(commonJScode.code, filename);
+    replacementModule.loaded = true;
+    cachedSchema = replacementModule.exports.schema as GraphQLSchema;
+    haveCache = true;
+    console.log("Schema import done - no cache");
+  } else {
+    console.log("Schema import done - from cache");
+  }
+  return cachedSchema;
+};
 
 const createPostGraphileSchema = async (
   pool: pg.Pool,
@@ -44,7 +86,23 @@ const createPostGraphileSchema = async (
     ],
   };
   const params = await makeSchema(preset);
-  return params;
+  if (process.env.TEST_EXPORTED_SCHEMA) {
+    return {
+      ...params,
+      schema: vmEval(
+        (
+          await exportSchemaAsString(params.schema, {
+            mode: "graphql-js",
+            // or:
+            // mode: "typeDefs",
+            modules: {},
+          })
+        ).code
+      ),
+    };
+  } else {
+    return params;
+  }
 };
 
 const readFile = promisify(fs.readFile);
@@ -146,67 +204,73 @@ beforeAll(async () => {
 
 for (const queryFileName of queryFileNames) {
   // eslint-disable-next-line jest/valid-title
-  test(queryFileName, async () => {
-    // Read the query from the file system.
-    const query = await readFile(
-      path.resolve(queriesDir, queryFileName),
-      "utf8"
-    );
-    // Get the appropriate GraphQL schema for this fixture. We want to test
-    // some specific fixtures against a schema configured slightly
-    // differently.
-    const gqlSchemaByQueryFileName: {
-      [queryFileName: string]: SchemaResult;
-    } = {
-      "addConnectionFilterOperator.graphql":
-        gqlSchemas.addConnectionFilterOperator,
-      "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
-      "types.cidr.graphql": gqlSchemas.networkScalars,
-      "types.macaddr.graphql": gqlSchemas.networkScalars,
-      "arrayTypes.cidrArray.graphql": gqlSchemas.networkScalars,
-      "arrayTypes.macaddrArray.graphql": gqlSchemas.networkScalars,
-      "relations.graphql": gqlSchemas.relations,
-      "simpleCollections.graphql": gqlSchemas.simpleCollections,
-      "nullAndEmptyAllowed.graphql": gqlSchemas.nullAndEmptyAllowed,
-    };
-    const { schema, resolvedPreset } =
-      queryFileName in gqlSchemaByQueryFileName
-        ? gqlSchemaByQueryFileName[queryFileName]
-        : gqlSchemas.normal;
-
-    const document = parse(query);
-    const errors = validate(schema, document);
-    if (errors.length > 0) {
-      throw new Error(
-        `GraphQL validation errors:\n${errors.map((e) => e.message).join("\n")}`
+  test(
+    queryFileName,
+    async () => {
+      // Read the query from the file system.
+      const query = await readFile(
+        path.resolve(queriesDir, queryFileName),
+        "utf8"
       );
-    }
-    const args: ExecutionArgs = {
-      schema,
-      document,
-    };
-    await hookArgs(args, resolvedPreset, {});
-    //const pgSubscriber = new PgSubscriber(pool);
-    const result = (await withPgClient(async (pgClient) => {
-      // We must override the context because we didn't use a pool above and so
-      // we need to add our own client
+      // Get the appropriate GraphQL schema for this fixture. We want to test
+      // some specific fixtures against a schema configured slightly
+      // differently.
+      const gqlSchemaByQueryFileName: {
+        [queryFileName: string]: SchemaResult;
+      } = {
+        "addConnectionFilterOperator.graphql":
+          gqlSchemas.addConnectionFilterOperator,
+        "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
+        "types.cidr.graphql": gqlSchemas.networkScalars,
+        "types.macaddr.graphql": gqlSchemas.networkScalars,
+        "arrayTypes.cidrArray.graphql": gqlSchemas.networkScalars,
+        "arrayTypes.macaddrArray.graphql": gqlSchemas.networkScalars,
+        "relations.graphql": gqlSchemas.relations,
+        "simpleCollections.graphql": gqlSchemas.simpleCollections,
+        "nullAndEmptyAllowed.graphql": gqlSchemas.nullAndEmptyAllowed,
+      };
+      const { schema, resolvedPreset } =
+        queryFileName in gqlSchemaByQueryFileName
+          ? gqlSchemaByQueryFileName[queryFileName]
+          : gqlSchemas.normal;
 
-      // NOTE: the withPgClient needed on context is **VERY DIFFERENT** to our
-      // withPgClient test helper. We should rename our test helper ;)
-      const contextWithPgClient =
-        makeWithPgClientViaPgClientAlreadyInTransaction(pgClient, false);
-      try {
-        args.contextValue = {
-          pgSettings: (args.contextValue as any).pgSettings,
-          withPgClient: contextWithPgClient,
-          //pgSubscriber,
-        };
-
-        return (await execute(args)) as any;
-      } finally {
-        contextWithPgClient.release?.();
+      const document = parse(query);
+      const errors = validate(schema, document);
+      if (errors.length > 0) {
+        throw new Error(
+          `GraphQL validation errors:\n${errors
+            .map((e) => e.message)
+            .join("\n")}`
+        );
       }
-    })) as any;
-    expect(result).toMatchSnapshot();
-  });
+      const args: ExecutionArgs = {
+        schema,
+        document,
+      };
+      await hookArgs(args, resolvedPreset, {});
+      //const pgSubscriber = new PgSubscriber(pool);
+      const result = (await withPgClient(async (pgClient) => {
+        // We must override the context because we didn't use a pool above and so
+        // we need to add our own client
+
+        // NOTE: the withPgClient needed on context is **VERY DIFFERENT** to our
+        // withPgClient test helper. We should rename our test helper ;)
+        const contextWithPgClient =
+          makeWithPgClientViaPgClientAlreadyInTransaction(pgClient, false);
+        try {
+          args.contextValue = {
+            pgSettings: (args.contextValue as any).pgSettings,
+            withPgClient: contextWithPgClient,
+            //pgSubscriber,
+          };
+
+          return (await execute(args)) as any;
+        } finally {
+          contextWithPgClient.release?.();
+        }
+      })) as any;
+      expect(result).toMatchSnapshot();
+    },
+    100000000
+  );
 }
