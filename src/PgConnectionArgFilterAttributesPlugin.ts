@@ -98,7 +98,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                         ) {
                           throw Object.assign(
                             new Error(
-                              `Null literals are forbidden in filter argument input. - AllowNullInput: ${connectionFilterAllowNullInput}`
+                              "Null literals are forbidden in filter argument input."
                             ),
                             {
                               //TODO: mark this error as safe

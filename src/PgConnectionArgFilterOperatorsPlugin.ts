@@ -243,47 +243,62 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           isNull: {
             description:
               "Is null (if `true` is specified) or is not null (if `false` is specified).",
-            resolveInputCodec: () => TYPES.boolean,
-            resolveSqlValue: () => sql.null, // do not parse
+            resolveInputCodec: EXPORTABLE(
+              (TYPES) => () => TYPES.boolean,
+              [TYPES]
+            ),
+            resolveSqlValue: EXPORTABLE((sql) => () => sql.null, [sql]), // do not parse
             resolve: (i, _v, $input) =>
               sql`${i} ${$input.eval() ? sql`IS NULL` : sql`IS NOT NULL`}`,
           },
           equalTo: {
             description: "Equal to the specified value.",
-            resolve: (i, v) => sql`${i} = ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} = ${v}`, [sql]),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           notEqualTo: {
             description: "Not equal to the specified value.",
-            resolve: (i, v) => sql`${i} <> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <> ${v}`, [sql]),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           distinctFrom: {
             description:
               "Not equal to the specified value, treating null like an ordinary value.",
-            resolve: (i, v) => sql`${i} IS DISTINCT FROM ${v}`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} IS DISTINCT FROM ${v}`,
+              [sql]
+            ),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           notDistinctFrom: {
             description:
               "Equal to the specified value, treating null like an ordinary value.",
-            resolve: (i, v) => sql`${i} IS NOT DISTINCT FROM ${v}`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} IS NOT DISTINCT FROM ${v}`,
+              [sql]
+            ),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           in: {
             description: "Included in the specified list.",
-            resolve: (i, v) => sql`${i} = ANY(${v})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} = ANY(${v})`,
+              [sql]
+            ),
             resolveInputCodec: resolveArrayInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveType: resolveTypeToListOfNonNullable,
           },
           notIn: {
             description: "Not included in the specified list.",
-            resolve: (i, v) => sql`${i} <> ALL(${v})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} <> ALL(${v})`,
+              [sql]
+            ),
             resolveInputCodec: resolveArrayInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveType: resolveTypeToListOfNonNullable,
@@ -292,25 +307,25 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         const sortOperators: { [fieldName: string]: OperatorSpec } = {
           lessThan: {
             description: "Less than the specified value.",
-            resolve: (i, v) => sql`${i} < ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} < ${v}`, [sql]),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           lessThanOrEqualTo: {
             description: "Less than or equal to the specified value.",
-            resolve: (i, v) => sql`${i} <= ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <= ${v}`, [sql]),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           greaterThan: {
             description: "Greater than the specified value.",
-            resolve: (i, v) => sql`${i} > ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} > ${v}`, [sql]),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
           greaterThanOrEqualTo: {
             description: "Greater than or equal to the specified value.",
-            resolve: (i, v) => sql`${i} >= ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >= ${v}`, [sql]),
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
@@ -321,19 +336,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             includes: {
               description: "Contains the specified string (case-sensitive).",
               resolveInput: EXPORTABLE(
-                (escapeLikeWildcards) =>
-                  function (input) {
-                    return `%${escapeLikeWildcards(input)}%`;
-                  },
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}%`,
                 [escapeLikeWildcards]
               ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: EXPORTABLE(
-                (sql) =>
-                  function (i, v) {
-                    return sql`${i} LIKE ${v}`;
-                  },
+                (sql) => (i, v) => sql`${i} LIKE ${v}`,
                 [sql]
               ),
             },
@@ -341,32 +351,28 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description:
                 "Does not contain the specified string (case-sensitive).",
               resolveInput: EXPORTABLE(
-                (escapeLikeWildcards) =>
-                  function (input) {
-                    return `%${escapeLikeWildcards(input)}%`;
-                  },
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}%`,
                 [escapeLikeWildcards]
               ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: EXPORTABLE(
-                (sql) =>
-                  function (i, v) {
-                    return sql`${i} NOT LIKE ${v}`;
-                  },
+                (sql) => (i, v) => sql`${i} NOT LIKE ${v}`,
                 [sql]
               ),
             },
             includesInsensitive: {
               description: "Contains the specified string (case-insensitive).",
               resolveInput: EXPORTABLE(
-                (escapeLikeWildcards) =>
-                  function (input) {
-                    return `%${escapeLikeWildcards(input)}%`;
-                  },
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}%`,
                 [escapeLikeWildcards]
               ),
-              resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
@@ -374,7 +380,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description:
                 "Does not contain the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
-              resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
@@ -383,7 +392,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
-              resolve: (i, v) => sql`${i} LIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} LIKE ${v}`,
+                [sql]
+              ),
             },
             notStartsWith: {
               description:
@@ -391,13 +403,19 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
-              resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT LIKE ${v}`,
+                [sql]
+              ),
             },
             startsWithInsensitive: {
               description:
                 "Starts with the specified string (case-insensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
-              resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
@@ -405,7 +423,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description:
                 "Does not start with the specified string (case-insensitive).",
               resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
-              resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
@@ -414,7 +435,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
-              resolve: (i, v) => sql`${i} LIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} LIKE ${v}`,
+                [sql]
+              ),
             },
             notEndsWith: {
               description:
@@ -422,12 +446,18 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
-              resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT LIKE ${v}`,
+                [sql]
+              ),
             },
             endsWithInsensitive: {
               description: "Ends with the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
-              resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
@@ -435,35 +465,50 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               description:
                 "Does not end with the specified string (case-insensitive).",
               resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
-              resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             like: {
               description:
                 "Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-              resolve: (i, v) => sql`${i} LIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} LIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             },
             notLike: {
               description:
                 "Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-              resolve: (i, v) => sql`${i} NOT LIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT LIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             },
             likeInsensitive: {
               description:
                 "Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-              resolve: (i, v) => sql`${i} ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
             notLikeInsensitive: {
               description:
                 "Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.",
-              resolve: (i, v) => sql`${i} NOT ILIKE ${v}`,
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
+                [sql]
+              ),
               resolveInputCodec: resolveInputCodecInsensitive,
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
@@ -478,20 +523,20 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           containsKey: {
             description: "Contains the specified key.",
             resolveInputCodec: () => TYPES.text,
-            resolve: (i, v) => sql`${i} ? ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ? ${v}`, [sql]),
           },
           containsAllKeys: {
             name: "containsAllKeys",
             description: "Contains all of the specified keys.",
             resolveInputCodec: resolveTextArrayInputCodec,
-            resolve: (i, v) => sql`${i} ?& ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ?& ${v}`, [sql]),
             resolveType: resolveTypeToListOfNonNullable,
           },
           containsAnyKeys: {
             name: "containsAnyKeys",
             description: "Contains any of the specified keys.",
             resolveInputCodec: resolveTextArrayInputCodec,
-            resolve: (i, v) => sql`${i} ?| ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ?| ${v}`, [sql]),
             resolveType: resolveTypeToListOfNonNullable,
           },
           containedBy: {
@@ -507,19 +552,19 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           containsKey: {
             description: "Contains the specified key.",
             resolveInputCodec: () => TYPES.text,
-            resolve: (i, v) => sql`${i} ? ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ? ${v}`, [sql]),
           },
           containsAllKeys: {
             name: "containsAllKeys",
             description: "Contains all of the specified keys.",
             resolveInputCodec: resolveTextArrayInputCodec,
-            resolve: (i, v) => sql`${i} ?& ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ?& ${v}`, [sql]),
           },
           containsAnyKeys: {
             name: "containsAnyKeys",
             description: "Contains any of the specified keys.",
             resolveInputCodec: resolveTextArrayInputCodec,
-            resolve: (i, v) => sql`${i} ?| ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ?| ${v}`, [sql]),
           },
           containedBy: {
             description: "Contained by the specified JSON.",
@@ -688,16 +733,20 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsElement: {
             description: "Contains the specified value.",
-            resolveInputCodec(c) {
-              if (c.rangeOfCodec) {
-                return c.rangeOfCodec;
-              } else {
-                throw new Error(
-                  `Couldn't determine the range element type to use`
-                );
-              }
-            },
-            resolve: (i, v) => sql`${i} @> ${v}`,
+            resolveInputCodec: EXPORTABLE(
+              () =>
+                function (c) {
+                  if (c.rangeOfCodec) {
+                    return c.rangeOfCodec;
+                  } else {
+                    throw new Error(
+                      `Couldn't determine the range element type to use`
+                    );
+                  }
+                },
+              []
+            ),
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
           },
           containedBy: {
             description: "Contained by the specified range.",
@@ -742,51 +791,69 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             description: "Contains the specified list of values.",
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveInputCodec: resolveInputCodecSensitive,
-            resolve: (i, v) => sql`${i} @> ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
           },
           containedBy: {
             description: "Contained by the specified list of values.",
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveInputCodec: resolveInputCodecSensitive,
-            resolve: (i, v) => sql`${i} <@ ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
           },
           overlaps: {
             description: "Overlaps the specified list of values.",
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveInputCodec: resolveInputCodecSensitive,
-            resolve: (i, v) => sql`${i} && ${v}`,
+            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} && ${v}`, [sql]),
           },
           anyEqualTo: {
             description: "Any array item is equal to the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
-            resolve: (i, v) => sql`${v} = ANY (${i})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${v} = ANY (${i})`,
+              [sql]
+            ),
           },
           anyNotEqualTo: {
             description: "Any array item is not equal to the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
-            resolve: (i, v) => sql`${v} <> ANY (${i})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${v} <> ANY (${i})`,
+              [sql]
+            ),
           },
           anyLessThan: {
             description: "Any array item is less than the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
-            resolve: (i, v) => sql`${v} > ANY (${i})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${v} > ANY (${i})`,
+              [sql]
+            ),
           },
           anyLessThanOrEqualTo: {
             description:
               "Any array item is less than or equal to the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
-            resolve: (i, v) => sql`${v} >= ANY (${i})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${v} >= ANY (${i})`,
+              [sql]
+            ),
           },
           anyGreaterThan: {
             description: "Any array item is greater than the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
-            resolve: (i, v) => sql`${v} < ANY (${i})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${v} < ANY (${i})`,
+              [sql]
+            ),
           },
           anyGreaterThanOrEqualTo: {
             description:
               "Any array item is greater than or equal to the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
-            resolve: (i, v) => sql`${v} <= ANY (${i})`,
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${v} <= ANY (${i})`,
+              [sql]
+            ),
           },
         };
 
@@ -1064,11 +1131,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           Object.create(null) as GrafastInputFieldConfigMap<any, any>
         );
 
-        return EXPORTABLE(
-          (extend, fields, operatorFields) =>
-            extend(fields, operatorFields, ""),
-          [extend, fields, operatorFields]
-        );
+        return extend(fields, operatorFields, "");
       },
     },
   },
@@ -1203,9 +1266,7 @@ export function makeApplyPlanFromOperatorSpec(
         if (!connectionFilterAllowNullInput && $input.evalIs(null)) {
           // Forbidden
           throw Object.assign(
-            new Error(
-              `Null literals are forbidden in filter argument input. - AllowNullInput: ${connectionFilterAllowNullInput}`
-            ),
+            new Error("Null literals are forbidden in filter argument input."),
             {
               //TODO: mark this error as safe
             }

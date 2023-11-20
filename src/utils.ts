@@ -73,8 +73,7 @@ export function makeAssertAllowed(options: GraphileBuild.SchemaOptions) {
           $raw.evalIsEmpty()
         ) {
           throw Object.assign(
-            new Error(`Empty objects are forbidden in filter argument input. - AllowEmptyObjectInput;
-: [${connectionFilterAllowEmptyObjectInput}]`),
+            new Error("Empty objects are forbidden in filter argument input."),
             {
               //TODO: mark this error as safe
             }
@@ -105,9 +104,7 @@ export function makeAssertAllowed(options: GraphileBuild.SchemaOptions) {
         // For all modes, check null
         if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
           throw Object.assign(
-            new Error(
-              `Null literals are forbidden in filter argument input. - AllowNullInput: ${connectionFilterAllowNullInput}`
-            ),
+            new Error("Null literals are forbidden in filter argument input."),
             {
               //TODO: mark this error as safe
             }
