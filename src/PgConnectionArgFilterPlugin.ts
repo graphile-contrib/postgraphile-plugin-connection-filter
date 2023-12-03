@@ -7,6 +7,7 @@ import type {
 } from "graphql";
 import { OperatorsCategory } from "./interfaces";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 type AnyCodec = PgCodec<any, any, any, any, any, any, any>;

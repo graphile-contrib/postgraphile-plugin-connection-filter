@@ -15,5 +15,6 @@ module.exports = {
   ],
   rules: {
     "jest/expect-expect": ["off"],
+    "@typescript-eslint/no-namespace": ["off"],
   },
 };
