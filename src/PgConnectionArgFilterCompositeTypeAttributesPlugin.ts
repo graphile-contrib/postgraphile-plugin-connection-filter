@@ -1,5 +1,6 @@
 import type { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.Plugin =

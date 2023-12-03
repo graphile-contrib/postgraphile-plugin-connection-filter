@@ -2,6 +2,7 @@ import type { GraphQLInputType } from "graphql";
 import { $$filters } from "./interfaces";
 import { makeApplyPlanFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {

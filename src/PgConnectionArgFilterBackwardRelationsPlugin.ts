@@ -7,6 +7,7 @@ import type {
 } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin =

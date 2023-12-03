@@ -8,6 +8,7 @@ import type {
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
 
 // const textArrayCodec = listOfCodec(TYPES.text);
@@ -716,7 +717,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         let rangeLike = true;
         let enumLike = true;
         for (const codec of pgCodecs) {
-          let underlyingType = codec.domainOfCodec ?? codec;
+          const underlyingType = codec.domainOfCodec ?? codec;
           if (!underlyingType.arrayOfCodec) {
             arrayLike = false;
           }
@@ -734,34 +735,27 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             case TYPES.bigint:
             case TYPES.int:
             case TYPES.int2:
-
             case TYPES.boolean:
-
             case TYPES.varbit:
             case TYPES.bit:
-
             case TYPES.date:
             case TYPES.timestamp:
             case TYPES.timestamptz:
             case TYPES.time:
             case TYPES.timetz:
             case TYPES.interval:
-
             case TYPES.json:
             case TYPES.jsonb:
-
             case TYPES.cidr:
             case TYPES.inet:
             case TYPES.macaddr:
             case TYPES.macaddr8:
-
             case TYPES.text:
             case TYPES.name:
             case TYPES.citext:
             case TYPES.varchar:
             case TYPES.char:
             case TYPES.bpchar:
-
             case TYPES.uuid: {
               // Sort is fine
               break;
@@ -928,7 +922,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             if (!codecGraphQLType) {
               return memo;
             }
-            let type = resolveType
+            const type = resolveType
               ? resolveType(codecGraphQLType)
               : codecGraphQLType;
 
