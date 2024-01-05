@@ -84,7 +84,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             function (
               c: PgCodec<any, any, any, any, any, any, any>
             ): PgCodec<any, any, any, any, any, any, any> {
-              return c.domainOfCodec ? resolveDomains(c.domainOfCodec) : c;
+              let current = c;
+              while (current.domainOfCodec) {
+                current = current.domainOfCodec;
+              }
+              return current;
             },
           []
         );

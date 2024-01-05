@@ -1,5 +1,5 @@
 import type { PgSelectStep, PgCodec } from "@dataplan/pg";
-import type { ConnectionStep } from "grafast";
+import type { ConnectionStep, FieldArgs } from "grafast";
 import type {
   GraphQLInputType,
   GraphQLOutputType,
@@ -478,7 +478,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                             any,
                             PgSelectStep
                           >,
-                          fieldArgs: any
+                          fieldArgs: FieldArgs
                         ) {
                           assertAllowed(fieldArgs, "object");
                           const $pgSelect = $connection.getSubplan();
