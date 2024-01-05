@@ -132,7 +132,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             Self,
           } = context;
 
-          const assertAllowed = makeAssertAllowed(build.options);
+          const assertAllowed = makeAssertAllowed(build);
 
           const source =
             pgCodec &&

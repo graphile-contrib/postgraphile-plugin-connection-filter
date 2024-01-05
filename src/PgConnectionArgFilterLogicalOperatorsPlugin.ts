@@ -29,7 +29,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             return fields;
           }
 
-          const assertAllowed = makeAssertAllowed(build.options);
+          const assertAllowed = makeAssertAllowed(build);
 
           const logicalOperatorFields = {
             and: fieldWithHooks(

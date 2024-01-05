@@ -1,7 +1,6 @@
 import type { GraphQLInputType } from "graphql";
 import { $$filters } from "./interfaces";
 import { makeApplyPlanFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
-import { EXPORTABLE } from "graphile-export";
 
 const { version } = require("../package.json");
 
@@ -51,6 +50,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
       },
       GraphQLInputObjectType_fields(inFields, build, context) {
         let fields = inFields;
+        const { EXPORTABLE } = build;
         const {
           scope: { pgConnectionFilterOperators },
           Self,

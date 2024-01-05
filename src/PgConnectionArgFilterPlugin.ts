@@ -7,7 +7,6 @@ import type {
 } from "graphql";
 import { OperatorsCategory } from "./interfaces";
 import { makeAssertAllowed } from "./utils";
-import { EXPORTABLE } from "graphile-export";
 
 const { version } = require("../package.json"); // eslint-disable-line
 
@@ -99,6 +98,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             connectionFilterAllowedFieldTypes,
             connectionFilterArrays,
           },
+          EXPORTABLE,
         } = build;
 
         build.connectionFilterOperatorsDigest = (codec) => {
@@ -451,7 +451,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
-        const assertAllowed = makeAssertAllowed(build.options);
+        const assertAllowed = makeAssertAllowed(build);
 
         const attributeCodec =
           resource?.parameters && !resource?.codec.attributes

@@ -3,7 +3,6 @@ import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
 } from "./utils";
-import { EXPORTABLE } from "graphile-build";
 
 const { version } = require("../package.json");
 
@@ -38,6 +37,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
             inflection,
             connectionFilterOperatorsDigest,
             dataplanPg: { TYPES, PgConditionStep },
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
@@ -128,7 +128,12 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                     description: `Filter by the object’s \`${fieldName}\` field.`,
                     type: OperatorsType,
                     applyPlan: EXPORTABLE(
-                      (PgConditionStep, computedAttributeResource, functionResultCodec) => function (
+                      (
+                        PgConditionStep,
+                        computedAttributeResource,
+                        functionResultCodec
+                      ) =>
+                        function (
                           $where: PgConditionStep<any>,
                           fieldArgs: any
                         ) {
@@ -147,7 +152,11 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                           };
                           fieldArgs.apply($col);
                         },
-                      [PgConditionStep, computedAttributeResource, functionResultCodec]
+                      [
+                        PgConditionStep,
+                        computedAttributeResource,
+                        functionResultCodec,
+                      ]
                     ),
                   }
                 ),

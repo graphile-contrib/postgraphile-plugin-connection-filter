@@ -7,7 +7,6 @@ import type {
 import type { FieldArgs } from "grafast";
 import type { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
-import { EXPORTABLE } from "graphile-export";
 
 export function isComputedScalarAttributeResource(
   s: PgResource<any, any, any, any, any>
@@ -57,7 +56,8 @@ export function getComputedAttributeResources(
 }
 
 // TODO: rename. (Checks that the arguments aren't null/empty.)
-export function makeAssertAllowed(options: GraphileBuild.SchemaOptions) {
+export function makeAssertAllowed(build: GraphileBuild.Build) {
+  const { options, EXPORTABLE } = build;
   const {
     connectionFilterAllowNullInput,
     connectionFilterAllowEmptyObjectInput,
