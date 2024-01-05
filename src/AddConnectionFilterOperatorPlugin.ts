@@ -50,7 +50,6 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
       },
       GraphQLInputObjectType_fields(inFields, build, context) {
         let fields = inFields;
-        const { EXPORTABLE } = build;
         const {
           scope: { pgConnectionFilterOperators },
           Self,
@@ -118,7 +117,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
           );
         }
 
-        return EXPORTABLE((fields) => fields, [fields]);
+        return fields;
       },
     },
   },
