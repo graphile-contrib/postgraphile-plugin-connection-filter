@@ -1,8 +1,15 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as pg from "pg";
+
 import { promisify } from "util";
-import { ExecutionArgs, parse, validate } from "graphql";
+import {
+  ExecutionArgs,
+  GraphQLError,
+  GraphQLSchema,
+  parse,
+  validate,
+} from "graphql";
 import { withPgClient, withPgPool } from "../helpers";
 import { PgConditionArgumentPlugin } from "graphile-build-pg";
 import { postgraphilePresetAmber } from "postgraphile/presets/amber";
@@ -10,12 +17,22 @@ import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
 import { makeSchema } from "postgraphile";
 import { PostGraphileConnectionFilterPreset } from "../../src/index";
 import CustomOperatorsPlugin from "./../customOperatorsPlugin";
-import { execute, hookArgs } from "grafast";
+import { execute, hookArgs, isSafeError } from "grafast";
 import { SchemaResult } from "graphile-build";
 import { makeWithPgClientViaPgClientAlreadyInTransaction } from "@dataplan/pg/adaptors/pg";
+import { exportSchemaAsString } from "graphile-export";
+import { importFromStringSync } from "module-from-string";
 
 // TODO: remove this once Grafast gets it's planning under control :D
-jest.setTimeout(30000);
+jest.setTimeout(300000);
+
+const vmEval = (code: string) => {
+  const { schema } = importFromStringSync(code, {
+    transformOptions: { loader: "js" },
+    useCurrentGlobal: true,
+  });
+  return schema as GraphQLSchema;
+};
 
 const createPostGraphileSchema = async (
   pool: pg.Pool,
@@ -44,7 +61,23 @@ const createPostGraphileSchema = async (
     ],
   };
   const params = await makeSchema(preset);
-  return params;
+  if (process.env.TEST_EXPORTED_SCHEMA) {
+    return {
+      ...params,
+      schema: vmEval(
+        (
+          await exportSchemaAsString(params.schema, {
+            mode: "graphql-js",
+            // or:
+            // mode: "typeDefs",
+            modules: {},
+          })
+        ).code
+      ),
+    };
+  } else {
+    return params;
+  }
 };
 
 const readFile = promisify(fs.readFile);
@@ -91,36 +124,66 @@ beforeAll(async () => {
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
     ] = await Promise.all([
-      createPostGraphileSchema(pool, ["p"], {
-        skipPlugins: [PgConditionArgumentPlugin],
-      }),
-      createPostGraphileSchema(pool, ["p"], {
-        skipPlugins: [PgConditionArgumentPlugin],
-        dynamicJson: true,
-      }),
-      createPostGraphileSchema(pool, ["p"], {
-        skipPlugins: [PgConditionArgumentPlugin],
-        graphileBuildOptions: {
-          pgUseCustomNetworkScalars: true,
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
         },
-      }),
-      createPostGraphileSchema(pool, ["p"], {
-        skipPlugins: [PgConditionArgumentPlugin],
-        graphileBuildOptions: {
-          connectionFilterRelations: true,
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          dynamicJson: true,
         },
-      }),
-      createPostGraphileSchema(pool, ["p"], {
-        skipPlugins: [PgConditionArgumentPlugin],
-        simpleCollections: "only",
-      }),
-      createPostGraphileSchema(pool, ["p"], {
-        skipPlugins: [PgConditionArgumentPlugin],
-        graphileBuildOptions: {
-          connectionFilterAllowNullInput: true,
-          connectionFilterAllowEmptyObjectInput: true,
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            pgUseCustomNetworkScalars: true,
+          },
         },
-      }),
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            connectionFilterRelations: true,
+          },
+        },
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          simpleCollections: "only",
+        },
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            connectionFilterAllowNullInput: true,
+            connectionFilterAllowEmptyObjectInput: true,
+          },
+        },
+        {}
+      ),
       createPostGraphileSchema(
         pool,
         ["p"],
@@ -173,7 +236,6 @@ for (const queryFileName of queryFileNames) {
       queryFileName in gqlSchemaByQueryFileName
         ? gqlSchemaByQueryFileName[queryFileName]
         : gqlSchemas.normal;
-
     const document = parse(query);
     const errors = validate(schema, document);
     if (errors.length > 0) {
