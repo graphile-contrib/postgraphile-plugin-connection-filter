@@ -3,6 +3,7 @@ import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
 } from "./utils";
+import type { FieldArgs } from "grafast";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
@@ -38,6 +39,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
             inflection,
             connectionFilterOperatorsDigest,
             dataplanPg: { TYPES, PgConditionStep },
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
@@ -127,22 +129,37 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                   {
                     description: `Filter by the object’s \`${fieldName}\` field.`,
                     type: OperatorsType,
-                    applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                      if (
-                        typeof computedAttributeResource.from !== "function"
-                      ) {
-                        throw new Error(`Unexpected...`);
-                      }
-                      const expression = computedAttributeResource.from({
-                        placeholder: $where.alias,
-                      });
-                      const $col = new PgConditionStep($where);
-                      $col.extensions.pgFilterAttribute = {
-                        codec: functionResultCodec,
-                        expression,
-                      };
-                      fieldArgs.apply($col);
-                    },
+                    applyPlan: EXPORTABLE(
+                      (
+                        PgConditionStep,
+                        computedAttributeResource,
+                        functionResultCodec
+                      ) =>
+                        function (
+                          $where: PgConditionStep<any>,
+                          fieldArgs: FieldArgs
+                        ) {
+                          if (
+                            typeof computedAttributeResource.from !== "function"
+                          ) {
+                            throw new Error(`Unexpected...`);
+                          }
+                          const expression = computedAttributeResource.from({
+                            placeholder: $where.alias,
+                          });
+                          const $col = new PgConditionStep($where);
+                          $col.extensions.pgFilterAttribute = {
+                            codec: functionResultCodec,
+                            expression,
+                          };
+                          fieldArgs.apply($col);
+                        },
+                      [
+                        PgConditionStep,
+                        computedAttributeResource,
+                        functionResultCodec,
+                      ]
+                    ),
                   }
                 ),
               },

@@ -39,13 +39,13 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             graphql: { GraphQLBoolean },
             sql,
             options: { pgIgnoreReferentialIntegrity },
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
             scope: { pgCodec, isPgConnectionFilter },
           } = context;
-
-          const assertAllowed = makeAssertAllowed(build.options);
+          const assertAllowed = makeAssertAllowed(build);
 
           const source =
             pgCodec &&
@@ -113,24 +113,42 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                   () => ({
                     description: `Filter by the object’s \`${fieldName}\` relation.`,
                     type: ForeignTableFilterType,
-                    applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                      assertAllowed(fieldArgs, "object");
-                      const $subQuery = $where.existsPlan({
-                        tableExpression: foreignTableExpression,
-                        alias: foreignTable.name,
-                      });
-                      localAttributes.forEach((localAttribute, i) => {
-                        const remoteAttribute = remoteAttributes[i];
-                        $subQuery.where(
-                          sql`${$where.alias}.${sql.identifier(
-                            localAttribute as string
-                          )} = ${$subQuery.alias}.${sql.identifier(
-                            remoteAttribute as string
-                          )}`
-                        );
-                      });
-                      fieldArgs.apply($subQuery);
-                    },
+                    applyPlan: EXPORTABLE(
+                      (
+                        assertAllowed,
+                        foreignTable,
+                        foreignTableExpression,
+                        localAttributes,
+                        remoteAttributes,
+                        sql
+                      ) =>
+                        function ($where: PgConditionStep<any>, fieldArgs) {
+                          assertAllowed(fieldArgs, "object");
+                          const $subQuery = $where.existsPlan({
+                            tableExpression: foreignTableExpression,
+                            alias: foreignTable.name,
+                          });
+                          localAttributes.forEach((localAttribute, i) => {
+                            const remoteAttribute = remoteAttributes[i];
+                            $subQuery.where(
+                              sql`${$where.alias}.${sql.identifier(
+                                localAttribute as string
+                              )} = ${$subQuery.alias}.${sql.identifier(
+                                remoteAttribute as string
+                              )}`
+                            );
+                          });
+                          fieldArgs.apply($subQuery);
+                        },
+                      [
+                        assertAllowed,
+                        foreignTable,
+                        foreignTableExpression,
+                        localAttributes,
+                        remoteAttributes,
+                        sql,
+                      ]
+                    ),
                   })
                 ),
               },
@@ -155,24 +173,42 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                     () => ({
                       description: `A related \`${fieldName}\` exists.`,
                       type: GraphQLBoolean,
-                      applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                        assertAllowed(fieldArgs, "scalar");
-                        const $subQuery = $where.existsPlan({
-                          tableExpression: foreignTableExpression,
-                          alias: foreignTable.name,
-                          $equals: fieldArgs.get(),
-                        });
-                        localAttributes.forEach((localAttribute, i) => {
-                          const remoteAttribute = remoteAttributes[i];
-                          $subQuery.where(
-                            sql`${$where.alias}.${sql.identifier(
-                              localAttribute as string
-                            )} = ${$subQuery.alias}.${sql.identifier(
-                              remoteAttribute as string
-                            )}`
-                          );
-                        });
-                      },
+                      applyPlan: EXPORTABLE(
+                        (
+                          assertAllowed,
+                          foreignTable,
+                          foreignTableExpression,
+                          localAttributes,
+                          remoteAttributes,
+                          sql
+                        ) =>
+                          function ($where: PgConditionStep<any>, fieldArgs) {
+                            assertAllowed(fieldArgs, "scalar");
+                            const $subQuery = $where.existsPlan({
+                              tableExpression: foreignTableExpression,
+                              alias: foreignTable.name,
+                              $equals: fieldArgs.get(),
+                            });
+                            localAttributes.forEach((localAttribute, i) => {
+                              const remoteAttribute = remoteAttributes[i];
+                              $subQuery.where(
+                                sql`${$where.alias}.${sql.identifier(
+                                  localAttribute as string
+                                )} = ${$subQuery.alias}.${sql.identifier(
+                                  remoteAttribute as string
+                                )}`
+                              );
+                            });
+                          },
+                        [
+                          assertAllowed,
+                          foreignTable,
+                          foreignTableExpression,
+                          localAttributes,
+                          remoteAttributes,
+                          sql,
+                        ]
+                      ),
                     })
                   ),
                 },

@@ -15,6 +15,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
           const {
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
@@ -29,7 +30,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             return fields;
           }
 
-          const assertAllowed = makeAssertAllowed(build.options);
+          const assertAllowed = makeAssertAllowed(build);
 
           const logicalOperatorFields = {
             and: fieldWithHooks(
@@ -40,13 +41,17 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for all expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                  assertAllowed(fieldArgs, "list");
-                  const $and = $where.andPlan();
-                  // No need for this more correct form, easier to read if it's flatter.
-                  // fieldArgs.apply(() => $and.andPlan());
-                  fieldArgs.apply($and);
-                },
+                applyPlan: EXPORTABLE(
+                  (assertAllowed) =>
+                    function ($where: PgConditionStep<any>, fieldArgs) {
+                      assertAllowed(fieldArgs, "list");
+                      const $and = $where.andPlan();
+                      // No need for this more correct form, easier to read if it's flatter.
+                      // fieldArgs.apply(() => $and.andPlan());
+                      fieldArgs.apply($and);
+                    },
+                  [assertAllowed]
+                ),
               }
             ),
             or: fieldWithHooks(
@@ -57,12 +62,16 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for any expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                  assertAllowed(fieldArgs, "list");
-                  const $or = $where.orPlan();
-                  // Every entry is added to the `$or`, but the entries themselves should use an `and`.
-                  fieldArgs.apply(() => $or.andPlan());
-                },
+                applyPlan: EXPORTABLE(
+                  (assertAllowed) =>
+                    function ($where: PgConditionStep<any>, fieldArgs) {
+                      assertAllowed(fieldArgs, "list");
+                      const $or = $where.orPlan();
+                      // Every entry is added to the `$or`, but the entries themselves should use an `and`.
+                      fieldArgs.apply(() => $or.andPlan());
+                    },
+                  [assertAllowed]
+                ),
               }
             ),
             not: fieldWithHooks(
@@ -73,12 +82,16 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Negates the expression.`,
                 type: Self,
-                applyPlan($where: PgConditionStep<any>, fieldArgs) {
-                  assertAllowed(fieldArgs, "object");
-                  const $not = $where.notPlan();
-                  const $and = $not.andPlan();
-                  fieldArgs.apply($and);
-                },
+                applyPlan: EXPORTABLE(
+                  (assertAllowed) =>
+                    function ($where: PgConditionStep<any>, fieldArgs) {
+                      assertAllowed(fieldArgs, "object");
+                      const $not = $where.notPlan();
+                      const $and = $not.andPlan();
+                      fieldArgs.apply($and);
+                    },
+                  [assertAllowed]
+                ),
               }
             ),
           };

@@ -6,6 +6,7 @@ import type {
   GraphQLNamedType,
 } from "graphql";
 import { OperatorsCategory } from "./interfaces";
+import { makeAssertAllowed } from "./utils";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { version } = require("../package.json");
@@ -98,6 +99,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             connectionFilterAllowedFieldTypes,
             connectionFilterArrays,
           },
+          EXPORTABLE,
         } = build;
 
         build.connectionFilterOperatorsDigest = (codec) => {
@@ -230,15 +232,19 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           };
         };
 
-        build.escapeLikeWildcards = (input) => {
-          if ("string" !== typeof input) {
-            throw new Error(
-              "Non-string input was provided to escapeLikeWildcards"
-            );
-          } else {
-            return input.split("%").join("\\%").split("_").join("\\_");
-          }
-        };
+        build.escapeLikeWildcards = EXPORTABLE(
+          () =>
+            function (input) {
+              if ("string" !== typeof input) {
+                throw new Error(
+                  "Non-string input was provided to escapeLikeWildcards"
+                );
+              } else {
+                return input.split("%").join("\\%").split("_").join("\\_");
+              }
+            },
+          []
+        );
 
         return build;
       },
@@ -387,6 +393,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             connectionFilterAllowNullInput,
             connectionFilterAllowEmptyObjectInput,
           },
+          EXPORTABLE,
         } = build;
         const {
           scope: {
@@ -445,33 +452,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
           return args;
         }
 
-        const assertAllowed = (fieldArgs: FieldArgs) => {
-          const $raw = fieldArgs.getRaw();
-          if (
-            !connectionFilterAllowEmptyObjectInput &&
-            "evalIsEmpty" in $raw &&
-            $raw.evalIsEmpty()
-          ) {
-            throw Object.assign(
-              new Error(
-                "Empty objects are forbidden in filter argument input."
-              ),
-              {
-                //TODO: mark this error as safe
-              }
-            );
-          }
-          if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
-            throw Object.assign(
-              new Error(
-                "Null literals are forbidden in filter argument input."
-              ),
-              {
-                //TODO: mark this error as safe
-              }
-            );
-          }
-        };
+        const assertAllowed = makeAssertAllowed(build);
 
         const attributeCodec =
           resource?.parameters && !resource?.codec.attributes
@@ -488,33 +469,50 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               autoApplyAfterParentPlan: true,
               ...(isPgFieldConnection
                 ? {
-                    applyPlan(
-                      _,
-                      $connection: ConnectionStep<any, any, any, PgSelectStep>,
-                      fieldArgs
-                    ) {
-                      assertAllowed(fieldArgs);
-                      const $pgSelect = $connection.getSubplan();
-                      const $where = $pgSelect.wherePlan();
-                      if (attributeCodec) {
-                        $where.extensions.pgFilterAttribute = {
-                          codec: attributeCodec,
-                        };
-                      }
-                      fieldArgs.apply($where);
-                    },
+                    applyPlan: EXPORTABLE(
+                      (assertAllowed, attributeCodec) =>
+                        function (
+                          _: any,
+                          $connection: ConnectionStep<
+                            any,
+                            any,
+                            any,
+                            PgSelectStep
+                          >,
+                          fieldArgs: FieldArgs
+                        ) {
+                          assertAllowed(fieldArgs, "object");
+                          const $pgSelect = $connection.getSubplan();
+                          const $where = $pgSelect.wherePlan();
+                          if (attributeCodec) {
+                            $where.extensions.pgFilterAttribute = {
+                              codec: attributeCodec,
+                            };
+                          }
+                          fieldArgs.apply($where);
+                        },
+                      [assertAllowed, attributeCodec]
+                    ),
                   }
                 : {
-                    applyPlan(_, $pgSelect: PgSelectStep, fieldArgs) {
-                      assertAllowed(fieldArgs);
-                      const $where = $pgSelect.wherePlan();
-                      if (attributeCodec) {
-                        $where.extensions.pgFilterAttribute = {
-                          codec: attributeCodec,
-                        };
-                      }
-                      fieldArgs.apply($where);
-                    },
+                    applyPlan: EXPORTABLE(
+                      (assertAllowed, attributeCodec) =>
+                        function (
+                          _: any,
+                          $pgSelect: PgSelectStep,
+                          fieldArgs: any
+                        ) {
+                          assertAllowed(fieldArgs, "object");
+                          const $where = $pgSelect.wherePlan();
+                          if (attributeCodec) {
+                            $where.extensions.pgFilterAttribute = {
+                              codec: attributeCodec,
+                            };
+                          }
+                          fieldArgs.apply($where);
+                        },
+                      [assertAllowed, attributeCodec]
+                    ),
                   }),
             },
           },
