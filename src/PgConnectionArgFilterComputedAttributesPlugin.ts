@@ -3,6 +3,7 @@ import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
 } from "./utils";
+import type { FieldArgs } from "grafast";
 
 const { version } = require("../package.json");
 
@@ -135,7 +136,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                       ) =>
                         function (
                           $where: PgConditionStep<any>,
-                          fieldArgs: any
+                          fieldArgs: FieldArgs
                         ) {
                           if (
                             typeof computedAttributeResource.from !== "function"
