@@ -252,8 +252,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               [TYPES]
             ),
             resolveSqlValue: EXPORTABLE((sql) => () => sql.null, [sql]), // do not parse
-            resolve: (i, _v, $input) =>
-              sql`${i} ${$input.eval() ? sql`IS NULL` : sql`IS NOT NULL`}`,
+            resolve: EXPORTABLE(
+              (sql) => (i, _v, $input) =>
+                sql`${i} ${$input.eval() ? sql`IS NULL` : sql`IS NOT NULL`}`,
+              [sql]
+            ),
           },
           equalTo: {
             description: "Equal to the specified value.",
@@ -383,7 +386,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             notIncludesInsensitive: {
               description:
                 "Does not contain the specified string (case-insensitive).",
-              resolveInput: (input) => `%${escapeLikeWildcards(input)}%`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}%`,
+                [escapeLikeWildcards]
+              ),
               resolve: EXPORTABLE(
                 (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
                 [sql]
@@ -393,7 +400,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             },
             startsWith: {
               description: "Starts with the specified string (case-sensitive).",
-              resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `${escapeLikeWildcards(input)}%`,
+                [escapeLikeWildcards]
+              ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: EXPORTABLE(
@@ -404,7 +415,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             notStartsWith: {
               description:
                 "Does not start with the specified string (case-sensitive).",
-              resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `${escapeLikeWildcards(input)}%`,
+                [escapeLikeWildcards]
+              ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: EXPORTABLE(
@@ -415,7 +430,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             startsWithInsensitive: {
               description:
                 "Starts with the specified string (case-insensitive).",
-              resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `${escapeLikeWildcards(input)}%`,
+                [escapeLikeWildcards]
+              ),
               resolve: EXPORTABLE(
                 (sql) => (i, v) => sql`${i} ILIKE ${v}`,
                 [sql]
@@ -426,7 +445,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             notStartsWithInsensitive: {
               description:
                 "Does not start with the specified string (case-insensitive).",
-              resolveInput: (input) => `${escapeLikeWildcards(input)}%`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `${escapeLikeWildcards(input)}%`,
+                [escapeLikeWildcards]
+              ),
               resolve: EXPORTABLE(
                 (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
                 [sql]
@@ -436,7 +459,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             },
             endsWith: {
               description: "Ends with the specified string (case-sensitive).",
-              resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}`,
+                [escapeLikeWildcards]
+              ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: EXPORTABLE(
@@ -447,7 +474,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             notEndsWith: {
               description:
                 "Does not end with the specified string (case-sensitive).",
-              resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}`,
+                [escapeLikeWildcards]
+              ),
               resolveInputCodec: resolveInputCodecSensitive,
               resolveSqlIdentifier: resolveSqlIdentifierSensitive,
               resolve: EXPORTABLE(
@@ -457,7 +488,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             },
             endsWithInsensitive: {
               description: "Ends with the specified string (case-insensitive).",
-              resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}`,
+                [escapeLikeWildcards]
+              ),
               resolve: EXPORTABLE(
                 (sql) => (i, v) => sql`${i} ILIKE ${v}`,
                 [sql]
@@ -468,7 +503,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             notEndsWithInsensitive: {
               description:
                 "Does not end with the specified string (case-insensitive).",
-              resolveInput: (input) => `%${escapeLikeWildcards(input)}`,
+              resolveInput: EXPORTABLE(
+                (escapeLikeWildcards) => (input) =>
+                  `%${escapeLikeWildcards(input)}`,
+                [escapeLikeWildcards]
+              ),
               resolve: EXPORTABLE(
                 (sql) => (i, v) => sql`${i} NOT ILIKE ${v}`,
                 [sql]
@@ -517,8 +556,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
           };
-        const resolveTextArrayInputCodec = () =>
-          listOfCodec(TYPES.text, { extensions: { listItemNonNull: true } });
+        const resolveTextArrayInputCodec = EXPORTABLE(
+          (TYPES, listOfCodec) => () =>
+            listOfCodec(TYPES.text, { extensions: { listItemNonNull: true } }),
+          [TYPES, listOfCodec]
+        );
         const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified KeyValueHash.",
@@ -526,7 +568,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsKey: {
             description: "Contains the specified key.",
-            resolveInputCodec: () => TYPES.text,
+            resolveInputCodec: EXPORTABLE((TYPES) => () => TYPES.text, [TYPES]),
             resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ? ${v}`, [sql]),
           },
           containsAllKeys: {
@@ -555,7 +597,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsKey: {
             description: "Contains the specified key.",
-            resolveInputCodec: () => TYPES.text,
+            resolveInputCodec: EXPORTABLE((TYPES) => () => TYPES.text, [TYPES]),
             resolve: EXPORTABLE((sql) => (i, v) => sql`${i} ? ${v}`, [sql]),
           },
           containsAllKeys: {
