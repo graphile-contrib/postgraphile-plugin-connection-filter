@@ -47,7 +47,14 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       const $and = $where.andPlan();
                       // No need for this more correct form, easier to read if it's flatter.
                       // fieldArgs.apply(() => $and.andPlan());
-                      fieldArgs.apply($and);
+                      const value = fieldArgs.getRaw().eval();
+                      for (let i = 0; i < value.length; i++) {
+                        for (const key in value[i]) {
+                          if (value[i][key] !== undefined) {
+                            fieldArgs.apply($and, [i, key]);
+                          }
+                        }
+                      }
                     },
                   [assertAllowed]
                 ),
@@ -65,9 +72,16 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                   (assertAllowed) =>
                     function ($where: PgConditionStep<any>, fieldArgs) {
                       assertAllowed(fieldArgs, "list");
+                      const value = fieldArgs.getRaw().eval();
                       const $or = $where.orPlan();
-                      // Every entry is added to the `$or`, but the entries themselves should use an `and`.
-                      fieldArgs.apply(() => $or.andPlan());
+                      for (let i = 0; i < value.length; i++) {
+                        for (const key in value[i]) {
+                          if (value[i][key] !== undefined) {
+                            // Every entry is added to the `$or`, but the entries themselves should use an `and`.
+                            fieldArgs.apply(() => $or.andPlan(), [i, key]);
+                          }
+                        }
+                      }
                     },
                   [assertAllowed]
                 ),
@@ -87,7 +101,12 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(fieldArgs, "object");
                       const $not = $where.notPlan();
                       const $and = $not.andPlan();
-                      fieldArgs.apply($and);
+                      const value = fieldArgs.getRaw().eval();
+                      for (const key in value) {
+                        if (value[key] !== undefined) {
+                          fieldArgs.apply($and, [key]);
+                        }
+                      }
                     },
                   [assertAllowed]
                 ),

@@ -107,7 +107,12 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                         }
                         const $col = new PgConditionStep($where);
                         $col.extensions.pgFilterAttribute = colSpec;
-                        fieldArgs.apply($col);
+                        const value = $raw.eval();
+                        for (const key in value) {
+                          if (value[key] !== undefined) {
+                            fieldArgs.apply($col, [key]);
+                          }
+                        }
                       },
                     [
                       PgConditionStep,

@@ -488,7 +488,12 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                               codec: attributeCodec,
                             };
                           }
-                          fieldArgs.apply($where);
+                          const value = fieldArgs.getRaw().eval();
+                          for (const key in value) {
+                            if (value[key] !== undefined) {
+                              fieldArgs.apply($where, [key]);
+                            }
+                          }
                         },
                       [assertAllowed, attributeCodec]
                     ),
@@ -508,7 +513,12 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                               codec: attributeCodec,
                             };
                           }
-                          fieldArgs.apply($where);
+                          const value = fieldArgs.getRaw().eval();
+                          for (const key in value) {
+                            if (value[key] !== undefined) {
+                              fieldArgs.apply($where, [key]);
+                            }
+                          }
                         },
                       [assertAllowed, attributeCodec]
                     ),
