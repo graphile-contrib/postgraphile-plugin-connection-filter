@@ -1,6 +1,7 @@
 import type { Plugin } from "graphile-build";
 import type { PgClass, PgProc, PgType } from "graphile-build-pg";
 import { ConnectionFilterResolver } from "./PgConnectionArgFilterPlugin";
+import camelCase from "camelcase";
 
 const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
   builder,
@@ -31,6 +32,9 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
 
     connectionFilterTypesByTypeName[Self.name] = Self;
 
+    let computedColumnNames: string[] = [];
+    let argumentLists: { name: string; type: PgType }[][] = [];
+
     const procByFieldName = (
       introspectionResultsByKind.procedure as PgProc[]
     ).reduce((memo: { [fieldName: string]: PgProc }, proc) => {
@@ -49,19 +53,6 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
         proc
       );
       if (!computedColumnDetails) return memo;
-      const { pseudoColumnName } = computedColumnDetails;
-
-      // Must have only one required argument
-      const inputArgsCount = proc.argTypeIds.filter(
-        (_typeId, idx) =>
-          proc.argModes.length === 0 || // all args are `in`
-          proc.argModes[idx] === "i" || // this arg is `in`
-          proc.argModes[idx] === "b" // this arg is `inout`
-      ).length;
-      const nonOptionalArgumentsCount = inputArgsCount - proc.argDefaultsNum;
-      if (nonOptionalArgumentsCount > 1) {
-        return memo;
-      }
 
       // Must return a scalar or an array
       if (proc.returnsSet) return memo;
@@ -75,11 +66,25 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
       if (isVoid) return memo;
 
       // Looks good
+      const { argNames, argTypes, pseudoColumnName } = computedColumnDetails;
       const fieldName = inflection.computedColumn(
         pseudoColumnName,
         proc,
         table
       );
+
+      const args: { name: string; type: PgType }[] = [];
+      // The first argument is of table type. It is not exposed to the schema.
+      for (let i = 1; i < argNames.length; i++) {
+        args.push({
+          name: camelCase(argNames[i]),
+          type: argTypes[i],
+        });
+      }
+
+      computedColumnNames.push(pseudoColumnName);
+      argumentLists.push(args);
+
       memo = build.extend(memo, { [fieldName]: proc });
       return memo;
     }, {});
@@ -87,27 +92,50 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
     const operatorsTypeNameByFieldName: { [fieldName: string]: string } = {};
 
     const procFields = Object.entries(procByFieldName).reduce(
-      (memo, [fieldName, proc]) => {
+      (memo, [fieldName, proc], index) => {
+        const hasArgsField: boolean = argumentLists[index].length >= 1;
+
+        const computedColumnWithArgsDetails = hasArgsField
+          ? {
+              name: computedColumnNames[index],
+              arguments: argumentLists[index],
+            }
+          : undefined;
+
         const OperatorsType = connectionFilterOperatorsType(
           newWithHooks,
           proc.returnTypeId,
-          null
+          null,
+          computedColumnWithArgsDetails
         );
         if (!OperatorsType) {
           return memo;
         }
         operatorsTypeNameByFieldName[fieldName] = OperatorsType.name;
+
+        const createdField = fieldWithHooks(
+          fieldName,
+          {
+            description: `Filter by the object’s \`${fieldName}\` field.`,
+            type: OperatorsType,
+          },
+          {
+            isPgConnectionFilterField: true,
+          }
+        );
+
+        if (hasArgsField) {
+          // The args field resolver doesn't do anything. The args are
+          // handled in the resolver of the computed column (below).
+          connectionFilterRegisterResolver(
+            createdField.type.name,
+            "args",
+            () => null
+          );
+        }
+
         return extend(memo, {
-          [fieldName]: fieldWithHooks(
-            fieldName,
-            {
-              description: `Filter by the object’s \`${fieldName}\` field.`,
-              type: OperatorsType,
-            },
-            {
-              isPgConnectionFilterField: true,
-            }
-          ),
+          [fieldName]: createdField,
         });
       },
       {}
@@ -121,10 +149,29 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
     }) => {
       if (fieldValue == null) return null;
 
+      const queryParameters: { [key: string]: any } = fieldValue;
+      const providedArgs = queryParameters["args"];
+
       const proc = procByFieldName[fieldName];
+
+      // Collect arguments of the computed column and add it
+      // to the sql function arguments.
+      let sqlFunctionArguments = [sql.fragment`${sourceAlias}`];
+      // The first function argument (table type) is already set above.
+      for (let i = 1; i < proc.argNames.length; i++) {
+        const nameOfArgument = camelCase(proc.argNames[i]);
+        const providedArgValue = providedArgs?.[nameOfArgument];
+        if (providedArgValue === undefined)
+          throw new Error(
+            `The value for argument ${nameOfArgument} is missing.`
+          );
+
+        sqlFunctionArguments.push(sql.fragment`${sql.value(providedArgValue)}`);
+      }
+
       const sqlIdentifier = sql.query`${sql.identifier(
         proc.namespace.name
-      )}.${sql.identifier(proc.name)}(${sourceAlias})`;
+      )}.${sql.identifier(proc.name)}(${sql.join(sqlFunctionArguments, ",")})`;
       const pgType = introspectionResultsByKind.typeById[proc.returnTypeId];
       const pgTypeModifier = null;
       const filterTypeName = operatorsTypeNameByFieldName[fieldName];
@@ -175,8 +222,9 @@ const PgConnectionArgFilterComputedColumnsPlugin: Plugin = (
       return null;
     }
 
+    const argNames = proc.argNames;
     const pseudoColumnName = proc.name.substr(table.name.length + 1);
-    return { argTypes, pseudoColumnName };
+    return { argNames, argTypes, pseudoColumnName };
   }
 };
 

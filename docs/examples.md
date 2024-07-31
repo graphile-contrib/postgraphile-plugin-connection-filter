@@ -95,6 +95,32 @@ query {
 }
 ```
 
+#### Computed Columns with Arguments
+
+```graphql
+query {
+  allPeople(
+    filter: {
+      computedColumn: {
+        equalTo: 17
+        args: { firstArgument: 1, secondArgument: 2 }
+      }
+    }
+  ) {
+    nodes {
+      firstName
+      lastName
+    }
+  }
+}
+```
+
+The `args` are passed to the SQL function that is resposible for creating the computed column:
+
+```sql
+FUNCTION people_computed_column(person people, first_argument int, second_argument int)
+```
+
 #### Relations: Nested
 
 ```graphql

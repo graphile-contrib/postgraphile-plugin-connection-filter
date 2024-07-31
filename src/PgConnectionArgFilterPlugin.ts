@@ -138,7 +138,12 @@ const PgConnectionArgFilterPlugin: Plugin = (
   builder.hook("build", (build) => {
     const {
       extend,
-      graphql: { getNamedType, GraphQLInputObjectType, GraphQLList },
+      graphql: {
+        getNamedType,
+        GraphQLInputObjectType,
+        GraphQLList,
+        GraphQLNonNull,
+      },
       inflection,
       pgIntrospectionResultsByKind: introspectionResultsByKind,
       pgGetGqlInputTypeByTypeIdAndModifier,
@@ -230,7 +235,14 @@ const PgConnectionArgFilterPlugin: Plugin = (
     const connectionFilterOperatorsType = (
       newWithHooks: any,
       pgTypeId: number,
-      pgTypeModifier: number
+      pgTypeModifier: number,
+      computedColumnWithArgsDetails?: {
+        name: string;
+        arguments: {
+          name: string;
+          type: PgType;
+        }[];
+      }
     ) => {
       const pgType = introspectionResultsByKind.typeById[pgTypeId];
 
@@ -349,7 +361,10 @@ const PgConnectionArgFilterPlugin: Plugin = (
           : null;
 
       const isListType = fieldType instanceof GraphQLList;
-      const operatorsTypeName = isListType
+
+      const operatorsTypeName = computedColumnWithArgsDetails
+        ? `ComputedColumnWithArgs_${computedColumnWithArgsDetails.name}`
+        : isListType
         ? inflection.filterFieldListType(namedType.name)
         : inflection.filterFieldType(namedType.name);
 
@@ -367,14 +382,54 @@ const PgConnectionArgFilterPlugin: Plugin = (
         // fully defined with fields, so return it
         return existingType;
       }
+
+      let connectionFilterOperatorsTypeConfig: {
+        name: string;
+        description?: string;
+        fields?: {
+          args: {
+            type: any;
+          };
+        };
+      } = {
+        name: operatorsTypeName,
+        description: `A filter to be used against ${namedType.name}${
+          isListType ? " List" : ""
+        } fields. All fields are combined with a logical ‘and.’`,
+      };
+
+      if (computedColumnWithArgsDetails) {
+        // Create a type for the args field
+        let argFields: { [key: string]: any } = {};
+        computedColumnWithArgsDetails.arguments.forEach((argument) => {
+          argFields[argument.name] = {
+            type: new GraphQLNonNull(
+              pgGetGqlInputTypeByTypeIdAndModifier(argument.type.id)
+            ),
+          };
+        });
+
+        const argsType = newWithHooks(
+          GraphQLInputObjectType,
+          {
+            name: `${operatorsTypeName}_Arguments`,
+            fields: argFields,
+          },
+          {},
+          true
+        );
+
+        // Add the args field to the filter-operator type
+        connectionFilterOperatorsTypeConfig.fields = {
+          args: {
+            type: new GraphQLNonNull(argsType),
+          },
+        };
+      }
+
       return newWithHooks(
         GraphQLInputObjectType,
-        {
-          name: operatorsTypeName,
-          description: `A filter to be used against ${namedType.name}${
-            isListType ? " List" : ""
-          } fields. All fields are combined with a logical ‘and.’`,
-        },
+        connectionFilterOperatorsTypeConfig,
         {
           isPgConnectionFilterOperators: true,
           pgConnectionFilterOperatorsCategory,
