@@ -16,6 +16,12 @@ Install with:
 yarn add postgraphile postgraphile-plugin-connection-filter
 ```
 
+for PostGraphile v5 (beta):
+
+```
+yarn add postgraphile@beta postgraphile-plugin-connection-filter@beta
+```
+
 CLI usage via `--append-plugins`:
 
 ```
@@ -31,6 +37,18 @@ import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter";
 const middleware = postgraphile(DATABASE_URL, SCHEMAS, {
   appendPlugins: [ConnectionFilterPlugin],
 });
+```
+
+Config example for PostGraphile v5 (beta), `graphile.config.mjs`:
+
+```ts
+import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter";
+
+const preset = {
+  extends: [ConnectionFilterPlugin.PostGraphileConnectionFilterPreset],
+};
+
+export default preset;
 ```
 
 ## Performance and Security
