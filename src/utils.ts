@@ -4,7 +4,6 @@ import type {
   PgResource,
   PgResourceParameter,
 } from "@dataplan/pg";
-import type { FieldArgs } from "grafast";
 import type { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
 
@@ -64,13 +63,13 @@ export function makeAssertAllowed(build: GraphileBuild.Build) {
   } = options;
   const assertAllowed = EXPORTABLE(
     (connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput) =>
-      function (fieldArgs: FieldArgs, mode: "list" | "object" | "scalar") {
-        const $raw = fieldArgs.getRaw();
+      function (value: unknown, mode: "list" | "object" | "scalar") {
         if (
           mode === "object" &&
           !connectionFilterAllowEmptyObjectInput &&
-          "evalIsEmpty" in $raw &&
-          $raw.evalIsEmpty()
+          typeof value === "object" &&
+          value !== null &&
+          Object.keys(value).length === 0
         ) {
           throw Object.assign(
             new Error("Empty objects are forbidden in filter argument input."),
@@ -79,16 +78,17 @@ export function makeAssertAllowed(build: GraphileBuild.Build) {
             }
           );
         }
-        if (
-          mode === "list" &&
-          !connectionFilterAllowEmptyObjectInput &&
-          "evalLength" in $raw
-        ) {
-          const l = $raw.evalLength();
-          if (l != null) {
+        if (mode === "list" && !connectionFilterAllowEmptyObjectInput) {
+          const arr = value as any[] | null | undefined;
+          if (arr) {
+            const l = arr.length;
             for (let i = 0; i < l; i++) {
-              const $entry = $raw.at(i);
-              if ("evalIsEmpty" in $entry && $entry.evalIsEmpty()) {
+              const entry = arr[i];
+              if (
+                typeof entry === "object" &&
+                entry !== null &&
+                Object.keys(entry).length === 0
+              ) {
                 throw Object.assign(
                   new Error(
                     "Empty objects are forbidden in filter argument input."
@@ -102,7 +102,7 @@ export function makeAssertAllowed(build: GraphileBuild.Build) {
           }
         }
         // For all modes, check null
-        if (!connectionFilterAllowNullInput && $raw.evalIs(null)) {
+        if (!connectionFilterAllowNullInput && value === null) {
           throw Object.assign(
             new Error("Null literals are forbidden in filter argument input."),
             {

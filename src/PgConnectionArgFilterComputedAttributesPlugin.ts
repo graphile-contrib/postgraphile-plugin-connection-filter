@@ -1,9 +1,10 @@
-import type { PgConditionStep } from "@dataplan/pg";
+import type { PgCondition } from "@dataplan/pg";
 import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
 } from "./utils";
 import type { FieldArgs } from "grafast";
+import { GraphQLInputObjectType } from "graphql";
 
 const { version } = require("../package.json");
 
@@ -51,7 +52,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
           const {
             inflection,
             connectionFilterOperatorsDigest,
-            dataplanPg: { TYPES, PgConditionStep },
+            dataplanPg: { TYPES, PgCondition },
             EXPORTABLE,
           } = build;
           const {
@@ -99,7 +100,9 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
             if (!digest) {
               continue;
             }
-            const OperatorsType = build.getTypeByName(digest.operatorsTypeName);
+            const OperatorsType = build.getTypeByName(
+              digest.operatorsTypeName
+            ) as GraphQLInputObjectType;
             if (!OperatorsType) {
               continue;
             }
@@ -142,28 +145,38 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                   {
                     description: `Filter by the object’s \`${fieldName}\` field.`,
                     type: OperatorsType,
-                    applyPlan: EXPORTABLE(
-                      (PgConditionStep, computedAttributeResource, fieldName, functionResultCodec) => function (
-                          $where: PgConditionStep<any>,
-                          fieldArgs: FieldArgs
-                        ) {
+                    apply: EXPORTABLE(
+                      (
+                        PgCondition,
+                        computedAttributeResource,
+                        fieldName,
+                        functionResultCodec
+                      ) =>
+                        function ($where: PgCondition, value: object | null) {
                           if (
                             typeof computedAttributeResource.from !== "function"
                           ) {
                             throw new Error(`Unexpected...`);
                           }
+                          // TODO: assertAllowed?
+                          if (value == null) return;
                           const expression = computedAttributeResource.from({
                             placeholder: $where.alias,
                           });
-                          const $col = new PgConditionStep($where);
+                          const $col = new PgCondition($where);
                           $col.extensions.pgFilterAttribute = {
                             fieldName,
                             codec: functionResultCodec,
                             expression,
                           };
-                          fieldArgs.apply($col);
+                          return $col;
                         },
-                      [PgConditionStep, computedAttributeResource, fieldName, functionResultCodec]
+                      [
+                        PgCondition,
+                        computedAttributeResource,
+                        fieldName,
+                        functionResultCodec,
+                      ]
                     ),
                   }
                 ),

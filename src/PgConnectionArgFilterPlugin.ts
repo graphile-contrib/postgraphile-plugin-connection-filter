@@ -1,5 +1,5 @@
-import type { PgSelectStep, PgCodec } from "@dataplan/pg";
-import type { ConnectionStep, FieldArgs } from "grafast";
+import type { PgSelectStep, PgCodec, PgSelectQueryBuilder } from "@dataplan/pg";
+import type { ConnectionStep, FieldArg } from "grafast";
 import type {
   GraphQLInputType,
   GraphQLOutputType,
@@ -403,15 +403,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
 
       // Add `filter` input argument to connection and simple collection types
       GraphQLObjectType_fields_field_args(args, build, context) {
-        const {
-          extend,
-          inflection,
-          options: {
-            connectionFilterAllowNullInput,
-            connectionFilterAllowEmptyObjectInput,
-          },
-          EXPORTABLE,
-        } = build;
+        const { extend, inflection, EXPORTABLE } = build;
         const {
           scope: {
             isPgFieldConnection,
@@ -483,7 +475,6 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               description:
                 "A filter to be used in determining which values should be returned by the collection.",
               type: FilterType,
-              autoApplyAfterParentPlan: true,
               ...(isPgFieldConnection
                 ? {
                     applyPlan: EXPORTABLE(
@@ -496,17 +487,23 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                             any,
                             PgSelectStep
                           >,
-                          fieldArgs: FieldArgs
+                          fieldArg: FieldArg
                         ) {
-                          assertAllowed(fieldArgs, "object");
+                          assertAllowed(fieldArg, "object");
                           const $pgSelect = $connection.getSubplan();
-                          const $where = $pgSelect.wherePlan();
-                          if (attributeCodec) {
-                            $where.extensions.pgFilterAttribute = {
-                              codec: attributeCodec,
-                            };
-                          }
-                          fieldArgs.apply($where);
+                          const myExtensions = attributeCodec
+                            ? { pgFilterAttribute: { codec: attributeCodec } }
+                            : null;
+                          fieldArg.apply(
+                            $pgSelect,
+                            (queryBuilder: PgSelectQueryBuilder) => ({
+                              ...queryBuilder,
+                              extensions: {
+                                ...queryBuilder.extensions,
+                                ...myExtensions,
+                              },
+                            })
+                          );
                         },
                       [assertAllowed, attributeCodec]
                     ),
@@ -517,16 +514,22 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                         function (
                           _: any,
                           $pgSelect: PgSelectStep,
-                          fieldArgs: any
+                          fieldArg: FieldArg
                         ) {
-                          assertAllowed(fieldArgs, "object");
-                          const $where = $pgSelect.wherePlan();
-                          if (attributeCodec) {
-                            $where.extensions.pgFilterAttribute = {
-                              codec: attributeCodec,
-                            };
-                          }
-                          fieldArgs.apply($where);
+                          assertAllowed(fieldArg, "object");
+                          const myExtensions = attributeCodec
+                            ? { pgFilterAttribute: { codec: attributeCodec } }
+                            : null;
+                          fieldArg.apply(
+                            $pgSelect,
+                            (queryBuilder: PgSelectQueryBuilder) => ({
+                              ...queryBuilder,
+                              extensions: {
+                                ...queryBuilder.extensions,
+                                ...myExtensions,
+                              },
+                            })
+                          );
                         },
                       [assertAllowed, attributeCodec]
                     ),
