@@ -3,7 +3,6 @@ import type {
   PgCodec,
   PgConditionCapableParent,
 } from "@dataplan/pg";
-import { sqlValueWithCodec } from "@dataplan/pg";
 import type {
   GrafastInputFieldConfigMap,
   InputObjectFieldApplyResolver,
@@ -26,7 +25,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         const {
           extend,
           graphql: { GraphQLNonNull, GraphQLList, isListType, isNonNullType },
-          dataplanPg: { isEnumCodec, listOfCodec, TYPES },
+          dataplanPg: { isEnumCodec, listOfCodec, TYPES, sqlValueWithCodec },
           sql,
           escapeLikeWildcards,
           options: {
@@ -1225,7 +1224,7 @@ export function makeApplyFromOperatorSpec(
 ): InputObjectFieldApplyResolver<PgCondition> {
   const {
     sql,
-    dataplanPg: { TYPES },
+    dataplanPg: { TYPES, sqlValueWithCodec },
     EXPORTABLE,
   } = build;
   const {
