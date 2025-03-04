@@ -403,7 +403,12 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
 
       // Add `filter` input argument to connection and simple collection types
       GraphQLObjectType_fields_field_args(args, build, context) {
-        const { extend, inflection, EXPORTABLE } = build;
+        const {
+          extend,
+          inflection,
+          EXPORTABLE,
+          dataplanPg: { PgCondition },
+        } = build;
         const {
           scope: {
             isPgFieldConnection,
@@ -478,7 +483,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               ...(isPgFieldConnection
                 ? {
                     applyPlan: EXPORTABLE(
-                      (assertAllowed, attributeCodec) =>
+                      (PgCondition, assertAllowed, attributeCodec) =>
                         function (
                           _: any,
                           $connection: ConnectionStep<
@@ -489,49 +494,55 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                           >,
                           fieldArg: FieldArg
                         ) {
-                          assertAllowed(fieldArg, "object");
                           const $pgSelect = $connection.getSubplan();
-                          const myExtensions = attributeCodec
-                            ? { pgFilterAttribute: { codec: attributeCodec } }
-                            : null;
                           fieldArg.apply(
                             $pgSelect,
-                            (queryBuilder: PgSelectQueryBuilder) => ({
-                              ...queryBuilder,
-                              extensions: {
-                                ...queryBuilder.extensions,
-                                ...myExtensions,
-                              },
-                            })
+                            (
+                              queryBuilder: PgSelectQueryBuilder,
+                              value: object | null
+                            ) => {
+                              assertAllowed(value, "object");
+                              if (value == null) return;
+                              const condition = new PgCondition(queryBuilder);
+                              if (attributeCodec) {
+                                condition.extensions.pgFilterAttribute = {
+                                  codec: attributeCodec,
+                                };
+                              }
+                              return condition;
+                            }
                           );
                         },
-                      [assertAllowed, attributeCodec]
+                      [PgCondition, assertAllowed, attributeCodec]
                     ),
                   }
                 : {
                     applyPlan: EXPORTABLE(
-                      (assertAllowed, attributeCodec) =>
+                      (PgCondition, assertAllowed, attributeCodec) =>
                         function (
                           _: any,
                           $pgSelect: PgSelectStep,
                           fieldArg: FieldArg
                         ) {
-                          assertAllowed(fieldArg, "object");
-                          const myExtensions = attributeCodec
-                            ? { pgFilterAttribute: { codec: attributeCodec } }
-                            : null;
                           fieldArg.apply(
                             $pgSelect,
-                            (queryBuilder: PgSelectQueryBuilder) => ({
-                              ...queryBuilder,
-                              extensions: {
-                                ...queryBuilder.extensions,
-                                ...myExtensions,
-                              },
-                            })
+                            (
+                              queryBuilder: PgSelectQueryBuilder,
+                              value: object | null
+                            ) => {
+                              assertAllowed(value, "object");
+                              if (value == null) return;
+                              const condition = new PgCondition(queryBuilder);
+                              if (attributeCodec) {
+                                condition.extensions.pgFilterAttribute = {
+                                  codec: attributeCodec,
+                                };
+                              }
+                              return condition;
+                            }
                           );
                         },
-                      [assertAllowed, attributeCodec]
+                      [PgCondition, assertAllowed, attributeCodec]
                     ),
                   }),
             },

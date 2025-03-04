@@ -4,7 +4,6 @@ import type {
   PgCodecWithAttributes,
   PgRegistry,
   PgResource,
-  PgConditionCapableParent,
 } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 import { GraphQLInputObjectType } from "graphql";
