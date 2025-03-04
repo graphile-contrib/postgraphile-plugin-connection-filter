@@ -3,6 +3,7 @@ import type {
   PgConditionCapableParent,
 } from "@dataplan/pg";
 import type { GraphQLInputObjectType } from "graphql";
+import { isEmpty } from "./utils";
 
 const { version } = require("../package.json");
 
@@ -73,13 +74,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                   description: `Filter by the object’s \`${fieldName}\` field.`,
                   type: OperatorsType,
                   apply: EXPORTABLE(
-                    (
-                      PgCondition,
-                      colSpec,
-                      connectionFilterAllowEmptyObjectInput,
-                      connectionFilterAllowNullInput
-                    ) =>
-                      function (
+                    (PgCondition, colSpec, connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput, isEmpty) => function (
                         queryBuilder: PgConditionCapableParent,
                         value: unknown
                       ) {
@@ -98,8 +93,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                         }
                         if (
                           !connectionFilterAllowEmptyObjectInput &&
-                          value != null &&
-                          Object.keys(value).length === 0
+                          isEmpty(value)
                         ) {
                           throw Object.assign(
                             new Error(
@@ -114,12 +108,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                         condition.extensions.pgFilterAttribute = colSpec;
                         return condition;
                       },
-                    [
-                      PgCondition,
-                      colSpec,
-                      connectionFilterAllowEmptyObjectInput,
-                      connectionFilterAllowNullInput,
-                    ]
+                    [PgCondition, colSpec, connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput, isEmpty]
                   ),
                 })
               ),

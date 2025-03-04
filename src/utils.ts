@@ -62,14 +62,16 @@ export function makeAssertAllowed(build: GraphileBuild.Build) {
     connectionFilterAllowEmptyObjectInput,
   } = options;
   const assertAllowed = EXPORTABLE(
-    (connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput) =>
+    (
+      connectionFilterAllowEmptyObjectInput,
+      connectionFilterAllowNullInput,
+      isEmpty
+    ) =>
       function (value: unknown, mode: "list" | "object" | "scalar") {
         if (
           mode === "object" &&
           !connectionFilterAllowEmptyObjectInput &&
-          typeof value === "object" &&
-          value !== null &&
-          Object.keys(value).length === 0
+          isEmpty(value)
         ) {
           throw Object.assign(
             new Error("Empty objects are forbidden in filter argument input."),
@@ -83,12 +85,7 @@ export function makeAssertAllowed(build: GraphileBuild.Build) {
           if (arr) {
             const l = arr.length;
             for (let i = 0; i < l; i++) {
-              const entry = arr[i];
-              if (
-                typeof entry === "object" &&
-                entry !== null &&
-                Object.keys(entry).length === 0
-              ) {
+              if (isEmpty(arr[i])) {
                 throw Object.assign(
                   new Error(
                     "Empty objects are forbidden in filter argument input."
@@ -111,7 +108,15 @@ export function makeAssertAllowed(build: GraphileBuild.Build) {
           );
         }
       },
-    [connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput]
+    [
+      connectionFilterAllowEmptyObjectInput,
+      connectionFilterAllowNullInput,
+      isEmpty,
+    ]
   );
   return assertAllowed;
+}
+
+export function isEmpty(o: unknown): o is Record<string, never> {
+  return typeof o === "object" && o !== null && Object.keys(o).length === 0;
 }
