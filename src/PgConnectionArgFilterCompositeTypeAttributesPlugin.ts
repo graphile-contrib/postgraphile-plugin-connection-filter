@@ -1,5 +1,5 @@
 import type { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
-import { GraphQLInputObjectType } from "graphql";
+import type { GraphQLInputObjectType } from "graphql";
 
 const { version } = require("../package.json");
 

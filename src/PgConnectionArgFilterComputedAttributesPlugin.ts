@@ -3,8 +3,7 @@ import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
 } from "./utils";
-import type { FieldArgs } from "grafast";
-import { GraphQLInputObjectType } from "graphql";
+import type { GraphQLInputObjectType } from "graphql";
 
 const { version } = require("../package.json");
 

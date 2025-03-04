@@ -6,7 +6,7 @@ import type {
   PgResource,
 } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
-import { GraphQLInputObjectType } from "graphql";
+import type { GraphQLInputObjectType } from "graphql";
 
 const { version } = require("../package.json");
 
