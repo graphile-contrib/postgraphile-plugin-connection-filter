@@ -74,22 +74,19 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                   description: `Filter by the object’s \`${fieldName}\` field.`,
                   type: OperatorsType,
                   apply: EXPORTABLE(
-                    (PgCondition, colSpec, connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput, isEmpty) => function (
+                    (
+                      PgCondition,
+                      colSpec,
+                      connectionFilterAllowEmptyObjectInput,
+                      connectionFilterAllowNullInput,
+                      isEmpty
+                    ) =>
+                      function (
                         queryBuilder: PgConditionCapableParent,
                         value: unknown
                       ) {
                         if (value === undefined) {
                           return;
-                        }
-                        if (!connectionFilterAllowNullInput && value === null) {
-                          throw Object.assign(
-                            new Error(
-                              "Null literals are forbidden in filter argument input."
-                            ),
-                            {
-                              //TODO: mark this error as safe
-                            }
-                          );
                         }
                         if (
                           !connectionFilterAllowEmptyObjectInput &&
@@ -104,11 +101,27 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                             }
                           );
                         }
+                        if (!connectionFilterAllowNullInput && value === null) {
+                          throw Object.assign(
+                            new Error(
+                              "Null literals are forbidden in filter argument input."
+                            ),
+                            {
+                              //TODO: mark this error as safe
+                            }
+                          );
+                        }
                         const condition = new PgCondition(queryBuilder);
                         condition.extensions.pgFilterAttribute = colSpec;
                         return condition;
                       },
-                    [PgCondition, colSpec, connectionFilterAllowEmptyObjectInput, connectionFilterAllowNullInput, isEmpty]
+                    [
+                      PgCondition,
+                      colSpec,
+                      connectionFilterAllowEmptyObjectInput,
+                      connectionFilterAllowNullInput,
+                      isEmpty,
+                    ]
                   ),
                 })
               ),
