@@ -5433,6 +5433,13 @@ exports[`computedColumns.graphql 1`] = `
         },
       ],
     },
+    "computed_equalTo_test_computed_with_optional": {
+      "nodes": [
+        {
+          "id": 4,
+        },
+      ],
+    },
     "filterableById_1_computedSetofChild_name_equalTo_child2": {
       "computedSetofChild": {
         "nodes": [
