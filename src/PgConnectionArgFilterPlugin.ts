@@ -35,7 +35,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterPlugin",
   version,
 
-  // after: ["PgTypesPlugin", "PgCodecsPlugin", "PgCodecs"],
+  // Sometimes we want to order by things we filter by (e.g. if we're doing
+  // fulltext search), so we should ensure that the filters are applied before
+  // ordering.
+  before: ["PgConnectionArgOrderByPlugin"],
   /*
   gather: {
     hooks: {
