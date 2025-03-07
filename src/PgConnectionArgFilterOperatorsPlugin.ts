@@ -1203,7 +1203,7 @@ export interface OperatorSpec {
   resolve: (
     sqlIdentifier: SQL,
     sqlValue: SQL,
-    $input: Step,
+    input: unknown,
     // was: $placeholderable: PlaceholderableStep,
     _unused: PgConditionCapableParent,
     details: {
