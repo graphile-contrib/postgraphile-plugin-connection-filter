@@ -905,6 +905,7 @@ type Filterable implements Node {
     offset: Int
   ): FilterableComputedSetofIntConnection!
   computedTaggedFilterable: Int
+  computedWithOptional(suffix: String): String
   computedWithRequiredArg(i: Int!): Int
   date: Date
 
@@ -1186,6 +1187,9 @@ input FilterableFilter {
 
   """Filter by the object’s \`computedTaggedFilterable\` field."""
   computedTaggedFilterable: IntFilter
+
+  """Filter by the object’s \`computedWithOptional\` field."""
+  computedWithOptional: StringFilter
 
   """Filter by the object’s \`filterableClosuresByAncestorId\` relation."""
   filterableClosuresByAncestorId: FilterableToManyFilterableClosureFilter

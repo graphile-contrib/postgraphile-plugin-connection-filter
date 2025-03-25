@@ -11,7 +11,7 @@ import { PgConnectionArgFilterLogicalOperatorsPlugin } from "./PgConnectionArgFi
 import {
   OperatorSpec,
   PgConnectionArgFilterOperatorsPlugin,
-  makeApplyPlanFromOperatorSpec,
+  makeApplyFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
 import type { GraphQLInputType, GraphQLOutputType } from "graphql";
@@ -21,11 +21,11 @@ import type {} from "postgraphile/presets/v4";
 import { AddConnectionFilterOperatorPlugin } from "./AddConnectionFilterOperatorPlugin";
 import type { SQL } from "pg-sql2";
 
-export { makeApplyPlanFromOperatorSpec };
+export { makeApplyFromOperatorSpec };
 
 declare global {
   namespace DataplanPg {
-    interface PgConditionStepExtensions {
+    interface PgConditionExtensions {
       pgFilterAttribute?: /** Filtering a column */
       | {
             fieldName: string;

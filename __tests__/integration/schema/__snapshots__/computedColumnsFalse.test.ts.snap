@@ -2505,6 +2505,7 @@ type Filterable implements Node {
     offset: Int
   ): FilterableComputedSetofIntConnection!
   computedTaggedFilterable: Int
+  computedWithOptional(suffix: String): String
   computedWithRequiredArg(i: Int!): Int
   date: Date
 

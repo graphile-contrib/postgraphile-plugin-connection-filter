@@ -1,6 +1,6 @@
 import type { GraphQLInputType } from "graphql";
 import { $$filters } from "./interfaces";
-import { makeApplyPlanFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
+import { makeApplyFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
 
 const { version } = require("../package.json");
 
@@ -103,7 +103,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
                 {
                   description,
                   type,
-                  applyPlan: makeApplyPlanFromOperatorSpec(
+                  apply: makeApplyFromOperatorSpec(
                     build,
                     Self.name,
                     filterName,

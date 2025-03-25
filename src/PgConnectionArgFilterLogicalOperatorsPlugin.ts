@@ -1,7 +1,13 @@
-import type { PgConditionStep } from "@dataplan/pg";
+import type { PgCondition } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 
 const { version } = require("../package.json");
+
+type LogicalOperatorInput = {
+  and?: null | ReadonlyArray<LogicalOperatorInput>;
+  or?: null | ReadonlyArray<LogicalOperatorInput>;
+  not?: null | LogicalOperatorInput;
+};
 
 export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin =
   {
@@ -40,14 +46,18 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for all expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                applyPlan: EXPORTABLE(
+                apply: EXPORTABLE(
                   (assertAllowed) =>
-                    function ($where: PgConditionStep<any>, fieldArgs) {
-                      assertAllowed(fieldArgs, "list");
+                    function (
+                      $where: PgCondition,
+                      value: ReadonlyArray<LogicalOperatorInput> | null
+                    ) {
+                      assertAllowed(value, "list");
+                      if (value == null) return;
                       const $and = $where.andPlan();
                       // No need for this more correct form, easier to read if it's flatter.
                       // fieldArgs.apply(() => $and.andPlan());
-                      fieldArgs.apply($and);
+                      return $and;
                     },
                   [assertAllowed]
                 ),
@@ -61,13 +71,17 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Checks for any expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
-                applyPlan: EXPORTABLE(
+                apply: EXPORTABLE(
                   (assertAllowed) =>
-                    function ($where: PgConditionStep<any>, fieldArgs) {
-                      assertAllowed(fieldArgs, "list");
+                    function (
+                      $where: PgCondition<any>,
+                      value: ReadonlyArray<LogicalOperatorInput> | null
+                    ) {
+                      assertAllowed(value, "list");
+                      if (value == null) return;
                       const $or = $where.orPlan();
                       // Every entry is added to the `$or`, but the entries themselves should use an `and`.
-                      fieldArgs.apply(() => $or.andPlan());
+                      return () => $or.andPlan();
                     },
                   [assertAllowed]
                 ),
@@ -81,13 +95,17 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
               {
                 description: `Negates the expression.`,
                 type: Self,
-                applyPlan: EXPORTABLE(
+                apply: EXPORTABLE(
                   (assertAllowed) =>
-                    function ($where: PgConditionStep<any>, fieldArgs) {
-                      assertAllowed(fieldArgs, "object");
+                    function (
+                      $where: PgCondition<any>,
+                      value: LogicalOperatorInput | null
+                    ) {
+                      assertAllowed(value, "object");
+                      if (value == null) return;
                       const $not = $where.notPlan();
                       const $and = $not.andPlan();
-                      fieldArgs.apply($and);
+                      return $and;
                     },
                   [assertAllowed]
                 ),

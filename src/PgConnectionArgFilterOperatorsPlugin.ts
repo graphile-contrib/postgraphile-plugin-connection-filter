@@ -1,9 +1,12 @@
-import type { PgConditionStep, PgCodec } from "@dataplan/pg";
 import type {
-  ExecutableStep,
+  PgCondition,
+  PgCodec,
+  PgConditionCapableParent,
+} from "@dataplan/pg";
+import type {
   GrafastInputFieldConfigMap,
-  InputObjectFieldApplyPlanResolver,
-  InputStep,
+  InputObjectFieldApplyResolver,
+  Step,
 } from "grafast";
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
@@ -22,7 +25,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         const {
           extend,
           graphql: { GraphQLNonNull, GraphQLList, isListType, isNonNullType },
-          dataplanPg: { isEnumCodec, listOfCodec, TYPES },
+          dataplanPg: { isEnumCodec, listOfCodec, TYPES, sqlValueWithCodec },
           sql,
           escapeLikeWildcards,
           options: {
@@ -253,8 +256,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ),
             resolveSqlValue: EXPORTABLE((sql) => () => sql.null, [sql]), // do not parse
             resolve: EXPORTABLE(
-              (sql) => (i, _v, $input) =>
-                sql`${i} ${$input.eval() ? sql`IS NULL` : sql`IS NOT NULL`}`,
+              (sql) => (i, _v, input) =>
+                sql`${i} ${input ? sql`IS NULL` : sql`IS NOT NULL`}`,
               [sql]
             ),
           },
@@ -694,17 +697,14 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             [TYPES, resolveDomains, sql]
           );
           const resolveSqlValue = EXPORTABLE(
-            (TYPES, name, sql) =>
+            (TYPES, name, sql, sqlValueWithCodec) =>
               function (
-                $placeholderable: PlaceholderableStep,
-                $input: InputStep,
+                _unused: unknown,
+                input: any,
                 inputCodec: PgCodec<any, any, any, any, any, any, any>
               ) {
                 if (name === "in" || name === "notIn") {
-                  const sqlList = $placeholderable.placeholder(
-                    $input,
-                    inputCodec
-                  );
+                  const sqlList = sqlValueWithCodec(input, inputCodec);
                   if (inputCodec.arrayOfCodec === TYPES.citext) {
                     // already case-insensitive, so no need to call `lower()`
                     return sqlList;
@@ -715,10 +715,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                     return sql`(select lower(t) from unnest(${sqlList}) t)`;
                   }
                 } else {
-                  const sqlValue = $placeholderable.placeholder(
-                    $input,
-                    inputCodec
-                  );
+                  const sqlValue = sqlValueWithCodec(input, inputCodec);
                   if (inputCodec === TYPES.citext) {
                     // already case-insensitive, so no need to call `lower()`
                     return sqlValue;
@@ -727,7 +724,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                   }
                 }
               },
-            [TYPES, name, sql]
+            [TYPES, name, sql, sqlValueWithCodec]
           );
 
           const resolveInputCodec = EXPORTABLE(
@@ -1163,7 +1160,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               {
                 description,
                 type,
-                applyPlan: makeApplyPlanFromOperatorSpec(
+                apply: makeApplyFromOperatorSpec(
                   build,
                   Self.name,
                   operatorName,
@@ -1174,20 +1171,13 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             );
             return memo;
           },
-          Object.create(null) as GrafastInputFieldConfigMap<any, any>
+          Object.create(null) as GrafastInputFieldConfigMap<any>
         );
 
         return extend(fields, operatorFields, "");
       },
     },
   },
-};
-
-type PlaceholderableStep = {
-  placeholder(
-    step: ExecutableStep,
-    codec: PgCodec<any, any, any, any, any, any, any>
-  ): SQL;
 };
 
 export interface OperatorSpec {
@@ -1204,16 +1194,18 @@ export interface OperatorSpec {
   ) => PgCodec<any, any, any, any, any, any, any>;
   resolveSql?: any;
   resolveSqlValue?: (
-    $placeholderable: PlaceholderableStep,
-    $input: InputStep,
+    //was: $placeholderable: PlaceholderableStep,
+    _unused: PgConditionCapableParent,
+    value: any,
     codec: PgCodec<any, any, any, any, any, any, any>
     // UNUSED? resolveListItemSqlValue?: any
   ) => SQL;
   resolve: (
     sqlIdentifier: SQL,
     sqlValue: SQL,
-    $input: InputStep,
-    $placeholderable: PlaceholderableStep,
+    input: unknown,
+    // was: $placeholderable: PlaceholderableStep,
+    _unused: PgConditionCapableParent,
     details: {
       // TODO: move $input and $placeholderable here too
       fieldName: string | null;
@@ -1223,17 +1215,16 @@ export interface OperatorSpec {
   resolveType?: (type: GraphQLInputType) => GraphQLInputType;
 }
 
-export function makeApplyPlanFromOperatorSpec(
+export function makeApplyFromOperatorSpec(
   build: GraphileBuild.Build,
   typeName: string,
   fieldName: string,
   spec: OperatorSpec,
   type: GraphQLInputType
-): InputObjectFieldApplyPlanResolver<PgConditionStep<any>> {
+): InputObjectFieldApplyResolver<PgCondition> {
   const {
     sql,
-    grafast: { lambda },
-    dataplanPg: { TYPES },
+    dataplanPg: { TYPES, sqlValueWithCodec },
     EXPORTABLE,
   } = build;
   const {
@@ -1271,22 +1262,21 @@ export function makeApplyPlanFromOperatorSpec(
     (
       connectionFilterAllowNullInput,
       fieldName,
-      lambda,
       resolve,
       resolveInput,
       resolveInputCodec,
       resolveSqlIdentifier,
       resolveSqlValue,
-      sql
+      sql,
+      sqlValueWithCodec
     ) =>
-      function ($where, fieldArgs) {
+      function ($where, value) {
         if (!$where.extensions?.pgFilterAttribute) {
           throw new Error(
             `Planning error: expected 'pgFilterAttribute' to be present on the $where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
           );
         }
-        const $input = fieldArgs.getRaw();
-        if ($input.evalIs(undefined)) {
+        if (value === undefined) {
           return;
         }
         const {
@@ -1316,11 +1306,11 @@ export function makeApplyPlanFromOperatorSpec(
       */
             [sourceAlias, sourceCodec];
 
-        if (connectionFilterAllowNullInput && $input.evalIs(null)) {
+        if (connectionFilterAllowNullInput && value === null) {
           // Don't add a filter
           return;
         }
-        if (!connectionFilterAllowNullInput && $input.evalIs(null)) {
+        if (!connectionFilterAllowNullInput && value === null) {
           // Forbidden
           throw Object.assign(
             new Error("Null literals are forbidden in filter argument input."),
@@ -1329,24 +1319,21 @@ export function makeApplyPlanFromOperatorSpec(
             }
           );
         }
-        const $resolvedInput = resolveInput
-          ? lambda($input, resolveInput)
-          : $input;
+        const resolvedInput = resolveInput ? resolveInput(value) : value;
         const inputCodec = resolveInputCodec
           ? resolveInputCodec(codec ?? attribute.codec)
           : codec ?? attribute.codec;
 
         const sqlValue = resolveSqlValue
-          ? resolveSqlValue($where, $input, inputCodec)
+          ? resolveSqlValue($where, value, inputCodec)
           : /*
       : attribute.codec === TYPES.citext
       ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
       : attribute.codec.arrayOfCodec === TYPES.citext
       ? $where.placeholder($resolvedInput, listOfCodec(TYPES.citext as any)) // cast input to text[]
       */
-            $where.placeholder($resolvedInput, inputCodec);
-
-        const fragment = resolve(sqlIdentifier, sqlValue, $input, $where, {
+            sqlValueWithCodec(resolvedInput, inputCodec);
+        const fragment = resolve(sqlIdentifier, sqlValue, value, $where, {
           fieldName: parentFieldName ?? null,
           operatorName: fieldName,
         });
@@ -1355,13 +1342,13 @@ export function makeApplyPlanFromOperatorSpec(
     [
       connectionFilterAllowNullInput,
       fieldName,
-      lambda,
       resolve,
       resolveInput,
       resolveInputCodec,
       resolveSqlIdentifier,
       resolveSqlValue,
       sql,
+      sqlValueWithCodec,
     ]
   );
 }

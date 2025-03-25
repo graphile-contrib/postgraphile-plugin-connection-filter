@@ -1,5 +1,5 @@
-import type { PgSelectStep, PgCodec } from "@dataplan/pg";
-import type { ConnectionStep, FieldArgs } from "grafast";
+import type { PgSelectStep, PgCodec, PgSelectQueryBuilder } from "@dataplan/pg";
+import type { ConnectionStep, FieldArg } from "grafast";
 import type {
   GraphQLInputType,
   GraphQLOutputType,
@@ -35,7 +35,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterPlugin",
   version,
 
-  // after: ["PgTypesPlugin", "PgCodecsPlugin", "PgCodecs"],
+  // Sometimes we want to order by things we filter by (e.g. if we're doing
+  // fulltext search), so we should ensure that the filters are applied before
+  // ordering.
+  before: ["PgConnectionArgOrderByPlugin"],
   /*
   gather: {
     hooks: {
@@ -406,11 +409,8 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         const {
           extend,
           inflection,
-          options: {
-            connectionFilterAllowNullInput,
-            connectionFilterAllowEmptyObjectInput,
-          },
           EXPORTABLE,
+          dataplanPg: { PgCondition },
         } = build;
         const {
           scope: {
@@ -483,11 +483,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               description:
                 "A filter to be used in determining which values should be returned by the collection.",
               type: FilterType,
-              autoApplyAfterParentPlan: true,
               ...(isPgFieldConnection
                 ? {
                     applyPlan: EXPORTABLE(
-                      (assertAllowed, attributeCodec) =>
+                      (PgCondition, assertAllowed, attributeCodec) =>
                         function (
                           _: any,
                           $connection: ConnectionStep<
@@ -496,39 +495,57 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                             any,
                             PgSelectStep
                           >,
-                          fieldArgs: FieldArgs
+                          fieldArg: FieldArg
                         ) {
-                          assertAllowed(fieldArgs, "object");
                           const $pgSelect = $connection.getSubplan();
-                          const $where = $pgSelect.wherePlan();
-                          if (attributeCodec) {
-                            $where.extensions.pgFilterAttribute = {
-                              codec: attributeCodec,
-                            };
-                          }
-                          fieldArgs.apply($where);
+                          fieldArg.apply(
+                            $pgSelect,
+                            (
+                              queryBuilder: PgSelectQueryBuilder,
+                              value: object | null
+                            ) => {
+                              assertAllowed(value, "object");
+                              if (value == null) return;
+                              const condition = new PgCondition(queryBuilder);
+                              if (attributeCodec) {
+                                condition.extensions.pgFilterAttribute = {
+                                  codec: attributeCodec,
+                                };
+                              }
+                              return condition;
+                            }
+                          );
                         },
-                      [assertAllowed, attributeCodec]
+                      [PgCondition, assertAllowed, attributeCodec]
                     ),
                   }
                 : {
                     applyPlan: EXPORTABLE(
-                      (assertAllowed, attributeCodec) =>
+                      (PgCondition, assertAllowed, attributeCodec) =>
                         function (
                           _: any,
                           $pgSelect: PgSelectStep,
-                          fieldArgs: any
+                          fieldArg: FieldArg
                         ) {
-                          assertAllowed(fieldArgs, "object");
-                          const $where = $pgSelect.wherePlan();
-                          if (attributeCodec) {
-                            $where.extensions.pgFilterAttribute = {
-                              codec: attributeCodec,
-                            };
-                          }
-                          fieldArgs.apply($where);
+                          fieldArg.apply(
+                            $pgSelect,
+                            (
+                              queryBuilder: PgSelectQueryBuilder,
+                              value: object | null
+                            ) => {
+                              assertAllowed(value, "object");
+                              if (value == null) return;
+                              const condition = new PgCondition(queryBuilder);
+                              if (attributeCodec) {
+                                condition.extensions.pgFilterAttribute = {
+                                  codec: attributeCodec,
+                                };
+                              }
+                              return condition;
+                            }
+                          );
                         },
-                      [assertAllowed, attributeCodec]
+                      [PgCondition, assertAllowed, attributeCodec]
                     ),
                   }),
             },

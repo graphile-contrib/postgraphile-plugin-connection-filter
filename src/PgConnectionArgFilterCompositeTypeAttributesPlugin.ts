@@ -1,4 +1,5 @@
 import type { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
+import type { GraphQLInputObjectType } from "graphql";
 
 const { version } = require("../package.json");
 
@@ -72,7 +73,9 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
             }
 
             const filterTypeName = inflection.filterType(nodeTypeName);
-            const CompositeFilterType = build.getTypeByName(filterTypeName);
+            const CompositeFilterType = build.getTypeByName(
+              filterTypeName
+            ) as GraphQLInputObjectType;
             if (!CompositeFilterType) {
               continue;
             }

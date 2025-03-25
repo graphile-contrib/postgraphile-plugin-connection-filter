@@ -1,4 +1,9 @@
-import type { PgConditionStep, PgCodecWithAttributes } from "@dataplan/pg";
+import type {
+  PgCodecWithAttributes,
+  PgConditionCapableParent,
+} from "@dataplan/pg";
+import type { GraphQLInputObjectType } from "graphql";
+import { isEmpty } from "./utils";
 
 const { version } = require("../package.json");
 
@@ -17,7 +22,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
         const {
           inflection,
           connectionFilterOperatorsDigest,
-          dataplanPg: { PgConditionStep },
+          dataplanPg: { PgCondition },
           EXPORTABLE,
         } = build;
         const {
@@ -47,7 +52,9 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
           if (!digest) {
             continue;
           }
-          const OperatorsType = build.getTypeByName(digest.operatorsTypeName);
+          const OperatorsType = build.getTypeByName(
+            digest.operatorsTypeName
+          ) as GraphQLInputObjectType;
           if (!OperatorsType) {
             continue;
           }
@@ -66,22 +73,24 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                 () => ({
                   description: `Filter by the object’s \`${fieldName}\` field.`,
                   type: OperatorsType,
-                  applyPlan: EXPORTABLE(
+                  apply: EXPORTABLE(
                     (
-                      PgConditionStep,
+                      PgCondition,
                       colSpec,
                       connectionFilterAllowEmptyObjectInput,
-                      connectionFilterAllowNullInput
+                      connectionFilterAllowNullInput,
+                      isEmpty
                     ) =>
-                      function ($where: PgConditionStep<any>, fieldArgs: any) {
-                        const $raw = fieldArgs.getRaw();
-                        if ($raw.evalIs(undefined)) {
+                      function (
+                        queryBuilder: PgConditionCapableParent,
+                        value: unknown
+                      ) {
+                        if (value === undefined) {
                           return;
                         }
                         if (
                           !connectionFilterAllowEmptyObjectInput &&
-                          "evalIsEmpty" in $raw &&
-                          $raw.evalIsEmpty()
+                          isEmpty(value)
                         ) {
                           throw Object.assign(
                             new Error(
@@ -92,10 +101,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                             }
                           );
                         }
-                        if (
-                          !connectionFilterAllowNullInput &&
-                          $raw.evalIs(null)
-                        ) {
+                        if (!connectionFilterAllowNullInput && value === null) {
                           throw Object.assign(
                             new Error(
                               "Null literals are forbidden in filter argument input."
@@ -105,15 +111,16 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                             }
                           );
                         }
-                        const $col = new PgConditionStep($where);
-                        $col.extensions.pgFilterAttribute = colSpec;
-                        fieldArgs.apply($col);
+                        const condition = new PgCondition(queryBuilder);
+                        condition.extensions.pgFilterAttribute = colSpec;
+                        return condition;
                       },
                     [
-                      PgConditionStep,
+                      PgCondition,
                       colSpec,
                       connectionFilterAllowEmptyObjectInput,
                       connectionFilterAllowNullInput,
+                      isEmpty,
                     ]
                   ),
                 })
