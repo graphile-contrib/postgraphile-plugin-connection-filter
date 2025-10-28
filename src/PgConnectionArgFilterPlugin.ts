@@ -493,6 +493,8 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                             any,
                             any,
                             any,
+                            any,
+                            any,
                             PgSelectStep
                           >,
                           fieldArg: FieldArg

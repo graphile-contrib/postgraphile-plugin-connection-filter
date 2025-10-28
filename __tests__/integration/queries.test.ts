@@ -13,7 +13,7 @@ import {
 } from "graphql";
 import { withPgClient, withPgPool } from "../helpers";
 import { PgConditionArgumentPlugin } from "graphile-build-pg";
-import { postgraphilePresetAmber } from "postgraphile/presets/amber";
+import { PostGraphileAmberPreset } from "postgraphile/presets/amber";
 import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
 import { makeSchema } from "postgraphile";
 import { PostGraphileConnectionFilterPreset } from "../../src/index";
@@ -44,23 +44,20 @@ const createPostGraphileSchema = async (
 ) => {
   const preset: GraphileConfig.Preset = {
     extends: [
-      postgraphilePresetAmber,
+      PostGraphileAmberPreset,
       PostGraphileConnectionFilterPreset,
       makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
     plugins: [FilterAllPlugin],
     pgServices: [
-      {
-        adaptor,
+      adaptor.makePgService({
         name: "main",
         withPgClientKey: "withPgClient",
         pgSettingsKey: "pgSettings",
         schemas: schemas,
-        adaptorSettings: {
-          pool,
-        },
-      } as any, //GraphileConfig.PgDatabaseConfiguration<"@dataplan/pg/adaptors/pg">,
+        pool,
+      }),
     ],
   };
   const params = await makeSchema(preset);
