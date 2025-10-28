@@ -491,10 +491,7 @@ exports[`arrayTypes.bpchar4Array.graphql 1`] = `
     "anyGreaterThan": {
       "nodes": [
         {
-          "id": 2,
-        },
-        {
-          "id": 3,
+          "id": 1,
         },
         {
           "id": 4,
@@ -510,9 +507,6 @@ exports[`arrayTypes.bpchar4Array.graphql 1`] = `
           "id": 2,
         },
         {
-          "id": 3,
-        },
-        {
           "id": 4,
         },
       ],
@@ -520,7 +514,13 @@ exports[`arrayTypes.bpchar4Array.graphql 1`] = `
     "anyLessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -531,6 +531,12 @@ exports[`arrayTypes.bpchar4Array.graphql 1`] = `
         },
         {
           "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -590,23 +596,17 @@ exports[`arrayTypes.bpchar4Array.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -620,17 +620,23 @@ exports[`arrayTypes.bpchar4Array.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -687,10 +693,7 @@ exports[`arrayTypes.char4Array.graphql 1`] = `
     "anyGreaterThan": {
       "nodes": [
         {
-          "id": 2,
-        },
-        {
-          "id": 3,
+          "id": 1,
         },
         {
           "id": 4,
@@ -706,9 +709,6 @@ exports[`arrayTypes.char4Array.graphql 1`] = `
           "id": 2,
         },
         {
-          "id": 3,
-        },
-        {
           "id": 4,
         },
       ],
@@ -716,7 +716,13 @@ exports[`arrayTypes.char4Array.graphql 1`] = `
     "anyLessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -727,6 +733,12 @@ exports[`arrayTypes.char4Array.graphql 1`] = `
         },
         {
           "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -786,23 +798,17 @@ exports[`arrayTypes.char4Array.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -816,17 +822,23 @@ exports[`arrayTypes.char4Array.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -1079,10 +1091,7 @@ exports[`arrayTypes.citextArray.graphql 1`] = `
     "anyGreaterThan": {
       "nodes": [
         {
-          "id": 2,
-        },
-        {
-          "id": 3,
+          "id": 1,
         },
         {
           "id": 4,
@@ -1098,9 +1107,6 @@ exports[`arrayTypes.citextArray.graphql 1`] = `
           "id": 2,
         },
         {
-          "id": 3,
-        },
-        {
           "id": 4,
         },
       ],
@@ -1108,7 +1114,13 @@ exports[`arrayTypes.citextArray.graphql 1`] = `
     "anyLessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -1119,6 +1131,12 @@ exports[`arrayTypes.citextArray.graphql 1`] = `
         },
         {
           "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -1178,23 +1196,17 @@ exports[`arrayTypes.citextArray.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -1208,17 +1220,23 @@ exports[`arrayTypes.citextArray.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -3823,10 +3841,7 @@ exports[`arrayTypes.textArray.graphql 1`] = `
     "anyGreaterThan": {
       "nodes": [
         {
-          "id": 2,
-        },
-        {
-          "id": 3,
+          "id": 1,
         },
         {
           "id": 4,
@@ -3842,9 +3857,6 @@ exports[`arrayTypes.textArray.graphql 1`] = `
           "id": 2,
         },
         {
-          "id": 3,
-        },
-        {
           "id": 4,
         },
       ],
@@ -3852,7 +3864,13 @@ exports[`arrayTypes.textArray.graphql 1`] = `
     "anyLessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -3863,6 +3881,12 @@ exports[`arrayTypes.textArray.graphql 1`] = `
         },
         {
           "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -3922,23 +3946,17 @@ exports[`arrayTypes.textArray.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -3952,17 +3970,23 @@ exports[`arrayTypes.textArray.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -5195,10 +5219,7 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
     "anyGreaterThan": {
       "nodes": [
         {
-          "id": 2,
-        },
-        {
-          "id": 3,
+          "id": 1,
         },
         {
           "id": 4,
@@ -5214,9 +5235,6 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
           "id": 2,
         },
         {
-          "id": 3,
-        },
-        {
           "id": 4,
         },
       ],
@@ -5224,7 +5242,13 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
     "anyLessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -5235,6 +5259,12 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
         },
         {
           "id": 2,
+        },
+        {
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -5294,23 +5324,17 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -5324,17 +5348,23 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -5532,10 +5562,7 @@ exports[`domainTypes.char4Domain.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
@@ -5545,13 +5572,10 @@ exports[`domainTypes.char4Domain.graphql 1`] = `
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -5636,7 +5660,10 @@ exports[`domainTypes.char4Domain.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -5646,10 +5673,13 @@ exports[`domainTypes.char4Domain.graphql 1`] = `
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -9535,10 +9565,7 @@ exports[`types.bpchar4.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
@@ -9548,13 +9575,10 @@ exports[`types.bpchar4.graphql 1`] = `
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -9639,7 +9663,10 @@ exports[`types.bpchar4.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -9649,10 +9676,13 @@ exports[`types.bpchar4.graphql 1`] = `
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -9910,10 +9940,7 @@ exports[`types.char4.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
@@ -9923,13 +9950,10 @@ exports[`types.char4.graphql 1`] = `
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -10014,7 +10038,10 @@ exports[`types.char4.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -10024,10 +10051,13 @@ exports[`types.char4.graphql 1`] = `
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -10442,10 +10472,7 @@ exports[`types.citext.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
@@ -10455,13 +10482,10 @@ exports[`types.citext.graphql 1`] = `
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -10546,7 +10570,10 @@ exports[`types.citext.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -10556,10 +10583,13 @@ exports[`types.citext.graphql 1`] = `
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -12825,10 +12855,7 @@ exports[`types.text.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
@@ -12838,13 +12865,10 @@ exports[`types.text.graphql 1`] = `
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -12929,7 +12953,10 @@ exports[`types.text.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -12939,10 +12966,13 @@ exports[`types.text.graphql 1`] = `
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -13920,10 +13950,7 @@ exports[`types.varchar.graphql 1`] = `
     "greaterThan": {
       "nodes": [
         {
-          "id": 3,
-        },
-        {
-          "id": 4,
+          "id": 1,
         },
       ],
     },
@@ -13933,13 +13960,10 @@ exports[`types.varchar.graphql 1`] = `
     "greaterThanOrEqualTo": {
       "nodes": [
         {
+          "id": 1,
+        },
+        {
           "id": 2,
-        },
-        {
-          "id": 3,
-        },
-        {
-          "id": 4,
         },
       ],
     },
@@ -14024,7 +14048,10 @@ exports[`types.varchar.graphql 1`] = `
     "lessThan": {
       "nodes": [
         {
-          "id": 1,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
@@ -14034,10 +14061,13 @@ exports[`types.varchar.graphql 1`] = `
     "lessThanOrEqualTo": {
       "nodes": [
         {
-          "id": 1,
+          "id": 2,
         },
         {
-          "id": 2,
+          "id": 3,
+        },
+        {
+          "id": 4,
         },
       ],
     },
