@@ -132,6 +132,9 @@ input BackwardCompoundFilter {
   """Filter by the object’s \`backwardCompound1\` field."""
   backwardCompound1: IntFilter
 
+  """Filter by the object’s \`backwardCompound2\` field."""
+  backwardCompound2: IntFilter
+
   """
   Filter by the object’s \`filterableByBackwardCompound1AndBackwardCompound2\` relation.
   """
@@ -176,6 +179,8 @@ type BackwardCompoundsEdge {
 enum BackwardCompoundsOrderBy {
   BACKWARD_COMPOUND_1_ASC
   BACKWARD_COMPOUND_1_DESC
+  BACKWARD_COMPOUND_2_ASC
+  BACKWARD_COMPOUND_2_DESC
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
@@ -878,6 +883,9 @@ input FilterableFilter {
   """Filter by the object’s \`backwardCompound1\` field."""
   backwardCompound1: IntFilter
 
+  """Filter by the object’s \`backwardCompound2\` field."""
+  backwardCompound2: IntFilter
+
   """
   Filter by the object’s \`backwardCompoundByBackwardCompound1AndBackwardCompound2\` relation.
   """
@@ -899,6 +907,9 @@ input FilterableFilter {
 
   """Filter by the object’s \`forwardCompound1\` field."""
   forwardCompound1: IntFilter
+
+  """Filter by the object’s \`forwardCompound2\` field."""
+  forwardCompound2: IntFilter
 
   """
   Filter by the object’s \`forwardCompoundByForwardCompound1AndForwardCompound2\` relation.
@@ -959,8 +970,12 @@ type FilterablesEdge {
 enum FilterablesOrderBy {
   BACKWARD_COMPOUND_1_ASC
   BACKWARD_COMPOUND_1_DESC
+  BACKWARD_COMPOUND_2_ASC
+  BACKWARD_COMPOUND_2_DESC
   FORWARD_COMPOUND_1_ASC
   FORWARD_COMPOUND_1_DESC
+  FORWARD_COMPOUND_2_ASC
+  FORWARD_COMPOUND_2_DESC
   FORWARD_ID_ASC
   FORWARD_ID_DESC
   ID_ASC
@@ -1013,6 +1028,9 @@ input ForwardCompoundFilter {
   """Filter by the object’s \`forwardCompound1\` field."""
   forwardCompound1: IntFilter
 
+  """Filter by the object’s \`forwardCompound2\` field."""
+  forwardCompound2: IntFilter
+
   """Negates the expression."""
   not: ForwardCompoundFilter
 
@@ -1052,6 +1070,8 @@ type ForwardCompoundsEdge {
 enum ForwardCompoundsOrderBy {
   FORWARD_COMPOUND_1_ASC
   FORWARD_COMPOUND_1_DESC
+  FORWARD_COMPOUND_2_ASC
+  FORWARD_COMPOUND_2_DESC
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
@@ -1456,6 +1476,9 @@ input JunctionFilter {
 
   """Filter by the object’s \`sideBBySideBId\` relation."""
   sideBBySideBId: SideBFilter
+
+  """Filter by the object’s \`sideBId\` field."""
+  sideBId: IntFilter
 }
 
 """A connection to a list of \`Junction\` values."""
@@ -1491,6 +1514,8 @@ enum JunctionsOrderBy {
   PRIMARY_KEY_DESC
   SIDE_A_ID_ASC
   SIDE_A_ID_DESC
+  SIDE_B_ID_ASC
+  SIDE_B_ID_DESC
 }
 
 """
@@ -2811,6 +2836,35 @@ enum SideAsOrderBy {
 
 type SideB implements Node {
   bId: Int!
+
+  """Reads and enables pagination through a set of \`Junction\`."""
+  junctionsBySideBId(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: JunctionFilter
+
+    """Only read the first \`n\` values of the set."""
+    first: Int
+
+    """Only read the last \`n\` values of the set."""
+    last: Int
+
+    """
+    Skip the first \`n\` values from our \`after\` cursor, an alternative to cursor
+    based pagination. May not be used with \`last\`.
+    """
+    offset: Int
+
+    """The method to use when ordering \`Junction\`."""
+    orderBy: [JunctionsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): JunctionsConnection!
   name: String!
 
   """
@@ -2828,6 +2882,12 @@ input SideBFilter {
 
   """Filter by the object’s \`bId\` field."""
   bId: IntFilter
+
+  """Filter by the object’s \`junctionsBySideBId\` relation."""
+  junctionsBySideBId: SideBToManyJunctionFilter
+
+  """Some related \`junctionsBySideBId\` exist."""
+  junctionsBySideBIdExist: Boolean
 
   """Negates the expression."""
   not: SideBFilter
@@ -2860,6 +2920,26 @@ type SideBSEdge {
 
   """The \`SideB\` at the end of the edge."""
   node: SideB
+}
+
+"""
+A filter to be used against many \`Junction\` object types. All fields are combined with a logical ‘and.’
+"""
+input SideBToManyJunctionFilter {
+  """
+  Every related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: JunctionFilter
+
+  """
+  No related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: JunctionFilter
+
+  """
+  Some related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: JunctionFilter
 }
 
 """Methods to use when ordering \`SideB\`."""
