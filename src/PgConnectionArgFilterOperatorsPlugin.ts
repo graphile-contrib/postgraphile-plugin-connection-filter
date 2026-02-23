@@ -11,7 +11,7 @@ import type {
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 // const textArrayCodec = listOfCodec(TYPES.text);
 

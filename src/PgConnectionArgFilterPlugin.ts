@@ -8,7 +8,7 @@ import type {
 import { OperatorsCategory } from "./interfaces";
 import { makeAssertAllowed } from "./utils";
 
-const { version } = require("../package.json"); // eslint-disable-line
+import { version } from "./version";
 
 type AnyCodec = PgCodec<any, any, any, any, any, any, any>;
 

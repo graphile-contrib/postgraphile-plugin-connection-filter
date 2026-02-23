@@ -5,7 +5,7 @@ import {
 } from "./utils";
 import type { GraphQLInputObjectType } from "graphql";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 declare global {
   namespace GraphileBuild {

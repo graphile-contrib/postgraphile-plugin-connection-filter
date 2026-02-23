@@ -2,7 +2,7 @@ import type { GraphQLInputType } from "graphql";
 import { $$filters } from "./interfaces";
 import { makeApplyFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
   name: "AddConnectionFilterOperatorPlugin",

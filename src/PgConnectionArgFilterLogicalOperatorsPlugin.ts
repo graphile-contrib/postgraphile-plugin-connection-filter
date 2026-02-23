@@ -1,7 +1,7 @@
 import type { PgCondition } from "@dataplan/pg";
 import { makeAssertAllowed } from "./utils";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 type LogicalOperatorInput = {
   and?: null | ReadonlyArray<LogicalOperatorInput>;

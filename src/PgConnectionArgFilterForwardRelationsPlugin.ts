@@ -8,7 +8,7 @@ import type {
 import { makeAssertAllowed } from "./utils";
 import type { GraphQLInputObjectType } from "graphql";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin =
   {
