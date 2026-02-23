@@ -1,5 +1,4 @@
 // @ts-check
-import babelParser from "@babel/eslint-parser";
 import js from "@eslint/js";
 import tsParser from "@typescript-eslint/parser";
 import { defineConfig, globalIgnores } from "eslint/config";
