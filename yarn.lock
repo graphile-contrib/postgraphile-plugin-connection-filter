@@ -3066,6 +3066,13 @@ eslint-module-utils@^2.12.1:
   dependencies:
     debug "^3.2.7"
 
+eslint-plugin-graphile-export@^1.0.0-rc.4:
+  version "1.0.0-rc.4"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-graphile-export/-/eslint-plugin-graphile-export-1.0.0-rc.4.tgz#73ce99df8c417bd96152ca1c04bdd66360ca0313"
+  integrity sha512-0mduwcm3Te4OP6Vpz8ubLENlbLOtWBh0Nja2WkJK374vayrlnqggJttMqEo5935yZybKdQPK+/Umpk4swaYcwQ==
+  dependencies:
+    tslib "^2.8.1"
+
 eslint-plugin-import@^2.32.0:
   version "2.32.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.32.0.tgz#602b55faa6e4caeaa5e970c198b5c00a37708980"

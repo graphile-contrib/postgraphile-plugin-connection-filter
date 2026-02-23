@@ -48,6 +48,7 @@
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-graphile-export": "^1.0.0-rc.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^28.14.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
