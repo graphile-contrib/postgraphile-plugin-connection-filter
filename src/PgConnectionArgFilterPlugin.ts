@@ -204,12 +204,12 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             codec.arrayOfCodec
               ? "Array"
               : codec.rangeOfCodec
-              ? "Range"
-              : isEnumCodec(codec)
-              ? "Enum"
-              : codec.domainOfCodec
-              ? "Domain"
-              : "Scalar";
+                ? "Range"
+                : isEnumCodec(codec)
+                  ? "Enum"
+                  : codec.domainOfCodec
+                    ? "Domain"
+                    : "Scalar";
 
           // Respect `connectionFilterArrays` config option
           if (
