@@ -28,12 +28,19 @@ const globalIgnoresFromFile = fs
 /** @type {import('@eslint/config-helpers').ConfigWithExtends} */
 const config = {
   languageOptions: {
-    parser: babelParser,
+    parser: tsParser,
     sourceType: "module",
     globals: {
       jasmine: false,
       ...globals.jest,
       ...globals.node,
+    },
+  },
+
+  settings: {
+    "import/resolver": {
+      node: true,
+      typescript: true,
     },
   },
 
