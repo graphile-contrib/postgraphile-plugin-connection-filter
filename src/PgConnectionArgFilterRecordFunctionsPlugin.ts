@@ -1,4 +1,4 @@
-const { version } = require("../package.json");
+import { version } from "./version";
 
 export const PgConnectionArgFilterRecordFunctionsPlugin: GraphileConfig.Plugin =
   {

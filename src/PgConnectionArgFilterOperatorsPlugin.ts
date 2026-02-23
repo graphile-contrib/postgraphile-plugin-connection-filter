@@ -11,7 +11,7 @@ import type {
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 // const textArrayCodec = listOfCodec(TYPES.text);
 
@@ -1106,18 +1106,18 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         } = arrayLike
           ? connectionFilterArrayOperators
           : rangeLike
-          ? connectionFilterRangeOperators
-          : enumLike
-          ? connectionFilterEnumOperators
-          : {
-              ...standardOperators,
-              ...(sortable ? sortOperators : null),
-              ...(inetLike ? inetOperators : null),
-              ...(jsonLike ? jsonbOperators : null),
-              ...(hstoreLike ? hstoreOperators : null),
-              ...(textLike ? patternMatchingOperators : null),
-              ...(textLike ? insensitiveOperators : null),
-            };
+            ? connectionFilterRangeOperators
+            : enumLike
+              ? connectionFilterEnumOperators
+              : {
+                  ...standardOperators,
+                  ...(sortable ? sortOperators : null),
+                  ...(inetLike ? inetOperators : null),
+                  ...(jsonLike ? jsonbOperators : null),
+                  ...(hstoreLike ? hstoreOperators : null),
+                  ...(textLike ? patternMatchingOperators : null),
+                  ...(textLike ? insensitiveOperators : null),
+                };
 
         const operatorFields = Object.entries(operatorSpecs).reduce(
           (memo: { [fieldName: string]: any }, [name, spec]) => {
@@ -1292,8 +1292,8 @@ export function makeApplyFromOperatorSpec(
             ? attribute.expression($where.alias)
             : sql`${$where.alias}.${sql.identifier(attributeName)}`
           : expression
-          ? expression
-          : $where.alias;
+            ? expression
+            : $where.alias;
         const sourceCodec = codec ?? attribute.codec;
 
         const [sqlIdentifier, identifierCodec] = resolveSqlIdentifier
@@ -1322,7 +1322,7 @@ export function makeApplyFromOperatorSpec(
         const resolvedInput = resolveInput ? resolveInput(value) : value;
         const inputCodec = resolveInputCodec
           ? resolveInputCodec(codec ?? attribute.codec)
-          : codec ?? attribute.codec;
+          : (codec ?? attribute.codec);
 
         const sqlValue = resolveSqlValue
           ? resolveSqlValue($where, value, inputCodec)

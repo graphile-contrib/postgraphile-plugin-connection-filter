@@ -5,7 +5,7 @@ import type {
 import type { GraphQLInputObjectType } from "graphql";
 import { isEmpty } from "./utils";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterAttributesPlugin",

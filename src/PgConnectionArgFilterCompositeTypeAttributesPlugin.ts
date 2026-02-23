@@ -1,7 +1,7 @@
 import type { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
 import type { GraphQLInputObjectType } from "graphql";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.Plugin =
   {

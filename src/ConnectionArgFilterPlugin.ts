@@ -1,6 +1,6 @@
 import type {} from "graphile-build";
 
-const { version } = require("../package.json");
+import { version } from "./version";
 
 export const ConnectionArgFilterPlugin: GraphileConfig.Plugin = {
   name: "PostGraphileConnectionFilter_ConnectionArgFilterPlugin",
