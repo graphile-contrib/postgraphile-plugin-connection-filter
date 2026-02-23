@@ -13,6 +13,7 @@
     "format:check": "yarn format:all --list-different",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix && yarn prettier:fix",
+    "postversion": "node --experimental-strip-types scripts/postversion.mts",
     "prepack": "rm -Rf dist && npm run build",
     "test": "jest -i",
     "typecheck": "tsc --noEmit"
@@ -72,5 +73,6 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "packageManager": "yarn@1.22.22"
 }
