@@ -72,7 +72,7 @@ export default defineConfig([
   tseslint.configs.recommended,
   // ...tseslint.configs.recommendedTypeChecked, // requires parserOptions.project
   graphileExport.configs.recommended,
-  // TODO: plugin:jest/recommended
+  jest.configs["flat/recommended"],
   prettier, // not a plugin, just a config object
   config,
 
