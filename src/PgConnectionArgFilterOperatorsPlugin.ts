@@ -10,6 +10,7 @@ import type {
 } from "grafast";
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
+import { EXPORTABLE } from "./EXPORTABLE";
 
 import { version } from "./version";
 
@@ -1215,6 +1216,93 @@ export interface OperatorSpec {
   resolveType?: (type: GraphQLInputType) => GraphQLInputType;
 }
 
+const pgConnectionFilterApplyFromOperator = EXPORTABLE(
+  () =>
+    (
+      connectionFilterAllowNullInput: boolean | undefined,
+      fieldName: string,
+      resolve: OperatorSpec["resolve"],
+      resolveInput: OperatorSpec["resolveInput"],
+      resolveInputCodec: OperatorSpec["resolveInputCodec"],
+      resolveSqlIdentifier: OperatorSpec["resolveSqlIdentifier"],
+      resolveSqlValue: OperatorSpec["resolveSqlValue"],
+      sql: GraphileBuild.Build["sql"],
+      sqlValueWithCodec: GraphileBuild.Build["dataplanPg"]["sqlValueWithCodec"],
+      $where: PgCondition,
+      value: unknown
+    ) => {
+      if (!$where.extensions?.pgFilterAttribute) {
+        throw new Error(
+          `Planning error: expected 'pgFilterAttribute' to be present on the $where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
+        );
+      }
+      if (value === undefined) {
+        return;
+      }
+      const {
+        fieldName: parentFieldName,
+        attributeName,
+        attribute,
+        codec,
+        expression,
+      } = $where.extensions.pgFilterAttribute;
+
+      const sourceAlias = attribute
+        ? attribute.expression
+          ? attribute.expression($where.alias)
+          : sql`${$where.alias}.${sql.identifier(attributeName)}`
+        : expression
+          ? expression
+          : $where.alias;
+      const sourceCodec = codec ?? attribute.codec;
+
+      const [sqlIdentifier, identifierCodec] = resolveSqlIdentifier
+        ? resolveSqlIdentifier(sourceAlias, sourceCodec)
+        : /*
+      : attribute.codec === TYPES.citext
+      ? sql.query`${sourceAlias}::text` // cast attribute to text for case-sensitive matching
+      : attribute.codec.arrayOfCodec === TYPES.citext
+      ? sql.query`${sourceAlias}::text[]` // cast attribute to text[] for case-sensitive matching
+      */
+          [sourceAlias, sourceCodec];
+
+      if (connectionFilterAllowNullInput && value === null) {
+        // Don't add a filter
+        return;
+      }
+      if (!connectionFilterAllowNullInput && value === null) {
+        // Forbidden
+        throw Object.assign(
+          new Error("Null literals are forbidden in filter argument input."),
+          {
+            //TODO: mark this error as safe
+          }
+        );
+      }
+      const resolvedInput = resolveInput ? resolveInput(value) : value;
+      const inputCodec = resolveInputCodec
+        ? resolveInputCodec(codec ?? attribute.codec)
+        : (codec ?? attribute.codec);
+
+      const sqlValue = resolveSqlValue
+        ? resolveSqlValue($where, value, inputCodec)
+        : /*
+      : attribute.codec === TYPES.citext
+      ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
+      : attribute.codec.arrayOfCodec === TYPES.citext
+      ? $where.placeholder($resolvedInput, listOfCodec(TYPES.citext as any)) // cast input to text[]
+      */
+          sqlValueWithCodec(resolvedInput, inputCodec);
+      const fragment = resolve(sqlIdentifier, sqlValue, value, $where, {
+        fieldName: parentFieldName ?? null,
+        operatorName: fieldName,
+      });
+      $where.where(fragment);
+    },
+  [],
+  "pgConnectionFilterApplyFromOperator"
+);
+
 export function makeApplyFromOperatorSpec(
   build: GraphileBuild.Build,
   typeName: string,
@@ -1262,6 +1350,7 @@ export function makeApplyFromOperatorSpec(
     (
       connectionFilterAllowNullInput,
       fieldName,
+      pgConnectionFilterApplyFromOperator,
       resolve,
       resolveInput,
       resolveInputCodec,
@@ -1271,77 +1360,24 @@ export function makeApplyFromOperatorSpec(
       sqlValueWithCodec
     ) =>
       function ($where, value) {
-        if (!$where.extensions?.pgFilterAttribute) {
-          throw new Error(
-            `Planning error: expected 'pgFilterAttribute' to be present on the $where plan's extensions; your extensions to \`postgraphile-plugin-connection-filter\` does not implement the required interfaces.`
-          );
-        }
-        if (value === undefined) {
-          return;
-        }
-        const {
-          fieldName: parentFieldName,
-          attributeName,
-          attribute,
-          codec,
-          expression,
-        } = $where.extensions.pgFilterAttribute;
-
-        const sourceAlias = attribute
-          ? attribute.expression
-            ? attribute.expression($where.alias)
-            : sql`${$where.alias}.${sql.identifier(attributeName)}`
-          : expression
-            ? expression
-            : $where.alias;
-        const sourceCodec = codec ?? attribute.codec;
-
-        const [sqlIdentifier, identifierCodec] = resolveSqlIdentifier
-          ? resolveSqlIdentifier(sourceAlias, sourceCodec)
-          : /*
-      : attribute.codec === TYPES.citext
-      ? sql.query`${sourceAlias}::text` // cast attribute to text for case-sensitive matching
-      : attribute.codec.arrayOfCodec === TYPES.citext
-      ? sql.query`${sourceAlias}::text[]` // cast attribute to text[] for case-sensitive matching
-      */
-            [sourceAlias, sourceCodec];
-
-        if (connectionFilterAllowNullInput && value === null) {
-          // Don't add a filter
-          return;
-        }
-        if (!connectionFilterAllowNullInput && value === null) {
-          // Forbidden
-          throw Object.assign(
-            new Error("Null literals are forbidden in filter argument input."),
-            {
-              //TODO: mark this error as safe
-            }
-          );
-        }
-        const resolvedInput = resolveInput ? resolveInput(value) : value;
-        const inputCodec = resolveInputCodec
-          ? resolveInputCodec(codec ?? attribute.codec)
-          : (codec ?? attribute.codec);
-
-        const sqlValue = resolveSqlValue
-          ? resolveSqlValue($where, value, inputCodec)
-          : /*
-      : attribute.codec === TYPES.citext
-      ? $where.placeholder($resolvedInput, TYPES.text) // cast input to text
-      : attribute.codec.arrayOfCodec === TYPES.citext
-      ? $where.placeholder($resolvedInput, listOfCodec(TYPES.citext as any)) // cast input to text[]
-      */
-            sqlValueWithCodec(resolvedInput, inputCodec);
-        const fragment = resolve(sqlIdentifier, sqlValue, value, $where, {
-          fieldName: parentFieldName ?? null,
-          operatorName: fieldName,
-        });
-        $where.where(fragment);
+        return pgConnectionFilterApplyFromOperator(
+          connectionFilterAllowNullInput,
+          fieldName,
+          resolve,
+          resolveInput,
+          resolveInputCodec,
+          resolveSqlIdentifier,
+          resolveSqlValue,
+          sql,
+          sqlValueWithCodec,
+          $where,
+          value
+        );
       },
     [
       connectionFilterAllowNullInput,
       fieldName,
+      pgConnectionFilterApplyFromOperator,
       resolve,
       resolveInput,
       resolveInputCodec,

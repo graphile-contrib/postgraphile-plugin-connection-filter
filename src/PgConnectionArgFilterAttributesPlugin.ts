@@ -1,11 +1,54 @@
 import type {
+  PgCodecAttribute,
   PgCodecWithAttributes,
   PgConditionCapableParent,
 } from "@dataplan/pg";
 import type { GraphQLInputObjectType } from "graphql";
 import { isEmpty } from "./utils";
+import { EXPORTABLE } from "./EXPORTABLE";
 
 import { version } from "./version";
+
+const pgConnectionFilterApplyAttribute = EXPORTABLE(
+  (isEmpty) =>
+    (
+      PgCondition: GraphileBuild.Build["dataplanPg"]["PgCondition"],
+      colSpec: {
+        fieldName: string;
+        attributeName: string;
+        attribute: PgCodecAttribute;
+      },
+      connectionFilterAllowEmptyObjectInput: boolean | undefined,
+      connectionFilterAllowNullInput: boolean | undefined,
+      queryBuilder: PgConditionCapableParent,
+      value: unknown
+    ) => {
+      if (value === undefined) {
+        return;
+      }
+      if (!connectionFilterAllowEmptyObjectInput && isEmpty(value)) {
+        throw Object.assign(
+          new Error("Empty objects are forbidden in filter argument input."),
+          {
+            //TODO: mark this error as safe
+          }
+        );
+      }
+      if (!connectionFilterAllowNullInput && value === null) {
+        throw Object.assign(
+          new Error("Null literals are forbidden in filter argument input."),
+          {
+            //TODO: mark this error as safe
+          }
+        );
+      }
+      const condition = new PgCondition(queryBuilder);
+      condition.extensions.pgFilterAttribute = colSpec;
+      return condition;
+    },
+  [isEmpty],
+  "pgConnectionFilterApplyAttribute"
+);
 
 export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterAttributesPlugin",
@@ -78,49 +121,26 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                       PgCondition,
                       colSpec,
                       connectionFilterAllowEmptyObjectInput,
-                      connectionFilterAllowNullInput,
-                      isEmpty
+                      connectionFilterAllowNullInput
                     ) =>
                       function (
                         queryBuilder: PgConditionCapableParent,
                         value: unknown
                       ) {
-                        if (value === undefined) {
-                          return;
-                        }
-                        if (
-                          !connectionFilterAllowEmptyObjectInput &&
-                          isEmpty(value)
-                        ) {
-                          throw Object.assign(
-                            new Error(
-                              "Empty objects are forbidden in filter argument input."
-                            ),
-                            {
-                              //TODO: mark this error as safe
-                            }
-                          );
-                        }
-                        if (!connectionFilterAllowNullInput && value === null) {
-                          throw Object.assign(
-                            new Error(
-                              "Null literals are forbidden in filter argument input."
-                            ),
-                            {
-                              //TODO: mark this error as safe
-                            }
-                          );
-                        }
-                        const condition = new PgCondition(queryBuilder);
-                        condition.extensions.pgFilterAttribute = colSpec;
-                        return condition;
+                        return pgConnectionFilterApplyAttribute(
+                          PgCondition,
+                          colSpec,
+                          connectionFilterAllowEmptyObjectInput,
+                          connectionFilterAllowNullInput,
+                          queryBuilder,
+                          value
+                        );
                       },
                     [
                       PgCondition,
                       colSpec,
                       connectionFilterAllowEmptyObjectInput,
                       connectionFilterAllowNullInput,
-                      isEmpty,
                     ]
                   ),
                 })

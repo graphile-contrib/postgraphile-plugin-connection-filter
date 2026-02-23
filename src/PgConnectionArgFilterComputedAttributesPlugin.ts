@@ -1,9 +1,10 @@
-import type { PgCondition } from "@dataplan/pg";
+import type { PgCodec, PgCondition, PgResource } from "@dataplan/pg";
 import {
   getComputedAttributeResources,
   isComputedScalarAttributeResource,
 } from "./utils";
 import type { GraphQLInputObjectType } from "graphql";
+import { EXPORTABLE } from "./EXPORTABLE";
 
 import { version } from "./version";
 
@@ -14,6 +15,36 @@ declare global {
     }
   }
 }
+
+const pgConnectionFilterApplyComputedAttribute = EXPORTABLE(
+  () =>
+    (
+      PgCondition: GraphileBuild.Build["dataplanPg"]["PgCondition"],
+      computedAttributeResource: PgResource,
+      fieldName: string,
+      functionResultCodec: PgCodec,
+      $where: PgCondition,
+      value: object | null
+    ) => {
+      if (typeof computedAttributeResource.from !== "function") {
+        throw new Error(`Unexpected...`);
+      }
+      // TODO: assertAllowed?
+      if (value == null) return;
+      const expression = computedAttributeResource.from({
+        placeholder: $where.alias,
+      });
+      const $col = new PgCondition($where);
+      $col.extensions.pgFilterAttribute = {
+        fieldName,
+        codec: functionResultCodec,
+        expression,
+      };
+      return $col;
+    },
+  [],
+  "pgConnectionFilterApplyComputedAttribute "
+);
 
 export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugin =
   {
@@ -152,23 +183,14 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                         functionResultCodec
                       ) =>
                         function ($where: PgCondition, value: object | null) {
-                          if (
-                            typeof computedAttributeResource.from !== "function"
-                          ) {
-                            throw new Error(`Unexpected...`);
-                          }
-                          // TODO: assertAllowed?
-                          if (value == null) return;
-                          const expression = computedAttributeResource.from({
-                            placeholder: $where.alias,
-                          });
-                          const $col = new PgCondition($where);
-                          $col.extensions.pgFilterAttribute = {
+                          return pgConnectionFilterApplyComputedAttribute(
+                            PgCondition,
+                            computedAttributeResource,
                             fieldName,
-                            codec: functionResultCodec,
-                            expression,
-                          };
-                          return $col;
+                            functionResultCodec,
+                            $where,
+                            value
+                          );
                         },
                       [
                         PgCondition,
