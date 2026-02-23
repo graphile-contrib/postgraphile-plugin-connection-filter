@@ -194,6 +194,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                         foreignTable,
                         foreignTableExpression,
                         localAttributes,
+                        pgConnectionFilterApplySingleRelation,
                         remoteAttributes,
                         sql
                       ) =>
@@ -214,6 +215,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                         foreignTable,
                         foreignTableExpression,
                         localAttributes,
+                        pgConnectionFilterApplySingleRelation,
                         remoteAttributes,
                         sql,
                       ]
@@ -248,6 +250,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                           foreignTable,
                           foreignTableExpression,
                           localAttributes,
+                          pgConnectionFilterApplyForwardRelationExists,
                           remoteAttributes,
                           sql
                         ) =>
@@ -271,6 +274,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                           foreignTable,
                           foreignTableExpression,
                           localAttributes,
+                          pgConnectionFilterApplyForwardRelationExists,
                           remoteAttributes,
                           sql,
                         ]

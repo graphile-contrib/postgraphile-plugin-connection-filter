@@ -180,7 +180,8 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                         PgCondition,
                         computedAttributeResource,
                         fieldName,
-                        functionResultCodec
+                        functionResultCodec,
+                        pgConnectionFilterApplyComputedAttribute
                       ) =>
                         function ($where: PgCondition, value: object | null) {
                           return pgConnectionFilterApplyComputedAttribute(
@@ -197,6 +198,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                         computedAttributeResource,
                         fieldName,
                         functionResultCodec,
+                        pgConnectionFilterApplyComputedAttribute,
                       ]
                     ),
                   }

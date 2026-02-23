@@ -121,7 +121,8 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                       PgCondition,
                       colSpec,
                       connectionFilterAllowEmptyObjectInput,
-                      connectionFilterAllowNullInput
+                      connectionFilterAllowNullInput,
+                      pgConnectionFilterApplyAttribute
                     ) =>
                       function (
                         queryBuilder: PgConditionCapableParent,
@@ -141,6 +142,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                       colSpec,
                       connectionFilterAllowEmptyObjectInput,
                       connectionFilterAllowNullInput,
+                      pgConnectionFilterApplyAttribute,
                     ]
                   ),
                 })
