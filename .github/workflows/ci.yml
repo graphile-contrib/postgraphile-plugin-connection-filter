@@ -14,10 +14,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 18.x
+      - name: Use Node.js 22.x
         uses: actions/setup-node@v1
         with:
-          node-version: 18
+          node-version: 22
 
       - name: Install
         run: yarn --immutable --ignore-engines
@@ -51,8 +51,8 @@ jobs:
           - 14
           - 15
         node-version:
-          - 16.x
-          - 18.x
+          - 22.x
+          - 24.x
 
     services:
       postgres:
