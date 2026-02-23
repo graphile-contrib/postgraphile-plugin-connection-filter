@@ -7,7 +7,7 @@
     "clean": "rm -Rf dist",
     "build": "tsc -p tsconfig.build.json",
     "watch": "yarn build --watch",
-    "format": "prettier --ignore-path ./.eslintignore",
+    "format": "prettier --ignore-path ./.lintignore",
     "format:all": "yarn format '**/*.{json,md,html,js,jsx,ts,tsx}'",
     "format:fix": "yarn format:all --write",
     "format:check": "yarn format:all --list-different",
