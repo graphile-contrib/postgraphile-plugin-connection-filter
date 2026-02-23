@@ -12,6 +12,7 @@
     "format:fix": "yarn format:all --write",
     "format:check": "yarn format:all --list-different",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "yarn lint --fix && yarn prettier:fix",
     "prepack": "rm -Rf dist && npm run build",
     "test": "jest -i",
     "typecheck": "tsc --noEmit"
@@ -30,23 +31,24 @@
     "tslib": "^2.5.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.28.6",
+    "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-transform-runtime": "^7.23.3",
     "@babel/preset-env": "^7.22.14",
     "@babel/preset-typescript": "^7.22.11",
     "@dataplan/pg": "^1.0.0-rc.1",
+    "@eslint/compat": "^2.0.0",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.39.1",
     "@types/jest": "29.5.0",
     "@types/pg": "^8.11.11",
-    "@typescript-eslint/eslint-plugin": "^8.56.1",
-    "@typescript-eslint/parser": "^8.56.1",
-    "@typescript-eslint/typescript-estree": "^8.56.1",
+    "@typescript-eslint/parser": "^8.47.0",
     "babel-jest": "^29.6.4",
     "babel-plugin-transform-import-meta": "^2.2.1",
-    "eslint": "^10.0.1",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-graphile-export": "^1.0.0-rc.4",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-jest": "^29.15.0",
+    "eslint-plugin-jest": "^28.14.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-tsdoc": "^0.5.0",
     "eslint_d": "^14.3.0",
@@ -65,7 +67,8 @@
     "postgraphile": "^5.0.0-rc.1",
     "prettier": "2.8.7",
     "ts-jest": "29.1.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "typescript-eslint": "^8.47.0"
   },
   "files": [
     "dist"
