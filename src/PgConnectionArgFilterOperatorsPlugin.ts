@@ -729,31 +729,55 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containedBy: {
             description: "Contained by the specified JSON.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} <@ ${v}`,
+              [sql],
+              "resolveContainedBy"
+            ),
           },
         };
         const inetOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified internet address.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >> ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} >> ${v}`,
+              [sql],
+              "resolveContains"
+            ),
           },
           containsOrEqualTo: {
             description: "Contains or equal to the specified internet address.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >>= ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} >>= ${v}`,
+              [sql],
+              "resolveContainsOrEqualTo"
+            ),
           },
           containedBy: {
             description: "Contained by the specified internet address.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} << ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} << ${v}`,
+              [sql],
+              "resolveContainedBy"
+            ),
           },
           containedByOrEqualTo: {
             description:
               "Contained by or equal to the specified internet address.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <<= ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} <<= ${v}`,
+              [sql],
+              "resolveContainedByOrEqualTo"
+            ),
           },
           containsOrContainedBy: {
             description:
               "Contains or contained by the specified internet address.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} && ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} && ${v}`,
+              [sql],
+              "resolveContainsOrContainedBy"
+            ),
           },
         };
 
@@ -884,7 +908,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           ...sortOperators,
           contains: {
             description: "Contains the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} @> ${v}`,
+              [sql],
+              "resolveContains"
+            ),
           },
           containsElement: {
             description: "Contains the specified value.",
@@ -901,35 +929,67 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                 },
               []
             ),
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} @> ${v}`,
+              [sql],
+              "resolveContainsElement"
+            ),
           },
           containedBy: {
             description: "Contained by the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} <@ ${v}`,
+              [sql],
+              "resolveContainedBy"
+            ),
           },
           overlaps: {
             description: "Overlaps the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} && ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} && ${v}`,
+              [sql],
+              "resolveOverlaps"
+            ),
           },
           strictlyLeftOf: {
             description: "Strictly left of the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} << ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} << ${v}`,
+              [sql],
+              "resolveStrictlyLeftOf"
+            ),
           },
           strictlyRightOf: {
             description: "Strictly right of the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} >> ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} >> ${v}`,
+              [sql],
+              "resolveStrictlyRightOf"
+            ),
           },
           notExtendsRightOf: {
             description: "Does not extend right of the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} &< ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} &< ${v}`,
+              [sql],
+              "resolveNotExtendsRightOf"
+            ),
           },
           notExtendsLeftOf: {
             description: "Does not extend left of the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} &> ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} &> ${v}`,
+              [sql],
+              "resolveNotExtendsLeftOf"
+            ),
           },
           adjacentTo: {
             description: "Adjacent to the specified range.",
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} -|- ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} -|- ${v}`,
+              [sql],
+              "resolveAdjacentTo"
+            ),
           },
         };
 
@@ -946,26 +1006,39 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             description: "Contains the specified list of values.",
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveInputCodec: resolveInputCodecSensitive,
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} @> ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} @> ${v}`,
+              [sql],
+              "resolveContains"
+            ),
           },
           containedBy: {
             description: "Contained by the specified list of values.",
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveInputCodec: resolveInputCodecSensitive,
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} <@ ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} <@ ${v}`,
+              [sql],
+              "resolveContainedBy"
+            ),
           },
           overlaps: {
             description: "Overlaps the specified list of values.",
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
             resolveInputCodec: resolveInputCodecSensitive,
-            resolve: EXPORTABLE((sql) => (i, v) => sql`${i} && ${v}`, [sql]),
+            resolve: EXPORTABLE(
+              (sql) => (i, v) => sql`${i} && ${v}`,
+              [sql],
+              "resolveOverlaps"
+            ),
           },
           anyEqualTo: {
             description: "Any array item is equal to the specified value.",
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${v} = ANY (${i})`,
-              [sql]
+              [sql],
+              "resolveAnyEqualTo"
             ),
           },
           anyNotEqualTo: {
@@ -973,7 +1046,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${v} <> ANY (${i})`,
-              [sql]
+              [sql],
+              "resolveAnyNotEqualTo"
             ),
           },
           anyLessThan: {
@@ -981,7 +1055,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${v} > ANY (${i})`,
-              [sql]
+              [sql],
+              "resolveAnyLessThan"
             ),
           },
           anyLessThanOrEqualTo: {
@@ -990,7 +1065,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${v} >= ANY (${i})`,
-              [sql]
+              [sql],
+              "resolveAnyLessThanOrEqualTo"
             ),
           },
           anyGreaterThan: {
@@ -998,7 +1074,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${v} < ANY (${i})`,
-              [sql]
+              [sql],
+              "resolveAnyGreaterThan"
             ),
           },
           anyGreaterThanOrEqualTo: {
@@ -1007,7 +1084,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveArrayItemInputCodecSensitive,
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${v} <= ANY (${i})`,
-              [sql]
+              [sql],
+              "resolveAnyGreaterThanOrEqualTo"
             ),
           },
         };
