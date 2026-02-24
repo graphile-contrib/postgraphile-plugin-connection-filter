@@ -13,11 +13,9 @@ const pgConnectionFilterApplyAttribute = EXPORTABLE(
   (isEmpty) =>
     (
       PgCondition: GraphileBuild.Build["dataplanPg"]["PgCondition"],
-      colSpec: {
-        fieldName: string;
-        attributeName: string;
-        attribute: PgCodecAttribute;
-      },
+      fieldName: string,
+      attributeName: string,
+      attribute: PgCodecAttribute,
       connectionFilterAllowEmptyObjectInput: boolean | undefined,
       connectionFilterAllowNullInput: boolean | undefined,
       queryBuilder: PgConditionCapableParent,
@@ -43,7 +41,11 @@ const pgConnectionFilterApplyAttribute = EXPORTABLE(
         );
       }
       const condition = new PgCondition(queryBuilder);
-      condition.extensions.pgFilterAttribute = colSpec;
+      condition.extensions.pgFilterAttribute = {
+        fieldName,
+        attributeName,
+        attribute,
+      };
       return condition;
     },
   [isEmpty],
@@ -90,7 +92,6 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
             continue;
           }
           const fieldName = inflection.attribute({ codec, attributeName });
-          const colSpec = { fieldName, attributeName, attribute };
           const digest = connectionFilterOperatorsDigest(attribute.codec);
           if (!digest) {
             continue;
@@ -119,9 +120,11 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                   apply: EXPORTABLE(
                     (
                       PgCondition,
-                      colSpec,
+                      attribute,
+                      attributeName,
                       connectionFilterAllowEmptyObjectInput,
                       connectionFilterAllowNullInput,
+                      fieldName,
                       pgConnectionFilterApplyAttribute
                     ) =>
                       function (
@@ -130,7 +133,9 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                       ) {
                         return pgConnectionFilterApplyAttribute(
                           PgCondition,
-                          colSpec,
+                          fieldName,
+                          attributeName,
+                          attribute,
                           connectionFilterAllowEmptyObjectInput,
                           connectionFilterAllowNullInput,
                           queryBuilder,
@@ -139,9 +144,11 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
                       },
                     [
                       PgCondition,
-                      colSpec,
+                      attribute,
+                      attributeName,
                       connectionFilterAllowEmptyObjectInput,
                       connectionFilterAllowNullInput,
+                      fieldName,
                       pgConnectionFilterApplyAttribute,
                     ]
                   ),
