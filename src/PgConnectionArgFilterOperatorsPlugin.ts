@@ -6,7 +6,6 @@ import type {
 import type {
   GrafastInputFieldConfigMap,
   InputObjectFieldApplyResolver,
-  Step,
 } from "grafast";
 import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
@@ -16,12 +15,40 @@ import { version } from "./version";
 
 // const textArrayCodec = listOfCodec(TYPES.text);
 
+declare global {
+  namespace GraphileBuild {
+    interface Build {
+      pgAggregatesForceTextTypesInsensitive: PgCodec[];
+      pgAggregatesForceTextTypesSensitive: PgCodec[];
+    }
+  }
+}
+
 export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
   name: "PgConnectionArgFilterOperatorsPlugin",
   version,
+  after: ["PgBasicsPlugin"],
 
   schema: {
     hooks: {
+      build(build) {
+        if (!build.dataplanPg) {
+          throw new Error("Must be loaded after dataplanPg is added to build");
+        }
+        const { TYPES } = build.dataplanPg;
+        return build.extend(
+          build,
+          {
+            pgAggregatesForceTextTypesInsensitive: [TYPES.char, TYPES.bpchar],
+            pgAggregatesForceTextTypesSensitive: [
+              TYPES.citext,
+              TYPES.char,
+              TYPES.bpchar,
+            ],
+          },
+          "Adding text types that need to be forced to be case sensitive"
+        );
+      },
       GraphQLInputObjectType_fields(fields, build, context) {
         const {
           extend,
@@ -34,6 +61,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             connectionFilterOperatorNames,
           },
           EXPORTABLE,
+          pgAggregatesForceTextTypesSensitive: forceTextTypesSensitive,
+          pgAggregatesForceTextTypesInsensitive: forceTextTypesInsensitive,
         } = build;
 
         const {
@@ -78,12 +107,6 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           "resolveTypeToListOfNonNullable"
         );
 
-        const forceTextTypesSensitive = [
-          TYPES.citext,
-          TYPES.char,
-          TYPES.bpchar,
-        ];
-        const forceTextTypesInsensitive = [TYPES.char, TYPES.bpchar];
         const resolveDomains = EXPORTABLE(
           () =>
             function (
