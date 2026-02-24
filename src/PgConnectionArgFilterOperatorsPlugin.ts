@@ -723,7 +723,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
           containsKey: {
             description: "Contains the specified key.",
-            resolveInputCodec: EXPORTABLE((TYPES) => () => TYPES.text, [TYPES]),
+            resolveInputCodec: EXPORTABLE(
+              (TYPES) => () => TYPES.text,
+              [TYPES],
+              "resolveInputCodecText"
+            ),
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} ? ${v}`,
               [sql],
@@ -853,16 +857,18 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                   ? ([sourceAlias, codec] as const) // already case-insensitive, so no need to call `lower()`
                   : ([sql`lower(${sourceAlias}::text)`, TYPES.text] as const);
               },
-            [TYPES, resolveDomains, sql]
+            [TYPES, resolveDomains, sql],
+            "resolveSqlIdentifierInsensitiveOperator"
           );
+          const inOrNotIn = name === "in" || name === "notIn";
           const resolveSqlValue = EXPORTABLE(
-            (TYPES, name, sql, sqlValueWithCodec) =>
+            (TYPES, inOrNotIn, sql, sqlValueWithCodec) =>
               function (
                 _unused: unknown,
                 input: any,
                 inputCodec: PgCodec<any, any, any, any, any, any, any>
               ) {
-                if (name === "in" || name === "notIn") {
+                if (inOrNotIn) {
                   const sqlList = sqlValueWithCodec(input, inputCodec);
                   if (inputCodec.arrayOfCodec === TYPES.citext) {
                     // already case-insensitive, so no need to call `lower()`
@@ -883,15 +889,16 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                   }
                 }
               },
-            [TYPES, name, sql, sqlValueWithCodec]
+            [TYPES, inOrNotIn, sql, sqlValueWithCodec],
+            `resolveSqlValueInsensitiveOperator${inOrNotIn ? "_list" : ""}`
           );
 
           const resolveInputCodec = EXPORTABLE(
-            (TYPES, listOfCodec, name, resolveDomains) =>
+            (TYPES, inOrNotIn, listOfCodec, resolveDomains) =>
               function (
                 inputCodec: PgCodec<any, any, any, any, any, any, any>
               ) {
-                if (name === "in" || name === "notIn") {
+                if (inOrNotIn) {
                   const t =
                     resolveDomains(inputCodec) === TYPES.citext
                       ? inputCodec
@@ -907,7 +914,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                   return t;
                 }
               },
-            [TYPES, listOfCodec, name, resolveDomains]
+            [TYPES, inOrNotIn, listOfCodec, resolveDomains],
+            `resolveInputCodecInsensitiveOperator${inOrNotIn ? "_list" : ""}`
           );
 
           insensitiveOperators[`${name}Insensitive`] = {
@@ -950,7 +958,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                     );
                   }
                 },
-              []
+              [],
+              "resolveInputCodecContainsElement"
             ),
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} @> ${v}`,
@@ -1597,6 +1606,7 @@ export function makeApplyFromOperatorSpec(
       resolveSqlValue,
       sql,
       sqlValueWithCodec,
-    ]
+    ],
+    "makeApplyFromOperatorSpec"
   );
 }
