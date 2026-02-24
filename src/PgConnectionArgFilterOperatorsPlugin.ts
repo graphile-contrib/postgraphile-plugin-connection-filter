@@ -724,7 +724,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in hstoreOperators) {
-          hstoreOperators[key].name ??= key;
+          hstoreOperators[key].name ??= `hstore${key}`;
         }
 
         const jsonbOperators: { [fieldName: string]: OperatorSpec } = {
@@ -779,7 +779,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in jsonbOperators) {
-          jsonbOperators[key].name ??= key;
+          jsonbOperators[key].name ??= `jsonb${key}`;
         }
 
         const inetOperators: { [fieldName: string]: OperatorSpec } = {
@@ -827,7 +827,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in inetOperators) {
-          inetOperators[key].name ??= key;
+          inetOperators[key].name ??= `inet${key}`;
         }
 
         const insensitiveOperators: { [fieldName: string]: OperatorSpec } = {};
@@ -942,14 +942,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
 
           insensitiveOperators[`${name}Insensitive`] = {
             ...spec,
+            name: `${name}Insensitive`,
             description,
             resolveInputCodec,
             resolveSqlIdentifier,
             resolveSqlValue,
           };
-        }
-        for (const key in insensitiveOperators) {
-          insensitiveOperators[key].name ??= key;
         }
 
         const connectionFilterEnumOperators = {
@@ -1050,7 +1048,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in connectionFilterRangeOperators) {
-          connectionFilterRangeOperators[key].name ??= key;
+          connectionFilterRangeOperators[key].name ??= `range${key}`;
         }
 
         const connectionFilterArrayOperators: {
@@ -1150,7 +1148,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in connectionFilterArrayOperators) {
-          connectionFilterArrayOperators[key].name ??= key;
+          connectionFilterArrayOperators[key].name ??= `array${key}`;
         }
 
         const {

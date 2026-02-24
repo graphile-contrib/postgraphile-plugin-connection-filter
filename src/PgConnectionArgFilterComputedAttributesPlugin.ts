@@ -43,7 +43,7 @@ const pgConnectionFilterApplyComputedAttribute = EXPORTABLE(
       return $col;
     },
   [],
-  "pgConnectionFilterApplyComputedAttribute "
+  "pgConnectionFilterApplyComputedAttribute"
 );
 
 export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugin =
