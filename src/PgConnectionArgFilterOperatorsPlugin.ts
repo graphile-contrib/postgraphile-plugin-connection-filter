@@ -364,6 +364,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveType: resolveTypeToListOfNonNullable,
           },
         };
+        for (const key in standardOperators) {
+          standardOperators[key].name ??= key;
+        }
+
         const sortOperators: { [fieldName: string]: OperatorSpec } = {
           lessThan: {
             description: "Less than the specified value.",
@@ -406,6 +410,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
         };
+        for (const key in sortOperators) {
+          sortOperators[key].name ??= key;
+        }
 
         const patternMatchingOperators: { [fieldName: string]: OperatorSpec } =
           {
@@ -653,6 +660,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               resolveSqlIdentifier: resolveSqlIdentifierInsensitive,
             },
           };
+        for (const key in patternMatchingOperators) {
+          patternMatchingOperators[key].name ??= key;
+        }
+
         const resolveTextArrayInputCodec = EXPORTABLE(
           (TYPES, listOfCodec) => () =>
             listOfCodec(TYPES.text, { extensions: { listItemNonNull: true } }),
@@ -712,6 +723,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ),
           },
         };
+        for (const key in hstoreOperators) {
+          hstoreOperators[key].name ??= key;
+        }
+
         const jsonbOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified JSON.",
@@ -763,6 +778,10 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ),
           },
         };
+        for (const key in jsonbOperators) {
+          jsonbOperators[key].name ??= key;
+        }
+
         const inetOperators: { [fieldName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified internet address.",
@@ -807,6 +826,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ),
           },
         };
+        for (const key in inetOperators) {
+          inetOperators[key].name ??= key;
+        }
 
         const insensitiveOperators: { [fieldName: string]: OperatorSpec } = {};
 
@@ -926,6 +948,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveSqlValue,
           };
         }
+        for (const key in insensitiveOperators) {
+          insensitiveOperators[key].name ??= key;
+        }
 
         const connectionFilterEnumOperators = {
           ...standardOperators,
@@ -1024,6 +1049,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ),
           },
         };
+        for (const key in connectionFilterRangeOperators) {
+          connectionFilterRangeOperators[key].name ??= key;
+        }
 
         const connectionFilterArrayOperators: {
           [fieldName: string]: OperatorSpec;
@@ -1121,6 +1149,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             ),
           },
         };
+        for (const key in connectionFilterArrayOperators) {
+          connectionFilterArrayOperators[key].name ??= key;
+        }
 
         const {
           //inputTypeName,
@@ -1607,6 +1638,6 @@ export function makeApplyFromOperatorSpec(
       sql,
       sqlValueWithCodec,
     ],
-    "makeApplyFromOperatorSpec"
+    `pgAggregatesApply_${spec.name ?? "unknown"}`
   );
 }
