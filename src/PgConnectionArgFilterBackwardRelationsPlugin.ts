@@ -367,6 +367,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         () => ({
                           description: `Filter by the object’s \`${fieldName}\` relation.`,
                           type: FilterManyType,
+                          // $where.alias represents source; we need a condition that references the relational target
                           apply: EXPORTABLE(
                             (
                               assertAllowed,
@@ -380,7 +381,6 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                                 value: object | null
                               ) {
                                 assertAllowed(value, "object");
-                                // $where.alias represents source; we need a condition that references the relational target
                                 const $rel = $where.andPlan();
                                 $rel.extensions.pgFilterRelation = {
                                   tableExpression: foreignTableExpression,
