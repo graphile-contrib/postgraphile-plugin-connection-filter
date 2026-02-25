@@ -152,7 +152,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
             );
 
             // Must have only one required argument
-            if (argDetails.some((a) => a.required)) {
+            if (argDetails.some((a) => !a.optional)) {
               continue;
             }
 
