@@ -4,11 +4,10 @@
 
 Adds a powerful suite of filtering capabilities to a PostGraphile schema.
 
-> **Warning:** Use of this plugin with the default options may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the [Performance and Security](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#performance-and-security) section below for details.
+> [!WARNING]
+> Use of this plugin with the default options may make it **astoundingly trivial** for a malicious actor (or a well-intentioned application that generates complex GraphQL queries) to overwhelm your database with expensive queries. See the [Performance and Security](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#performance-and-security) section below for details.
 
 ## Usage
-
-Requires PostGraphile v4.5.0 or higher.
 
 Install with:
 
@@ -16,36 +15,13 @@ Install with:
 yarn add postgraphile postgraphile-plugin-connection-filter
 ```
 
-for PostGraphile v5 (beta):
-
-```
-yarn add postgraphile@beta postgraphile-plugin-connection-filter@beta
-```
-
-CLI usage via `--append-plugins`:
-
-```
-postgraphile --append-plugins postgraphile-plugin-connection-filter -c postgres://localhost/my_db ...
-```
-
-Library usage via `appendPlugins`:
+Add to your `graphile.config.ts` configuration:
 
 ```ts
-import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter";
-// or: const ConnectionFilterPlugin = require("postgraphile-plugin-connection-filter");
-
-const middleware = postgraphile(DATABASE_URL, SCHEMAS, {
-  appendPlugins: [ConnectionFilterPlugin],
-});
-```
-
-Config example for PostGraphile v5 (beta), `graphile.config.mjs`:
-
-```ts
-import ConnectionFilterPlugin from "postgraphile-plugin-connection-filter";
+import { PostGraphileConnectionFilterPreset } from "postgraphile-plugin-connection-filter";
 
 const preset = {
-  extends: [ConnectionFilterPlugin.PostGraphileConnectionFilterPreset],
+  extends: [PostGraphileConnectionFilterPreset],
 };
 
 export default preset;
