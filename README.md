@@ -18,10 +18,18 @@ yarn add postgraphile postgraphile-plugin-connection-filter
 Add to your `graphile.config.ts` configuration:
 
 ```ts
+import { makePgService } from "postgraphile/adaptors/pg";
+import { PostGraphileAmberPreset } from "postgraphile/presets/amber";
 import { PostGraphileConnectionFilterPreset } from "postgraphile-plugin-connection-filter";
 
-const preset = {
-  extends: [PostGraphileConnectionFilterPreset],
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileAmberPreset, PostGraphileConnectionFilterPreset],
+  pgServices: [
+    makePgService({
+      connectionString: process.env.DATABASE_URL!,
+      schemas: ["app_public"],
+    }),
+  ],
 };
 
 export default preset;
@@ -64,15 +72,16 @@ To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and
 
 ## Plugin Options
 
-When using PostGraphile as a library, the following plugin options can be passed via `graphileBuildOptions`:
+These options live in the `schema` section of your Graphile config:
 
 #### connectionFilterAllowedOperators
 
 Restrict filtering to specific operators:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterAllowedOperators: [
       "isNull",
       "equalTo",
@@ -87,19 +96,20 @@ postgraphile(pgConfig, schema, {
       "notIn",
     ],
   },
-});
+};
 ```
 
 #### connectionFilterAllowedFieldTypes
 
 Restrict filtering to specific field types:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterAllowedFieldTypes: ["String", "Int"],
   },
-});
+};
 ```
 
 The available field types will depend on your database schema.
@@ -108,24 +118,26 @@ The available field types will depend on your database schema.
 
 Enable/disable filtering on PostgreSQL arrays:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterArrays: false, // default: true
   },
-});
+};
 ```
 
 #### connectionFilterComputedColumns
 
 Enable/disable filtering by computed columns:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterComputedColumns: false, // default: true
   },
-});
+};
 ```
 
 Consider setting this to `false` and using `@filterable` [smart comments](https://www.graphile.org/postgraphile/smart-comments/) to selectively enable filtering:
@@ -141,39 +153,42 @@ comment on function app_public.foo_computed(foo app_public.foo) is E'@filterable
 
 Use alternative names (e.g. `eq`, `ne`) for operators:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterOperatorNames: {
       equalTo: "eq",
       notEqualTo: "ne",
     },
   },
-});
+};
 ```
 
 #### connectionFilterRelations
 
 Enable/disable filtering on related fields:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterRelations: true, // default: false
   },
-});
+};
 ```
 
 #### connectionFilterSetofFunctions
 
 Enable/disable filtering on functions that return `setof`:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterSetofFunctions: false, // default: true
   },
-});
+};
 ```
 
 Consider setting this to `false` and using `@filterable` [smart comments](https://www.graphile.org/postgraphile/smart-comments/) to selectively enable filtering:
@@ -189,24 +204,26 @@ comment on function app_public.some_foos() is E'@filterable';
 
 Enable/disable filtering with logical operators (`and`/`or`/`not`):
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterLogicalOperators: false, // default: true
   },
-});
+};
 ```
 
 #### connectionFilterAllowNullInput
 
 Allow/forbid `null` literals in input:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterAllowNullInput: true, // default: false
   },
-});
+};
 ```
 
 When `false`, passing `null` as a field value will throw an error.
@@ -216,12 +233,13 @@ When `true`, passing `null` as a field value is equivalent to omitting the field
 
 Allow/forbid empty objects (`{}`) in input:
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterAllowEmptyObjectInput: true, // default: false
   },
-});
+};
 ```
 
 When `false`, passing `{}` as a field value will throw an error.
@@ -237,12 +255,13 @@ inflection to omit the `-list` suffix, e.g. using
 `@graphile-contrib/pg-simplify-inflector`'s `pgOmitListSuffix` option. Use this
 if you see `Connection` added to your filter field names.
 
-```js
-postgraphile(pgConfig, schema, {
-  graphileBuildOptions: {
+```ts
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  schema: {
     connectionFilterUseListInflectors: true, // default: false
   },
-});
+};
 ```
 
 ## Examples
