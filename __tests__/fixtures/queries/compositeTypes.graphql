@@ -1,0 +1,38 @@
+query {
+  compositeColumn_a_equalTo_1: allFilterables(
+    filter: { compositeColumn: { a: { equalTo: 1 } } }
+  ) {
+    ...nodes
+  }
+  compositeColumn_b_equalTo_beta: allFilterables(
+    filter: { compositeColumn: { b: { equalTo: "beta" } } }
+  ) {
+    ...nodes
+  }
+  compositeColumn_a_equalTo_1_and_b_equalTo_gamma: allFilterables(
+    filter: { compositeColumn: { a: { equalTo: 1 }, b: { equalTo: "gamma" } } }
+  ) {
+    ...nodes
+  }
+  forwardColumn_id_equalTo_4: allFilterables(
+    filter: { forwardColumn: { id: { equalTo: 4 } } }
+  ) {
+    ...nodes
+  }
+  forwardColumn_name_equalTo_forward2: allFilterables(
+    filter: { forwardColumn: { name: { equalTo: "forward2" } } }
+  ) {
+    ...nodes
+  }
+  forwardColumn_id_equalTo_4_and_name_equalTo_forward4: allFilterables(
+    filter: { forwardColumn: { id: { equalTo: 4 }, name: { equalTo: "forward4" } } }
+  ) {
+    ...nodes
+  }
+}
+
+fragment nodes on FilterablesConnection {
+  nodes {
+    id
+  }
+}

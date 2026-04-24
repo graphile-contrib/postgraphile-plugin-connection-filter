@@ -5375,6 +5375,58 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
 }
 `;
 
+exports[`compositeTypes.graphql 1`] = `
+{
+  "data": {
+    "compositeColumn_a_equalTo_1": {
+      "nodes": [
+        {
+          "id": 1,
+        },
+        {
+          "id": 3,
+        },
+      ],
+    },
+    "compositeColumn_a_equalTo_1_and_b_equalTo_gamma": {
+      "nodes": [
+        {
+          "id": 3,
+        },
+      ],
+    },
+    "compositeColumn_b_equalTo_beta": {
+      "nodes": [
+        {
+          "id": 2,
+        },
+      ],
+    },
+    "forwardColumn_id_equalTo_4": {
+      "nodes": [
+        {
+          "id": 1,
+        },
+      ],
+    },
+    "forwardColumn_id_equalTo_4_and_name_equalTo_forward4": {
+      "nodes": [
+        {
+          "id": 1,
+        },
+      ],
+    },
+    "forwardColumn_name_equalTo_forward2": {
+      "nodes": [
+        {
+          "id": 2,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`computedColumns.graphql 1`] = `
 {
   "data": {

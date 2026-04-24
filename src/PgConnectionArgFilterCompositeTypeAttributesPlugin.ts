@@ -1,7 +1,39 @@
-import type { PgCodecAttributes, PgCodecWithAttributes } from "@dataplan/pg";
+import type {
+  PgCodecAttribute,
+  PgCodecAttributes,
+  PgCodecWithAttributes,
+  PgConditionCapableParent,
+} from "@dataplan/pg";
 import type { GraphQLInputObjectType } from "graphql";
+import { EXPORTABLE } from "./EXPORTABLE";
 
 import { version } from "./version";
+
+const pgConnectionFilterApplyCompositeTypeAttribute = EXPORTABLE(
+  () =>
+    (
+      PgCondition: GraphileBuild.Build["dataplanPg"]["PgCondition"],
+      sql: GraphileBuild.Build["sql"],
+      attributeName: string,
+      attribute: PgCodecAttribute,
+      queryBuilder: PgConditionCapableParent,
+      value: object | null
+    ) => {
+      if (value == null) {
+        return;
+      }
+      const expression = attribute.expression
+        ? sql.parens(attribute.expression(queryBuilder.alias), true)
+        : sql`(${queryBuilder.alias}.${sql.identifier(attributeName)})`;
+
+      const $record = new PgCondition(queryBuilder);
+      // TODO: upstream a better way of doing this, for example `new PgCondition(queryBuilder, expression)`
+      ($record as any).alias = expression;
+      return $record;
+    },
+  [],
+  "pgConnectionFilterApplyCompositeTypeAttribute"
+);
 
 export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.Plugin =
   {
@@ -16,7 +48,10 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
             extend,
             inflection,
             graphql: { isNamedType },
+            dataplanPg: { PgCondition },
             options: { connectionFilterAllowedFieldTypes },
+            sql,
+            EXPORTABLE,
           } = build;
           const {
             fieldWithHooks,
@@ -90,7 +125,35 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
                   () => ({
                     description: `Filter by the object’s \`${fieldName}\` field.`,
                     type: CompositeFilterType,
-                    // TODO: applyPlan
+                    apply: EXPORTABLE(
+                      (
+                        PgCondition,
+                        attribute,
+                        attributeName,
+                        pgConnectionFilterApplyCompositeTypeAttribute,
+                        sql
+                      ) =>
+                        function (
+                          queryBuilder: PgConditionCapableParent,
+                          value: object | null
+                        ) {
+                          return pgConnectionFilterApplyCompositeTypeAttribute(
+                            PgCondition,
+                            sql,
+                            attributeName,
+                            attribute,
+                            queryBuilder,
+                            value
+                          );
+                        },
+                      [
+                        PgCondition,
+                        attribute,
+                        attributeName,
+                        pgConnectionFilterApplyCompositeTypeAttribute,
+                        sql,
+                      ]
+                    ),
                   })
                 ),
               },
