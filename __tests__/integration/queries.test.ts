@@ -1,13 +1,84 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as pg from "pg";
+import * as adaptor from "postgraphile/@dataplan/pg/adaptors/pg";
+
 import { promisify } from "util";
-import { GraphQLSchema, graphql } from "graphql";
-import { withPgClient } from "../helpers";
-import { createPostGraphileSchema } from "postgraphile-core";
-import { PgConnectionArgCondition } from "graphile-build-pg";
-import ConnectionFilterPlugin from "../../src/index";
+import {
+  ExecutionArgs,
+  GraphQLError,
+  GraphQLSchema,
+  parse,
+  validate,
+} from "graphql";
+import { withPgClient, withPgPool } from "../helpers";
+import { PgConditionArgumentPlugin } from "graphile-build-pg";
+import { PostGraphileAmberPreset } from "postgraphile/presets/amber";
+import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
+import { makeSchema } from "postgraphile";
+import { PostGraphileConnectionFilterPreset } from "../../src/index";
 import CustomOperatorsPlugin from "./../customOperatorsPlugin";
+import { execute, hookArgs, isSafeError } from "grafast";
+import { SchemaResult } from "graphile-build";
+import { makeWithPgClientViaPgClientAlreadyInTransaction } from "@dataplan/pg/adaptors/pg";
+import { exportSchemaAsString } from "graphile-export";
+import { importFromStringSync } from "module-from-string";
+import { FilterAllPlugin } from "../FilterAllPlugin";
+
+// TODO: remove this once Grafast gets it's planning under control :D
+jest.setTimeout(300000);
+
+const vmEval = (code: string) => {
+  const { schema } = importFromStringSync(code, {
+    transformOptions: { loader: "js" },
+    useCurrentGlobal: true,
+  });
+  return schema as GraphQLSchema;
+};
+
+const createPostGraphileSchema = async (
+  pool: pg.Pool,
+  schemas: string[],
+  v4Options: V4Options,
+  anotherPreset: GraphileConfig.Preset = {}
+) => {
+  const preset: GraphileConfig.Preset = {
+    extends: [
+      PostGraphileAmberPreset,
+      PostGraphileConnectionFilterPreset,
+      makeV4Preset(v4Options),
+      ...(anotherPreset ? [anotherPreset] : []),
+    ],
+    plugins: [FilterAllPlugin],
+    pgServices: [
+      adaptor.makePgService({
+        name: "main",
+        withPgClientKey: "withPgClient",
+        pgSettingsKey: "pgSettings",
+        schemas: schemas,
+        pool,
+      }),
+    ],
+  };
+  const params = await makeSchema(preset);
+  if (process.env.TEST_EXPORTED_SCHEMA) {
+    return {
+      ...params,
+      schema: vmEval(
+        (
+          await exportSchemaAsString(params.schema, {
+            mode: "graphql-js",
+            // or:
+            // mode: "typeDefs",
+            modules: {},
+          })
+        ).code
+      ),
+    };
+  } else {
+    return params;
+  }
+};
 
 const readFile = promisify(fs.readFile);
 
@@ -15,13 +86,13 @@ const queriesDir = `${__dirname}/../fixtures/queries`;
 const queryFileNames = fs.readdirSync(queriesDir);
 
 let gqlSchemas: {
-  normal: GraphQLSchema;
-  dynamicJson: GraphQLSchema;
-  networkScalars: GraphQLSchema;
-  relations: GraphQLSchema;
-  simpleCollections: GraphQLSchema;
-  nullAndEmptyAllowed: GraphQLSchema;
-  addConnectionFilterOperator: GraphQLSchema;
+  normal: SchemaResult;
+  dynamicJson: SchemaResult;
+  networkScalars: SchemaResult;
+  relations: SchemaResult;
+  simpleCollections: SchemaResult;
+  nullAndEmptyAllowed: SchemaResult;
+  addConnectionFilterOperator: SchemaResult;
 };
 
 beforeAll(async () => {
@@ -40,7 +111,7 @@ beforeAll(async () => {
     await pgClient.query(await readFile(`${__dirname}/../p-data.sql`, "utf8"));
   });
   // Get GraphQL schema instances that we can query.
-  gqlSchemas = await withPgClient(async (pgClient) => {
+  gqlSchemas = await withPgPool(async (pool) => {
     // Different fixtures need different schemas with different configurations.
     // Make all of the different schemas with different configurations that we
     // need and wait for them to be created in parallel.
@@ -53,46 +124,76 @@ beforeAll(async () => {
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
     ] = await Promise.all([
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin],
-      }),
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin],
-        dynamicJson: true,
-      }),
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin],
-        graphileBuildOptions: {
-          pgUseCustomNetworkScalars: true,
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
         },
-      }),
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin],
-        graphileBuildOptions: {
-          connectionFilterRelations: true,
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          dynamicJson: true,
         },
-      }),
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin],
-        simpleCollections: "only",
-      }),
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin],
-        graphileBuildOptions: {
-          connectionFilterAllowNullInput: true,
-          connectionFilterAllowEmptyObjectInput: true,
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            pgUseCustomNetworkScalars: true,
+          },
         },
-      }),
-      createPostGraphileSchema(pgClient, ["p"], {
-        skipPlugins: [PgConnectionArgCondition],
-        appendPlugins: [ConnectionFilterPlugin, CustomOperatorsPlugin],
-      }),
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            connectionFilterRelations: true,
+          },
+        },
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          simpleCollections: "only",
+        },
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            connectionFilterAllowNullInput: true,
+            connectionFilterAllowEmptyObjectInput: true,
+          },
+        },
+        {}
+      ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+        },
+        {
+          plugins: [CustomOperatorsPlugin],
+        }
+      ),
     ]);
     return {
       normal,
@@ -118,7 +219,7 @@ for (const queryFileName of queryFileNames) {
     // some specific fixtures against a schema configured slightly
     // differently.
     const gqlSchemaByQueryFileName: {
-      [queryFileName: string]: GraphQLSchema;
+      [queryFileName: string]: SchemaResult;
     } = {
       "addConnectionFilterOperator.graphql":
         gqlSchemas.addConnectionFilterOperator,
@@ -131,13 +232,43 @@ for (const queryFileName of queryFileNames) {
       "simpleCollections.graphql": gqlSchemas.simpleCollections,
       "nullAndEmptyAllowed.graphql": gqlSchemas.nullAndEmptyAllowed,
     };
-    const gqlSchema =
+    const { schema, resolvedPreset } =
       queryFileName in gqlSchemaByQueryFileName
         ? gqlSchemaByQueryFileName[queryFileName]
         : gqlSchemas.normal;
-    const result = await withPgClient(async (client: pg.PoolClient) =>
-      graphql(gqlSchema, query, null, { pgClient: client })
-    );
+    const document = parse(query);
+    const errors = validate(schema, document);
+    if (errors.length > 0) {
+      throw new Error(
+        `GraphQL validation errors:\n${errors.map((e) => e.message).join("\n")}`
+      );
+    }
+    const args: ExecutionArgs = {
+      schema,
+      document,
+    };
+    await hookArgs(args, resolvedPreset, {});
+    //const pgSubscriber = new PgSubscriber(pool);
+    const result = (await withPgClient(async (pgClient) => {
+      // We must override the context because we didn't use a pool above and so
+      // we need to add our own client
+
+      // NOTE: the withPgClient needed on context is **VERY DIFFERENT** to our
+      // withPgClient test helper. We should rename our test helper ;)
+      const contextWithPgClient =
+        makeWithPgClientViaPgClientAlreadyInTransaction(pgClient, false);
+      try {
+        args.contextValue = {
+          pgSettings: (args.contextValue as any).pgSettings,
+          withPgClient: contextWithPgClient,
+          //pgSubscriber,
+        };
+
+        return (await execute(args)) as any;
+      } finally {
+        contextWithPgClient.release?.();
+      }
+    })) as any;
     expect(result).toMatchSnapshot();
   });
 }

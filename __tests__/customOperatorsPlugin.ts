@@ -1,52 +1,89 @@
-import type { Plugin } from "graphile-build";
-import { Build } from "postgraphile-core";
-import { AddConnectionFilterOperator } from "../src/PgConnectionArgFilterPlugin";
+import { TYPES } from "@dataplan/pg";
 
-const CustomOperatorsPlugin: Plugin = (builder) => {
-  builder.hook("build", (_, build) => {
-    const {
-      pgSql: sql,
-      graphql: { GraphQLInt, GraphQLBoolean },
-      addConnectionFilterOperator,
-    } = build as Build & {
-      addConnectionFilterOperator: AddConnectionFilterOperator;
-    };
+const CustomOperatorsPlugin: GraphileConfig.Plugin = {
+  name: "CustomOperatorsPlugin",
+  version: "0.0.0",
 
-    // simple
-    addConnectionFilterOperator(
-      "InternetAddress",
-      "familyEqualTo",
-      "Address family equal to specified value.",
-      () => GraphQLInt,
-      (i, v) => sql.fragment`family(${i}) = ${v}`
-    );
+  schema: {
+    hooks: {
+      init(_, build) {
+        const {
+          sql,
+          graphql: { GraphQLInt, GraphQLBoolean },
+          addConnectionFilterOperator,
+          EXPORTABLE,
+        } = build;
 
-    // using resolveSqlIdentifier
-    addConnectionFilterOperator(
-      "InternetAddress",
-      "familyNotEqualTo",
-      "Address family equal to specified value.",
-      () => GraphQLInt,
-      (i, v) => sql.fragment`${i} <> ${v}`,
-      {
-        resolveSqlIdentifier: (i) => sql.fragment`family(${i})`,
-      }
-    );
+        // simple
+        addConnectionFilterOperator("InternetAddress", "familyEqualTo", {
+          description: "Address family equal to specified value.",
+          resolveInputCodec: EXPORTABLE(
+            (TYPES) =>
+              function () {
+                return TYPES.int;
+              },
+            [TYPES]
+          ),
+          resolve: EXPORTABLE(
+            (sql) =>
+              function (i, v) {
+                return sql.fragment`family(${i}) = ${v}`;
+              },
+            [sql]
+          ),
+        });
 
-    // using resolveInput
-    addConnectionFilterOperator(
-      ["InternetAddress"], // typeNames: string | string[]
-      "isV4",
-      "Address family equal to specified value.",
-      () => GraphQLBoolean,
-      (i, v) => sql.fragment`family(${i}) = ${v}`,
-      {
-        resolveInput: (input) => (input === true ? 4 : 6),
-      }
-    );
+        // using resolveSqlIdentifier
+        addConnectionFilterOperator("InternetAddress", "familyNotEqualTo", {
+          description: "Address family equal to specified value.",
+          resolveInputCodec: EXPORTABLE(
+            (TYPES) =>
+              function () {
+                return TYPES.int;
+              },
+            [TYPES]
+          ),
+          resolve: EXPORTABLE(
+            (sql) =>
+              function (i, v) {
+                return sql.fragment`${i} <> ${v}`;
+              },
+            [sql]
+          ),
+          resolveSqlIdentifier: EXPORTABLE(
+            (TYPES, sql) =>
+              function (i) {
+                return [sql.fragment`family(${i})`, TYPES.int];
+              },
+            [TYPES, sql]
+          ),
+        });
 
-    return _;
-  });
+        // using resolveInput // typeNames: string | string[]
+        addConnectionFilterOperator(["InternetAddress"], "isV4", {
+          description: "Address family equal to specified value.",
+          resolve: EXPORTABLE(
+            (sql) =>
+              function (i, v) {
+                return sql.fragment`family(${i}) = ${v}`;
+              },
+            [sql]
+          ),
+          resolveInput: (input) => (input === true ? 4 : 6),
+          resolveInputCodec: EXPORTABLE(
+            (TYPES) =>
+              function () {
+                return TYPES.int;
+              },
+            [TYPES]
+          ),
+          resolveType: () => GraphQLBoolean,
+        });
+
+        return _;
+      },
+    },
+  },
 };
 
 export default CustomOperatorsPlugin;

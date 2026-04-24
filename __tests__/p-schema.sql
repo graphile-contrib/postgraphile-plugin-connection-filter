@@ -223,6 +223,10 @@ create function p.filterable_computed(filterable p.filterable) returns text as $
   select filterable."text" || ' computed'
 $$ language sql stable;
 
+create function p.filterable_computed_with_optional(filterable p.filterable, suffix text = ' default') returns text as $$
+  select filterable."text" || suffix
+$$ language sql stable;
+
 create function p.filterable_computed2(filterable p.filterable) returns text as $$
   select filterable."text" || ' computed2'
 $$ language sql stable;

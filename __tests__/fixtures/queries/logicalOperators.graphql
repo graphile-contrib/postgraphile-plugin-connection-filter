@@ -4,6 +4,16 @@ query {
   ) {
     ...nodes
   }
+  int4_equalTo_2_and_int2_equalTo_4_or_text_endsWith_T: allFilterables(
+    filter: {
+      or: [
+        { int4: { equalTo: 2 }, int2: { equalTo: 4 } }
+        { text: { endsWith: "T" } }
+      ]
+    }
+  ) {
+    ...nodes
+  }
   int4_equalTo_2_and_text_endsWith_t: allFilterables(
     filter: { and: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
   ) {
