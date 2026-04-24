@@ -1,3 +1,9 @@
+## 3.0.0 - 2026-04-24
+
+- Ported to PostGraphile V5, including reworking to be a Graphile Config preset.
+- Removed obsolete `connectionFilterUseListInflectors` workaround as it's not
+  needed in V5.
+
 ## 2.3.0 - 2022-04-03
 
 - Added `connectionFilterUseListInflectors` option to use list inflectors (#177)
