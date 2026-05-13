@@ -1,4 +1,4 @@
-query {
+query ($undefined: String) {
   allSideAs_junctionsBySideAIdExist_false: allSideAs(filter: {junctionsBySideAIdExist: false}) { nodes { aId } }
   allSideAs_junctionsBySideAIdExist_true: allSideAs(filter: {junctionsBySideAIdExist: true}) { nodes { aId } }
   allSideBs_junctionsBySideBIdExist_false: allSideBs(filter: {junctionsBySideBIdExist: false}) { nodes { bId } }
@@ -48,6 +48,7 @@ query {
   x_children_empty: allFilterables(filter: {childrenByFilterableId: {}}) { ...childrenConnection }
   x_childrenExist_null: allFilterables(filter: {childrenByFilterableIdExist: null}) { ...childrenConnection }
   x_forward_name_equalTo_null: allFilterables(filter: {forwardByForwardId: {name: {equalTo: null}}}) { ...textConnection }
+  x_forward_name_equalTo_undefined: allFilterables(filter: {forwardByForwardId: {name: {equalTo: $undefined}}}) { ...textConnection }
   x_forward_name_null: allFilterables(filter: {forwardByForwardId: {name: null}}) { ...textConnection }
   x_forward_name_empty: allFilterables(filter: {forwardByForwardId: {name: {}}}) { ...textConnection }
   x_forward_null: allFilterables(filter: {forwardByForwardId: null}) { ...textConnection }
