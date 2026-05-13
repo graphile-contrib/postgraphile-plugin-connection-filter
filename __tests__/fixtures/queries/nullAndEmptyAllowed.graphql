@@ -1,6 +1,6 @@
 # All queries in this file should result in no filter being applied, thus returning all rows
 # (queries are an exact copy of nullAndEmptyForbidden.graphql)
-query {
+query ($undefined: String, $null: String = null) {
   a: allFilterables(filter: null) {
     totalCount
   }
@@ -67,5 +67,64 @@ query {
   }
   t: allFilterables(filter: { not: { text: {} } }) {
     totalCount
+  }
+  forward_name_unfiltered: allFilterables {
+    ...textConnection
+  }
+  forward_name_equalTo_forward2: allFilterables(
+    filter: { forwardByForwardId: { name: { equalTo: "forward2" } } }
+  ) {
+    ...textConnection
+  }
+  forward_name_equalTo_null: allFilterables(
+    filter: { forwardByForwardId: { name: { equalTo: null } } }
+  ) {
+    ...textConnection
+  }
+  forward_name_equalTo_undefined: allFilterables(
+    filter: { forwardByForwardId: { name: { equalTo: $undefined } } }
+  ) {
+    ...textConnection
+  }
+  children_unfiltered: allFilterables {
+    ...childrenConnection
+  }
+  children_some_name_equalTo_child2: allFilterables(
+    filter: {
+      childrenByFilterableId: { some: { name: { equalTo: "child2" } } }
+    }
+  ) {
+    ...childrenConnection
+  }
+  children_some_name_equalTo_null: allFilterables(
+    filter: { childrenByFilterableId: { some: { name: { equalTo: $null } } } }
+  ) {
+    ...childrenConnection
+  }
+  children_some_name_equalTo_undefined: allFilterables(
+    filter: {
+      childrenByFilterableId: { some: { name: { equalTo: $undefined } } }
+    }
+  ) {
+    ...childrenConnection
+  }
+}
+
+fragment textConnection on FilterablesConnection {
+  nodes {
+    id
+    text
+  }
+}
+
+fragment childrenConnection on FilterablesConnection {
+  nodes {
+    id
+    childrenByFilterableId {
+      nodes {
+        id
+        name
+      }
+    }
   }
 }
