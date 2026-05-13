@@ -6377,6 +6377,147 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
     "c": {
       "totalCount": 5,
     },
+    "children_none_name_equalTo_child2": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_equalTo_null": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_equalTo_undefined": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
     "children_some_name_equalTo_child2": {
       "nodes": [
         {

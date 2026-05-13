@@ -108,6 +108,25 @@ query ($undefined: String, $null: String = null) {
   ) {
     ...childrenConnection
   }
+  children_none_name_equalTo_child2: allFilterables(
+    filter: {
+      childrenByFilterableId: { none: { name: { equalTo: "child2" } } }
+    }
+  ) {
+    ...childrenConnection
+  }
+  children_none_name_equalTo_null: allFilterables(
+    filter: { childrenByFilterableId: { none: { name: { equalTo: $null } } } }
+  ) {
+    ...childrenConnection
+  }
+  children_none_name_equalTo_undefined: allFilterables(
+    filter: {
+      childrenByFilterableId: { none: { name: { equalTo: $undefined } } }
+    }
+  ) {
+    ...childrenConnection
+  }
 }
 
 fragment textConnection on FilterablesConnection {
