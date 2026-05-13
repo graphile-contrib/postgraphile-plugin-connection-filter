@@ -684,6 +684,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             )}`
                           );
                         });
+                        $subQuery.setActivationRequiresMoreConditions();
                         return $subQuery;
                       },
                     [assertAllowed, sql]
@@ -714,7 +715,9 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                           tableExpression,
                           alias,
                         } = $where.extensions.pgFilterRelation;
-                        const $subQuery = $where.notPlan().existsPlan({
+                        const $notQuery = $where.notPlan();
+                        $notQuery.setActivationRequiresMoreConditions();
+                        const $subQuery = $notQuery.existsPlan({
                           tableExpression,
                           alias,
                         });
@@ -728,6 +731,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             )}`
                           );
                         });
+                        $subQuery.setActivationRequiresMoreConditions();
                         return $subQuery;
                       },
                     [assertAllowed, sql]
