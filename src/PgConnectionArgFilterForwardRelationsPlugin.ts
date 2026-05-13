@@ -38,7 +38,7 @@ const pgConnectionFilterApplySingleRelation = EXPORTABLE(
           }.${sql.identifier(remoteAttribute as string)}`
         );
       });
-      $subQuery.setActivationRequiresMoreConditions();
+      $subQuery.ignoreUnlessAmended();
       return $subQuery;
     },
   [],
