@@ -26,10 +26,13 @@ const pgConnectionFilterApplyCompositeTypeAttribute = EXPORTABLE(
         ? sql.parens(attribute.expression(queryBuilder.alias), true)
         : sql`(${queryBuilder.alias}.${sql.identifier(attributeName)})`;
 
-      const $record = new PgCondition(queryBuilder);
-      // TODO: upstream a better way of doing this, for example `new PgCondition(queryBuilder, expression)`
-      ($record as any).alias = expression;
-      return $record;
+      const record = new PgCondition(queryBuilder, {
+        mode: {
+          mode: "RECORD_EXPRESSION",
+          expression,
+        },
+      });
+      return record;
     },
   [],
   "pgConnectionFilterApplyCompositeTypeAttribute"
