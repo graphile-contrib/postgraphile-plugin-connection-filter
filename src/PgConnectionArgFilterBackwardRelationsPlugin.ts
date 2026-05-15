@@ -684,6 +684,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             )}`
                           );
                         });
+                        $subQuery.ignoreUnlessAmended();
                         return $subQuery;
                       },
                     [assertAllowed, sql]
@@ -728,6 +729,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             )}`
                           );
                         });
+                        $subQuery.ignoreUnlessAmended();
                         return $subQuery;
                       },
                     [assertAllowed, sql]

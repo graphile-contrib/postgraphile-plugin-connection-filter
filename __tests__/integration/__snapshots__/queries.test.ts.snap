@@ -6377,6 +6377,322 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
     "c": {
       "totalCount": 5,
     },
+    "children_none_name_equalTo_child2": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_equalTo_null": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_none_name_equalTo_undefined": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_some_name_equalTo_child2": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+      ],
+    },
+    "children_some_name_equalTo_null": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_some_name_equalTo_undefined": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
+    "children_unfiltered": {
+      "nodes": [
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 1,
+                "name": "child1",
+              },
+              {
+                "id": 2,
+                "name": "child2",
+              },
+            ],
+          },
+          "id": 1,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [
+              {
+                "id": 3,
+                "name": "child3",
+              },
+              {
+                "id": 4,
+                "name": "child4",
+              },
+            ],
+          },
+          "id": 2,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 3,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 4,
+        },
+        {
+          "childrenByFilterableId": {
+            "nodes": [],
+          },
+          "id": 5,
+        },
+      ],
+    },
     "d": {
       "totalCount": 5,
     },
@@ -6385,6 +6701,86 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
     },
     "f": {
       "totalCount": 5,
+    },
+    "forward_name_equalTo_forward2": {
+      "nodes": [
+        {
+          "id": 2,
+          "text": "Test",
+        },
+      ],
+    },
+    "forward_name_equalTo_null": {
+      "nodes": [
+        {
+          "id": 1,
+          "text": "TEST",
+        },
+        {
+          "id": 2,
+          "text": "Test",
+        },
+        {
+          "id": 3,
+          "text": "tEST",
+        },
+        {
+          "id": 4,
+          "text": "test",
+        },
+        {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "forward_name_equalTo_undefined": {
+      "nodes": [
+        {
+          "id": 1,
+          "text": "TEST",
+        },
+        {
+          "id": 2,
+          "text": "Test",
+        },
+        {
+          "id": 3,
+          "text": "tEST",
+        },
+        {
+          "id": 4,
+          "text": "test",
+        },
+        {
+          "id": 5,
+          "text": null,
+        },
+      ],
+    },
+    "forward_name_unfiltered": {
+      "nodes": [
+        {
+          "id": 1,
+          "text": "TEST",
+        },
+        {
+          "id": 2,
+          "text": "Test",
+        },
+        {
+          "id": 3,
+          "text": "tEST",
+        },
+        {
+          "id": 4,
+          "text": "test",
+        },
+        {
+          "id": 5,
+          "text": null,
+        },
+      ],
     },
     "g": {
       "totalCount": 5,
@@ -9196,6 +9592,7 @@ exports[`relations.graphql 1`] = `
     "x_forward_empty": null,
     "x_forward_name_empty": null,
     "x_forward_name_equalTo_null": null,
+    "x_forward_name_equalTo_undefined": null,
     "x_forward_name_null": null,
     "x_forward_null": null,
     "x_parent_empty": null,
@@ -9219,6 +9616,7 @@ exports[`relations.graphql 1`] = `
     [GraphQLError: Empty objects are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
+    [GraphQLError: Empty objects are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],
     [GraphQLError: Empty objects are forbidden in filter argument input.],
     [GraphQLError: Null literals are forbidden in filter argument input.],

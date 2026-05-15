@@ -27,6 +27,14 @@
   "bugs": {
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
+  "peerDependencies": {
+    "postgraphile": "^5.0.3"
+  },
+  "peerDependenciesMeta": {
+    "postgraphile": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@tsconfig/node20": "^20.1.4",
     "tslib": "^2.5.0"
@@ -36,7 +44,7 @@
     "@babel/plugin-transform-runtime": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
-    "@dataplan/pg": "^1.0.0-rc.7",
+    "@dataplan/pg": "^1.0.3",
     "@eslint/compat": "^2.0.0",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
@@ -48,25 +56,25 @@
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-graphile-export": "^1.0.0-rc.4",
+    "eslint-plugin-graphile-export": "^1.0.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^28.14.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-tsdoc": "^0.5.0",
     "eslint_d": "^14.3.0",
-    "grafast": "^1.0.0-rc.8",
-    "grafserv": "^1.0.0-rc.1",
-    "graphile": "^5.0.0-rc.5",
-    "graphile-build": "^5.0.0-rc.5",
-    "graphile-build-pg": "^5.0.0-rc.7",
-    "graphile-export": "^1.0.0-rc.5",
+    "grafast": "^1.0.0",
+    "grafserv": "^1.0.0",
+    "graphile": "^5.0.0",
+    "graphile-build": "^5.0.0",
+    "graphile-build-pg": "^5.0.0",
+    "graphile-export": "^1.0.0",
     "graphql": "^16.9.0",
     "jest": "29.7.0",
     "module-from-string": "^3.3.0",
     "pg": "^8.14.1",
-    "pg-introspection": "^1.0.0-rc.4",
-    "pg-sql2": "^5.0.0-rc.4",
-    "postgraphile": "^5.0.0-rc.9",
+    "pg-introspection": "^1.0.0",
+    "pg-sql2": "^5.0.0",
+    "postgraphile": "^5.0.3",
     "prettier": "^3.6.2",
     "ts-jest": "29.1.0",
     "typescript": "^5.0.4",
@@ -75,5 +83,5 @@
   "files": [
     "dist"
   ],
-  "packageManager": "yarn@1.22.22"
+  "packageManager": "yarn@4.14.1"
 }
