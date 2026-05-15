@@ -27,6 +27,14 @@
   "bugs": {
     "url": "https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues"
   },
+  "peerDependencies": {
+    "postgraphile": "^5.0.3"
+  },
+  "peerDependenciesMeta": {
+    "postgraphile": {
+      "optional": true
+    }
+  },
   "dependencies": {
     "@tsconfig/node20": "^20.1.4",
     "tslib": "^2.5.0"
@@ -66,7 +74,7 @@
     "pg": "^8.14.1",
     "pg-introspection": "^1.0.0-rc.4",
     "pg-sql2": "^5.0.0-rc.4",
-    "postgraphile": "^5.0.0-rc.9",
+    "postgraphile": "^5.0.3",
     "prettier": "^3.6.2",
     "ts-jest": "29.1.0",
     "typescript": "^5.0.4",
