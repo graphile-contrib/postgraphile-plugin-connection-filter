@@ -21,26 +21,28 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
             EXPORTABLE,
+            inflection,
           } = build;
           const {
             fieldWithHooks,
-            scope: { isPgConnectionFilter },
+            scope: { isPgConnectionFilter, pgConnectionFilterOperators },
             Self,
           } = context;
 
-          if (!isPgConnectionFilter) return fields;
+          if (!isPgConnectionFilter && !pgConnectionFilterOperators)
+            return fields;
 
           if (Object.keys(fields).length === 0) {
             // Skip adding these operators if they would be the only fields
-            return fields;
+            //return fields;
           }
 
           const assertAllowed = makeAssertAllowed(build);
 
           const logicalOperatorFields = {
-            and: fieldWithHooks(
+            [inflection.pgConnectionFilterBuiltin("and")]: fieldWithHooks(
               {
-                fieldName: "and",
+                fieldName: inflection.pgConnectionFilterBuiltin("and"),
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -63,9 +65,9 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            or: fieldWithHooks(
+            [inflection.pgConnectionFilterBuiltin("or")]: fieldWithHooks(
               {
-                fieldName: "or",
+                fieldName: inflection.pgConnectionFilterBuiltin("or"),
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -87,9 +89,9 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            not: fieldWithHooks(
+            [inflection.pgConnectionFilterBuiltin("not")]: fieldWithHooks(
               {
-                fieldName: "not",
+                fieldName: inflection.pgConnectionFilterBuiltin("not"),
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
