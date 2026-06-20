@@ -22,6 +22,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             graphql: { GraphQLList, GraphQLNonNull },
             EXPORTABLE,
             inflection,
+            options: { connectionFilterApplyLogicalOperatorsToAttributes },
           } = build;
           const {
             fieldWithHooks,
@@ -29,8 +30,13 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             Self,
           } = context;
 
-          if (!isPgConnectionFilter && !pgConnectionFilterOperators)
+          if (
+            !isPgConnectionFilter &&
+            (!connectionFilterApplyLogicalOperatorsToAttributes ||
+              !pgConnectionFilterOperators)
+          ) {
             return fields;
+          }
 
           if (Object.keys(fields).length === 0) {
             // Skip adding these operators if they would be the only fields

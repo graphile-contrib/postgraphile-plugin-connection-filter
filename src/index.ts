@@ -80,6 +80,7 @@ declare global {
       connectionFilterLogicalOperators?: boolean;
       connectionFilterAllowNullInput?: boolean;
       connectionFilterAllowEmptyObjectInput?: boolean;
+      connectionFilterApplyLogicalOperatorsToAttributes?: boolean;
       pgIgnoreReferentialIntegrity?: boolean;
     }
     interface Inflection {
@@ -185,5 +186,6 @@ export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
     connectionFilterLogicalOperators: true,
     connectionFilterAllowNullInput: false,
     connectionFilterAllowEmptyObjectInput: false,
+    connectionFilterApplyLogicalOperatorsToAttributes: false,
   },
 };
