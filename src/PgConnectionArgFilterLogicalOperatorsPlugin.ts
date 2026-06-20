@@ -57,6 +57,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $and = $where.andPlan();
+                      $and.extensions = { ...$where.extensions };
                       // No need for this more correct form, easier to read if it's flatter.
                       // fieldArgs.apply(() => $and.andPlan());
                       return $and;
@@ -82,6 +83,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $or = $where.orPlan();
+                      $or.extensions = { ...$where.extensions };
                       // Every entry is added to the `$or`, but the entries themselves should use an `and`.
                       return () => $or.andPlan();
                     },
@@ -107,6 +109,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       if (value == null) return;
                       const $not = $where.notPlan();
                       const $and = $not.andPlan();
+                      $and.extensions = { ...$where.extensions };
                       return $and;
                     },
                   [assertAllowed]
