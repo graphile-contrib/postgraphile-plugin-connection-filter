@@ -399,16 +399,17 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          greaterThanOrEqualTo: {
-            description: "Greater than or equal to the specified value.",
-            resolve: EXPORTABLE(
-              (sql) => (i, v) => sql`${i} >= ${v}`,
-              [sql],
-              "resolveGreaterThanOrEqualTo"
-            ),
-            resolveInputCodec: resolveInputCodecSensitive,
-            resolveSqlIdentifier: resolveSqlIdentifierSensitive,
-          },
+          [build.inflection.pgConnectionFilterBuiltin("greaterThanOrEqualTo")]:
+            {
+              description: "Greater than or equal to the specified value.",
+              resolve: EXPORTABLE(
+                (sql) => (i, v) => sql`${i} >= ${v}`,
+                [sql],
+                "resolveGreaterThanOrEqualTo"
+              ),
+              resolveInputCodec: resolveInputCodecSensitive,
+              resolveSqlIdentifier: resolveSqlIdentifierSensitive,
+            },
         };
         for (const key in sortOperators) {
           sortOperators[key].name ??= key;

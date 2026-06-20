@@ -13,6 +13,7 @@ import {
   PgConnectionArgFilterOperatorsPlugin,
   makeApplyFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
+import { PgConnectionArgFilterInflectionPlugin } from "./PgConnectionArgFilterInflectionPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
 import type { GraphQLInputType, GraphQLOutputType } from "graphql";
 import type { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
@@ -157,6 +158,7 @@ declare global {
 
 export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
   plugins: [
+    PgConnectionArgFilterInflectionPlugin,
     ConnectionArgFilterPlugin,
     PgConnectionArgFilterPlugin,
     PgConnectionArgFilterAttributesPlugin,
