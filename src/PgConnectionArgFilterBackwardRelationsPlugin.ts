@@ -382,7 +382,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         })
                       ),
                     },
-                    `Adding connection filter backward relation field from ${source.name} to ${foreignTable.name}`
+                    `Adding connection filter backward relation ${relationName} field from ${source.name} to ${foreignTable.name}`
                   );
 
                   const existsFieldName =
@@ -448,7 +448,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         })
                       ),
                     },
-                    `Adding connection filter backward relation exists field from ${source.name} to ${foreignTable.name}`
+                    `Adding connection filter backward relation ${relationName} exists field from ${source.name} to ${foreignTable.name}`
                   );
                 }
               } else {
@@ -514,7 +514,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       })
                     ),
                   },
-                  `Adding connection filter backward relation field from ${source.name} to ${foreignTable.name}`
+                  `Adding connection filter backward relation ${relationName} field from ${source.name} to ${foreignTable.name}`
                 );
 
                 const existsFieldName =
@@ -576,7 +576,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         })
                       ),
                     },
-                    `Adding connection filter backward relation exists field from ${source.name} to ${foreignTable.name}`
+                    `Adding connection filter backward relation ${relationName} exists field from ${source.name} to ${foreignTable.name}`
                   )
                 );
               }

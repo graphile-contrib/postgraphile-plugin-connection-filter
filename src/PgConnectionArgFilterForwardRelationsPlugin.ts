@@ -224,7 +224,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                   })
                 ),
               },
-              `Adding connection filter forward relation field from ${source.name} to ${foreignTable.name}`
+              `Adding connection filter forward relation ${relationName} field from ${codec.name} to ${foreignTable.name}`
             );
 
             const keyIsNullable = relation.localAttributes.some(
@@ -283,7 +283,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
                     })
                   ),
                 },
-                `Adding connection filter forward relation exists field from ${source.name} to ${foreignTable.name}`
+                `Adding connection filter forward relation ${relationName} exists field from ${codec.name} to ${foreignTable.name}`
               );
             }
           }
