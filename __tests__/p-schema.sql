@@ -135,7 +135,7 @@ create table p.range_array_types (
 create domain p.char4_domain as char(4) check (lower(value) = 'test');
 create domain p.date_domain as date check (value >= '1990-01-01'::date);
 create domain p.int4_domain as int4 check (value > 0);
-create domain p.email_domain as text check (value ~ '^[^@]+@[^@]+$');
+create domain p.email_domain as citext check (value ~ '^[^@]+@[^@]+$');
 
 create table p.domain_types (
   id serial primary key,
