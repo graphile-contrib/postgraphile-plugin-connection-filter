@@ -13,7 +13,7 @@
     "format:check": "yarn format:all --list-different",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "yarn lint --fix && yarn format:fix",
-    "postversion": "node --experimental-strip-types scripts/postversion.mts",
+    "version": "node --experimental-strip-types scripts/postversion.mts && git add src/version.ts",
     "prepack": "rm -Rf dist && npm run build",
     "test": "jest -i",
     "typecheck": "tsc --noEmit"

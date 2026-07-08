@@ -2,6 +2,7 @@
 
 - Fixed issue where `@foreignKey` smart tags on composite types were not
   handled.
+- Fixed version export.
 
 ## 3.0.1 - 2026-05-15
 
