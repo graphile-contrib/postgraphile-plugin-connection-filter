@@ -1003,6 +1003,7 @@ input DatetimeRangeListFilter {
 type DomainType implements Node {
   char4Domain: Char4Domain
   dateDomain: DateDomain
+  emailDomain: EmailDomain
   id: Int!
   int4Domain: Int4Domain
 
@@ -1024,6 +1025,9 @@ input DomainTypeFilter {
 
   """Filter by the object’s \`dateDomain\` field."""
   dateDomain: DateDomainFilter
+
+  """Filter by the object’s \`emailDomain\` field."""
+  emailDomain: EmailDomainFilter
 
   """Filter by the object’s \`id\` field."""
   id: IntFilter
@@ -1070,6 +1074,8 @@ enum DomainTypesOrderBy {
   CHAR4_DOMAIN_DESC
   DATE_DOMAIN_ASC
   DATE_DOMAIN_DESC
+  EMAIL_DOMAIN_ASC
+  EMAIL_DOMAIN_DESC
   ID_ASC
   ID_DESC
   INT4_DOMAIN_ASC
@@ -1077,6 +1083,19 @@ enum DomainTypesOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+}
+
+scalar EmailDomain
+
+"""
+A filter to be used against EmailDomain fields. All fields are combined with a logical ‘and.’
+"""
+input EmailDomainFilter {
+  """Equal to the specified value."""
+  equalTo: EmailDomain
+
+  """Not equal to the specified value."""
+  notEqualTo: EmailDomain
 }
 
 type EnumArrayType implements Node {

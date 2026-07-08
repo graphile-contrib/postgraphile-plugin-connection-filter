@@ -520,6 +520,7 @@ type DatetimeRangeBound {
 type DomainType implements Node {
   char4Domain: Char4Domain
   dateDomain: DateDomain
+  emailDomain: EmailDomain
   id: Int!
   int4Domain: Int4Domain
 
@@ -580,6 +581,8 @@ enum DomainTypesOrderBy {
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
 }
+
+scalar EmailDomain
 
 type EnumArrayType implements Node {
   enumArray: [Mood]

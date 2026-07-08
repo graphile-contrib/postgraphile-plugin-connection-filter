@@ -1387,6 +1387,7 @@ input DatetimeRangeInput {
 type DomainType implements Node {
   char4Domain: Char4Domain
   dateDomain: DateDomain
+  emailDomain: EmailDomain
   id: Int!
   int4Domain: Int4Domain
 
@@ -1408,6 +1409,9 @@ input DomainTypeFilter {
 
   """Filter by the object’s \`dateDomain\` field."""
   dateDomain: DateDomainFilter
+
+  """Filter by the object’s \`emailDomain\` field."""
+  emailDomain: EmailDomainFilter
 
   """Filter by the object’s \`id\` field."""
   id: IntFilter
@@ -1454,6 +1458,8 @@ enum DomainTypesOrderBy {
   CHAR4_DOMAIN_DESC
   DATE_DOMAIN_ASC
   DATE_DOMAIN_DESC
+  EMAIL_DOMAIN_ASC
+  EMAIL_DOMAIN_DESC
   ID_ASC
   ID_DESC
   INT4_DOMAIN_ASC
@@ -1461,6 +1467,140 @@ enum DomainTypesOrderBy {
   NATURAL
   PRIMARY_KEY_ASC
   PRIMARY_KEY_DESC
+}
+
+scalar EmailDomain
+
+"""
+A filter to be used against EmailDomain fields. All fields are combined with a logical ‘and.’
+"""
+input EmailDomainFilter {
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: EmailDomain
+
+  """
+  Not equal to the specified value, treating null like an ordinary value (case-insensitive).
+  """
+  distinctFromInsensitive: String
+
+  """Ends with the specified string (case-sensitive)."""
+  endsWith: EmailDomain
+
+  """Ends with the specified string (case-insensitive)."""
+  endsWithInsensitive: EmailDomain
+
+  """Equal to the specified value."""
+  equalTo: EmailDomain
+
+  """Equal to the specified value (case-insensitive)."""
+  equalToInsensitive: String
+
+  """Greater than the specified value."""
+  greaterThan: EmailDomain
+
+  """Greater than the specified value (case-insensitive)."""
+  greaterThanInsensitive: String
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: EmailDomain
+
+  """Greater than or equal to the specified value (case-insensitive)."""
+  greaterThanOrEqualToInsensitive: String
+
+  """Included in the specified list."""
+  in: [EmailDomain!]
+
+  """Included in the specified list (case-insensitive)."""
+  inInsensitive: [String!]
+
+  """Contains the specified string (case-sensitive)."""
+  includes: EmailDomain
+
+  """Contains the specified string (case-insensitive)."""
+  includesInsensitive: EmailDomain
+
+  """
+  Is null (if \`true\` is specified) or is not null (if \`false\` is specified).
+  """
+  isNull: Boolean
+
+  """Less than the specified value."""
+  lessThan: EmailDomain
+
+  """Less than the specified value (case-insensitive)."""
+  lessThanInsensitive: String
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: EmailDomain
+
+  """Less than or equal to the specified value (case-insensitive)."""
+  lessThanOrEqualToInsensitive: String
+
+  """
+  Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  like: EmailDomain
+
+  """
+  Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  likeInsensitive: EmailDomain
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: EmailDomain
+
+  """
+  Equal to the specified value, treating null like an ordinary value (case-insensitive).
+  """
+  notDistinctFromInsensitive: String
+
+  """Does not end with the specified string (case-sensitive)."""
+  notEndsWith: EmailDomain
+
+  """Does not end with the specified string (case-insensitive)."""
+  notEndsWithInsensitive: EmailDomain
+
+  """Not equal to the specified value."""
+  notEqualTo: EmailDomain
+
+  """Not equal to the specified value (case-insensitive)."""
+  notEqualToInsensitive: String
+
+  """Not included in the specified list."""
+  notIn: [EmailDomain!]
+
+  """Not included in the specified list (case-insensitive)."""
+  notInInsensitive: [String!]
+
+  """Does not contain the specified string (case-sensitive)."""
+  notIncludes: EmailDomain
+
+  """Does not contain the specified string (case-insensitive)."""
+  notIncludesInsensitive: EmailDomain
+
+  """
+  Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  notLike: EmailDomain
+
+  """
+  Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
+  """
+  notLikeInsensitive: EmailDomain
+
+  """Does not start with the specified string (case-sensitive)."""
+  notStartsWith: EmailDomain
+
+  """Does not start with the specified string (case-insensitive)."""
+  notStartsWithInsensitive: EmailDomain
+
+  """Starts with the specified string (case-sensitive)."""
+  startsWith: EmailDomain
+
+  """Starts with the specified string (case-insensitive)."""
+  startsWithInsensitive: EmailDomain
 }
 
 type EnumArrayType implements Node {
