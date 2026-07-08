@@ -1,3 +1,14 @@
+## 3.0.2 - 2026-07-08
+
+- Fixed issue where `@foreignKey` smart tags on composite types were not
+  handled.
+
+## 3.0.1 - 2026-05-15
+
+- Fixes a regression in 3.0.0 where null/undefined conditions still apply
+  relational existence constraints, which differs from the 2.x behavior.
+- Requires PostGraphile v5.0.3+
+
 ## 3.0.0 - 2026-04-24
 
 - Ported to PostGraphile V5, including reworking to be a Graphile Config preset.
