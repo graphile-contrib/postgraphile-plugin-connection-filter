@@ -99,6 +99,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
             sql,
             graphql: { GraphQLBoolean },
             EXPORTABLE,
+            input: { pgRegistry: registry },
           } = build;
           const {
             fieldWithHooks,
@@ -116,21 +117,17 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
 
           const assertAllowed = makeAssertAllowed(build);
 
-          const source =
+          if (
+            isPgConnectionFilter &&
             pgCodec &&
-            (Object.values(build.input.pgRegistry.pgResources).find(
-              (s) => s.codec === pgCodec && !s.parameters
-            ) as
-              | PgResource<any, PgCodecWithAttributes, any, any, PgRegistry>
-              | undefined);
-          if (isPgConnectionFilter && pgCodec && pgCodec.attributes && source) {
-            const backwardsRelations = Object.entries(
-              source.getRelations() as {
-                [relationName: string]: PgCodecRelation;
-              }
-            ).filter(([relationName, relation]) => {
-              return relation.isReferencee;
-            });
+            pgCodec.attributes &&
+            registry.pgRelations[pgCodec.name]
+          ) {
+            const codec = pgCodec as PgCodecWithAttributes;
+            const relations = registry.pgRelations[codec.name];
+            const backwardsRelations = Object.entries(relations).filter(
+              ([_relationName, relation]) => relation.isReferencee
+            );
 
             for (const [relationName, relation] of backwardsRelations) {
               const foreignTable = relation.remoteResource; // Deliberate shadowing
@@ -317,7 +314,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   build.behavior.pgCodecRelationMatches(relation, "connection")
                 ) {
                   const filterManyTypeName = inflection.filterManyType(
-                    source.codec,
+                    codec,
                     foreignTable
                   );
                   const FilterManyType = build.getTypeByName(
@@ -330,8 +327,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   }
                   // TODO: revisit using `_` prefixed inflector
                   const fieldName = inflection._manyRelation({
-                    registry: source.registry,
-                    codec: source.codec,
+                    registry,
+                    codec,
                     relationName,
                   });
                   const filterFieldName =
@@ -382,7 +379,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         })
                       ),
                     },
-                    `Adding connection filter backward relation ${relationName} field from ${source.name} to ${foreignTable.name}`
+                    `Adding connection filter backward relation ${relationName} field from ${codec.name} to ${foreignTable.name}`
                   );
 
                   const existsFieldName =
@@ -448,13 +445,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         })
                       ),
                     },
-                    `Adding connection filter backward relation ${relationName} exists field from ${source.name} to ${foreignTable.name}`
+                    `Adding connection filter backward relation ${relationName} exists field from ${codec.name} to ${foreignTable.name}`
                   );
                 }
               } else {
                 const fieldName = inflection.singleRelationBackwards({
-                  registry: source.registry,
-                  codec: source.codec,
+                  registry,
+                  codec,
                   relationName,
                 });
                 const filterFieldName =
@@ -514,7 +511,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                       })
                     ),
                   },
-                  `Adding connection filter backward relation ${relationName} field from ${source.name} to ${foreignTable.name}`
+                  `Adding connection filter backward relation ${relationName} field from ${codec.name} to ${foreignTable.name}`
                 );
 
                 const existsFieldName =
@@ -576,7 +573,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                         })
                       ),
                     },
-                    `Adding connection filter backward relation ${relationName} exists field from ${source.name} to ${foreignTable.name}`
+                    `Adding connection filter backward relation ${relationName} exists field from ${codec.name} to ${foreignTable.name}`
                   )
                 );
               }
