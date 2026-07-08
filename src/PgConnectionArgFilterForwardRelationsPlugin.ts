@@ -134,9 +134,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             return fields;
           }
           const forwardRelations = Object.entries(relations).filter(
-            ([_relationName, relation]) => {
-              return !relation.isReferencee;
-            }
+            ([_relationName, relation]) => !relation.isReferencee
           );
 
           for (const [relationName, relation] of forwardRelations) {
