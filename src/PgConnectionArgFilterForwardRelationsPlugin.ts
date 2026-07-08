@@ -116,6 +116,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             sql,
             options: { pgIgnoreReferentialIntegrity },
             EXPORTABLE,
+            input: { pgRegistry: registry },
           } = build;
           const {
             fieldWithHooks,
@@ -123,31 +124,23 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
           } = context;
           const assertAllowed = makeAssertAllowed(build);
 
-          const source =
-            pgCodec &&
-            (Object.values(build.input.pgRegistry.pgResources).find(
-              (s) => s.codec === pgCodec && !s.parameters
-            ) as PgResource<any, PgCodecWithAttributes, any, any, any>);
-
-          if (
-            !isPgConnectionFilter ||
-            !pgCodec ||
-            !pgCodec.attributes ||
-            !source
-          ) {
+          if (!isPgConnectionFilter || !pgCodec || !pgCodec.attributes) {
             return fields;
           }
+          const codec = pgCodec as PgCodecWithAttributes;
 
-          const forwardRelations = Object.entries(
-            source.getRelations() as {
-              [relationName: string]: PgCodecRelation;
+          const relations = registry.pgRelations[codec.name];
+          if (!relations) {
+            return fields;
+          }
+          const forwardRelations = Object.entries(relations).filter(
+            ([_relationName, relation]) => {
+              return !relation.isReferencee;
             }
-          ).filter(([_relationName, relation]) => {
-            return !relation.isReferencee;
-          });
+          );
 
           for (const [relationName, relation] of forwardRelations) {
-            const foreignTable = relation.remoteResource; // Deliberate shadowing
+            const foreignTable = relation.remoteResource;
 
             // Used to use 'read' behavior too
             if (!build.behavior.pgCodecRelationMatches(relation, "filterBy")) {
@@ -155,8 +148,8 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             }
 
             const fieldName = inflection.singleRelation({
-              registry: source.registry,
-              codec: source.codec,
+              registry,
+              codec,
               relationName,
             });
             const filterFieldName =
@@ -228,8 +221,7 @@ export const PgConnectionArgFilterForwardRelationsPlugin: GraphileConfig.Plugin 
             );
 
             const keyIsNullable = relation.localAttributes.some(
-              (col) =>
-                !(source.codec.attributes[col] as PgCodecAttribute).notNull
+              (col) => !(codec.attributes[col] as PgCodecAttribute).notNull
             );
             if (keyIsNullable || pgIgnoreReferentialIntegrity) {
               const existsFieldName =
