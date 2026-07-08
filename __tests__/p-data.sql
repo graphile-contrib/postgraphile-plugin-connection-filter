@@ -47,12 +47,12 @@ insert into p.range_array_types
   (5,  null,                                                                       null,                                null,                                null,                               null,                                                                                             null);
 
 insert into p.domain_types
-  (id, char4_domain, date_domain, int4_domain) values
-  (1, 'TEST', '1999-01-01', 1),
-  (2, 'Test', '1999-02-01', 2),
-  (3, 'tEST', '1999-03-01', 3),
-  (4, 'test', '1999-04-01', 4),
-  (5, null,   null,         null);
+  (id, char4_domain, date_domain, int4_domain, email_domain) values
+  (1, 'TEST', '1999-01-01', 1, 'u1@example.com'),
+  (2, 'Test', '1999-02-01', 2, 'u2@example.com'),
+  (3, 'tEST', '1999-03-01', 3, 'u3@example.com'),
+  (4, 'test', '1999-04-01', 4, 'u4@example.com'),
+  (5, null,   null,         null, null);
 
 insert into p.enum_types
   (id, "enum") values
