@@ -1478,45 +1478,45 @@ input EmailDomainFilter {
   """
   Not equal to the specified value, treating null like an ordinary value.
   """
-  distinctFrom: EmailDomain
+  distinctFrom: String
 
   """
   Not equal to the specified value, treating null like an ordinary value (case-insensitive).
   """
-  distinctFromInsensitive: String
+  distinctFromInsensitive: EmailDomain
 
   """Ends with the specified string (case-sensitive)."""
-  endsWith: EmailDomain
+  endsWith: String
 
   """Ends with the specified string (case-insensitive)."""
   endsWithInsensitive: EmailDomain
 
   """Equal to the specified value."""
-  equalTo: EmailDomain
+  equalTo: String
 
   """Equal to the specified value (case-insensitive)."""
-  equalToInsensitive: String
+  equalToInsensitive: EmailDomain
 
   """Greater than the specified value."""
-  greaterThan: EmailDomain
+  greaterThan: String
 
   """Greater than the specified value (case-insensitive)."""
-  greaterThanInsensitive: String
+  greaterThanInsensitive: EmailDomain
 
   """Greater than or equal to the specified value."""
-  greaterThanOrEqualTo: EmailDomain
+  greaterThanOrEqualTo: String
 
   """Greater than or equal to the specified value (case-insensitive)."""
-  greaterThanOrEqualToInsensitive: String
+  greaterThanOrEqualToInsensitive: EmailDomain
 
   """Included in the specified list."""
-  in: [EmailDomain!]
+  in: [String!]
 
   """Included in the specified list (case-insensitive)."""
-  inInsensitive: [String!]
+  inInsensitive: [EmailDomain!]
 
   """Contains the specified string (case-sensitive)."""
-  includes: EmailDomain
+  includes: String
 
   """Contains the specified string (case-insensitive)."""
   includesInsensitive: EmailDomain
@@ -1527,21 +1527,21 @@ input EmailDomainFilter {
   isNull: Boolean
 
   """Less than the specified value."""
-  lessThan: EmailDomain
+  lessThan: String
 
   """Less than the specified value (case-insensitive)."""
-  lessThanInsensitive: String
+  lessThanInsensitive: EmailDomain
 
   """Less than or equal to the specified value."""
-  lessThanOrEqualTo: EmailDomain
+  lessThanOrEqualTo: String
 
   """Less than or equal to the specified value (case-insensitive)."""
-  lessThanOrEqualToInsensitive: String
+  lessThanOrEqualToInsensitive: EmailDomain
 
   """
   Matches the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
   """
-  like: EmailDomain
+  like: String
 
   """
   Matches the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
@@ -1549,33 +1549,33 @@ input EmailDomainFilter {
   likeInsensitive: EmailDomain
 
   """Equal to the specified value, treating null like an ordinary value."""
-  notDistinctFrom: EmailDomain
+  notDistinctFrom: String
 
   """
   Equal to the specified value, treating null like an ordinary value (case-insensitive).
   """
-  notDistinctFromInsensitive: String
+  notDistinctFromInsensitive: EmailDomain
 
   """Does not end with the specified string (case-sensitive)."""
-  notEndsWith: EmailDomain
+  notEndsWith: String
 
   """Does not end with the specified string (case-insensitive)."""
   notEndsWithInsensitive: EmailDomain
 
   """Not equal to the specified value."""
-  notEqualTo: EmailDomain
+  notEqualTo: String
 
   """Not equal to the specified value (case-insensitive)."""
-  notEqualToInsensitive: String
+  notEqualToInsensitive: EmailDomain
 
   """Not included in the specified list."""
-  notIn: [EmailDomain!]
+  notIn: [String!]
 
   """Not included in the specified list (case-insensitive)."""
-  notInInsensitive: [String!]
+  notInInsensitive: [EmailDomain!]
 
   """Does not contain the specified string (case-sensitive)."""
-  notIncludes: EmailDomain
+  notIncludes: String
 
   """Does not contain the specified string (case-insensitive)."""
   notIncludesInsensitive: EmailDomain
@@ -1583,7 +1583,7 @@ input EmailDomainFilter {
   """
   Does not match the specified pattern (case-sensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
   """
-  notLike: EmailDomain
+  notLike: String
 
   """
   Does not match the specified pattern (case-insensitive). An underscore (_) matches any single character; a percent sign (%) matches any sequence of zero or more characters.
@@ -1591,13 +1591,13 @@ input EmailDomainFilter {
   notLikeInsensitive: EmailDomain
 
   """Does not start with the specified string (case-sensitive)."""
-  notStartsWith: EmailDomain
+  notStartsWith: String
 
   """Does not start with the specified string (case-insensitive)."""
   notStartsWithInsensitive: EmailDomain
 
   """Starts with the specified string (case-sensitive)."""
-  startsWith: EmailDomain
+  startsWith: String
 
   """Starts with the specified string (case-insensitive)."""
   startsWithInsensitive: EmailDomain

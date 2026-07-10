@@ -1092,10 +1092,10 @@ A filter to be used against EmailDomain fields. All fields are combined with a l
 """
 input EmailDomainFilter {
   """Equal to the specified value."""
-  equalTo: EmailDomain
+  equalTo: String
 
   """Not equal to the specified value."""
-  notEqualTo: EmailDomain
+  notEqualTo: String
 }
 
 type EnumArrayType implements Node {
