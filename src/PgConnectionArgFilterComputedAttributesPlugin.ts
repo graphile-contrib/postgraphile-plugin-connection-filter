@@ -11,7 +11,7 @@ import { version } from "./version";
 declare global {
   namespace GraphileBuild {
     interface BehaviorStrings {
-      filterBy: true;
+      "filter:proc:filterBy": true;
     }
   }
 }
@@ -54,7 +54,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
     schema: {
       behaviorRegistry: {
         add: {
-          filterBy: {
+          "filter:proc:filterBy": {
             description: "",
             entities: ["pgResource"],
           },
@@ -68,7 +68,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
               build.options.connectionFilterComputedColumns &&
               isComputedScalarAttributeResource(entity)
             ) {
-              return [behavior, "filterBy"];
+              return [behavior, "filter:proc:filterBy"];
             } else {
               return behavior;
             }
@@ -140,7 +140,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
             if (
               !build.behavior.pgResourceMatches(
                 computedAttributeResource,
-                "filterBy"
+                "filter:proc:filterBy"
               )
             ) {
               continue;
