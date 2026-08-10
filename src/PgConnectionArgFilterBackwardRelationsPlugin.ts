@@ -497,6 +497,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                                   )}`
                                 );
                               });
+                              $subQuery.ignoreUnlessAmended();
                               return $subQuery;
                             },
                           [
