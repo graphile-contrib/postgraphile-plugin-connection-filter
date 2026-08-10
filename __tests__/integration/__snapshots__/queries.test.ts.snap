@@ -6374,6 +6374,12 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
     "b": {
       "totalCount": 5,
     },
+    "backward_name_equalTo_null": {
+      "totalCount": 5,
+    },
+    "backward_name_equalTo_null_in_or": {
+      "totalCount": 5,
+    },
     "c": {
       "totalCount": 5,
     },
