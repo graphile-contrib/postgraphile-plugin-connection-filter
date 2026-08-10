@@ -163,3 +163,5 @@ Complex logic can be expressed using the following logical operators:
 | AND | and: `[T]` | Checks for all expressions in this list. |
 | OR  | or: `[T]`  | Checks for any expressions in this list. |
 | NOT | not: `T`   | Negates the expression.                  |
+
+Empty logical operators follow the standard Boolean identities: `and: []` is true, `or: []` is false, and `not: { or: [] }` is true. This also applies after `null` or empty-object fields have been removed when the corresponding allow options are enabled.

@@ -1,4 +1,7 @@
 query ($undefined: String) {
+  backward_and_empty: allFilterables(filter: {backwardByFilterableId: {and: []}}) { totalCount }
+  backward_not_or_empty: allFilterables(filter: {backwardByFilterableId: {not: {or: []}}}) { totalCount }
+  backward_or_empty: allFilterables(filter: {backwardByFilterableId: {or: []}}) { totalCount }
   allSideAs_junctionsBySideAIdExist_false: allSideAs(filter: {junctionsBySideAIdExist: false}) { nodes { aId } }
   allSideAs_junctionsBySideAIdExist_true: allSideAs(filter: {junctionsBySideAIdExist: true}) { nodes { aId } }
   allSideBs_junctionsBySideBIdExist_false: allSideBs(filter: {junctionsBySideBIdExist: false}) { nodes { bId } }
@@ -18,6 +21,12 @@ query ($undefined: String) {
   children_some_name_startsWith_c_and_childrenExist_true: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
   children_some_name_startsWith_c_and_childrenExist_false: allFilterables(filter: {childrenByFilterableId: {some: {name: {startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
   children_none_name_equalTo_child2: allFilterables(filter: {childrenByFilterableId: {none: {name: {equalTo: "child2"}}}}) { ...childrenConnection }
+  children_none_and_empty: allFilterables(filter: {childrenByFilterableId: {none: {and: []}}}) { totalCount }
+  children_none_or_empty: allFilterables(filter: {childrenByFilterableId: {none: {or: []}}}) { totalCount }
+  children_some_and_empty: allFilterables(filter: {childrenByFilterableId: {some: {and: []}}}) { totalCount }
+  children_some_or_empty: allFilterables(filter: {childrenByFilterableId: {some: {or: []}}}) { totalCount }
+  children_every_and_empty: allFilterables(filter: {childrenByFilterableId: {every: {and: []}}}) { totalCount }
+  children_every_or_empty: allFilterables(filter: {childrenByFilterableId: {every: {or: []}}}) { totalCount }
   children_none_name_startsWith_c: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}}) { ...childrenConnection }
   children_none_name_startsWith_c_and_childrenExist_true: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
   children_none_name_startsWith_c_and_childrenExist_false: allFilterables(filter: {childrenByFilterableId: {none: {name: {startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }

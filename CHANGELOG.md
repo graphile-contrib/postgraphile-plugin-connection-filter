@@ -1,3 +1,13 @@
+## Unreleased
+
+- **BREAKING CHANGE:** Empty `and` and `or` logical operators now use standard
+  Boolean identities: `and: []` is true and `or: []` is false. This also
+  applies when all children of a logical operator are omitted because null or
+  empty-object input is allowed. A `not` with no remaining condition is still
+  omitted.
+- Fixed an issue where an empty condition on a to-one backward relation
+  incorrectly applied an existence constraint.
+
 ## 3.0.2 - 2026-07-08
 
 - Fixed issue where `@foreignKey` smart tags on composite types were not

@@ -68,7 +68,7 @@ See also:
 
 By default, this plugin will throw an error when `null` literals or empty objects (`{}`) are included in `filter` input objects. This prevents queries with ambiguous semantics such as `filter: { field: null }` and `filter: { field: { equalTo: null } }` from returning unexpected results. For background on this decision, see https://github.com/graphile-contrib/postgraphile-plugin-connection-filter/issues/58.
 
-To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and `connectionFilterAllowEmptyObjectInput` options documented under [Plugin Options](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#plugin-options). Please note that even with `connectionFilterAllowNullInput` enabled, `null` is never interpreted as a SQL `NULL`; fields with `null` values are simply ignored when resolving the query.
+To allow `null` and `{}` in inputs, use the `connectionFilterAllowNullInput` and `connectionFilterAllowEmptyObjectInput` options documented under [Plugin Options](https://github.com/graphile-contrib/postgraphile-plugin-connection-filter#plugin-options). Please note that even with `connectionFilterAllowNullInput` enabled, `null` is never interpreted as a SQL `NULL`; individual fields with `null` values are removed from the surrounding expression before it is resolved.
 
 ## Plugin Options
 
@@ -227,7 +227,7 @@ const preset: GraphileConfig.Preset = {
 ```
 
 When `false`, passing `null` as a field value will throw an error.
-When `true`, passing `null` as a field value is equivalent to omitting the field.
+When `true`, a `null` field value does not add a condition. If that leaves a supplied `and` or `or` expression with no conditions, its standard Boolean identity applies: `and` is true and `or` is false. A `not` with no remaining condition is omitted. A `null` passed directly as a logical operator value also omits that operator.
 
 #### connectionFilterAllowEmptyObjectInput
 
@@ -243,7 +243,7 @@ const preset: GraphileConfig.Preset = {
 ```
 
 When `false`, passing `{}` as a field value will throw an error.
-When `true`, passing `{}` as a field value is equivalent to omitting the field.
+When `true`, an empty field-operator object does not add a condition. In a supplied logical expression, standard Boolean identities still apply: `and: []` is true and `or: []` is false. A `not` with no remaining condition, such as `not: {}`, is omitted.
 
 ## Examples
 

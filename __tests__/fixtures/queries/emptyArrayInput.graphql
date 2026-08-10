@@ -17,15 +17,15 @@ query {
   jsonb_containsAnyKeys_empty: allFilterables(filter: { jsonb: { containsAnyKeys: [] } }) {
     totalCount
   }
-  # `and: []` is ignored when resolving the SQL query
+  # `and: []` evaluates to true
   logical_and_empty: allFilterables(filter: { and: [] }) {
     totalCount
   }
-  # `or: []` is ignored when resolving the SQL query
+  # `or: []` evaluates to false
   logical_or_empty: allFilterables(filter: { or: [] }) {
     totalCount
   }
-  # all of this nested logic is ignored when resolving the SQL query
+  # `not: {and: [{or: []}], or: [{and: []}, {or: []}]}` evaluates to true
   logical_nested: allFilterables(
     filter: { not: { and: [{ or: [] }], or: [{ and: [] }, { or: [] }] } }
   ) {

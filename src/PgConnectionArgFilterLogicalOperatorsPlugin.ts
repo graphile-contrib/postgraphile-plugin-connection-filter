@@ -20,6 +20,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
           const {
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
+            sql,
             EXPORTABLE,
           } = build;
           const {
@@ -47,7 +48,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 description: `Checks for all expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
                 apply: EXPORTABLE(
-                  (assertAllowed) =>
+                  (assertAllowed, sql) =>
                     function (
                       $where: PgCondition,
                       value: ReadonlyArray<LogicalOperatorInput> | null
@@ -55,11 +56,12 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $and = $where.andPlan();
+                      $and.where(sql.true);
                       // No need for this more correct form, easier to read if it's flatter.
                       // fieldArgs.apply(() => $and.andPlan());
                       return $and;
                     },
-                  [assertAllowed]
+                  [assertAllowed, sql]
                 ),
               }
             ),
@@ -72,7 +74,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 description: `Checks for any expressions in this list.`,
                 type: new GraphQLList(new GraphQLNonNull(Self)),
                 apply: EXPORTABLE(
-                  (assertAllowed) =>
+                  (assertAllowed, sql) =>
                     function (
                       $where: PgCondition<any>,
                       value: ReadonlyArray<LogicalOperatorInput> | null
@@ -80,10 +82,11 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $or = $where.orPlan();
+                      $or.where(sql.false);
                       // Every entry is added to the `$or`, but the entries themselves should use an `and`.
                       return () => $or.andPlan();
                     },
-                  [assertAllowed]
+                  [assertAllowed, sql]
                 ),
               }
             ),
@@ -105,6 +108,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       if (value == null) return;
                       const $not = $where.notPlan();
                       const $and = $not.andPlan();
+                      $not.ignoreUnlessAmended();
                       return $and;
                     },
                   [assertAllowed]
