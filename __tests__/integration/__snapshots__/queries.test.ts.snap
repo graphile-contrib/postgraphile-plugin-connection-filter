@@ -6375,13 +6375,13 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
       "totalCount": 5,
     },
     "backward_name_equalTo_null": {
-      "totalCount": 4,
+      "totalCount": 5,
     },
     "backward_name_equalTo_null_in_or": {
-      "totalCount": 4,
+      "totalCount": 5,
     },
     "backward_name_equalTo_null_or_text_equalTo_Test_or_int4_equalTo_4": {
-      "totalCount": 4,
+      "totalCount": 2,
     },
     "c": {
       "totalCount": 5,
@@ -9097,7 +9097,7 @@ exports[`relations.graphql 1`] = `
       ],
     },
     "backward_and_empty": {
-      "totalCount": 4,
+      "totalCount": 5,
     },
     "backward_name_equalTo_backward2": {
       "nodes": [
@@ -9108,10 +9108,10 @@ exports[`relations.graphql 1`] = `
       ],
     },
     "backward_not_or_empty": {
-      "totalCount": 4,
+      "totalCount": 5,
     },
     "backward_or_empty": {
-      "totalCount": 4,
+      "totalCount": 5,
     },
     "childrenExist_false": {
       "nodes": [
@@ -9170,7 +9170,7 @@ exports[`relations.graphql 1`] = `
       ],
     },
     "children_every_and_empty": {
-      "totalCount": 3,
+      "totalCount": 5,
     },
     "children_every_name_equalTo_child2": {
       "nodes": [
@@ -9303,7 +9303,7 @@ exports[`relations.graphql 1`] = `
       ],
     },
     "children_every_or_empty": {
-      "totalCount": 3,
+      "totalCount": 5,
     },
     "children_none_and_empty": {
       "totalCount": 5,

@@ -497,6 +497,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                                   )}`
                                 );
                               });
+                              $subQuery.ignoreUnlessAmended();
                               return $subQuery;
                             },
                           [
@@ -637,6 +638,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                             )}`
                           );
                         });
+                        $subQuery.ignoreUnlessAmended();
                         return $subQuery.notPlan().andPlan();
                       },
                     [assertAllowed, sql]
