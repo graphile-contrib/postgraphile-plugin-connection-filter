@@ -27,7 +27,7 @@ declare global {
   namespace DataplanPg {
     interface PgConditionExtensions {
       pgFilterAttribute?: /** Filtering a column */
-      | {
+        | {
             fieldName: string;
             attributeName: string;
             attribute: PgCodecAttribute;
