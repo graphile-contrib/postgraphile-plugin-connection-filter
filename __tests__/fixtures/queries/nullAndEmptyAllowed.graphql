@@ -113,6 +113,11 @@ query ($undefined: String, $null: String = null) {
   children_unfiltered: allFilterables {
     ...childrenConnection
   }
+  children_every_name_equalTo_null: allFilterables(
+    filter: { childrenByFilterableId: { every: { name: { equalTo: $null } } } }
+  ) {
+    totalCount
+  }
   children_some_name_equalTo_child2: allFilterables(
     filter: {
       childrenByFilterableId: { some: { name: { equalTo: "child2" } } }

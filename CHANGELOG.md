@@ -1,7 +1,16 @@
-## 3.0.4 - 2026-08-14
+## 4.0.0 - 2026-08-14
 
-- Fixed an issue where an empty condition to a to-one backward relation
-  incorrectly applied an existence constraint.
+Fixed an issue where some empty relation conditions incorrectly applied
+existence constraints, rather than being ignored as they should be. This
+impacted to-one backward relations and `every` conditions. Only affects people
+with `connectionFilterAllowNullInput` or `connectionFilterAllowEmptyObjectInput`
+enabled.
+
+I considered releasing this as 3.0.4 but because it changes the results for the
+affected queries quite significantly, I decided critical logic might be based on
+the bad behavior of 3.x so made it a semver major release. Updating should be
+painless (unless you were impacted, in which case some test snapshots and
+queries might need revisiting).
 
 ## 3.0.3 - 2026-07-22
 

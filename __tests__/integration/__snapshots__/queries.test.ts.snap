@@ -6386,6 +6386,9 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
     "c": {
       "totalCount": 5,
     },
+    "children_every_name_equalTo_null": {
+      "totalCount": 5,
+    },
     "children_none_name_equalTo_child2": {
       "nodes": [
         {
