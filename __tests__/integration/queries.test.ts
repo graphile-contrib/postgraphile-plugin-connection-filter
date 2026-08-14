@@ -180,6 +180,7 @@ beforeAll(async () => {
           graphileBuildOptions: {
             connectionFilterAllowNullInput: true,
             connectionFilterAllowEmptyObjectInput: true,
+            connectionFilterRelations: true,
           },
         },
         {}

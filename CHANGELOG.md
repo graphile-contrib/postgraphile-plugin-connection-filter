@@ -1,3 +1,13 @@
+## 3.0.4 - 2026-08-14
+
+- Fixed an issue where an empty condition to a to-one backward relation
+  incorrectly applied an existence constraint.
+
+## 3.0.3 - 2026-07-22
+
+- Uses more tightly scoped `filter:proc:filterBy` rather than `filterBy`
+  behavior.
+
 ## 3.0.2 - 2026-07-08
 
 - Fixed issue where `@foreignKey` smart tags on composite types were not

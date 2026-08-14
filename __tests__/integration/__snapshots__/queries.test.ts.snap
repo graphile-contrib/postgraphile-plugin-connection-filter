@@ -6374,6 +6374,15 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
     "b": {
       "totalCount": 5,
     },
+    "backward_name_equalTo_null": {
+      "totalCount": 5,
+    },
+    "backward_name_equalTo_null_in_or": {
+      "totalCount": 5,
+    },
+    "backward_name_equalTo_null_or_text_equalTo_Test_or_int4_equalTo_4": {
+      "totalCount": 2,
+    },
     "c": {
       "totalCount": 5,
     },
@@ -6804,6 +6813,9 @@ exports[`nullAndEmptyAllowed.graphql 1`] = `
       "totalCount": 5,
     },
     "n": {
+      "totalCount": 5,
+    },
+    "not_empty_object": {
       "totalCount": 5,
     },
     "o": {
@@ -9084,6 +9096,9 @@ exports[`relations.graphql 1`] = `
         },
       ],
     },
+    "backward_and_empty": {
+      "totalCount": 5,
+    },
     "backward_name_equalTo_backward2": {
       "nodes": [
         {
@@ -9091,6 +9106,12 @@ exports[`relations.graphql 1`] = `
           "text": "Test",
         },
       ],
+    },
+    "backward_not_or_empty": {
+      "totalCount": 5,
+    },
+    "backward_or_empty": {
+      "totalCount": 5,
     },
     "childrenExist_false": {
       "nodes": [
@@ -9147,6 +9168,9 @@ exports[`relations.graphql 1`] = `
           "id": 2,
         },
       ],
+    },
+    "children_every_and_empty": {
+      "totalCount": 5,
     },
     "children_every_name_equalTo_child2": {
       "nodes": [
@@ -9278,6 +9302,12 @@ exports[`relations.graphql 1`] = `
         },
       ],
     },
+    "children_every_or_empty": {
+      "totalCount": 5,
+    },
+    "children_none_and_empty": {
+      "totalCount": 5,
+    },
     "children_none_name_equalTo_child2": {
       "nodes": [
         {
@@ -9361,6 +9391,12 @@ exports[`relations.graphql 1`] = `
     },
     "children_none_name_startsWith_c_and_childrenExist_true": {
       "nodes": [],
+    },
+    "children_none_or_empty": {
+      "totalCount": 5,
+    },
+    "children_some_and_empty": {
+      "totalCount": 5,
     },
     "children_some_name_equalTo_child2": {
       "nodes": [
@@ -9451,6 +9487,9 @@ exports[`relations.graphql 1`] = `
           "id": 2,
         },
       ],
+    },
+    "children_some_or_empty": {
+      "totalCount": 5,
     },
     "filterableClosuresByDescendantId_some_filterableByAncestorId_name_equalTo_Test": {
       "nodes": [

@@ -86,6 +86,30 @@ query ($undefined: String, $null: String = null) {
   ) {
     ...textConnection
   }
+  backward_name_equalTo_null: allFilterables(
+    filter: { backwardByFilterableId: { name: { equalTo: $null } } }
+  ) {
+    totalCount
+  }
+  backward_name_equalTo_null_in_or: allFilterables(
+    filter: { or: [{ backwardByFilterableId: { name: { equalTo: $null } } }] }
+  ) {
+    totalCount
+  }
+  backward_name_equalTo_null_or_text_equalTo_Test_or_int4_equalTo_4: allFilterables(
+    filter: {
+      or: [
+        { backwardByFilterableId: { name: { equalTo: $null } } }
+        { text: { equalTo: "Test" } }
+        { int4: { equalTo: 4 } }
+      ]
+    }
+  ) {
+    totalCount
+  }
+  not_empty_object: allFilterables(filter: { not: {} }) {
+    totalCount
+  }
   children_unfiltered: allFilterables {
     ...childrenConnection
   }
