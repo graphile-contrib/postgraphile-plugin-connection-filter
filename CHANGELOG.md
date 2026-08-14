@@ -1,3 +1,7 @@
+## 4.0.1 - 2026-08-14
+
+Fix issue deploying module (npm ignore-scripts ignored the prepack script?).
+
 ## 4.0.0 - 2026-08-14
 
 Fixed an issue where some empty relation conditions incorrectly applied
