@@ -13,6 +13,7 @@ import {
   PgConnectionArgFilterOperatorsPlugin,
   makeApplyFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
+import { PgConnectionArgFilterInflectionPlugin } from "./PgConnectionArgFilterInflectionPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
 import type { GraphQLInputType, GraphQLOutputType } from "graphql";
 import type { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
@@ -79,6 +80,7 @@ declare global {
       connectionFilterLogicalOperators?: boolean;
       connectionFilterAllowNullInput?: boolean;
       connectionFilterAllowEmptyObjectInput?: boolean;
+      connectionFilterApplyLogicalOperatorsToAttributes?: boolean;
       pgIgnoreReferentialIntegrity?: boolean;
     }
     interface Inflection {
@@ -157,6 +159,7 @@ declare global {
 
 export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
   plugins: [
+    PgConnectionArgFilterInflectionPlugin,
     ConnectionArgFilterPlugin,
     PgConnectionArgFilterPlugin,
     PgConnectionArgFilterAttributesPlugin,
@@ -183,5 +186,6 @@ export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
     connectionFilterLogicalOperators: true,
     connectionFilterAllowNullInput: false,
     connectionFilterAllowEmptyObjectInput: false,
+    connectionFilterApplyLogicalOperatorsToAttributes: false,
   },
 };

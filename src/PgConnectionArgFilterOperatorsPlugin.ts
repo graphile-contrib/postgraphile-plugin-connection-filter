@@ -65,6 +65,9 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           pgAggregatesForceTextTypesInsensitive: forceTextTypesInsensitive,
         } = build;
 
+        const builtin = (name: string) =>
+          build.inflection.pgConnectionFilterBuiltin(name);
+
         const {
           scope: {
             pgConnectionFilterOperators,
@@ -299,7 +302,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               "resolveIsNull"
             ),
           },
-          equalTo: {
+          [builtin("equalTo")]: {
             description: "Equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} = ${v}`,
@@ -309,7 +312,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          notEqualTo: {
+          [builtin("notEqualTo")]: {
             description: "Not equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} <> ${v}`,
@@ -341,7 +344,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          in: {
+          [builtin("in")]: {
             description: "Included in the specified list.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} = ANY(${v})`,
@@ -369,7 +372,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         }
 
         const sortOperators: { [fieldName: string]: OperatorSpec } = {
-          lessThan: {
+          [builtin("lessThan")]: {
             description: "Less than the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} < ${v}`,
@@ -379,7 +382,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          lessThanOrEqualTo: {
+          [builtin("lessThanOrEqualTo")]: {
             description: "Less than or equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} <= ${v}`,
@@ -389,7 +392,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          greaterThan: {
+          [builtin("greaterThan")]: {
             description: "Greater than the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} > ${v}`,
@@ -399,7 +402,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          greaterThanOrEqualTo: {
+          [builtin("greaterThanOrEqualTo")]: {
             description: "Greater than or equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} >= ${v}`,
@@ -1055,8 +1058,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           [fieldName: string]: OperatorSpec;
         } = {
           isNull: standardOperators.isNull,
-          equalTo: standardOperators.equalTo,
-          notEqualTo: standardOperators.notEqualTo,
+          [builtin("equalTo")]: standardOperators[builtin("equalTo")],
+          [builtin("notEqualTo")]: standardOperators[builtin("notEqualTo")],
           distinctFrom: standardOperators.distinctFrom,
           notDistinctFrom: standardOperators.notDistinctFrom,
           ...sortOperators,
@@ -1148,6 +1151,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in connectionFilterArrayOperators) {
+          if (!connectionFilterArrayOperators[key])
+            throw new Error(`${key} not found`);
           connectionFilterArrayOperators[key].name ??= `array${key}`;
         }
 

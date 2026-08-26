@@ -479,7 +479,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         return extend(
           args,
           {
-            filter: {
+            [inflection.pgConnectionFilterBuiltin("filter")]: {
               description:
                 "A filter to be used in determining which values should be returned by the collection.",
               type: FilterType,

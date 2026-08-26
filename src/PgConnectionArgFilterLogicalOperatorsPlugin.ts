@@ -21,26 +21,34 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
             EXPORTABLE,
+            inflection,
+            options: { connectionFilterApplyLogicalOperatorsToAttributes },
           } = build;
           const {
             fieldWithHooks,
-            scope: { isPgConnectionFilter },
+            scope: { isPgConnectionFilter, pgConnectionFilterOperators },
             Self,
           } = context;
 
-          if (!isPgConnectionFilter) return fields;
+          if (
+            !isPgConnectionFilter &&
+            (!connectionFilterApplyLogicalOperatorsToAttributes ||
+              !pgConnectionFilterOperators)
+          ) {
+            return fields;
+          }
 
           if (Object.keys(fields).length === 0) {
             // Skip adding these operators if they would be the only fields
-            return fields;
+            //return fields;
           }
 
           const assertAllowed = makeAssertAllowed(build);
 
           const logicalOperatorFields = {
-            and: fieldWithHooks(
+            [inflection.pgConnectionFilterBuiltin("and")]: fieldWithHooks(
               {
-                fieldName: "and",
+                fieldName: inflection.pgConnectionFilterBuiltin("and"),
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -55,6 +63,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $and = $where.andPlan();
+                      $and.extensions = { ...$where.extensions };
                       // No need for this more correct form, easier to read if it's flatter.
                       // fieldArgs.apply(() => $and.andPlan());
                       return $and;
@@ -63,9 +72,9 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            or: fieldWithHooks(
+            [inflection.pgConnectionFilterBuiltin("or")]: fieldWithHooks(
               {
-                fieldName: "or",
+                fieldName: inflection.pgConnectionFilterBuiltin("or"),
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -80,6 +89,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $or = $where.orPlan();
+                      $or.extensions = { ...$where.extensions };
                       // Every entry is added to the `$or`, but the entries themselves should use an `and`.
                       return () => $or.andPlan();
                     },
@@ -87,9 +97,9 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            not: fieldWithHooks(
+            [inflection.pgConnectionFilterBuiltin("not")]: fieldWithHooks(
               {
-                fieldName: "not",
+                fieldName: inflection.pgConnectionFilterBuiltin("not"),
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -105,6 +115,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       if (value == null) return;
                       const $not = $where.notPlan();
                       const $and = $not.andPlan();
+                      $and.extensions = { ...$where.extensions };
                       return $and;
                     },
                   [assertAllowed]
