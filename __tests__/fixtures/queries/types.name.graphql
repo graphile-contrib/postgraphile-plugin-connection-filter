@@ -1,136 +1,136 @@
 query name($v2: String = "Test", $v3: String = "tEST") {
-  distinctFrom: allFilterables(filter: { name: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { name: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  distinctFromInsensitive: allFilterables(filter: { name: { distinctFromInsensitive: $v2 } }) {
+  distinctFromInsensitive: allFilterables(zzz_filter: { name: { zzz_distinctFromInsensitive: $v2 } }) {
     ...nodes
   }
-  endsWith: allFilterables(filter: { name: { endsWith: "T" } }) {
+  endsWith: allFilterables(zzz_filter: { name: { zzz_endsWith: "T" } }) {
     ...nodes
   }
   endsWithInsensitive: allFilterables(
-    filter: { name: { endsWithInsensitive: "T" } }
+    zzz_filter: { name: { zzz_endsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { name: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { name: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  equalToInsensitive: allFilterables(filter: { name: { equalToInsensitive: $v2 } }) {
+  equalToInsensitive: allFilterables(zzz_filter: { name: { zzz_equalToInsensitive: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { name: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { name: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
-  greaterThanInsensitive: allFilterables(filter: { name: { greaterThanInsensitive: $v2 } }) {
+  greaterThanInsensitive: allFilterables(zzz_filter: { name: { zzz_greaterThanInsensitive: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { name: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { name: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   greaterThanOrEqualToInsensitive: allFilterables(
-    filter: { name: { greaterThanOrEqualToInsensitive: $v2 } }
+    zzz_filter: { name: { zzz_greaterThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { name: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { name: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  inInsensitive: allFilterables(filter: { name: { inInsensitive: [$v2, $v3] } }) {
+  inInsensitive: allFilterables(zzz_filter: { name: { zzz_inInsensitive: [$v2, $v3] } }) {
     ...nodes
   }
-  includes: allFilterables(filter: { name: { includes: "T" } }) {
+  includes: allFilterables(zzz_filter: { name: { zzz_includes: "T" } }) {
     ...nodes
   }
   includesInsensitive: allFilterables(
-    filter: { name: { includesInsensitive: "T" } }
+    zzz_filter: { name: { zzz_includesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  isNull: allFilterables(filter: { name: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { name: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { name: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { name: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
-  lessThanInsensitive: allFilterables(filter: { name: { lessThanInsensitive: $v2 } }) {
+  lessThanInsensitive: allFilterables(zzz_filter: { name: { zzz_lessThanInsensitive: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { name: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { name: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   lessThanOrEqualToInsensitive: allFilterables(
-    filter: { name: { lessThanOrEqualToInsensitive: $v2 } }
+    zzz_filter: { name: { zzz_lessThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
-  like: allFilterables(filter: { name: { like: "%ES%" } }) {
+  like: allFilterables(zzz_filter: { name: { zzz_like: "%ES%" } }) {
     ...nodes
   }
   likeInsensitive: allFilterables(
-    filter: { name: { likeInsensitive: "%ES%" } }
+    zzz_filter: { name: { zzz_likeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { name: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { name: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notDistinctFromInsensitive: allFilterables(filter: { name: { notDistinctFromInsensitive: $v2 } }) {
+  notDistinctFromInsensitive: allFilterables(zzz_filter: { name: { zzz_notDistinctFromInsensitive: $v2 } }) {
     ...nodes
   }
-  notEndsWith: allFilterables(filter: { name: { notEndsWith: "T" } }) {
+  notEndsWith: allFilterables(zzz_filter: { name: { zzz_notEndsWith: "T" } }) {
     ...nodes
   }
   notEndsWithInsensitive: allFilterables(
-    filter: { name: { notEndsWithInsensitive: "T" } }
+    zzz_filter: { name: { zzz_notEndsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { name: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { name: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notEqualToInsensitive: allFilterables(filter: { name: { notEqualToInsensitive: $v2 } }) {
+  notEqualToInsensitive: allFilterables(zzz_filter: { name: { zzz_notEqualToInsensitive: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { name: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { name: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
-  notInInsensitive: allFilterables(filter: { name: { notInInsensitive: [$v2] } }) {
+  notInInsensitive: allFilterables(zzz_filter: { name: { zzz_notInInsensitive: [$v2] } }) {
     ...nodes
   }
-  notIncludes: allFilterables(filter: { name: { notIncludes: "T" } }) {
+  notIncludes: allFilterables(zzz_filter: { name: { zzz_notIncludes: "T" } }) {
     ...nodes
   }
   notIncludesInsensitive: allFilterables(
-    filter: { name: { notIncludesInsensitive: "T" } }
+    zzz_filter: { name: { zzz_notIncludesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notLike: allFilterables(filter: { name: { notLike: "%ES%" } }) {
+  notLike: allFilterables(zzz_filter: { name: { zzz_notLike: "%ES%" } }) {
     ...nodes
   }
   notLikeInsensitive: allFilterables(
-    filter: { name: { notLikeInsensitive: "%ES%" } }
+    zzz_filter: { name: { zzz_notLikeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
-  notStartsWith: allFilterables(filter: { name: { notStartsWith: "T" } }) {
+  notStartsWith: allFilterables(zzz_filter: { name: { zzz_notStartsWith: "T" } }) {
     ...nodes
   }
   notStartsWithInsensitive: allFilterables(
-    filter: { name: { notStartsWithInsensitive: "T" } }
+    zzz_filter: { name: { zzz_notStartsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  startsWith: allFilterables(filter: { name: { startsWith: "T" } }) {
+  startsWith: allFilterables(zzz_filter: { name: { zzz_startsWith: "T" } }) {
     ...nodes
   }
   startsWithInsensitive: allFilterables(
-    filter: { name: { startsWithInsensitive: "T" } }
+    zzz_filter: { name: { zzz_startsWithInsensitive: "T" } }
   ) {
     ...nodes
   }

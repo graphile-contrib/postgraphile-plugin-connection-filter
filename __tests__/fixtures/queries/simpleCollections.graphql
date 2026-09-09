@@ -1,5 +1,5 @@
 query {
-  text_isNull_true: allFilterablesList(filter: { text: { isNull: true } }) { ...textList }
+  text_isNull_true: allFilterablesList(zzz_filter: { text: { zzz_isNull: true } }) { ...textList }
 }
 
 fragment textList on Filterable {

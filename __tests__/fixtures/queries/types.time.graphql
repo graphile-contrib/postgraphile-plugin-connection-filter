@@ -1,39 +1,39 @@
 query time($v2: Time = "00:02:00", $v3: Time = "00:03:00") {
-  distinctFrom: allFilterables(filter: { time: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { time: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { time: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { time: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { time: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { time: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { time: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { time: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { time: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { time: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { time: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { time: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { time: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { time: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { time: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { time: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { time: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { time: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { time: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { time: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { time: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { time: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

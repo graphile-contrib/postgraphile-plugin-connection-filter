@@ -5,63 +5,63 @@ query int4Range(
   }
   $elementVal: Int = 2
 ) {
-  adjacentTo: allRangeTypes(filter: { int4Range: { adjacentTo: $val } }) {
+  adjacentTo: allRangeTypes(zzz_filter: { int4Range: { zzz_adjacentTo: $val } }) {
     ...nodes
   }
-  containedBy: allRangeTypes(filter: { int4Range: { containedBy: $val } }) {
+  containedBy: allRangeTypes(zzz_filter: { int4Range: { zzz_containedBy: $val } }) {
     ...nodes
   }
-  contains: allRangeTypes(filter: { int4Range: { contains: $val } }) {
+  contains: allRangeTypes(zzz_filter: { int4Range: { zzz_contains: $val } }) {
     ...nodes
   }
   containsElement: allRangeTypes(
-    filter: { int4Range: { containsElement: $elementVal } }
+    zzz_filter: { int4Range: { zzz_containsElement: $elementVal } }
   ) {
     ...nodes
   }
-  distinctFrom: allRangeTypes(filter: { int4Range: { distinctFrom: $val } }) {
+  distinctFrom: allRangeTypes(zzz_filter: { int4Range: { zzz_distinctFrom: $val } }) {
     ...nodes
   }
-  equalTo: allRangeTypes(filter: { int4Range: { equalTo: $val } }) {
+  equalTo: allRangeTypes(zzz_filter: { int4Range: { zzz_equalTo: $val } }) {
     ...nodes
   }
-  in: allRangeTypes(filter: { int4Range: { in: [$val] } }) {
+  in: allRangeTypes(zzz_filter: { int4Range: { zzz_in: [$val] } }) {
     ...nodes
   }
-  isNull: allRangeTypes(filter: { int4Range: { isNull: true } }) {
+  isNull: allRangeTypes(zzz_filter: { int4Range: { zzz_isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allRangeTypes(
-    filter: { int4Range: { notDistinctFrom: $val } }
+    zzz_filter: { int4Range: { zzz_notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allRangeTypes(filter: { int4Range: { notEqualTo: $val } }) {
+  notEqualTo: allRangeTypes(zzz_filter: { int4Range: { zzz_notEqualTo: $val } }) {
     ...nodes
   }
   notExtendsLeftOf: allRangeTypes(
-    filter: { int4Range: { notExtendsLeftOf: $val } }
+    zzz_filter: { int4Range: { zzz_notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allRangeTypes(
-    filter: { int4Range: { notExtendsRightOf: $val } }
+    zzz_filter: { int4Range: { zzz_notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allRangeTypes(filter: { int4Range: { notIn: [$val] } }) {
+  notIn: allRangeTypes(zzz_filter: { int4Range: { zzz_notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allRangeTypes(filter: { int4Range: { overlaps: $val } }) {
+  overlaps: allRangeTypes(zzz_filter: { int4Range: { zzz_overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allRangeTypes(
-    filter: { int4Range: { strictlyLeftOf: $val } }
+    zzz_filter: { int4Range: { zzz_strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allRangeTypes(
-    filter: { int4Range: { strictlyRightOf: $val } }
+    zzz_filter: { int4Range: { zzz_strictlyRightOf: $val } }
   ) {
     ...nodes
   }

@@ -1,71 +1,71 @@
 # All queries in this file should throw an error
 # (queries are an exact copy of nullAndEmptyAllowed.graphql)
 query {
-  a: allFilterables(filter: null) {
+  a: allFilterables(zzz_filter: null) {
     totalCount
   }
-  b: allFilterables(filter: {}) {
+  b: allFilterables(zzz_filter: {}) {
     totalCount
   }
-  c: allFilterables(filter: { text: null }) {
+  c: allFilterables(zzz_filter: { text: null }) {
     totalCount
   }
-  d: allFilterables(filter: { text: {} }) {
+  d: allFilterables(zzz_filter: { text: {} }) {
     totalCount
   }
-  e: allFilterables(filter: { text: null, int4: null }) {
+  e: allFilterables(zzz_filter: { text: null, int4: null }) {
     totalCount
   }
-  f: allFilterables(filter: { text: {}, int4: {} }) {
+  f: allFilterables(zzz_filter: { text: {}, int4: {} }) {
     totalCount
   }
-  g: allFilterables(filter: { text: null, int4: {} }) {
+  g: allFilterables(zzz_filter: { text: null, int4: {} }) {
     totalCount
   }
-  h: allFilterables(filter: { text: { equalTo: null } }) {
+  h: allFilterables(zzz_filter: { text: { zzz_equalTo: null } }) {
     totalCount
   }
-  i: allFilterables(filter: { text: { equalTo: null, notEqualTo: null } }) {
+  i: allFilterables(zzz_filter: { text: { zzz_equalTo: null, zzz_notEqualTo: null } }) {
     totalCount
   }
   j: allFilterables(
-    filter: {
-      text: { equalTo: null, notEqualTo: null }
-      int4: { equalTo: null }
+    zzz_filter: {
+      text: { zzz_equalTo: null, zzz_notEqualTo: null }
+      int4: { zzz_equalTo: null }
       numeric: {}
       bool: null
     }
   ) {
     totalCount
   }
-  k: allFilterables(filter: { and: null }) {
+  k: allFilterables(zzz_filter: { zzz_and: null }) {
     totalCount
   }
-  l: allFilterables(filter: { and: [{}] }) {
+  l: allFilterables(zzz_filter: { zzz_and: [{}] }) {
     totalCount
   }
-  m: allFilterables(filter: { and: [{}, {}] }) {
+  m: allFilterables(zzz_filter: { zzz_and: [{}, {}] }) {
     totalCount
   }
-  n: allFilterables(filter: { or: null }) {
+  n: allFilterables(zzz_filter: { zzz_or: null }) {
     totalCount
   }
-  o: allFilterables(filter: { or: [{}] }) {
+  o: allFilterables(zzz_filter: { zzz_or: [{}] }) {
     totalCount
   }
-  p: allFilterables(filter: { or: [{}, {}] }) {
+  p: allFilterables(zzz_filter: { zzz_or: [{}, {}] }) {
     totalCount
   }
-  q: allFilterables(filter: { not: null }) {
+  q: allFilterables(zzz_filter: { zzz_not: null }) {
     totalCount
   }
-  r: allFilterables(filter: { not: {} }) {
+  r: allFilterables(zzz_filter: { zzz_not: {} }) {
     totalCount
   }
-  s: allFilterables(filter: { not: { text: null } }) {
+  s: allFilterables(zzz_filter: { zzz_not: { text: null } }) {
     totalCount
   }
-  t: allFilterables(filter: { not: { text: {} } }) {
+  t: allFilterables(zzz_filter: { zzz_not: { text: {} } }) {
     totalCount
   }
 }

@@ -3,72 +3,72 @@ query bit4Array(
   $v2_1: BitString = "0010"
   $v3: [BitString] = ["0011", "0100"]
 ) {
-  anyEqualTo: allArrayTypes(filter: { bit4Array: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { bit4Array: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { bit4Array: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { bit4Array: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { bit4Array: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { bit4Array: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { bit4Array: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { bit4Array: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { bit4Array: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { bit4Array: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { bit4Array: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { bit4Array: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { bit4Array: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { bit4Array: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { bit4Array: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { bit4Array: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { bit4Array: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { bit4Array: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { bit4Array: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { bit4Array: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { bit4Array: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { bit4Array: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { bit4Array: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { bit4Array: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { bit4Array: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { bit4Array: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { bit4Array: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { bit4Array: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { bit4Array: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { bit4Array: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { bit4Array: { notDistinctFrom: $v2 } }
+    zzz_filter: { bit4Array: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { bit4Array: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { bit4Array: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { bit4Array: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { bit4Array: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

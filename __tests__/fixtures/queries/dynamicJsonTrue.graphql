@@ -1,32 +1,32 @@
 query dynamicJsonTrue(
   $varInt: Int = 2
   $varJSON: JSON = { key2: 2 }
-  $varJSONFilter: JSONFilter = { contains: { key2: 2 } }
+  $varJSONFilter: JSONFilter = { zzz_contains: { key2: 2 } }
   $withArrayV2: JSON = [{ key2: 2 }, { key3: 3 }]
   $withObjectV2: JSON = { key2: 2 }
 ) {
   # The first four (a, b, c, d) should result in the same value
-  a: allJsonbTests(filter: { jsonbWithObject: { contains: { key2: 2 } } }) {
+  a: allJsonbTests(zzz_filter: { jsonbWithObject: { zzz_contains: { key2: 2 } } }) {
     ...nodes
   }
   b: allJsonbTests(
-    filter: { jsonbWithObject: { contains: { key2: $varInt } } }
+    zzz_filter: { jsonbWithObject: { zzz_contains: { key2: $varInt } } }
   ) {
     ...nodes
   }
-  c: allJsonbTests(filter: { jsonbWithObject: { contains: $varJSON } }) {
+  c: allJsonbTests(zzz_filter: { jsonbWithObject: { zzz_contains: $varJSON } }) {
     ...nodes
   }
-  d: allJsonbTests(filter: { jsonbWithObject: $varJSONFilter }) {
+  d: allJsonbTests(zzz_filter: { jsonbWithObject: $varJSONFilter }) {
     ...nodes
   }
   withArray: allJsonbTests(
-    filter: { jsonbWithArray: { equalTo: $withArrayV2 } }
+    zzz_filter: { jsonbWithArray: { zzz_equalTo: $withArrayV2 } }
   ) {
     ...nodes
   }
   withObject: allJsonbTests(
-    filter: { jsonbWithObject: { equalTo: $withObjectV2 } }
+    zzz_filter: { jsonbWithObject: { zzz_equalTo: $withObjectV2 } }
   ) {
     ...nodes
   }

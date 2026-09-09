@@ -2,62 +2,62 @@ query cidr(
   $v2: CidrAddress = "192.168.1.2"
   $v3: CidrAddress = "192.168.1.3"
 ) {
-  containedBy: allFilterables(filter: { cidr: { containedBy: $v2 } }) {
+  containedBy: allFilterables(zzz_filter: { cidr: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
   containedByOrEqualTo: allFilterables(
-    filter: { cidr: { containedByOrEqualTo: $v2 } }
+    zzz_filter: { cidr: { zzz_containedByOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  contains: allFilterables(filter: { cidr: { contains: $v2 } }) {
+  contains: allFilterables(zzz_filter: { cidr: { zzz_contains: $v2 } }) {
     ...nodes
   }
   containsOrContainedBy: allFilterables(
-    filter: { cidr: { containsOrContainedBy: $v2 } }
+    zzz_filter: { cidr: { zzz_containsOrContainedBy: $v2 } }
   ) {
     ...nodes
   }
   containsOrEqualTo: allFilterables(
-    filter: { cidr: { containsOrEqualTo: $v2 } }
+    zzz_filter: { cidr: { zzz_containsOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  distinctFrom: allFilterables(filter: { cidr: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { cidr: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { cidr: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { cidr: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { cidr: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { cidr: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { cidr: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { cidr: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { cidr: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { cidr: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { cidr: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { cidr: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { cidr: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { cidr: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { cidr: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { cidr: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { cidr: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { cidr: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { cidr: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { cidr: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { cidr: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { cidr: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

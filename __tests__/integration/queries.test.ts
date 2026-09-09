@@ -50,7 +50,7 @@ const createPostGraphileSchema = async (
       makeV4Preset(v4Options),
       ...(anotherPreset ? [anotherPreset] : []),
     ],
-    plugins: [FilterAllPlugin],
+    plugins: [FilterAllPlugin, SillyInflectionPlugin],
     pgServices: [
       adaptor.makePgService({
         name: "main",
@@ -94,7 +94,6 @@ let gqlSchemas: {
   simpleCollections: SchemaResult;
   nullAndEmptyAllowed: SchemaResult;
   addConnectionFilterOperator: SchemaResult;
-  builtinInflection: SchemaResult;
 };
 
 beforeAll(async () => {
@@ -125,7 +124,6 @@ beforeAll(async () => {
       simpleCollections,
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
-      builtinInflection,
     ] = await Promise.all([
       createPostGraphileSchema(
         pool,
@@ -198,14 +196,6 @@ beforeAll(async () => {
           plugins: [CustomOperatorsPlugin],
         }
       ),
-      createPostGraphileSchema(
-        pool,
-        ["p"],
-        {
-          skipPlugins: [PgConditionArgumentPlugin],
-        },
-        { plugins: [SillyInflectionPlugin] }
-      ),
     ]);
     return {
       normal,
@@ -215,7 +205,6 @@ beforeAll(async () => {
       simpleCollections,
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
-      builtinInflection,
     };
   });
 });
@@ -236,7 +225,6 @@ for (const queryFileName of queryFileNames) {
     } = {
       "addConnectionFilterOperator.graphql":
         gqlSchemas.addConnectionFilterOperator,
-      "builtinInflection.graphql": gqlSchemas.builtinInflection,
       "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
       "types.cidr.graphql": gqlSchemas.networkScalars,
       "types.macaddr.graphql": gqlSchemas.networkScalars,

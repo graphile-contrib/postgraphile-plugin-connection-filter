@@ -1,23 +1,23 @@
 query enum($val: Mood = OK) {
-  distinctFrom: allEnumTypes(filter: { enum: { distinctFrom: $val } }) {
+  distinctFrom: allEnumTypes(zzz_filter: { enum: { zzz_distinctFrom: $val } }) {
     ...nodes
   }
-  equalTo: allEnumTypes(filter: { enum: { equalTo: $val } }) {
+  equalTo: allEnumTypes(zzz_filter: { enum: { zzz_equalTo: $val } }) {
     ...nodes
   }
-  in: allEnumTypes(filter: { enum: { in: [$val] } }) {
+  in: allEnumTypes(zzz_filter: { enum: { zzz_in: [$val] } }) {
     ...nodes
   }
-  isNull: allEnumTypes(filter: { enum: { isNull: true } }) {
+  isNull: allEnumTypes(zzz_filter: { enum: { zzz_isNull: true } }) {
     ...nodes
   }
-  notDistinctFrom: allEnumTypes(filter: { enum: { notDistinctFrom: $val } }) {
+  notDistinctFrom: allEnumTypes(zzz_filter: { enum: { zzz_notDistinctFrom: $val } }) {
     ...nodes
   }
-  notEqualTo: allEnumTypes(filter: { enum: { notEqualTo: $val } }) {
+  notEqualTo: allEnumTypes(zzz_filter: { enum: { zzz_notEqualTo: $val } }) {
     ...nodes
   }
-  notIn: allEnumTypes(filter: { enum: { notIn: [$val] } }) {
+  notIn: allEnumTypes(zzz_filter: { enum: { zzz_notIn: [$val] } }) {
     ...nodes
   }
 }

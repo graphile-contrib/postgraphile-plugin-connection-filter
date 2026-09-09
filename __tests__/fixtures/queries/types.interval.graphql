@@ -16,43 +16,43 @@ query interval(
     years: 0
   }
 ) {
-  distinctFrom: allFilterables(filter: { interval: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { interval: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { interval: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { interval: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { interval: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { interval: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { interval: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { interval: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { interval: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { interval: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { interval: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { interval: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { interval: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { interval: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { interval: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { interval: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allFilterables(
-    filter: { interval: { notDistinctFrom: $v2 } }
+    zzz_filter: { interval: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { interval: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { interval: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { interval: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { interval: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

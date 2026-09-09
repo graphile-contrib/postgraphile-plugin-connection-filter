@@ -1,140 +1,140 @@
 query char4Domain($v2: String = "Test", $v3: String = "tEST") {
-  distinctFrom: allDomainTypes(filter: { char4Domain: { distinctFrom: $v2 } }) {
+  distinctFrom: allDomainTypes(zzz_filter: { char4Domain: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  distinctFromInsensitive: allDomainTypes(filter: { char4Domain: { distinctFromInsensitive: $v2 } }) {
+  distinctFromInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_distinctFromInsensitive: $v2 } }) {
     ...nodes
   }
-  endsWith: allDomainTypes(filter: { char4Domain: { endsWith: "T" } }) {
+  endsWith: allDomainTypes(zzz_filter: { char4Domain: { zzz_endsWith: "T" } }) {
     ...nodes
   }
   endsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { endsWithInsensitive: "T" } }
+    zzz_filter: { char4Domain: { zzz_endsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  equalTo: allDomainTypes(filter: { char4Domain: { equalTo: $v2 } }) {
+  equalTo: allDomainTypes(zzz_filter: { char4Domain: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  equalToInsensitive: allDomainTypes(filter: { char4Domain: { equalToInsensitive: $v2 } }) {
+  equalToInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_equalToInsensitive: $v2 } }) {
     ...nodes
   }
-  greaterThan: allDomainTypes(filter: { char4Domain: { greaterThan: $v2 } }) {
+  greaterThan: allDomainTypes(zzz_filter: { char4Domain: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
-  greaterThanInsensitive: allDomainTypes(filter: { char4Domain: { greaterThanInsensitive: $v2 } }) {
+  greaterThanInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_greaterThanInsensitive: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allDomainTypes(
-    filter: { char4Domain: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { char4Domain: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   greaterThanOrEqualToInsensitive: allDomainTypes(
-    filter: { char4Domain: { greaterThanOrEqualToInsensitive: $v2 } }
+    zzz_filter: { char4Domain: { zzz_greaterThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
-  in: allDomainTypes(filter: { char4Domain: { in: [$v2, $v3] } }) {
+  in: allDomainTypes(zzz_filter: { char4Domain: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  inInsensitive: allDomainTypes(filter: { char4Domain: { inInsensitive: [$v2, $v3] } }) {
+  inInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_inInsensitive: [$v2, $v3] } }) {
     ...nodes
   }
-  includes: allDomainTypes(filter: { char4Domain: { includes: "T" } }) {
+  includes: allDomainTypes(zzz_filter: { char4Domain: { zzz_includes: "T" } }) {
     ...nodes
   }
   includesInsensitive: allDomainTypes(
-    filter: { char4Domain: { includesInsensitive: "T" } }
+    zzz_filter: { char4Domain: { zzz_includesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  isNull: allDomainTypes(filter: { char4Domain: { isNull: true } }) {
+  isNull: allDomainTypes(zzz_filter: { char4Domain: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allDomainTypes(filter: { char4Domain: { lessThan: $v2 } }) {
+  lessThan: allDomainTypes(zzz_filter: { char4Domain: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
-  lessThanInsensitive: allDomainTypes(filter: { char4Domain: { lessThanInsensitive: $v2 } }) {
+  lessThanInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_lessThanInsensitive: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allDomainTypes(
-    filter: { char4Domain: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { char4Domain: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   lessThanOrEqualToInsensitive: allDomainTypes(
-    filter: { char4Domain: { lessThanOrEqualToInsensitive: $v2 } }
+    zzz_filter: { char4Domain: { zzz_lessThanOrEqualToInsensitive: $v2 } }
   ) {
     ...nodes
   }
-  like: allDomainTypes(filter: { char4Domain: { like: "%ES%" } }) {
+  like: allDomainTypes(zzz_filter: { char4Domain: { zzz_like: "%ES%" } }) {
     ...nodes
   }
   likeInsensitive: allDomainTypes(
-    filter: { char4Domain: { likeInsensitive: "%ES%" } }
+    zzz_filter: { char4Domain: { zzz_likeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notDistinctFrom: allDomainTypes(
-    filter: { char4Domain: { notDistinctFrom: $v2 } }
+    zzz_filter: { char4Domain: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFromInsensitive: allDomainTypes(filter: { char4Domain: { notDistinctFromInsensitive: $v2 } }) {
+  notDistinctFromInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_notDistinctFromInsensitive: $v2 } }) {
     ...nodes
   }
-  notEndsWith: allDomainTypes(filter: { char4Domain: { notEndsWith: "T" } }) {
+  notEndsWith: allDomainTypes(zzz_filter: { char4Domain: { zzz_notEndsWith: "T" } }) {
     ...nodes
   }
   notEndsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { notEndsWithInsensitive: "T" } }
+    zzz_filter: { char4Domain: { zzz_notEndsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notEqualTo: allDomainTypes(filter: { char4Domain: { notEqualTo: $v2 } }) {
+  notEqualTo: allDomainTypes(zzz_filter: { char4Domain: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notEqualToInsensitive: allDomainTypes(filter: { char4Domain: { notEqualToInsensitive: $v2 } }) {
+  notEqualToInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_notEqualToInsensitive: $v2 } }) {
     ...nodes
   }
-  notIn: allDomainTypes(filter: { char4Domain: { notIn: [$v2] } }) {
+  notIn: allDomainTypes(zzz_filter: { char4Domain: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
-  notInInsensitive: allDomainTypes(filter: { char4Domain: { notInInsensitive: [$v2] } }) {
+  notInInsensitive: allDomainTypes(zzz_filter: { char4Domain: { zzz_notInInsensitive: [$v2] } }) {
     ...nodes
   }
-  notIncludes: allDomainTypes(filter: { char4Domain: { notIncludes: "T" } }) {
+  notIncludes: allDomainTypes(zzz_filter: { char4Domain: { zzz_notIncludes: "T" } }) {
     ...nodes
   }
   notIncludesInsensitive: allDomainTypes(
-    filter: { char4Domain: { notIncludesInsensitive: "T" } }
+    zzz_filter: { char4Domain: { zzz_notIncludesInsensitive: "T" } }
   ) {
     ...nodes
   }
-  notLike: allDomainTypes(filter: { char4Domain: { notLike: "%ES%" } }) {
+  notLike: allDomainTypes(zzz_filter: { char4Domain: { zzz_notLike: "%ES%" } }) {
     ...nodes
   }
   notLikeInsensitive: allDomainTypes(
-    filter: { char4Domain: { notLikeInsensitive: "%ES%" } }
+    zzz_filter: { char4Domain: { zzz_notLikeInsensitive: "%ES%" } }
   ) {
     ...nodes
   }
   notStartsWith: allDomainTypes(
-    filter: { char4Domain: { notStartsWith: "T" } }
+    zzz_filter: { char4Domain: { zzz_notStartsWith: "T" } }
   ) {
     ...nodes
   }
   notStartsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { notStartsWithInsensitive: "T" } }
+    zzz_filter: { char4Domain: { zzz_notStartsWithInsensitive: "T" } }
   ) {
     ...nodes
   }
-  startsWith: allDomainTypes(filter: { char4Domain: { startsWith: "T" } }) {
+  startsWith: allDomainTypes(zzz_filter: { char4Domain: { zzz_startsWith: "T" } }) {
     ...nodes
   }
   startsWithInsensitive: allDomainTypes(
-    filter: { char4Domain: { startsWithInsensitive: "T" } }
+    zzz_filter: { char4Domain: { zzz_startsWithInsensitive: "T" } }
   ) {
     ...nodes
   }

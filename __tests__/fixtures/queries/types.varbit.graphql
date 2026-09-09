@@ -1,41 +1,41 @@
 query varbit($v2: BitString = "0010", $v3: BitString = "0011") {
-  distinctFrom: allFilterables(filter: { varbit: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { varbit: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { varbit: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { varbit: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { varbit: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { varbit: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { varbit: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { varbit: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { varbit: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { varbit: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { varbit: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { varbit: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { varbit: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { varbit: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { varbit: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { varbit: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allFilterables(
-    filter: { varbit: { notDistinctFrom: $v2 } }
+    zzz_filter: { varbit: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { varbit: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { varbit: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { varbit: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { varbit: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

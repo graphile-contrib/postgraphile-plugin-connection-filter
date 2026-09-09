@@ -5,63 +5,63 @@ query dateRange(
   }
   $elementVal: Date = "1999-02-01"
 ) {
-  adjacentTo: allRangeTypes(filter: { dateRange: { adjacentTo: $val } }) {
+  adjacentTo: allRangeTypes(zzz_filter: { dateRange: { zzz_adjacentTo: $val } }) {
     ...nodes
   }
-  containedBy: allRangeTypes(filter: { dateRange: { containedBy: $val } }) {
+  containedBy: allRangeTypes(zzz_filter: { dateRange: { zzz_containedBy: $val } }) {
     ...nodes
   }
-  contains: allRangeTypes(filter: { dateRange: { contains: $val } }) {
+  contains: allRangeTypes(zzz_filter: { dateRange: { zzz_contains: $val } }) {
     ...nodes
   }
   containsElement: allRangeTypes(
-    filter: { dateRange: { containsElement: $elementVal } }
+    zzz_filter: { dateRange: { zzz_containsElement: $elementVal } }
   ) {
     ...nodes
   }
-  distinctFrom: allRangeTypes(filter: { dateRange: { distinctFrom: $val } }) {
+  distinctFrom: allRangeTypes(zzz_filter: { dateRange: { zzz_distinctFrom: $val } }) {
     ...nodes
   }
-  equalTo: allRangeTypes(filter: { dateRange: { equalTo: $val } }) {
+  equalTo: allRangeTypes(zzz_filter: { dateRange: { zzz_equalTo: $val } }) {
     ...nodes
   }
-  in: allRangeTypes(filter: { dateRange: { in: [$val] } }) {
+  in: allRangeTypes(zzz_filter: { dateRange: { zzz_in: [$val] } }) {
     ...nodes
   }
-  isNull: allRangeTypes(filter: { dateRange: { isNull: true } }) {
+  isNull: allRangeTypes(zzz_filter: { dateRange: { zzz_isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allRangeTypes(
-    filter: { dateRange: { notDistinctFrom: $val } }
+    zzz_filter: { dateRange: { zzz_notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allRangeTypes(filter: { dateRange: { notEqualTo: $val } }) {
+  notEqualTo: allRangeTypes(zzz_filter: { dateRange: { zzz_notEqualTo: $val } }) {
     ...nodes
   }
   notExtendsLeftOf: allRangeTypes(
-    filter: { dateRange: { notExtendsLeftOf: $val } }
+    zzz_filter: { dateRange: { zzz_notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allRangeTypes(
-    filter: { dateRange: { notExtendsRightOf: $val } }
+    zzz_filter: { dateRange: { zzz_notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allRangeTypes(filter: { dateRange: { notIn: [$val] } }) {
+  notIn: allRangeTypes(zzz_filter: { dateRange: { zzz_notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allRangeTypes(filter: { dateRange: { overlaps: $val } }) {
+  overlaps: allRangeTypes(zzz_filter: { dateRange: { zzz_overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allRangeTypes(
-    filter: { dateRange: { strictlyLeftOf: $val } }
+    zzz_filter: { dateRange: { zzz_strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allRangeTypes(
-    filter: { dateRange: { strictlyRightOf: $val } }
+    zzz_filter: { dateRange: { zzz_strictlyRightOf: $val } }
   ) {
     ...nodes
   }

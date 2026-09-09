@@ -1,39 +1,39 @@
 query int8($v2: BigInt = "2", $v3: BigInt = "3") {
-  distinctFrom: allFilterables(filter: { int8: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { int8: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { int8: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { int8: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { int8: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { int8: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { int8: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { int8: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { int8: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { int8: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { int8: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { int8: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { int8: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { int8: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { int8: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { int8: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { int8: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { int8: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { int8: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { int8: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { int8: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { int8: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

@@ -2,41 +2,41 @@ query timestamp(
   $v2: Datetime = "1999-02-01 00:00"
   $v3: Datetime = "1999-03-01 00:00"
 ) {
-  distinctFrom: allFilterables(filter: { timestamp: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { timestamp: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { timestamp: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { timestamp: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { timestamp: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { timestamp: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { timestamp: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { timestamp: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { timestamp: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { timestamp: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { timestamp: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { timestamp: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { timestamp: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { timestamp: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { timestamp: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { timestamp: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { timestamp: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { timestamp: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { timestamp: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { timestamp: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { timestamp: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { timestamp: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

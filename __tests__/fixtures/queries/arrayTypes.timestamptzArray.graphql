@@ -4,81 +4,81 @@ query timestamptzArray(
   $v3: [Datetime] = ["1999-03-01 00:00", "1999-04-01 00:00"]
 ) {
   anyEqualTo: allArrayTypes(
-    filter: { timestamptzArray: { anyEqualTo: $v2_1 } }
+    zzz_filter: { timestamptzArray: { zzz_anyEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { timestamptzArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { timestamptzArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { timestamptzArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { timestamptzArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyLessThan: allArrayTypes(
-    filter: { timestamptzArray: { anyLessThan: $v2_1 } }
+    zzz_filter: { timestamptzArray: { zzz_anyLessThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { timestamptzArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { timestamptzArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { timestamptzArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { timestamptzArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   containedBy: allArrayTypes(
-    filter: { timestamptzArray: { containedBy: $v2 } }
+    zzz_filter: { timestamptzArray: { zzz_containedBy: $v2 } }
   ) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { timestamptzArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { timestamptzArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
   distinctFrom: allArrayTypes(
-    filter: { timestamptzArray: { distinctFrom: $v2 } }
+    zzz_filter: { timestamptzArray: { zzz_distinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { timestamptzArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { timestamptzArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
   greaterThan: allArrayTypes(
-    filter: { timestamptzArray: { greaterThan: $v2 } }
+    zzz_filter: { timestamptzArray: { zzz_greaterThan: $v2 } }
   ) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { timestamptzArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { timestamptzArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { timestamptzArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { timestamptzArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { timestamptzArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { timestamptzArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { timestamptzArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { timestamptzArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { timestamptzArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { timestamptzArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { timestamptzArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { timestamptzArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { timestamptzArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { timestamptzArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

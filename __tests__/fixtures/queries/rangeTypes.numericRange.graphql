@@ -5,65 +5,65 @@ query numericRange(
   }
   $elementVal: BigFloat = "0.2"
 ) {
-  adjacentTo: allRangeTypes(filter: { numericRange: { adjacentTo: $val } }) {
+  adjacentTo: allRangeTypes(zzz_filter: { numericRange: { zzz_adjacentTo: $val } }) {
     ...nodes
   }
-  containedBy: allRangeTypes(filter: { numericRange: { containedBy: $val } }) {
+  containedBy: allRangeTypes(zzz_filter: { numericRange: { zzz_containedBy: $val } }) {
     ...nodes
   }
-  contains: allRangeTypes(filter: { numericRange: { contains: $val } }) {
+  contains: allRangeTypes(zzz_filter: { numericRange: { zzz_contains: $val } }) {
     ...nodes
   }
   containsElement: allRangeTypes(
-    filter: { numericRange: { containsElement: $elementVal } }
+    zzz_filter: { numericRange: { zzz_containsElement: $elementVal } }
   ) {
     ...nodes
   }
   distinctFrom: allRangeTypes(
-    filter: { numericRange: { distinctFrom: $val } }
+    zzz_filter: { numericRange: { zzz_distinctFrom: $val } }
   ) {
     ...nodes
   }
-  equalTo: allRangeTypes(filter: { numericRange: { equalTo: $val } }) {
+  equalTo: allRangeTypes(zzz_filter: { numericRange: { zzz_equalTo: $val } }) {
     ...nodes
   }
-  in: allRangeTypes(filter: { numericRange: { in: [$val] } }) {
+  in: allRangeTypes(zzz_filter: { numericRange: { zzz_in: [$val] } }) {
     ...nodes
   }
-  isNull: allRangeTypes(filter: { numericRange: { isNull: true } }) {
+  isNull: allRangeTypes(zzz_filter: { numericRange: { zzz_isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allRangeTypes(
-    filter: { numericRange: { notDistinctFrom: $val } }
+    zzz_filter: { numericRange: { zzz_notDistinctFrom: $val } }
   ) {
     ...nodes
   }
-  notEqualTo: allRangeTypes(filter: { numericRange: { notEqualTo: $val } }) {
+  notEqualTo: allRangeTypes(zzz_filter: { numericRange: { zzz_notEqualTo: $val } }) {
     ...nodes
   }
   notExtendsLeftOf: allRangeTypes(
-    filter: { numericRange: { notExtendsLeftOf: $val } }
+    zzz_filter: { numericRange: { zzz_notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allRangeTypes(
-    filter: { numericRange: { notExtendsRightOf: $val } }
+    zzz_filter: { numericRange: { zzz_notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allRangeTypes(filter: { numericRange: { notIn: [$val] } }) {
+  notIn: allRangeTypes(zzz_filter: { numericRange: { zzz_notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allRangeTypes(filter: { numericRange: { overlaps: $val } }) {
+  overlaps: allRangeTypes(zzz_filter: { numericRange: { zzz_overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allRangeTypes(
-    filter: { numericRange: { strictlyLeftOf: $val } }
+    zzz_filter: { numericRange: { zzz_strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allRangeTypes(
-    filter: { numericRange: { strictlyRightOf: $val } }
+    zzz_filter: { numericRange: { zzz_strictlyRightOf: $val } }
   ) {
     ...nodes
   }
