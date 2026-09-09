@@ -45,6 +45,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             [andFieldName]: fieldWithHooks(
               {
                 fieldName: andFieldName,
+                pgConnectionFilterOperatorName: "and",
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -70,6 +71,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             [orFieldName]: fieldWithHooks(
               {
                 fieldName: orFieldName,
+                pgConnectionFilterOperatorName: "or",
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -94,6 +96,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             [notFieldName]: fieldWithHooks(
               {
                 fieldName: notFieldName,
+                pgConnectionFilterOperatorName: "not",
                 isPgConnectionFilterOperatorLogical: true,
               },
               {

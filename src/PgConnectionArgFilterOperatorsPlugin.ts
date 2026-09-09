@@ -63,10 +63,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           EXPORTABLE,
           pgAggregatesForceTextTypesSensitive: forceTextTypesSensitive,
           pgAggregatesForceTextTypesInsensitive: forceTextTypesInsensitive,
+          inflection,
         } = build;
-
-        const builtin = (name: string) =>
-          build.inflection.pgConnectionFilterBuiltin(name);
 
         const {
           scope: {
@@ -281,7 +279,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           "resolveSqlIdentifierInsensitive"
         );
 
-        const standardOperators: { [fieldName: string]: OperatorSpec } = {
+        const standardOperators: { [operatorName: string]: OperatorSpec } = {
           isNull: {
             description:
               "Is null (if `true` is specified) or is not null (if `false` is specified).",
@@ -302,7 +300,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
               "resolveIsNull"
             ),
           },
-          [builtin("equalTo")]: {
+          equalTo: {
             description: "Equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} = ${v}`,
@@ -312,7 +310,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          [builtin("notEqualTo")]: {
+          notEqualTo: {
             description: "Not equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} <> ${v}`,
@@ -344,7 +342,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          [builtin("in")]: {
+          in: {
             description: "Included in the specified list.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} = ANY(${v})`,
@@ -371,8 +369,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           standardOperators[key].name ??= key;
         }
 
-        const sortOperators: { [fieldName: string]: OperatorSpec } = {
-          [builtin("lessThan")]: {
+        const sortOperators: { [operatorName: string]: OperatorSpec } = {
+          lessThan: {
             description: "Less than the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} < ${v}`,
@@ -382,7 +380,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          [builtin("lessThanOrEqualTo")]: {
+          lessThanOrEqualTo: {
             description: "Less than or equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} <= ${v}`,
@@ -392,7 +390,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          [builtin("greaterThan")]: {
+          greaterThan: {
             description: "Greater than the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} > ${v}`,
@@ -402,7 +400,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             resolveInputCodec: resolveInputCodecSensitive,
             resolveSqlIdentifier: resolveSqlIdentifierSensitive,
           },
-          [builtin("greaterThanOrEqualTo")]: {
+          greaterThanOrEqualTo: {
             description: "Greater than or equal to the specified value.",
             resolve: EXPORTABLE(
               (sql) => (i, v) => sql`${i} >= ${v}`,
@@ -417,7 +415,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           sortOperators[key].name ??= key;
         }
 
-        const patternMatchingOperators: { [fieldName: string]: OperatorSpec } =
+        type str = string;
+        const patternMatchingOperators: { [operatorName: str]: OperatorSpec } =
           {
             includes: {
               description: "Contains the specified string (case-sensitive).",
@@ -673,7 +672,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           [TYPES, listOfCodec],
           "resolveTextArrayInputCodec"
         );
-        const hstoreOperators: { [fieldName: string]: OperatorSpec } = {
+        const hstoreOperators: { [operatorName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified KeyValueHash.",
             resolve: EXPORTABLE(
@@ -730,7 +729,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           hstoreOperators[key].name ??= `hstore${key}`;
         }
 
-        const jsonbOperators: { [fieldName: string]: OperatorSpec } = {
+        const jsonbOperators: { [operatorName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified JSON.",
             resolve: EXPORTABLE(
@@ -785,7 +784,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           jsonbOperators[key].name ??= `jsonb${key}`;
         }
 
-        const inetOperators: { [fieldName: string]: OperatorSpec } = {
+        const inetOperators: { [operatorName: string]: OperatorSpec } = {
           contains: {
             description: "Contains the specified internet address.",
             resolve: EXPORTABLE(
@@ -833,7 +832,8 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           inetOperators[key].name ??= `inet${key}`;
         }
 
-        const insensitiveOperators: { [fieldName: string]: OperatorSpec } = {};
+        const insensitiveOperators: { [operatorName: string]: OperatorSpec } =
+          {};
 
         /**
          * This block adds the following operators:
@@ -959,7 +959,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         };
 
         const connectionFilterRangeOperators: {
-          [fieldName: string]: OperatorSpec;
+          [operatorName: string]: OperatorSpec;
         } = {
           ...standardOperators,
           ...sortOperators,
@@ -1055,11 +1055,11 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         }
 
         const connectionFilterArrayOperators: {
-          [fieldName: string]: OperatorSpec;
+          [operatorName: string]: OperatorSpec;
         } = {
           isNull: standardOperators.isNull,
-          [builtin("equalTo")]: standardOperators[builtin("equalTo")],
-          [builtin("notEqualTo")]: standardOperators[builtin("notEqualTo")],
+          equalTo: standardOperators.equalTo,
+          notEqualTo: standardOperators.notEqualTo,
           distinctFrom: standardOperators.distinctFrom,
           notDistinctFrom: standardOperators.notDistinctFrom,
           ...sortOperators,
@@ -1356,7 +1356,7 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
         }
 
         const operatorSpecs: {
-          [fieldName: string]: OperatorSpec;
+          [operatorName: string]: OperatorSpec;
         } = arrayLike
           ? connectionFilterArrayOperators
           : rangeLike
@@ -1406,9 +1406,12 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                 connectionFilterOperatorNames[name]) ||
               name;
 
-            memo[operatorName] = fieldWithHooks(
+            const fieldName =
+              inflection.pgConnectionFilterBuiltin(operatorName);
+            memo[fieldName] = fieldWithHooks(
               {
-                fieldName: operatorName,
+                fieldName,
+                pgConnectionFilterOperatorName: operatorName,
                 isPgConnectionFilterOperator: true,
               },
               {
@@ -1473,7 +1476,7 @@ const pgConnectionFilterApplyFromOperator = EXPORTABLE(
   () =>
     (
       connectionFilterAllowNullInput: boolean | undefined,
-      fieldName: string,
+      operatorName: string,
       resolve: OperatorSpec["resolve"],
       resolveInput: OperatorSpec["resolveInput"],
       resolveInputCodec: OperatorSpec["resolveInputCodec"],
@@ -1548,7 +1551,7 @@ const pgConnectionFilterApplyFromOperator = EXPORTABLE(
           sqlValueWithCodec(resolvedInput, inputCodec);
       const fragment = resolve(sqlIdentifier, sqlValue, value, $where, {
         fieldName: parentFieldName ?? null,
-        operatorName: fieldName,
+        operatorName,
       });
       $where.where(fragment);
     },
@@ -1559,7 +1562,7 @@ const pgConnectionFilterApplyFromOperator = EXPORTABLE(
 export function makeApplyFromOperatorSpec(
   build: GraphileBuild.Build,
   typeName: string,
-  fieldName: string,
+  operatorName: string,
   spec: OperatorSpec,
   type: GraphQLInputType
 ): InputObjectFieldApplyResolver<PgCondition> {
@@ -1602,7 +1605,7 @@ export function makeApplyFromOperatorSpec(
   return EXPORTABLE(
     (
       connectionFilterAllowNullInput,
-      fieldName,
+      operatorName,
       pgConnectionFilterApplyFromOperator,
       resolve,
       resolveInput,
@@ -1615,7 +1618,7 @@ export function makeApplyFromOperatorSpec(
       function ($where, value) {
         return pgConnectionFilterApplyFromOperator(
           connectionFilterAllowNullInput,
-          fieldName,
+          operatorName,
           resolve,
           resolveInput,
           resolveInputCodec,
@@ -1629,7 +1632,7 @@ export function makeApplyFromOperatorSpec(
       },
     [
       connectionFilterAllowNullInput,
-      fieldName,
+      operatorName,
       pgConnectionFilterApplyFromOperator,
       resolve,
       resolveInput,

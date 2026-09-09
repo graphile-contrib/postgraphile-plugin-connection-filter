@@ -143,7 +143,7 @@ declare global {
       [$$filters]: Map<string, Map<string, OperatorSpec>>;
       addConnectionFilterOperator(
         typeName: string | string[],
-        filterName: string,
+        operatorName: string,
         spec: OperatorSpec
       ): void;
     }
@@ -152,6 +152,7 @@ declare global {
       isPgConnectionFilterManyField?: boolean;
       isPgConnectionFilterOperatorLogical?: boolean;
       isPgConnectionFilterOperator?: boolean;
+      pgConnectionFilterOperatorName?: string;
     }
   }
 }
