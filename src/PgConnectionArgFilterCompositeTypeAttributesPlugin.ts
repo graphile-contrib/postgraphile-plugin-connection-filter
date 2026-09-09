@@ -123,6 +123,7 @@ export const PgConnectionArgFilterCompositeTypeAttributesPlugin: GraphileConfig.
                 [fieldName]: fieldWithHooks(
                   {
                     fieldName,
+                    pgFieldAttributeName: attributeName,
                     isPgConnectionFilterField: true,
                   },
                   () => ({

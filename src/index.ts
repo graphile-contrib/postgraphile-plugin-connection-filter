@@ -148,6 +148,7 @@ declare global {
       ): void;
     }
     interface ScopeInputObjectFieldsField {
+      pgFieldAttributeName?: string;
       isPgConnectionFilterField?: boolean;
       isPgConnectionFilterManyField?: boolean;
       isPgConnectionFilterOperatorLogical?: boolean;

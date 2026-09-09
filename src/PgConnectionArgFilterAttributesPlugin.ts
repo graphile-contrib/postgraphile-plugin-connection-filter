@@ -112,6 +112,7 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
               [fieldName]: fieldWithHooks(
                 {
                   fieldName,
+                  pgFieldAttributeName: attributeName,
                   isPgConnectionFilterField: true,
                 },
                 () => ({

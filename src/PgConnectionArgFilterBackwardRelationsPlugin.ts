@@ -596,7 +596,8 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
               );
             }
 
-            const everyFieldName = inflection.pgConnectionFilterBuiltin("every");
+            const everyFieldName =
+              inflection.pgConnectionFilterBuiltin("every");
             const someFieldName = inflection.pgConnectionFilterBuiltin("some");
             const noneFieldName = inflection.pgConnectionFilterBuiltin("none");
             const manyFields = {
@@ -604,6 +605,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 {
                   fieldName: everyFieldName,
                   isPgConnectionFilterManyField: true,
+                  pgConnectionFilterOperatorName: "every",
                 },
                 () => ({
                   description: `Every related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
@@ -652,6 +654,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 {
                   fieldName: someFieldName,
                   isPgConnectionFilterManyField: true,
+                  pgConnectionFilterOperatorName: "some",
                 },
                 () => ({
                   description: `Some related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,
@@ -697,6 +700,7 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                 {
                   fieldName: noneFieldName,
                   isPgConnectionFilterManyField: true,
+                  pgConnectionFilterOperatorName: "none",
                 },
                 () => ({
                   description: `No related \`${foreignTableTypeName}\` matches the filter criteria. All fields are combined with a logical ‘and.’`,

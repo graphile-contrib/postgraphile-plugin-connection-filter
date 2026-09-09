@@ -171,6 +171,7 @@ export const PgConnectionArgFilterComputedAttributesPlugin: GraphileConfig.Plugi
                   {
                     fieldName,
                     isPgConnectionFilterField: true,
+                    pgFieldSource: computedAttributeResource,
                   },
                   {
                     description: `Filter by the object’s \`${fieldName}\` field.`,
