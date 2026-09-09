@@ -5375,6 +5375,23 @@ exports[`arrayTypes.varcharArray.graphql 1`] = `
 }
 `;
 
+exports[`builtinInflection.graphql 1`] = `
+{
+  "data": {
+    "prefixedBuiltins": {
+      "nodes": [
+        {
+          "id": 2,
+        },
+        {
+          "id": 3,
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`compositeTypes.graphql 1`] = `
 {
   "data": {

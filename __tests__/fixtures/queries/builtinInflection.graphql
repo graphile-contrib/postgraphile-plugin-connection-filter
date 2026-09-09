@@ -1,0 +1,19 @@
+query {
+  prefixedBuiltins: allFilterables(
+    zzz_filter: {
+      zzz_or: [
+        { int4: { zzz_equalTo: 2 } }
+        {
+          zzz_and: [
+            { int4: { zzz_greaterThan: 2 } }
+            { zzz_not: { text: { zzz_equalTo: "test" } } }
+          ]
+        }
+      ]
+    }
+  ) {
+    nodes {
+      id
+    }
+  }
+}
