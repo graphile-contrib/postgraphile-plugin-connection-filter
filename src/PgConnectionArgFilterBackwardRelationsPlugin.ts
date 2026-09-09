@@ -596,10 +596,13 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
               );
             }
 
+            const everyFieldName = inflection.pgConnectionFilterBuiltin("every");
+            const someFieldName = inflection.pgConnectionFilterBuiltin("some");
+            const noneFieldName = inflection.pgConnectionFilterBuiltin("none");
             const manyFields = {
-              every: fieldWithHooks(
+              [everyFieldName]: fieldWithHooks(
                 {
-                  fieldName: "every",
+                  fieldName: everyFieldName,
                   isPgConnectionFilterManyField: true,
                 },
                 () => ({
@@ -645,9 +648,9 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   ),
                 })
               ),
-              some: fieldWithHooks(
+              [someFieldName]: fieldWithHooks(
                 {
-                  fieldName: "some",
+                  fieldName: someFieldName,
                   isPgConnectionFilterManyField: true,
                 },
                 () => ({
@@ -690,9 +693,9 @@ export const PgConnectionArgFilterBackwardRelationsPlugin: GraphileConfig.Plugin
                   ),
                 })
               ),
-              none: fieldWithHooks(
+              [noneFieldName]: fieldWithHooks(
                 {
-                  fieldName: "none",
+                  fieldName: noneFieldName,
                   isPgConnectionFilterManyField: true,
                 },
                 () => ({

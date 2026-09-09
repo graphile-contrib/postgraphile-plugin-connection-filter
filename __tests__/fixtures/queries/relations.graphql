@@ -12,27 +12,27 @@ query ($undefined: String) {
   backward_name_equalTo_backward2: allFilterables(zzz_filter: {backwardByFilterableId: {name: {zzz_equalTo: "backward2"}}}) { ...textConnection }
   backwardExists_false: allFilterables(zzz_filter: {backwardByFilterableIdExists: false}) { ...textConnection }
   backwardExists_true: allFilterables(zzz_filter: {backwardByFilterableIdExists: true}) { ...textConnection }
-  children_every_name_equalTo_child2: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: {zzz_equalTo: "child2"}}}}) { ...childrenConnection }
-  children_every_name_startsWith_c: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: {zzz_startsWith: "c"}}}}) { ...childrenConnection }
-  children_every_name_startsWith_c_and_childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
-  children_every_name_startsWith_c_and_childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
-  children_some_name_equalTo_child2: allFilterables(zzz_filter: {childrenByFilterableId: {some: {name: {zzz_equalTo: "child2"}}}}) { ...childrenConnection }
-  children_some_name_startsWith_c: allFilterables(zzz_filter: {childrenByFilterableId: {some: {name: {zzz_startsWith: "c"}}}}) { ...childrenConnection }
-  children_some_name_startsWith_c_and_childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableId: {some: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
-  children_some_name_startsWith_c_and_childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableId: {some: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
-  children_none_name_equalTo_child2: allFilterables(zzz_filter: {childrenByFilterableId: {none: {name: {zzz_equalTo: "child2"}}}}) { ...childrenConnection }
-  children_none_and_empty: allFilterables(zzz_filter: {childrenByFilterableId: {none: {zzz_and: []}}}) { totalCount }
-  children_none_or_empty: allFilterables(zzz_filter: {childrenByFilterableId: {none: {zzz_or: []}}}) { totalCount }
-  children_some_and_empty: allFilterables(zzz_filter: {childrenByFilterableId: {some: {zzz_and: []}}}) { totalCount }
-  children_some_or_empty: allFilterables(zzz_filter: {childrenByFilterableId: {some: {zzz_or: []}}}) { totalCount }
-  children_every_and_empty: allFilterables(zzz_filter: {childrenByFilterableId: {every: {zzz_and: []}}}) { totalCount }
-  children_every_or_empty: allFilterables(zzz_filter: {childrenByFilterableId: {every: {zzz_or: []}}}) { totalCount }
-  children_none_name_startsWith_c: allFilterables(zzz_filter: {childrenByFilterableId: {none: {name: {zzz_startsWith: "c"}}}}) { ...childrenConnection }
-  children_none_name_startsWith_c_and_childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableId: {none: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
-  children_none_name_startsWith_c_and_childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableId: {none: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
+  children_every_name_equalTo_child2: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: {zzz_equalTo: "child2"}}}}) { ...childrenConnection }
+  children_every_name_startsWith_c: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: {zzz_startsWith: "c"}}}}) { ...childrenConnection }
+  children_every_name_startsWith_c_and_childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
+  children_every_name_startsWith_c_and_childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
+  children_some_name_equalTo_child2: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_some: {name: {zzz_equalTo: "child2"}}}}) { ...childrenConnection }
+  children_some_name_startsWith_c: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_some: {name: {zzz_startsWith: "c"}}}}) { ...childrenConnection }
+  children_some_name_startsWith_c_and_childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_some: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
+  children_some_name_startsWith_c_and_childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_some: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
+  children_none_name_equalTo_child2: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_none: {name: {zzz_equalTo: "child2"}}}}) { ...childrenConnection }
+  children_none_and_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_none: {zzz_and: []}}}) { totalCount }
+  children_none_or_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_none: {zzz_or: []}}}) { totalCount }
+  children_some_and_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_some: {zzz_and: []}}}) { totalCount }
+  children_some_or_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_some: {zzz_or: []}}}) { totalCount }
+  children_every_and_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {zzz_and: []}}}) { totalCount }
+  children_every_or_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {zzz_or: []}}}) { totalCount }
+  children_none_name_startsWith_c: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_none: {name: {zzz_startsWith: "c"}}}}) { ...childrenConnection }
+  children_none_name_startsWith_c_and_childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_none: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: true}) { ...childrenConnection }
+  children_none_name_startsWith_c_and_childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_none: {name: {zzz_startsWith: "c"}}}, childrenByFilterableIdExist: false}) { ...childrenConnection }
   childrenExist_false: allFilterables(zzz_filter: {childrenByFilterableIdExist: false}) { ...childrenConnection }
   childrenExist_true: allFilterables(zzz_filter: {childrenByFilterableIdExist: true}) { ...childrenConnection }
-  filterableClosuresByDescendantId_some_filterableByAncestorId_name_equalTo_Test: allFilterables(zzz_filter: { filterableClosuresByDescendantId: { some: { filterableByAncestorId: { name: { zzz_equalTo: "Test" } } } } }) { ...textConnection }
+  filterableClosuresByDescendantId_some_filterableByAncestorId_name_equalTo_Test: allFilterables(zzz_filter: { filterableClosuresByDescendantId: { zzz_some: { filterableByAncestorId: { name: { zzz_equalTo: "Test" } } } } }) { ...textConnection }
   forwardCompound_name_equalTo_forwardCompound12: allFilterables(zzz_filter: {forwardCompoundByForwardCompound1AndForwardCompound2: {name: {zzz_equalTo: "forwardCompound12"}}}) { ...textConnection }
   forwardCompoundExists_false: allFilterables(zzz_filter: {forwardCompoundByForwardCompound1AndForwardCompound2Exists: false}) { ...textConnection }
   forwardCompoundExists_true: allFilterables(zzz_filter: {forwardCompoundByForwardCompound1AndForwardCompound2Exists: true}) { ...textConnection }
@@ -48,11 +48,11 @@ query ($undefined: String) {
   x_backward_name_empty: allFilterables(zzz_filter: {backwardByFilterableId: {name: {}}}) { ...textConnection }
   x_backward_null: allFilterables(zzz_filter: {backwardByFilterableId: null}) { ...textConnection }
   x_backward_empty: allFilterables(zzz_filter: {backwardByFilterableId: {}}) { ...textConnection }
-  x_children_every_name_equalTo_null: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: {zzz_equalTo: null}}}}) { ...childrenConnection }
-  x_children_every_name_null: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: null}}}) { ...childrenConnection }
-  x_children_every_name_empty: allFilterables(zzz_filter: {childrenByFilterableId: {every: {name: {}}}}) { ...childrenConnection }
-  x_children_every_null: allFilterables(zzz_filter: {childrenByFilterableId: {every: null}}) { ...childrenConnection }
-  x_children_every_empty: allFilterables(zzz_filter: {childrenByFilterableId: {every: {}}}) { ...childrenConnection }
+  x_children_every_name_equalTo_null: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: {zzz_equalTo: null}}}}) { ...childrenConnection }
+  x_children_every_name_null: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: null}}}) { ...childrenConnection }
+  x_children_every_name_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {name: {}}}}) { ...childrenConnection }
+  x_children_every_null: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: null}}) { ...childrenConnection }
+  x_children_every_empty: allFilterables(zzz_filter: {childrenByFilterableId: {zzz_every: {}}}) { ...childrenConnection }
   x_children_null: allFilterables(zzz_filter: {childrenByFilterableId: null}) { ...childrenConnection }
   x_children_empty: allFilterables(zzz_filter: {childrenByFilterableId: {}}) { ...childrenConnection }
   x_childrenExist_null: allFilterables(zzz_filter: {childrenByFilterableIdExist: null}) { ...childrenConnection }

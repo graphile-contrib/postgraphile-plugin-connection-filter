@@ -2935,17 +2935,17 @@ input FilterableToManyChildFilter {
   """
   Every related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  every: ChildFilter
+  zzz_every: ChildFilter
 
   """
   No related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  none: ChildFilter
+  zzz_none: ChildFilter
 
   """
   Some related \`Child\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  some: ChildFilter
+  zzz_some: ChildFilter
 }
 
 """
@@ -2955,17 +2955,17 @@ input FilterableToManyFilterableClosureFilter {
   """
   Every related \`FilterableClosure\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  every: FilterableClosureFilter
+  zzz_every: FilterableClosureFilter
 
   """
   No related \`FilterableClosure\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  none: FilterableClosureFilter
+  zzz_none: FilterableClosureFilter
 
   """
   Some related \`FilterableClosure\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  some: FilterableClosureFilter
+  zzz_some: FilterableClosureFilter
 }
 
 """A connection to a list of \`Filterable\` values."""
@@ -4728,17 +4728,17 @@ input ParentToManyFilterableFilter {
   """
   Every related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  every: FilterableFilter
+  zzz_every: FilterableFilter
 
   """
   No related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  none: FilterableFilter
+  zzz_none: FilterableFilter
 
   """
   Some related \`Filterable\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  some: FilterableFilter
+  zzz_some: FilterableFilter
 }
 
 """A connection to a list of \`Parent\` values."""
@@ -6063,17 +6063,17 @@ input SideAToManyJunctionFilter {
   """
   Every related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  every: JunctionFilter
+  zzz_every: JunctionFilter
 
   """
   No related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  none: JunctionFilter
+  zzz_none: JunctionFilter
 
   """
   Some related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  some: JunctionFilter
+  zzz_some: JunctionFilter
 }
 
 """Methods to use when ordering \`SideA\`."""
@@ -6185,17 +6185,17 @@ input SideBToManyJunctionFilter {
   """
   Every related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  every: JunctionFilter
+  zzz_every: JunctionFilter
 
   """
   No related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  none: JunctionFilter
+  zzz_none: JunctionFilter
 
   """
   Some related \`Junction\` matches the filter criteria. All fields are combined with a logical ‘and.’
   """
-  some: JunctionFilter
+  zzz_some: JunctionFilter
 }
 
 """Methods to use when ordering \`SideB\`."""

@@ -35,6 +35,16 @@ test(
         expect.arrayContaining(["and", "or", "not"])
       );
 
+      const manyChildFilter = schema.getType(
+        "FilterableToManyChildFilter"
+      ) as GraphQLInputObjectType;
+      expect(Object.keys(manyChildFilter.getFields())).toEqual(
+        expect.arrayContaining(["zzz_every", "zzz_some", "zzz_none"])
+      );
+      expect(Object.keys(manyChildFilter.getFields())).not.toEqual(
+        expect.arrayContaining(["every", "some", "none"])
+      );
+
       const intFilter = schema.getType("IntFilter") as GraphQLInputObjectType;
       expect(Object.keys(intFilter.getFields())).toEqual(
         expect.arrayContaining(["zzz_equalTo", "zzz_notEqualTo", "zzz_isNull"])

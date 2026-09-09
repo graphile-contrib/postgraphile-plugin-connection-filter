@@ -114,44 +114,44 @@ query ($undefined: String, $null: String = null) {
     ...childrenConnection
   }
   children_every_name_equalTo_null: allFilterables(
-    zzz_filter: { childrenByFilterableId: { every: { name: { zzz_equalTo: $null } } } }
+    zzz_filter: { childrenByFilterableId: { zzz_every: { name: { zzz_equalTo: $null } } } }
   ) {
     totalCount
   }
   children_some_name_equalTo_child2: allFilterables(
     zzz_filter: {
-      childrenByFilterableId: { some: { name: { zzz_equalTo: "child2" } } }
+      childrenByFilterableId: { zzz_some: { name: { zzz_equalTo: "child2" } } }
     }
   ) {
     ...childrenConnection
   }
   children_some_name_equalTo_null: allFilterables(
-    zzz_filter: { childrenByFilterableId: { some: { name: { zzz_equalTo: $null } } } }
+    zzz_filter: { childrenByFilterableId: { zzz_some: { name: { zzz_equalTo: $null } } } }
   ) {
     ...childrenConnection
   }
   children_some_name_equalTo_undefined: allFilterables(
     zzz_filter: {
-      childrenByFilterableId: { some: { name: { zzz_equalTo: $undefined } } }
+      childrenByFilterableId: { zzz_some: { name: { zzz_equalTo: $undefined } } }
     }
   ) {
     ...childrenConnection
   }
   children_none_name_equalTo_child2: allFilterables(
     zzz_filter: {
-      childrenByFilterableId: { none: { name: { zzz_equalTo: "child2" } } }
+      childrenByFilterableId: { zzz_none: { name: { zzz_equalTo: "child2" } } }
     }
   ) {
     ...childrenConnection
   }
   children_none_name_equalTo_null: allFilterables(
-    zzz_filter: { childrenByFilterableId: { none: { name: { zzz_equalTo: $null } } } }
+    zzz_filter: { childrenByFilterableId: { zzz_none: { name: { zzz_equalTo: $null } } } }
   ) {
     ...childrenConnection
   }
   children_none_name_equalTo_undefined: allFilterables(
     zzz_filter: {
-      childrenByFilterableId: { none: { name: { zzz_equalTo: $undefined } } }
+      childrenByFilterableId: { zzz_none: { name: { zzz_equalTo: $undefined } } }
     }
   ) {
     ...childrenConnection
