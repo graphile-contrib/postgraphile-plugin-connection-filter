@@ -24,6 +24,7 @@ import { makeWithPgClientViaPgClientAlreadyInTransaction } from "@dataplan/pg/ad
 import { exportSchemaAsString } from "graphile-export";
 import { importFromStringSync } from "module-from-string";
 import { FilterAllPlugin } from "../FilterAllPlugin";
+import { SillyInflectionPlugin } from "../SillyInflectionPlugin";
 
 // TODO: remove this once Grafast gets it's planning under control :D
 jest.setTimeout(300000);
@@ -93,6 +94,7 @@ let gqlSchemas: {
   simpleCollections: SchemaResult;
   nullAndEmptyAllowed: SchemaResult;
   addConnectionFilterOperator: SchemaResult;
+  builtinInflection: SchemaResult;
 };
 
 beforeAll(async () => {
@@ -123,6 +125,7 @@ beforeAll(async () => {
       simpleCollections,
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
+      builtinInflection,
     ] = await Promise.all([
       createPostGraphileSchema(
         pool,
@@ -195,6 +198,14 @@ beforeAll(async () => {
           plugins: [CustomOperatorsPlugin],
         }
       ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+        },
+        { plugins: [SillyInflectionPlugin] }
+      ),
     ]);
     return {
       normal,
@@ -204,6 +215,7 @@ beforeAll(async () => {
       simpleCollections,
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
+      builtinInflection,
     };
   });
 });
@@ -224,6 +236,7 @@ for (const queryFileName of queryFileNames) {
     } = {
       "addConnectionFilterOperator.graphql":
         gqlSchemas.addConnectionFilterOperator,
+      "builtinInflection.graphql": gqlSchemas.builtinInflection,
       "dynamicJsonTrue.graphql": gqlSchemas.dynamicJson,
       "types.cidr.graphql": gqlSchemas.networkScalars,
       "types.macaddr.graphql": gqlSchemas.networkScalars,
