@@ -3,72 +3,72 @@ query jsonbArray(
   $v2_1: JSON = "{\"key2\":2}"
   $v3: [JSON] = ["{\"key3\":3}", "{\"key4\": 4}"]
 ) {
-  anyEqualTo: allArrayTypes(filter: { jsonbArray: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { jsonbArray: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { jsonbArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { jsonbArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { jsonbArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { jsonbArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { jsonbArray: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { jsonbArray: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { jsonbArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { jsonbArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { jsonbArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { jsonbArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { jsonbArray: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { jsonbArray: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { jsonbArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { jsonbArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { jsonbArray: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { jsonbArray: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { jsonbArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { jsonbArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { jsonbArray: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { jsonbArray: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { jsonbArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { jsonbArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { jsonbArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { jsonbArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { jsonbArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { jsonbArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { jsonbArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { jsonbArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { jsonbArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { jsonbArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { jsonbArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { jsonbArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { jsonbArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { jsonbArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

@@ -15,7 +15,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
         build[$$filters] = new Map();
         build.addConnectionFilterOperator = (
           typeNameOrNames,
-          filterName,
+          operatorName,
           spec
         ) => {
           if (
@@ -38,17 +38,18 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
               operatorSpecByFilterName = new Map();
               build[$$filters]!.set(filterTypeName, operatorSpecByFilterName);
             }
-            if (operatorSpecByFilterName.has(filterName)) {
+            if (operatorSpecByFilterName.has(operatorName)) {
               throw new Error(
-                `Filter '${filterName}' already registered on '${filterTypeName}'`
+                `Filter '${operatorName}' already registered on '${filterTypeName}'`
               );
             }
-            operatorSpecByFilterName.set(filterName, spec);
+            operatorSpecByFilterName.set(operatorName, spec);
           }
         };
         return build;
       },
       GraphQLInputObjectType_fields(inFields, build, context) {
+        const { inflection } = build;
         let fields = inFields;
         const {
           scope: { pgConnectionFilterOperators },
@@ -76,7 +77,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
           return fields;
         }
 
-        for (const [filterName, spec] of operatorSpecByFilterName.entries()) {
+        for (const [operatorName, spec] of operatorSpecByFilterName.entries()) {
           const { description, resolveInputCodec, resolveType } = spec;
           const firstCodec = pgConnectionFilterOperators.pgCodecs[0];
           const inputCodec = resolveInputCodec
@@ -92,12 +93,14 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
           const type = resolveType
             ? resolveType(codecGraphQLType)
             : codecGraphQLType;
+          const fieldName = inflection.pgConnectionFilterBuiltin(operatorName);
           fields = build.extend(
             fields,
             {
-              [filterName]: fieldWithHooks(
+              [fieldName]: fieldWithHooks(
                 {
-                  fieldName: filterName,
+                  fieldName,
+                  pgConnectionFilterOperatorName: operatorName,
                   isPgConnectionFilterOperator: true,
                 },
                 {
@@ -106,7 +109,7 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
                   apply: makeApplyFromOperatorSpec(
                     build,
                     Self.name,
-                    filterName,
+                    operatorName,
                     spec,
                     type
                   ),

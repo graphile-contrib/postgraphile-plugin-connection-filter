@@ -6,70 +6,70 @@ query timestamptzRange(
   $elementVal: Datetime = "1999-02-01 00:00"
 ) {
   adjacentTo: allRangeTypes(
-    filter: { timestamptzRange: { adjacentTo: $val } }
+    zzz_filter: { timestamptzRange: { zzz_adjacentTo: $val } }
   ) {
     ...nodes
   }
   containedBy: allRangeTypes(
-    filter: { timestamptzRange: { containedBy: $val } }
+    zzz_filter: { timestamptzRange: { zzz_containedBy: $val } }
   ) {
     ...nodes
   }
-  contains: allRangeTypes(filter: { timestamptzRange: { contains: $val } }) {
+  contains: allRangeTypes(zzz_filter: { timestamptzRange: { zzz_contains: $val } }) {
     ...nodes
   }
   containsElement: allRangeTypes(
-    filter: { timestamptzRange: { containsElement: $elementVal } }
+    zzz_filter: { timestamptzRange: { zzz_containsElement: $elementVal } }
   ) {
     ...nodes
   }
   distinctFrom: allRangeTypes(
-    filter: { timestamptzRange: { distinctFrom: $val } }
+    zzz_filter: { timestamptzRange: { zzz_distinctFrom: $val } }
   ) {
     ...nodes
   }
-  equalTo: allRangeTypes(filter: { timestamptzRange: { equalTo: $val } }) {
+  equalTo: allRangeTypes(zzz_filter: { timestamptzRange: { zzz_equalTo: $val } }) {
     ...nodes
   }
-  in: allRangeTypes(filter: { timestamptzRange: { in: [$val] } }) {
+  in: allRangeTypes(zzz_filter: { timestamptzRange: { zzz_in: [$val] } }) {
     ...nodes
   }
-  isNull: allRangeTypes(filter: { timestamptzRange: { isNull: true } }) {
+  isNull: allRangeTypes(zzz_filter: { timestamptzRange: { zzz_isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allRangeTypes(
-    filter: { timestamptzRange: { notDistinctFrom: $val } }
+    zzz_filter: { timestamptzRange: { zzz_notDistinctFrom: $val } }
   ) {
     ...nodes
   }
   notEqualTo: allRangeTypes(
-    filter: { timestamptzRange: { notEqualTo: $val } }
+    zzz_filter: { timestamptzRange: { zzz_notEqualTo: $val } }
   ) {
     ...nodes
   }
   notExtendsLeftOf: allRangeTypes(
-    filter: { timestamptzRange: { notExtendsLeftOf: $val } }
+    zzz_filter: { timestamptzRange: { zzz_notExtendsLeftOf: $val } }
   ) {
     ...nodes
   }
   notExtendsRightOf: allRangeTypes(
-    filter: { timestamptzRange: { notExtendsRightOf: $val } }
+    zzz_filter: { timestamptzRange: { zzz_notExtendsRightOf: $val } }
   ) {
     ...nodes
   }
-  notIn: allRangeTypes(filter: { timestamptzRange: { notIn: [$val] } }) {
+  notIn: allRangeTypes(zzz_filter: { timestamptzRange: { zzz_notIn: [$val] } }) {
     ...nodes
   }
-  overlaps: allRangeTypes(filter: { timestamptzRange: { overlaps: $val } }) {
+  overlaps: allRangeTypes(zzz_filter: { timestamptzRange: { zzz_overlaps: $val } }) {
     ...nodes
   }
   strictlyLeftOf: allRangeTypes(
-    filter: { timestamptzRange: { strictlyLeftOf: $val } }
+    zzz_filter: { timestamptzRange: { zzz_strictlyLeftOf: $val } }
   ) {
     ...nodes
   }
   strictlyRightOf: allRangeTypes(
-    filter: { timestamptzRange: { strictlyRightOf: $val } }
+    zzz_filter: { timestamptzRange: { zzz_strictlyRightOf: $val } }
   ) {
     ...nodes
   }

@@ -3,72 +3,72 @@ query nameArray(
   $v2_1: String = "Test"
   $v3: [String] = ["tEST", "test"]
 ) {
-  anyEqualTo: allArrayTypes(filter: { nameArray: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { nameArray: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { nameArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { nameArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { nameArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { nameArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { nameArray: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { nameArray: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { nameArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { nameArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { nameArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { nameArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { nameArray: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { nameArray: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { nameArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { nameArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { nameArray: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { nameArray: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { nameArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { nameArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { nameArray: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { nameArray: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { nameArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { nameArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { nameArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { nameArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { nameArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { nameArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { nameArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { nameArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { nameArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { nameArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { nameArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { nameArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { nameArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { nameArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

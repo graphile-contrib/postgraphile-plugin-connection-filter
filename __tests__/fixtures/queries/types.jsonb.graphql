@@ -4,60 +4,60 @@ query jsonb(
   $v3: JSON = "{\"key3\":3}"
   $v3_1_key: String = "key3"
 ) {
-  containedBy: allFilterables(filter: { jsonb: { containedBy: $v2 } }) {
+  containedBy: allFilterables(zzz_filter: { jsonb: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allFilterables(filter: { jsonb: { contains: $v3 } }) {
+  contains: allFilterables(zzz_filter: { jsonb: { zzz_contains: $v3 } }) {
     ...nodes
   }
   containsAllKeys: allFilterables(
-    filter: { jsonb: { containsAllKeys: [$v2_1_key] } }
+    zzz_filter: { jsonb: { zzz_containsAllKeys: [$v2_1_key] } }
   ) {
     ...nodes
   }
   containsAnyKeys: allFilterables(
-    filter: { jsonb: { containsAnyKeys: [$v2_1_key, $v3_1_key] } }
+    zzz_filter: { jsonb: { zzz_containsAnyKeys: [$v2_1_key, $v3_1_key] } }
   ) {
     ...nodes
   }
-  containsKey: allFilterables(filter: { jsonb: { containsKey: $v2_1_key } }) {
+  containsKey: allFilterables(zzz_filter: { jsonb: { zzz_containsKey: $v2_1_key } }) {
     ...nodes
   }
-  distinctFrom: allFilterables(filter: { jsonb: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { jsonb: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { jsonb: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { jsonb: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { jsonb: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { jsonb: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { jsonb: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { jsonb: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { jsonb: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { jsonb: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { jsonb: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { jsonb: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { jsonb: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { jsonb: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { jsonb: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { jsonb: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { jsonb: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { jsonb: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { jsonb: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { jsonb: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { jsonb: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { jsonb: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

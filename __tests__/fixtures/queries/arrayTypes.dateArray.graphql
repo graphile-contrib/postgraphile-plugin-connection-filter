@@ -3,72 +3,72 @@ query dateArray(
   $v2_1: Date = "1999-02-01"
   $v3: [Date] = ["1999-03-01", "1999-04-01"]
 ) {
-  anyEqualTo: allArrayTypes(filter: { dateArray: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { dateArray: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { dateArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { dateArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { dateArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { dateArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { dateArray: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { dateArray: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { dateArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { dateArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { dateArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { dateArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { dateArray: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { dateArray: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { dateArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { dateArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { dateArray: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { dateArray: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { dateArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { dateArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { dateArray: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { dateArray: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { dateArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { dateArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { dateArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { dateArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { dateArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { dateArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { dateArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { dateArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { dateArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { dateArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { dateArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { dateArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { dateArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { dateArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

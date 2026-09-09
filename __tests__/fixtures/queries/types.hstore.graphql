@@ -4,46 +4,46 @@ query hstore(
   $v3: KeyValueHash = {key3:"3"}
   $v3_1_key: String = "key3"
 ) {
-  containedBy: allFilterables(filter: { hstore: { containedBy: $v2 } }) {
+  containedBy: allFilterables(zzz_filter: { hstore: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allFilterables(filter: { hstore: { contains: $v3 } }) {
+  contains: allFilterables(zzz_filter: { hstore: { zzz_contains: $v3 } }) {
     ...nodes
   }
   containsAllKeys: allFilterables(
-    filter: { hstore: { containsAllKeys: [$v2_1_key] } }
+    zzz_filter: { hstore: { zzz_containsAllKeys: [$v2_1_key] } }
   ) {
     ...nodes
   }
   containsAnyKeys: allFilterables(
-    filter: { hstore: { containsAnyKeys: [$v2_1_key, $v3_1_key] } }
+    zzz_filter: { hstore: { zzz_containsAnyKeys: [$v2_1_key, $v3_1_key] } }
   ) {
     ...nodes
   }
-  containsKey: allFilterables(filter: { hstore: { containsKey: $v2_1_key } }) {
+  containsKey: allFilterables(zzz_filter: { hstore: { zzz_containsKey: $v2_1_key } }) {
     ...nodes
   }
-  distinctFrom: allFilterables(filter: { hstore: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { hstore: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { hstore: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { hstore: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  in: allFilterables(filter: { hstore: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { hstore: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { hstore: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { hstore: { zzz_isNull: true } }) {
     ...nodes
   }
   notDistinctFrom: allFilterables(
-    filter: { hstore: { notDistinctFrom: $v2 } }
+    zzz_filter: { hstore: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { hstore: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { hstore: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { hstore: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { hstore: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

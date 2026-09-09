@@ -13,6 +13,7 @@ import {
   PgConnectionArgFilterOperatorsPlugin,
   makeApplyFromOperatorSpec,
 } from "./PgConnectionArgFilterOperatorsPlugin";
+import { PgConnectionArgFilterInflectionPlugin } from "./PgConnectionArgFilterInflectionPlugin";
 import { $$filters, OperatorsCategory } from "./interfaces";
 import type { GraphQLInputType, GraphQLOutputType } from "graphql";
 import type { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
@@ -142,21 +143,24 @@ declare global {
       [$$filters]: Map<string, Map<string, OperatorSpec>>;
       addConnectionFilterOperator(
         typeName: string | string[],
-        filterName: string,
+        operatorName: string,
         spec: OperatorSpec
       ): void;
     }
     interface ScopeInputObjectFieldsField {
+      pgFieldAttributeName?: string;
       isPgConnectionFilterField?: boolean;
       isPgConnectionFilterManyField?: boolean;
       isPgConnectionFilterOperatorLogical?: boolean;
       isPgConnectionFilterOperator?: boolean;
+      pgConnectionFilterOperatorName?: string;
     }
   }
 }
 
 export const PostGraphileConnectionFilterPreset: GraphileConfig.Preset = {
   plugins: [
+    PgConnectionArgFilterInflectionPlugin,
     ConnectionArgFilterPlugin,
     PgConnectionArgFilterPlugin,
     PgConnectionArgFilterAttributesPlugin,

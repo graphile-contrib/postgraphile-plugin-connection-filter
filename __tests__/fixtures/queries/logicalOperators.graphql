@@ -1,32 +1,32 @@
 query {
   int4_equalTo_2_or_text_endsWith_t: allFilterables(
-    filter: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+    zzz_filter: { zzz_or: [{ int4: { zzz_equalTo: 2 } }, { text: { zzz_endsWith: "t" } }] }
   ) {
     ...nodes
   }
   int4_equalTo_2_and_int2_equalTo_4_or_text_endsWith_T: allFilterables(
-    filter: {
-      or: [
-        { int4: { equalTo: 2 }, int2: { equalTo: 4 } }
-        { text: { endsWith: "T" } }
+    zzz_filter: {
+      zzz_or: [
+        { int4: { zzz_equalTo: 2 }, int2: { zzz_equalTo: 4 } }
+        { text: { zzz_endsWith: "T" } }
       ]
     }
   ) {
     ...nodes
   }
   int4_equalTo_2_and_text_endsWith_t: allFilterables(
-    filter: { and: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+    zzz_filter: { zzz_and: [{ int4: { zzz_equalTo: 2 } }, { text: { zzz_endsWith: "t" } }] }
   ) {
     ...nodes
   }
   not_text_equalTo_test: allFilterables(
-    filter: { not: { text: { equalTo: "test" } } }
+    zzz_filter: { zzz_not: { text: { zzz_equalTo: "test" } } }
   ) {
     ...nodes
   }
   not_int4_equalTo_2_or_text_endsWith_t: allFilterables(
-    filter: {
-      not: { or: [{ int4: { equalTo: 2 } }, { text: { endsWith: "t" } }] }
+    zzz_filter: {
+      zzz_not: { zzz_or: [{ int4: { zzz_equalTo: 2 } }, { text: { zzz_endsWith: "t" } }] }
     }
   ) {
     ...nodes

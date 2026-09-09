@@ -3,72 +3,72 @@ query citextArray(
   $v2_1: String = "Test"
   $v3: [String] = ["tEST", "test"]
 ) {
-  anyEqualTo: allArrayTypes(filter: { citextArray: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { citextArray: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { citextArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { citextArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { citextArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { citextArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { citextArray: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { citextArray: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { citextArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { citextArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { citextArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { citextArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { citextArray: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { citextArray: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { citextArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { citextArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { citextArray: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { citextArray: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { citextArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { citextArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { citextArray: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { citextArray: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { citextArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { citextArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { citextArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { citextArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { citextArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { citextArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { citextArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { citextArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { citextArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { citextArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { citextArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { citextArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { citextArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { citextArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

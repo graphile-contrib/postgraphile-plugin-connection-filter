@@ -1,40 +1,40 @@
 query {
-  int4_in_empty: allFilterables(filter: { int4: { in: [] } }) {
+  int4_in_empty: allFilterables(zzz_filter: { int4: { zzz_in: [] } }) {
     totalCount
   }
-  int4_notIn_empty: allFilterables(filter: { int4: { notIn: [] } }) {
+  int4_notIn_empty: allFilterables(zzz_filter: { int4: { zzz_notIn: [] } }) {
     totalCount
   }
-  hstore_containsAllKeys_empty: allFilterables(filter: { hstore: { containsAllKeys: [] } }) {
+  hstore_containsAllKeys_empty: allFilterables(zzz_filter: { hstore: { zzz_containsAllKeys: [] } }) {
     totalCount
   }
-  hstore_containsAnyKeys_empty: allFilterables(filter: { hstore: { containsAnyKeys: [] } }) {
+  hstore_containsAnyKeys_empty: allFilterables(zzz_filter: { hstore: { zzz_containsAnyKeys: [] } }) {
     totalCount
   }
-  jsonb_containsAllKeys_empty: allFilterables(filter: { jsonb: { containsAllKeys: [] } }) {
+  jsonb_containsAllKeys_empty: allFilterables(zzz_filter: { jsonb: { zzz_containsAllKeys: [] } }) {
     totalCount
   }
-  jsonb_containsAnyKeys_empty: allFilterables(filter: { jsonb: { containsAnyKeys: [] } }) {
+  jsonb_containsAnyKeys_empty: allFilterables(zzz_filter: { jsonb: { zzz_containsAnyKeys: [] } }) {
     totalCount
   }
   # `and: []` is ignored when resolving the SQL query
-  logical_and_empty: allFilterables(filter: { and: [] }) {
+  logical_and_empty: allFilterables(zzz_filter: { zzz_and: [] }) {
     totalCount
   }
   # `or: []` is ignored when resolving the SQL query
-  logical_or_empty: allFilterables(filter: { or: [] }) {
+  logical_or_empty: allFilterables(zzz_filter: { zzz_or: [] }) {
     totalCount
   }
   # all of this nested logic is ignored when resolving the SQL query
   logical_nested: allFilterables(
-    filter: { not: { and: [{ or: [] }], or: [{ and: [] }, { or: [] }] } }
+    zzz_filter: { zzz_not: { zzz_and: [{ zzz_or: [] }], zzz_or: [{ zzz_and: [] }, { zzz_or: [] }] } }
   ) {
     totalCount
   }
-  logical_not_and_empty: allFilterables(filter: { not: { and: [] } }) {
+  logical_not_and_empty: allFilterables(zzz_filter: { zzz_not: { zzz_and: [] } }) {
     totalCount
   }
-  logical_not_or_empty: allFilterables(filter: { not: { or: [] } }) {
+  logical_not_or_empty: allFilterables(zzz_filter: { zzz_not: { zzz_or: [] } }) {
     totalCount
   }
 }

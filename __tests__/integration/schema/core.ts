@@ -6,6 +6,7 @@ import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
 import { makeSchema } from "postgraphile";
 import { PostGraphileConnectionFilterPreset } from "../../../src/index";
 import { FilterAllPlugin } from "../../FilterAllPlugin";
+import { GraphQLSchema } from "graphql";
 
 const createPostGraphileSchema = async (
   pgClient: pg.PoolClient,
@@ -41,8 +42,12 @@ const createPostGraphileSchema = async (
 export const test =
   (
     schemas: string[],
-    options: Record<string, unknown>,
-    setup?: (client: pg.PoolClient) => void
+    config: V4Options & {
+      legacyRelations?: string;
+      preset?: GraphileConfig.Preset;
+    },
+    setup?: (client: pg.PoolClient) => void,
+    moreAssertions?: (details: { schema: GraphQLSchema }) => void
   ) =>
   (): Promise<void> =>
     withPgClient(async (client) => {
@@ -53,6 +58,13 @@ export const test =
           await client.query(setup);
         }
       }
-      const schema = await createPostGraphileSchema(client, schemas, options);
+      const { preset, ...options } = config;
+      const schema = await createPostGraphileSchema(
+        client,
+        schemas,
+        options,
+        preset
+      );
+      moreAssertions?.({ schema });
       expect(printSchemaOrdered(schema)).toMatchSnapshot();
     });

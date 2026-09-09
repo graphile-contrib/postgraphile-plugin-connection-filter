@@ -21,6 +21,7 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             extend,
             graphql: { GraphQLList, GraphQLNonNull },
             EXPORTABLE,
+            inflection,
           } = build;
           const {
             fieldWithHooks,
@@ -37,10 +38,14 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
 
           const assertAllowed = makeAssertAllowed(build);
 
+          const andFieldName = inflection.pgConnectionFilterBuiltin("and");
+          const orFieldName = inflection.pgConnectionFilterBuiltin("or");
+          const notFieldName = inflection.pgConnectionFilterBuiltin("not");
           const logicalOperatorFields = {
-            and: fieldWithHooks(
+            [andFieldName]: fieldWithHooks(
               {
-                fieldName: "and",
+                fieldName: andFieldName,
+                pgConnectionFilterOperatorName: "and",
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -63,9 +68,10 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            or: fieldWithHooks(
+            [orFieldName]: fieldWithHooks(
               {
-                fieldName: "or",
+                fieldName: orFieldName,
+                pgConnectionFilterOperatorName: "or",
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -87,9 +93,10 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            not: fieldWithHooks(
+            [notFieldName]: fieldWithHooks(
               {
-                fieldName: "not",
+                fieldName: notFieldName,
+                pgConnectionFilterOperatorName: "not",
                 isPgConnectionFilterOperatorLogical: true,
               },
               {

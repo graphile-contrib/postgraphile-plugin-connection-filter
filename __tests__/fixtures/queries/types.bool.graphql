@@ -1,39 +1,39 @@
 query bool($v2: Boolean = true, $v3: Boolean = false) {
-  distinctFrom: allFilterables(filter: { bool: { distinctFrom: $v2 } }) {
+  distinctFrom: allFilterables(zzz_filter: { bool: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allFilterables(filter: { bool: { equalTo: $v2 } }) {
+  equalTo: allFilterables(zzz_filter: { bool: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allFilterables(filter: { bool: { greaterThan: $v2 } }) {
+  greaterThan: allFilterables(zzz_filter: { bool: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allFilterables(
-    filter: { bool: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { bool: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  in: allFilterables(filter: { bool: { in: [$v2, $v3] } }) {
+  in: allFilterables(zzz_filter: { bool: { zzz_in: [$v2, $v3] } }) {
     ...nodes
   }
-  isNull: allFilterables(filter: { bool: { isNull: true } }) {
+  isNull: allFilterables(zzz_filter: { bool: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allFilterables(filter: { bool: { lessThan: $v2 } }) {
+  lessThan: allFilterables(zzz_filter: { bool: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allFilterables(
-    filter: { bool: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { bool: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  notDistinctFrom: allFilterables(filter: { bool: { notDistinctFrom: $v2 } }) {
+  notDistinctFrom: allFilterables(zzz_filter: { bool: { zzz_notDistinctFrom: $v2 } }) {
     ...nodes
   }
-  notEqualTo: allFilterables(filter: { bool: { notEqualTo: $v2 } }) {
+  notEqualTo: allFilterables(zzz_filter: { bool: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  notIn: allFilterables(filter: { bool: { notIn: [$v2] } }) {
+  notIn: allFilterables(zzz_filter: { bool: { zzz_notIn: [$v2] } }) {
     ...nodes
   }
 }

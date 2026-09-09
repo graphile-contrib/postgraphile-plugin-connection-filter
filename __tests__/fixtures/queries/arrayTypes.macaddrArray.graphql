@@ -9,72 +9,72 @@ query macaddrArray(
     "00:00:00:00:00:04"
   ]
 ) {
-  anyEqualTo: allArrayTypes(filter: { macaddrArray: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { macaddrArray: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { macaddrArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { macaddrArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { macaddrArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { macaddrArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { macaddrArray: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { macaddrArray: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { macaddrArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { macaddrArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { macaddrArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { macaddrArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { macaddrArray: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { macaddrArray: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { macaddrArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { macaddrArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { macaddrArray: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { macaddrArray: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { macaddrArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { macaddrArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { macaddrArray: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { macaddrArray: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { macaddrArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { macaddrArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { macaddrArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { macaddrArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { macaddrArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { macaddrArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { macaddrArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { macaddrArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { macaddrArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { macaddrArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { macaddrArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { macaddrArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { macaddrArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { macaddrArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }

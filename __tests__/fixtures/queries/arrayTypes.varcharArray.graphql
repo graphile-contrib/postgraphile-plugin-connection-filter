@@ -3,72 +3,72 @@ query varcharArray(
   $v2_1: String = "Test"
   $v3: [String] = ["tEST", "test"]
 ) {
-  anyEqualTo: allArrayTypes(filter: { varcharArray: { anyEqualTo: $v2_1 } }) {
+  anyEqualTo: allArrayTypes(zzz_filter: { varcharArray: { zzz_anyEqualTo: $v2_1 } }) {
     ...nodes
   }
   anyGreaterThan: allArrayTypes(
-    filter: { varcharArray: { anyGreaterThan: $v2_1 } }
+    zzz_filter: { varcharArray: { zzz_anyGreaterThan: $v2_1 } }
   ) {
     ...nodes
   }
   anyGreaterThanOrEqualTo: allArrayTypes(
-    filter: { varcharArray: { anyGreaterThanOrEqualTo: $v2_1 } }
+    zzz_filter: { varcharArray: { zzz_anyGreaterThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  anyLessThan: allArrayTypes(filter: { varcharArray: { anyLessThan: $v2_1 } }) {
+  anyLessThan: allArrayTypes(zzz_filter: { varcharArray: { zzz_anyLessThan: $v2_1 } }) {
     ...nodes
   }
   anyLessThanOrEqualTo: allArrayTypes(
-    filter: { varcharArray: { anyLessThanOrEqualTo: $v2_1 } }
+    zzz_filter: { varcharArray: { zzz_anyLessThanOrEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
   anyNotEqualTo: allArrayTypes(
-    filter: { varcharArray: { anyNotEqualTo: $v2_1 } }
+    zzz_filter: { varcharArray: { zzz_anyNotEqualTo: $v2_1 } }
   ) {
     ...nodes
   }
-  containedBy: allArrayTypes(filter: { varcharArray: { containedBy: $v2 } }) {
+  containedBy: allArrayTypes(zzz_filter: { varcharArray: { zzz_containedBy: $v2 } }) {
     ...nodes
   }
-  contains: allArrayTypes(filter: { varcharArray: { contains: $v3 } }) {
+  contains: allArrayTypes(zzz_filter: { varcharArray: { zzz_contains: $v3 } }) {
     ...nodes
   }
-  distinctFrom: allArrayTypes(filter: { varcharArray: { distinctFrom: $v2 } }) {
+  distinctFrom: allArrayTypes(zzz_filter: { varcharArray: { zzz_distinctFrom: $v2 } }) {
     ...nodes
   }
-  equalTo: allArrayTypes(filter: { varcharArray: { equalTo: $v2 } }) {
+  equalTo: allArrayTypes(zzz_filter: { varcharArray: { zzz_equalTo: $v2 } }) {
     ...nodes
   }
-  greaterThan: allArrayTypes(filter: { varcharArray: { greaterThan: $v2 } }) {
+  greaterThan: allArrayTypes(zzz_filter: { varcharArray: { zzz_greaterThan: $v2 } }) {
     ...nodes
   }
   greaterThanOrEqualTo: allArrayTypes(
-    filter: { varcharArray: { greaterThanOrEqualTo: $v2 } }
+    zzz_filter: { varcharArray: { zzz_greaterThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
-  isNull: allArrayTypes(filter: { varcharArray: { isNull: true } }) {
+  isNull: allArrayTypes(zzz_filter: { varcharArray: { zzz_isNull: true } }) {
     ...nodes
   }
-  lessThan: allArrayTypes(filter: { varcharArray: { lessThan: $v2 } }) {
+  lessThan: allArrayTypes(zzz_filter: { varcharArray: { zzz_lessThan: $v2 } }) {
     ...nodes
   }
   lessThanOrEqualTo: allArrayTypes(
-    filter: { varcharArray: { lessThanOrEqualTo: $v2 } }
+    zzz_filter: { varcharArray: { zzz_lessThanOrEqualTo: $v2 } }
   ) {
     ...nodes
   }
   notDistinctFrom: allArrayTypes(
-    filter: { varcharArray: { notDistinctFrom: $v2 } }
+    zzz_filter: { varcharArray: { zzz_notDistinctFrom: $v2 } }
   ) {
     ...nodes
   }
-  notEqualTo: allArrayTypes(filter: { varcharArray: { notEqualTo: $v2 } }) {
+  notEqualTo: allArrayTypes(zzz_filter: { varcharArray: { zzz_notEqualTo: $v2 } }) {
     ...nodes
   }
-  overlaps: allArrayTypes(filter: { varcharArray: { overlaps: $v2 } }) {
+  overlaps: allArrayTypes(zzz_filter: { varcharArray: { zzz_overlaps: $v2 } }) {
     ...nodes
   }
 }
