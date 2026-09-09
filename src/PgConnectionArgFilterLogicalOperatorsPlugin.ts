@@ -22,25 +22,18 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
             graphql: { GraphQLList, GraphQLNonNull },
             EXPORTABLE,
             inflection,
-            options: { connectionFilterApplyLogicalOperatorsToAttributes },
           } = build;
           const {
             fieldWithHooks,
-            scope: { isPgConnectionFilter, pgConnectionFilterOperators },
+            scope: { isPgConnectionFilter },
             Self,
           } = context;
 
-          if (
-            !isPgConnectionFilter &&
-            (!connectionFilterApplyLogicalOperatorsToAttributes ||
-              !pgConnectionFilterOperators)
-          ) {
-            return fields;
-          }
+          if (!isPgConnectionFilter) return fields;
 
           if (Object.keys(fields).length === 0) {
             // Skip adding these operators if they would be the only fields
-            //return fields;
+            return fields;
           }
 
           const assertAllowed = makeAssertAllowed(build);
@@ -63,7 +56,6 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $and = $where.andPlan();
-                      $and.extensions = { ...$where.extensions };
                       // No need for this more correct form, easier to read if it's flatter.
                       // fieldArgs.apply(() => $and.andPlan());
                       return $and;
@@ -89,7 +81,6 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       assertAllowed(value, "list");
                       if (value == null) return;
                       const $or = $where.orPlan();
-                      $or.extensions = { ...$where.extensions };
                       // Every entry is added to the `$or`, but the entries themselves should use an `and`.
                       return () => $or.andPlan();
                     },
@@ -115,7 +106,6 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                       if (value == null) return;
                       const $not = $where.notPlan();
                       const $and = $not.andPlan();
-                      $and.extensions = { ...$where.extensions };
                       return $and;
                     },
                   [assertAllowed]

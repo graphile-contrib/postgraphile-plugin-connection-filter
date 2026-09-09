@@ -1151,8 +1151,6 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           },
         };
         for (const key in connectionFilterArrayOperators) {
-          if (!connectionFilterArrayOperators[key])
-            throw new Error(`${key} not found`);
           connectionFilterArrayOperators[key].name ??= `array${key}`;
         }
 
