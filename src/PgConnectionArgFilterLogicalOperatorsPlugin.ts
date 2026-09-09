@@ -38,10 +38,13 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
 
           const assertAllowed = makeAssertAllowed(build);
 
+          const andFieldName = inflection.pgConnectionFilterBuiltin("and");
+          const orFieldName = inflection.pgConnectionFilterBuiltin("or");
+          const notFieldName = inflection.pgConnectionFilterBuiltin("not");
           const logicalOperatorFields = {
-            [inflection.pgConnectionFilterBuiltin("and")]: fieldWithHooks(
+            [andFieldName]: fieldWithHooks(
               {
-                fieldName: inflection.pgConnectionFilterBuiltin("and"),
+                fieldName: andFieldName,
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -64,9 +67,9 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            [inflection.pgConnectionFilterBuiltin("or")]: fieldWithHooks(
+            [orFieldName]: fieldWithHooks(
               {
-                fieldName: inflection.pgConnectionFilterBuiltin("or"),
+                fieldName: orFieldName,
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
@@ -88,9 +91,9 @@ export const PgConnectionArgFilterLogicalOperatorsPlugin: GraphileConfig.Plugin 
                 ),
               }
             ),
-            [inflection.pgConnectionFilterBuiltin("not")]: fieldWithHooks(
+            [notFieldName]: fieldWithHooks(
               {
-                fieldName: inflection.pgConnectionFilterBuiltin("not"),
+                fieldName: notFieldName,
                 isPgConnectionFilterOperatorLogical: true,
               },
               {
