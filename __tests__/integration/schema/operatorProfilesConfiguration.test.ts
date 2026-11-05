@@ -15,7 +15,8 @@ const setup = `
   create table operator_profiles_test.item (
     id serial primary key,
     title text,
-    tags text[]
+    tags text[],
+    payload json
   );
 `;
 
@@ -93,6 +94,22 @@ test("fails when a column opts into a profile but its filter is not published", 
       )
     ).rejects.toThrow(
       'Column "operator_profiles_test.item.title" opts into operator profile "search" but its filter is not published'
+    );
+  }));
+
+test("fails when a column opts into a profile but its type has no filter operators", () =>
+  withTransaction(async (client) => {
+    await client.query(setup);
+    await client.query(
+      `comment on column operator_profiles_test.item.payload is E'@behavior +attribute:filterBy:search';`
+    );
+    await expect(
+      buildSchema(
+        client,
+        makeFilterOperatorProfilesPlugin({ search: ["includes"] })
+      )
+    ).rejects.toThrow(
+      'Column "operator_profiles_test.item.payload" opts into operator profile "search" but its type "json" has no filter operators'
     );
   }));
 
