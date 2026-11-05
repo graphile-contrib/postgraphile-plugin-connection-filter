@@ -76,6 +76,12 @@ create table p.filterable (
 
 comment on column p.filterable."text_omit_filter" is E'@omit filter';
 
+-- Operator profile opt-in: only schemas built with
+-- makeFilterOperatorProfilesPlugin register this behavior, so other test
+-- schemas keep the shared StringFilter for this column.
+comment on column p.filterable."text" is E'@behavior +attribute:filterBy:search';
+comment on column p.filterable."varchar" is E'@behavior +attribute:filterBy:prefix';
+
 create table p.array_types (
   id serial primary key,
   "bit4_array" bit(4)[],
@@ -111,6 +117,9 @@ create table p.array_types (
   "varchar_array" varchar[],
   "xml_array" xml[] -- not filterable
 );
+
+-- List filter types use the list profile naming rule.
+comment on column p.array_types."text_array" is E'@behavior +attribute:filterBy:arrayOps';
 
 create table p.range_types (
   id serial primary key,

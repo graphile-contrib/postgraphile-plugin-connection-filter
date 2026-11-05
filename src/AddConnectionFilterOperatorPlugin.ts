@@ -1,6 +1,7 @@
 import type { GraphQLInputType } from "graphql";
 import { $$filters } from "./interfaces";
 import { makeApplyFromOperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
+import { getAddOnOperatorSpecs } from "./utils";
 
 import { version } from "./version";
 
@@ -59,7 +60,15 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
         if (!pgConnectionFilterOperators) {
           return fields;
         }
-        const operatorSpecByFilterName = build[$$filters].get(Self.name);
+        // Operators are registered against the generated input type name. A
+        // profile type reads the registrations of its own name and of its
+        // base type: a profile adds to the base set, it never removes an
+        // operator another plugin contributed.
+        const operatorSpecByFilterName = getAddOnOperatorSpecs(
+          build,
+          Self.name,
+          pgConnectionFilterOperators.baseOperatorsTypeName
+        );
         if (!operatorSpecByFilterName) {
           return fields;
         }

@@ -6892,6 +6892,45 @@ exports[`nullAndEmptyForbidden.graphql 1`] = `
 }
 `;
 
+exports[`operatorProfiles.graphql 1`] = `
+{
+  "data": {
+    "caseSensitive": {
+      "nodes": [
+        {
+          "id": 2,
+          "text": "Test",
+        },
+        {
+          "id": 4,
+          "text": "test",
+        },
+      ],
+    },
+    "prefix": {
+      "nodes": [
+        {
+          "id": 1,
+          "text": "TEST",
+        },
+      ],
+    },
+    "substring": {
+      "nodes": [
+        {
+          "id": 1,
+          "text": "TEST",
+        },
+        {
+          "id": 3,
+          "text": "tEST",
+        },
+      ],
+    },
+  },
+}
+`;
+
 exports[`rangeArrayTypes.dateRangeArray.graphql 1`] = `
 {
   "data": {

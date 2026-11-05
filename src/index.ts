@@ -21,8 +21,10 @@ import type { PgResource, PgCodec, PgCodecAttribute } from "@dataplan/pg";
 import type {} from "postgraphile/presets/v4";
 import { AddConnectionFilterOperatorPlugin } from "./AddConnectionFilterOperatorPlugin";
 import type { SQL } from "pg-sql2";
+import { makeFilterOperatorProfilesPlugin } from "./PgConnectionArgFilterOperatorProfilesPlugin";
 
 export { makeApplyFromOperatorSpec };
+export { makeFilterOperatorProfilesPlugin };
 
 declare global {
   namespace DataplanPg {
@@ -86,6 +88,16 @@ declare global {
       filterType(this: Inflection, typeName: string): string;
       filterFieldType(this: Inflection, typeName: string): string;
       filterFieldListType(this: Inflection, typeName: string): string;
+      filterOperatorProfileType(
+        this: Inflection,
+        typeName: string,
+        profile: string
+      ): string;
+      filterOperatorProfileListType(
+        this: Inflection,
+        typeName: string,
+        profile: string
+      ): string;
       filterManyType(
         this: Inflection,
         table: PgCodec<any, any, any, any, any, any, any>,
@@ -118,6 +130,16 @@ declare global {
         inputTypeName: string;
         rangeElementInputTypeName: string | null;
         domainBaseTypeName: string | null;
+        /** Set when this is a profile type rather than the base type. */
+        profile?: string;
+        /**
+         * On a profile type, the type name of the base filter for the same
+         * column type. Operators added to the base type through
+         * `addConnectionFilterOperator` also appear on the profile type.
+         */
+        baseOperatorsTypeName?: string;
+        /** A column that opted into the profile; used in build error messages. */
+        profileColumn?: string;
       };
       pgConnectionFilterOperatorsCategory?: OperatorsCategory;
       // TODO: rename these so they are scoped to this plugin!
@@ -129,8 +151,14 @@ declare global {
       isPgConnectionFilterMany?: boolean;
     }
     interface Build {
+      /**
+       * The operator profiles registered for this schema build, keyed by
+       * profile name. Set by `makeFilterOperatorProfilesPlugin`.
+       */
+      connectionFilterOperatorProfiles?: Map<string, string[]>;
       connectionFilterOperatorsDigest(
-        codec: PgCodec<any, any, any, any, any, any, any>
+        codec: PgCodec<any, any, any, any, any, any, any>,
+        profile?: string
       ): {
         operatorsTypeName: string;
         relatedTypeName: string;
@@ -138,6 +166,7 @@ declare global {
         inputTypeName: string;
         rangeElementInputTypeName: string | null;
         domainBaseTypeName: string | null;
+        profile?: string;
       } | null;
       escapeLikeWildcards(input: unknown): string;
       [$$filters]: Map<string, Map<string, OperatorSpec>>;

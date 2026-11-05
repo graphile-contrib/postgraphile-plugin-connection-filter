@@ -8,7 +8,7 @@ import { PostGraphileConnectionFilterPreset } from "../../../src/index";
 import { FilterAllPlugin } from "../../FilterAllPlugin";
 import { GraphQLSchema } from "graphql";
 
-const createPostGraphileSchema = async (
+export const createPostGraphileSchema = async (
   pgClient: pg.PoolClient,
   schemas: string[],
   v4Options: V4Options,

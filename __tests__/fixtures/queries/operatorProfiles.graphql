@@ -1,0 +1,29 @@
+query {
+  substring: allFilterables(
+    zzz_filter: { text: { zzz_includes: "ES" } }
+    orderBy: [ID_ASC]
+  ) {
+    nodes {
+      id
+      text
+    }
+  }
+  prefix: allFilterables(
+    zzz_filter: { text: { zzz_startsWith: "TE" } }
+    orderBy: [ID_ASC]
+  ) {
+    nodes {
+      id
+      text
+    }
+  }
+  caseSensitive: allFilterables(
+    zzz_filter: { text: { zzz_includes: "es" } }
+    orderBy: [ID_ASC]
+  ) {
+    nodes {
+      id
+      text
+    }
+  }
+}

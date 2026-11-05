@@ -1,3 +1,12 @@
+## Unreleased
+
+- Added per-column operator profiles. `makeFilterOperatorProfilesPlugin({ ... })`
+  registers named operator sets; a column opts into one with the
+  `attribute:filterBy:<profile>` behavior and its filter field then uses a
+  `${Type}${UpperCamel(profile)}Filter` input type that adds the profile's
+  operators to the base set. Without the plugin and the behavior the schema is
+  unchanged.
+
 ## 4.0.1 - 2026-08-14
 
 Fix issue deploying module (npm ignore-scripts ignored the prepack script?).

@@ -4,7 +4,7 @@ import type {
   PgConditionCapableParent,
 } from "@dataplan/pg";
 import type { GraphQLInputObjectType } from "graphql";
-import { isEmpty } from "./utils";
+import { describeColumn, getActiveOperatorProfiles, isEmpty } from "./utils";
 import { EXPORTABLE } from "./EXPORTABLE";
 
 import { version } from "./version";
@@ -92,7 +92,15 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
             continue;
           }
           const fieldName = inflection.attribute({ codec, attributeName });
-          const digest = connectionFilterOperatorsDigest(attribute.codec);
+          const activeProfiles = getActiveOperatorProfiles(
+            build,
+            codec,
+            attributeName
+          );
+          const digest = connectionFilterOperatorsDigest(
+            attribute.codec,
+            activeProfiles[0]
+          );
           if (!digest) {
             continue;
           }
@@ -100,6 +108,14 @@ export const PgConnectionArgFilterAttributesPlugin: GraphileConfig.Plugin = {
             digest.operatorsTypeName
           ) as GraphQLInputObjectType;
           if (!OperatorsType) {
+            if (activeProfiles[0]) {
+              throw new Error(
+                `Column ${describeColumn(
+                  codec,
+                  attributeName
+                )} opts into operator profile "${activeProfiles[0]}" but its filter type "${digest.operatorsTypeName}" was not registered.`
+              );
+            }
             continue;
           }
           const {
