@@ -310,10 +310,13 @@ merged map of every profile the application needs. The plugin name is fixed, so
 a second factory call is rejected — merge the maps into one call instead.
 
 Schema build fails with an error naming the column, the profile and the type
-when: a column opts into two profiles, a profile is set on a column whose filter
-is not published, a profile adds no operator the column's type offers, a profile
-name produces a filter type name that is already taken, or a profile names an
-operator that the plugin and its add-on plugins do not know.
+when: a column opts into two profiles, a column with a profile has no published
+filter (`attribute:filterBy` is off), a profile adds no operator the column's
+type offers, a profile name produces a filter type name that is already taken,
+or a profile names an operator that the plugin and its add-on plugins do not
+know. A profile on a column of a table whose own filter is omitted (`@omit
+filter` on the table) is accepted and has no effect: the table publishes no
+filter input type for the profile to extend.
 
 ## Examples
 

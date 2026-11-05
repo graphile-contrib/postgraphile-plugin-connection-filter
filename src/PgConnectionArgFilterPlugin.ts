@@ -26,6 +26,17 @@ type OperatorFilterDigest = NonNullable<
 >;
 
 /**
+ * Whether the codec filters list values (a plain array, or an array wrapped in
+ * a domain or range).
+ */
+const isListCodec = (codec: AnyCodec): boolean =>
+  !!(
+    codec.arrayOfCodec ||
+    codec.domainOfCodec?.arrayOfCodec ||
+    codec.rangeOfCodec?.arrayOfCodec
+  );
+
+/**
  * Why `connectionFilterOperatorsDigest` returned null for this codec, in the
  * words of the setting the reader should look at.
  */
@@ -44,12 +55,7 @@ const describeNoFilterReason = (
   ) {
     return `"connectionFilterAllowedFieldTypes" does not include the GraphQL type "${namedTypeName}"`;
   }
-  const isList = !!(
-    codec.arrayOfCodec ||
-    codec.domainOfCodec?.arrayOfCodec ||
-    codec.rangeOfCodec?.arrayOfCodec
-  );
-  if (isList && connectionFilterArrays === false) {
+  if (isListCodec(codec) && connectionFilterArrays === false) {
     return `"connectionFilterArrays" is false for its list type`;
   }
   return `its type "${codec.name}" has no filter operators`;
@@ -275,11 +281,7 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                 )
               : null;
 
-          const listType = !!(
-            codec.arrayOfCodec ||
-            codec.domainOfCodec?.arrayOfCodec ||
-            codec.rangeOfCodec?.arrayOfCodec
-          );
+          const listType = isListCodec(codec);
 
           const operatorsTypeName = profile
             ? listType

@@ -7,6 +7,8 @@ import type {
 } from "@dataplan/pg";
 import type { GraphileBuild } from "graphile-build";
 import type {} from "graphile-build-pg";
+import { $$filters } from "./interfaces";
+import type { OperatorSpec } from "./PgConnectionArgFilterOperatorsPlugin";
 
 export function isComputedScalarAttributeResource(
   s: PgResource<any, any, any, any, any>
@@ -66,6 +68,28 @@ export function describeColumn(
   const tableName =
     pg?.schemaName != null ? `${pg.schemaName}.${pg.name}` : codec.name;
   return `"${tableName}.${attributeName}"`;
+}
+
+/**
+ * The operators registered for an input type through
+ * `addConnectionFilterOperator`, including those registered for the type's
+ * base filter type: a profile type adds to the base set. This is the one place
+ * that decides which registrations belong to an input type, so the operator
+ * emission and the profile validation agree.
+ */
+export function getAddOnOperatorSpecs(
+  build: GraphileBuild.Build,
+  typeName: string,
+  baseOperatorsTypeName?: string
+): Map<string, OperatorSpec> | undefined {
+  const ownSpecs = build[$$filters].get(typeName);
+  const baseSpecs = baseOperatorsTypeName
+    ? build[$$filters].get(baseOperatorsTypeName)
+    : undefined;
+  if (baseSpecs && ownSpecs) {
+    return new Map([...baseSpecs, ...ownSpecs]);
+  }
+  return ownSpecs ?? baseSpecs;
 }
 
 /**

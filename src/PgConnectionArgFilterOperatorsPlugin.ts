@@ -11,6 +11,7 @@ import type { GraphQLInputType, GraphQLNamedType } from "graphql";
 import type { SQL } from "pg-sql2";
 import { EXPORTABLE } from "./EXPORTABLE";
 import { $$filters } from "./interfaces";
+import { getAddOnOperatorSpecs } from "./utils";
 
 import { version } from "./version";
 
@@ -1426,11 +1427,13 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
             );
           }
           const availableOperatorNames = new Set(Object.keys(operatorSpecs));
-          const baseAddOnSpecs = baseOperatorsTypeName
-            ? build[$$filters].get(baseOperatorsTypeName)
-            : undefined;
-          if (baseAddOnSpecs) {
-            for (const name of baseAddOnSpecs.keys()) {
+          const addOnSpecs = getAddOnOperatorSpecs(
+            build,
+            Self.name,
+            baseOperatorsTypeName
+          );
+          if (addOnSpecs) {
+            for (const name of addOnSpecs.keys()) {
               availableOperatorNames.add(name);
             }
           }
