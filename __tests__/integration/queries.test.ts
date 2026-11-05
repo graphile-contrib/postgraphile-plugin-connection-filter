@@ -16,7 +16,10 @@ import { PgConditionArgumentPlugin } from "graphile-build-pg";
 import { PostGraphileAmberPreset } from "postgraphile/presets/amber";
 import { makeV4Preset, V4Options } from "postgraphile/presets/v4";
 import { makeSchema } from "postgraphile";
-import { PostGraphileConnectionFilterPreset } from "../../src/index";
+import {
+  makeFilterOperatorProfilesPlugin,
+  PostGraphileConnectionFilterPreset,
+} from "../../src/index";
 import CustomOperatorsPlugin from "./../customOperatorsPlugin";
 import { execute, hookArgs, isSafeError } from "grafast";
 import { SchemaResult } from "graphile-build";
@@ -94,6 +97,7 @@ let gqlSchemas: {
   simpleCollections: SchemaResult;
   nullAndEmptyAllowed: SchemaResult;
   addConnectionFilterOperator: SchemaResult;
+  operatorProfiles: SchemaResult;
 };
 
 beforeAll(async () => {
@@ -124,6 +128,7 @@ beforeAll(async () => {
       simpleCollections,
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
+      operatorProfiles,
     ] = await Promise.all([
       createPostGraphileSchema(
         pool,
@@ -196,6 +201,24 @@ beforeAll(async () => {
           plugins: [CustomOperatorsPlugin],
         }
       ),
+      createPostGraphileSchema(
+        pool,
+        ["p"],
+        {
+          skipPlugins: [PgConditionArgumentPlugin],
+          graphileBuildOptions: {
+            connectionFilterAllowedOperators: ["equalTo", "notEqualTo"],
+          },
+        },
+        {
+          plugins: [
+            makeFilterOperatorProfilesPlugin({
+              search: ["includes", "startsWith", "endsWith"],
+              prefix: ["startsWith"],
+            }),
+          ],
+        }
+      ),
     ]);
     return {
       normal,
@@ -205,6 +228,7 @@ beforeAll(async () => {
       simpleCollections,
       nullAndEmptyAllowed,
       addConnectionFilterOperator,
+      operatorProfiles,
     };
   });
 });
@@ -233,6 +257,7 @@ for (const queryFileName of queryFileNames) {
       "relations.graphql": gqlSchemas.relations,
       "simpleCollections.graphql": gqlSchemas.simpleCollections,
       "nullAndEmptyAllowed.graphql": gqlSchemas.nullAndEmptyAllowed,
+      "operatorProfiles.graphql": gqlSchemas.operatorProfiles,
     };
     const { schema, resolvedPreset } =
       queryFileName in gqlSchemaByQueryFileName

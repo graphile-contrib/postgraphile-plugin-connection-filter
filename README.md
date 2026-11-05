@@ -245,6 +245,68 @@ const preset: GraphileConfig.Preset = {
 When `false`, passing `{}` as a field value will throw an error.
 When `true`, passing `{}` as a field value is equivalent to omitting the field.
 
+## Per-column operator profiles
+
+`connectionFilterAllowedOperators` applies one operator set to every column of a
+type. When a few more operators make sense only on specific columns — because
+an index serves them there and not elsewhere — register **operator profiles**
+and let a column opt into one:
+
+```ts
+import {
+  makeFilterOperatorProfilesPlugin,
+  PostGraphileConnectionFilterPreset,
+} from "postgraphile-plugin-connection-filter";
+
+const preset: GraphileConfig.Preset = {
+  extends: [PostGraphileConnectionFilterPreset],
+  plugins: [
+    makeFilterOperatorProfilesPlugin({
+      search: ["includes", "startsWith", "endsWith"],
+      prefix: ["startsWith"],
+    }),
+  ],
+  schema: {
+    connectionFilterAllowedOperators: ["equalTo", "notEqualTo"],
+  },
+};
+```
+
+A profile maps to the canonical operator names that its filter input type adds
+to the base set (the set limited by `connectionFilterAllowedOperators`; when that
+option is not set every operator is already available and a profile adds
+nothing). `connectionFilterOperatorNames` renames profile operators like any
+other operator.
+
+Profiles are off by default: a column opts in through the
+`attribute:filterBy:<profile>` behavior, for example with a smart comment:
+
+```sql
+comment on column app_public.post.title is E'@behavior +attribute:filterBy:search';
+```
+
+The behavior can also be set by another plugin. The plugin does not check
+indexes — the behavior is the configuration's promise that an access path
+exists for that column.
+
+The filter field of an opted-in column uses a separate input type carrying the
+base operators plus the profile's:
+
+- `${Type}${UpperCamel(profile)}Filter` — the `search` profile on a `String`
+  field gives `StringSearchFilter`;
+- for lists, `${Type}List${UpperCamel(profile)}Filter` — e.g.
+  `StringListSearchFilter`.
+
+Columns without the behavior keep the shared `${Type}Filter` type, so a profile
+is visible only on the columns that opted in; this also holds inside relation
+filters. Profiles are independent: each column can opt into one profile, and a
+profile type exists only when some column uses it. Schema build fails with an
+error naming the column and profile for a column that opts into two profiles, a
+profile on a column whose filter is not published, and an operator name in a
+profile that the plugin does not know.
+
+Add the factory plugin once, with every profile.
+
 ## Examples
 
 ```graphql

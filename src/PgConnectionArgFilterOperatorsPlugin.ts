@@ -1355,6 +1355,37 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
           }*/
         }
 
+        // A profile may only add operators this plugin knows, so catch typos
+        // here where every canonical operator name is in scope.
+        const connectionFilterOperatorProfiles =
+          build.connectionFilterOperatorProfiles;
+        if (connectionFilterOperatorProfiles) {
+          const knownOperatorNames = new Set<string>([
+            ...Object.keys(standardOperators),
+            ...Object.keys(sortOperators),
+            ...Object.keys(patternMatchingOperators),
+            ...Object.keys(hstoreOperators),
+            ...Object.keys(jsonbOperators),
+            ...Object.keys(inetOperators),
+            ...Object.keys(insensitiveOperators),
+            ...Object.keys(connectionFilterEnumOperators),
+            ...Object.keys(connectionFilterRangeOperators),
+            ...Object.keys(connectionFilterArrayOperators),
+          ]);
+          for (const [
+            profile,
+            profileOperators,
+          ] of connectionFilterOperatorProfiles) {
+            for (const operatorName of profileOperators) {
+              if (!knownOperatorNames.has(operatorName)) {
+                throw new Error(
+                  `Operator profile "${profile}" lists unknown operator "${operatorName}"; profile operators are the plugin's canonical operator names, before any connectionFilterOperatorNames renaming.`
+                );
+              }
+            }
+          }
+        }
+
         const operatorSpecs: {
           [operatorName: string]: OperatorSpec;
         } = arrayLike
@@ -1373,14 +1404,25 @@ export const PgConnectionArgFilterOperatorsPlugin: GraphileConfig.Plugin = {
                   ...(textLike ? insensitiveOperators : null),
                 };
 
+        const { profile } = pgConnectionFilterOperators;
+        const allowedOperators = connectionFilterAllowedOperators
+          ? new Set(connectionFilterAllowedOperators)
+          : null;
+        if (allowedOperators && profile) {
+          // A profile type offers the base set plus its own operators; the
+          // profile contents were validated above.
+          for (const operatorName of connectionFilterOperatorProfiles?.get(
+            profile
+          ) ?? []) {
+            allowedOperators.add(operatorName);
+          }
+        }
+
         const operatorFields = Object.entries(operatorSpecs).reduce(
           (memo: { [fieldName: string]: any }, [name, spec]) => {
             const { description, resolveInputCodec, resolveType } = spec;
 
-            if (
-              connectionFilterAllowedOperators &&
-              !connectionFilterAllowedOperators.includes(name)
-            ) {
+            if (allowedOperators && !allowedOperators.has(name)) {
               return memo;
             }
             if (!fieldInputType) {

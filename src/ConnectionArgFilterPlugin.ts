@@ -17,6 +17,12 @@ export const ConnectionArgFilterPlugin: GraphileConfig.Plugin = {
       filterFieldListType(preset, typeName) {
         return `${typeName}ListFilter`;
       },
+      filterOperatorProfileType(preset, typeName, profile) {
+        return `${typeName}${this.upperCamelCase(profile)}Filter`;
+      },
+      filterOperatorProfileListType(preset, typeName, profile) {
+        return `${typeName}List${this.upperCamelCase(profile)}Filter`;
+      },
     },
   },
 };

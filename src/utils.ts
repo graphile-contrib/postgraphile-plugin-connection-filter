@@ -1,5 +1,6 @@
 import type {
   PgCodec,
+  PgCodecWithAttributes,
   PgRegistry,
   PgResource,
   PgResourceParameter,
@@ -52,6 +53,46 @@ export function getComputedAttributeResources(
       s.parameters[0].codec === source.codec
   );
   return computedAttributeSources;
+}
+
+/**
+ * A schema-qualified column label for configuration error messages.
+ */
+export function describeColumn(
+  codec: PgCodec<any, any, any, any, any, any, any>,
+  attributeName: string
+): string {
+  const pg = codec.extensions?.pg;
+  const tableName =
+    pg?.schemaName != null ? `${pg.schemaName}.${pg.name}` : codec.name;
+  return `"${tableName}.${attributeName}"`;
+}
+
+/**
+ * Returns the operator profiles the column's behavior opts into, in the order
+ * the profiles were registered.
+ */
+export function getActiveOperatorProfiles(
+  build: GraphileBuild.Build,
+  codec: PgCodecWithAttributes,
+  attributeName: string
+): string[] {
+  const profiles = build.connectionFilterOperatorProfiles;
+  if (!profiles) {
+    return [];
+  }
+  const activeProfiles: string[] = [];
+  for (const profile of profiles.keys()) {
+    if (
+      build.behavior.pgCodecAttributeMatches(
+        [codec, attributeName],
+        `attribute:filterBy:${profile}`
+      )
+    ) {
+      activeProfiles.push(profile);
+    }
+  }
+  return activeProfiles;
 }
 
 // TODO: rename. (Checks that the arguments aren't null/empty.)
