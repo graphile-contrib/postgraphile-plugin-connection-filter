@@ -3,6 +3,10 @@ import { version } from "./version";
 declare global {
   namespace GraphileBuild {
     interface BehaviorStrings {
+      // Profile names come from configuration, so the set of profile
+      // behaviors is not closed at compile time. Typing the namespace lets
+      // the factory, the matcher and the behavior registry use
+      // `attribute:filterBy:<profile>` without a cast at every site.
       [key: `attribute:filterBy:${string}`]: true;
     }
   }
