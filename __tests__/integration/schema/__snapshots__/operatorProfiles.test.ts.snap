@@ -115,7 +115,7 @@ input ArrayTypeFilter {
   or: [ArrayTypeFilter!]
 
   """Filter by the object’s \`textArray\` field."""
-  textArray: StringListPrefixFilter
+  textArray: StringListArrayOpsFilter
 
   """Filter by the object’s \`timeArray\` field."""
   timeArray: TimeListFilter
@@ -4305,9 +4305,12 @@ input StringFilter {
 }
 
 """
-A filter to be used against String List fields. All fields are combined with a logical ‘and.’
+A filter to be used against String List fields offering the "arrayOps" operator profile in addition to the base operators. All fields are combined with a logical ‘and.’
 """
-input StringListFilter {
+input StringListArrayOpsFilter {
+  """Contains the specified list of values."""
+  contains: [String]
+
   """Equal to the specified value."""
   equalTo: [String]
 
@@ -4316,9 +4319,9 @@ input StringListFilter {
 }
 
 """
-A filter to be used against String List fields offering the "prefix" operator profile in addition to the base operators. All fields are combined with a logical ‘and.’
+A filter to be used against String List fields. All fields are combined with a logical ‘and.’
 """
-input StringListPrefixFilter {
+input StringListFilter {
   """Equal to the specified value."""
   equalTo: [String]
 
@@ -4630,7 +4633,7 @@ input ArrayTypeFilter {
   or: [ArrayTypeFilter!]
 
   """Filter by the object’s \`textArray\` field."""
-  textArray: StringListPrefixFilter
+  textArray: StringListArrayOpsFilter
 
   """Filter by the object’s \`timeArray\` field."""
   timeArray: TimeListFilter
@@ -8820,9 +8823,12 @@ input StringFilter {
 }
 
 """
-A filter to be used against String List fields. All fields are combined with a logical ‘and.’
+A filter to be used against String List fields offering the "arrayOps" operator profile in addition to the base operators. All fields are combined with a logical ‘and.’
 """
-input StringListFilter {
+input StringListArrayOpsFilter {
+  """Contains the specified list of values."""
+  contains: [String]
+
   """Equal to the specified value."""
   eq: [String]
 
@@ -8831,9 +8837,9 @@ input StringListFilter {
 }
 
 """
-A filter to be used against String List fields offering the "prefix" operator profile in addition to the base operators. All fields are combined with a logical ‘and.’
+A filter to be used against String List fields. All fields are combined with a logical ‘and.’
 """
-input StringListPrefixFilter {
+input StringListFilter {
   """Equal to the specified value."""
   eq: [String]
 

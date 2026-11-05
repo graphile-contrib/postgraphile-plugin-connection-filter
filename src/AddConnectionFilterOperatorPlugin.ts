@@ -59,7 +59,20 @@ export const AddConnectionFilterOperatorPlugin: GraphileConfig.Plugin = {
         if (!pgConnectionFilterOperators) {
           return fields;
         }
-        const operatorSpecByFilterName = build[$$filters].get(Self.name);
+        // Operators are registered against the generated input type name. A
+        // profile type has a different name, so it also reads the operators
+        // registered for its base type: a profile adds to the base set, it
+        // never removes an operator another plugin contributed.
+        const ownSpecs = build[$$filters].get(Self.name);
+        const baseSpecs = pgConnectionFilterOperators.baseOperatorsTypeName
+          ? build[$$filters].get(
+              pgConnectionFilterOperators.baseOperatorsTypeName
+            )
+          : undefined;
+        const operatorSpecByFilterName =
+          baseSpecs && ownSpecs
+            ? new Map([...baseSpecs, ...ownSpecs])
+            : (ownSpecs ?? baseSpecs);
         if (!operatorSpecByFilterName) {
           return fields;
         }

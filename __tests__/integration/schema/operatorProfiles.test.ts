@@ -5,6 +5,7 @@ import { makeFilterOperatorProfilesPlugin } from "../../../src/index";
 const operatorProfiles = makeFilterOperatorProfilesPlugin({
   search: ["includes", "startsWith", "endsWith"],
   prefix: ["startsWith"],
+  arrayOps: ["contains"],
 });
 
 test(
@@ -40,6 +41,7 @@ test(
         makeFilterOperatorProfilesPlugin({
           search: ["includes", "startsWith", "endsWith"],
           prefix: ["startsWith"],
+          arrayOps: ["contains"],
         }),
       ],
     },

@@ -118,9 +118,8 @@ create table p.array_types (
   "xml_array" xml[] -- not filterable
 );
 
--- List filter types use the list profile naming rule; the profile's operators
--- need not apply to lists.
-comment on column p.array_types."text_array" is E'@behavior +attribute:filterBy:prefix';
+-- List filter types use the list profile naming rule.
+comment on column p.array_types."text_array" is E'@behavior +attribute:filterBy:arrayOps';
 
 create table p.range_types (
   id serial primary key,

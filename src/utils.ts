@@ -69,6 +69,18 @@ export function describeColumn(
 }
 
 /**
+ * The behavior string a column uses to opt into an operator profile. Profile
+ * names come from configuration, so they are not part of the `BehaviorStrings`
+ * key union; this helper is the one place that casts, so the package's global
+ * behavior typing stays unchanged.
+ */
+export function profileBehaviorString(
+  profile: string
+): keyof GraphileBuild.BehaviorStrings {
+  return `attribute:filterBy:${profile}` as keyof GraphileBuild.BehaviorStrings;
+}
+
+/**
  * Returns the operator profiles the column's behavior opts into, in the order
  * the profiles were registered.
  */
@@ -86,7 +98,7 @@ export function getActiveOperatorProfiles(
     if (
       build.behavior.pgCodecAttributeMatches(
         [codec, attributeName],
-        `attribute:filterBy:${profile}`
+        profileBehaviorString(profile)
       )
     ) {
       activeProfiles.push(profile);

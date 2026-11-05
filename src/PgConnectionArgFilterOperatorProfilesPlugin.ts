@@ -1,16 +1,5 @@
+import { profileBehaviorString } from "./utils";
 import { version } from "./version";
-
-declare global {
-  namespace GraphileBuild {
-    interface BehaviorStrings {
-      // Profile names come from configuration, so the set of profile
-      // behaviors is not closed at compile time. Typing the namespace lets
-      // the factory, the matcher and the behavior registry use
-      // `attribute:filterBy:<profile>` without a cast at every site.
-      [key: `attribute:filterBy:${string}`]: true;
-    }
-  }
-}
 
 /**
  * A valid behavior string segment: starts with a letter and continues with
@@ -78,7 +67,7 @@ export function makeFilterOperatorProfilesPlugin(
     >
   > = {};
   for (const profile of profileNames) {
-    behaviorRegistryAdd[`attribute:filterBy:${profile}`] = {
+    behaviorRegistryAdd[profileBehaviorString(profile)] = {
       description: `Does this column's filter field offer the "${profile}" operator profile in addition to the base operators?`,
       entities: ["pgCodecAttribute"],
     };
@@ -106,7 +95,8 @@ export function makeFilterOperatorProfilesPlugin(
               return [
                 behavior,
                 ...profileNames.map(
-                  (profile) => `-attribute:filterBy:${profile}` as const
+                  (profile) =>
+                    `-${profileBehaviorString(profile)}` as GraphileBuild.BehaviorString
                 ),
               ];
             },
@@ -118,7 +108,7 @@ export function makeFilterOperatorProfilesPlugin(
         build(build) {
           if (build.connectionFilterOperatorProfiles) {
             throw new Error(
-              "makeFilterOperatorProfilesPlugin was added to the preset more than once; call it once with every operator profile."
+              "makeFilterOperatorProfilesPlugin was added to the preset more than once; profiles are one schema-wide map, so merge the maps into a single factory call."
             );
           }
           build.connectionFilterOperatorProfiles = new Map(

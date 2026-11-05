@@ -300,12 +300,20 @@ base operators plus the profile's:
 Columns without the behavior keep the shared `${Type}Filter` type, so a profile
 is visible only on the columns that opted in; this also holds inside relation
 filters. Profiles are independent: each column can opt into one profile, and a
-profile type exists only when some column uses it. Schema build fails with an
-error naming the column and profile for a column that opts into two profiles, a
-profile on a column whose filter is not published, and an operator name in a
-profile that the plugin does not know.
+profile type exists only when some column uses it. A profile adds to the base
+set and never removes from it: operators another plugin contributes through
+`addConnectionFilterOperator` also appear on the profile type, and a profile may
+name them.
 
-Add the factory plugin once, with every profile.
+Profiles are a schema-wide singleton, so add the factory plugin once with the
+merged map of every profile the application needs. The plugin name is fixed, so
+a second factory call is rejected — merge the maps into one call instead.
+
+Schema build fails with an error naming the column, the profile and the type
+when: a column opts into two profiles, a profile is set on a column whose filter
+is not published, a profile adds no operator the column's type offers, a profile
+name produces a filter type name that is already taken, or a profile names an
+operator that the plugin and its add-on plugins do not know.
 
 ## Examples
 

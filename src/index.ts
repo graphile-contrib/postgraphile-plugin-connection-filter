@@ -132,6 +132,14 @@ declare global {
         domainBaseTypeName: string | null;
         /** Set when this is a profile type rather than the base type. */
         profile?: string;
+        /**
+         * On a profile type, the type name of the base filter for the same
+         * column type. Operators added to the base type through
+         * `addConnectionFilterOperator` also appear on the profile type.
+         */
+        baseOperatorsTypeName?: string;
+        /** A column that opted into the profile; used in build error messages. */
+        profileColumn?: string;
       };
       pgConnectionFilterOperatorsCategory?: OperatorsCategory;
       // TODO: rename these so they are scoped to this plugin!

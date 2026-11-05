@@ -21,6 +21,40 @@ import { version } from "./version";
 
 type AnyCodec = PgCodec<any, any, any, any, any, any, any>;
 
+type OperatorFilterDigest = NonNullable<
+  ReturnType<GraphileBuild.Build["connectionFilterOperatorsDigest"]>
+>;
+
+/**
+ * Why `connectionFilterOperatorsDigest` returned null for this codec, in the
+ * words of the setting the reader should look at.
+ */
+const describeNoFilterReason = (
+  build: GraphileBuild.Build,
+  codec: AnyCodec
+): string => {
+  const { connectionFilterAllowedFieldTypes, connectionFilterArrays } =
+    build.options;
+  const itemCodec = codec.arrayOfCodec ?? codec;
+  const namedTypeName = build.getGraphQLTypeNameByPgCodec(itemCodec, "output");
+  if (
+    connectionFilterAllowedFieldTypes &&
+    namedTypeName &&
+    !connectionFilterAllowedFieldTypes.includes(namedTypeName)
+  ) {
+    return `"connectionFilterAllowedFieldTypes" does not include the GraphQL type "${namedTypeName}"`;
+  }
+  const isList = !!(
+    codec.arrayOfCodec ||
+    codec.domainOfCodec?.arrayOfCodec ||
+    codec.rangeOfCodec?.arrayOfCodec
+  );
+  if (isList && connectionFilterArrays === false) {
+    return `"connectionFilterArrays" is false for its list type`;
+  }
+  return `its type "${codec.name}" has no filter operators`;
+};
+
 const isSuitableForFiltering = (
   build: GraphileBuild.Build,
   codec: AnyCodec
@@ -288,6 +322,11 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
         callback(_, build) {
           const { inflection } = build;
 
+          // Filter type names already taken by object types, so a profile type
+          // can report a name collision instead of graphile-build's generic
+          // "two entities ... same type" message.
+          const reservedFilterTypeNames = new Map<string, string>();
+
           // Create filter type for all column-having codecs
           for (const pgCodec of build.allPgCodecs) {
             if (!pgCodec.attributes) {
@@ -303,6 +342,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             }
 
             const filterTypeName = inflection.filterType(nodeTypeName);
+            reservedFilterTypeNames.set(
+              filterTypeName,
+              `the connection filter type of the "${nodeTypeName}" object type`
+            );
             build.registerInputObjectType(
               filterTypeName,
               {
@@ -316,8 +359,9 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
             );
           }
 
-          // Get or create types like IntFilter, StringFilter, etc.
-          const codecsByFilterTypeName: {
+          // Collect every per-scalar filter type (base and profile) keyed by
+          // its input type name, then register them in one pass.
+          const filterTypeByTypeName: {
             [typeName: string]: {
               isList: boolean;
               relatedTypeName: string;
@@ -325,13 +369,17 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               inputTypeName: string;
               rangeElementInputTypeName: string | null;
               domainBaseTypeName: string | null;
+              profile: string | undefined;
+              baseOperatorsTypeName: string | undefined;
+              exampleColumn: string | undefined;
             };
           } = {};
-          for (const codec of build.allPgCodecs) {
-            const digest = build.connectionFilterOperatorsDigest(codec);
-            if (!digest) {
-              continue;
-            }
+
+          const addFilterType = (
+            codec: PgCodec,
+            digest: OperatorFilterDigest,
+            exampleColumn?: string
+          ) => {
             const {
               isList,
               operatorsTypeName,
@@ -339,95 +387,84 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               inputTypeName,
               rangeElementInputTypeName,
               domainBaseTypeName,
+              profile,
             } = digest;
+            const existing = filterTypeByTypeName[operatorsTypeName];
+            const baseOperatorsTypeName =
+              profile === undefined
+                ? undefined
+                : isList
+                  ? inflection.filterFieldListType(relatedTypeName)
+                  : inflection.filterFieldType(relatedTypeName);
 
-            if (!codecsByFilterTypeName[operatorsTypeName]) {
-              codecsByFilterTypeName[operatorsTypeName] = {
-                isList,
-                relatedTypeName,
-                pgCodecs: [codec],
-                inputTypeName,
-                rangeElementInputTypeName,
-                domainBaseTypeName,
-              };
-            } else {
-              for (const key of [
-                "isList",
-                "relatedTypeName",
-                "inputTypeName",
-                "rangeElementInputTypeName",
-              ] as const) {
-                if (
-                  digest[key] !== codecsByFilterTypeName[operatorsTypeName][key]
-                ) {
-                  throw new Error(
-                    `${key} mismatch: existing codecs (${codecsByFilterTypeName[
-                      operatorsTypeName
-                    ].pgCodecs
-                      .map((c) => c.name)
-                      .join(", ")}) had ${key} = ${
-                      codecsByFilterTypeName[operatorsTypeName][key]
-                    }, but ${codec.name} instead has ${key} = ${digest[key]}`
-                  );
-                }
+            if (profile !== undefined) {
+              const reservedBy = reservedFilterTypeNames.get(operatorsTypeName);
+              if (reservedBy !== undefined) {
+                throw new Error(
+                  `Operator profile "${profile}" generates filter type name "${operatorsTypeName}" for "${relatedTypeName}" fields, which is already ${reservedBy}; choose another profile name or override filterOperatorProfileType/filterOperatorProfileListType.`
+                );
               }
-              codecsByFilterTypeName[operatorsTypeName].pgCodecs.push(codec);
+              if (existing && existing.profile !== profile) {
+                throw new Error(
+                  existing.profile === undefined
+                    ? `Operator profile "${profile}" generates filter type name "${operatorsTypeName}" for "${relatedTypeName}" fields, which is already the base filter type for "${existing.relatedTypeName}${
+                        existing.isList ? " List" : ""
+                      }" fields; choose another profile name or override filterOperatorProfileType/filterOperatorProfileListType.`
+                    : `Operator profiles "${existing.profile}" and "${profile}" both generate filter type name "${operatorsTypeName}"; choose profile names whose upper-camel forms are distinct or override filterOperatorProfileType/filterOperatorProfileListType.`
+                );
+              }
             }
-          }
 
-          for (const [
-            operatorsTypeName,
-            {
+            const entry = {
               isList,
               relatedTypeName,
-              pgCodecs,
               inputTypeName,
               rangeElementInputTypeName,
               domainBaseTypeName,
-            },
-          ] of Object.entries(codecsByFilterTypeName)) {
-            build.registerInputObjectType(
-              operatorsTypeName,
-              {
-                pgConnectionFilterOperators: {
-                  isList,
-                  pgCodecs,
-                  inputTypeName,
-                  rangeElementInputTypeName,
-                  domainBaseTypeName,
-                },
-                /*
-              pgConnectionFilterOperatorsCategory,
-              fieldType,
-              fieldInputType,
-              rangeElementInputType,
-              domainBaseType,
-              */
-              },
-              () => ({
-                name: operatorsTypeName,
-                description: `A filter to be used against ${relatedTypeName}${
-                  isList ? " List" : ""
-                } fields. All fields are combined with a logical ‘and.’`,
-              }),
-              "PgConnectionArgFilterPlugin"
-            );
+              profile,
+              baseOperatorsTypeName,
+            };
+
+            if (!existing) {
+              filterTypeByTypeName[operatorsTypeName] = {
+                ...entry,
+                pgCodecs: [codec],
+                exampleColumn,
+              };
+              return;
+            }
+
+            for (const key of [
+              "isList",
+              "relatedTypeName",
+              "inputTypeName",
+              "rangeElementInputTypeName",
+              "profile",
+              "baseOperatorsTypeName",
+            ] as const) {
+              if (entry[key] !== existing[key]) {
+                throw new Error(
+                  `${key} mismatch for filter type "${operatorsTypeName}": existing codecs (${existing.pgCodecs
+                    .map((c) => c.name)
+                    .join(", ")}) had ${key} = ${existing[key]}, but ${
+                    codec.name
+                  } instead has ${key} = ${entry[key]}`
+                );
+              }
+            }
+            existing.pgCodecs.push(codec);
+          };
+
+          for (const codec of build.allPgCodecs) {
+            const digest = build.connectionFilterOperatorsDigest(codec);
+            if (digest) {
+              addFilterType(codec, digest);
+            }
           }
 
           // Create a filter type for each operator profile that a column opts
           // into. A profile type exists only when used, so a schema that opts
           // no column in keeps the base schema.
-          const profileCodecsByFilterTypeName: {
-            [typeName: string]: {
-              isList: boolean;
-              relatedTypeName: string;
-              pgCodecs: PgCodec[];
-              inputTypeName: string;
-              rangeElementInputTypeName: string | null;
-              domainBaseTypeName: string | null;
-              profile: string;
-            };
-          } = {};
           for (const rawCodec of build.allPgCodecs) {
             if (!rawCodec.attributes) {
               continue;
@@ -469,57 +506,13 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               );
               if (!digest) {
                 throw new Error(
-                  `Column ${column} opts into operator profile "${profile}" but its type "${attribute.codec.name}" has no filter operators.`
+                  `Column ${column} opts into operator profile "${profile}" but ${describeNoFilterReason(
+                    build,
+                    attribute.codec
+                  )}.`
                 );
               }
-              const {
-                isList,
-                operatorsTypeName,
-                relatedTypeName,
-                inputTypeName,
-                rangeElementInputTypeName,
-                domainBaseTypeName,
-              } = digest;
-
-              if (!profileCodecsByFilterTypeName[operatorsTypeName]) {
-                profileCodecsByFilterTypeName[operatorsTypeName] = {
-                  isList,
-                  relatedTypeName,
-                  pgCodecs: [attribute.codec],
-                  inputTypeName,
-                  rangeElementInputTypeName,
-                  domainBaseTypeName,
-                  profile,
-                };
-              } else {
-                for (const key of [
-                  "isList",
-                  "relatedTypeName",
-                  "inputTypeName",
-                  "rangeElementInputTypeName",
-                  "profile",
-                ] as const) {
-                  if (
-                    digest[key] !==
-                    profileCodecsByFilterTypeName[operatorsTypeName][key]
-                  ) {
-                    throw new Error(
-                      `${key} mismatch for operator profile type "${operatorsTypeName}": existing codecs (${profileCodecsByFilterTypeName[
-                        operatorsTypeName
-                      ].pgCodecs
-                        .map((c) => c.name)
-                        .join(", ")}) had ${key} = ${
-                        profileCodecsByFilterTypeName[operatorsTypeName][key]
-                      }, but ${attribute.codec.name} instead has ${key} = ${
-                        digest[key]
-                      }`
-                    );
-                  }
-                }
-                profileCodecsByFilterTypeName[operatorsTypeName].pgCodecs.push(
-                  attribute.codec
-                );
-              }
+              addFilterType(attribute.codec, digest, column);
             }
           }
 
@@ -533,8 +526,10 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
               rangeElementInputTypeName,
               domainBaseTypeName,
               profile,
+              baseOperatorsTypeName,
+              exampleColumn,
             },
-          ] of Object.entries(profileCodecsByFilterTypeName)) {
+          ] of Object.entries(filterTypeByTypeName)) {
             build.registerInputObjectType(
               operatorsTypeName,
               {
@@ -545,13 +540,20 @@ export const PgConnectionArgFilterPlugin: GraphileConfig.Plugin = {
                   rangeElementInputTypeName,
                   domainBaseTypeName,
                   profile,
+                  baseOperatorsTypeName,
+                  profileColumn: exampleColumn,
                 },
               },
               () => ({
                 name: operatorsTypeName,
-                description: `A filter to be used against ${relatedTypeName}${
-                  isList ? " List" : ""
-                } fields offering the "${profile}" operator profile in addition to the base operators. All fields are combined with a logical ‘and.’`,
+                description:
+                  profile === undefined
+                    ? `A filter to be used against ${relatedTypeName}${
+                        isList ? " List" : ""
+                      } fields. All fields are combined with a logical ‘and.’`
+                    : `A filter to be used against ${relatedTypeName}${
+                        isList ? " List" : ""
+                      } fields offering the "${profile}" operator profile in addition to the base operators. All fields are combined with a logical ‘and.’`,
               }),
               "PgConnectionArgFilterPlugin"
             );

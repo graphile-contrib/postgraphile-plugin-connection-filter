@@ -16,7 +16,8 @@ const setup = `
     id serial primary key,
     title text,
     tags text[],
-    payload json
+    payload json,
+    count int
   );
 `;
 
@@ -110,6 +111,38 @@ test("fails when a column opts into a profile but its type has no filter operato
       )
     ).rejects.toThrow(
       'Column "operator_profiles_test.item.payload" opts into operator profile "search" but its type "json" has no filter operators'
+    );
+  }));
+
+test("fails when a profile adds no operator for the column type", () =>
+  withTransaction(async (client) => {
+    await client.query(setup);
+    await client.query(
+      `comment on column operator_profiles_test.item.count is E'@behavior +attribute:filterBy:search';`
+    );
+    await expect(
+      buildSchema(
+        client,
+        makeFilterOperatorProfilesPlugin({ search: ["startsWith"] })
+      )
+    ).rejects.toThrow(
+      'Operator profile "search" adds no operator for column "operator_profiles_test.item.count" (type "int4")'
+    );
+  }));
+
+test("fails when a profile type name collides with an existing filter type", () =>
+  withTransaction(async (client) => {
+    await client.query(setup);
+    await client.query(
+      `comment on column operator_profiles_test.item.title is E'@behavior +attribute:filterBy:list';`
+    );
+    await expect(
+      buildSchema(
+        client,
+        makeFilterOperatorProfilesPlugin({ list: ["includes"] })
+      )
+    ).rejects.toThrow(
+      'Operator profile "list" generates filter type name "StringListFilter" for "String" fields, which is already the base filter type for "String List" fields'
     );
   }));
 
